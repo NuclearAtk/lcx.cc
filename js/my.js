@@ -82,11 +82,8 @@ function showad() {
     // var ad_foot = newad('★ ★ ★ 广告位招租 @ 微信: ******, QQ: ******, Telegram: @****** ★ ★ ★', 'margin-top:1em;');
     // footer.parentNode.insertBefore(ad_foot, footer.nextSibling);
     // 广告
-    // var ad1 = newad('<marquee onMouseOut="this.start()" onMouseOver="this.stop()" onclick="window.open(\'https://t.me/******\', \'_blank\');">★ Telegram:@****** ★ 黑客·入侵·渗透·黑产·灰产·溯源追踪·脚本定制·程序开发·网络安全维护·找人·追债·手机定位·机主车主实名·商业机密调查·身份及社会背景调查 ★ Telegram:@****** ★</marquee>', 'margin-bottom:1em;');
+    // var ad1 = newad('<marquee onMouseOut="this.start()" onMouseOver="this.stop()" onclick="window.open(\'https://t.me/******\', \'_blank\');">★ Telegram:@****** ★ 广告位招租 ★ Telegram:@****** ★</marquee>', 'margin-bottom:1em;');
     // header.parentNode.insertBefore(ad1, header.nextSibling);
-    // 广告
-    var ad2 = newad('<marquee onMouseOut="this.start()" onMouseOver="this.stop()" onclick="window.open(\'https://acbgroupcorp.com/#footer-bottom\', \'_blank\');">★ 爱世博集团(ACB)，高薪诚聘技术工程师等各岗位人才，我们只为有能力的人买单，欢迎联系我们：ACBGroupCorp.COM，另收购各大 CMS 0day (discuz、phpcms、dedecms、destoon、cmstop、久草cms、海洋cms、飞飞cms、奇杰cms 等)，Linux 提权方式，高权重 WebShell、高权重网站收购（A5担保交易）、真实运营商劫持流量、SEO流量（色量、漫画、体育、棋牌、博彩）、短信电销通道，根据价值收购，投入无上限！！！欢迎联系我们：ACBGroupCorp.COM ★</marquee>', 'margin-bottom:1em;');
-    header.parentNode.insertBefore(ad2, header.nextSibling);
     // 常用特殊符号：http://cn.piliapp.com/symbol/
     // ★☆☚☛☜☝☞☟✌✍✈
     // <span style="font-size:35px;position:relative;top:0.15em;line-height:20px;">☞</span>
