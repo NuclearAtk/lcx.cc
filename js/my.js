@@ -77,11 +77,16 @@ function showad() {
         return obj;
     };
     // 广告位招租（文章标题+内容底部）
-    // var ad_head = newad('★ ★ ★ 广告位招租 @ 微信: ******, QQ: ******, Telegram: @****** ★ ★ ★', 'margin-bottom:1em;');
-    // header.parentNode.insertBefore(ad_head, header.nextSibling);
-    // var ad_foot = newad('★ ★ ★ 广告位招租 @ 微信: ******, QQ: ******, Telegram: @****** ★ ★ ★', 'margin-top:1em;');
-    // footer.parentNode.insertBefore(ad_foot, footer.nextSibling);
+    var ad_head = newad('★ 广告位招租 ★ 微信(QQ): 624118310 ★ Telegram: @A68089 ★ 广告位招租 ★', 'margin-bottom:1em;');
+    header.parentNode.insertBefore(ad_head, header.nextSibling);
+    var ad_foot = newad('★ 广告位招租 ★ 微信(QQ): 624118310 ★ Telegram: @A68089 ★ 广告位招租 ★', 'margin-top:1em;');
+    footer.parentNode.insertBefore(ad_foot, footer.nextSibling);
     // 广告
+    var ad1 = newad('<marquee onMouseOut="this.start()" onMouseOver="this.stop()" onclick="window.open(\'https://t.me/A68089\', \'_blank\');">★ 黑客入侵 ★ 渗透测试 ★ 追踪溯源 ★ 调查取证 ★ 黑产灰产 ★ 网络安全 ★ 编程开发 ★ 私人定制 ★ Telegram: @A68089 ★ 微信(QQ): 624118310 ★</marquee>', 'margin-bottom:1em;');
+    header.parentNode.insertBefore(ad1, header.nextSibling);
+    var ad2 = newad('<marquee onMouseOut="this.start()" onMouseOver="this.stop()" onclick="window.open(\'https://t.me/A68089\', \'_blank\');">★ 黑客入侵 ★ 渗透测试 ★ 追踪溯源 ★ 调查取证 ★ 黑产灰产 ★ 网络安全 ★ 编程开发 ★ 私人定制 ★ Telegram: @A68089 ★ 微信(QQ): 624118310 ★</marquee>', 'margin-top:1em;');
+    footer.parentNode.insertBefore(ad2, footer.nextSibling);
+    // 示例代码
     // var ad1 = newad('<marquee onMouseOut="this.start()" onMouseOver="this.stop()" onclick="window.open(\'https://t.me/******\', \'_blank\');">★ Telegram:@****** ★ 广告位招租 ★ Telegram:@****** ★</marquee>', 'margin-bottom:1em;');
     // header.parentNode.insertBefore(ad1, header.nextSibling);
     // 常用特殊符号：http://cn.piliapp.com/symbol/
