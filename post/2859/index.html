@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>廉价迷你 Linux 机器 Raspberry Pi 详解 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="腾讯数码" /><meta name="description" content="廉价迷你 Linux 机器 Raspberry Pi 详解。在今年早些时候Raspberry Pi刚刚发布，这个信用卡大小的迷你Linux机器瞬间走红。在它开始发售的那个晚上，Pi计划的官方分发商Premier Farnell/element 14与RS Components的网站被刷得几乎没办法打开。时间来到今天，你终于可以在三周之内拿到一个Raspberry Pi了。它说得上是今年的Linux设备之最，如果你已经准备入手一个，那么下面的文章将会告诉你该如何为它进行设置。 " />
+<meta name="keywords" content="廉价迷你 Linux 机器 Raspberry Pi 详解" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/2859/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="廉价迷你 Linux 机器 Raspberry Pi 详解" />
+<meta property="og:description" content="廉价迷你 Linux 机器 Raspberry Pi 详解。在今年早些时候Raspberry Pi刚刚发布，这个信用卡大小的迷你Linux机器瞬间走红。在它开始发售的那个晚上，Pi计划的官方分发商Premier Farnell/element 14与RS Components的网站被刷得几乎没办法打开。时间来到今天，你终于可以在三周之内拿到一个Raspberry Pi了。它说得上是今年的Linux设备之最，如果你已经准备入手一个，那么下面的文章将会告诉你该如何为它进行设置。 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/2859/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-09-09T15:16:28&#43;08:00" />
+<meta property="article:modified_time" content="2012-09-21T11:29:28&#43;08:00" />
+
+<meta itemprop="name" content="廉价迷你 Linux 机器 Raspberry Pi 详解">
+<meta itemprop="description" content="廉价迷你 Linux 机器 Raspberry Pi 详解。在今年早些时候Raspberry Pi刚刚发布，这个信用卡大小的迷你Linux机器瞬间走红。在它开始发售的那个晚上，Pi计划的官方分发商Premier Farnell/element 14与RS Components的网站被刷得几乎没办法打开。时间来到今天，你终于可以在三周之内拿到一个Raspberry Pi了。它说得上是今年的Linux设备之最，如果你已经准备入手一个，那么下面的文章将会告诉你该如何为它进行设置。 "><meta itemprop="datePublished" content="2012-09-09T15:16:28&#43;08:00" />
+<meta itemprop="dateModified" content="2012-09-21T11:29:28&#43;08:00" />
+<meta itemprop="wordCount" content="6736">
+<meta itemprop="keywords" content="ASP,Linux,IP,MAC,Python,Windows,安全,编程,车,程序,电脑,电视,工具,管理,美国,密码,命令,软件,设备,网站,文件,文件夹,问题,系统,游戏," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="廉价迷你 Linux 机器 Raspberry Pi 详解"/>
+<meta name="twitter:description" content="廉价迷你 Linux 机器 Raspberry Pi 详解。在今年早些时候Raspberry Pi刚刚发布，这个信用卡大小的迷你Linux机器瞬间走红。在它开始发售的那个晚上，Pi计划的官方分发商Premier Farnell/element 14与RS Components的网站被刷得几乎没办法打开。时间来到今天，你终于可以在三周之内拿到一个Raspberry Pi了。它说得上是今年的Linux设备之最，如果你已经准备入手一个，那么下面的文章将会告诉你该如何为它进行设置。 "/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">廉价迷你 Linux 机器 Raspberry Pi 详解</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-09-09" class="post-time">
+          2012-09-09
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/asp/"> ASP </a>
+            <a href="https://lcx.cc/categories/linux/"> Linux </a>
+            
+          </div>
+        <span class="more-meta"> 约 6736 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	在今年早些时候Raspberry Pi刚刚发布，这个信用卡大小的迷你Linux机器瞬间走红。在它开始发售的那个晚上，Pi计划的官方分发商Premier Farnell/element 14与RS Components的网站被刷得几乎没办法打开。<b>时间来到今天，你终于可以在三周之内拿到一个Raspberry Pi了。它说得上是今年的Linux设备之最，如果你已经准备入手一个，那么下面的文章将会告诉你该如何为它进行设置。</b> 
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1289_1.png" width="550" height="365" /> 
+</p>
+<p style="text-indent:2em;">
+	<strong>Raspberry Pi</strong><strong>是什么？</strong> 
+</p>
+<p style="text-indent:2em;">
+	最初，Raspberry Pi只是作为开发样板而推出，目的是吸引更多的开发者到社区中来。然而，在发售当晚，所有的经销商网站都收到了无数对这款产品的需求。如果你是拿到第一批拿到这个小板的幸运儿之一，那么在你收到它以后你或许会对它非常惊讶，也或许会对它完全失望。
+</p>
+<p style="text-indent:2em;">
+	如果你觉得Pi的性能非常差劲，那么你可能在买的时候就把它当成另外一个东西了。首先，我们要认清Raspberry Pi是一款怎么样的设备：它主要用于教育用途，专为业余兴趣者和想学习编程的年轻人们而设计的。它的本意并不是用来代替家中高性能Linux桌面电脑的。
+</p>
+<p style="text-indent:2em;">
+	配备当今看来非常少的256MB内存和一个比你手中手机处理器还慢的700MHz ARM-11处理器，就明白Pi的定价为何如此低了。请记住，Pi的主要作用是为教育方面有需要人士，提供一个具有最基本功能的、廉价的硬件平台。Model B还提供两个USB接口，HDMI输出和10/100自适应以太网端口。若需要音频输出，那么你可以通过板载的3.5毫米插孔或者那个支持音频输出的HDMI接口来完成。Raspberry Pi声称它的GPU运算能力达到1Gpixel每秒，1.5Gtexel每秒或24 GFLOPs的普通运算，并且符合OpenGL 2.0标准。换而言之，它的图形能力跟初代Xbox的图形能力相约。
+</p>
+<p style="text-indent:2em;">
+	在本文我们将带你一步一步看Raspberry Pi Model B的设置，以及运行Raspbian，一个基于Debian的Linux系统。
+</p>
+<p style="text-indent:2em;">
+	<strong>购买一个Raspberry Pi</strong> 
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1290_2.png" width="550" height="365" /> 
+</p>
+<p style="text-indent:2em;">
+	为了支持Raspberry Pi基金的目标，我们建议你花35美元从这两家分销商的其中一家购入Model B Raspberry Pi：Premier Farnell / element14 或者 RS Components。
+</p>
+<p style="text-indent:2em;">
+	你还需要以下这些东西：
+</p>
+<ol>
+	<li>
+		一张SD记忆卡
+	</li>
+	<li>
+		一个SD读卡器，用于将系统映像写入到SD卡中
+	</li>
+	<li>
+		供电来源。我们用的是一个旧的安卓手机充电器，你需要一个5V的micro USB接口充电器为它供电
+	</li>
+	<li>
+		如果你是用的普通显示器而不是高清电视，你需要一条HDMI连接线与HDMI-DVI转换器。如果你的显示器支持HDMI或者你打算使用电视机进行连接，那么你就可以省去转换器了
+	</li>
+	<li>
+		USB接口的键盘和鼠标
+	</li>
+	<li>
+		一条以太网线
+	</li>
+</ol>
+<p style="text-indent:2em;">
+	可选设备：
+</p>
+<ol>
+	<li>
+		用于保护Raspberry Pi的盒子
+	</li>
+	<li>
+		除了键盘和鼠标之外，如果你打算要连接更多的USB设备，那么你需要一个USB Hub集线器。
+	</li>
+	<li>
+		我们在本文中使用的东西：
+	</li>
+	<li>
+		一个Model B Raspberry Pi
+	</li>
+	<li>
+		一张16GB Class 10 SanDisk Ultra SDHC记忆卡（传输率标为300MB/s）
+	</li>
+	<li>
+		一个原本用于HTC Inspire的旧充电器
+	</li>
+	<li>
+		罗技K260无线键鼠套装（两件只用一个接收器，因此只占用一个USB口）
+	</li>
+	<li>
+		一条RJ-45网线
+	</li>
+</ol>
+<p style="text-indent:2em;">
+	设置
+</p>
+<p style="text-indent:2em;">
+	当你把上面的一切都准备好以后，我们就可以开始设置Raspberry Pi了。
+</p>
+<p style="text-indent:2em;">
+	<strong>将Raspbian</strong><strong>映像安装到SD卡中</strong> 
+</p>
+<p style="text-indent:2em;">
+	Raspberry Pi出来已经有一段时间了，也正因如此，无论你是在用Windows、Mac OSX还是Linux，都有好几种方法将Raspbian的映像写到你的SD卡中。然而为了让这篇文章不变成介绍各种映像写入软件的文章，我们将会把最常用的方法展示给大家看：在OSX与Linux中我们将会用系统自带的dd工具写入，而在Windows中我们将会使用一个叫Win32DiskImager的工具进行。
+</p>
+<p style="text-indent:2em;">
+	如果你使用的是Mac<b>：</b> 
+</p>
+<p style="text-indent:2em;">
+	为了让过程便得简单，我们建议你在开始操作前，先把下载文件夹清空。然后，从这里下载Raspbian.zip。在里面，选择最新的Raspbian来下载。当然你也可以选择使用BT来下载，为了能让其他人继续用BT下载，我们建议你在下载完成后继续上传。
+</p>
+<p style="text-indent:2em;">
+	把压缩文件解压以后，你将得到Raspbian的映像文件，这个时候打开终端窗口。如果你使用的是OS X 10.7或更高版本，你可以从应用程序中的工具(10.7)或者其他(10.8)中找到终端窗口。打开后，使用”cd ~/Downloads”来进入下载文件夹。
+</p>
+<p style="text-indent:2em;">
+	如果你在开始前清空了你的下载文件夹，那么现在里面应该有两个文件，输入”ls”来确认是否分别有一个img后缀与一个zip后缀的文件，如下图：
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1291_3.png" width="550" height="30" /> 
+</p>
+<p style="text-indent:2em;">
+	接下来就要开始将解压出来的映像文件写到SD卡中了，很可惜这个操作并不是直接把文件拷到卡中那么简单。首先，我们在把SD卡插到你的Mac之前，要把你电脑分区状态先搞清楚。如果你已经迫不及待把卡插了进去，那么先把它安全移除吧。
+</p>
+<p style="text-indent:2em;">
+	在终端窗口中输入”df –h”，你应该会看到类似这样的结果：
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1292_4.png" width="550" height="78" /> 
+</p>
+<p style="text-indent:2em;">
+	现在，插入你的SD卡，再运行一次刚才的命令，你会发现多了一个”/dev/disk1s1”的设备。把它先记下来，等一会儿把它转换成原始设备名称时会用到的。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1293_5.png" width="550" height="102" /> 
+</p>
+<p style="text-indent:2em;">
+	接下来，你需要先从系统中把卡卸载掉，以便”dd”这个工具可以将映像写入到SD卡中。在终端窗口输入”sudo diskutil unmount /dev/disk1s1”，然后输入你的系统密码。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1294_6.png" width="550" height="138" /> 
+</p>
+<p style="text-indent:2em;">
+	如果操作成功的话，你会看到最后那一行字：”Volume XXX unmounted”中的XXX是你SD卡的名称。现在我们就可以往卡上写入映像了。
+</p>
+<p style="text-indent:2em;">
+	记得刚才让你记下来的设备名么？现在就是用到它的时候了。将你的设备名（例如/dev/disk1s1）最后的s1去掉，然后在disk前面加上r，变成”/dev/rdisk1”，这样你就得到SD卡的原始设备名称了。
+</p>
+<p style="text-indent:2em;">
+	也就是说，”/dev/disk1s1” = “/dev/rdisk1”。懂了吗？
+</p>
+<p style="text-indent:2em;">
+	然后在终端中输入以下命令：”sudo dd bs=1m if=2012-06-15-wheezy-raspbian.img of=/dev/YOURDISKNAME”。将YOURDISKNAME改成你的原始设备名称，通常这个都是/dev/rdisk1。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1295_7.png" width="550" height="66" /> 
+</p>
+<p style="text-indent:2em;">
+	写入的过程需要一点时间。当”dd”完成了它的工作以后，将桌面的SD卡图标拖进回收站中以将SD卡安全移除。
+</p>
+<p style="text-indent:2em;">
+	准备工作就完成了！直接到“初次启动你的Pi”部分吧。
+</p>
+<p style="text-indent:2em;">
+	Our prep work is finished! Skip ahead to "Booting your Pi for the first time."
+</p>
+<p style="text-indent:2em;">
+	<strong>如果你使用的是Linux</strong> 
+</p>
+<p style="text-indent:2em;">
+	无论你使用的是哪一个发行版的Linux，”dd”这个工具通常都是默认安装的。对于接下来的操作，我们假设：
+</p>
+<p style="text-indent:2em;">
+	1) 你的sudo程序已经设置妥当，而且你知道如何使用它
+</p>
+<p style="text-indent:2em;">
+	2) 你的Linux中已安装fdisk工具（大多数发行版都默认安装）
+</p>
+<p style="text-indent:2em;">
+	在这里我们使用的是最为流行的Linux发行版Ubuntu，其中”dd”, “fdisk”已默认安装，并且”sudo”也已预先为用户配置好了。
+</p>
+<p style="text-indent:2em;">
+	首先，从这里下载Raspbian的最新版本压缩包。同样，你也可以选择使用BT下载。在你下载完成以后，第一个操作自然就是解压。
+</p>
+<p style="text-indent:2em;">
+	打开一个终端窗口，然后使用”cd ~”命令将工作目录变更到你的主目录中。输入”unzip imagename.zip”，将imagename替换为刚才你下载文件的名字。
+</p>
+<p style="text-indent:2em;">
+	如果你找不到刚才下载的压缩包，你可以尝试使用”cd ~/Downloads/”进入下载目录寻找。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1296_8.png" width="550" height="62" /> 
+</p>
+<p style="text-indent:2em;">
+	接下来，我们要确定你的SD卡在系统中的设备名称。插入你的SD卡，然后在终端中输入”sudo fdisk –l”。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1297_9.png" width="550" height="354" /> 
+</p>
+<p style="text-indent:2em;">
+	<b>注意看列出来的设备：你运行命令后得出的结果跟上面显示的应该很相似</b> 
+</p>
+<p style="text-indent:2em;">
+	这里看到，/dev/sda是一个大小250.1GB的设备，而/dev/sdb是一个15.9GB的设备。很明显，/dev/sdb就是我们的SD卡。留意一下/dev/sdb下面显示的分区：/dev/sdb1与/dev/sdb2，我们要在写入映像之前将这两个分区先从系统中卸载掉：
+</p>
+<p style="text-indent:2em;">
+	sudo umount /dev/sdb1
+</p>
+<p style="text-indent:2em;">
+	sudo umount /dev/sdb2
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1298_10.png" width="550" height="92" /> 
+</p>
+<p style="text-indent:2em;">
+	接下来，我们使用”dd”将映像文件写入到SD卡中：”sudo dd bs=1M if=2012-08-16-wheezy-raspbian.img of=/dev/sdb”。跟在Mac中操作相同，这个过程需要一些时间来完成。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1299_11.png" width="550" height="70" /> 
+</p>
+<p style="text-indent:2em;">
+	如果你看到终端显示跟上面类似的文字，那么写入已经完成了。现在，你可以跳到“初次启动你的Pi”部分继续阅读。
+</p>
+<p style="text-indent:2em;">
+	<strong>如果你正在使用Windows</strong> 
+</p>
+<p style="text-indent:2em;">
+	如果你正在使用的是Windows系统，有一个叫做Win32DiskImager的小工具可以帮你完成这项工作。把它下载下来以后，再把Raspbian的映像从这里下载下来。记得选择最新版本的Raspbian。
+</p>
+<p style="text-indent:2em;">
+	当你把Win32DiskImager和Raspbian映像文件都下载下来以后，把他们都解压出来。你可以把所有文件都解压到桌面的一个文件夹中，方便接下来的操作。
+</p>
+<p style="text-indent:2em;">
+	将你的SD卡插入到你的读卡器中，留意一下读卡器在电脑中的盘符。将读卡器接到电脑以后，打开刚解压出来的Win32DiskImager程序：
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1300_12.png" width="550" height="440" /> 
+</p>
+<p style="text-indent:2em;">
+	在启动时，Win32DiskImager可能会提示以下错误：（至少在Windows 7中是这样的）
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1301_13.png" width="506" height="184" /> 
+</p>
+<p style="text-indent:2em;">
+	这个错误可以忽略掉，点OK继续。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1302_14.png" width="421" height="213" /> 
+</p>
+<p style="text-indent:2em;">
+	点击右边的蓝色文件夹图标，然后选中刚才解压出来的Raspbian映像文件。确保最右边Device中的盘符为你读卡器的盘符。
+</p>
+<p style="text-indent:2em;">
+	打开映像文件以后，点Write，然后点一下Yes确定操作。整个写入过程需要一些时间来完成。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1303_15.png" width="421" height="213" /> 
+</p>
+<p style="text-indent:2em;">
+	写入完毕以后，你会看到下面的信息，这时你就可以把你的SD卡安全移除了。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1304_16.png" width="166" height="120" /> 
+</p>
+<p style="text-indent:2em;">
+	<strong>初次启动你的Pi </strong> 
+</p>
+<p style="text-indent:2em;">
+	初次启动Raspberry Pi时，你会看到一个叫做raspi-config的配置工具。如果在日后使用过程中你需要更改这些设置，你可以通过在Pi的命令行中运行raspi-config来使用这个工具。在这里，你需要进行一些最基本的设置来继续使用你的Pi。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1305_17.png" width="550" height="270" /> 
+</p>
+<p style="text-indent:2em;">
+	首先，我们要选择expand_rootfs。它的作用是将刚才写入到SD卡中的映像文件大小扩展到整张SD卡中。如果你使用的是一张较大的SD卡（例如16GB），那么你肯定像充分利用上面的空间。因为原本的映像只有大约2GB的大小，进行该操作就能将它扩展到与你的SD卡同样的大小。
+</p>
+<p style="text-indent:2em;">
+	选中expand_rootfs选项，然后按下回车。你会看到如下提示，只需要再按一下回车就可以回到raspi-config的主菜单中。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1306_18.png" width="458" height="280" /> 
+</p>
+<p style="text-indent:2em;">
+	接下来就是overscan选项。你会发现，屏幕显示的图像并没有完全占用你的显示器空间；所以，最后就是将overscan禁用掉，来让系统充分利用整个屏幕。但如果你的屏幕显示没有问题，那么你就可以跳过这个步骤。假设你需要禁用overscan，那么将overscan选项选中后按下回车。
+</p>
+<p style="text-indent:2em;">
+	接下来的画面能够让你选择禁用(Disable)或者是启用(Enable) overscan。如果你在往后使用的过程中更换显示器或者电视机，你或许需要重新启用overscan。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1307_19.png" width="422" height="279" /> 
+</p>
+<p style="text-indent:2em;">
+	接下来，我们要确保我们的键盘正常工作。Raspbian默认的是英国键盘布局，而我们在中国使用的键盘布局与美国的相同，因此我们要对它进行更改才能正常使用。
+</p>
+<p style="text-indent:2em;">
+	选中configure_keyboard，然后按下回车。下面显示的画面中你会看到一个很长的列表，里面都是不同的键盘类型。你可以根据你的需要来选择，或者直接选择Generic 105-key (Intl) PC键盘。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1308_20.png" width="550" height="78" /> 
+</p>
+<p style="text-indent:2em;">
+	在选择键盘类型以后，你需要为它选择一个键盘布局。刚开始显示的列表中，都只有英国的键盘布局，但是我们现在要选择美国的键盘布局，因此我们选中其他(Other)，然后再里面的列表选择English (US)。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1309_21.png" width="550" height="309" /> 
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1310_22.png" width="417" height="127" /> 
+</p>
+<p style="text-indent:2em;">
+	然后你会被问到关于辅助键的问题，选择默认的选项，并且在下一个画面中选择No compose key选项。同样，如果你需要更改这个设置，可以使用raspi-config来更改。
+</p>
+<p style="text-indent:2em;">
+	最后一个选项为是否打开CTRL+ALT+BACKSPACE的组合键。它可以在你的图形界面崩溃时，不需重启而将图形界面进程结束掉。
+</p>
+<p style="text-indent:2em;">
+	回到主菜单，下一步我们要设置一个用户密码。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1311_23.png" width="560" height="286" /> 
+</p>
+<p style="text-indent:2em;">
+	选中change_pass然后按下回车。一个确认窗口弹出以后，在屏幕的底下会提示你输入一个新的UNIX用户密码。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1312_24.png" width="257" height="41" /> 
+</p>
+<p style="text-indent:2em;">
+	到这里就差不多完成了。接下来设置你的“区域”，这个主要会决定系统使用的字符集和语言。同样，如果你不想使用英国英语，那么你可以在这里更改这些设置。在演示中我们选择的是美国英语，因此我们选择en_US.UTF-8，并下翻列表将en_GB选项剔除。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1313_25.png" width="277" height="550" /> 
+</p>
+<p style="text-indent:2em;">
+	再下一个对话框中会让你选择默认的区域，选择你刚才选的区域然后按回车继续。
+</p>
+<p style="text-indent:2em;">
+	回到raspi-config的主菜单，设置适当的时区。选中change_timezone选项然后按下回车。你会先看到一个地区列表。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1314_26.png" width="501" height="291" /> 
+</p>
+<p style="text-indent:2em;">
+	选择一个地区，然后下一个菜单中会显示该区域的具体位置。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1315_27.png" width="577" height="209" /> 
+</p>
+<p style="text-indent:2em;">
+	再次回到主菜单，剩下还没选过的选项我们可以忽略，直接点击完成(Finish)。系统会提示你，一些变更需要重启才能生效。重启以后，你会看到一个登录界面，如下：
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1316_28.png" width="434" height="81" /> 
+</p>
+<p style="text-indent:2em;">
+	在这里，用户名为”pi”，密码就是你刚才设置的UNIX用户密码。
+</p>
+<p style="text-indent:2em;">
+	使用你的Raspberry Pi
+</p>
+<p style="text-indent:2em;">
+	现在，你已经登录到了你之前设置的Raspberry Pi中了。你要做的第一件事，就是在命令行中输入”startx”来进入图形界面，以下我们会把这个界面称之为“窗口管理器”。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1317_29.png" width="596" height="282" /> 
+</p>
+<p style="text-indent:2em;">
+	屏幕快速闪烁几次后，你应该会看到如下画面：（除了那个终端窗口以外）
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1318_30.png" width="500" height="400" /> 
+</p>
+<p style="text-indent:2em;">
+	欢迎使用LXDE窗口管理器。LXDE是一个非常轻量级，并且功能齐全的图形界面，它能够很好地运行在Raspberry Pi中。如果你从来未使用过LXDE，别担心，它用起来跟Windows非常相似。点击最左下角的图标，你会看到一个应用程序列表。
+</p>
+<p style="text-indent:2em;">
+	现在能干嘛呢？
+</p>
+<p style="text-indent:2em;">
+	当你把Pi配置完成，并且打开了LXDE窗口管理器以后，你就得到了一台运行完整 Debian的Linux机器了。在这个时候，你可以使用Midori来浏览网页，架设一个网页服务器，或者是进行一些平常的工作。
+</p>
+<p style="text-indent:2em;">
+	但首先，我们要谈的是Raspberry Pi本身最注重的方面：教育。特别是，软件开发教育。
+</p>
+<p style="text-indent:2em;">
+	<strong>在Raspberry Pi</strong><strong>上撰写你的第一个程序</strong> 
+</p>
+<p style="text-indent:2em;">
+	Raspbian中预装Python，它是Raspberry Pi的官方编程语言，还有IDLE 3，一个Python的集成开发环境(IDE)。我们将会教你如何使用IDLE在Raspberry Pi上写一个简单的程序。
+</p>
+<p style="text-indent:2em;">
+	在学习一门新的编程语言时，通常第一件事都是写一个”Hello World!”的小程序。接下来我们要教你的跟这个也差不多，不过要比它稍微花哨一些。这是一个会问你的名字，然后作自我介绍的Python程序。
+</p>
+<p style="text-indent:2em;">
+	首先，直接双击LXDE桌面上的图标来打开IDLE 3。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1319_31.png" width="500" height="489" /> 
+</p>
+<p style="text-indent:2em;">
+	点击文件 &gt; 新窗口，就会出现一个可以让你输入文字的空白窗口。
+</p>
+<p style="text-indent:2em;">
+	输入以下内容到你的新窗口中：
+</p>
+<p style="text-indent:2em;">
+	#my first Python program
+</p>
+<p style="text-indent:2em;">
+	username = input("Hello, I'm Raspberry Pi! What is your name? ")
+</p>
+<p style="text-indent:2em;">
+	print ('Nice to meet you, ' + username + ' have a nice day!')
+</p>
+<p style="text-indent:2em;">
+	如下图：
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1320_32.png" width="500" height="489" /> 
+</p>
+<p style="text-indent:2em;">
+	现在，点击文件 &gt; 另存为，然后将你的文件保存为”hello”，点击保存。
+</p>
+<p style="text-indent:2em;">
+	现在就可以运行你刚才写的程序了！
+</p>
+<p style="text-indent:2em;">
+	点击运行 &gt; 运行模块，或者直接按F5键。
+</p>
+<p style="text-indent:2em;">
+	当IDLE 3窗口中提示你”Hello, I’m Raspberry Pi! What is your name?”的时候，输入你的名字然后按下回车。你会看到Raspberry Pi对你做出回应。
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1321_33.png" width="500" height="489" /> 
+</p>
+<p style="text-indent:2em;">
+	<strong>总结</strong> 
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1322_34.png" width="500" height="333" /> 
+</p>
+<p style="text-indent:2em;">
+	你的第一个Raspberry Pi程序老实说是简单得不能再简单了。使用Python语言可以写出许多非常强大的软件。在这里我们推荐你在Python的官方网站上，参与他们的
+Python教程来学习更多内容。连一个7岁的小孩子都能在Raspberry Pi上面写一个游戏，相信你也可以的。
+</p>
+<p style="text-indent:2em;">
+	当你学Python学累了的时候，你或许想休闲一下，玩一些老游戏。你可以将你的Pi配置成一个MAME街机模拟器，把它连接到你的电视机中。连游戏都玩累了，你还可以在上面安装一个XBMC。Pi支持播放1080p全高清视频，把它连接到一台高清电视中，充当一个媒体中心还是没有太大问题的。
+</p>
+<p style="text-indent:2em;">
+	当然，如果你只想要一台35美元如此便宜的Linux机器，Raspberry Pi也可以成为你的选择。你会发现它会给你带来许多欢乐——它对一个黑客来说，就是无尽的可能。我们期待接下来的数月中会有更多的Pi程序出现，特别是在Gertboard宣布以后。希望这篇文章能够给你对这件强大的小玩意儿带来一点兴趣，不妨去买一个回来玩吧！
+</p>
+<p>
+	<strong><span style="color:#E53333;">站长评论：</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">这玩意儿很强大的，去年这个时候就出来了：</span><a href="https://lcx.cc/post/1562/" target="_blank">微型“计算机” 只要25美元的计算机 装在U盘里的电脑</a> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="2349,2859,119.60.63.155">
+<p>【匿名者】 @ 2012-09-09 15:31:06</p>
+<p style="text-indent:2em">核总，图片挂了~</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">看到了，正在修。</p>
+</blockquote>
+<blockquote id="2360,2859,180.111.139.203">
+<p>【匿名者】 @ 2012-09-11 21:35:04</p>
+<p style="text-indent:2em">这东西在国内感觉炒的好贵。。。。。。。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">貌似不贵啊，淘宝搜：Raspberry Pi，400元左右……</p>
+</blockquote>
+<blockquote id="2389,2859,183.44.196.184">
+<p>tmp @ 2012-09-21 11:26:46</p>
+<p style="text-indent:2em">然后在终端中输入以下命令：”sudo ddb s=1m if=2012-06-15-wheezy-raspbian.img of=/dev/YOURDISKNAME”。将YOURDISKNAME改成你的原始设备名称，通常这个都是/dev/rdisk1。
+这里有笔误.应该是&quot;sudo dd bs=1m if=2012-06-15-wheezy-raspbian.img of=/dev/YOURDISKNAME&quot;</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你看得真仔细！文章已修正！Thanks!</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">腾讯数码</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-09-21
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/asp/">ASP</a>
+          <a href="https://lcx.cc/tags/linux/">Linux</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/mac/">MAC</a>
+          <a href="https://lcx.cc/tags/python/">Python</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+          <a href="https://lcx.cc/tags/%E8%BD%A6/">车</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E8%84%91/">电脑</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E8%A7%86/">电视</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E7%BE%8E%E5%9B%BD/">美国</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BE%E5%A4%87/">设备</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6%E5%A4%B9/">文件夹</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E6%B8%B8%E6%88%8F/">游戏</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2860/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">互联网身份管理策略 网络人肉与反人肉</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2858/">
+            <span class="next-text nav-default">谷歌自动驾驶汽车价格曝光：超30万美元 比法拉利贵</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

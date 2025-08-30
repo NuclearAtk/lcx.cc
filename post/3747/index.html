@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>如何设置安全的密码 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="叉叉树" /><meta name="description" content="如何设置安全的密码。1、写此文的原因 最近出现的“棱镜”事件，加上之前密码泄漏事件，这大大的增加了我们在互联网上的安全问题，尤其对我们来说重要的一些账户和密码，如果一旦泄漏出去，那么对我们造成的损失会很大，很严重。网络上也有因为密码泄露而引发的连带的问题。我们需要对自己的密码进行一个很好的管理。养成一种习惯，减少我们的威胁。 2、使用场景 及重要程度 我们密码使用的场景大概分为以下几类：财产类（重要） 这类直接关系到我们的金钱相关的账户，其中包括银行，支付宝，购物账户等。这些账户一旦被盗，将给我们直接造成经济损失。通讯类（重要） 这类主要包括电子邮件，QQ、msn，这里主要包含我们经常联系的人。同时邮箱中还包含很多注册信息、以及其他密码信息。往来邮件等。" />
+<meta name="keywords" content="如何设置安全的密码" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3747/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="如何设置安全的密码" />
+<meta property="og:description" content="如何设置安全的密码。1、写此文的原因 最近出现的“棱镜”事件，加上之前密码泄漏事件，这大大的增加了我们在互联网上的安全问题，尤其对我们来说重要的一些账户和密码，如果一旦泄漏出去，那么对我们造成的损失会很大，很严重。网络上也有因为密码泄露而引发的连带的问题。我们需要对自己的密码进行一个很好的管理。养成一种习惯，减少我们的威胁。 2、使用场景 及重要程度 我们密码使用的场景大概分为以下几类：财产类（重要） 这类直接关系到我们的金钱相关的账户，其中包括银行，支付宝，购物账户等。这些账户一旦被盗，将给我们直接造成经济损失。通讯类（重要） 这类主要包括电子邮件，QQ、msn，这里主要包含我们经常联系的人。同时邮箱中还包含很多注册信息、以及其他密码信息。往来邮件等。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3747/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-07-20T10:51:16&#43;08:00" />
+<meta property="article:modified_time" content="2013-07-20T10:51:16&#43;08:00" />
+
+<meta itemprop="name" content="如何设置安全的密码">
+<meta itemprop="description" content="如何设置安全的密码。1、写此文的原因 最近出现的“棱镜”事件，加上之前密码泄漏事件，这大大的增加了我们在互联网上的安全问题，尤其对我们来说重要的一些账户和密码，如果一旦泄漏出去，那么对我们造成的损失会很大，很严重。网络上也有因为密码泄露而引发的连带的问题。我们需要对自己的密码进行一个很好的管理。养成一种习惯，减少我们的威胁。 2、使用场景 及重要程度 我们密码使用的场景大概分为以下几类：财产类（重要） 这类直接关系到我们的金钱相关的账户，其中包括银行，支付宝，购物账户等。这些账户一旦被盗，将给我们直接造成经济损失。通讯类（重要） 这类主要包括电子邮件，QQ、msn，这里主要包含我们经常联系的人。同时邮箱中还包含很多注册信息、以及其他密码信息。往来邮件等。"><meta itemprop="datePublished" content="2013-07-20T10:51:16&#43;08:00" />
+<meta itemprop="dateModified" content="2013-07-20T10:51:16&#43;08:00" />
+<meta itemprop="wordCount" content="5166">
+<meta itemprop="keywords" content="安全,密码,FTP,QQ,保护,暴力,测试,电脑,分享,服务,服务器,管理,加密,破解,企业,软件,上传,数据,数据库,网络,网站,文件,问题,系统,泄漏,银行,邮件,邮箱,账号,账户," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="如何设置安全的密码"/>
+<meta name="twitter:description" content="如何设置安全的密码。1、写此文的原因 最近出现的“棱镜”事件，加上之前密码泄漏事件，这大大的增加了我们在互联网上的安全问题，尤其对我们来说重要的一些账户和密码，如果一旦泄漏出去，那么对我们造成的损失会很大，很严重。网络上也有因为密码泄露而引发的连带的问题。我们需要对自己的密码进行一个很好的管理。养成一种习惯，减少我们的威胁。 2、使用场景 及重要程度 我们密码使用的场景大概分为以下几类：财产类（重要） 这类直接关系到我们的金钱相关的账户，其中包括银行，支付宝，购物账户等。这些账户一旦被盗，将给我们直接造成经济损失。通讯类（重要） 这类主要包括电子邮件，QQ、msn，这里主要包含我们经常联系的人。同时邮箱中还包含很多注册信息、以及其他密码信息。往来邮件等。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">如何设置安全的密码</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-07-20" class="post-time">
+          2013-07-20
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E5%AE%89%E5%85%A8/"> 安全 </a>
+            <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+            
+          </div>
+        <span class="more-meta"> 约 5166 字 </span>
+          <span class="more-meta"> 预计阅读 11 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-align:center;">
+	<strong><span style="color:#333333;"><a href="/file/old/2733_1.png" target="_blank"><img alt="" src="/file/old/2733_1.png" width="780" height="390" /></a></span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">1、写此文的原因</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#009900;">最近出现的“棱镜”事件，加上之前密码泄漏事件，这大大的增加了我们在互联网上的安全问题，尤其对我们来说重要的一些账户和密码，如果一旦泄漏出去，那么对我们造成的损失会很大，很严重。网络上也有因为密码泄露而引发的连带的问题。我们需要对自己的密码进行一个很好的管理。养成一种习惯，减少我们的威胁。</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">2、使用场景 及重要程度</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	我们密码使用的场景大概分为以下几类：
+</p>
+<p style="text-indent:2em;">
+	<strong>财产类（重要）</strong> 
+</p>
+<p style="text-indent:2em;">
+	这类直接关系到我们的金钱相关的账户，其中包括银行，支付宝，购物账户等。这些账户一旦被盗，将给我们直接造成经济损失。
+</p>
+<p style="text-indent:2em;">
+	<strong>通讯类（重要）</strong> 
+</p>
+<p style="text-indent:2em;">
+	这类主要包括电子邮件，QQ、msn，这里主要包含我们经常联系的人。同时邮箱中还包含很多注册信息、以及其他密码信息。往来邮件等。
+</p>
+<p style="text-indent:2em;">
+	<strong>临时类（不重要）</strong> 
+</p>
+<p style="text-indent:2em;">
+	一般是，我们在网络上搜索东西，需要注册才能够使用的，这种我们一般是临时内容。
+</p>
+<p style="text-indent:2em;">
+	<strong>工作类（重要）</strong> 
+</p>
+<p style="text-indent:2em;">
+	一般是我们工作中需要用到的一些密码，包括服务器密码，ftp密码，网站后台密码，无线密码、路由密码，其他认证密码等。
+</p>
+<p style="text-indent:2em;">
+	<strong>常用类（中等）</strong> 
+</p>
+<p style="text-indent:2em;">
+	这种一般的是我们常去的一些网站或论坛、社区等地方。这些不涉及财产，不涉及个人隐私等信息。
+</p>
+<p style="text-indent:2em;">
+	<strong>隐私类（重要）</strong> 
+</p>
+<p style="text-indent:2em;">
+	对于在网络上，有些网站是需要提交个人信息、或者相关证件等信息的。还有上传照片的，网络硬盘等存在有我们私人的东西的地方。当然，对于这些也会根据我们在这些地方上传的内容有来定。
+</p>
+<p style="text-indent:2em;">
+	目前密码使用的地方大多数是以上提到的，如果有漏掉的，还请补充。其中以上的重要程度也会根据相关的内容而变的不一定,其中也包括,一些账户用于不重要的地方,一些账户用在重要的地方.将其分类等.
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">3、密码安全原则</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>密码强度</strong> 
+</p>
+<p style="text-indent:2em;">
+	将自己现有的网络账户进行分类整理,密码根据账户的重要程度去进行设置.可以分为三个等级-弱\中\强.
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#E53333;">弱：一般表示非常容易记的。不用去背的。例如123456这样的密码。位数少的，例如4-6位（容易被爆破） （附录A中有top 100的弱密码）</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	中：一般为字母+数字，其中有的密码是由名字和生日进行组合而成的。或者某些单词+数字，这种与上一中要复杂一些，位数要多一些。但是被人掌握个人信息也有很大的可能去被破解。
+</p>
+<p style="text-indent:2em;">
+	高：大小写字母+数字+特殊符号。比较复杂，不容易记忆。
+</p>
+<p style="text-indent:2em;">
+	当然除了字符以外，密码的长度也是其中的一个标准。安全的建议是8位以上复杂密码和中等密码，这样在破解的过程中耗费的时间要长很多。
+</p>
+<p style="text-indent:2em;">
+	<a href="https://howsecureismypassword.net" target="_blank">https://howsecureismypassword.net</a>/ 在这个网址里面可以计算到你输入的密码被破解的时间。
+</p>
+<p style="text-indent:2em;">
+	下面来说一下在什么情况下使用什么样的密码，当然没有一个固定的规则，根据自己的实际情况去设置即可。我说一下我的思路
+</p>
+<p style="text-indent:2em;">
+	对于自己财产类的，要设置一个比较复杂一些的密码，可以考虑使用字母大小写+数字的方法。同时不要用自己的名字、自己名字的缩写、常用昵称或这ID做为密码的一部分。例如银行网上银行密码、支付密码等。（考虑到有些银行可能不允许输入特殊字符，所有建议大小写字母+数字，）
+</p>
+<p style="text-indent:2em;">
+	还有一种通讯类的密码，比如重要的电子邮件， 重要的QQ，这种的可以设置比较复杂的密码，<strong>大小写字母+数字+特殊字符，长度建议在10位</strong>。
+</p>
+<p style="text-indent:2em;">
+	对于一些常去的网站，里面如果不涉及到隐私以及跟其他重要关联的，建议密码不用设置太过复杂。
+</p>
+<p style="text-indent:2em;">
+	还有一些很少去的网站，或者是临时类的，那么我们的密码使用弱密码即可。因为被盗了也无妨。但是也建议使用top 100以外的密码。
+</p>
+<p style="text-indent:2em;">
+	对于涉及到隐私信息的，我的建议是尽量不要往网络上传，如果非要传的话，也涉及一个别人想不到的密码，并且，上传的地方的网站要可靠、可靠主要包含的是网站安全性高，以及网站的信誉。
+</p>
+<p style="text-indent:2em;">
+	对于工作中的用到的账户和密码，必须要复杂。同时关于工作的信息和文件，源代码，计划书、报表等文件，最好不要存储到网络硬盘上。同时要设置复杂的密码。
+</p>
+<p style="text-indent:2em;">
+	电脑开机密码，电脑密码也很重要的，一旦系统密码，硬盘中的文件以及浏览记录、cookie，照片、视频、聊天记录，重要文件等全部一览无余。这样的情况系统密码不使用弱口令就可以。同时设置bios密码，可以设置硬盘密码的也可以设置硬盘密码。如果设置不了硬盘密码，也可以虑使用微软自带的或者开源的加密程序对盘符进行加明。并设置加密密码。
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">低关联性</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	有些人设置的密码确实复杂，但是有可能存在的一种情况是使用同一个密码，这种情况不在少数，即使是有些是搞安全的也会存在这样的情况，这样存在一种风险，就是一旦有一个密码被盗了，其他所有的全部完了。有的密码虽然不一样，但是规律却很明显。这样也是跟用同一个密码区别不大。
+</p>
+<p style="text-indent:2em;">
+	密码是一方面，同时使用一个或几个同样的账号在不同的网站，使用1-3个密码，这样的话，也存在一定风险。使用个账号与测试那几个密码。这样的话也要比暴力破解时间来的快很多。
+</p>
+<p style="text-indent:2em;">
+	保护好自己的邮箱，很多注册的时候都需要填写邮箱，需要进行验证的情况。如果多个地方注册使用同一个邮箱，一旦我们的邮箱被破解，那么我们其他网站密码被破解的可能性变会很大。可利用密码找回功能进行找回。所以，这里的建议是注册多个邮箱，或者单个网站对单个邮箱，对于不常去的且不重要的，可以单独被一个这样的注册邮箱。特别重要的，可以注册一个重要的邮箱。也可以根据自己的情况去申请几个邮箱作为某一类或某一种情况的专用。
+</p>
+<p style="text-indent:2em;">
+	账户的使用也可以跟邮箱一样，单独设计几个，在什么情况下的时候使用什么账户。也可以考虑邮箱账户跟注册的ID一致。这样的目的主要是多个账号之前没有关联性，不会导致连带的效果。会给破解带来一定的难度。
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">密码设置分享</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	对于用户名和密码的选择设置方面，特别重要的每个用户名之间相互独立。且设置不同的密码。
+</p>
+<p style="text-indent:2em;">
+	设立密码可以根据注册的地方，用途去设置密码，根据这些单词或者拼音去进行联想，对联想到的和用途单词想结合（具体怎么结合可以自己随意）也可以穿插一些数字，数字的话。然后进行随机的大小写转换即可得到密码。也可以使用对自己有一些特殊意义的做为一部分，例如：<strong>3.1415926</strong> 这个密码用的人也比较多，那么我可以使其变形为<strong><span style="color:#E53333;">3dIanY1415Ya6</span></strong>。其中我将“.”换成了拼音，当然也可以换成其他语言，编程语言也可以，例如使用“-&gt;”，1我先变为yi，在进行大小写转换，然后2联想到小鸭子（小时候学数学的时候老师给讲的，教科书上也都画着类似的图。），ya，然后进行大小写转换，最后形成这个密码（当然也可以使用duck）。其次，还有一种方法，就是注册一些网站的时候，对于一些不重要的网站，密码可以使用网站名字。是什么网站，就用拼音、英语或其他语言做为密码。
+</p>
+<p style="text-indent:2em;">
+	当然，对于存放加密盘的密码，完全可以使用一个很长的密码来进行加密，使用一个密码，将其加密成64位的。
+</p>
+<p style="text-align:center;">
+	<img alt="" src="/file/old/2734_2.png" width="341" height="208" /> 
+</p>
+<p style="text-indent:2em;">
+	以上为本人一点小小的分享，其实对于密码的设置来说，也有密码生成的软件和网站，也有相关密码管理的软件，以来我是觉得，密码生成软件生成的无规律，确实安全，但是背起来完全不好背，密码管理软件的话，就像是一个保险柜，只要拿到了保险柜的钥匙破解了保险柜密码，那么里面的东西全部都没了。当然，也可以考虑把密码放到一个文本里，然后经过winrar进行压缩并设置解压密码。密码可以设置的复杂一些，当然也可以做成多层的rar加密。但是这样做就比较麻烦了。所以对于密码方面不建议使用这种方法。
+</p>
+<p style="text-indent:2em;">
+	安全和方便两个方面，本身就是有冲突的，就看在什么情况下哪一方面更重要。需要去考虑一下，同时在安全的同时，自然会多了一些麻烦。
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">4、密码的保护</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	设置复杂的密码只是为了防止被别人破解，但是获取密码的方式不止一种破解，如果想要做到安全，需要了解相关的安全知识才是最关键的。
+</p>
+<p style="text-indent:2em;">
+	获取密码的方式可以通过网络钓鱼实现、键盘记录方式、嗅探、暴力破解，社会工程学、读取内存。窃取文件（读取配置文件）。
+</p>
+<p style="text-indent:2em;">
+	密码的保护的话也是从这些方面入手进行防御。
+</p>
+<p style="text-indent:2em;">
+	对于掉与和键盘记录，我们要提高警惕，不要随意打开一些网址（要注意看好网址）、以及别人发来的文件等（除了exe外，还要小心doc、xls、pdf这类常用文件)，需要确认后打开查看。
+</p>
+<p style="text-indent:2em;">
+	嗅探的话，做好arp方面的防御。
+</p>
+<p style="text-indent:2em;">
+	暴力破解，就是加强自己的密码强度。设置复杂的密码
+</p>
+<p style="text-indent:2em;">
+	社会工程学，不要轻易告诉别人你的密码，并且说要密码的邮件或者网站，都不要相信。别人说因为某某原因需要提供密码的时候也不要给。
+</p>
+<p style="text-indent:2em;">
+	对于配置文件方面，要加强程序的安全，服务器的安全性，防止配置文件被别人查看。做好文件系统的权限设置。
+</p>
+<p style="text-indent:2em;">
+	内存方面，本人才疏学浅，不懂这方面知识
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">补充：</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	对于互联网的世界，到处都需要使用密码。如果保护好密码，设置一个安全的密码，使在工作和生活的更好，减少因为泄漏而造成的一些烦恼以及损失。
+</p>
+<p style="text-indent:2em;">
+	如果是作为一个管理企业网络，或者是公司的服务器维护的管理人员以及其他的员工密码，主要有以下几类维护的密码（主要说跟密码有关的）：
+</p>
+<p style="text-indent:2em;">
+	1、网站后台操作密码。其中主要为管理密码。（网站管理员）
+</p>
+<p style="text-indent:2em;">
+	2、办公、工作类密码。通讯类密码（例如QQ、邮箱），例如OA系统密码，客服管理密码。项目管理系统密码等（公司的的个人员工，小到最底层，大到最顶层
+</p>
+<p style="text-indent:2em;">
+	3、管理密码。其中包括：服务器系统密码、ftp、开发人员的svn代码。文档密码。数据库密码。还包括一些管理工具的密码。
+</p>
+<p style="text-indent:2em;">
+	4、测试类密码。一般为临时的，作为测试使用的密码。
+</p>
+<p style="text-indent:2em;">
+	5、操作系统密码。
+</p>
+<p style="text-indent:2em;">
+	6、私人密码与工作无关的密码。（我不建议在工作的电脑上登录个人的账号密码。如果是登录，也建议对其记录和保存的一些信息进行安全擦除。）
+</p>
+<p style="text-indent:2em;">
+	在入侵渗透中我们主要要获取的也是这些密码。获取这些密码，我们可以得到相应的信息。具体也根据密码背后存在的东西，这个主要看对于渗透者来说目标是什么了。
+</p>
+<p style="text-indent:2em;">
+	作为管理员，要保护好所有这些密码。正所谓千里之堤溃于蚁穴，安全问题的大小，取决于短板、也就是最弱的地方。
+</p>
+<p style="text-indent:2em;">
+	对于密码的设置，可以根据前一篇，对其重要程度进行密码的分类设置。
+</p>
+<p style="text-indent:2em;">
+	对于服务器的密码，多台服务器不要使用同一个密码，也不要使用带有规律的密码。例如密码前面的几个字符一样 ，后面使用ip的几位字符作为密码的一部分。这样也很容易被利用。
+</p>
+<p style="text-indent:2em;">
+	对于工作中的账号不建议使用弱口令，即使是测试的服务器或者测试用的账号。同时也不要在测试的系统中使用与自己经常使用的密码一样。
+</p>
+<p style="text-indent:2em;">
+	考虑对工作中重要的的文件进行加密。并且设置一个密码，密码不要过于简单。
+</p>
+<p style="text-indent:2em;">
+	两类重要的信息相互之间密码不要有关联性。防止别人通过字典去爆破密码。
+</p>
+<p style="text-indent:2em;">
+	对于重要的文件，绝对不要使用离线文件方式发送。也不要传到任何的网络上。对于邮件和im，有条件的可以企业内部执行架设邮件服务器。聊天软件服务器。
+</p>
+<p style="text-indent:2em;">
+	这里涉及的一个问题是众多的密码，该怎样管理？如果忘记了怎么办？
+</p>
+<p style="text-indent:2em;">
+	1、对于工作中的相关密码，可以记录在别人不知道的本子里，在用的时候到本子里查就可以了。然后把本子保存好。可以锁到抽屉里。当然，这种方式主要防止的通过网络去进行窃取文件泄漏密码的可能。但是这种不能防止物理接触来盗取本子的可能。当然，对于一般个人来说相对来说安全。因为不会有人特意来获取。
+</p>
+<p style="text-indent:2em;">
+	2、是把密码保存在一个文本或者是xls，doc文件里，然后加入密码。然后将其文件进行rar压缩，并设置一个强壮的密码。自己记住就可以了。
+</p>
+<p style="text-indent:2em;">
+	3 、使用自己的大脑记忆。或者像我一样，可以进行关联记忆。当然对于常用的密码来说，根本不用去记。手下意识的就会去输入了。
+</p>
+<p style="text-indent:2em;">
+	<strong>密码重要程度的分级</strong> 
+</p>
+<p style="text-indent:2em;">
+	一类，自己工作相关的网站密码。这些网站有可能是客服账号、跟自己工作内容相关的资料、资源、知识类网站。这类一般设置一个不用太复杂的密码就可以了。
+</p>
+<p style="text-indent:2em;">
+	二类、管理密码，例如网站系统密码、服务器密码、ftp密码，远程管理密码、数据库密码等。这类的密码需要设置的复杂一些。同时对于数据库这样的密码可以考虑使用密码生成器软件生成一个复杂的密码。因为这些密码一般不需要特别的去记忆。主要用于配置。其他的，网站系统密码密码可以设置的不用复杂。但是服务器的密码、远程控制软件的密码长度建议超过10位。
+</p>
+<p style="text-indent:2em;">
+	三类、测试密码，测试密码有很多，主要是临时测试用，这种密码我建议也是不要设置简单的，不要使用top 100的密码。
+</p>
+<p style="text-indent:2em;">
+	四类、私人密码不要跟工作混在一起，要单独使用。使用环境尽量也进行分离。
+</p>
+<p style="text-indent:2em;">
+	这里只是把自己的一点东西分享出来。其中对于经常更换密码，对于一般的来说，没有必要定期更换密码。只要第关联，不是简单，没有什么规律。破解起来难度会比较大。
+</p>
+<p style="text-indent:2em;">
+	对于现在这样一个信息化的时代，网络与我们息息相关。我们要在网络中学会保护自己，加强自己的安全意识。安全不是小事！安全不止是大公司，大企业才需要重视的，安全需要每一个人都重视起来。
+</p>
+<p style="text-indent:2em;">
+	以上也是我在工作的环境中的一些分享。欢迎一起讨论，也欢迎分享 一些自己的方法或者技巧。大家共同来让我们安全的上网。
+</p>
+<p style="text-indent:2em;">
+	<strong>附top 100 密码</strong> 
+</p>
+<pre class="prettyprint">123456789
+a123456
+123456
+a123456789
+1234567890
+woaini1314
+qq123456
+abc123456
+123456a
+123456789a
+147258369
+zxcvbnm
+987654321
+12345678910
+abc123
+qq123456789
+123456789
+7708801314520
+woaini
+5201314520
+q123456
+123456abc
+1233211234567
+123123123
+123456.
+123456789
+asd123456
+aa123456
+135792468
+q123456789
+abcd123456
+12345678900
+woaini520
+woaini123
+zxcvbnm123
+1111111111111111
+w123456
+aini1314
+abc123456789
+111111
+woaini521
+qwertyuiop
+1314520520
+1234567891
+qwe123456
+asd123
+000000
+1472583690
+1357924680
+789456123
+123456789abc
+z123456
+1234567899
+aaa123456
+abcd1234
+www123456
+123456789q
+123abc
+qwe123
+W123456789
+7894561230
+123456qq
+zxc123456
+123456789qq
+1111111111
+111111111
+0000000000000000
+1234567891234567
+qazwsxedc
+qwerty
+123456..
+zxc123
+asdfghjkl
+0000000000
+1234554321
+123456q
+123456aa
+9876543210
+110120119
+Qaz123456
+qq5201314
+123698745
+5201314
+00000000
+as123456
+123123
+5841314520
+z123456789
+52013145201314
+a123123
+caonima
+a5201314
+wang123456
+abcd123
+123456789..
+woaini1314520
+123456asd
+aa123456789
+741852963
+a12345678</pre>
+<p style="text-indent:2em;">
+	<a href="http://www.freebuf.com/articles/others-articles/11186.html" target="_blank">[原文地址]</a>
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">叉叉树</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-07-20
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/ftp/">FTP</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/%E4%BF%9D%E6%8A%A4/">保护</a>
+          <a href="https://lcx.cc/tags/%E6%9A%B4%E5%8A%9B/">暴力</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E8%84%91/">电脑</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E4%BA%AB/">分享</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+          <a href="https://lcx.cc/tags/%E7%A0%B4%E8%A7%A3/">破解</a>
+          <a href="https://lcx.cc/tags/%E4%BC%81%E4%B8%9A/">企业</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E4%B8%8A%E4%BC%A0/">上传</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E6%B3%84%E6%BC%8F/">泄漏</a>
+          <a href="https://lcx.cc/tags/%E9%93%B6%E8%A1%8C/">银行</a>
+          <a href="https://lcx.cc/tags/%E9%82%AE%E4%BB%B6/">邮件</a>
+          <a href="https://lcx.cc/tags/%E9%82%AE%E7%AE%B1/">邮箱</a>
+          <a href="https://lcx.cc/tags/%E8%B4%A6%E5%8F%B7/">账号</a>
+          <a href="https://lcx.cc/tags/%E8%B4%A6%E6%88%B7/">账户</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3748/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">浅谈大型网络入侵检测建设</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3746/">
+            <span class="next-text nav-default">Struts2再爆远程代码执行漏洞（S2-016）</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>如何管理并设计你的口令 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="陈皓" /><meta name="description" content="如何管理并设计你的口令。在互联网上，需要我们输入用户名口令的地方实在是太多了，多得都让人记不过来了，N个电子邮件帐号，QQ， MSN，校内，开心，facebook，Blog，各种论坛，网银，淘宝，电子相册……，太多了，想想看，你要用多少用户名口令，相信很多人可能会这样做，用几乎一样的口令和用户名来申请所有的这些帐号，我估计这是大多数人的做法。当然，这样一来，你就需要保管好你的用户名和口令了，因为只要被破解了，就相当于你所有的帐号被破解了，这是多数恐怖的一件事情啊。你可能觉得别人破解你的口令很难，但我告诉你也许会非常容易，因为，如果你只使用一样的用户名和口令的话，也许某天，你注册了一个不知名的小网站，可能会意味着你所有的用户名和口令都被人获取了，要小心啊。" />
+<meta name="keywords" content="如何管理并设计你的口令" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/2975/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="如何管理并设计你的口令" />
+<meta property="og:description" content="如何管理并设计你的口令。在互联网上，需要我们输入用户名口令的地方实在是太多了，多得都让人记不过来了，N个电子邮件帐号，QQ， MSN，校内，开心，facebook，Blog，各种论坛，网银，淘宝，电子相册……，太多了，想想看，你要用多少用户名口令，相信很多人可能会这样做，用几乎一样的口令和用户名来申请所有的这些帐号，我估计这是大多数人的做法。当然，这样一来，你就需要保管好你的用户名和口令了，因为只要被破解了，就相当于你所有的帐号被破解了，这是多数恐怖的一件事情啊。你可能觉得别人破解你的口令很难，但我告诉你也许会非常容易，因为，如果你只使用一样的用户名和口令的话，也许某天，你注册了一个不知名的小网站，可能会意味着你所有的用户名和口令都被人获取了，要小心啊。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/2975/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-10-10T09:03:07&#43;08:00" />
+<meta property="article:modified_time" content="2012-10-10T09:26:57&#43;08:00" />
+
+<meta itemprop="name" content="如何管理并设计你的口令">
+<meta itemprop="description" content="如何管理并设计你的口令。在互联网上，需要我们输入用户名口令的地方实在是太多了，多得都让人记不过来了，N个电子邮件帐号，QQ， MSN，校内，开心，facebook，Blog，各种论坛，网银，淘宝，电子相册……，太多了，想想看，你要用多少用户名口令，相信很多人可能会这样做，用几乎一样的口令和用户名来申请所有的这些帐号，我估计这是大多数人的做法。当然，这样一来，你就需要保管好你的用户名和口令了，因为只要被破解了，就相当于你所有的帐号被破解了，这是多数恐怖的一件事情啊。你可能觉得别人破解你的口令很难，但我告诉你也许会非常容易，因为，如果你只使用一样的用户名和口令的话，也许某天，你注册了一个不知名的小网站，可能会意味着你所有的用户名和口令都被人获取了，要小心啊。"><meta itemprop="datePublished" content="2012-10-10T09:03:07&#43;08:00" />
+<meta itemprop="dateModified" content="2012-10-10T09:26:57&#43;08:00" />
+<meta itemprop="wordCount" content="7886">
+<meta itemprop="keywords" content="管理,Blog,CSDN,Hash,QQ,安全,编码,服务,号码,加密,论坛,密码,破解,软件,思路,淘宝,网站,问题,系统,银行,邮箱," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="如何管理并设计你的口令"/>
+<meta name="twitter:description" content="如何管理并设计你的口令。在互联网上，需要我们输入用户名口令的地方实在是太多了，多得都让人记不过来了，N个电子邮件帐号，QQ， MSN，校内，开心，facebook，Blog，各种论坛，网银，淘宝，电子相册……，太多了，想想看，你要用多少用户名口令，相信很多人可能会这样做，用几乎一样的口令和用户名来申请所有的这些帐号，我估计这是大多数人的做法。当然，这样一来，你就需要保管好你的用户名和口令了，因为只要被破解了，就相当于你所有的帐号被破解了，这是多数恐怖的一件事情啊。你可能觉得别人破解你的口令很难，但我告诉你也许会非常容易，因为，如果你只使用一样的用户名和口令的话，也许某天，你注册了一个不知名的小网站，可能会意味着你所有的用户名和口令都被人获取了，要小心啊。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">如何管理并设计你的口令</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-10-10" class="post-time">
+          2012-10-10
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E7%AE%A1%E7%90%86/"> 管理 </a>
+            
+          </div>
+        <span class="more-meta"> 约 7886 字 </span>
+          <span class="more-meta"> 预计阅读 16 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	在互联网上，需要我们输入用户名口令的地方实在是太多了，多得都让人记不过来了，N个电子邮件帐号，QQ， MSN，校内，开心，facebook，Blog，各种论坛，网银，淘宝，电子相册……，太多了，想想看，你要用多少用户名口令，相信很多人可能会这样做，用几乎一样的口令和用户名来申请所有的这些帐号，我估计这是大多数人的做法。
+</p>
+<p style="text-indent:2em;">
+	当然，这样一来，你就需要保管好你的用户名和口令了，因为只要被破解了，就相当于你所有的帐号被破解了，这是多数恐怖的一件事情啊。你可能觉得别人破解你的口令很难，但我告诉你也许会非常容易，因为，如果你只使用一样的用户名和口令的话，也许某天，你注册了一个不知名的小网站，可能会意味着你所有的用户名和口令都被人获取了，要小心啊。
+</p>
+<p style="text-indent:2em;">
+	对我来说，我通常会有几组组帐号和密码，
+</p>
+<ol>
+	<li>
+		一个帐号/密码是用于一些大的可以依赖的站点，如：MSN，gmail，linkedin，facebook，hotmail等，因为我相信这些站点应该可以足够信任不会出卖用户信息，也有足够的能力不会让用户信息和口令外泄。
+	</li>
+	<li>
+		一个帐号/密码用于一些国内的一些大的网站，如：QQ，开心，CSDN，Sina，网易，Blog，同学录等，因为这些站点必竟还受到国家的监管，以及其内部不良员工可能会倒卖我的信息，指不定什么时候我的用户信息就会外泄。
+	</li>
+	<li>
+		一个帐号/密码用于我的一些经济活动，如网银，淘宝，支付宝什么的。
+	</li>
+	<li>
+		最后一个帐号/密码用于登录那些必需要注册的破站点，一个最简单的用户名口令。
+	</li>
+</ol>
+<p style="text-indent:2em;">
+	真烦啊。在这样的一个社会里，忘记密码绝对是一件最普通不过的事情了。就算是我这样的分组归类，同样需要超强的记忆力。不知道你会不会把你的密码写在某处呢？是啊，我也是想写啊，但那岂不是相当的危险，不丢则已，一丢就全丢了。
+</p>
+<p style="text-indent:2em;">
+	今天，在国外的某论坛里看到了这样的一个设计方法，好像很不错，分享给大家。
+</p>
+<p style="text-indent:2em;">
+	1）首先，先找一句你喜欢的话（你一辈子都记得的话），当然，只有你记得的，无论中英文，然后取各个单词或字的英文、拼音、五笔头一个字母。比如：<strong>I</strong> <strong>L</strong>ike <strong>L</strong>ong <strong>C</strong>omplicated <strong>P</strong>asswords, <strong>T</strong>hey <strong>C</strong>onfuse <strong>P</strong>eople，取头一个字母则成为了：<strong>illcptcp</strong>。中文的——“信春哥得永生”的五笔的第一个字母是：<strong>wdstyt</strong>。这个东西只有你自己知道，就算是别人看到明码，也很难马上记下来，是吧。
+</p>
+<p style="text-indent:2em;">
+	2）加上一些数字吧，比如你的生日，学号，电话，纪念日等。比如世界末日：2012年的12月21日(我们只取12月21日)。把这些数字加在断句的地方，于是得到这样的口令：<strong>illcp12tcp21 </strong>或是 <strong>wds12tyt21</strong>。
+</p>
+<p style="text-indent:2em;">
+	3）我们把第二步得到的口令叫基本口令。然后你可以在其前后(或是中间)加上站点的简称（用大写）。如：
+</p>
+<ul>
+	<li>
+		gmail：<strong>GMillcp12tcp21</strong> 
+	</li>
+	<li>
+		CSDN：<strong>CSwds12tyt21DN</strong> 
+	</li>
+	<li>
+		MSN<strong><span style="font-weight:normal;">：</span><strong>illcp12tcp21MSN</strong></strong> 
+	</li>
+	<li>
+		<strong><span style="font-weight:normal;">QQ：</span><strong>Q<strong>wds12tyt21Q</strong></strong></strong> 
+	</li>
+</ul>
+<p style="text-indent:2em;">
+	4）改良。你可以在上述的第2）步，在输入数字时按着Shift键，于是，你可以得到更BT的口令：<strong>illcp!@tcp@! </strong>，或是在第3)步聚的前缀和后缀间加上特殊字符，如：&amp;, ＃，^等等。
+</p>
+<p style="text-indent:2em;">
+	相信这样的规则会让你的口令即不重复，又好记，而且又足够复杂。不然，你真的要去下载一个软件来记你的口令了。
+</p>
+<p style="text-indent:2em;">
+	大家不妨也说说你的口令的设计或管理方法。
+</p>
+<p style="text-indent:2em;">
+	(全文完)
+</p>
+<hr />
+<p>
+	<strong>网友评论：</strong> 
+</p>
+<p style="text-indent:2em;">
+	bones7456 2010年5月18日09:04 | #1 回复 | 引用 不错的思路。
+</p>
+<p style="text-indent:2em;">
+	还有就是，对那些注册了只会用一两次的站，可以用bugmenot搞定，我那还有个firefox插件的。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	T2 2010年5月18日09:19 | #2 回复 | 引用 有时候用化学方程式，有时候用一些自己电脑上的硬件ID，还用过movAcc,Me，pushPWD这种伪汇编……
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	xifs 2010年5月18日09:41 | #3 回复 | 引用 切换了键盘布局的密码
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	枯藤昏鸦 2010年5月18日10:06 | #4 回复 | 引用 杯具，一直以来我都是以这几种方法来的，这下都知道了。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	依云 2010年5月18日12:16 | #5 回复 | 引用 @xifs
+</p>
+<p style="text-indent:2em;">
+	好主意。我一直是用特定的公开的编码规则来编码的，现在再加上键盘布局，估计连我自己看到自己的密码都不认识了——
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	l!c@h#’%p^lbejwtoto
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	liz 2010年5月18日12:30 | #6 回复 | 引用 千万别用QQ或者百度的帐号信息和密码注册gmail或者hotmail，会被网监和法院直接登录“取证”，特别是用户名和密码不要一样，这将是检方直接的证据，颠覆国家政权罪等这你
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	liz 2010年5月18日12:32 | #7 回复 | 引用 谭做人就是这么进去的，5年阿。。。@liz
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	济南seo 2010年5月18日12:58 | #8 回复 | 引用 精彩内容,怎容错过！
+</p>
+<p style="text-indent:2em;">
+	o(∩_∩)o
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	mml 2010年5月18日13:22 | #9 回复 | 引用 一般都是用些比较geek的语句，然后使键盘上手指整体偏移一个坐标输入，出来的我自己都不知道是什么，
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	menmang 2010年5月18日14:05 | #10 回复 | 引用 Add in the following replacement for alphanumeric strings randomly:
+</p>
+<p style="text-indent:2em;">
+	a – @
+</p>
+<p style="text-indent:2em;">
+	E – 3
+</p>
+<p style="text-indent:2em;">
+	S – $
+</p>
+<p style="text-indent:2em;">
+	8 – &amp;
+</p>
+<p style="text-indent:2em;">
+	o – 0
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	e.g. P@s$w0rd
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	AWard 2010年5月18日14:37 | #11 回复 | 引用 通常用带有数字的唐诗宋词两句
+</p>
+<p style="text-indent:2em;">
+	这样搭配shift就有大小写字母数字符号了…长度通常在14位以上
+</p>
+<p style="text-indent:2em;">
+	好记又复杂…
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	陈皓 2010年5月18日15:25 | #12 回复 | 引用 menmang :
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	Add in the following replacement for alphanumeric strings randomly:
+</p>
+<p style="text-indent:2em;">
+	a – @
+</p>
+<p style="text-indent:2em;">
+	E – 3
+</p>
+<p style="text-indent:2em;">
+	S – $
+</p>
+<p style="text-indent:2em;">
+	8 – &amp;
+</p>
+<p style="text-indent:2em;">
+	o – 0
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	e.g. P@s$w0rd
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	这样的规则已经是大众所熟悉的规则了，已经不好使了。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	pjhades 2010年5月18日16:51 | #13 回复 | 引用 寒假无聊的时候异想天开，用一种畸形的方法生成密码，拿一个11个字符长的字符串乘以一个11阶幻方，再把结果映射到自己设定的字符表里面……
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	wenjianhn 2010年5月18日17:37 | #14 回复 | 引用 hp有个sitepass
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	realtianya 2010年5月18日17:54 | #15 回复 | 引用 赞一个…..
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	miaowu 2010年5月18日19:04 | #16 回复 | 引用 坐标控
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	核子力量 2010年5月18日19:41 | #17 回复 | 引用 以前看过一篇文章不错，叫做“唐诗宋词，华人信手拈来的密码”
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	现在的互联网服务很多，登陆论坛要密码，电子邮件要密码，即时通信还要密码，每一次需要创建密码的时候，都是最头疼的，我见过一些国际化的网络公司的高级网管，出于安全考虑，设定密码的时候闭着眼睛在键盘上乱砸一气，然后把得到的密码记在纸上，等到背熟了再销毁，这样的密码如：as/fjruq2;3 [-q235isd 当然很难被暴力破解，但是自己用起来也很麻烦，很难记忆和口述给别人 – 有的大公司的密码设定还有更详细的规定，如不小于10位，必须包括至少一个大写、一个小写字母、一个数字等… 总之很麻烦，那么为什么不试试唐诗宋词呢?
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	如果你对唐诗宋词没有研究，或者你的拼音功底比较差，那么现在关闭这个页面还来得及，当当网正在搞购物打折活动，现在去估计还能买到促销的好东西
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	这并不是对密码学的专业研究，但是可算一种实用的密码生成逻辑
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	举个例子，如果你能背得出“两个黄鹂鸣翠柳，一行白鹭上青天”，那么你可以把每个字的第一个声母作为密码，即：lghlmcl.yhblsqt，进一步加强，如果某个字和数字的读音类似，可以改成数字，这个密码变化为：2ghlmcl.1hblsqt，再进一步，你可以按自己的习惯修改，如把每句的第二个字母大写，或者修改分隔符之类的，如：2Ghlmcl,1Hblsqt
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	感谢你耐心的看到这里
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	下一步是要考虑如何对付穷举破解密码了，如果有好事者搞了一个唐诗宋词密码本出来，穷举破解密码，那么简单的唐诗组合就不安全了，所以你可以在密码中加入干扰，如：将每句诗缩短到几个字，本例中，可以将诗缩短成“两个黄鹂，一行白鹭”，密码则为：2Ghl.1Hbl
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	最后，设置密码的人常常在过后忘记自己当时的生成逻辑，记得我以前的公司刚刚为大家创建股票帐户的时候，强调了大家要注意自己设定的密码，不要太随意避免出问题，所以许多同事绞尽脑汁设计了自己的密码，但几天后就忘记了，所以很多人不得不为取回密码而折腾一番，为了避免这个问题，你可以在纸上写下提示性的文字，如“杜甫诗，每句取４个字…”或者“窗含西岭，门泊东吴”之类的，如果真的忘记了密码，这样的提示是很有用的。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	Yifan 2010年5月18日19:45 | #18 回复 | 引用 Use KeePass: http://keepass.info/
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	turygo 2010年5月18日20:39 | #19 回复 | 引用 使用lastpass来管理所有密码，这个软件基本支持所有主流浏览器扩展，可以随机生成任意位数密码，最重要的是，这个软件是美国人做的，我放心…..只要lastpass的登录密码记住就行了，可以设个强密码
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	yongfa365 2010年5月18日21:27 | #20 回复 | 引用 呵呵，我就这么搞，不过老婆非常不赞同，施行不起来，哈
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	yea 2010年5月19日10:05 | #21 回复 | 引用 也来说说我的方法。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	1、我的密码一般分成两种：需要保密的，和不需要保密的（相当于上面文章提到的前三类和最后一类）。
+</p>
+<p style="text-indent:2em;">
+	需要保密的密码，会采用“一句完整的英文句子，区分大小写，部分单词使用数字或缩写代替，允许的话，加上标点和空格”。例如：“ItIsAGoodDay2Die.”、“show.me.the.$$$!”等等。不需要保密的密码，比如论坛登录密码，一般就直接用“登录名@网站名”，比如“yea@coolshell.cn”，简单，好记。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	2、对于纯数字密码，比如银行卡密码，使用“电话号码助记法”。
+</p>
+<p style="text-indent:2em;">
+	“电话号码助记法”是在欧美比较流行的记电话号码的方式，大家的电话数字按键上一般都会印有“2abc”、“3def”、“4ghi”等等，26个单词对应数字2~9，1和0保留。那么，一个N位数字密码，就可以找一个包含N个字母的单词、句子或缩写，对着键盘直接按，就得到了数字密码。比如，“iloveu”就是“456838”。这样一来，无意义的密码就是变成了有意义的语句，方便记忆。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	raychino 2010年5月19日19:18 | #22 回复 | 引用 请大家试试lastpass
+</p>
+<p style="text-indent:2em;">
+	托管密码的工具，支持几乎所有浏览器，只用记住它的密码，剩下的随便你怎么写就行了，探测到需要输入ID和密的时候，可以自动登录
+</p>
+<p style="text-indent:2em;">
+	当然，这个方法和博主的思想有本质上的差异
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	小轰 2010年5月19日21:03 | #23 回复 | 引用 @核子力量 这样真是一个好办法。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	楼主提供的分组办法我也觉得相当明智。其下介绍的办法也很牛屄。只是所有的密码已经设置完毕，想改想记住，真的是难上加难了。呵呵。不过最好的一个办法是，设置永久的电邮，一旦密码发生“错误”，都可以通过这个找回来。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	小轰 2010年5月19日21:04 | #24 回复 | 引用 诶，现在发现，这样的一种“回复”方式，非常不错。不会有扰人的条条框框，也可以迅速定位。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	内地规定:非国家工作人员受贿5000以上将被… 2010年5月19日21:38 | #25 回复 | 引用 个人有个人的招
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	五月凌 2010年5月19日22:29 | #26 回复 | 引用 @pjhades
+</p>
+<p style="text-indent:2em;">
+	您很牛叉。。。。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	jueny 2010年5月19日23:59 | #27 回复 | 引用 哈哈，好文章，正在为这个事苦恼，天天要重设密码
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	viaxl 2010年5月20日01:57 | #28 回复 | 引用 噢也.. 看了一下没人知道我的idea.. 我不会说的..
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	初境 2010年5月20日09:15 | #29 回复 | 引用 我以前用的密码系统就是：wo4gangsi+(网站名缩写)。意思是：我是刚丝。很简单。前几天把整个密码系统又重新整理并优化，跟银行有关的（像淘宝，支付宝，OK宝）是一个系统，用我邮箱作账号的娱乐性网站（豆瓣，虾米，人人）是一个系统，游戏类的（魔兽，游戏平台）又是一个系统。我没加什么特殊符号，字母与数字就够了。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	蜂窝 2010年5月20日11:41 | #30 回复 | 引用 不错的办法，上次看到还有个办法就是键盘上，往左或往右移动一格打入密码。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	sapphire 2010年5月20日13:12 | #31 回复 | 引用 密码设定为 固定字符+网站域名hash码。固定字符要包含字母数字和特殊字符。目前用的网站域名hash算法是用取域名的定长字段，用手机键盘转换。同时和一个定长字段做与。产生一个10位的密码。缺点是如果暴露了多组密码，很容易被猜出来。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	路过 2010年5月21日09:16 | #32 回复 | 引用 dd if=/dev/urandom bs=12 count=1 2&gt;/dev/null | base64
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	imcoddy 2010年5月21日14:41 | #33 回复 | 引用 AWard :
+</p>
+<p style="text-indent:2em;">
+	通常用带有数字的唐诗宋词两句
+</p>
+<p style="text-indent:2em;">
+	这样搭配shift就有大小写字母数字符号了…长度通常在14位以上
+</p>
+<p style="text-indent:2em;">
+	好记又复杂…
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	这个方法很赞同，要破解还需要中西合璧啊
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	leges 2010年5月25日16:52 | #34 回复 | 引用 首先我很赞同你的密码分类，不同类别的采用不同方法的编码习惯。而且我也很赞同你说的，国外的服务比国内的更让人放心，唉，悲惨的国家，自己人都不相信自己人了…额，跑题了，不过还是谢谢你的方法。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	darasion 2010年6月9日18:31 | #35 回复 | 引用 我的设计是，闭着眼睛在键盘上乱按一通。然后把这个序列牢记，就是密码了。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	爬墙砖家 2010年6月15日14:24 | #36 回复 | 引用 @xifs
+</p>
+<p style="text-indent:2em;">
+	这个牛比，可惜比较麻烦。
+</p>
+<p style="text-indent:2em;">
+	哥现在用1password，懒得记那么多
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	XML好强 2010年7月26日00:07 | #37 回复 | 引用 我的密码是不:O0l1O01l
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	house.lee 2010年10月11日21:07 | #38 回复 | 引用 记一组原始密码，然后分组罗列N个f(x)做hash.
+</p>
+<p style="text-indent:2em;">
+	把f(x)离散放在不同位置，每一个位置有一个g(x)能hash出一个地址指向下一个f(x)所在
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	element 2011年1月27日16:27 | #39 回复 | 引用 我的就一个密码。。。。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	被窝宝贝 2011年2月10日02:03 | #40 回复 | 引用 儿子在学3字经
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	他背哪， 我就换到哪。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	野草博客 2011年2月27日22:01 | #41 回复 | 引用 好棒～刚准备写文章来分享野草设计密码的方法的呢。
+</p>
+<p style="text-indent:2em;">
+	全被博主和楼上这些说完啦～
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	sky 2011年3月2日12:18 | #42 回复 | 引用 不错，我的密码也是分级的，但不是像楼主那样按信任度来分。而是按其帐号的重要程度、机密度来分的，比如：一般网站与金融有关的就不是一个级别的。
+</p>
+<p style="text-indent:2em;">
+	一般的娱乐网站的密码很简单，就字母加数字。
+</p>
+<p style="text-indent:2em;">
+	而银行的密码却比较复杂了。大小写、数字、字符穿插在一起，而且不是普通的随意组合，而是使用了俺在做程序开发中所碰到的需要做特殊处理字符，而且还有意做了混淆动作。比如：看起来像一个中文字符的uncode编码等等，加上足够的长度，如果不是被挂马或是被钓鱼，就算是普通的加密算法，破解起来也较困难。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	yyc1992 2011年3月24日03:14 | #43 回复 | 引用 base64
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	下载.de 2011年3月31日07:05 | #44 回复 | 引用 @T2
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	你这个方法更猛
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	esopose 2011年5月27日15:25 | #45 回复 | 引用 这个问题困扰我很久了，老是记不得密码，今天大开眼界！
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	lemon 2011年8月25日18:55 | #46 回复 | 引用 这种思路真不错，我咋没想到啊。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	Iceberg 2011年9月14日17:30 | #47 回复 | 引用 真是不谋而合。我和博主用的是同样的思路和体系。不过有一个问题，即使按文中最后一种方式设置的密码，也一样存在被一个小网站泄露之后，就整个系列都被一锅端的风险。毕竟那些网站名特征字太容易辨认了。有什么好办法呢？嗯，有思路了……
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	巡洋舰 2011年10月12日16:31 | #48 回复 | 引用 @被窝宝贝
+</p>
+<p style="text-indent:2em;">
+	这个主意不错 背完了又怎么办啊！
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	阿木 2011年10月25日17:15 | #49 回复 | 引用 挺复杂的。我普通的论坛一种帐号，邮箱一种帐号（邮箱也不尽相同），QQ等一种帐号，网银等一种帐号。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	hustlijian 2011年11月6日02:09 | #50 回复 | 引用 分类+基础密码+网站名称+特殊字符
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	jjmaiz 2011年11月28日09:21 | #1 回复 | 引用 @turygo
+</p>
+<p style="text-indent:2em;">
+	自己才是最可靠的。。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	michael 2011年11月28日10:54 | #2 回复 | 引用 我大部分的密码我自己都不知道，而且是软件生成的，通过keepass（SourceForge上的，也不确定安不安全）管理。
+</p>
+<p style="text-indent:2em;">
+	keepass的好处是你登录的时候不需要自己输入帐号和密码，所以密码和帐号都是伪随机数，再长都无所谓（我gmail有100位密码），密码也就不需要共用了。就算有说梦话的习惯也不怕了（当然啦，我是不会说梦话的）。
+</p>
+<p style="text-indent:2em;">
+	然后强记一个无规律的密码作为HMAC，生成帐号的checksum作为比较重要的帐号的密码（具体原理我也不太懂，从维基百科上看貌似挺安全的）。
+</p>
+<p style="text-indent:2em;">
+	QQ的密码从来都没改过，因为没办法改掉（杯具）。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	michael 2011年11月28日10:57 | #3 回复 | 引用 “在键盘上乱砸一气”生成的密码实际上非常容易破解@核子力量
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	icy 2011年11月30日20:50 | #4 回复 | 引用 为了能让密码自己能记得而其他人猜不出，最好使用行业壁垒，冷僻知识，比如IT的在伪码里取材（前面有人提到），数学的用著名数列；化学的用元素周期表，元素+原子量/周期/族 什么的刚好字母加数字；生化和医学的名词有英文拉丁文以及行话简称，绝对够用够晦涩，而且好处在于万一忘记随时能查出，相当于公用且标准的密码字典。自己从中取样加上自己改造，稍加提示的记下来做备份，安全且不容易辨认。（当然对方如果是同行或者Geek还是有小概率破解==)
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	double 2011年12月21日17:33 | #5 回复 | 引用 一个帐号/密码用于一些国内的一些大的网站，如：QQ，开心，CSDN，Sina，网易，Blog，同学录等，因为这些站点必竟还受到国家的监管，以及其内部不良员工可能会倒卖我的信息，指不定什么时候我的用户信息就会外泄。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	csdn亮了
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	skydark 2011年12月22日09:46 | #6 回复 | 引用 CSDN亮了+65535
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	Eshin 2011年12月22日12:29 | #7 回复 | 引用 CSDN杯具
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	loll 2011年12月22日12:47 | #8 回复 | 引用 2B公司不给你安全保管，损失的还是我们
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	笨猫猫 2011年12月22日14:32 | #9 回复 | 引用 “指不定什么时候我的用户信息就会外泄。”神预言
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	dent 2011年12月22日15:05 | #10 回复 | 引用 可以用i和!呼唤，a和@呼唤，S和5呼唤来设计自己的密码。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	teyqiu 2011年12月22日17:09 | #11 回复 | 引用 已阅。求关注。。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	Zhe 2011年12月22日17:25 | #12 回复 | 引用 咱的密码规则是一首唐诗，穿插了Shift，数字替换，足够长，足够复杂！可是架不住明文啊。。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	Zhe 2011年12月22日17:26 | #13 回复 | 引用 a,@/i,1/o,0/s,5/l,1替换已经都使烂了。。
+</p>
+<p style="text-indent:2em;">
+	@dent
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	soxunyi 2011年12月22日20:26 | #14 回复 | 引用 最好的方法，自己对自己的密码加密。在不同的网站密码都不一样。这样的结果是，每次登陆网站，我都得心算一个密码是什么。呵呵。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	elf 2011年12月22日20:33 | #15 回复 | 引用 用数学公式….
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	追梦人 2011年12月23日10:34 | #16 回复 | 引用 有人总是用MD5散列值做密码，强度够吗？
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	xh014 2011年12月23日17:01 | #17 回复 | 引用 弄来弄去估计自己破解的时候都忘记了。。。。T.T
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	299792458 2011年12月27日13:19 | #18 回复 | 引用 可以用一些生僻的方法来进行组合倒不错
+</p>
+<p style="text-indent:2em;">
+	比如用五笔编码 四角号码 等等
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	瑞克少尉 2011年12月27日13:49 | #19 回复 | 引用 已经天下无贼，我们只能自我保护了……
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	Rockrush 2012年3月15日10:25 | #20 回复 | 引用 大部分网站是共用一个帐号（出于不可告人的目的），这些帐号很不重要，丢了大不了再注册一个。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	当某个服务器上的帐号变得重要起来时，我会用软件生成随机密码，加密保存到多个位置。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	当某个帐号非常重要，不容丢失时，直接背下那个随机密码，不再保存。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	难道是？ 2012年4月20日14:38 | #21 回复 | 引用 @Iceberg
+</p>
+<p style="text-indent:2em;">
+	是这样么？ QQ的 mht。。。。。。
+</p>
+<p style="text-indent:2em;">
+	淘宝的 my。。。。。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	<a href="http://coolshell.cn/articles/2428.html" target="_blank">[点此浏览更多评论]</a> 
+</p>
+<hr />
+<p style="text-indent:2em;">
+	发表日期：2010年5月18日，作者：陈皓，来源：<a href="http://coolshell.cn/articles/2428.html" target="_blank">http://coolshell.cn/articles/2428.html</a> 
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">陈皓</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-10-10
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/blog/">Blog</a>
+          <a href="https://lcx.cc/tags/csdn/">CSDN</a>
+          <a href="https://lcx.cc/tags/hash/">Hash</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A0%81/">编码</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E5%8F%B7%E7%A0%81/">号码</a>
+          <a href="https://lcx.cc/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BA%E5%9D%9B/">论坛</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E7%A0%B4%E8%A7%A3/">破解</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E6%80%9D%E8%B7%AF/">思路</a>
+          <a href="https://lcx.cc/tags/%E6%B7%98%E5%AE%9D/">淘宝</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E9%93%B6%E8%A1%8C/">银行</a>
+          <a href="https://lcx.cc/tags/%E9%82%AE%E7%AE%B1/">邮箱</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2976/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">怎样保护自己的密码</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2974/">
+            <span class="next-text nav-default">王鹏你妹“占领”北京地铁五号线屏幕，关于“王鹏你妹”的真相</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,1973 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>.eml 邮件文件格式解析(MIME) 提取内容 附件 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content=".eml 后缀的邮件文件相信大家并不陌生，应该都见过，没见过也不要紧，随便找个邮箱，选择一封邮件，然后导出或者显示邮件原文，就能看到 .eml 文件格式或者内容了。使用程序自动化批量处理大量 .eml 邮件文件。" />
+<meta name="keywords" content=".eml, 邮件, 文件格式解析, MIME, 提取内容, 提取附件, vbs, 代码, 分析, 批量, 算法, 编码, 脚本, 邮箱, 文件" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4597/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content=".eml 邮件文件格式解析(MIME) 提取内容 附件" />
+<meta property="og:description" content=".eml 后缀的邮件文件相信大家并不陌生，应该都见过，没见过也不要紧，随便找个邮箱，选择一封邮件，然后导出或者显示邮件原文，就能看到 .eml 文件格式或者内容了。使用程序自动化批量处理大量 .eml 邮件文件。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4597/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-09-14T21:25:51&#43;08:00" />
+<meta property="article:modified_time" content="2019-09-14T21:25:51&#43;08:00" />
+
+<meta itemprop="name" content=".eml 邮件文件格式解析(MIME) 提取内容 附件">
+<meta itemprop="description" content=".eml 后缀的邮件文件相信大家并不陌生，应该都见过，没见过也不要紧，随便找个邮箱，选择一封邮件，然后导出或者显示邮件原文，就能看到 .eml 文件格式或者内容了。使用程序自动化批量处理大量 .eml 邮件文件。"><meta itemprop="datePublished" content="2019-09-14T21:25:51&#43;08:00" />
+<meta itemprop="dateModified" content="2019-09-14T21:25:51&#43;08:00" />
+<meta itemprop="wordCount" content="8078">
+<meta itemprop="keywords" content="邮件,vbs,代码,分析,批量,算法,编码,脚本,文件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=".eml 邮件文件格式解析(MIME) 提取内容 附件"/>
+<meta name="twitter:description" content=".eml 后缀的邮件文件相信大家并不陌生，应该都见过，没见过也不要紧，随便找个邮箱，选择一封邮件，然后导出或者显示邮件原文，就能看到 .eml 文件格式或者内容了。使用程序自动化批量处理大量 .eml 邮件文件。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">.eml 邮件文件格式解析(MIME) 提取内容 附件</h1>
+      
+      <div class="post-meta">
+        <time datetime="2019-09-14" class="post-time">
+          2019-09-14
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E9%82%AE%E4%BB%B6/"> 邮件 </a>
+            <a href="https://lcx.cc/categories/vbs/"> vbs </a>
+            <a href="https://lcx.cc/categories/%E4%BB%A3%E7%A0%81/"> 代码 </a>
+            <a href="https://lcx.cc/categories/%E5%88%86%E6%9E%90/"> 分析 </a>
+            <a href="https://lcx.cc/categories/%E6%89%B9%E9%87%8F/"> 批量 </a>
+            <a href="https://lcx.cc/categories/%E7%AE%97%E6%B3%95/"> 算法 </a>
+            <a href="https://lcx.cc/categories/%E7%BC%96%E7%A0%81/"> 编码 </a>
+            <a href="https://lcx.cc/categories/%E8%84%9A%E6%9C%AC/"> 脚本 </a>
+            <a href="https://lcx.cc/categories/%E6%96%87%E4%BB%B6/"> 文件 </a>
+            
+          </div>
+        <span class="more-meta"> 约 8078 字 </span>
+          <span class="more-meta"> 预计阅读 17 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#解析方法">解析方法</a></li>
+    <li><a href="#cdosysdll">Cdosys.dll</a></li>
+    <li><a href="#vbs-例子">vbs 例子</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+    <li><a href="#重要摘录">重要摘录</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>　　.eml 后缀的邮件文件相信大家并不陌生，应该都见过，没见过也不要紧，随便找个邮箱，选择一封邮件，然后导出或者显示邮件原文，就能看到 .eml 文件格式或者内容了。</p>
+<p>　　在这里科普一下：</p>
+<blockquote>
+<p>　　EML 格式是微软公司为 Outlook 和 Outlook Express 开发的文件格式。</p>
+<p>　　EML 文件是将邮件归档后生成的文件，保留着原来的HTML格式和标题。大多数邮件客户端都支持EML格式。</p>
+</blockquote>
+<p>　　.eml 其实是纯文本文件，内容格式为 MIME，继续科普一下：</p>
+<blockquote>
+<p>　　MIME，英文全称为“Multipurpose Internet Mail Extensions”，即多用途互联网邮件扩展，是目前互联网电子邮件普遍遵循的邮件技术规范。</p>
+<p>　　MIME 邮件由邮件头和邮件体两部分组成。</p>
+<p>　　邮件头包括：标题，送信人，收信人，创建日期，邮件体内容类型和邮件体编码方式等内容。</p>
+<p>　　邮件体包括：正文，超文本，内嵌数据和附件等内容。</p>
+<p>　　MIME 技术规范的完整内容由 RFC 2045-2049 定义，包括了信息格式、媒体类型、编码方式等各方面的内容。</p>
+</blockquote>
+<p>　　MIME 格式内容具有一定的编码，一般为 base64 或 quoted-printable 编码算法。</p>
+<p>　　如果 eml 文件数量不多的话，人工或者手工挨个打开阅读是可行的，但是如果一次需要处理成千上万封邮件内容并提取分析附件文件数据，那么就是相当痛苦的一件事了。</p>
+<p>　　举个例子，例如某黑客入侵渗透了某公司内网邮件服务器，导出了海量邮件 .eml 文件，准备日后做关键信息提取以及数据分析，那么就必须得使用程序自动化批量处理了。</p>
+<p>　　<a href="https://lcx.cc/">核总</a><a href="https://lcx.cc/">(https://lcx.cc/)</a>由于某次工作需要，需要处理大量 .eml 邮件文件，于是进行了一番研究。</p>
+<h2 id="解析方法">解析方法</h2>
+<p>　　虽然<a href="https://lcx.cc/">核总</a>在日常工作中经常接触 .eml 文件，但是对其具体结构并不是十分了解，只知道这是纯文本文件，内容具有一定编码，一般以 base64 为主。</p>
+<p>　　经过一番搜索后，其实目前主流解析邮件文件的方法基本都是先直接读取文本内容，然后逐行进行解码分析（其实就是对 MIME 格式的分析）。</p>
+<p>　　这种方法虽然简单，但是缺点也很明显，需要自己写大量代码逐行解析 MIME 格式内容，很麻烦、效率低，而且根据每个人经验水平高低，可能产生大量解码错误。</p>
+<p>　　那么<a href="https://lcx.cc/">核总</a><a href="https://lcx.cc/">(https://lcx.cc/)</a>就想到既然这个格式已经出现很多年了，那么系统是否有自带 dll、函数、组件已经封装了个这个功能呢？避免重复造轮子？</p>
+<p>　　于是，<a href="https://lcx.cc/">核总</a>又进行了更深入的搜索+学习，发现既然微软的 Outlook Express 是可以保存和打开并发送 EML 文件的，那么肯定也是可以解析 EML 文件的。</p>
+<p>　　那么问题就来了，我们是否可以直接利用微软现有的功能呢？答案当然是可以的！那就是“Cdosys.dll”！</p>
+<h2 id="cdosysdll">Cdosys.dll</h2>
+<p>　　Cdosys.dll 又称为 CDOSYS，包含了一系列邮件相关的 COM 组件，从 Windows 2000 开始被正式引入的，后续的操作系统都支持，关于 Cdosys.dll 的细节，请看 MSDN 文档。</p>
+<p>　　使用方法也极其简单，以邮件内容解析为例，<a href="https://lcx.cc/">核总</a><a href="https://lcx.cc/">(https://lcx.cc/)</a>在底下用 vbs 脚本写了个简单例子（目前全网最全的功能），其他语言可以照抄。</p>
+<h2 id="vbs-例子">vbs 例子</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">dim ado, oMsg
+Set ado = CreateObject(&#34;Adodb.Stream&#34;)
+set oMsg = CreateObject(&#34;CDO.Message&#34;)
+
+&#39; 读取文件二进制数据流
+ado.Type = 1 &#39;设置读取模式：1 = Binary，2 = Text
+ado.Mode = 3 &#39;1 只读，2 写入，3 读写。
+ado.Open
+ado.Loadfromfile &#34;C:\Users\lcx.cc\Desktop\3.eml&#34;
+
+&#39; 将EML数据流载入到CDO.Message
+oMsg.DataSource.OpenObject ado, &#34;_stream&#34;
+
+&#39; 解析内容（每个字段不一定有，记得进行错误判断）
+on error resume next
+wscript.echo ado.Size &#39;文件大小
+wscript.echo oMsg.Subject &#39;标题
+wscript.echo oMsg.From &#39;发信人
+wscript.echo oMsg.Sender &#39;寄件人(实际提交邮件的用户或代理的地址)
+wscript.echo oMsg.ReplyTo &#39;回信收件人（用户直接回复邮件时, reply-to 就是默认的收件人. 如果用户不指定它, from 就是默认的收件人.）
+wscript.echo oMsg.SentOn &#39;发送时间(此消息提交给服务器的日期/时间)
+wscript.echo oMsg.CC &#39;抄送
+wscript.echo oMsg.BCC &#39;密送
+wscript.echo oMsg.To &#39;收信人
+wscript.echo oMsg.ReceivedTime &#39;接收时间
+wscript.echo oMsg.BodyPart.Charset &#39;邮件内容编码
+wscript.echo oMsg.BodyPart.ContentTransferEncoding &#39;通过网络发送时使用的编码
+wscript.echo oMsg.HTMLBodyPart.Charset &#39;Html内容编码
+wscript.echo oMsg.HTMLBody &#39;Html内容
+wscript.echo oMsg.TextBodyPart.Charset &#39;文本内容编码
+wscript.echo oMsg.TextBody &#39;文本内容
+
+&#39; 附件
+wscript.echo oMsg.Attachments.Count
+if oMsg.Attachments.Count &gt; 0 Then
+    Dim attach &#39;as CDO.BodyPart
+    For Each attach In oMsg.Attachments
+        wscript.echo attach.ContentMediaType &#39;附件文件类型
+        wscript.echo attach.FileName &#39;附件文件名
+        wscript.echo attach.GetDecodedContentStream.SaveToFile(attach.FileName, 2) &#39;将附件二进制数据保存为源文件（1=不存在时新建/存在时报错(默认), 2=不存在时新建/存在时覆盖）
+    Next
+End if
+
+&#39; 关闭
+ado.Close
+</code></pre></td></tr></table>
+</div>
+</div><p>　　上边的代码可以实现邮件内容的提取，例如：收件人、发件人、时间、标题、内容、编码等信息。</p>
+<p>　　还可以直接提取原始邮件附件二进制文件数据并保存为原文件，以供后续其他分析。</p>
+<h2 id="参考资料">参考资料</h2>
+<p>　　<a href="https://docs.microsoft.com/en-us/previous-versions/office/developer/exchange-server-2007/aa579557%28v=exchg.80%29">MSDN CDOEX 参考</a></p>
+<p>　　<a href="https://docs.microsoft.com/en-us/previous-versions/office/developer/exchange-server-2007/aa579703%28v=exchg.80%29">MSDN IMessage 接口</a></p>
+<p>　　<a href="http://hankundev.blog.sohu.com/104046669.html">MIME邮件(EML文件)格式分析</a></p>
+<p>　　<a href="https://www.cnblogs.com/a-zx/articles/2179255.html">eml文件的解析和发送</a></p>
+<p>　　<a href="https://support.microsoft.com/zh-cn/help/310212/how-to-use-the-cdosys-dll-library-to-send-an-e-mail-message-with-attac">如何使用Visual C＃使用Cdosys.dll库发送带附件的电子邮件</a></p>
+<h2 id="重要摘录">重要摘录</h2>
+<p>　　另外摘录了一些重要内容备用，以防以后原网页被删除用作参考。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
+</span><span class="lnt">305
+</span><span class="lnt">306
+</span><span class="lnt">307
+</span><span class="lnt">308
+</span><span class="lnt">309
+</span><span class="lnt">310
+</span><span class="lnt">311
+</span><span class="lnt">312
+</span><span class="lnt">313
+</span><span class="lnt">314
+</span><span class="lnt">315
+</span><span class="lnt">316
+</span><span class="lnt">317
+</span><span class="lnt">318
+</span><span class="lnt">319
+</span><span class="lnt">320
+</span><span class="lnt">321
+</span><span class="lnt">322
+</span><span class="lnt">323
+</span><span class="lnt">324
+</span><span class="lnt">325
+</span><span class="lnt">326
+</span><span class="lnt">327
+</span><span class="lnt">328
+</span><span class="lnt">329
+</span><span class="lnt">330
+</span><span class="lnt">331
+</span><span class="lnt">332
+</span><span class="lnt">333
+</span><span class="lnt">334
+</span><span class="lnt">335
+</span><span class="lnt">336
+</span><span class="lnt">337
+</span><span class="lnt">338
+</span><span class="lnt">339
+</span><span class="lnt">340
+</span><span class="lnt">341
+</span><span class="lnt">342
+</span><span class="lnt">343
+</span><span class="lnt">344
+</span><span class="lnt">345
+</span><span class="lnt">346
+</span><span class="lnt">347
+</span><span class="lnt">348
+</span><span class="lnt">349
+</span><span class="lnt">350
+</span><span class="lnt">351
+</span><span class="lnt">352
+</span><span class="lnt">353
+</span><span class="lnt">354
+</span><span class="lnt">355
+</span><span class="lnt">356
+</span><span class="lnt">357
+</span><span class="lnt">358
+</span><span class="lnt">359
+</span><span class="lnt">360
+</span><span class="lnt">361
+</span><span class="lnt">362
+</span><span class="lnt">363
+</span><span class="lnt">364
+</span><span class="lnt">365
+</span><span class="lnt">366
+</span><span class="lnt">367
+</span><span class="lnt">368
+</span><span class="lnt">369
+</span><span class="lnt">370
+</span><span class="lnt">371
+</span><span class="lnt">372
+</span><span class="lnt">373
+</span><span class="lnt">374
+</span><span class="lnt">375
+</span><span class="lnt">376
+</span><span class="lnt">377
+</span><span class="lnt">378
+</span><span class="lnt">379
+</span><span class="lnt">380
+</span><span class="lnt">381
+</span><span class="lnt">382
+</span><span class="lnt">383
+</span><span class="lnt">384
+</span><span class="lnt">385
+</span><span class="lnt">386
+</span><span class="lnt">387
+</span><span class="lnt">388
+</span><span class="lnt">389
+</span><span class="lnt">390
+</span><span class="lnt">391
+</span><span class="lnt">392
+</span><span class="lnt">393
+</span><span class="lnt">394
+</span><span class="lnt">395
+</span><span class="lnt">396
+</span><span class="lnt">397
+</span><span class="lnt">398
+</span><span class="lnt">399
+</span><span class="lnt">400
+</span><span class="lnt">401
+</span><span class="lnt">402
+</span><span class="lnt">403
+</span><span class="lnt">404
+</span><span class="lnt">405
+</span><span class="lnt">406
+</span><span class="lnt">407
+</span><span class="lnt">408
+</span><span class="lnt">409
+</span><span class="lnt">410
+</span><span class="lnt">411
+</span><span class="lnt">412
+</span><span class="lnt">413
+</span><span class="lnt">414
+</span><span class="lnt">415
+</span><span class="lnt">416
+</span><span class="lnt">417
+</span><span class="lnt">418
+</span><span class="lnt">419
+</span><span class="lnt">420
+</span><span class="lnt">421
+</span><span class="lnt">422
+</span><span class="lnt">423
+</span><span class="lnt">424
+</span><span class="lnt">425
+</span><span class="lnt">426
+</span><span class="lnt">427
+</span><span class="lnt">428
+</span><span class="lnt">429
+</span><span class="lnt">430
+</span><span class="lnt">431
+</span><span class="lnt">432
+</span><span class="lnt">433
+</span><span class="lnt">434
+</span><span class="lnt">435
+</span><span class="lnt">436
+</span><span class="lnt">437
+</span><span class="lnt">438
+</span><span class="lnt">439
+</span><span class="lnt">440
+</span><span class="lnt">441
+</span><span class="lnt">442
+</span><span class="lnt">443
+</span><span class="lnt">444
+</span><span class="lnt">445
+</span><span class="lnt">446
+</span><span class="lnt">447
+</span><span class="lnt">448
+</span><span class="lnt">449
+</span><span class="lnt">450
+</span><span class="lnt">451
+</span><span class="lnt">452
+</span><span class="lnt">453
+</span><span class="lnt">454
+</span><span class="lnt">455
+</span><span class="lnt">456
+</span><span class="lnt">457
+</span><span class="lnt">458
+</span><span class="lnt">459
+</span><span class="lnt">460
+</span><span class="lnt">461
+</span><span class="lnt">462
+</span><span class="lnt">463
+</span><span class="lnt">464
+</span><span class="lnt">465
+</span><span class="lnt">466
+</span><span class="lnt">467
+</span><span class="lnt">468
+</span><span class="lnt">469
+</span><span class="lnt">470
+</span><span class="lnt">471
+</span><span class="lnt">472
+</span><span class="lnt">473
+</span><span class="lnt">474
+</span><span class="lnt">475
+</span><span class="lnt">476
+</span><span class="lnt">477
+</span><span class="lnt">478
+</span><span class="lnt">479
+</span><span class="lnt">480
+</span><span class="lnt">481
+</span><span class="lnt">482
+</span><span class="lnt">483
+</span><span class="lnt">484
+</span><span class="lnt">485
+</span><span class="lnt">486
+</span><span class="lnt">487
+</span><span class="lnt">488
+</span><span class="lnt">489
+</span><span class="lnt">490
+</span><span class="lnt">491
+</span><span class="lnt">492
+</span><span class="lnt">493
+</span><span class="lnt">494
+</span><span class="lnt">495
+</span><span class="lnt">496
+</span><span class="lnt">497
+</span><span class="lnt">498
+</span><span class="lnt">499
+</span><span class="lnt">500
+</span><span class="lnt">501
+</span><span class="lnt">502
+</span><span class="lnt">503
+</span><span class="lnt">504
+</span><span class="lnt">505
+</span><span class="lnt">506
+</span><span class="lnt">507
+</span><span class="lnt">508
+</span><span class="lnt">509
+</span><span class="lnt">510
+</span><span class="lnt">511
+</span><span class="lnt">512
+</span><span class="lnt">513
+</span><span class="lnt">514
+</span><span class="lnt">515
+</span><span class="lnt">516
+</span><span class="lnt">517
+</span><span class="lnt">518
+</span><span class="lnt">519
+</span><span class="lnt">520
+</span><span class="lnt">521
+</span><span class="lnt">522
+</span><span class="lnt">523
+</span><span class="lnt">524
+</span><span class="lnt">525
+</span><span class="lnt">526
+</span><span class="lnt">527
+</span><span class="lnt">528
+</span><span class="lnt">529
+</span><span class="lnt">530
+</span><span class="lnt">531
+</span><span class="lnt">532
+</span><span class="lnt">533
+</span><span class="lnt">534
+</span><span class="lnt">535
+</span><span class="lnt">536
+</span><span class="lnt">537
+</span><span class="lnt">538
+</span><span class="lnt">539
+</span><span class="lnt">540
+</span><span class="lnt">541
+</span><span class="lnt">542
+</span><span class="lnt">543
+</span><span class="lnt">544
+</span><span class="lnt">545
+</span><span class="lnt">546
+</span><span class="lnt">547
+</span><span class="lnt">548
+</span><span class="lnt">549
+</span><span class="lnt">550
+</span><span class="lnt">551
+</span><span class="lnt">552
+</span><span class="lnt">553
+</span><span class="lnt">554
+</span><span class="lnt">555
+</span><span class="lnt">556
+</span><span class="lnt">557
+</span><span class="lnt">558
+</span><span class="lnt">559
+</span><span class="lnt">560
+</span><span class="lnt">561
+</span><span class="lnt">562
+</span><span class="lnt">563
+</span><span class="lnt">564
+</span><span class="lnt">565
+</span><span class="lnt">566
+</span><span class="lnt">567
+</span><span class="lnt">568
+</span><span class="lnt">569
+</span><span class="lnt">570
+</span><span class="lnt">571
+</span><span class="lnt">572
+</span><span class="lnt">573
+</span><span class="lnt">574
+</span><span class="lnt">575
+</span><span class="lnt">576
+</span><span class="lnt">577
+</span><span class="lnt">578
+</span><span class="lnt">579
+</span><span class="lnt">580
+</span><span class="lnt">581
+</span><span class="lnt">582
+</span><span class="lnt">583
+</span><span class="lnt">584
+</span><span class="lnt">585
+</span><span class="lnt">586
+</span><span class="lnt">587
+</span><span class="lnt">588
+</span><span class="lnt">589
+</span><span class="lnt">590
+</span><span class="lnt">591
+</span><span class="lnt">592
+</span><span class="lnt">593
+</span><span class="lnt">594
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[Mail]MIME邮件(EML文件)格式分析
+2008-11-10 13:18 阅读(2433)评论(0)
+http://hankundev.blog.sohu.com/104046669.html
+
+MIME，英文全称为“Multipurpose Internet Mail Extensions”，即多用途互联网邮件扩展，是目前互联网电子邮件普遍遵循的邮件技术规范。
+
+MIME邮件由邮件头和邮件体两部分组成。
+
+邮件头包括：标题，送信人，收信人，创建日期，邮件体内容类型和邮件体编码方式等内容。
+
+邮件体包括：正文，超文本，内嵌数据和附件等内容。
+
+MIME技术规范的完整内容由RFC 2045-2049定义，包括了信息格式、媒体类型、编码方式等各方面的内容，本文只介绍其中的一些关键的格式和规范。
+
+1.域
+
+MIME邮件中的重要信息都记录在邮件内的各个域中。
+域的基本格式是 {域名}:{内容}。
+一个域占一行或多行，域的首行左侧不能有空白字符，占多行的域其后续行必须以空白字符开头。
+域的信息内容中还可以包含属性，属性之间以“;”分隔，属性格式是{属性名}=&#34;{属性值}&#34;。
+域的内容的编码格式是&#34;=?&#34;+编码名称+&#34;?&#34;+B/Q+&#34;?&#34;+编码后的字符序列+&#34;?=&#34;。(B代表base64的编码方式，Q代表quoted-printable的编码方式)
+
+2.Content-Type域
+
+Content-Type域定义了邮件中各种内容的形式及属性。
+Content-Type域的基本格式是 Content-Type:{主类型}/{子类型}。
+Content-Type的主类型分text，image，audio，video和application五种离散类型以及multiple和message两种复合类型。
+text类型有plain和html两种常用的子类型。
+multiple类型有mixed，alternative和related三种常用的子类型。
+
+3.multiple类型
+
+·multiple类型基本格式
+multiple类型基本格式是 Content-Type: multipart/{子类型};boundary=&#34;{分段标识}&#34;
+三种子类型的对比：
+------------------------------------------------------------------
+|类型名              |邮件种类  |boundary作用                    |
+------------------------------------------------------------------
+|multiple/mixed      |有附件    |分隔各附件内容和邮件其他内容    |
+------------------------------------------------------------------
+|multiple/alternative|有超文本  |分隔纯文本，超文本和邮件其他内容|
+------------------------------------------------------------------
+|multiple/related    |有内嵌资源|分隔各内嵌资源和邮件其他内容    |
+------------------------------------------------------------------
+·boundary属性
+multiple子类型中都定义了各自的boundary属性，邮件中使用boundary中定义的字符串作为标识，将邮件内容分成不同的段，段内每个字段以&#34;--&#34;+boundary中定义的字符串开始，父段则以&#34;--&#34;+boundary中定义的字符串+&#34;--&#34;结束，不同段之间用空行分隔。
+
+·multiple类型的层次关系
+------------------------------
+|multiple/mixed              |
+------------------------------
+| |multiple/related        | |
+------------------------------
+| | |multiple/alternative| | |
+------------------------------
+| | |纯文本正文          | | |
+------------------------------
+| | |超文本正文          | | |
+------------------------------
+| |内嵌资源                | |
+------------------------------
+|附件                        |
+------------------------------
+
+4.Content-Transfer-Encoding域
+
+Content-Transfer-Encoding域定义段内文字的编码方式，不同段可以有不同的编码方式。
+MIME邮件中的数据编码普遍采用base64和quoted-printable两种编码。
+
+·base64编码的算法
+编码的原则是将输入数据全部转换成由{&#39;A&#39;-&#39;Z&#39;,&#39;a&#39;-&#39;z&#39;,&#39;0&#39;-&#39;9&#39;,&#39;+&#39;,&#39;/&#39;}64个ASCII字符组成的字符序列。
+编码时将需要转换的数据每次取出6bit，然后转换成十进制数字，查询64个ASCII字符组成的字典表，输出对应位置的ASCII码字符。每3个字节的数据内容会被转换成4个字典中的ASCII码字符。当转换后的数据不是4的整倍数时，用&#34;=&#34;来填充。
+
+·quoted-printable编码的算法
+编码的原则是将输入的数据转换成可打印的ASCII码字符。
+编码时根据读入内容来决定是否进行编码，如果读入的字节处于33-60，62-126范围内，属可直接打印的ASCII字符，则直接输出，否则将该字节分为两个4bit，每个用一个十六进制数来表示，然后再前面加上&#34;=&#34;，每个需要编码的字节被转换成三个字符来表示。
+
+----------
+
+分开邮件的各个部分,应该是用正则了.分开之后,对内容做读取的时候,需要用base64和qp两种解码,要根据邮件相关信息来确定具体用哪一种.
+
+一般邮件获取内容编码方式的正则的写法应该是下面这个样子
+
+C# code
+
+private const string encodingReg = &#34;(?&lt;=(Content\\-Transfer\\-Encoding\\:)).*&#34;;
+
+做一个TextAnalyze方法来统筹分析
+
+C# code
+
+//c 内容
+//charset,文字编码方式,utf-8/gb2312等等
+//encoding,加密编码方式,包括qp和base64两种
+//因为encoding获得的加密编码标志可能不同,所以用了switch.
+private string TextAnalyze(string c, string charset, string encoding)
+{
+    switch (encoding.ToLower())
+    {
+        case &#34;quoted-printable&#34;:
+        case &#34;qp&#34;:
+        case &#34;q&#34;:
+            try { c = QDecode(Encoding.GetEncoding(charset), c); }
+            catch (Exception e) { throw new Exception(&#34;TextAnalyze(quoted-printabl)&#34; + e.Message); }
+            break;
+        case &#34;base64&#34;:
+        case &#34;b&#34;:
+            try
+            { c = DecodeBase64(charset, encoding); }
+            catch (Exception e) { throw new Exception(&#34;TextAnalyze(DecodeBase64)&#34; + e.Message); }
+            break;
+    }
+    return c;
+}
+
+base64在c#中处理很简单了,就放一个qp的解码.这个也是在网上辛苦搜到的.当时自己水平太凹,总编不好.
+
+C# code
+
+///   &lt;summary&gt;
+///     quoted-printable解码程序.
+///   &lt;/summary&gt;
+///   &lt;param   name=&#34;encoding&#34;&gt;解码目标字符集&lt;/param&gt;
+///   &lt;param   name=&#34;data&#34;&gt;需要解码的字符串&lt;/param&gt;
+///   &lt;returns&gt;&lt;/returns&gt;
+private static string QDecode(System.Text.Encoding encoding, string data)
+{
+    MemoryStream strm = new MemoryStream(System.Text.Encoding.Default.GetBytes(data));
+    int b = strm.ReadByte();
+    MemoryStream dStrm = new MemoryStream();
+    while (b &gt; -1)
+    {
+        //   Hex   eg.   =E4
+        if (b == &#39;=&#39;)
+        {
+            byte[] buf = new byte[2];
+            strm.Read(buf, 0, 2);
+            if (!(buf[0] == &#39;\r&#39; &amp;&amp; buf[1] == &#39;\n&#39;))
+            {
+                int val = int.Parse(System.Text.Encoding.Default.GetString(buf), System.Globalization.NumberStyles.HexNumber);
+                //int   val   =   int.Parse(System.Text.Encoding.Default.GetString(buf));
+                byte[] temp = new Byte[] { (byte)val };
+                dStrm.Write(temp, 0, temp.Length);
+            }
+        }
+        else
+        {
+            string encodedChar = encoding.GetString(new byte[] { (byte)b });
+            byte[] d = System.Text.Encoding.Default.GetBytes(encodedChar);
+            dStrm.Write(d, 0, d.Length);
+        }
+
+        b = strm.ReadByte();
+    }
+    return encoding.GetString(dStrm.ToArray());
+}
+
+当时对我来讲最困难的就是qp这部分了,这部分解决之后其他的都很好办的.不知道你什么情况.
+
+----------
+
+和大家分享一个解决方案，使用这种方法，可以非常容易读取和&#34;EML&#34;邮件相关的所有信息
+
+1、添加COM组件cdosys.dll的引用，如图
+
+2、相关代码
+/// &lt;summary&gt;
+/// 获取eml文件的主体内容
+/// &lt;/summary&gt;
+/// &lt;param name=&#34;file&#34;&gt;eml文件的路径&lt;/param&gt;
+/// &lt;returns&gt;eml文件的主体内容&lt;/returns&gt;
+public string ReadEML(string file)
+{
+    CDO.Message oMsg = new CDO.Message();
+    ADODB.Stream stm = null;
+    //读取EML文件到CDO.MESSAGE，做分析的话，实际是用了下面的部分
+    try
+    {
+        stm = new ADODB.Stream();
+        stm.Open(System.Reflection.Missing.Value,
+                 ADODB.ConnectModeEnum.adModeUnknown,
+                 ADODB.StreamOpenOptionsEnum.adOpenStreamUnspecified,
+                 &#34;&#34;, &#34;&#34;);
+        stm.Type = ADODB.StreamTypeEnum.adTypeBinary;//二进制方式读入
+
+        stm.LoadFromFile(file); //将EML读入数据流
+
+        oMsg.DataSource.OpenObject(stm, &#34;_stream&#34;); //将EML数据流载入到CDO.Message，要做解析的话，后面就可以了。
+
+    }
+    catch (IOException ex)
+    {
+
+    }
+    finally
+    {
+        stm.Close();
+    }
+    return oMsg.HTMLBody;//oMsg里包含了邮件相关的所有信息
+}
+
+有关“cdosys.dll”模块可以到网上进一步了解，使用它可以方面的完成邮件的所有功能
+
+----------
+
+eml文件的解析和发送
+https://www.cnblogs.com/a-zx/articles/2179255.html
+
+转自：http://www.zu14.cn/2009/05/20/read-analyze-send-eml-as-mail-by-csharp-cdosys/
+
+最近，我发布了几篇关于 .NET 和 EML 文件的邮件相关 的博文，引来了一些网友的关注与讨论。尤其是对于“如何解析EML文件的内容”和 “发送现有的EML文件”。
+
+目前，比较主流的解析EML文件的方式，基本是对MIME格式的分析，基于对 RFC822及其后续扩展的标准 的理解。但是，此种方法工作量太大，且过于繁琐。
+
+我是个懒人，喜欢找捷径
+
+大家都知道，微软的 outlook express 是可以保存和打开并发送EML文件的。那么很明显，outlook express 肯定是可以解析EML文件的。
+
+问题就来了：我们可不可以利用微软现有的成果呢？
+
+针对这个问题，我们再回到.NET中发送邮件的功能上，为了体现的明显，我们回到.NET 1.1上，.NET 1.1 发送邮件的是 System.Web.Mail ，这个System.Web.Mail 当时是比较弱的，原因就是它是基于 cdosys.dll 的基础上的且并未做富实现。
+
+cdosys.dll是从windows 2000 开始被正式引入的，后续的操作系统都支持，关于cdosys.dll的细节，请看MSDN。
+
+经过一个晚上对cdosys的研究，终于得出了结果：CDOSYS是可以加载eml文件并进行解析和直接发送的。
+
+cdosys属于COM，在.NET使用，需要添加COM引用。
+
+CDOSYS
+
+添加引用，会在项目的引用里出现下面的2项：
+
+image
+
+下面我对发送EML文件，封装了一个类（只做了基本封装，大家可以自己扩展）
+
+/// &lt;summary&gt;
+/// 功能： 发送EML文件
+/// 作者： 三角猫
+/// 网址： http://www.zu14.cn
+/// 声明： 转载务必保留此信息
+/// &lt;/summary&gt;
+public class EmlSender
+{
+    private string emlFilePath;
+    private string smtpServer;
+    private string smtpServerPort = &#34;25&#34;;
+    private string smtpUserName;
+    private string smtpPassword;
+    /// &lt;summary&gt;
+    /// 构造函数
+    /// &lt;/summary&gt;
+    /// &lt;param name=&#34;EmlFilePath&#34;&gt;EML文件的绝对路径&lt;/param&gt;
+    public EmlSender(string EmlFilePath)
+    {
+        emlFilePath = EmlFilePath;
+    }
+
+    /// &lt;summary&gt;
+    /// SMTP服务器地址
+    /// &lt;/summary&gt;
+    public string SmtpServer
+    {
+        set { smtpServer = value; }
+    }
+
+    /// &lt;summary&gt;
+    /// SMTP服务器端口号
+    /// &lt;/summary&gt;
+    public string SmtpServerPort
+    {
+        set { smtpServerPort = value; }
+    }
+
+    /// &lt;summary&gt;
+    /// SMTP服务器认证帐号
+    /// &lt;/summary&gt;
+    public string SmtpUserName
+    {
+        set { smtpUserName = value; }
+    }
+
+    /// &lt;summary&gt;
+    /// SMTP服务器认证密码
+    /// &lt;/summary&gt;
+    public string SmtpPassword
+    {
+        set { smtpPassword = value; }
+    }
+
+    /// &lt;summary&gt;
+    /// 使用CDOSYS发送EML文件
+    /// &lt;/summary&gt;
+    public void Send()
+    {
+        CDO.Message oMsg = new CDO.Message();
+        CDO.IConfiguration iConfg = oMsg.Configuration;
+        ADODB.Fields oFields = iConfg.Fields;
+
+        //设置CDO相关的发送参数，主要是用于SMTP服务器的认证
+         ADODB.Field oField = oFields[&#34;http://schemas.microsoft.com/cdo/configuration/sendusing&#34;];
+        oField.Value = &#34;2&#34;;
+
+        oField = oFields[&#34;http://schemas.microsoft.com/cdo/configuration/smtpserverport&#34;];
+        oField.Value = smtpServerPort;
+
+        oField = oFields[&#34;http://schemas.microsoft.com/cdo/configuration/smtpserver&#34;];
+        oField.Value = smtpServer;
+
+        oField = oFields[&#34;http://schemas.microsoft.com/cdo/configuration/languagecode&#34;];
+        oField.Value = &#34;0x0804&#34;;
+
+        //下面三项可以自己根据需要去填写，我比较懒
+        oField = oFields[&#34;http://schemas.microsoft.com/cdo/configuration/sendemailaddress&#34;];
+        oField.Value = &#34;&#34;;
+
+        oField = oFields[&#34;http://schemas.microsoft.com/cdo/configuration/smtpuserreplyemailaddress&#34;];
+        oField.Value = &#34;&#34;;
+
+        oField = oFields[&#34;http://schemas.microsoft.com/cdo/configuration/smtpaccountname&#34;];
+        oField.Value = &#34;&#34;;
+        //------------------------
+
+        oField = oFields[&#34;http://schemas.microsoft.com/cdo/configuration/smtpconnectiontimeout&#34;];
+        oField.Value = &#34;60&#34;;
+
+        oField = oFields[&#34;http://schemas.microsoft.com/cdo/configuration/sendusername&#34;];
+        oField.Value = smtpUserName;
+
+        oField = oFields[&#34;http://schemas.microsoft.com/cdo/configuration/sendpassword&#34;];
+        oField.Value = smtpPassword;
+
+        oField = oFields[&#34;http://schemas.microsoft.com/cdo/configuration/smtpauthenticate&#34;];
+        oField.Value = &#34;1&#34;;
+
+        oFields.Update();
+
+        try
+        {
+            //读取EML文件到CDO.MESSAGE，做分析的话，实际是用了下面的部分
+            ADODB.Stream stm = new ADODB.Stream();
+            stm.Open(System.Reflection.Missing.Value,
+                     ADODB.ConnectModeEnum.adModeUnknown,
+                     ADODB.StreamOpenOptionsEnum.adOpenStreamUnspecified,
+                     &#34;&#34;, &#34;&#34;);
+            stm.Type = ADODB.StreamTypeEnum.adTypeBinary;//二进制方式读入
+
+            stm.LoadFromFile(emlFilePath); //将EML读入数据流
+
+            oMsg.DataSource.OpenObject(stm, &#34;_stream&#34;); //将EML数据流载入到CDO.Message，要做解析的话，后面就可以了。
+
+            stm.Close();
+
+            oMsg.Send(); //发送
+        }
+        catch
+        {
+            throw;
+        }
+        finally
+        {
+            oField = null;
+            oFields = null;
+            oMsg = null;
+        }
+    }
+}
+
+使用方法：
+
+EmlSender eml = new EmlSender(@&#34;d:\a.eml&#34;);
+eml.SmtpServer = &#34;smtp.zu14.cn&#34;;
+eml.SmtpServerPort = &#34;25&#34;;
+eml.SmtpUserName = &#34;admin@zu14.cn&#34;;
+eml.SmtpPassword = &#34;*****&#34;;
+eml.Send();
+
+至此，.NET 关于MAIL 和 EML 相关的内容，算是告一段落了。
+
+----------
+
+如何使用Visual C＃使用Cdosys.dll库发送带附件的电子邮件
+https://support.microsoft.com/zh-cn/help/310212/how-to-use-the-cdosys-dll-library-to-send-an-e-mail-message-with-attac
+
+摘要
+
+本文介绍如何使用Windows 2000库协作数据对象（CDO）（Cdosys.dll）发送带附件的电子邮件。您可以使用本地SMTP服务器或Microsoft Visual C＃中的智能主机服务器在电子邮件正文中发送文本或HTML或网页。
+
+注意 Cdosys.dll库也称为CDOSYS。
+
+更多信息
+
+要按照“摘要”部分中的说明使用CDOSYS，请按照下列步骤操作：
+
+启动Microsoft Visual Studio。
+
+在“ 文件”菜单上，单击“ 新建”，然后单击“ 项目”。
+
+在项目类型下，单击Visual C＃，然后单击模板下的控制台应用程序。默认情况下，会创建Program.cs。注意在Microsoft Visual C＃.NET 2003中，Visual C＃更改为Visual C＃Projects。默认情况下，创建Class1.cs。
+
+添加对Microsoft CDO For Windows 2000 Library的引用。为此，请按照下列步骤操作：
+
+在“ 项目”菜单上，单击“ 添加引用”。
+
+在COM选项卡上，找到Microsoft CDO For Windows 2000 Library。
+
+注意在Visual C＃.NET 2003中，单击“ 选择”。
+
+要接受您的选择，请在“ 添加引用”对话框中单击“ 确定 ”。如果您收到一个对话框来为您选择的库生成包装器，请单击“ 是”。
+
+在代码窗口中，使用以下代码替换所有代码：
+
+namespace CdoSys
+{
+using System;
+class Class1
+{
+static void Main(string[] args)
+{
+try
+{
+CDO.Message oMsg = new CDO.Message();
+CDO.IConfiguration iConfg;
+
+iConfg = oMsg.Configuration;
+
+ADODB.Fields oFields;
+oFields = iConfg.Fields;
+
+// Set configuration.
+ADODB.Field oField = oFields[&#34;http://schemas.microsoft.com/cdo/configuration/sendusing&#34;];
+
+//TODO: To send by using the smart host, uncomment the following lines:
+//oField.Value = CDO.CdoSendUsing.cdoSendUsingPort;
+//oField = oFields[&#34;http://schemas.microsoft.com/cdo/configuration/smtpserver&#34;];
+//oField.Value = &#34;smarthost&#34;;
+
+// TODO: To send by using local SMTP service.
+//oField = oFields[&#34;http://schemas.microsoft.com/cdo/configuration/sendusing&#34;];
+//oField.Value = 1;
+
+oFields.Update();
+
+// Set common properties from message.
+
+//TODO: To send text body, uncomment the following line:
+//oMsg.TextBody = &#34;Hello, how are you doing?&#34;;
+
+//TODO: To send HTML body, uncomment the following lines:
+//String sHtml;
+//sHtml = &#34;&lt;HTML&gt;\n&#34; +
+//&#34;&lt;HEAD&gt;\n&#34; +
+//&#34;&lt;TITLE&gt;Sample GIF&lt;/TITLE&gt;\n&#34; +
+//&#34;&lt;/HEAD&gt;\n&#34; +
+//&#34;&lt;BODY&gt;&lt;P&gt;\n&#34; +
+//&#34;&lt;h1&gt;&lt;Font Color=Green&gt;Inline graphics&lt;/Font&gt;&lt;/h1&gt;\n&#34; +
+//&#34;&lt;/BODY&gt;\n&#34; +
+//&#34;&lt;/HTML&gt;&#34;;
+//oMsg.HTMLBody = sHtml;
+
+//TOTO: To send WEb page in an e-mail, uncomment the following lines and make changes in TODO section.
+//TODO: Replace with your preferred Web page
+//oMsg.CreateMHTMLBody(&#34;http://www.microsoft.com&#34;,
+//CDO.CdoMHTMLFlags.cdoSuppressNone,
+//&#34;&#34;, &#34;&#34;);
+oMsg.Subject = &#34;Test SMTP&#34;;
+
+//TODO: Change the To and From address to reflect your information.
+oMsg.From = &#34;someone@example.com&#34;;
+oMsg.To = &#34;someone@example.com&#34;;
+//ADD attachment.
+//TODO: Change the path to the file that you want to attach.
+oMsg.AddAttachment(&#34;C:\\Hello.txt&#34;, &#34;&#34;, &#34;&#34;);
+oMsg.AddAttachment(&#34;C:\\Test.doc&#34;, &#34;&#34;, &#34;&#34;);
+                                    oMsg.Send();
+}
+catch (Exception e)
+{
+Console.WriteLine(&#34;{0} Exception caught.&#34;, e);
+}
+return;
+}
+}
+}
+
+如果TODO出现在代码中，请按照指示修改代码。
+
+要构建和运行程序，请按F5。
+
+验证是否已发送和接收电子邮件。
+
+参考
+
+有关使用Visual Studio进行Microsoft Office开发的详细信息，请参阅以下Microsoft Developer Network（MSDN）网站：
+http://msdn.microsoft.com/en-us/library/aa188489(office.10).aspx
+有关如何使用CDOSYS的其他信息，请单击下面的文章编号，以查看Microsoft知识库中相应的文章：
+
+310221如何使用Visual C＃.NET将Cdosys.dll库嵌入到新消息中
+
+310224如何使用Visual C＃.NET使用Cdosys.dll库处理Drop目录中的邮件
+
+310225如何使用Cdosys.dll库通过使用Visual C＃.NET将消息保存到文件
+
+上次更新时间：2019年6月10日
+
+----------
+
+CDOSYS.dll 发邮件，邮件体中文乱码
+
+方案整理者：lgg2tmm
+发布时间：2011-06-04
+
+给位大侠，请帮忙看一下。
+objEmail.TextBody.Charset = &#34;Gb2312&#34; 错误，不能运行。
+要是没有这行，可以运行，但是中文是乱码。
+
+Const adOpenStatic = 3
+Const adLockOptimistic = 3
+Const adUseClient = 3
+Set objConnection = CreateObject(&#34;ADODB.Connection&#34;)
+Set objRecordset = CreateObject(&#34;ADODB.Recordset&#34;)
+objConnection.Open &#34;DSN=cdma;uid=cdma_admin;pwd=cdma_admin&#34;
+objRecordset.CursorLocation = adUseClient
+objRecordset.Open &#34;SELECT * FROM RECEIVING_RELOG WHERE TO_CHAR(SENDMAILDATE,&#39;YYYY&#39;) = TO_CHAR(SYSDATE,&#39;YYYY&#39;) AND TO_CHAR(SENDMAILDATE,&#39;MM&#39;) = TO_CHAR(SYSDATE,&#39;MM&#39;) AND TO_CHAR(SENDMAILDATE,&#39;DD&#39;) = TO_CHAR(SYSDATE,&#39;DD&#39;)-2 AND ISSUE_DATE is null&#34;, objConnection, _
+adOpenStatic, adLockOptimistic
+
+Do Until objRecordset.EOF
+
+toid = &#34;&#34;
+
+If objRecordset(&#34;ReceiverID1&#34;)  &lt;&gt; &#34;&#34; then
+toid =toid&amp;objRecordset(&#34;ReceiverID1&#34;)&amp;&#34;@&#34;&amp;&#34;freescale.com&#34;&amp;&#34;;&#34;
+End If
+
+If objRecordset(&#34;ReceiverID2&#34;)  &lt;&gt; &#34;&#34; then
+toid =toid&amp;objRecordset(&#34;ReceiverID2&#34;)&amp;&#34;@&#34;&amp;&#34;freescale.com&#34;&amp;&#34;;&#34;
+End If
+
+If objRecordset(&#34;ReceiverID3&#34;)  &lt;&gt; &#34;&#34; then
+toid =toid&amp;objRecordset(&#34;ReceiverID3&#34;)&amp;&#34;@&#34;&amp;&#34;freescale.com&#34;&amp;&#34;;&#34;
+End If
+
+If objRecordset(&#34;ReceiverID4&#34;)  &lt;&gt; &#34;&#34; then
+toid =toid&amp;objRecordset(&#34;ReceiverID4&#34;)&amp;&#34;@&#34;&amp;&#34;freescale.com&#34;&amp;&#34;;&#34;
+End If
+
+If objRecordset(&#34;ReceiverID5&#34;)  &lt;&gt; &#34;&#34; then
+toid =toid&amp;objRecordset(&#34;ReceiverID5&#34;)&amp;&#34;@&#34;&amp;&#34;freescale.com&#34;&amp;&#34;;&#34;
+End If
+
+If objRecordset(&#34;ReceiverID6&#34;)  &lt;&gt; &#34;&#34; then
+toid =toid&amp;objRecordset(&#34;ReceiverID6&#34;)&amp;&#34;@&#34;&amp;&#34;freescale.com&#34;&amp;&#34;;&#34;
+End If
+
+If objRecordset(&#34;ReceiverID7&#34;)  &lt;&gt; &#34;&#34; then
+toid =toid&amp;objRecordset(&#34;ReceiverID7&#34;)&amp;&#34;@&#34;&amp;&#34;freescale.com&#34;&amp;&#34;;&#34;
+End If
+
+If objRecordset(&#34;ReceiverID8&#34;)  &lt;&gt; &#34;&#34; then
+toid =toid&amp;objRecordset(&#34;ReceiverID8&#34;)&amp;&#34;@&#34;&amp;&#34;freescale.com&#34;&amp;&#34;;&#34;
+End If
+
+If objRecordset(&#34;ReceiverID9&#34;)  &lt;&gt; &#34;&#34; then
+toid =toid&amp;objRecordset(&#34;ReceiverID9&#34;)&amp;&#34;@&#34;&amp;&#34;freescale.com&#34;&amp;&#34;;&#34;
+End If
+
+If objRecordset(&#34;ReceiverID10&#34;)  &lt;&gt; &#34;&#34; then
+toid =toid&amp;objRecordset(&#34;ReceiverID10&#34;)&amp;&#34;@&#34;&amp;&#34;freescale.com&#34;&amp;&#34;;&#34;
+End If
+
+SendEmailDate = Month(Now()) &amp; &#34;-&#34; &amp; Day(Now()) &amp; &#34;-&#34; &amp; Year(Now())
+
+Set objEmail = CreateObject(&#34;CDO.Message&#34;)
+objEmail.From = &#34;Receiving_Center@freescale.com&#34;
+objEmail.To = toid
+objEmail.Subject = &#34;Delivery Notification on &#34; &amp; SendEmailDate
+objEmail.TextBody.Charset = &#34;Gb2312&#34;
+
+objEmail.TextBody = &#34;Please pick up your goods within 24 hrs from receiving center. If you have any queries, please call our hotline number 13370329111 or Ext.85686516. Thanks.&#34; &amp; vbCrLf &amp; vbCrLf &amp; &#34;Delivery Date:&#34; &amp; objRecordset(&#34;REC_DATE&#34;) &amp; vbCrLf &amp; &#34;Vendor Name:&#34; &amp; objRecordset(&#34;SUPPLIER_NAME&#34;) &amp; vbCrLf &amp; &#34;PO#:&#34; &amp; objRecordset(&#34;PO_NO&#34;) &amp; vbCrLf &amp; &#34;English Description:&#34; &amp; objRecordset(&#34;ENGLISH_DESC&#34;) &amp; vbCrLf &amp; &#34;Chinese Description:&#34; &amp; objRecordset(&#34;CHINESE_DESC&#34;) &amp; vbCrLf &amp; &#34;MAWB:&#34; &amp; objRecordset(&#34;MAWB&#34;) &amp; vbCrLf &amp; &#34;HAWB:&#34; &amp; objRecordset(&#34;HAWB&#34;) &amp; vbCrLf &amp; &#34;Original:&#34; &amp; objRecordset(&#34;ORIGIN&#34;) &amp; vbCrLf &amp; vbCrLf &amp; &#34;Best Regards,&#34; &amp; vbCrLf &amp; &#34;Receiving Center&#34;
+
+objEmail.Configuration.Fields.Item(&#34;) = 2
+objEmail.Configuration.Fields.Item(&#34;) = &#34;remotesmtp.freescale.net&#34;
+objEmail.Configuration.Fields.Item(&#34;) = 25
+objEmail.Configuration.Fields.Update
+objEmail.Send
+objRecordset.movenext
+Loop
+
+objRecordset.Close
+objConnection.Close
+
+推荐解决方案
+邮件主体=StrConv(邮件主体,vbunicode)
+试一下行不行
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2019-09-14
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E9%82%AE%E4%BB%B6/">邮件</a>
+          <a href="https://lcx.cc/tags/vbs/">vbs</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%89%B9%E9%87%8F/">批量</a>
+          <a href="https://lcx.cc/tags/%E7%AE%97%E6%B3%95/">算法</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A0%81/">编码</a>
+          <a href="https://lcx.cc/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4598/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">★ 公告 ★ 关于西安另一个“核攻击” ★ 郭瑞 ★</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4596/">
+            <span class="next-text nav-default">rc4 加密 解密 算法 调试 测试 工具</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

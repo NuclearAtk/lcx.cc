@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【转载】反射型跨站脚本攻击的利用解析 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="反射型跨站脚本攻击的利用解析。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="反射型跨站脚本攻击的利用解析,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/457/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【转载】反射型跨站脚本攻击的利用解析" />
+<meta property="og:description" content="反射型跨站脚本攻击的利用解析。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/457/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-08-30T11:21:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-08-30T11:21:00&#43;08:00" />
+
+<meta itemprop="name" content="【转载】反射型跨站脚本攻击的利用解析">
+<meta itemprop="description" content="反射型跨站脚本攻击的利用解析。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-08-30T11:21:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-08-30T11:21:00&#43;08:00" />
+<meta itemprop="wordCount" content="4025">
+<meta itemprop="keywords" content="攻击,脚本,跨站,转载,app,cookie,Html,HTTP,IE,IP,js,JSON,POC,XSS,安全,测试,代码,恶意,函数,技术,浏览器,漏洞,骗,数据,问题," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【转载】反射型跨站脚本攻击的利用解析"/>
+<meta name="twitter:description" content="反射型跨站脚本攻击的利用解析。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【转载】反射型跨站脚本攻击的利用解析</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-08-30" class="post-time">
+          2010-08-30
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E6%94%BB%E5%87%BB/"> 攻击 </a>
+            <a href="https://lcx.cc/categories/%E8%84%9A%E6%9C%AC/"> 脚本 </a>
+            <a href="https://lcx.cc/categories/%E8%B7%A8%E7%AB%99/"> 跨站 </a>
+            <a href="https://lcx.cc/categories/%E8%BD%AC%E8%BD%BD/"> 转载 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4025 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>&nbsp;&nbsp;&nbsp; 我思考了很久才把这里面的错综复杂的关系整清楚，我想很多人看我下面的paper会睡着，或者干脆“一目百行”的跳过去，但如果你真的想弄懂，请调试我的每一个poc，会非常有助于理解(虽然你还是可能会晕)。请尊重俺的劳动成果，码这么多字不容易。欢迎技术讨论，但谢绝没仔细看就来指手画脚的。@_@</P>
+<P>&nbsp;&nbsp;&nbsp; 首先，为了帮助大家更好的理解，我先讲讲这种攻击能够达成什么效果： <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1. 跨域执行脚本（IE、Firefox） <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. 把非持久性XSS变成持久性XSS <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3. 跨页面执行脚本 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4. 浏览器将很难修补这一“特性”造成的威胁 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5. 当然还是有一些条件限制的,本篇只是在理论上描述了这种攻击。</P>
+<P>&nbsp;&nbsp;&nbsp; 那么，什么是cross iframe，简单来说就是把iframe做一个迭代，以实现一些iframe之间的交叉数据访问。在正常的web应用中，许多地方都有用到这种技术，比如facebook，比如yahoo。</P>
+<P>&nbsp;&nbsp;&nbsp; 但是由cross iframe引申出来一些安全隐患，则是我这里要探讨的重点。</P>
+<P>&nbsp;&nbsp;&nbsp; 以下是我的测试环境： <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Windows XP SP2 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IE 6 SP2 (我只有IE6，没有IE7，请自行测试IE7) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Firefox 2.0.0.16</P>
+<P>&nbsp;&nbsp;&nbsp; 测试域名： <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; www.A.com （/1.html , /4.html） <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; www.B.com （/2.html , /3.html）</P>
+<P>&nbsp;&nbsp;&nbsp; 这次测试主要使用了4个html页面，请牢记1.html和4.html是在域A下； 2.html和3.html是在域B下</P>
+<P>&nbsp;&nbsp;&nbsp; 首先来看看什么是Cross Iframe， 他们又能干些什么。</P>
+<P>&nbsp;&nbsp;&nbsp; Rule1: 同一个页面下的两个iframe，如果这两个iframe指向同一个域，那么他们可以互相访问，并操作对方页面的脚本。</P>
+<P> <br />
+&nbsp;&nbsp;&nbsp; 在 www.A.com 上，存在一个 1.html ，包含了两个iframe，这两个iframe分别引用了www.B.com 上的两个页面。其代码如下： <br />
+&nbsp;&nbsp;&nbsp; 1.html: <br />
+&nbsp;&nbsp;&nbsp; &lt;iframe id="tt2_2" src="http://www.B.com/2.html" width="300" height="300" &gt;&lt;/iframe&gt; <br />
+&nbsp;&nbsp;&nbsp; &lt;iframe id="tt2_3" src="http://www.B.com/3.html" width="300" height="300" &gt;&lt;/iframe&gt;</P>
+<P>&nbsp;&nbsp;&nbsp; 现在我们的目的就是利用 iframe：tt2_2 去调用 iframe：tt2_3里的javascript的函数。</P>
+<P>&nbsp;&nbsp;&nbsp; 3.html的代码如下： <br />
+3.html： <br />
+&lt;html&gt; <br />
+&lt;body&gt;</P>
+<P>&lt;script&gt; <br />
+function alertpoc(){  <br />
+&nbsp;&nbsp; alert("alert POC"); <br />
+}&nbsp;&nbsp;&nbsp;  <br />
+&lt;/script&gt;</P>
+<P>&lt;/body&gt; <br />
+&lt;/html&gt;</P>
+<P> <br />
+&nbsp;&nbsp;&nbsp; 2.html的代码如下： <br />
+2.html： <br />
+&lt;body&gt;</P>
+<P>&lt;script&gt; <br />
+window.onload = function() { <br />
+&nbsp;&nbsp;&nbsp; parent.frames["tt2_3"].alertpoc(); <br />
+} <br />
+&lt;/script&gt;</P>
+<P>&lt;/body&gt;</P>
+<P> <br />
+&nbsp;&nbsp;&nbsp; 那么，当访问 http://www.A.com/1.html 时，iframe：tt2_2中的脚本在www.B.com执行了，它通过读父窗口的iframe：tt2_3，尝试在其中执行脚本函数alertpoc()。由于tt2_2与tt2_3同在www.B.com 域中，所以他们之间不存在跨域问题，脚本被允许执行。</P>
+<P> <br />
+&nbsp;&nbsp;&nbsp; Rule2：域B能够以 iframe proxy 的方式，操作域A上的脚本，或者传递信息，实现跨域操作。</P>
+<P>&nbsp;&nbsp;&nbsp; 什么叫iframe proxy呢？其实就是做了一次iframe的迭代。</P>
+<P>&nbsp;&nbsp;&nbsp; 如下： <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; http://www.A.com/1.html 中包含一个iframe，指向 http://www.B.com/3.html <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; http://www.B.com/3.html 中又包含一个iframe，指向 http://www.A.com/4.html</P>
+<P>&nbsp;&nbsp;&nbsp; 那么这个3.html就是一个iframe proxy，通过 3.html 就能从B域 向 A域的 4.html传递消息，如果4.html还有一些处理的话，就可以执行脚本。</P>
+<P>&nbsp;&nbsp;&nbsp; 实例如下： <br />
+&nbsp;&nbsp;&nbsp; 1.html的代码： <br />
+1.html： <br />
+&lt;script&gt; <br />
+// 1.html上的弹窗函数 <br />
+function tt1(fvck){ <br />
+&nbsp;&nbsp;&nbsp; alert(fvck); <br />
+}</P>
+<P>&lt;/script&gt; <br />
+&lt;iframe id="tt2_2" src="http://www.B.com/2.html" width="300" height="300" &gt;&lt;/iframe&gt; <br />
+&lt;iframe id="tt2_3" src="http://www.B.com/3.html" width="300" height="300" &gt;&lt;/iframe&gt;</P>
+<P>&nbsp;&nbsp;&nbsp; 同在 www.A.com 域下的 4.html代码： <br />
+4.html: <br />
+&lt;html&gt; <br />
+&lt;body&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&lt;script&gt; <br />
+&nbsp;&nbsp;&nbsp; //parent.parent.tt1("fvck tt1"); 也可以 <br />
+&nbsp;&nbsp;&nbsp; top.tt1("fvck tt1");&nbsp;&nbsp;&nbsp;&nbsp; // 调用 1.html 里的 tt1() 函数 <br />
+&lt;/script&gt; <br />
+&lt;/body&gt; <br />
+&lt;/html&gt;</P>
+<P>&nbsp;&nbsp;&nbsp; 在 www.B.com 域下的3.html 作用是iframe proxy，其代码为： <br />
+3.html: <br />
+&lt;html&gt; <br />
+&lt;body&gt; <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&lt;script&gt; <br />
+&nbsp;&nbsp;&nbsp; var tt1_4 = document.createElement("iframe"); <br />
+&nbsp;&nbsp;&nbsp; tt1_4.src = "http://www.A.com/4.html";  <br />
+&nbsp;&nbsp;&nbsp; document.body.appendChild(tt1_4); <br />
+&lt;/script&gt; <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&lt;/body&gt; <br />
+&lt;/html&gt;</P>
+<P>&nbsp;&nbsp;&nbsp; 访问 http://www.A.com/1.html 后，将通过 http://www.B.com/3.html ，利用 http://www.A.com/4.html 执行 http://www.A.com/1.html 的脚本</P>
+<P>&nbsp;&nbsp;&nbsp; 正确执行了脚本。</P>
+<P>&nbsp;&nbsp;&nbsp; 跨域的问题已经POC过了，那么存在什么样的风险呢？</P>
+<P>&nbsp;&nbsp;&nbsp; 先讲跨域的问题。</P>
+<P>&nbsp;&nbsp;&nbsp; 首先，由于4.html在这里关联性最小，所以我们假设4.html是我们在域A下上传的某个文件，或者是存在XSS漏洞的某个页面。</P>
+<P>&nbsp;&nbsp;&nbsp; 那么对于域A下的页面 1.html，它包含了 域B的3.html，当域B下的3.html被恶意用户控制时，恶意用户就可以通过4.html，直接攻击到 1.html</P>
+<P>&nbsp;&nbsp;&nbsp; 所以我们有了第一个攻击方法： <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Attack Vector 1：控制iframe proxy后可以跨域攻击父页面</P>
+<P>&nbsp;&nbsp;&nbsp; 由于域B和域A不是同一个域，所以域A的安全级别和一些防范措施很可能无法涉及到域B，这种信任上的危机将带来一定的风险。</P>
+<P>&nbsp;&nbsp;&nbsp; 请注意和普通挂马或者是XSS攻击不同的是，域A上的这个页面是我们无法控制或篡改的，但他正好包含了一个指向域B上页面的iframe，所以我们才可以通过域B上的那个页面跨域攻击它。</P>
+<P>&nbsp;&nbsp;&nbsp; 比如，www.baidu.com/av.html 可能包含了某个广告网站的一些页面，他使用的是iframe的方式： &lt;iframe src="http://www.advertise.com/evil.html" &gt;</P>
+<P>&nbsp;&nbsp;&nbsp; 那么这个时候，攻击者如果能够控制evil.html，就可以在evil.html 中包含一个指向 http://www.baidu.com/evilupload.html 的iframe；</P>
+<P>&nbsp;&nbsp;&nbsp; 当正常用户浏览 http://www.baidu.com/av.html 时候，就会受到来自 evilupload.html 的XSS攻击， 而攻击的来源是 http://www.advertise.com/evil.html 发起的。</P>
+<P>&nbsp;&nbsp;&nbsp; 这种跨域的攻击将会极其隐蔽，因为真正的恶意脚本是写在evilupload.html 里的，所以即便查看了 av.html 和 evil.html 的代码也无法看到任何恶意脚本，只能看到两个iframe。</P>
+<P>&nbsp;&nbsp;&nbsp; 对于IE 6， 甚至可以把 4.html 改名为 4.JPG 或者 4.RAR， 在iframe proxy中引用后，都将执行脚本。(想到GIFAR没？)</P>
+<P>&nbsp;&nbsp;&nbsp; 而Firefox 2 则必须保持为 html 文件才能保证脚本的执行。</P>
+<P>&nbsp;&nbsp;&nbsp; 控制evil.html的方法有很多种，最常见的包括直接攻击域B服务器、篡改客户端网络中的数据、或者是在evil.html 中放置一个 持久性的XSS，都将导致 evil.html 被控制</P>
+<P>&nbsp;&nbsp;&nbsp; 通过控制 evil.html，调整不同的iframe src地址，我们可以得到第二种攻击方法。 <br />
+&nbsp;&nbsp;&nbsp; Attack Vector 2：在iframe proxy中直接引用一个非持久性XSS（反射XSS），可以让该XSS在父窗口中持久存在。</P>
+<P>&nbsp;&nbsp;&nbsp; 很多人非常鄙视非持久性XSS（反射型XSS），认为这种XSS只能依靠欺骗的手段去骗人点击，才能让攻击正常实施起来。</P>
+<P>&nbsp;&nbsp;&nbsp; 其实让非持久性XSS变得持久的方法，已经出现过好多次了。比如利用applet、利用flash的AS脚本、利用IE的Ghost 页面。</P>
+<P>&nbsp;&nbsp;&nbsp; 那么今天这种方法又要多一个了：利用 Cross Iframe Trick</P>
+<P>&nbsp;&nbsp;&nbsp; 实例如下： <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 设想http://www.A.com/4.html 存在一个XSS漏洞，其代码如下： <br />
+4.html： <br />
+&lt;html&gt; <br />
+&nbsp;&nbsp;&nbsp; &lt;body&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&lt;script&gt; <br />
+&nbsp;&nbsp;&nbsp; //parent.parent.tt1("fvck tt1"); <br />
+&nbsp;&nbsp;&nbsp; //top.tt1("fvck tt1");</P>
+<P>&nbsp;&nbsp;&nbsp; document.write("&lt;input id=\"aaa\" value=\'test"+window.location.href+"\' &gt;");&nbsp;&nbsp;  <br />
+&lt;/script&gt;</P>
+<P>&lt;/body&gt; <br />
+&lt;/html&gt;</P>
+<P>&nbsp;&nbsp;&nbsp; 这里存在一个基于DOM的XSS漏洞，当在浏览器地址栏里输入：http://www.A.com/4.html#'&gt;&lt;script&gt;alert(/XSS/);&lt;/script&gt;&lt;'时，alert()将被执行。</P>
+<P>&nbsp;&nbsp;&nbsp; 此时，利用 Cross Iframe技术，在 3.html 中直接构造iframe地址为XSS的地址。 <br />
+3.html： <br />
+&lt;html&gt; <br />
+&lt;body&gt; <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&lt;script&gt; <br />
+&nbsp;&nbsp;&nbsp; //function alertpoc(){ alert("alert POC"); }&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; var tt1_4 = document.createElement("iframe"); <br />
+&nbsp;&nbsp;&nbsp; tt1_4.src = "http://www.A.com/4.html#\'\&gt;\&lt;script\&gt;alert(\"Domain=\"+document.domain)\;\&lt;/script\&gt;\&lt;\'"; <br />
+&nbsp;&nbsp;&nbsp; document.body.appendChild(tt1_4); <br />
+&lt;/script&gt; <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&lt;/body&gt; <br />
+&lt;/html&gt;</P>
+<P>&nbsp;&nbsp;&nbsp; 访问 http://www.A.com/1.html 后，4.html里的XSS漏洞将被利用，并弹出可爱的小框框</P>
+<P>&nbsp;&nbsp;&nbsp; 如果说，前面讲的两种方法是利用的Rule 2，那么Rule 1能否利用起来呢？思考后，发现Rule 1虽然没有跨域风险高，但还是会带来一些问题的。 <br />
+&nbsp;&nbsp;&nbsp; Attack Vector 3：如果域A下的某个页面z中，包含了指向域B的两个iframe，分别是x和y；那么x能够通过z，对y的某些对象进行一定的修改，从而篡改数据，或者是篡改函数的参数，执行脚本。此时z起着iframe proxy的作用。</P>
+<P>&nbsp;&nbsp;&nbsp; 这段话可能有点拗口，其实就是父窗口在这里起了iframe proxy的作用。根据rule 1，我们有以下实例： <br />
+2.html： <br />
+&lt;script&gt;  <br />
+window.onload = function() { <br />
+&nbsp;&nbsp;&nbsp; parent.frames["tt2_3"].document.getElementById("3").value="222"; <br />
+&nbsp;&nbsp;&nbsp; parent.frames["tt2_3"].alertpoc1(); <br />
+} <br />
+&lt;/script&gt;</P>
+<P>2.html将调用 3.html 中的 alertpoc1()函数，并修改 input框的值为222</P>
+<P>3.html： <br />
+&lt;html&gt; <br />
+&lt;body&gt; <br />
+&lt;script&gt;  <br />
+&nbsp;&nbsp;&nbsp; //function alertpoc(){ alert("alert POC"); } <br />
+&nbsp;&nbsp;&nbsp; function alertpoc1(){ alert(window.location.href); }&nbsp;&nbsp;&nbsp;  <br />
+&lt;/script&gt;</P>
+<P>&lt;input id="3" value="333" &gt; <br />
+&lt;/body&gt; <br />
+&lt;/html&gt;</P>
+<P> <br />
+&nbsp;&nbsp;&nbsp; 此时，访问http://www.A.com/1.html 后，发现input的值被成功修改，同事alertpoc1弹出显示的是3.html的地址。</P>
+<P>&nbsp;&nbsp;&nbsp; 这种攻击实际上还是攻击的 http://www.A.com 下的 1.html 这个页面（注意这个是和普通XSS攻击的本质区别，攻击的目标页面不同），因为iframe： 3.html 是显示在 1.html 里的。在实际中用到这种情况的可能是某个页面里要显示一个报表，那么这个报表可以采用iframe的方式嵌入在页面中。</P>
+<P>&nbsp;&nbsp;&nbsp; 实施这种攻击，可以随意篡改报表里的数据。攻击来源却是在另外一个iframe里实现的，和当前的1.html 没有直接关系。</P>
+<P>&nbsp;&nbsp;&nbsp; 如果结合JSON Hijacking，直接在2.html中调用 3.html 里的一些回调函数，窃取敏感数据，也可能会起到一些意想不到的作用。因为在这里，我们再次把JSON CallBack函数持久化了，而且json返回的数据将显示在1.html里，更具有欺骗性。</P>
+<P>&nbsp;&nbsp;&nbsp; 所以这第三种攻击方法在篡改数据方面带来了更高的风险。</P>
+<P>&nbsp;&nbsp;&nbsp; 以上可以看出，Cross Iframe Trick最大的优势就是隐蔽性。</P>
+<P>&nbsp;&nbsp;&nbsp; 攻击就像来自天外一样，几乎无迹可寻。</P>
+<P> <br />
+局限性： <br />
+1、首先iframe是限制发送cookie的，本地存储的stored cookie将不被发送，只能发送一个session cookie。浏览器的这个安全特性将使得我们使用XSRF的可能性更低。 <br />
+&nbsp;&nbsp; 但也不是没有办法，比如在 4.html 里使用一个 window.open() 就能够发送出stored cookie了，当然可能还有更好的方法。 <br />
+&nbsp;&nbsp; 不过虽然限制了cookie，导致XSRF会有些困难，但是能够执行目标域下的脚本，还是非常有价值的一件事情，已经可以完成许多攻击了。</P>
+<P>2、其次，要在A域寻找到这样一个用iframe包含B域的页面，并且去控制iframe中的B域页面，才是最为不容易的事情。这个条件是比较苛刻的。如果有朋友能找到现实网站中的案例，请给我一个反馈。</P>
+<P>&nbsp;&nbsp;&nbsp; 最后，正如最开始所说，要修补这种漏洞非常困难，因为这完全是浏览器的正常功能。如果要限制iframe的话，微软自己在IE里实现了iframe的一个security属性，可以限制框架页面里脚本的执行。也许还有其他的方法可以来对抗，但是，就不是我们今天要讨论的话题了。</P>
+<P>&nbsp;&nbsp;&nbsp; 我虽然只是在理论上提出了Cross Iframe Trick这种威胁，但是我认为这几乎可以算成是一种漏洞类型。它是许多脚本攻击技术的结合应用技巧，而程序员又往往会忽略这些地方。所以这种威胁是真实存在的，而且是可以长期挖掘和利用的一种“漏洞类型”</P>
+<P> <br />
+PS: 本来准备拆成几篇的，不过为了完整性，还是整一篇吧！</P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-08-30
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+          <a href="https://lcx.cc/tags/%E8%B7%A8%E7%AB%99/">跨站</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AC%E8%BD%BD/">转载</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/cookie/">cookie</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/js/">js</a>
+          <a href="https://lcx.cc/tags/json/">JSON</a>
+          <a href="https://lcx.cc/tags/poc/">POC</a>
+          <a href="https://lcx.cc/tags/xss/">XSS</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E6%81%B6%E6%84%8F/">恶意</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E9%AA%97/">骗</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/458/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【技巧】联合国网站一个小小的Bug</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/456/">
+            <span class="next-text nav-default">【视频】志村大爆笑 - 保安检查员</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

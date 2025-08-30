@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>XSS解决方案系列之一：淘宝、百度、腾讯的解决方案之瑕疵 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="jiayzhan" /><meta name="description" content="XSS解决方案系列之一：淘宝、百度、腾讯的解决方案之瑕疵。好，我们进入正题，在本人过去的经验及现实工作当中总结来看，解决XSS问题需要遵循的最基本的原则是： 1. 避免用户输入的脚本再次展示于客户端之时非设计预期的执行 2. 任何时候不应该改变用户的输入 3. 何时展示何时解决 【解释一下】对于上述原则不是本人编造的，而是业界的共识（未必是我们伟大祖国的业界共识，但这确实是业界的共识），以下将分别以例证的方式说明以上三条XSS解决方案的基本原则。今天就来个倒序吧，一个一个看： 【上述原则之3】 比较容易理解，许多公司已经解决了XSS问题，但是解决的不完整，或者说不完美,有后患，以实例来看以下：" />
+<meta name="keywords" content="XSS解决方案系列之一：淘宝、百度、腾讯的解决方案之瑕疵" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3611/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="XSS解决方案系列之一：淘宝、百度、腾讯的解决方案之瑕疵" />
+<meta property="og:description" content="XSS解决方案系列之一：淘宝、百度、腾讯的解决方案之瑕疵。好，我们进入正题，在本人过去的经验及现实工作当中总结来看，解决XSS问题需要遵循的最基本的原则是： 1. 避免用户输入的脚本再次展示于客户端之时非设计预期的执行 2. 任何时候不应该改变用户的输入 3. 何时展示何时解决 【解释一下】对于上述原则不是本人编造的，而是业界的共识（未必是我们伟大祖国的业界共识，但这确实是业界的共识），以下将分别以例证的方式说明以上三条XSS解决方案的基本原则。今天就来个倒序吧，一个一个看： 【上述原则之3】 比较容易理解，许多公司已经解决了XSS问题，但是解决的不完整，或者说不完美,有后患，以实例来看以下：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3611/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-06-20T18:10:47&#43;08:00" />
+<meta property="article:modified_time" content="2013-06-20T18:40:25&#43;08:00" />
+
+<meta itemprop="name" content="XSS解决方案系列之一：淘宝、百度、腾讯的解决方案之瑕疵">
+<meta itemprop="description" content="XSS解决方案系列之一：淘宝、百度、腾讯的解决方案之瑕疵。好，我们进入正题，在本人过去的经验及现实工作当中总结来看，解决XSS问题需要遵循的最基本的原则是： 1. 避免用户输入的脚本再次展示于客户端之时非设计预期的执行 2. 任何时候不应该改变用户的输入 3. 何时展示何时解决 【解释一下】对于上述原则不是本人编造的，而是业界的共识（未必是我们伟大祖国的业界共识，但这确实是业界的共识），以下将分别以例证的方式说明以上三条XSS解决方案的基本原则。今天就来个倒序吧，一个一个看： 【上述原则之3】 比较容易理解，许多公司已经解决了XSS问题，但是解决的不完整，或者说不完美,有后患，以实例来看以下："><meta itemprop="datePublished" content="2013-06-20T18:10:47&#43;08:00" />
+<meta itemprop="dateModified" content="2013-06-20T18:40:25&#43;08:00" />
+<meta itemprop="wordCount" content="4649">
+<meta itemprop="keywords" content="XSS,百度,淘宝,腾讯,Hack,IE,IP,Net,SQL,URL,安全,编码,代码,工程师,攻击,技术,漏洞,企业,数据,搜索,网站,文件,问题,系统,中国,注入,转载," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="XSS解决方案系列之一：淘宝、百度、腾讯的解决方案之瑕疵"/>
+<meta name="twitter:description" content="XSS解决方案系列之一：淘宝、百度、腾讯的解决方案之瑕疵。好，我们进入正题，在本人过去的经验及现实工作当中总结来看，解决XSS问题需要遵循的最基本的原则是： 1. 避免用户输入的脚本再次展示于客户端之时非设计预期的执行 2. 任何时候不应该改变用户的输入 3. 何时展示何时解决 【解释一下】对于上述原则不是本人编造的，而是业界的共识（未必是我们伟大祖国的业界共识，但这确实是业界的共识），以下将分别以例证的方式说明以上三条XSS解决方案的基本原则。今天就来个倒序吧，一个一个看： 【上述原则之3】 比较容易理解，许多公司已经解决了XSS问题，但是解决的不完整，或者说不完美,有后患，以实例来看以下："/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">XSS解决方案系列之一：淘宝、百度、腾讯的解决方案之瑕疵</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-06-20" class="post-time">
+          2013-06-20
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/xss/"> XSS </a>
+            <a href="https://lcx.cc/categories/%E7%99%BE%E5%BA%A6/"> 百度 </a>
+            <a href="https://lcx.cc/categories/%E6%B7%98%E5%AE%9D/"> 淘宝 </a>
+            <a href="https://lcx.cc/categories/%E8%85%BE%E8%AE%AF/"> 腾讯 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4649 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<span><strong>【声明】</strong></span> 
+</p>
+<pre class="prettyprint lang-html">1. 只是技术研究，没有攻击哪家公司之意
+2. 本文不涉及漏洞公布，不影响以上公司的任何应用安全之相关事宜
+3. 本人没兴趣炒作，举这三大公司为例表明本人认为它们是中国互相网企业当中的佼佼者，也容易被更多的人读懂
+4. 如果您觉得我的文章影响了你的公司的某个方面，请以邮件的形式告知我，我将修改本文
+5. 本文未经本人以书面形式同意，禁止其它网站转载，本文格式，诚请编辑修订，以增加可读性。</pre>
+<p style="text-indent:2em;">
+	<span style="color:#009900;"><strong>好，我们进入正题，在本人过去的经验及现实工作当中总结来看，解决XSS问题需要遵循的最基本的原则是：</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	<span>1. 避免用户输入的脚本再次展示于客户端之时非设计预期的执行</span> 
+</p>
+<p style="text-indent:2em;">
+	<span>2. 任何时候不应该改变用户的输入</span> 
+</p>
+<p style="text-indent:2em;">
+	<span>3. 何时展示何时解决</span> 
+</p>
+<p style="text-indent:2em;">
+	<span><strong>【解释一下】</strong></span><span>对于上述原则不是本人编造的，而是业界的共识（未必是我们伟大祖国的业界共识，但这确实是业界的共识），以下将分别以例证的方式说明以上三条XSS解决方案的基本原则。今天就来个倒序吧，一个一个看：</span> 
+</p>
+<p style="text-indent:2em;">
+	<span><span><strong>【上述原则之3】</strong> 比较容易理解，许多公司已经解决了XSS问题，但是解决的不完整，或者说不完美,有后患，以实例来看以下：</span></span> 
+</p>
+<p style="text-indent:2em;">
+	<span>步骤：</span> 
+</p>
+<p style="text-indent:2em;">
+	<span>1) 打开www.soso.com</span> 
+</p>
+<p style="text-indent:2em;">
+	<span>2) 输入字符串：159753125521&lt;script&gt;alert(“‘”)&lt;/script&gt;</span> 
+</p>
+<p style="text-indent:2em;">
+	<span>3) 打开资源文件，如下图：</span> 
+</p>
+<p style="text-align:center;">
+	<a href="/file/old/2442_1.jpg" target="_blank"><img alt="" src="/file/old/2442_1.jpg" width="780" height="72" /></a> 
+</p>
+<p style="text-indent:2em;">
+	<span><strong>图中的部分代码:</strong></span> 
+</p>
+<pre class="prettyprint lang-html">&lt;script&gt;var __kw = '159753125521%3A%3Cscript%3Ealert%28%22%27%22%29%3C%2Fscript%3E',__kw8 =encodeURIComponent("159753125521:&lt;script&gt;alert(\"'\")&lt;\/script&gt;")...</pre>
+<p style="text-indent:2em;">
+	<span>可以看出，代码片段中的编码(此处的编码是指：Encoding或者叫转义)从解决问题的原则角度来说，有点早，毕竟：变量<strong>__kw</strong>将在何时使用，何处使用，你可能在编码(此处的编码是指：写代码)的时候可以预料，但是随着时间的推移，可能会被其它的开发人员使用，使用的语法环境是否适合使用URL+Javascript编码<span>(此处的编码是指：</span><span>Encoding或者叫转义</span><span>)</span>就很难说了。</span> 
+</p>
+<p style="text-indent:2em;">
+	<span><strong>【上述原则之2】 </strong>我们提供的应用平台应该是这样的：</span> 
+</p>
+<p style="text-indent:2em;">
+	<span>1. 允许用户输入任何值而不影响本应用的正常运行，也不改变输入的输入，至少不应该让用户感觉到你改变了用户的输入</span> 
+</p>
+<p style="text-indent:2em;">
+	<span>2. 出于对应用设计的考虑，禁止用户输入特定的保留字符，对于此种情况，应用平台理应以友好的方式告知用户以提示用户不要输入不可以接受的字符，而不是直接改变用户的输入而用户觉得莫名其妙,比如淘宝网,打开淘宝首页，按以下步骤进行：</span> 
+</p>
+<p style="text-indent:2em;">
+	<span>1)  打开www.taobao.com</span> 
+</p>
+<p style="text-indent:2em;">
+	<span>2)  字符串：159753125521&lt;script&gt;alert(“‘”)&lt;/script&gt;</span> 
+</p>
+<p style="text-indent:2em;">
+	<span>3)  在淘宝的输入框里输入以上2)字符串（此类例子，我一般使用Google Chrome浏览，不同浏览器有可能在处理URL时有不同的方式），你也可以在Chrome里直接运行以下URL：</span> 
+</p>
+<pre class="prettyprint lang-html">http://s.taobao.com/search?q=159753125521&lt;script&gt;alert("'")&lt;/script&gt;</pre>
+<p style="text-indent:2em;">
+	<span>得到的结果是搜索框的搜索值变成了：159753125521 script alert( ) /script，截图如下：</span> 
+</p>
+<p style="text-align:center;">
+	<a href="/file/old/2443_2.jpg" target="_blank"><img alt="" src="/file/old/2443_2.jpg" width="780" height="183" /></a> 
+</p>
+<p style="text-indent:2em;">
+	<span>其资源文件里也同样如此，截图如下：</span> 
+</p>
+<p style="text-align:center;">
+	<a href="/file/old/2444_3.jpg" target="_blank"><img alt="" src="/file/old/2444_3.jpg" width="780" height="306" /></a> 
+</p>
+<p style="text-indent:2em;">
+	<span>以上表明，淘宝在处理XSS问题时，因为方法不当而改变了用户的输入。</span><span></span> 
+</p>
+<p style="text-indent:2em;">
+	<span><span><strong>【上述原则之1】</strong> 意思也不难理解，这个问题比较敏感，如果我举出一个例子似乎就意味着这地方有漏洞，有没有办法举出一个例子却是一个几乎不能被利用的漏洞呢？ 貌似有，步骤：</span></span> 
+</p>
+<p style="text-indent:2em;">
+	<span>1） 打开www.baidu.com</span> 
+</p>
+<p style="text-indent:2em;">
+	<span>2）输入字符串 &lt;script&gt;alert(“‘”)&lt;/script&gt;//&lt;!–159753159753</span> 
+</p>
+<p style="text-indent:2em;">
+	<span>3）点击搜索，观察现象，细节我就不分析了，现象上看，貌似某处的被字符串 // 或者&lt;!– 起了作用而导致后续代码被注释，我只是猜测啊，不负责的，仅供交流。</span> 
+</p>
+<p style="text-indent:2em;">
+	<span><strong>结果是这样的:</strong></span> 
+</p>
+<p style="text-align:center;">
+	<img alt="" src="/file/old/2445_4.jpg" width="670" height="196" /> 
+</p>
+<p style="text-indent:2em;">
+	<span><strong>正确的提示页应该是：</strong></span> 
+</p>
+<p style="text-align:center;">
+	<a href="/file/old/2446_5.jpg" target="_blank"><img alt="" src="/file/old/2446_5.jpg" width="780" height="261" /></a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://www.freebuf.com/articles/web/9928.html" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3611/" target="_blank">XSS解决方案系列之一：淘宝、百度、腾讯的解决方案之瑕疵</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3608/" target="_blank">XSS解决方案系列之二：知其所以然—浏览器是如是解码的</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3607/" target="_blank">XSS解决方案系列之三: 例解过后，再回首您正在维护的产品</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3585/" target="_blank">XSS解决方案系列之四：关于编码</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3610/" target="_blank">防御XSS的七条原则</a> 
+</p>
+<p>
+	<strong>各种吐槽：</strong> 
+</p>
+<p style="text-indent:2em;">
+	葙守 (5级) 90后安全爱好者 2013-05-28 1楼
+</p>
+<p style="text-indent:2em;">
+	来看看！！
+</p>
+<p style="text-indent:2em;">
+	anlfi (1级) ??????????????????????????... 2013-05-28 2楼
+</p>
+<p style="text-indent:2em;">
+	昨天Freebuf 掉线是怎么回事
+</p>
+<p style="text-indent:2em;">
+	wp 重置了又木有 我还玩了一下
+</p>
+<p style="text-indent:2em;">
+	FB客服 (3级) FreebuF官方客服 2013-05-28
+</p>
+<p style="text-indent:2em;">
+	@anlfi 昨天晚上由于freebuf某SA误操作，修改了网站的文件宿主权限，导致wp-config.php文件无法读取，对此造成的不便表示道歉，经过管理团队的一番教育，该SA泪流满面表示痛改前非，深刻忏悔，并表示下次不会再犯同类错误。
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-05
+</p>
+<p style="text-indent:2em;">
+	@FB客服 昨天发现我荣升为四级，今天早上一看，掉级了，哈哈哈，这系统好智能啊。
+</p>
+<p style="text-indent:2em;">
+	test 2013-05-28 3楼
+</p>
+<p style="text-indent:2em;">
+	该评论已被和谐，如有反对意见，请提出相应数据证明。 by FB客服
+</p>
+<p style="text-indent:2em;">
+	诚实弟 2013-05-28 4楼
+</p>
+<p style="text-indent:2em;">
+	估计被日了
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-05-28
+</p>
+<p style="text-indent:2em;">
+	@诚实弟 无论如何，咱们都不要说脏话或者攻击类的话，在我们GFW的环境下，你我都是在裸奔。互相尊重利大于弊。
+</p>
+<p style="text-indent:2em;">
+	dig my girl 2013-05-28 5楼
+</p>
+<p style="text-indent:2em;">
+	业务规模 和 不安全指数成正比.
+</p>
+<p style="text-indent:2em;">
+	除非从“头”开始就遵循安全标准。 否则这些技术上的弥补。 只能饮鸩止渴. 而且个人经验，lz说的这些“大头”。 没一家聘请了足够的“苦力”替他们扫地。很多重要业务上都存在很明显的问题。安全与否，那些底层的娃娃最了解。当然这也没法，天高皇帝远，况且还是“土皇帝”， 能做到这样也算庆幸了。
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-05-28
+</p>
+<p style="text-indent:2em;">
+	@dig my girl 嗯，确实是这样，许多问题从一开始遵循安全标准并实施到开发流程当中当然是理想的。如果已经用老方法做了，补救的办法也不是没有，工作量之大可以想象，但是这个工作量的付出是必需必要且值得的。个人觉得“安全意识”是根本问题，许多公司注重问题的挖掘而往往忽略了解决方案的系统性研究，这是高层需要改变的观念问题，与员工技术水平无关，员工只能做老总觉得应该做的事儿。
+</p>
+<p style="text-indent:2em;">
+	global_hacker (3级) 2013-05-28 6楼
+</p>
+<p style="text-indent:2em;">
+	哈哈哈 不错 思路 是有的但是你说的不一定 存在 xss 这个要测试才知道了
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-05-28
+</p>
+<p style="text-indent:2em;">
+	@global_hacker 你可千万别以此钻研出个漏洞出来，与我无关呦！呵呵
+</p>
+<p style="text-indent:2em;">
+	robert 2013-05-29 7楼
+</p>
+<p style="text-indent:2em;">
+	这文章写的貌似有点太监了，看的不是特明白。
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-05-29
+</p>
+<p style="text-indent:2em;">
+	@robert 嗯，我是假设您是一个企业的应用安全工作者（有人俗称甲方应用安全工程师），有一定XSS问题的发掘及解决经验的才容易理解。有问题可以讨论，我一有空会给你。
+</p>
+<p style="text-indent:2em;">
+	netbutless (1级) 2013-05-29 8楼
+</p>
+<p style="text-indent:2em;">
+	xss应该是在model而非view解决的事
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-05-29
+</p>
+<p style="text-indent:2em;">
+	@netbutless 不完全同意，XSS的问题应该在Model考虑，解决上是一定要在View层完成的，否则后患无穷的。我计划会写几篇系列文章来逐步阐述我个人观点，供参考。
+</p>
+<p style="text-indent:2em;">
+	kussa 2013-05-30
+</p>
+<p style="text-indent:2em;">
+	@netbutless 还真是要在view完成。咱不玩那虚头巴脑的，直接说我的看法：一来如果在model层做过滤或转义，有可能影响正常逻辑，这个是没必要的损失；二来从管理上，把规范设定成要求在view做转移，更容易定位问题和查找责任人，哪个页面出问题就找哪个view的维护者，特别是对存储型XSS的控制更是这样；三来，在view上做控制更容易把控制措施统一抽象，然后集成在框架中解决，对具体开发同学的依赖小，而在model中的话实现起来更容易五花八门，可能需要要求每个开发都要理解。
+</p>
+<p style="text-indent:2em;">
+	sabu 2013-05-30
+</p>
+<p style="text-indent:2em;">
+	@jiayzhan @kussa 赞同，不过如果真正过滤xss，何不自己建立安全框架，各业务统一调用？最佳实践是一方面，但是一定要强制开发在设计时就要有引入安全框架的概念。
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-05-30
+</p>
+<p style="text-indent:2em;">
+	@kussa 嗯，需要统一的解决方案来供view层实现者调用。能遇到在解决方案方面的内行真是快事儿，呵呵呵
+</p>
+<p style="text-indent:2em;">
+	kussa 2013-05-30
+</p>
+<p style="text-indent:2em;">
+	@kussa @jiayzhan 额，楼上客气了，据我所知至少在阿里这些所谓的解决方案都是很成熟的，应届生干上个半年SDL支持也完全能达到这样的认识，所以我还真不敢说是内行。内行是能把这些认识去push到实践中的人，很多时候开会讨论包括开发在内都认可的东西，到了实践层面就多了很多麻烦，所以能够把安全解决方案和开发的习惯、流程、制度融在一起的才是高手，那要对问题有很深的认识才行，我就是个门外汉。而百度腾讯在这方面也丝毫不差。
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-05-30
+</p>
+<p style="text-indent:2em;">
+	@kussa 呵呵，我没想说哪家公司做的不好，关于SDL的实施是个系统工程，细节问题较多，知识与知识运用就如牛郎星与织女星，相隔甚远。而硅谷的许多公司却用的极其成熟，但硅谷的那套拿到中国来，却难以被中高层接受,所以，国内的大企业在应用安全方面没有不合格的员工，只有不合格的体制。
+</p>
+<p style="text-indent:2em;">
+	Ecore (1级) 2013-05-29 9楼
+</p>
+<p style="text-indent:2em;">
+	1、验证用户输入，如长度限制、格式限制、字符白名单
+</p>
+<p style="text-indent:2em;">
+	2、设置正确的 content-type与编码，如 返回json格式数据的接口
+</p>
+<p style="text-indent:2em;">
+	3、在输出的时候做转义处理，使用白名单的机制做转义，像ESAPI的方式
+</p>
+<p style="text-indent:2em;">
+	4、对富文本可以考虑 anti-samy ,HTMLPurify
+</p>
+<p style="text-indent:2em;">
+	还有些特殊情况，特殊对待..
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-05-29
+</p>
+<p style="text-indent:2em;">
+	@Ecore 您好， 您所述的1、4是解决输入验证的，，2、3是解决XSS问题的。我之前有文章说到输入验证，输入验证可以解决许多潜在的安全攻击，但它不是解决XSS问题的终极解决方案。
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-05-29 10楼
+</p>
+<p style="text-indent:2em;">
+	百度解决问题的速度真是快，也不知道谢我一下，不大度呀。呵呵
+</p>
+<p style="text-indent:2em;">
+	kussa 2013-05-30 11楼
+</p>
+<p style="text-indent:2em;">
+	这样的方式并非淘宝编码规范中的防XSS解决方案，应该是开发在修复漏洞时case by case的随意修复，不具备普遍性，所以用我认为这个来评论公司层面的解决方案并不合适。
+</p>
+<p style="text-indent:2em;">
+	另外根据我的感受，soso的研发和腾讯整体风格也有些不一样，所以我不负责任的认为用soso的case来在公司层面评论腾讯的解决方案也不太合适。
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-05-30
+</p>
+<p style="text-indent:2em;">
+	@kussa @kussa 嗯，赞成您的观点，以点代面是不正确的，本文只是为举例而举例，举知名公司的例子容易被所有的人读懂，仅此而已。本文由于涉及到公司，所以声明：禁止转载，我也看了，除了本站，无其它网站转载。
+</p>
+<p style="text-indent:2em;">
+	kussa 2013-05-30
+</p>
+<p style="text-indent:2em;">
+	@jiayzhan 如果像你所说这样，建议举典型例子，比如淘宝商品、店铺、交易等页面的。腾讯的也最好选择个qq.com的，这样让大家看起来更加有代表性，也更加严谨。
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-05-30
+</p>
+<p style="text-indent:2em;">
+	@kussa 如果这样会有法律问题，见谅。
+</p>
+<p style="text-indent:2em;">
+	kussa 2013-05-30
+</p>
+<p style="text-indent:2em;">
+	@jiayzhan 哈哈，有意思。
+</p>
+<p style="text-indent:2em;">
+	hackwz 2013-05-31 12楼
+</p>
+<p style="text-indent:2em;">
+	请问下大牛，sql注入能否也在view层进行控制？
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-01
+</p>
+<p style="text-indent:2em;">
+	@hackwz 不敢称牛。单纯考虑SQL注入问题，在数据访问层解决，只要我们使用绑定变量方式进行数据访问，基本不会导致SQL注入问题。如果一定要使用非绑定变量方式，你需要使用白名单方式固定可接受无风险的来自于用户输入的SQL语句子句。之所以说单纯考虑SQL注入问题是因为我有前文提到输入验证，通过输入验证可以一定程度上避免SQL注入攻击。在解决安全问题上，通常要考虑系统性风险，从而有选择的采取多个辅助措施，输入验证就是其中一种。
+</p>
+<p style="text-indent:2em;">
+	Dante (1级) archer &amp; 讨厌复杂的东西 2013-05-31 13楼
+</p>
+<p style="text-indent:2em;">
+	这个文章应该有下文，感觉像太监一样。。。
+</p>
+<p style="text-indent:2em;">
+	意犹未尽。
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-01
+</p>
+<p style="text-indent:2em;">
+	@Dante 是的，目前是铺垫，关于XSS问题之所以数年来经久不衰，就是因为缺乏对她的系统性认识，没有从根本上了解她，后续关于XSS问题的博文可能比较晦涩能看懂却较难理解运用，但解决复杂问题本身就得对问题有深入理解，然后才可以简单解决。个人见解，如有冒昧见谅。
+</p>
+<p style="text-indent:2em;">
+	hackwz 2013-06-01 14楼
+</p>
+<p style="text-indent:2em;">
+	@jiayzhan 受益非浅，感谢前辈指点，希望能有更多精彩的文章！
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-02
+</p>
+<p style="text-indent:2em;">
+	@hackwz 真正技术文章从下篇文章开始，到目前为止说的都是理念多于技术。谢谢关注。
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">jiayzhan</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-06-20
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/xss/">XSS</a>
+          <a href="https://lcx.cc/tags/%E7%99%BE%E5%BA%A6/">百度</a>
+          <a href="https://lcx.cc/tags/%E6%B7%98%E5%AE%9D/">淘宝</a>
+          <a href="https://lcx.cc/tags/%E8%85%BE%E8%AE%AF/">腾讯</a>
+          <a href="https://lcx.cc/tags/hack/">Hack</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A0%81/">编码</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E7%A8%8B%E5%B8%88/">工程师</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E4%BC%81%E4%B8%9A/">企业</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%90%9C%E7%B4%A2/">搜索</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E4%B8%AD%E5%9B%BD/">中国</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%85%A5/">注入</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AC%E8%BD%BD/">转载</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3612/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">[渗透技巧]python脚本处理伪静态注入</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3610/">
+            <span class="next-text nav-default">防御XSS的七条原则</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

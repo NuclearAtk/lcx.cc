@@ -1,0 +1,2790 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>3389 远程桌面 Mstsc RDP协议详细解析 (上) - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="3389 远程桌面 Mstsc.exe RDP 协议详细解析，3389解析，3389协议，3389协议解析，3389协议详细解析，3389远程桌面Mstsc.exe协议解析RDP，Mstsc.exe解析，Mstsc.exe协议，Mstsc.exe协议解析，Mstsc.exe协议详细解析，RDP 解析，RDP 协议，RDP 协议解析，RDP 协议详细解析，Windows 远程协议详细解析，Windows 远程终端服务协议解析，Windows 远程终端服务协议详解，Windows 远程终端服务协议详细解析，Windows 远程终端协议详细解析，Windows 终端服务协议详细解析，Windows 终端协议详细解析，远程终端服务协议详细解析，远程终端协议，远程终端协议详解，远程终端协议详细解析，远程桌面解析，远程桌面协议，远程桌面协议解析，远程桌面协议详细解析。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="3389 远程桌面 Mstsc.exe RDP 协议详细解析,3389解析,3389协议,3389协议解析,3389协议详细解析,3389远程桌面Mstsc.exe协议解析RDP,Mstsc.exe解析,Mstsc.exe协议,Mstsc.exe协议解析,Mstsc.exe协议详细解析,RDP 解析,RDP 协议,RDP 协议解析,RDP 协议详细解析,Windows 远程协议详细解析,Windows 远程终端服务协议解析,Windows 远程终端服务协议详解,Windows 远程终端服务协议详细解析,Windows 远程终端协议详细解析,Windows 终端服务协议详细解析,Windows 终端协议详细解析,远程终端服务协议详细解析,远程终端协议,远程终端协议详解,远程终端协议详细解析,远程桌面解析,远程桌面协议,远程桌面协议解析,远程桌面协议详细解析,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/936/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="3389 远程桌面 Mstsc RDP协议详细解析 (上)" />
+<meta property="og:description" content="3389 远程桌面 Mstsc.exe RDP 协议详细解析，3389解析，3389协议，3389协议解析，3389协议详细解析，3389远程桌面Mstsc.exe协议解析RDP，Mstsc.exe解析，Mstsc.exe协议，Mstsc.exe协议解析，Mstsc.exe协议详细解析，RDP 解析，RDP 协议，RDP 协议解析，RDP 协议详细解析，Windows 远程协议详细解析，Windows 远程终端服务协议解析，Windows 远程终端服务协议详解，Windows 远程终端服务协议详细解析，Windows 远程终端协议详细解析，Windows 终端服务协议详细解析，Windows 终端协议详细解析，远程终端服务协议详细解析，远程终端协议，远程终端协议详解，远程终端协议详细解析，远程桌面解析，远程桌面协议，远程桌面协议解析，远程桌面协议详细解析。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/936/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-11-15T18:36:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-11-15T18:36:00&#43;08:00" />
+
+<meta itemprop="name" content="3389 远程桌面 Mstsc RDP协议详细解析 (上)">
+<meta itemprop="description" content="3389 远程桌面 Mstsc.exe RDP 协议详细解析，3389解析，3389协议，3389协议解析，3389协议详细解析，3389远程桌面Mstsc.exe协议解析RDP，Mstsc.exe解析，Mstsc.exe协议，Mstsc.exe协议解析，Mstsc.exe协议详细解析，RDP 解析，RDP 协议，RDP 协议解析，RDP 协议详细解析，Windows 远程协议详细解析，Windows 远程终端服务协议解析，Windows 远程终端服务协议详解，Windows 远程终端服务协议详细解析，Windows 远程终端协议详细解析，Windows 终端服务协议详细解析，Windows 终端协议详细解析，远程终端服务协议详细解析，远程终端协议，远程终端协议详解，远程终端协议详细解析，远程桌面解析，远程桌面协议，远程桌面协议解析，远程桌面协议详细解析。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-11-15T18:36:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-11-15T18:36:00&#43;08:00" />
+<meta itemprop="wordCount" content="8841">
+<meta itemprop="keywords" content="协议,远程,远程桌面,exe,IE,Windows,本地,程序,端口,服务,服务器,加密,解密,客户端,密码,密钥,命令,模块,破解,设备,数据,网络,系统," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="3389 远程桌面 Mstsc RDP协议详细解析 (上)"/>
+<meta name="twitter:description" content="3389 远程桌面 Mstsc.exe RDP 协议详细解析，3389解析，3389协议，3389协议解析，3389协议详细解析，3389远程桌面Mstsc.exe协议解析RDP，Mstsc.exe解析，Mstsc.exe协议，Mstsc.exe协议解析，Mstsc.exe协议详细解析，RDP 解析，RDP 协议，RDP 协议解析，RDP 协议详细解析，Windows 远程协议详细解析，Windows 远程终端服务协议解析，Windows 远程终端服务协议详解，Windows 远程终端服务协议详细解析，Windows 远程终端协议详细解析，Windows 终端服务协议详细解析，Windows 终端协议详细解析，远程终端服务协议详细解析，远程终端协议，远程终端协议详解，远程终端协议详细解析，远程桌面解析，远程桌面协议，远程桌面协议解析，远程桌面协议详细解析。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">3389 远程桌面 Mstsc RDP协议详细解析 (上)</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-11-15" class="post-time">
+          2010-11-15
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E5%8D%8F%E8%AE%AE/"> 协议 </a>
+            <a href="https://lcx.cc/categories/%E8%BF%9C%E7%A8%8B/"> 远程 </a>
+            <a href="https://lcx.cc/categories/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/"> 远程桌面 </a>
+            
+          </div>
+        <span class="more-meta"> 约 8841 字 </span>
+          <span class="more-meta"> 预计阅读 18 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>&nbsp;&nbsp;&nbsp; 这是前一段时间想模拟(3389 远程桌面 Mstsc.exe RDP 协议)做一个蜜罐系统，用来记录各种各样的攻击资料，甚至自己模拟数据流弄个吓人的画面，哈哈哈哈。以下是当时找到的资料，请看下边的详细内容。</P>
+<P><B>RDP</B><B>协议详细解析（一）</B><B></B></P>
+<P align=center><B>RDP</B><B>协议详细解析</B></P>
+<P align=left>一 前言</P>
+<P align=left>二 概述</P>
+<P align=left>三 同络层次</P>
+<P align=left>四 各连接模块说明</P>
+<P align=left>五 各功能模块说明</P>
+<P align=left>六 rdpwin结构、数据流说明</P>
+<P align=left>七 总结</P>
+<P align=left>一、前言</P>
+<P align=left>&nbsp;&nbsp;&nbsp; windows从NT开始提供终端服务，它是微软买来的网络协议技术(Citrix)，服务器端要安装、配置，客户端要连接程序。终端服务使任何一台有权限的终端机，用已知的账号登录服务器，可以使用账号内的资源，包括软件，硬件资源；同时，在协议升级后，客户端连接后可以使用本地的资源，包括本地打印机、声音本地回放，本地磁盘资源和本地硬件接口。所有的计算都在服务器端进行，客户端只需要处理网络连接、接收数据、界面显示和设备数据输出。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 目前，关于RDP服务的linux客户端程序有winconnect，linrdp，rdesktop，前两个没有源码，但redsktop已经由原来的个人开发后公开代码演变成现在的项目组开发。由于项目的跨平台开发需要，我们在开始时进行过单独的协议破解工作，破解后，我们的程序在原来的RDP4.0基础上扩展到5.1，实现了16位颜色，声音本地回放， 映射本地打印机。对于当前的终端机，这些功能完全满足需要，因此其他功能暂不便破解实现。为防患RDP协议的升级而影响我们破解而得的终端程序的功能性，需要对RDP协议的变化进行跟踪，对et-rdesktop进行优化、完善。鉴于当前的工作安排，将跟踪redsktop项目的进展，以提炼功能为我所用和完善现有程序。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 3389 远程桌面 Mstsc.exe RDP 协议详细解析，3389解析，3389协议，3389协议解析，3389协议详细解析，3389远程桌面Mstsc.exe协议解析RDP，Mstsc.exe解析，Mstsc.exe协议，Mstsc.exe协议解析，Mstsc.exe协议详细解析，RDP 解析，RDP 协议，RDP 协议解析，RDP 协议详细解析，Windows 远程协议详细解析，Windows 远程终端服务协议解析，Windows 远程终端服务协议详解，Windows 远程终端服务协议详细解析，Windows 远程终端协议详细解析，Windows 终端服务协议详细解析，Windows 终端协议详细解析，远程终端服务协议详细解析，远程终端协议，远程终端协议详解，远程终端协议详细解析，远程桌面解析，远程桌面协议，远程桌面协议解析，远程桌面协议详细解析。</P>
+<P align=left>二、概述</P>
+<P align=left>1 版本功能说明：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; RDP协议在终端服务推出后已有四个版本，4.0、5.0、5.1、5.2。一般来说，版本是根据windows的版本确定的。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 从客户端的角度来说，5.X版本间提供的功能差别不是很大，相对于4.0版本，它提供了用户带密码直接登录、客户端驱动器资源映射、客户端音频回放、最高24位色显示和符合FIPS加密级别连接。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 另外，从4.0协议开始变提供的客户羰功能有：高、中、低三种数据加密级别，客户端自定义初始登录环境，客户端打印机映射，客户端LPT端口映射，客户端com端口映射，剪贴板映射，客户登录的个性化设置(包括键盘、显示界面大小等)。</P>
+<P align=left>2、协议层次说明：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 通过破解研究，我们掌握了RDP协议的基本层次结构。基本上，RDP协议的每一层次上都标示出其层内的数据长度值。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 对于层次划分，主要是指RDP协议网络功能数据传送时通常都包含的各层次，而对于各层次内所实现的单层次连接等功能将做为单独的模块来进行阐述。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 网络连接层：RDP协议建立在TCP/IP协议之上，由于传输的数据量比较大，因此在协议的底层首先定义一层网络连接层。它定义了一个完事的RDP数据逻辑包，以避免由于网络包长度过长而被分割使数据丢失。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; ISO数据层：在网络连接层之上是ISO数据层，它表示RDP数据的正常连接通信。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 虚拟通道层：在ISO数据层之上，RDP协议定义一个虚拟通道层，用以拆分标示不同虚拟通道的数据，加快客户端处理速度，节省占用网络接口的时间。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 加密解密层：在虚拟通道层之上，RDP定义一个数据加密解密层。此层用于对所有的功能数据进行加密、解密处理。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 功能数据层：在加密解密层之上是功能数据，画面信息，本地资源转换，声音数据，打印数据等所有的功能数据信息都在此层进行处理。另外，根据数据类型的不同，这些数据都有各自不同层次的分割，他们的内部层次结构将在各个功能模块中进行阐述。</P>
+<P align=left>3 其它说明：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 本协议解析中所提到的各层次结构都是指RDP功能数据正常传送时的各底层结构，在功能数据传送前的各层次的建立连接过程及其结构、实现都归于模块实现来进行说明。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 对于服务器端的各种设置以及个版本间的内部实现差异请看RDP帮助文档，以及rdpwin开发文档。</P>
+<P align=left>4 连接过程说明：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 1) 客户端连接服务器</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 2) ISO数据层建立连接</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 3) 发送初始协议相关信息，接收加密、解密密钥</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 4) 虚拟通道申请</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 5) 加密形式发送客户端系统信息，同时验证加密协议</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 6) 平台软件证书验证</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 7) 各功能建立连接，各功能数据传输，功能实现</P>
+<P align=left>三、网络层次：</P>
+<P align=left>1 网络连接层：</P>
+<P align=left>在RDP协议网络实现连接中，本层的数据格式是固定的。</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD width=79>
+<P align=center>内容</P></TD>
+<TD width=144>
+<P align=center>协议版本号</P></TD>
+<TD width=60>
+<P align=center>保留</P></TD>
+<TD width=285>
+<P align=center>此逻辑包长度</P></TD></TR>
+<TR>
+<TD width=79>
+<P align=center>字节数</P></TD>
+<TD width=144>
+<P align=center>1</P></TD>
+<TD width=60>
+<P align=center>1</P></TD>
+<TD width=285>
+<P align=center>2</P></TD></TR>
+<TR>
+<TD width=79>
+<P align=center>值</P></TD>
+<TD width=144>
+<P align=center>当前版本皆是3</P></TD>
+<TD width=60>
+<P align=center>0</P></TD>
+<TD width=285>
+<P align=center>逻辑长度，从版本号开始到本包结束</P></TD></TR></TBODY></TABLE></P>
+<P align=left>2 ISO数据层：</P>
+<P align=left>在RDP功能数据网络传输中，本层的数据格式是固定的。</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD width=79>
+<P align=center>内容</P></TD>
+<TD width=205>
+<P align=center>单层数据长度</P></TD>
+<TD width=155>
+<P align=center>ISO包类型</P></TD>
+<TD width=60>
+<P align=center>标志</P></TD></TR>
+<TR>
+<TD width=79>
+<P align=center>字节数</P></TD>
+<TD width=205>
+<P align=center>1</P></TD>
+<TD width=155>
+<P align=center>1</P></TD>
+<TD width=60>
+<P align=center>1</P></TD></TR>
+<TR>
+<TD width=79>
+<P align=center>值</P></TD>
+<TD width=205>
+<P align=center>2，从下字节开始计算</P></TD>
+<TD width=155>
+<P align=center>0xf0，表示数据</P></TD>
+<TD width=60>
+<P align=center>0x80</P></TD></TR></TBODY></TABLE></P>
+<P align=left>3 虚拟通道层：</P>
+<P align=left>&nbsp;&nbsp; 虚拟通道层用于在正常的网络连接数据之上，中个虚拟通道的功能数据。此层次的连接另见初始连接模块与通道申请模块，在此只说明正常数据连接时的层次结构。</P>
+<P align=left>&nbsp;&nbsp; 1) 结构信息：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD width=79>
+<P align=center>内容</P></TD>
+<TD width=96>
+<P align=center>类型</P></TD>
+<TD width=132>
+<P align=center>虚拟通道个数</P></TD>
+<TD width=156>
+<P align=center>虚拟通道号</P></TD>
+<TD width=96>
+<P align=center>标志</P></TD></TR>
+<TR>
+<TD width=79>
+<P align=center>字节数</P></TD>
+<TD width=96>
+<P align=center>1</P></TD>
+<TD width=132>
+<P align=center>2</P></TD>
+<TD width=156>
+<P align=center>2</P></TD>
+<TD width=96>
+<P align=center>1</P></TD></TR>
+<TR>
+<TD width=79>
+<P align=center>值</P></TD>
+<TD width=96>
+<P align=center>0x64/0x68</P></TD>
+<TD width=132>
+<P align=center>0x0001</P></TD>
+<TD width=156>
+<P align=center>0x03eb至0x03ee</P></TD>
+<TD width=96>
+<P align=center>0x70/0xf0</P></TD></TR></TBODY></TABLE></P>
+<P align=left>&nbsp;2) 类型说明：</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp; 0x64：客户端发送数据</P>
+<P align=left>0x68：客户端接收数据</P>
+<P align=left>&nbsp;&nbsp; 3) 用户号说明：</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 本次连接的用户号，服务器发送的是0x0001；客户端所发送的值是初始连接时请示通道后服务器同意开通的虚拟个数。</P>
+<P align=left>&nbsp;&nbsp; 4) 虚拟通道号说明：</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 虚拟通道号是本层次以上所发送的功能数据所在的虚拟通道号，其由初始连接通道申请建立时确定。</P>
+<P align=left>&nbsp;&nbsp; 5) 标志说明：</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 客户端发送的标志为0x70；服务器端发送的标志，当功能数据是图像是(由通道号识别)，其值为0x70，当功能数据是其它数据时，其值为0xf0。</P>
+<P align=left>4 加密解密层：</P>
+<P align=left>加密解密层用于对网络连接中所发送、接收的数据进行加密、解密。为保证数据和系统的安全性，对网络数据进行加密传输是比较常用且必然的，RDP协议在此层对实际的功能数据进行加密。</P>
+<P align=left>1) 结构信息：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 width=607 border=0>
+<TBODY>
+<TR>
+<TD width=79>
+<P align=center>内容</P></TD>
+<TD width=204>
+<P align=center>单层及层上数据总长度</P></TD>
+<TD width=96>
+<P align=center>加密标志</P></TD>
+<TD width=132>
+<P align=center>未知标志</P></TD>
+<TD width=96>
+<P align=center>数字签名</P></TD></TR>
+<TR>
+<TD width=79>
+<P align=center>字节数</P></TD>
+<TD width=204>
+<P align=center>1-2</P></TD>
+<TD width=96>
+<P align=center>2</P></TD>
+<TD width=132>
+<P align=center>2</P></TD>
+<TD width=96>
+<P align=center>8</P></TD></TR>
+<TR>
+<TD width=79>
+<P align=center>值</P></TD>
+<TD width=204>
+<P align=center>从下字节开始计算</P></TD>
+<TD width=96>
+<P align=center>0x0800</P></TD>
+<TD width=132>
+<P align=center>0x1000/0x0203</P></TD>
+<TD width=96>
+<P align=center>顺序取得</P></TD></TR></TBODY></TABLE></P>
+<P align=left>2) 总长度说明：</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp; 若长度大于0x7f，则长度以两字节表示，并按位与0x8000。这是由于版本升级赞成的格式不统一，长度不定，当前版本认为长度值不大于0x0fff(4095)因此只用长度值并按位与0x8000实现版本兼容，在版本升级后会以0x8x表示长度值的字节数，其中8表示非1字节，x表示具体的字节个数。</P>
+<P align=left>3) 加密标志说明：</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RDP协议要求在正常的功能连接实现之前，首先licence认证，其标志为0x8xxx，且其后数据不同于正常功能数据传输式的加密层格式，可以视licence认证为加密解密层的建立连接过程。另外功能数据的加密、解密的密钥是在初始连接时获得的，而加密解密功能的实现由加密、解密模块阐述。</P>
+<P align=left>4) 未知标志说明：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 服务器端发送过来的未知数据有两种，目前不知其意，客户端在发送数据时将其置为0x0000值。</P>
+<P align=left>5) 数字签名说明：</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp; 对所有的加密数据在此放置8字节数字签名。其值由RC4会话键值和功能数据经过SHA运算和MD5运算得到。</P>
+<P align=left>5 功能数据层：</P>
+<P align=left>功能数据是客户端与服务器进行交互的真正数据。他们都有各自固定格式，连接、控制方式，具体情况见各功能模块的说明。</P>
+<P align=left>根据当前我们所掌握的信息，RDP协议将图像信息、声音信息、设备信息、剪贴板内容都各自以单一的虚拟通道进行传送，而打印机映射，磁盘映射，端口映射都做为设备信息的内容进行处理。限于当前左上角工作和项目工作的限度，设备信息中只考虑了打印机映射的部分，对于打印机信息与其他的设备相关的信息没有进行有效隔离区分，而本协议说明中相关的连接信息、数据传送都只认为是打印机映射的内容。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 3389 远程桌面 Mstsc.exe RDP 协议详细解析，3389解析，3389协议，3389协议解析，3389协议详细解析，3389远程桌面Mstsc.exe协议解析RDP，Mstsc.exe解析，Mstsc.exe协议，Mstsc.exe协议解析，Mstsc.exe协议详细解析，RDP 解析，RDP 协议，RDP 协议解析，RDP 协议详细解析，Windows 远程协议详细解析，Windows 远程终端服务协议解析，Windows 远程终端服务协议详解，Windows 远程终端服务协议详细解析，Windows 远程终端协议详细解析，Windows 终端服务协议详细解析，Windows 终端协议详细解析，远程终端服务协议详细解析，远程终端协议，远程终端协议详解，远程终端协议详细解析，远程桌面解析，远程桌面协议，远程桌面协议解析，远程桌面协议详细解析。</P>
+<P align=left>四、各连接模块说明：</P>
+<P align=left>1 ISO连接模块：</P>
+<P align=left>在客户端与服务器的网络套接口建立之后，需要首先建立RDP协议底层连接，得到连接确认后才能正常通信。具体实现如下：</P>
+<P align=left>1) 连接过程说明：</P>
+<P align=left>初始连接时，在网络套接口TCP连接建立之后中，客户端首先进行连接请求，当收到连接确认后表示网络连接层连接建立，随后开始传送RDP数据。</P>
+<P align=left>2) 连接请求通信数据：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD width=84>
+<P align=left>内容</P></TD>
+<TD width=192>
+<P align=left>层内数据长度</P></TD>
+<TD width=120>
+<P align=left>RDP包类型</P></TD>
+<TD width=72>
+<P align=left>未知1</P></TD>
+<TD width=72>
+<P align=left>未知2</P></TD>
+<TD width=60>
+<P align=left>标志</P></TD>
+<TD width=60>
+<P align=left>其它</P></TD></TR>
+<TR>
+<TD width=84>
+<P align=left>字节数</P></TD>
+<TD width=192>
+<P align=left>1</P></TD>
+<TD width=120>
+<P align=left>1</P></TD>
+<TD width=72>
+<P align=left>2</P></TD>
+<TD width=72>
+<P align=left>2</P></TD>
+<TD width=60>
+<P align=left>1</P></TD>
+<TD width=60>
+<P align=left>不定</P></TD></TR>
+<TR>
+<TD width=84>
+<P align=left>值</P></TD>
+<TD width=192>
+<P align=left>从下一字节开始计算</P></TD>
+<TD width=120>
+<P align=left>0xd0或0xe0</P></TD>
+<TD width=72>
+<P align=left>0x0000</P></TD>
+<TD width=72>
+<P align=left>另见</P></TD>
+<TD width=60>
+<P align=left>0x00</P></TD>
+<TD width=60>
+<P align=left>另见</P></TD></TR></TBODY></TABLE></P>
+<P align=left>3) RDP包类型说明：</P>
+<P align=left>0xe0：客户端连接请求</P>
+<P align=left>0xd0：服务器确认连接</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 4) 未知数据2说明：</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0x0000：客户端请求连接的值</P>
+<P align=left>0x1234：服务器确认请求的值</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 5) 其它数据说明：</P>
+<P align=left>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; win2003客户端在请求时附带了如下字符—“Cookie: mstshash=Administrator0x0d0x0e”，目前不知其意。其中Administrator为自动登录名，当其长度超过12字节时，只保留前12字节，其它字符都固定不变。</P>
+<P align=left>2 协议信息初始模块：</P>
+<P align=left>当基本的RDP连接建立后，需要进行客户端与服务器的系统环境、RDP连接环境的信息交流与连接确认。</P>
+<P align=left>2-1) 发送包结构：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD width=211>
+<P align=left>内容</P></TD>
+<TD width=168>
+<P align=left>字节数</P></TD>
+<TD width=168>
+<P align=left>值</P></TD></TR>
+<TR>
+<TD width=211>
+<P align=left>ISO数据层及以下</P></TD>
+<TD width=168>
+<P align=left>XX</P></TD>
+<TD width=168>
+<P align=left>XX</P></TD></TR>
+<TR>
+<TD width=211>
+<P align=left>协议信息初始发送标志</P></TD>
+<TD width=168>
+<P align=left>2</P></TD>
+<TD width=168>
+<P align=left>0x7f65</P></TD></TR>
+<TR>
+<TD width=211>
+<P align=left>其后数据长度</P></TD>
+<TD width=168>
+<P align=left>3</P></TD>
+<TD width=168>
+<P align=left>0x82 0xlength</P></TD></TR>
+<TR>
+<TD width=211>
+<P align=left>第一部分未知数据</P></TD>
+<TD width=168>
+<P align=left>7</P></TD>
+<TD width=168>
+<P align=left>04 00 04 00 01 01 ff</P></TD></TR>
+<TR>
+<TD width=211>
+<P align=left>第二部分未知数据</P></TD>
+<TD width=168>
+<P align=left>XX</P></TD>
+<TD width=168>
+<P align=left>三组协议参数</P></TD></TR>
+<TR>
+<TD width=211>
+<P align=left>第三部分未知数据</P></TD>
+<TD width=168>
+<P align=left>XX</P></TD>
+<TD width=168>
+<P align=left>四种连接参数</P></TD></TR></TBODY></TABLE></P>
+<P align=left>2-1-1) 第一部分未知数据结构：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD width=189>
+<P align=left>内容</P></TD>
+<TD width=189>
+<P align=left>字节数</P></TD>
+<TD width=189>
+<P align=left>值</P></TD></TR>
+<TR>
+<TD width=189>
+<P align=left>Calling domain</P></TD>
+<TD width=189>
+<P align=left>2</P></TD>
+<TD width=189>
+<P align=left>0x0400</P></TD></TR>
+<TR>
+<TD width=189>
+<P align=left>Called domain</P></TD>
+<TD width=189>
+<P align=left>2</P></TD>
+<TD width=189>
+<P align=left>0x0400</P></TD></TR>
+<TR>
+<TD width=189>
+<P align=left>未知数据</P></TD>
+<TD width=189>
+<P align=left>2</P></TD>
+<TD width=189>
+<P align=left>0x0101</P></TD></TR>
+<TR>
+<TD width=189>
+<P align=left>标志</P></TD>
+<TD width=189>
+<P align=left>1</P></TD>
+<TD width=189>
+<P align=left>0xff</P></TD></TR></TBODY></TABLE></P>
+<P align=left>2-1-2) 第二部分未知数据结构：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 width=600 border=0>
+<TBODY>
+<TR>
+<TD width=144>
+<P align=left>内容</P></TD>
+<TD width=240>
+<P align=left>字节数</P></TD>
+<TD width=216>
+<P align=left>值</P></TD></TR>
+<TR>
+<TD width=144>
+<P align=left>协议适合参数</P></TD>
+<TD width=240>
+<P align=left>2+4+7*(2+参数值占字节数)</P></TD>
+<TD width=216>
+<P align=left>标志，长度，8个参数值</P></TD></TR>
+<TR>
+<TD width=144>
+<P align=left>协议最小参数</P></TD>
+<TD width=240>
+<P align=left>2+4+7*(2+参数值占字节数)</P></TD>
+<TD width=216>
+<P align=left>标志，长度，8个参数值</P></TD></TR>
+<TR>
+<TD width=144>
+<P align=left>协议最大参数</P></TD>
+<TD width=240>
+<P align=left>2+4+7*(2+参数值占字节数)</P></TD>
+<TD width=216>
+<P align=left>标志，长度，8个参数值</P></TD></TR></TBODY></TABLE></P>
+<P align=left>说明：3组参数标志都是0x30，8个参数值的标志都是0x20</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD width=187>
+<P align=left>含义</P></TD>
+<TD width=84>
+<P align=left>适合值</P></TD>
+<TD width=120>
+<P align=left>最小值</P></TD>
+<TD width=177>
+<P align=left>最大值</P></TD></TR>
+<TR>
+<TD width=187>
+<P align=left>虚拟通道数</P></TD>
+<TD width=84>
+<P align=left>0x22=34</P></TD>
+<TD width=120>
+<P align=left>0x01</P></TD>
+<TD width=177>
+<P align=left>0xffff</P></TD></TR>
+<TR>
+<TD width=187>
+<P align=left>用户数</P></TD>
+<TD width=84>
+<P align=left>0x02</P></TD>
+<TD width=120>
+<P align=left>0x01</P></TD>
+<TD width=177>
+<P align=left>0xfc17=64535</P></TD></TR>
+<TR>
+<TD width=187>
+<P align=left>Token值</P></TD>
+<TD width=84>
+<P align=left>0x00</P></TD>
+<TD width=120>
+<P align=left>0x01</P></TD>
+<TD width=177>
+<P align=left>0xffff</P></TD></TR>
+<TR>
+<TD width=187>
+<P align=left>优先数(priorities)</P></TD>
+<TD width=84>
+<P align=left>0x01</P></TD>
+<TD width=120>
+<P align=left>0x01</P></TD>
+<TD width=177>
+<P align=left>0x01</P></TD></TR>
+<TR>
+<TD width=187>
+<P align=left>遍及数(throughput)</P></TD>
+<TD width=84>
+<P align=left>0x00</P></TD>
+<TD width=120>
+<P align=left>0x00</P></TD>
+<TD width=177>
+<P align=left>0x00</P></TD></TR>
+<TR>
+<TD width=187>
+<P align=left>顶点数(height)</P></TD>
+<TD width=84>
+<P align=left>0x01</P></TD>
+<TD width=120>
+<P align=left>0x01</P></TD>
+<TD width=177>
+<P align=left>0x01</P></TD></TR>
+<TR>
+<TD width=187>
+<P align=left>网络逻辑数据包长度</P></TD>
+<TD width=84>
+<P align=left>0xffff</P></TD>
+<TD width=120>
+<P align=left>0x0420=1056</P></TD>
+<TD width=177>
+<P align=left>0xffff=65535</P></TD></TR>
+<TR>
+<TD width=187>
+<P align=left>版本号</P></TD>
+<TD width=84>
+<P align=left>0x02</P></TD>
+<TD width=120>
+<P align=left>0x02</P></TD>
+<TD width=177>
+<P align=left>0x02</P></TD></TR></TBODY></TABLE></P>
+<P align=left>2-1-3) 第三部分未知数据结构：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD width=211>
+<P align=left>内容</P></TD>
+<TD width=96>
+<P align=left>字节数</P></TD>
+<TD width=261>
+<P align=left>值</P></TD></TR>
+<TR>
+<TD width=211>
+<P align=left>本部分标志、数据长度</P></TD>
+<TD width=96>
+<P align=left>4</P></TD>
+<TD width=261>
+<P align=left>0x04 0x82 0xlength1</P></TD></TR>
+<TR>
+<TD width=211>
+<P align=left>未知数据1</P></TD>
+<TD width=96>
+<P align=left>4</P></TD>
+<TD width=261>
+<P align=left>00 05 00 14 7c 00 01</P></TD></TR>
+<TR>
+<TD width=211>
+<P align=left>余下的数据长度</P></TD>
+<TD width=96>
+<P align=left>2</P></TD>
+<TD width=261>
+<P align=left>0x8000|length2</P></TD></TR>
+<TR>
+<TD width=211>
+<P align=left>未知数据2</P></TD>
+<TD width=96>
+<P align=left>8</P></TD>
+<TD width=261>
+<P align=left>00 08 00 10 00 01 c0 00</P></TD></TR>
+<TR>
+<TD width=211>
+<P align=left>未知数据3</P></TD>
+<TD width=96>
+<P align=left>4</P></TD>
+<TD width=261>
+<P align=left>44 75 63 61 –“Duca”</P></TD></TR>
+<TR>
+<TD width=211>
+<P align=left>4组数据</P></TD>
+<TD width=96>
+<P align=left>XX</P></TD>
+<TD width=261>
+<P align=left>各功能模块连接信息</P></TD></TR></TBODY></TABLE></P>
+<P align=left>2-1-3-1：基本信息</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=82>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=297>
+<P align=left>值(反字节存储)</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>标志</P></TD>
+<TD vAlign=top width=82>
+<P align=left>2</P></TD>
+<TD vAlign=top width=297>
+<P align=left>0xc001</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>长度</P></TD>
+<TD vAlign=top width=82>
+<P align=left>2</P></TD>
+<TD vAlign=top width=297>
+<P align=left>这一组数据的长度</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>Licence版本</P></TD>
+<TD vAlign=top width=82>
+<P align=left>2</P></TD>
+<TD vAlign=top width=297>
+<P align=left>1，4，5；lincence标志升级</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>未知数据1</P></TD>
+<TD vAlign=top width=82>
+<P align=left>2</P></TD>
+<TD vAlign=top width=297>
+<P align=left>0x0008</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>窗口宽度、高度</P></TD>
+<TD vAlign=top width=82>
+<P align=left>4</P></TD>
+<TD vAlign=top width=297>
+<P align=left>宽度，高度</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>未知数据2</P></TD>
+<TD vAlign=top width=82>
+<P align=left>4</P></TD>
+<TD vAlign=top width=297>
+<P align=left>0xca01，0xaa03</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>Keylayout</P></TD>
+<TD vAlign=top width=82>
+<P align=left>4</P></TD>
+<TD vAlign=top width=297>
+<P align=left>0x00000409</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>客户端系统组件数</P></TD>
+<TD vAlign=top width=82>
+<P align=left>4</P></TD>
+<TD vAlign=top width=297>
+<P align=left>419，2195，2462</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>客户端机器名</P></TD>
+<TD vAlign=top width=82>
+<P align=left>32</P></TD>
+<TD vAlign=top width=297>
+<P align=left>2字节存储1个字符</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>未知数据3</P></TD>
+<TD vAlign=top width=82>
+<P align=left>12</P></TD>
+<TD vAlign=top width=297>
+<P align=left>0x04，0x00，0x0c各四个字节</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>未知数据4</P></TD>
+<TD vAlign=top width=82>
+<P align=left>64</P></TD>
+<TD vAlign=top width=297>
+<P align=left>都是0</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>未知数据5</P></TD>
+<TD vAlign=top width=82>
+<P align=left>8</P></TD>
+<TD vAlign=top width=297>
+<P align=left>01 ca 01 00 00 00 00 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>图形颜色位(最大值)</P></TD>
+<TD vAlign=top width=82>
+<P align=left>2</P></TD>
+<TD vAlign=top width=297>
+<P align=left>24，16，15，8</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>未知数据6(疑最小位)</P></TD>
+<TD vAlign=top width=82>
+<P align=left>2</P></TD>
+<TD vAlign=top width=297>
+<P align=left>07 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>未知数据7</P></TD>
+<TD vAlign=top width=82>
+<P align=left>4</P></TD>
+<TD vAlign=top width=297>
+<P align=left>01 00 00 00</P></TD></TR></TBODY></TABLE></P>
+<P align=left>基本信息返回值多少且固定，认为在具体连接时有更多返回信息。加密信息需要取回加密级别与密钥；通道信息则返回基本图形信息的通道号和其他虚拟通道号，需要另行申请。</P>
+<P align=left>2-2-1-1) 基本信息</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=189>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=189>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>标志</P></TD>
+<TD vAlign=top width=189>
+<P align=left>2</P></TD>
+<TD vAlign=top width=189>
+<P align=left>0xc001</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>本组信息长度</P></TD>
+<TD vAlign=top width=189>
+<P align=left>2</P></TD>
+<TD vAlign=top width=189>
+<P align=left>0x0008(固定)</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>未知数据1</P></TD>
+<TD vAlign=top width=189>
+<P align=left>2</P></TD>
+<TD vAlign=top width=189>
+<P align=left>0x0004</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>未知数据2</P></TD>
+<TD vAlign=top width=189>
+<P align=left>2</P></TD>
+<TD vAlign=top width=189>
+<P align=left>0x0008</P></TD></TR></TBODY></TABLE></P>
+<P align=left>2-2-1-2) 通道信息</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=211>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=144>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=213>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=211>
+<P align=left>标志</P></TD>
+<TD vAlign=top width=144>
+<P align=left>2</P></TD>
+<TD vAlign=top width=213>
+<P align=left>0xc003</P></TD></TR>
+<TR>
+<TD vAlign=top width=211>
+<P align=left>本组信息长度</P></TD>
+<TD vAlign=top width=144>
+<P align=left>2</P></TD>
+<TD vAlign=top width=213>
+<P align=left>XX</P></TD></TR>
+<TR>
+<TD vAlign=top width=211>
+<P align=left>需要单独开辟的通道数</P></TD>
+<TD vAlign=top width=144>
+<P align=left>2</P></TD>
+<TD vAlign=top width=213>
+<P align=left>若无需申请则不存在</P></TD></TR>
+<TR>
+<TD vAlign=top width=211>
+<P align=left>通道号组</P></TD>
+<TD vAlign=top width=144>
+<P align=left>通道数*2</P></TD>
+<TD vAlign=top width=213>
+<P align=left>2个字节存放一个通道号</P></TD></TR>
+<TR>
+<TD vAlign=top width=211>
+<P align=left>空闲字节</P></TD>
+<TD vAlign=top width=144>
+<P align=left>2</P></TD>
+<TD vAlign=top width=213>
+<P align=left>0x0000</P></TD></TR></TBODY></TABLE></P>
+<P align=left>2-2-1-3) 加密信息</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 width=571 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=106>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=276>
+<P align=left>值</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>标志</P></TD>
+<TD vAlign=top width=106>
+<P align=left>2</P></TD>
+<TD vAlign=top width=276>
+<P align=left>0xc002</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>本组信息长度</P></TD>
+<TD vAlign=top width=106>
+<P align=left>2</P></TD>
+<TD vAlign=top width=276>
+<P align=left>XX</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>加密位长度</P></TD>
+<TD vAlign=top width=106>
+<P align=left>4</P></TD>
+<TD vAlign=top width=276>
+<P align=left>1-&gt;40位，2-&gt;128位</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>加密级别</P></TD>
+<TD vAlign=top width=106>
+<P align=left>4</P></TD>
+<TD vAlign=top width=276>
+<P align=left>1-&gt;低，2-&gt;中，3-&gt;高</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>服务器随机数长度</P></TD>
+<TD vAlign=top width=106>
+<P align=left>4</P></TD>
+<TD vAlign=top width=276>
+<P align=left>目前都是32字节</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>RSA信息长度</P></TD>
+<TD vAlign=top width=106>
+<P align=left>4</P></TD>
+<TD vAlign=top width=276>
+<P align=left>从随机数结束开始</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>服务器端随机数</P></TD>
+<TD vAlign=top width=106>
+<P align=left>32</P></TD>
+<TD vAlign=top width=276>
+<P align=left>XX</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>RSA信息</P></TD>
+<TD vAlign=top width=106>
+<P align=left>XX</P></TD>
+<TD vAlign=top width=276>
+<P align=left>XX</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>密钥信息的类型</P></TD>
+<TD vAlign=top width=106>
+<P align=left>4</P></TD>
+<TD vAlign=top width=276>
+<P align=left>1-&gt;RDP4或0x80000002-&gt;X.509</P></TD></TR></TBODY></TABLE></P>
+<P align=left>2-2-1-3-1) RDP4类型密钥</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=118>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=261>
+<P align=left>值</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>未知数据1</P></TD>
+<TD vAlign=top width=118>
+<P align=left>8</P></TD>
+<TD vAlign=top width=261>
+<P align=left>01 00 00 00&nbsp; 01 00 00 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>公钥标志</P></TD>
+<TD vAlign=top width=118>
+<P align=left>2</P></TD>
+<TD vAlign=top width=261>
+<P align=left>0x0006</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>长度</P></TD>
+<TD vAlign=top width=118>
+<P align=left>2</P></TD>
+<TD vAlign=top width=261>
+<P align=left>length公钥信息</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>RSA1标志</P></TD>
+<TD vAlign=top width=118>
+<P align=left>4</P></TD>
+<TD vAlign=top width=261>
+<P align=left>52 53 41 31 --“RSA1”</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>公钥模数+衬垫长度</P></TD>
+<TD vAlign=top width=118>
+<P align=left>4</P></TD>
+<TD vAlign=top width=261>
+<P align=left>48 00 00 00-&gt;&nbsp; =64+8</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>未知数据2</P></TD>
+<TD vAlign=top width=118>
+<P align=left>8</P></TD>
+<TD vAlign=top width=261>
+<P align=left>00 02 00 00 3f 00 00 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>公钥指数(exponent)</P></TD>
+<TD vAlign=top width=118>
+<P align=left>4</P></TD>
+<TD vAlign=top width=261>
+<P align=left>01 00 01 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>公钥模数值(modulu)</P></TD>
+<TD vAlign=top width=118>
+<P align=left>64</P></TD>
+<TD vAlign=top width=261>
+<P align=left>XX</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>公钥衬垫值(pad)</P></TD>
+<TD vAlign=top width=118>
+<P align=left>8</P></TD>
+<TD vAlign=top width=261>
+<P align=left>00 00 00 00&nbsp;&nbsp; 00 00 00 00 </P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>公钥签名标志，长度</P></TD>
+<TD vAlign=top width=118>
+<P align=left>4</P></TD>
+<TD vAlign=top width=261>
+<P align=left>0x0008&nbsp; length(=0x48)</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>签名模数值 </P></TD>
+<TD vAlign=top width=118>
+<P align=left>64</P></TD>
+<TD vAlign=top width=261>
+<P align=left>XX</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>签名衬垫值</P></TD>
+<TD vAlign=top width=118>
+<P align=left>8</P></TD>
+<TD vAlign=top width=261>
+<P align=left>00 00 00 00&nbsp; 00 00 00 00 </P></TD></TR></TBODY></TABLE></P>
+<P align=left>2-2-1-3-1-2) 公钥信息数字签名—X509类型密钥</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=82>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=297>
+<P align=left>值</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>证书个数</P></TD>
+<TD vAlign=top width=82>
+<P align=left>4</P></TD>
+<TD vAlign=top width=297>
+<P align=left>不少于2个</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>无效证书</P></TD>
+<TD vAlign=top width=82>
+<P align=left>XX</P></TD>
+<TD vAlign=top width=297>
+<P align=left>若证书大于2个，都 被忽略，无效</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>CA证书 </P></TD>
+<TD vAlign=top width=82>
+<P align=left>XX</P></TD>
+<TD vAlign=top width=297>
+<P align=left>XX</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>服务器证书 </P></TD>
+<TD vAlign=top width=82>
+<P align=left>XX</P></TD>
+<TD vAlign=top width=297>
+<P align=left>XX</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>Padding值</P></TD>
+<TD vAlign=top width=82>
+<P align=left>16</P></TD>
+<TD vAlign=top width=297>
+<P align=left>全是0</P></TD></TR></TBODY></TABLE></P>
+<P align=left>对于win2003操作系统，当授权组件被更改时，此处的密钥变为X509类型。对于客户端，只提取服务器证书部分的相关信息，以得到服务器随机数。由于对于密钥的处理是采用通用的加密算法与标准，因此在此不予深入的讨论。</P>
+<P align=left>3 通道申请模块</P>
+<P align=left>对于RDP连接，各种功能数据都是通过单独的虚拟通道传输的。初始连接后，在进一步的信息通信之前，需要开辟相应的通道。</P>
+<P align=left>1) 过程说明</P>
+<P align=left>客户端首先发送一个建立连接独立空间请求，再发送一个用户绑定请求，若服务器同意，将发送用户绑定确认，且含有需要申请的虚拟通道总数totalchannel。随后客户端申请虚拟通道。虚拟通道号从1001+2=1003开始到1001+totalchannel结束，每次申请都应返回一个申请结果。</P>
+<P align=left>2) 建立连接独立空间请求结构：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD width=91>
+<P align=left>内容</P></TD>
+<TD width=144>
+<P align=left>ISO数据层以下</P></TD>
+<TD width=106>
+<P align=left>请求标示</P></TD>
+<TD width=114>
+<P align=left>高度值</P></TD>
+<TD width=114>
+<P align=left>间距</P></TD></TR>
+<TR>
+<TD width=91>
+<P align=left>字节数</P></TD>
+<TD width=144>
+<P align=left>XX</P></TD>
+<TD width=106>
+<P align=left>1</P></TD>
+<TD width=114>
+<P align=left>2</P></TD>
+<TD width=114>
+<P align=left>2</P></TD></TR>
+<TR>
+<TD width=91>
+<P align=left>值</P></TD>
+<TD width=144>
+<P align=left>XX</P></TD>
+<TD width=106>
+<P align=left>0x04</P></TD>
+<TD width=114>
+<P align=left>0x0001</P></TD>
+<TD width=114>
+<P align=left>0x0001</P></TD></TR></TBODY></TABLE></P>
+<P align=left>3) 用户绑定请求结构：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD width=110>
+<P align=left>内容</P></TD>
+<TD width=189>
+<P align=left>ISO数据层以下</P></TD>
+<TD width=108>
+<P align=left>请求标示</P></TD></TR>
+<TR>
+<TD width=110>
+<P align=left>字节数</P></TD>
+<TD width=189>
+<P align=left>XX</P></TD>
+<TD width=108>
+<P align=left>1</P></TD></TR>
+<TR>
+<TD width=110>
+<P align=left>值</P></TD>
+<TD width=189>
+<P align=left>XX</P></TD>
+<TD width=108>
+<P align=left>0x28</P></TD></TR></TBODY></TABLE></P>
+<P align=left>4) 用户绑定确认结构：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD width=87>
+<P align=left>内容</P></TD>
+<TD width=153>
+<P align=left>ISO数据层以下</P></TD>
+<TD width=108>
+<P align=left>请求标志</P></TD>
+<TD width=144>
+<P align=left>虚拟通道总数</P></TD></TR>
+<TR>
+<TD width=87>
+<P align=left>字节数</P></TD>
+<TD width=153>
+<P align=left>XX</P></TD>
+<TD width=108>
+<P align=left>2</P></TD>
+<TD width=144>
+<P align=left>2</P></TD></TR>
+<TR>
+<TD width=87>
+<P align=left>值</P></TD>
+<TD width=153>
+<P align=left>XX</P></TD>
+<TD width=108>
+<P align=left>0x2e00</P></TD>
+<TD width=144>
+<P align=left>totalchannel</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5) 申请虚拟通道号结构</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 width=583 border=0>
+<TBODY>
+<TR>
+<TD width=79>
+<P align=left>内容</P></TD>
+<TD width=168>
+<P align=left>ISO数据层以下</P></TD>
+<TD width=96>
+<P align=left>申请标志</P></TD>
+<TD width=132>
+<P align=left>虚拟通道总数</P></TD>
+<TD width=108>
+<P align=left>虚拟通道号</P></TD></TR>
+<TR>
+<TD width=79>
+<P align=left>字节数</P></TD>
+<TD width=168>
+<P align=left>XX</P></TD>
+<TD width=96>
+<P align=left>1</P></TD>
+<TD width=132>
+<P align=left>2</P></TD>
+<TD width=108>
+<P align=left>2</P></TD></TR>
+<TR>
+<TD width=79>
+<P align=left>值</P></TD>
+<TD width=168>
+<P align=left>XX</P></TD>
+<TD width=96>
+<P align=left>0x38</P></TD>
+<TD width=132>
+<P align=left>totalchannel</P></TD>
+<TD width=108>
+<P align=left>Num,</P></TD></TR></TBODY></TABLE></P>
+<P align=left>6) 通道申请确认结：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 width=607 border=0>
+<TBODY>
+<TR>
+<TD width=79>
+<P align=left>内容</P></TD>
+<TD width=144>
+<P align=left>ISO数据层以下</P></TD>
+<TD width=96>
+<P align=left>确认标志</P></TD>
+<TD width=96>
+<P align=left>通道总数</P></TD>
+<TD width=96>
+<P align=left>申请通道</P></TD>
+<TD width=96>
+<P align=left>申请通道</P></TD></TR>
+<TR>
+<TD width=79>
+<P align=left>字节数</P></TD>
+<TD width=144>
+<P align=left>XX</P></TD>
+<TD width=96>
+<P align=left>2</P></TD>
+<TD width=96>
+<P align=left>2</P></TD>
+<TD width=96>
+<P align=left>2</P></TD>
+<TD width=96>
+<P align=left>2</P></TD></TR>
+<TR>
+<TD width=79>
+<P align=left>值</P></TD>
+<TD width=144>
+<P align=left>XX</P></TD>
+<TD width=96>
+<P align=left>0x3e00</P></TD>
+<TD width=96>
+<P align=left>totall</P></TD>
+<TD width=96>
+<P align=left>num</P></TD>
+<TD width=96>
+<P align=left>num</P></TD></TR></TBODY></TABLE></P>
+<P align=left>4 系统初始连接模块：</P>
+<P align=left>当通道申请各部分通过后，开始系统登录的初始连接。从此数据包开始，所以虚拟通道层以上的网络数据都需要加密，详细的加密功能实现请参见加密模块。登录的网络信息结构如下：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 width=636 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=132>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=156>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=348>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=132>
+<P align=left>加密层及以下</P></TD>
+<TD vAlign=top width=156>
+<P align=left>XX</P></TD>
+<TD vAlign=top width=348>
+<P align=left>XX</P></TD></TR>
+<TR>
+<TD vAlign=top width=132>
+<P align=left>空闲字节</P></TD>
+<TD vAlign=top width=156>
+<P align=left>4</P></TD>
+<TD vAlign=top width=348>
+<P align=left>0x00000000</P></TD></TR>
+<TR>
+<TD vAlign=top width=132>
+<P align=left>自动登录标志</P></TD>
+<TD vAlign=top width=156>
+<P align=left>4</P></TD>
+<TD vAlign=top width=348>
+<P align=left>正常：0x33，自动：0x28</P></TD></TR>
+<TR>
+<TD vAlign=top width=132>
+<P align=left>域名长度</P></TD>
+<TD vAlign=top width=156>
+<P align=left>2</P></TD>
+<TD vAlign=top width=348>
+<P align=left>若空为0，有值则乘2</P></TD></TR>
+<TR>
+<TD vAlign=top width=132>
+<P align=left>用户名长度</P></TD>
+<TD vAlign=top width=156>
+<P align=left>2</P></TD>
+<TD vAlign=top width=348>
+<P align=left>若空为0，有值则乘2</P></TD></TR>
+<TR>
+<TD vAlign=top width=132>
+<P align=left>密码长度</P></TD>
+<TD vAlign=top width=156>
+<P align=left>2</P></TD>
+<TD vAlign=top width=348>
+<P align=left>若空为0，有值则乘2</P></TD></TR>
+<TR>
+<TD vAlign=top width=132>
+<P align=left>登录程序长度</P></TD>
+<TD vAlign=top width=156>
+<P align=left>2</P></TD>
+<TD vAlign=top width=348>
+<P align=left>若空为0，有值则乘2</P></TD></TR>
+<TR>
+<TD vAlign=top width=132>
+<P align=left>登录路径长度</P></TD>
+<TD vAlign=top width=156>
+<P align=left>2</P></TD>
+<TD vAlign=top width=348>
+<P align=left>若空为0，有值则乘2</P></TD></TR>
+<TR>
+<TD vAlign=top width=132>
+<P align=left>域名值</P></TD>
+<TD vAlign=top width=156>
+<P align=left>域名长度+2</P></TD>
+<TD vAlign=top width=348>
+<P align=left>2字节反存1字符，最后为2字节为0x0000</P></TD></TR>
+<TR>
+<TD vAlign=top width=132>
+<P align=left>用户名值</P></TD>
+<TD vAlign=top width=156>
+<P align=left>用户名长度+2</P></TD>
+<TD vAlign=top width=348>
+<P align=left>2字节反存1字符，最后为2字节为0x0000</P></TD></TR>
+<TR>
+<TD vAlign=top width=132>
+<P align=left>密码字符值</P></TD>
+<TD vAlign=top width=156>
+<P align=left>密码长度+2</P></TD>
+<TD vAlign=top width=348>
+<P align=left>2字节反存1字符，最后为2字节为0x0000</P></TD></TR>
+<TR>
+<TD vAlign=top width=132>
+<P align=left>登录程序名称</P></TD>
+<TD vAlign=top width=156>
+<P align=left>登录程序长度+2</P></TD>
+<TD vAlign=top width=348>
+<P align=left>2字节反存1字符，最后为2字节为0x0000</P></TD></TR>
+<TR>
+<TD vAlign=top width=132>
+<P align=left>登录路径值</P></TD>
+<TD vAlign=top width=156>
+<P align=left>登录路径长度+2</P></TD>
+<TD vAlign=top width=348>
+<P align=left>2字节反存1字符，最后为2字节为0x0000</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5 图形连接模块：</P>
+<P align=left>在图形数据发送之前，服务器需要对此功能模块验证，验证内容是所有与图形相关的信息，包括鼠标设置、键盘输入、字体类型、画图命令格式、图形显示的各种类型。</P>
+<P align=left>根据已破解的信息显示，RDESKTOP原来并没有正确的赋值，因为它的返回值是没有固定的，对于服务器发送来的信息没有处理，而服务器在其关于图形方面的参数设置询问没有得到正确的回答时，则以固定的服务器端的参数进行设置。</P>
+<P align=left>5-1) 连接过程说明：服务器端首先发送关于图形方面的基本参数设置，客户端应该对这些设置进行反馈。此后rdesktop的处理是顺序发送同步信息，两个控制信息包，一个输入信息包，两个字体信息包；同时顺序接收一个同步信息包，两控制信息包，一个未知信息包；但redsktop并没有对接2收的信息包进行处理。</P>
+<P align=left>5-2)基本参数设2置信息包结构：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD width=163>
+<P align=left>内容</P></TD>
+<TD width=96>
+<P align=left>字节数</P></TD>
+<TD width=309>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD width=163>
+<P align=left>加密层及以下</P></TD>
+<TD width=96>
+<P align=left>XX</P></TD>
+<TD width=309>
+<P align=left>XX</P></TD></TR>
+<TR>
+<TD width=163>
+<P align=left>层后数据长度</P></TD>
+<TD width=96>
+<P align=left>2</P></TD>
+<TD width=309>
+<P align=left>XX</P></TD></TR>
+<TR>
+<TD width=163>
+<P align=left>数据类型标志</P></TD>
+<TD width=96>
+<P align=left>2</P></TD>
+<TD width=309>
+<P align=left>11 00，表示是图形信息连接确认</P></TD></TR>
+<TR>
+<TD width=163>
+<P align=left>基本通道号</P></TD>
+<TD width=96>
+<P align=left>2</P></TD>
+<TD width=309>
+<P align=left>ea 03，固定</P></TD></TR>
+<TR>
+<TD width=163>
+<P align=left>基本通道号</P></TD>
+<TD width=96>
+<P align=left>2</P></TD>
+<TD width=309>
+<P align=left>ea 03，固定(share？)</P></TD></TR>
+<TR>
+<TD width=163>
+<P align=left>未知数据1</P></TD>
+<TD width=96>
+<P align=left>2</P></TD>
+<TD width=309>
+<P align=left>01 00</P></TD></TR>
+<TR>
+<TD width=163>
+<P align=left>ASCII信息长度</P></TD>
+<TD width=96>
+<P align=left>2</P></TD>
+<TD width=309>
+<P align=left>XX</P></TD></TR>
+<TR>
+<TD width=163>
+<P align=left>基本参数长度</P></TD>
+<TD width=96>
+<P align=left>2</P></TD>
+<TD width=309>
+<P align=left>XX</P></TD></TR>
+<TR>
+<TD width=163>
+<P align=left>ASCII信息</P></TD>
+<TD width=96>
+<P align=left>长度值+1</P></TD>
+<TD width=309>
+<P align=left>52 44 50 00，r-&gt;“RDP”，s-&gt;“MSTSC”</P></TD></TR>
+<TR>
+<TD width=163>
+<P align=left>参数信息</P></TD>
+<TD width=96>
+<P align=left>2</P></TD>
+<TD width=309>
+<P align=left>r-&gt;0b 00，s-&gt;0d</P></TD></TR>
+<TR>
+<TD width=163>
+<P align=left>空位</P></TD>
+<TD width=96>
+<P align=left>2</P></TD>
+<TD width=309>
+<P align=left>30或00</P></TD></TR>
+<TR>
+<TD width=163>
+<P align=left>详细各组参数</P></TD>
+<TD width=96>
+<P align=left>组数</P></TD>
+<TD width=309>
+<P align=left>内容XX</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5-3) 详细参数信息组类别：</P>
+<P align=left>每个类型的数据前2字节为类型，然后是长度，数据。以接收到优先作例介绍。</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>类型值</P></TD>
+<TD vAlign=top width=216>
+<P align=left>说明</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>01r</P></TD>
+<TD vAlign=top width=216>
+<P align=left>通用类型(general)</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>02r</P></TD>
+<TD vAlign=top width=216>
+<P align=left>位图类型(bitmap)</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>03r</P></TD>
+<TD vAlign=top width=216>
+<P align=left>命令(order)</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>04</P></TD>
+<TD vAlign=top width=216>
+<P align=left>位图缓存(bitmap cache)</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>05</P></TD>
+<TD vAlign=top width=216>
+<P align=left>控制(control)</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>07</P></TD>
+<TD vAlign=top width=216>
+<P align=left>活动(active)</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>08r</P></TD>
+<TD vAlign=top width=216>
+<P align=left>指针(pointer)</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>09r</P></TD>
+<TD vAlign=top width=216>
+<P align=left>共享(share)</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>0ar</P></TD>
+<TD vAlign=top width=216>
+<P align=left>颜色缓存(color cache)</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>0c</P></TD>
+<TD vAlign=top width=216>
+<P align=left>未知</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>0dr</P></TD>
+<TD vAlign=top width=216>
+<P align=left>未知</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>0e</P></TD>
+<TD vAlign=top width=216>
+<P align=left>未知</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>10</P></TD>
+<TD vAlign=top width=216>
+<P align=left>未知</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>12r</P></TD>
+<TD vAlign=top width=216>
+<P align=left>未知</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>14r</P></TD>
+<TD vAlign=top width=216>
+<P align=left>未知</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>16r</P></TD>
+<TD vAlign=top width=216>
+<P align=left>未知</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>40</P></TD>
+<TD vAlign=top width=216>
+<P align=left>未知</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>00r</P></TD>
+<TD vAlign=top width=216>
+<P align=left>未知</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5-3-1) 通用类型(general-&gt;01)</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD width=122>
+<P align=left>内容</P></TD>
+<TD width=106>
+<P align=left>字节数</P></TD>
+<TD width=204>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD width=122>
+<P align=left>系统主类型</P></TD>
+<TD width=106>
+<P align=left>2</P></TD>
+<TD width=204>
+<P align=left>01 00，OS major type</P></TD></TR>
+<TR>
+<TD width=122>
+<P align=left>系统次类型</P></TD>
+<TD width=106>
+<P align=left>2</P></TD>
+<TD width=204>
+<P align=left>03 00，OS minor type</P></TD></TR>
+<TR>
+<TD width=122>
+<P align=left>协议版本号</P></TD>
+<TD width=106>
+<P align=left>2</P></TD>
+<TD width=204>
+<P align=left>02 00，protocol version</P></TD></TR>
+<TR>
+<TD width=122>
+<P align=left>空数据1</P></TD>
+<TD width=106>
+<P align=left>2</P></TD>
+<TD width=204>
+<P align=left>00 00</P></TD></TR>
+<TR>
+<TD width=122>
+<P align=left>压缩类型</P></TD>
+<TD width=106>
+<P align=left>2</P></TD>
+<TD width=204>
+<P align=left>00 00不压缩</P></TD></TR>
+<TR>
+<TD width=122>
+<P align=left>空数据2</P></TD>
+<TD width=106>
+<P align=left>2</P></TD>
+<TD width=204>
+<P align=left>1d 04</P></TD></TR>
+<TR>
+<TD width=122>
+<P align=left>更新属性</P></TD>
+<TD width=106>
+<P align=left>2</P></TD>
+<TD width=204>
+<P align=left>00 00</P></TD></TR>
+<TR>
+<TD width=122>
+<P align=left>共享属性</P></TD>
+<TD width=106>
+<P align=left>2</P></TD>
+<TD width=204>
+<P align=left>00 00</P></TD></TR>
+<TR>
+<TD width=122>
+<P align=left>压缩级别</P></TD>
+<TD width=106>
+<P align=left>2</P></TD>
+<TD width=204>
+<P align=left>00 00</P></TD></TR>
+<TR>
+<TD width=122>
+<P align=left>空数据3</P></TD>
+<TD width=106>
+<P align=left>2</P></TD>
+<TD width=204>
+<P align=left>01 01</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5-3-2) 位图类型(bitmap-&gt;02)</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=108>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=144>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>最佳颜色深度</P></TD>
+<TD vAlign=top width=108>
+<P align=left>2</P></TD>
+<TD vAlign=top width=144>
+<P align=left>协商值</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>1颜色深度</P></TD>
+<TD vAlign=top width=108>
+<P align=left>2</P></TD>
+<TD vAlign=top width=144>
+<P align=left>01 00 </P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>2颜色深度</P></TD>
+<TD vAlign=top width=108>
+<P align=left>2</P></TD>
+<TD vAlign=top width=144>
+<P align=left>01 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>3颜色深度</P></TD>
+<TD vAlign=top width=108>
+<P align=left>2</P></TD>
+<TD vAlign=top width=144>
+<P align=left>01 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>桌面宽度</P></TD>
+<TD vAlign=top width=108>
+<P align=left>2</P></TD>
+<TD vAlign=top width=144>
+<P align=left>width</P></TD></TR>
+<TR>
+<TD vAlign=top width=144>
+<P align=left>桌面高度</P></TD>
+<TD vAlign=top width=108>
+<P align=left>2</P></TD>
+<TD vAlign=top width=144>
+<P align=left>height</P></TD></TR>
+<TR>
+<TD width=144>
+<P align=left>空位1</P></TD>
+<TD width=108>
+<P align=left>2</P></TD>
+<TD width=144>
+<P align=left>00 00</P></TD></TR>
+<TR>
+<TD width=144>
+<P align=left>允许调整大小</P></TD>
+<TD width=108>
+<P align=left>2</P></TD>
+<TD width=144>
+<P align=left>01 00</P></TD></TR>
+<TR>
+<TD width=144>
+<P align=left>位图压缩</P></TD>
+<TD width=108>
+<P align=left>2</P></TD>
+<TD width=144>
+<P align=left>01 00</P></TD></TR>
+<TR>
+<TD width=144>
+<P align=left>未知数据1</P></TD>
+<TD width=108>
+<P align=left>2</P></TD>
+<TD width=144>
+<P align=left>00 00</P></TD></TR>
+<TR>
+<TD width=144>
+<P align=left>未知数据2</P></TD>
+<TD width=108>
+<P align=left>2</P></TD>
+<TD width=144>
+<P align=left>01 00</P></TD></TR>
+<TR>
+<TD width=144>
+<P align=left>空位2</P></TD>
+<TD width=108>
+<P align=left>2</P></TD>
+<TD width=144>
+<P align=left>00 00</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5-3-3) 命令(order-&gt;03)</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=96>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=168>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>Terminal desc1</P></TD>
+<TD vAlign=top width=96>
+<P align=left>16</P></TD>
+<TD vAlign=top width=168>
+<P align=left>0值</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>Terminal desc2</P></TD>
+<TD vAlign=top width=96>
+<P align=left>4</P></TD>
+<TD vAlign=top width=168>
+<P align=left>10 42 0f 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>缓存X间隔</P></TD>
+<TD vAlign=top width=96>
+<P align=left>2</P></TD>
+<TD vAlign=top width=168>
+<P align=left>01 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>缓存Y间隔</P></TD>
+<TD vAlign=top width=96>
+<P align=left>2</P></TD>
+<TD vAlign=top width=168>
+<P align=left>14 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>未知数据1</P></TD>
+<TD vAlign=top width=96>
+<P align=left>2</P></TD>
+<TD vAlign=top width=168>
+<P align=left>00 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>最大命令级别</P></TD>
+<TD vAlign=top width=96>
+<P align=left>2</P></TD>
+<TD vAlign=top width=168>
+<P align=left>01 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>字体数目</P></TD>
+<TD vAlign=top width=96>
+<P align=left>2</P></TD>
+<TD vAlign=top width=168>
+<P align=left>00 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>容量标志</P></TD>
+<TD vAlign=top width=96>
+<P align=left>2</P></TD>
+<TD vAlign=top width=168>
+<P align=left>22 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>命令支持格式</P></TD>
+<TD vAlign=top width=96>
+<P align=left>32</P></TD>
+<TD vAlign=top width=168>
+<P align=left>另见</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>文本容量标志</P></TD>
+<TD vAlign=top width=96>
+<P align=left>2</P></TD>
+<TD vAlign=top width=168>
+<P align=left>a1 06</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>未知数据2</P></TD>
+<TD vAlign=top width=96>
+<P align=left>6</P></TD>
+<TD vAlign=top width=168>
+<P align=left>00 00 40 42 0f 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>桌面缓存大小</P></TD>
+<TD vAlign=top width=96>
+<P align=left>4</P></TD>
+<TD vAlign=top width=168>
+<P align=left>40 42 0f 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>未知数据3</P></TD>
+<TD vAlign=top width=96>
+<P align=left>4</P></TD>
+<TD vAlign=top width=168>
+<P align=left>01 00 00 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>未知数据4</P></TD>
+<TD vAlign=top width=96>
+<P align=left>4</P></TD>
+<TD vAlign=top width=168>
+<P align=left>00 00 00 00</P></TD></TR></TBODY></TABLE></P>
+<P align=left>命令支持格式说明：共32个标志，只对已知标志进行说明。</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>字节位置，0-31</P></TD>
+<TD vAlign=top width=312>
+<P align=left>值含义，1代表支持，0代表不支持</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>0</P></TD>
+<TD vAlign=top width=312>
+<P align=left>Dest blt</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>1</P></TD>
+<TD vAlign=top width=312>
+<P align=left>Pat blt</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>2</P></TD>
+<TD vAlign=top width=312>
+<P align=left>Screen blt</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>3</P></TD>
+<TD vAlign=top width=312>
+<P align=left>Required for memblt</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>8</P></TD>
+<TD vAlign=top width=312>
+<P align=left>Line1</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>9</P></TD>
+<TD vAlign=top width=312>
+<P align=left>Line2</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>10</P></TD>
+<TD vAlign=top width=312>
+<P align=left>Rect</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>11</P></TD>
+<TD vAlign=top width=312>
+<P align=left>Desktop save</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>13</P></TD>
+<TD vAlign=top width=312>
+<P align=left>Memblt</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>14</P></TD>
+<TD vAlign=top width=312>
+<P align=left>Triblt</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>22</P></TD>
+<TD vAlign=top width=312>
+<P align=left>Polyline</P></TD></TR>
+<TR>
+<TD vAlign=top width=168>
+<P align=left>27</P></TD>
+<TD vAlign=top width=312>
+<P align=left>Text2</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5-3-4) 位图缓存(bitmap cache-&gt;04)</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=189>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=189>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>未使用数据1</P></TD>
+<TD vAlign=top width=189>
+<P align=left>24</P></TD>
+<TD vAlign=top width=189>
+<P align=left>0值</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>Entries</P></TD>
+<TD vAlign=top width=189>
+<P align=left>2</P></TD>
+<TD vAlign=top width=189>
+<P align=left>58 02</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>Max cell size</P></TD>
+<TD vAlign=top width=189>
+<P align=left>2</P></TD>
+<TD vAlign=top width=189>
+<P align=left>00 01</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>Entries</P></TD>
+<TD vAlign=top width=189>
+<P align=left>2</P></TD>
+<TD vAlign=top width=189>
+<P align=left>2c 01</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>Max cell size</P></TD>
+<TD vAlign=top width=189>
+<P align=left>2</P></TD>
+<TD vAlign=top width=189>
+<P align=left>00 04</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>Entries</P></TD>
+<TD vAlign=top width=189>
+<P align=left>2</P></TD>
+<TD vAlign=top width=189>
+<P align=left>06 01</P></TD></TR>
+<TR>
+<TD vAlign=top width=189>
+<P align=left>Max cell size</P></TD>
+<TD vAlign=top width=189>
+<P align=left>2</P></TD>
+<TD vAlign=top width=189>
+<P align=left>00 10, , , , , , </P></TD></TR></TBODY></TABLE></P>
+<P align=left>5-3-5) 控制(control-&gt;05)</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=84>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=132>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>Control capability</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>00 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>Remote detach</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>00 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>Control interest</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>02 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>Detach interest</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>02 00</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5-3-6) 活动(activer-&gt;07)</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=84>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=132>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>Help key</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>00 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>Help index key</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>00 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>Extended help key</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>00 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>Window active</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>00 00</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5-3-7) 指针(pointer-&gt;08)</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=84>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=132>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>Color pointer</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>01 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>Cache size</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>19 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>未知数据1</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>19 00</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5-3-8) 共享(share-&gt;09)</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=84>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=132>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>基本通道号</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>ea 03</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>未知数据1</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>7d e1</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5-3-9) 颜色缓存(color cache-&gt;0a)</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=84>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=132>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>缓存大小</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>06 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=180>
+<P align=left>未知数据1</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=132>
+<P align=left>7d e1</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5-3-10) 未知类型-&gt;d 收到：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=84>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=324>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>未知数据1</P></TD>
+<TD vAlign=top width=84>
+<P align=left>12</P></TD>
+<TD vAlign=top width=324>
+<P align=left>35 00 00 00 a1 06 00 00&nbsp; 40 42 0f 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>未知数据2</P></TD>
+<TD vAlign=top width=84>
+<P align=left>12</P></TD>
+<TD vAlign=top width=324>
+<P align=left>40 42 0f 00&nbsp; 44 e6 0a ba&nbsp; 93 53 19 ba</P></TD></TR>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>未知数据3</P></TD>
+<TD vAlign=top width=84>
+<P align=left>12</P></TD>
+<TD vAlign=top width=324>
+<P align=left>08 60 03 e1&nbsp; 6a 05 1a ba&nbsp; 4c e6 0a ba</P></TD></TR>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>未知数据4</P></TD>
+<TD vAlign=top width=84>
+<P align=left>12</P></TD>
+<TD vAlign=top width=324>
+<P align=left>4c a4 7d e1&nbsp; 08 a0 7d e1&nbsp; 01 00 00 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>未知数据5</P></TD>
+<TD vAlign=top width=84>
+<P align=left>12</P></TD>
+<TD vAlign=top width=324>
+<P align=left>08 a4 7d e1&nbsp; 00 00 00 00&nbsp; 44 e6 0a ba</P></TD></TR>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>未知数据6</P></TD>
+<TD vAlign=top width=84>
+<P align=left>12</P></TD>
+<TD vAlign=top width=324>
+<P align=left>54 f2 19 ba&nbsp; 08 a0 7d e1&nbsp; 38 e6 0a ba</P></TD></TR>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>未知数据7</P></TD>
+<TD vAlign=top width=84>
+<P align=left>12</P></TD>
+<TD vAlign=top width=324>
+<P align=left>00 00 00 00&nbsp; 08 00 0a 00&nbsp; 01 00 19 00</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5-3-11) 未知类型-&gt;12 收到：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=84>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=216>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>未知数据1</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=216>
+<P align=left>01 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>未知数据2</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=216>
+<P align=left>00 00</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5-3-12) 未知类型-&gt;14 收到：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=84>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=216>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>未知数据1</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=216>
+<P align=left>02 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>未知数据2</P></TD>
+<TD vAlign=top width=84>
+<P align=left>2</P></TD>
+<TD vAlign=top width=216>
+<P align=left>00 00</P></TD></TR></TBODY></TABLE></P>
+<P align=left>5-3-13) 未知类型-&gt;16 收到：</P>
+<P>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>内容</P></TD>
+<TD vAlign=top width=84>
+<P align=left>字节数</P></TD>
+<TD vAlign=top width=324>
+<P align=left>值(字节反存)</P></TD></TR>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>未知数据1</P></TD>
+<TD vAlign=top width=84>
+<P align=left>12</P></TD>
+<TD vAlign=top width=324>
+<P align=left>01 00 00 00&nbsp; 6e 01 00 00&nbsp; 01 00 00 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>未知数据2</P></TD>
+<TD vAlign=top width=84>
+<P align=left>12</P></TD>
+<TD vAlign=top width=324>
+<P align=left>d0 07 40 bf&nbsp; 01 b0 83 bf&nbsp; 00 00 00 00</P></TD></TR>
+<TR>
+<TD vAlign=top width=108>
+<P align=left>未知数据3</P></TD>
+<TD vAlign=top width=84>
+<P align=left>12</P></TD>
+<TD vAlign=top width=324>
+<P align=left>a4 e6 0a ba&nbsp; 5c db 4f 80&nbsp; e6 01 00 00</P></TD></TR></TBODY></TABLE></P>
+<P align=left>6打印机映射连接模块：</P>
+<P align=left>&nbsp;&nbsp;&nbsp; RDP协议当前提供映射5个设备，在我们破解过程中并没有区分出他们的区别，在此视为单一处理。打印机的连接在系统登录前完成，以配置操作系统信息。</P><STRONG><FONT color=#ff0000>
+<P align=left><STRONG><FONT color=#ff0000>由于太长了，所以分成了两部分，这是上半部分，下半部分在这里：<A href="https://lcx.cc/post/937/"><FONT color=#0000ff target="_blank">3389 远程桌面 Mstsc RDP协议详细解析(下)</FONT></A></FONT></STRONG></P></FONT></STRONG>
+<P align=left>&nbsp;&nbsp;&nbsp; 3389 远程桌面 Mstsc.exe RDP 协议详细解析，3389解析，3389协议，3389协议解析，3389协议详细解析，3389远程桌面Mstsc.exe协议解析RDP，Mstsc.exe解析，Mstsc.exe协议，Mstsc.exe协议解析，Mstsc.exe协议详细解析，RDP 解析，RDP 协议，RDP 协议解析，RDP 协议详细解析，Windows 远程协议详细解析，Windows 远程终端服务协议解析，Windows 远程终端服务协议详解，Windows 远程终端服务协议详细解析，Windows 远程终端协议详细解析，Windows 终端服务协议详细解析，Windows 终端协议详细解析，远程终端服务协议详细解析，远程终端协议，远程终端协议详解，远程终端协议详细解析，远程桌面解析，远程桌面协议，远程桌面协议解析，远程桌面协议详细解析。</P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-11-15
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/">远程桌面</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E6%9C%AC%E5%9C%B0/">本地</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+          <a href="https://lcx.cc/tags/%E8%A7%A3%E5%AF%86/">解密</a>
+          <a href="https://lcx.cc/tags/%E5%AE%A2%E6%88%B7%E7%AB%AF/">客户端</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E9%92%A5/">密钥</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E5%9D%97/">模块</a>
+          <a href="https://lcx.cc/tags/%E7%A0%B4%E8%A7%A3/">破解</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BE%E5%A4%87/">设备</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/938/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【文章】应用密码学 W.迪菲(Whitfield Diffie)</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/937/">
+            <span class="next-text nav-default">3389 远程桌面 Mstsc RDP协议详细解析 (下)</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

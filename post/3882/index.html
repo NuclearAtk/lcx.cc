@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>如何玩转Android远控（androrat） - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="╰╃清風" /><meta name="description" content="如何玩转Android远控（androrat）。关于WebView中接口隐患与手机挂马利用的引深。看我是怎样改造Android远程控制工具AndroRat。1.修改布局界面。2.配置默认远程ip和端口。3.LauncherActivity修改为运行后自动开启服务并自动返回到主界面。4.修改xml让程序不显示在最新使用的程序。0x00 搭建Android环境，对于小白来说，首先需要的开发环境是必须。" />
+<meta name="keywords" content="如何玩转Android远控（androrat）" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3882/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="如何玩转Android远控（androrat）" />
+<meta property="og:description" content="如何玩转Android远控（androrat）。关于WebView中接口隐患与手机挂马利用的引深。看我是怎样改造Android远程控制工具AndroRat。1.修改布局界面。2.配置默认远程ip和端口。3.LauncherActivity修改为运行后自动开启服务并自动返回到主界面。4.修改xml让程序不显示在最新使用的程序。0x00 搭建Android环境，对于小白来说，首先需要的开发环境是必须。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3882/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-09-17T10:40:48&#43;08:00" />
+<meta property="article:modified_time" content="2014-07-12T17:23:17&#43;08:00" />
+
+<meta itemprop="name" content="如何玩转Android远控（androrat）">
+<meta itemprop="description" content="如何玩转Android远控（androrat）。关于WebView中接口隐患与手机挂马利用的引深。看我是怎样改造Android远程控制工具AndroRat。1.修改布局界面。2.配置默认远程ip和端口。3.LauncherActivity修改为运行后自动开启服务并自动返回到主界面。4.修改xml让程序不显示在最新使用的程序。0x00 搭建Android环境，对于小白来说，首先需要的开发环境是必须。"><meta itemprop="datePublished" content="2013-09-17T10:40:48&#43;08:00" />
+<meta itemprop="dateModified" content="2014-07-12T17:23:17&#43;08:00" />
+<meta itemprop="wordCount" content="6584">
+<meta itemprop="keywords" content="Android,Rat,远控,app,IP,IPS,Java,程序,端口,服务,手机,文件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="如何玩转Android远控（androrat）"/>
+<meta name="twitter:description" content="如何玩转Android远控（androrat）。关于WebView中接口隐患与手机挂马利用的引深。看我是怎样改造Android远程控制工具AndroRat。1.修改布局界面。2.配置默认远程ip和端口。3.LauncherActivity修改为运行后自动开启服务并自动返回到主界面。4.修改xml让程序不显示在最新使用的程序。0x00 搭建Android环境，对于小白来说，首先需要的开发环境是必须。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">如何玩转Android远控（androrat）</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-09-17" class="post-time">
+          2013-09-17
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/android/"> Android </a>
+            <a href="https://lcx.cc/categories/rat/"> Rat </a>
+            <a href="https://lcx.cc/categories/%E8%BF%9C%E6%8E%A7/"> 远控 </a>
+            
+          </div>
+        <span class="more-meta"> 约 6584 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3852/" target="_blank">关于WebView中接口隐患与手机挂马利用</a>的引深
+</p>
+<p style="text-indent:2em;">
+	看我是怎样改造Android远程控制工具AndroRat
+</p>
+<p style="text-indent:2em;">
+	1.修改布局界面
+</p>
+<p style="text-indent:2em;">
+	2.配置默认远程ip和端口
+</p>
+<p style="text-indent:2em;">
+	3.LauncherActivity修改为运行后自动开启服务并自动返回到主界面
+</p>
+<p style="text-indent:2em;">
+	4.修改xml让程序不显示在最新使用的程序
+</p>
+<p style="text-indent:2em;">
+	<strong>0x00 搭建Android环境</strong>
+</p>
+<p style="text-indent:2em;">
+	对于小白来说，首先需要的开发环境是必须
+</p>
+<p style="text-indent:2em;">
+	1.eclipse （<a href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/keplersr1" target="_blank">Eclipse IDE for Java Developers</a>）
+</p>
+<p style="text-indent:2em;">
+	2.jdk （<a href="http://www.oracle.com/technetwork/cn/java/javase/downloads/index.html" target="_blank">Java Platform）</a>
+</p>
+<p style="text-indent:2em;">
+	3.sdk （<a href="http://developer.android.com/sdk/index.html" target="_blank">Android SDK</a>）
+</p>
+<p style="text-indent:2em;">
+	安装配置好后就将我们的AndroRat工程导入eclipse中
+</p>
+<p style="text-indent:2em;">
+	导入完成后看见2个工程如图：
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/3092_1.jpg" target="_blank"><img title="2个工程" alt="2个工程" src="/file/old/3092_1.jpg" width="780" height="396" /></a>
+</p>
+<p style="text-indent:2em;">
+	刚导入进来时肯定会编译报错，这时需将2个jar包引用进来 如图：
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/3093_2.jpg" target="_blank"><img title="将2个jar包引用进来" alt="将2个jar包引用进来" src="/file/old/3093_2.jpg" width="780" height="410" /></a> ?
+</p>
+<p style="text-indent:2em;">
+	其他报错如import 缺少对应包可到<a href="http://www.findjar.com/index.x" target="_blank">http://www.findjar.com/index.x</a>查找并引用
+</p>
+<p style="text-indent:2em;">
+	编译错误解决完成后就会出现黄色感叹号，这个时候2个工程就可以运行了。
+</p>
+<p style="text-indent:2em;">
+	<strong>0x01 安装androrat</strong>
+</p>
+<p style="text-indent:2em;">
+	先运行我们的服务端开启监听 默认config.txt配置端口
+</p>
+<p style="text-indent:2em;">
+	<img title="运行我们的服务端开启监听 默认config.txt配置端口" alt="运行我们的服务端开启监听 默认config.txt配置端口" src="/file/old/3094_3.jpg" width="753" height="543" />
+</p>
+<p style="text-indent:2em;">
+	运行成功后出现服务端如下：
+</p>
+<p style="text-indent:2em;">
+	<img title="服务端" alt="服务端" src="/file/old/3095_4.jpg" width="681" height="355" />
+</p>
+<p style="text-indent:2em;">
+	接着运行客户端，使用usb链接我们的手机安装app查看
+</p>
+<p style="text-indent:2em;">
+	<img title="运行客户端" alt="运行客户端" src="/file/old/3096_5.jpg" width="755" height="685" />
+</p>
+<p style="text-indent:2em;">
+	安装好后应用列表会有一个叫LogsProvider的应用，可以在如下文件里修改name
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/3097_6.jpg" target="_blank"><img title="在如下文件里修改name" alt="在如下文件里修改name" src="/file/old/3097_6.jpg" width="780" height="227" /></a>
+</p>
+<p style="text-indent:2em;">
+	接着修改LauncherActivity.class（/Androrat/src/my/app/client/LauncherActivity.java）代码让程序默认情动并运行后自动black
+</p>
+<p style="text-indent:2em;">
+	<img title="修改LauncherActivity.class代码" alt="修改LauncherActivity.class代码" src="/file/old/3098_7.jpg" width="699" height="401" />
+</p>
+<p style="text-indent:2em;">
+	Manifest修改，使其不在home最近应用里显示
+</p>
+<p style="text-indent:2em;">
+	<img title="Manifest修改" alt="Manifest修改" src="/file/old/3099_8.jpg" width="664" height="357" />
+</p>
+<p style="text-indent:2em;">
+	布局文件位置，可以自定义修改布局
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/3100_9.jpg" target="_blank"><img title="布局文件位置" alt="布局文件位置" src="/file/old/3100_9.jpg" width="780" height="439" /></a>
+</p>
+<p style="text-indent:2em;">
+	adb 安装运行客户端后，服务端如图，-手机安装程序后会自动返回到桌面，长按home也看不到该程序。
+</p>
+<p style="text-indent:2em;">
+	<img title="adb 安装运行客户端后，服务端如图" alt="adb 安装运行客户端后，服务端如图" src="/file/old/3101_10.jpg" width="682" height="353" />
+</p>
+<p style="text-indent:2em;">
+	此时整个程序可以使用了，功能挺多的就不列举了
+</p>
+<p style="text-indent:2em;">
+	<strong>0x02 引申思考</strong>
+</p>
+<p style="text-indent:2em;">
+	1.如把修改app写成服务，监听短信指定代码开启端口 （老外都这样干的）
+</p>
+<p style="text-indent:2em;">
+	2.Android里的gps功能和拍照功能有bug 这可是两个亮点功能，擦
+</p>
+<p style="text-indent:2em;">
+	3.实现程序的自动编写，屏蔽扫描杀软，自我复制和感染文件（这还是留个大牛们研究）
+</p>
+<p style="text-indent:2em;">
+	<a href="http://drops.wooyun.org/tips/572" target="_blank">[原文地址]</a>
+</p>
+<p>
+	<strong>源码下载：</strong>
+</p>
+<p style="text-indent:2em;">
+	微云：<a href="http://share.weiyun.com/9b5dd48b5ac01529e73c6839f73c3de6" target="_blank">androrat.zip</a>，文件大小: 6.81M
+</p>
+<p style="text-indent:2em;">
+	百度网盘：<a href="http://pan.baidu.com/share/link?shareid=1496511097&uk=771752861" target="_blank">androrat.zip</a>，文件大小: 6.81M
+</p>
+<p>
+	<strong>相关内容：</strong>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3882/" target="_blank">如何玩转Android远控（androrat）</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3555/" target="_blank">Android远程控制工具，安卓手机远控木马</a>
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="4943,3882,8.35.201.96">
+<p>佚名 @ 2013-09-17 11:16:33</p>
+<p style="text-indent:2em">博主，如何让谷歌百度K掉某个网站，这个网站是卖假药和违法的精神药品的？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">举报呗，要么入侵它（非法，后果自负）……</p>
+</blockquote>
+<blockquote id="4998,3882,27.17.38.194">
+<p>清风 @ 2013-09-25 09:40:46</p>
+<p style="text-indent:2em">核总 小弟一时手误把Android打成了andriod  都是搜狗输入法害的 尼玛</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯嗯，已修正！Thx!</p>
+</blockquote>
+<blockquote id="5867,3882,119.108.176.9">
+<p>hello @ 2014-02-20 12:30:35</p>
+<p style="text-indent:2em">站长那个androrat中androratserver工程有缺漏啊，import不了，看了下连androidmanifest.xml都木有。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你下这个：http://lcx.cc/?i=3882，没有缺漏，编译通过。</p>
+</blockquote>
+<blockquote id="5869,3882,119.108.176.9">
+<p>hello @ 2014-02-20 13:51:49</p>
+<p style="text-indent:2em">站长是这样的，我下了androrat.zip后解压出现androrat文件夹(子文件夹有doc,Experiment,src)。然后用eclipse导入androrat整个文件夹，随后在eclipse中仅出现了Experiment文件夹中的ActivityAndrorat工程，以及src文件夹中的Androrat工程，并没有出现src文件夹中的AndroratServer工程（里面不完整，eclipse自然识别不了）。
+站长我是小白，最近在学习这个，还望站长解惑，多谢！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不清楚你这个情况，你下载的哪个版本的？这个压缩包亲测是完整的，编译通过，是否你导入方式不对？</p>
+</blockquote>
+<blockquote id="5875,3882,113.24.193.161">
+<p>佚名 @ 2014-02-21 11:37:02</p>
+<p style="text-indent:2em">这个服务端没有禁止用户删除的代码吗？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没有任何保护功能。</p>
+</blockquote>
+<blockquote id="5876,3882,113.24.193.161">
+<p>佚名 @ 2014-02-21 13:07:20</p>
+<p style="text-indent:2em">这个没有开机自启动程序吗？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">已有自启功能。</p>
+</blockquote>
+<blockquote id="5877,3882,113.24.193.161">
+<p>佚名 @ 2014-02-21 13:47:45</p>
+<p style="text-indent:2em">我测试过了。没有开机自启动功能</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">看看应用权限设置，是否将该程序开机启动权限禁止了。</p>
+</blockquote>
+<blockquote id="5878,3882,113.24.193.161">
+<p>佚名 @ 2014-02-21 14:12:25</p>
+<p style="text-indent:2em">是activityandrorat这个项目有自启动，还是androrat这个项目有？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">androrat</p>
+</blockquote>
+<blockquote id="5881,3882,113.24.193.161">
+<p>佚名 @ 2014-02-21 14:38:20</p>
+<p style="text-indent:2em">谢谢了！稍微改动下，自启动成功了！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">You Are Welcome!</p>
+</blockquote>
+<blockquote id="5937,3882,112.96.109.135">
+<p>wool @ 2014-03-03 20:34:44</p>
+<p style="text-indent:2em">这个玩意好像很复杂啊，那个ip能不能用域名？不然重启会变。还有，为什么要用数据线连接电脑安装呢？下载安装不行么？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">下载apk安装可以，上线地址类型改改就可以了。</p>
+</blockquote>
+<blockquote id="5938,3882,112.96.109.135">
+<p>wool @ 2014-03-03 20:35:59</p>
+<p style="text-indent:2em">这个玩意好像很复杂啊，那个ip能不能用域名？不然重启会变。还有，为什么要用数据线连接电脑安装呢？下载安装不行么？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">下载apk安装可以，上线地址类型改改就可以了。</p>
+</blockquote>
+<blockquote id="5939,3882,112.96.109.135">
+<p>wool @ 2014-03-03 20:38:37</p>
+<p style="text-indent:2em">不会英语和开发语句</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">百度 &amp; 谷歌，学习。</p>
+</blockquote>
+<blockquote id="5941,3882,182.96.125.188">
+<p>MrJason @ 2014-03-03 20:48:27</p>
+<p style="text-indent:2em">如果这也叫玩转，那只能说够菜</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯，这确实是基础教程，客官求出更详细的教程看看。</p>
+</blockquote>
+<blockquote id="6004,3882,60.181.47.55">
+<p>佚名 @ 2014-03-11 13:04:11</p>
+<p style="text-indent:2em">站长，你好，这个怎么导入坏境啊，有视频吗 有教程发个4331510@qq.com</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这个没有视频教程（完全没必要），百度一下：工程 导入 eclipse，就会有详细步骤，例如：
+http://jingyan.baidu.com/article/e2284b2b3a8d84e2e6118d1a.html</p>
+</blockquote>
+<blockquote id="6008,3882,115.60.154.88">
+<p>佚名 @ 2014-03-11 17:37:06</p>
+<p style="text-indent:2em">安卓智能监控 获得手机短信 通讯录 通话记录 通话录音等其他手机信息以邮件方式发送 也可以通过绑定手机的短信指令用中毒手机给其他手机发送信息. 
+无界面 无图标 完全后台隐藏运行需要的联系QQ263****007  免杀+实用型监控</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">请不要发广告，谢谢！　╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="6009,3882,115.60.154.88">
+<p>佚名 @ 2014-03-11 17:44:47</p>
+<p style="text-indent:2em">安卓智能监控 获得手机短信 通讯录 通话记录 通话录音等其他手机信息以邮件方式发送 也可以通过绑定手机的短信指令用中毒手机给其他手机发送信息.
+无界面 无图标 完全后台隐藏运行需要的联系QQ263***007 免杀+实用型监控</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你得是想屏蔽IP。</p>
+</blockquote>
+<blockquote id="6010,3882,115.60.154.88">
+<p>佚名 @ 2014-03-11 17:45:53</p>
+<p style="text-indent:2em">安卓智能监控 获得手机短信 通讯录 通话记录 通话录音等其他手机信息以邮件方式发送 也可以通过绑定手机的短信指令用中毒手机给其他手机发送信息.
+无界面 无图标 完全后台隐藏运行需要的联系QQ263***007 免杀+实用型监控</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你得是想屏蔽IP。</p>
+</blockquote>
+<blockquote id="6011,3882,115.60.154.88">
+<p>佚名 @ 2014-03-11 17:48:39</p>
+<p style="text-indent:2em">安卓智能监控 获得手机短信 通讯录 通话记录 通话录音等其他手机信息以邮件方式发送 也可以通过绑定手机的短信指令用中毒手机给其他手机发送信息.
+无界面 无图标 完全后台隐藏运行需要的联系QQ263***007 免杀+实用型监控</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">再见，孩纸~</p>
+</blockquote>
+<blockquote id="6111,3882,175.3.168.215">
+<p>佚名 @ 2014-03-27 02:12:32</p>
+<p style="text-indent:2em">请问下站长这个编译工具哪有下载?  如果能有视频教学那更好了，不知站长可有这份热心？小弟再次感谢！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你不看内容的么？文中已给出详细下载链接：
+1.eclipse （Eclipse IDE for Java Developers） 
+2.jdk （Java Platform） 
+3.sdk （Android SDK）</p>
+</blockquote>
+<blockquote id="6112,3882,175.3.168.215">
+<p>佚名 @ 2014-03-27 02:15:12</p>
+<p style="text-indent:2em">请问下站长这个编译工具哪有下载?  如果能有视频教学那更好了，不知站长可有这份热心？小弟再次感谢！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你不看内容的么？文中已给出详细下载链接：
+1.eclipse （Eclipse IDE for Java Developers） 
+2.jdk （Java Platform） 
+3.sdk （Android SDK）</p>
+</blockquote>
+<blockquote id="6133,3882,125.58.150.203">
+<p>7011 @ 2014-03-30 20:52:44</p>
+<p style="text-indent:2em">有汉化版的么？发至2365957931@qq.com 谢谢 站长哥哥</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没有汉化版，都是很简单的英语单词，或者你可以修改源码自己汉化一下。</p>
+</blockquote>
+<blockquote id="6151,3882,125.107.89.105">
+<p>站长 @ 2014-04-04 02:04:44</p>
+<p style="text-indent:2em">裸主
+我XP系统 导入AndroRat下SRC的ProcessCommand.java出现红X
+百度了下好像是JDK版本问题
+我XP下载JDK8打不开我就下载的7
+有没办法解决？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">看右下方信息输出窗口，会有报错信息，然后你自己百度一下就解决了。</p>
+</blockquote>
+<blockquote id="6199,3882,42.242.87.34">
+<p>佚名 @ 2014-04-14 02:56:31</p>
+<p style="text-indent:2em">站长你好！按照你的方法androrat 不上线。不知那里出错。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">教程资料（不懂的可以加我QQ：root@lcx.cc，其余号码一律为假货，谨防上当受骗！）：
+如何玩转Android远控（androrat）：http://lcx.cc/?i=3882
+Android远程控制工具，安卓手机远控木马：http://lcx.cc/?i=3555</p>
+</blockquote>
+<blockquote id="6200,3882,42.242.87.34">
+<p>佚名 @ 2014-04-14 02:57:51</p>
+<p style="text-indent:2em">可以加我QQ联系！86926561</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不懂的可以加我QQ：root@lcx.cc，其余号码一律为假货，谨防上当受骗！</p>
+</blockquote>
+<blockquote id="6343,3882,123.163.53.37">
+<p>逗比 @ 2014-05-04 22:22:09</p>
+<p style="text-indent:2em">请问版主qq多少？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">联系方式见：http://lcx.cc/?i=1#lianxi</p>
+</blockquote>
+<blockquote id="6373,3882,61.134.245.254">
+<p>佚名 @ 2014-05-10 12:14:34</p>
+<p style="text-indent:2em">现在有发展到和电脑那样扫1433吗</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">呵呵，目测没有这种扫鸡一说……</p>
+</blockquote>
+<blockquote id="6377,3882,222.41.170.66">
+<p>佚名 @ 2014-05-10 17:35:16</p>
+<p style="text-indent:2em">&lt;svg onload=alert(/x/)&gt;</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">&lt;svg onload=alert(/yoo~/)&gt;</p>
+</blockquote>
+<blockquote id="6432,3882,117.86.76.9">
+<p>佚名 @ 2014-05-21 00:10:08</p>
+<p style="text-indent:2em">变态啊。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">有何变态之有~</p>
+</blockquote>
+<blockquote id="6455,3882,180.102.167.252">
+<p>佚名 @ 2014-05-24 16:30:49</p>
+<p style="text-indent:2em">求教该软件如何导入安装</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你指的编译工程还是安装到手机？安装到手机的话需要先编译，编译工程的话，在eclipse里导入工程文件。</p>
+</blockquote>
+<blockquote id="6462,3882,183.9.76.197">
+<p>佚名 @ 2014-05-25 13:32:43</p>
+<p style="text-indent:2em">按照你的说法一步步去做。w7系统 。然后环境什么的都弄好了。就是一个劲报错。加了jre库的话报错更多。求解释啊~</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额，其中有些bug是需要手动修复的，听你描述不清楚问题所在，检查你配置环境。</p>
+</blockquote>
+<blockquote id="6465,3882,220.181.42.195">
+<p>jerome @ 2014-05-26 18:40:53</p>
+<p style="text-indent:2em">mac osx 服务端运行起来 显示如下：*** ANDRORAT SERVEUR ***
+Authors : A.Bertrand, A.Akimov, R.David, P.Junk
+Launch at Mon May 26 18:31:22 CST 2014
+On port : 9999
+Mon May 26 18:31:22 CST 2014 SERVER online, awaiting for a client...
+真机和模拟器分别连接过，都识别不到，一直停留在等待客户端，请问如何解决，十分感谢！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">启动正确，看你上线地址设置。</p>
+</blockquote>
+<blockquote id="6475,3882,220.181.42.195">
+<p>jerome @ 2014-05-27 18:34:38</p>
+<p style="text-indent:2em">楼主您好，我是昨天咨询无法连接设备的jerome,
+05-27 18:29:48.640: W/System.err(19311): java.net.ConnectException: failed to connect to /127.0.0.1 (port 9999): connect failed: ECONNREFUSED (Connection refused),端口9999，ip地址试了默认的192.168.0.12还有127.0.0.1，都没能建立连接，这部分我理解的也不透彻，望指导；我的qq:214396650,有时间可以加下我吗，感谢。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯，这个不太清楚。（本人唯一QQ：624118310，其他号码加你的都是冒名的骗子。）</p>
+</blockquote>
+<blockquote id="6476,3882,220.181.42.195">
+<p>jerome @ 2014-05-27 19:12:02</p>
+<p style="text-indent:2em">public void setOnline() {
+		while (online) {
+			gui.logTxt(&quot;SERVER online, awaiting for a client...&quot;);
+			gui.logTxt(&quot;test&quot;);
+			try {
+				gui.logTxt(&quot;step1&quot;);
+				Socket cs = serverSocket.accept();
+				gui.logTxt(&quot;step2&quot;);
+				System.out.println(&quot;LocalAddr : &quot; + cs.getLocalAddress());
+				// inscription temporaire d&#39;un client connecte
+				String id = Nclient + &quot;client&quot;;
+				ClientHandler newCH = new ClientHandler(cs, id, this, gui);
+				clientMap.put(id, newCH);
+				channelHandlerMap.put(id, new ChannelDistributionHandler());
+
+				newCH.start();
+				 System.out.println(&quot;client accept&quot;);
+				gui.logTxt(&quot;Connection established,temporary IMEI was assigned: &quot; + id);
+
+			} catch (IOException e) {
+				 e.printStackTrace();
+				gui.logErrTxt(&quot;ERROR while establishing a connection&quot;);
+			}
+		}
+		
+		gui.logTxt(&quot;*** SERVER STOPPED ***\n&quot;);
+	} 无法建立连接，Socket cs = serverSocket.accept();这里进不来，求解答，感谢！！！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">java 不太熟，这里应该是服务器端接受连接时出现的问题，具体你检查一些。</p>
+</blockquote>
+<blockquote id="6537,3882,65.49.68.187">
+<p>发奋图强 @ 2014-06-06 10:41:17</p>
+<p style="text-indent:2em">能改成域名上线么</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">diy~</p>
+</blockquote>
+<blockquote id="6542,3882,121.13.170.218">
+<p>佚名 @ 2014-06-07 16:19:12</p>
+<p style="text-indent:2em">经测试可用，可用域名上线</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">Yep!</p>
+</blockquote>
+<blockquote id="6565,3882,117.158.38.168">
+<p>安卓监控 @ 2014-06-11 19:02:43</p>
+<p style="text-indent:2em">安卓智能监控 获得手机短信 通讯录 通话记录 也可以通过绑定手机的短信指令用中毒手机给其他手机发送信息 控制手机发送短信 控制手机接收信息.
+无界面 无图标 完全后台隐藏运行需要的联系QQ6462-57-485 免杀+实用型监控</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="6580,3882,221.206.36.14">
+<p>孤家寡人 @ 2014-06-14 05:56:59</p>
+<p style="text-indent:2em">站长你好 
+androrat需要root权限吗？需要的话怎么获取呢？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不需要root权限。</p>
+</blockquote>
+<blockquote id="6618,3882,112.85.53.255">
+<p>佚名 @ 2014-06-20 19:08:10</p>
+<p style="text-indent:2em">那位实现域名上线的高人，把方法共享下呗。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">+1</p>
+</blockquote>
+<blockquote id="6693,3882,123.151.204.74">
+<p>sword @ 2014-07-01 22:13:51</p>
+<p style="text-indent:2em">请问androidrat支持最新的4.4.2系统么？我测试貌似无法回联</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">目测支持</p>
+</blockquote>
+<blockquote id="6705,3882,111.78.97.10">
+<p>我看我还是玩蛋儿吧 @ 2014-07-04 17:38:01</p>
+<p style="text-indent:2em">是jar包不是jra包</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">我靠，眼真尖，这都看出来了，感谢指正！已修正！</p>
+</blockquote>
+<blockquote id="6739,3882,219.148.123.10">
+<p>佚名 @ 2014-07-12 11:38:50</p>
+<p style="text-indent:2em">0x00 搭建andriod环境 ”andriod“=Android ，按文章测试中，有不懂的希望楼主能回复</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">感谢指正！已修正错误的单词！</p>
+</blockquote>
+<blockquote id="6859,3882,1.86.16.78">
+<p>蛋疼很 @ 2014-08-18 16:13:02</p>
+<p style="text-indent:2em">http://pan.baidu.com/s/1jGD****  最新编译客户端</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">提示：此为网友自行发布的客户端，谨防后门！请勿擅自安装，当心手机资料以及银行金额被盗！</p>
+</blockquote>
+<blockquote id="6918,3882,120.43.181.4">
+<p>阿布 @ 2014-09-03 03:08:22</p>
+<p style="text-indent:2em">高人～！！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="6920,3882,120.10.195.115">
+<p>佚名 @ 2014-09-04 09:03:15</p>
+<p style="text-indent:2em">请问你的联系QQ告诉我</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">http://lcx.cc/?i=1</p>
+</blockquote>
+<blockquote id="6936,3882,182.18.111.201">
+<p>佚名 @ 2014-09-06 19:38:08</p>
+<p style="text-indent:2em">我是利用他刷安卓肉鸡钻的   怎么利用他  连接电脑发短信   大神求解</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">？</p>
+</blockquote>
+<blockquote id="6956,3882,218.10.90.190">
+<p>长空 @ 2014-09-17 11:14:58</p>
+<p style="text-indent:2em">接着运行客户端，使用usb链接我们的手机安装app查看
+==========是安装APK么？是不是要先编译成APK，刚开始研究，不太懂，请大师解答。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">直接编译成apk，放手机里，安装即可。</p>
+</blockquote>
+<blockquote id="7089,3882,218.10.90.190">
+<p>长空 @ 2014-10-23 18:54:09</p>
+<p style="text-indent:2em">为什么安装完手机客户端后，在电脑的服务端接收不到连接信息，跟编译的安卓版本有关系么？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">仔细检查下。</p>
+</blockquote>
+<blockquote id="7156,3882,251.191.233.116">
+<p>佚名 @ 2014-11-12 23:48:12</p>
+<p style="text-indent:2em">unable to find an ant file to run
+没安装好环境？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">http://www.baidu.com/s?wd=unable%20to%20find%20an%20ant%20file%20to%20run</p>
+</blockquote>
+<blockquote id="7169,3882,171.90.12.173">
+<p>佚名 @ 2014-11-14 18:37:55</p>
+<p style="text-indent:2em">安装环境是硬伤啊，</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="7253,3882,125.92.250.209">
+<p>哥哥1 @ 2014-12-05 21:19:48</p>
+<p style="text-indent:2em">ProcessCommand.java 前面是x怎么办</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">具体看右下角详细错误输出框，然后百度解决。</p>
+</blockquote>
+<blockquote id="7265,3882,49.212.202.65">
+<p>佚名 @ 2014-12-09 14:17:38</p>
+<p style="text-indent:2em">跪求一个控，价钱好商量,QQ5-1-9-3-5-4-0-4</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：谨防上当受骗~</p>
+</blockquote>
+<blockquote id="7296,3882,125.92.250.209">
+<p>小弟 @ 2014-12-18 13:18:21</p>
+<p style="text-indent:2em">源码中没有jna-3.2.2.jar怎么办</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">百度下载一个。</p>
+</blockquote>
+<blockquote id="7297,3882,125.92.250.209">
+<p>兄弟 @ 2014-12-18 15:26:54</p>
+<p style="text-indent:2em">源码中没有jna-3.2.2.jar 百度下载一个之后 很多报错</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">我记得那个开发平台有官方更新器下载来着。</p>
+</blockquote>
+<blockquote id="7312,3882,125.92.250.209">
+<p>小哥 @ 2014-12-22 15:02:09</p>
+<p style="text-indent:2em">源码中没有jna-3.2.2.jar 百度下载一个之后 很多报错
+站长回复：
+我记得那个开发平台有官方更新器下载来着。
+接着问 ：怎么官方更新器下载 我现在就是发现源码中没有jna-3.2.2.jar 文件 在百度下载一个之后 居然很多报错</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">我的源码中没有“jna-3.2.2.jar”，我用的是“jna-3.4.0.jar”，已发至你邮箱，发件人地址为：624118310@qq.com，其余均为假冒。</p>
+</blockquote>
+<blockquote id="7313,3882,125.92.250.209">
+<p>佚名 @ 2014-12-22 15:04:20</p>
+<p style="text-indent:2em">源码中没有jna-3.2.2.jar 百度下载一个之后 很多报错
+站长回复：
+我记得那个开发平台有官方更新器下载来着。
+接着问 ：怎么官方更新器下载 我现在就是发现源码中没有jna-3.2.2.jar 文件 在百度下载一个之后 居然很多报错 你一般什么时候QQ在线 能把你下载的源码发给我吗 邮箱haiko123456@163.com</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">我的源码中没有“jna-3.2.2.jar”，我用的是“jna-3.4.0.jar”，已发至你邮箱，发件人地址为：624118310@qq.com，其余均为假冒。</p>
+</blockquote>
+<blockquote id="7316,3882,125.92.250.209">
+<p>佚名 @ 2014-12-23 15:39:19</p>
+<p style="text-indent:2em">请问怎么配置IP 这个软件只能控制同在局域网的手机吗 怎么远程控制手机 如果是在网吧使用 怎么配置IP和端口</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">换成广域网域名或IP即可，网吧需要端口映射，或其他转换成广域网的通讯方式。</p>
+</blockquote>
+<blockquote id="7438,3882,223.130.173.27">
+<p>下大侠 @ 2015-02-18 22:12:46</p>
+<p style="text-indent:2em">很好的技术性分析</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">+1</p>
+</blockquote>
+<blockquote id="7490,3882,183.23.244.246">
+<p>佚名 @ 2015-03-25 14:19:02</p>
+<p style="text-indent:2em">请问版主这个生成的app有多大？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">忘记了，貌似几百kb吧。</p>
+</blockquote>
+<blockquote id="7556,3882,218.14.24.224">
+<p>昔阳 @ 2015-04-23 22:02:21</p>
+<p style="text-indent:2em">你好 为什么我的源码里面没有androratserver.jar和jne的包？ 求发517763319@qq.com</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">百度一下就有下载。</p>
+</blockquote>
+<blockquote id="7560,3882,218.14.23.217">
+<p>昔阳 @ 2015-04-25 01:08:24</p>
+<p style="text-indent:2em">大牛别闹....真心搜不到...</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">“其他报错如import 缺少对应包可到http://www.findjar.com/index.x查找并引用 ”
+http://lcx.cc/?i=3882，http://lcx.cc/?i=3555，这两个都试一下。</p>
+</blockquote>
+<blockquote id="7629,3882,0.0.0.0">
+<p>佚名 @ 2015-06-05 13:21:13</p>
+<p style="text-indent:2em">核武大大    为什么我导进去的不是 Androrat和AndroratServer这两个  而是ActiveAndrorat 和Androrat这两个  是不是导错了？？？？另外   导入进去这两个以后  控制台有报错[2015-06-05 13:17:47 - ActivityAndrorat] Unable to resolve target &#39;android-8&#39;
+[2015-06-05 13:17:47 - Androrat] Unable to resolve target &#39;android-8&#39;      核武大大麻烦看下这是什么错误</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这个是版本问题，你百度一下就可以解决了。
+“版本低，打开project.properties ,把target=android-8改成 target=android-12，或以上的版本都可以。”</p>
+</blockquote>
+<blockquote id="7890,3882,183.131.104.230">
+<p>佚名 @ 2015-09-25 01:03:26</p>
+<p style="text-indent:2em">请在这里填写留言内容，最长不超过 1000 字。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[暂无回复]</p>
+</blockquote>
+<blockquote id="7947,3882,36.250.86.200">
+<p>世界都看看 @ 2015-10-16 12:41:41</p>
+<p style="text-indent:2em">试试看。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="7948,3882,36.250.86.200">
+<p>先问啊问 @ 2015-10-16 12:46:03</p>
+<p style="text-indent:2em">问问站长，为何服务端不能读取显示手机号码？但模拟器的虚拟手机号可以显示。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不太清楚</p>
+</blockquote>
+<blockquote id="7949,3882,36.250.86.200">
+<p>先问啊问 @ 2015-10-16 13:03:33</p>
+<p style="text-indent:2em">站长快来！
+站长快来！
+服务端如何才能读取显示手机号？模拟器的虚拟手机号都能读出来，真正手机号却不能显示，啥原因？？怎么弄站长？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不太清楚</p>
+</blockquote>
+<blockquote id="8010,3882,106.5.63.156">
+<p>佚名 @ 2015-11-23 22:51:32</p>
+<p style="text-indent:2em">哥哥  怎么我运行server端：  on part 9999或者11 货者0   
+.Android生成APK后   输入IP ,端口  没有反应   
+不怎么 那个两个IP 是怎样对上的。设多少  随便IP？ 端口？  跪求哥</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">首先你的安卓要能连接到这个IP，建议同一个局域网测试。</p>
+</blockquote>
+<blockquote id="8016,3882,106.5.36.5">
+<p>佚名 @ 2015-11-26 16:16:32</p>
+<p style="text-indent:2em">站长哥哥，运行server服务端后 是不是要放在服务器上，还有域名怎么办？是一定在区域网设置吗
+第2 ，怎么在局域网 设置域名和服务器的问题？谢谢 哥哥 ？  能加一个QQ吗，你QQ多少 加了没有反应</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这玩意儿是个实验品，也就只能在局域网自己玩玩，外网问题太多，基本用不了。QQ：624118310</p>
+</blockquote>
+<blockquote id="8017,3882,106.5.36.5">
+<p>佚名 @ 2015-11-26 16:26:42</p>
+<p style="text-indent:2em">android server 源码 怎样在那里改IP，</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不看内容的吗？文章里详细说明了。</p>
+</blockquote>
+<blockquote id="8019,3882,218.95.91.140">
+<p>佚名 @ 2015-11-27 20:33:18</p>
+<p style="text-indent:2em">站长哥哥 你好，android server 生成java后 打开有时是显示9999  有时显示 0？  是不是也要android server源码里设置下IP 和端口，怎么设置？谢谢 哥哥</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">参考文章内容.</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">╰╃清風</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2014-07-12
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/android/">Android</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E6%8E%A7/">远控</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/ips/">IPS</a>
+          <a href="https://lcx.cc/tags/java/">Java</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%89%8B%E6%9C%BA/">手机</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3883/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">DVWA中学习PHP常见漏洞及修复方法</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3881/">
+            <span class="next-text nav-default">如何用意念获取附近美女的手机号码，伪装免费CMCC信号，钓鱼妹子手机号码</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

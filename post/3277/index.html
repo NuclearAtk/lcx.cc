@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>网络游戏安全小议（端游/页游/手游） - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="碳基体" /><meta name="description" content="网络游戏安全小议（端游/页游/手游）。一直很想知道魔兽的游戏安全工程师是如何做游戏安全的，毫无疑问，魔兽是目前最流行的网络游戏，有着众多经验丰富的黑客在利润驱动的情况下以这款游戏的外挂作弊技术谋生，游戏黑客的作弊技能在《网络游戏安全解密》这本书里有提到（这是目前为止唯一的质量较高的游戏安全专门书籍），但游戏安全工程师是如何防御的就比较神秘了。咨询过一些做游戏安全的，都倾向于将防御手段隐藏起来，因此在游戏安全研究上基本靠游戏黑客提供资料。" />
+<meta name="keywords" content="网络游戏安全小议（端游/页游/手游）" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3277/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="网络游戏安全小议（端游/页游/手游）" />
+<meta property="og:description" content="网络游戏安全小议（端游/页游/手游）。一直很想知道魔兽的游戏安全工程师是如何做游戏安全的，毫无疑问，魔兽是目前最流行的网络游戏，有着众多经验丰富的黑客在利润驱动的情况下以这款游戏的外挂作弊技术谋生，游戏黑客的作弊技能在《网络游戏安全解密》这本书里有提到（这是目前为止唯一的质量较高的游戏安全专门书籍），但游戏安全工程师是如何防御的就比较神秘了。咨询过一些做游戏安全的，都倾向于将防御手段隐藏起来，因此在游戏安全研究上基本靠游戏黑客提供资料。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3277/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-01-15T06:56:24&#43;08:00" />
+<meta property="article:modified_time" content="2013-01-15T06:56:24&#43;08:00" />
+
+<meta itemprop="name" content="网络游戏安全小议（端游/页游/手游）">
+<meta itemprop="description" content="网络游戏安全小议（端游/页游/手游）。一直很想知道魔兽的游戏安全工程师是如何做游戏安全的，毫无疑问，魔兽是目前最流行的网络游戏，有着众多经验丰富的黑客在利润驱动的情况下以这款游戏的外挂作弊技术谋生，游戏黑客的作弊技能在《网络游戏安全解密》这本书里有提到（这是目前为止唯一的质量较高的游戏安全专门书籍），但游戏安全工程师是如何防御的就比较神秘了。咨询过一些做游戏安全的，都倾向于将防御手段隐藏起来，因此在游戏安全研究上基本靠游戏黑客提供资料。"><meta itemprop="datePublished" content="2013-01-15T06:56:24&#43;08:00" />
+<meta itemprop="dateModified" content="2013-01-15T06:56:24&#43;08:00" />
+<meta itemprop="wordCount" content="4950">
+<meta itemprop="keywords" content="安全,网络,游戏,Android,API,Windows,保护,爆,测试,产业,程序,代码,地图,钓鱼,恶意,分析,服务,服务器,工程师,工具,攻击,函数,黑客,货币,技术,监控,检测,客户端,漏洞,模拟,逆向,入侵,软件,设备,数据,淘宝,图片,网站,文件,问题,系统,源码," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="网络游戏安全小议（端游/页游/手游）"/>
+<meta name="twitter:description" content="网络游戏安全小议（端游/页游/手游）。一直很想知道魔兽的游戏安全工程师是如何做游戏安全的，毫无疑问，魔兽是目前最流行的网络游戏，有着众多经验丰富的黑客在利润驱动的情况下以这款游戏的外挂作弊技术谋生，游戏黑客的作弊技能在《网络游戏安全解密》这本书里有提到（这是目前为止唯一的质量较高的游戏安全专门书籍），但游戏安全工程师是如何防御的就比较神秘了。咨询过一些做游戏安全的，都倾向于将防御手段隐藏起来，因此在游戏安全研究上基本靠游戏黑客提供资料。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">网络游戏安全小议（端游/页游/手游）</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-01-15" class="post-time">
+          2013-01-15
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E5%AE%89%E5%85%A8/"> 安全 </a>
+            <a href="https://lcx.cc/categories/%E7%BD%91%E7%BB%9C/"> 网络 </a>
+            <a href="https://lcx.cc/categories/%E6%B8%B8%E6%88%8F/"> 游戏 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4950 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<span style="white-space:pre;"><span style="color:#FF0000;font-size:medium;"><b>一、网络游戏安全很有趣&nbsp;</b></span></span> 
+</p>
+<p style="text-indent:2em;">
+	一直很想知道魔兽的游戏安全工程师是如何做游戏安全的，毫无疑问，魔兽是目前最流行的网络游戏，有着众多经验丰富的黑客在利润驱动的情况下以这款游戏的外挂作弊技术谋生，游戏黑客的作弊技能在《网络游戏安全解密》这本书里有提到（这是目前为止唯一的质量较高的游戏安全专门书籍），但游戏安全工程师是如何防御的就比较神秘了。咨询过一些做游戏安全的，都倾向于将防御手段隐藏起来，因此在游戏安全研究上基本靠游戏黑客提供资料。
+</p>
+<p style="text-indent:2em;">
+	网络游戏安全很有意思，首先网络游戏安全代表了最高的软件技术（想想MMO可是数以十万计的用户在实时交互，多大的挑战），其次网络游戏的虚拟经济和现实经济之间存在直接的联系（想想淘宝上游戏点卡，游戏道具，游戏代练交易，多大的利益诱惑），再次网络游戏安全的重要经验可以直接适用于其他软件（通用性对安全工作者很有帮助），最后游戏安全不仅是技术问题也是法律问题，例如对游戏破坏者的法律制裁，如何平衡玩家隐私权利以及如何保护游戏不被破解（例如使用rooktkit技术检测玩家电脑是否有游戏破坏程序运行的方法涉及个人电脑隐私问题，当然这点也是杀毒软件面临的问题）。
+</p>
+<p style="text-indent:2em;">
+	网络游戏安全将信息安全的大多数方面的串联起来了。例如网络帐号的安全（游戏拖库），网络充值的安全，网络服务器的安全这些属于网络安全的领域；例如客户端的安全，反调试，反逆向，反Hook属于软件安全的领域；还有其他的，例如游戏欺诈（冒充工作内容骗取帐号密码，钓鱼网站，帐号纠纷），内部员工（GM的事件爆的最多）非法交易，游戏分级（儿童游戏保护，防沉迷系统）。游戏外挂的逆向分析以及外挂检测与防御就与杀毒行业非常像（想想恶意软件样本分析，游戏外挂对游戏而言就是病毒）。简单的说优秀的游戏安全工作者要既是hacker也是cracker，既要懂技术也要懂侦查。
+</p>
+<p style="text-indent:2em;">
+	<b style="color:#FF0000;line-height:28px;font-size:large;">二、游戏攻击手段很多样</b> 
+</p>
+<p style="text-indent:2em;">
+	博客中有介绍过手游与页游的攻击方法及相应的工具，但没有端游的（我没有端游的安全工作经历，这也是没法说自己是个游戏安全工作者的原因，我觉得没做过端游安全的不是真正的游戏安全工程师），从游戏的共性来说，网络游戏的本质就是客户端与服务端的数据通信，攻击的对象就是一系列的数据，游戏安装生成的客户端数据（可执行文件，动态链接库，存档文件，资源文件），游戏运行时在进程中的数据、界面数据、时钟数据，游戏通信时从网络接口流出的数据，
+</p>
+<p style="text-indent:2em;">
+	我们知道游戏的攻击手段（外挂）总的来说为以下几种：
+</p>
+<p style="text-indent:2em;">
+	<span style="white-space:pre;"> </span>1. <b>自动化游戏（机器人）</b><span style="white-space:pre;"> </span>端游和页游中广泛存在，例如精灵对战类游戏的自动打怪外挂，手游暂未出现该类型外挂。一般是模拟键盘鼠标对界面的操作，一般会通过<b>像素采集</b>来定位游戏界面上目标的坐标或状态（例如通过采集界面上显示怪物生命槽的地方的像素来确认怪物的生命状态）。
+</p>
+<p style="text-indent:2em;">
+	（游戏公司一般采用以下两种方法来反机器人外挂，一种是加入图片验证（也叫图灵测试，利用只有人类才能识别的特点，但仍存在问题，例如图片库的大小和更新速度是否能抵抗图片库遍历，另一种是对玩家特定数值进行监控，当超出限定范围时，预警）
+</p>
+<p style="text-indent:2em;">
+	<span style="white-space:pre;"> </span>2.<b>内存修改</b>&nbsp;<span style="line-height:22px;">端游</span>、页游，手游都存在，对<span style="line-height:22px;">端游</span><span style="line-height:22px;">和页游</span>在单机和弱联网时代比较流行，但随着网游的大方向，这种作弊手段的有效性逐渐弱化，对手游目前为主流作弊手段
+</p>
+<p style="text-indent:2em;">
+	<span style="white-space:pre;"> </span>3.<b>存档修改 </b>同内存修改，<span style="line-height:22px;">端游</span><span style="line-height:22px;">、页游，手游都存在，</span><span style="line-height:22px;">对</span><span style="line-height:22px;">端游</span><span style="line-height:22px;">和页游</span><span style="line-height:22px;">在单机和弱联网时代比较流行，但随着网游的大方向，这种作弊手段的有效性逐渐弱化，对手游目前为主流作弊手段</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="white-space:pre;"> </span>4.<b>封包修改</b> 网络游戏的<b>核心</b>作弊手段，分为<b>脱机挂</b>（<span style="line-height:25px;font-family:宋体;">不依赖于官方发布的客户端程序，由外挂完全模拟客户端去与服务器进行通信）、</span><b>内挂</b>（以游戏客户端程序为载体，依靠客户端程序来完成与游戏服务器的通讯），<b>私服</b>（与脱机挂相反，是完全模拟了官方服务器）。这种类型外挂一般都先通过逆向客户端得到协议（封包）生成算法，然后<span style="line-height:22px;">hook <b>ws2_32.dll</b>（<b>windows sockets的应用程序接口</b>)的send(),receive()函数来重写封包.</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="line-height:22px;">5.<b>加速器</b> 常见与对战类游戏，例如页游通过加速动画播放速度来快速对战</span> 
+</p>
+<p style="text-indent:2em;">
+	6.<b>安装包Patch</b> 常见于端游与手游这种富客户端的，例如修改App store下载的IPA包，去除掉版权保护还原加密部分，例如重打包Android的APK包，使试用版变成完整版（verycd上一堆的破解端游）
+</p>
+<p style="text-indent:2em;">
+	7.<b>runtime 攻击（API Hook）</b>&nbsp;<span style="line-height:22px;">常见于端游与手游这种富客户端的，</span>API hook 运行中游戏进程，替换原始的动态链接库（windows上的dll，iOS上的dylib，Android上的so），例如iOS上的免费内购外挂。
+</p>
+<p style="text-indent:2em;">
+	(可以说Hook技术是外挂的基础，是病毒的基础，是软件入侵的基础）
+</p>
+<p style="text-indent:2em;">
+	(一般应对hook的外挂防御方式，就是检查游戏的客户端进程，看是否有已知作弊进程的存在，一般采取字符串匹配）
+</p>
+<p style="text-indent:2em;">
+	8.<b>服务端配置漏洞</b> 例如未上线商品配置为可购买，例如过期运营活动未及时下线
+</p>
+<p style="text-indent:2em;">
+	9.<b>游戏逻辑漏洞</b> 例如游戏经济系统设计的漏洞（经济系统失衡），比如说可以通过创建多个小号将系统赠送的初始物品转移到大号上；例如游戏中个人私密数值可以被其他玩家查看甚至修改；例如超级火爆的宠物精灵对战游戏<span style="line-height:22px;">（魔兽都出了宠物对战，可见有多火了）</span>就会出现新捕捉的初始精灵未初始化而在某些操作中大量获得物品。<span style="line-height:22px;">。</span><span style="line-height:22px;">其实</span><span style="line-height:22px;">游戏的安全漏洞绝大多数都是开发编写出来的（还有一小部分是策划设计失误，运营人员配置失误），如果恰好遇到不配给高质量测试团队的项目，那就是惨不忍睹（题外话，</span><a style="color:#2970A6;line-height:16px;font-family:Arial, Verdana, &quot;background-color:#FAFAFA;" title="由 陈皓 发布" href="http://coolshell.cn/articles/author/haoel" rel="nofollow">陈皓</a><span style="line-height:22px;">&nbsp;曾写过</span><span style="line-height:22px;">《我们需要专职的QA吗》，他代表了一些开发对测试岗位的轻视，其实测试岗位的存在就是给开发背黑锅的，是对他们的保护）.大型网游都是分布式程序，因此会遭遇分布式程序处理并发请求时由于竞态条件带来的问题。&nbsp;</span> 
+</p>
+<p style="text-indent:2em;">
+	10.<b>游戏运行平台的安全问题</b> 例如越狱iOS设备与root后的Android设备就破坏了原本的安全机制，使得设备上运行的游戏需要考虑额外的威胁
+</p>
+<p style="text-indent:2em;">
+	11.<b>帐号安全 </b>属于web常见漏洞
+</p>
+<p style="text-indent:2em;">
+	12.<b>充值安全&nbsp;</b><span style="line-height:22px;">属于web常见漏洞</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="line-height:22px;">13.<b>游戏欺诈</b>&nbsp;帐号归属纠纷，冒充游戏充值网站的钓鱼网站，冒充游戏外挂（特别是号称可以刷游戏币的）的恶意软件，冒充官方工作人员骗取帐号，在游戏中发送恶意中奖信息</span> 
+</p>
+<p style="text-indent:2em;">
+	14.<b>游戏服务器的拒绝服务攻击</b> 大并发的请求拖垮服务器
+</p>
+<p style="text-indent:2em;">
+	其中<span style="line-height:22px;white-space:pre;"> </span><span style="line-height:22px;">4.</span><b style="line-height:22px;">封包修改</b><span style="line-height:22px;">最广泛</span><b style="line-height:22px;">，</b><span style="line-height:22px;">6.</span><b style="line-height:22px;">安装包Patch </b><span style="line-height:22px;">和</span><span style="line-height:22px;">7.</span><b style="line-height:22px;">runtime </b><span style="line-height:22px;">攻击最据技术含量（其实游戏外挂的最终形态还是从<b><span style="color:#FF0000;">内核操纵客户端</span></b>）</span> 
+</p>
+<p style="text-indent:2em;">
+	<b>补充(2013-1-14)</b> 
+</p>
+<p style="text-indent:2em;">
+	15.<b>可预测的随机数生成算法</b>&nbsp; 常见于在线扑克类博彩游戏（例如德州扑克），对这种游戏，常见的攻击手法有以下几种，一种是<b>线上玩家之间的勾结</b>（这也是根据ip限制防作弊场出现的原因，另一种是<b>利用伪随机数的缺陷预测玩家手中的牌</b>（提高随机率一直是安全方面工作的核心，特别是密码系统），还有一种叫算牌器，利用统计学的原理，计算出最有效的出牌战略
+</p>
+<p style="text-indent:2em;">
+	16.<b>数据挖掘</b> 从众多的玩家客户端挖掘出有用的游戏数据信息。例如魔兽数据库Thottbot，挖掘出来的游戏关键资料对游戏挖掘和打金工作室的玩家是非常有用的。
+</p>
+<p style="text-indent:2em;">
+	<b style="line-height:22px;"><span style="color:#FF0000;font-size:medium;">三、游戏攻击产业很给力</span></b> 
+</p>
+<p style="text-indent:2em;">
+	依靠游戏攻击盈利是一条很成熟的产业链，
+</p>
+<p style="text-indent:2em;">
+	有<span style="line-height:22px;">专业</span>做<b>游戏外挂制作培训</b>的；
+</p>
+<p style="text-indent:2em;">
+	有专业做<b>游戏代练</b>（现阶段的游戏黑客们都比较聪明的选择贩卖外挂服务而不是外挂本身，理由一，卖外挂的方式会让游戏公司的安全人员通过外挂分析快速定位游戏漏洞并给予修复及相应的加固防御。理由二，卖外挂的方式会给法律投诉留下明确的证据，而代练没法诉诸法律只能封号了事。理由三，卖服务的盈利次数明显高于卖外挂。）；
+</p>
+<p style="text-indent:2em;">
+	有专业做<b style="line-height:22px;">游戏虚拟商品交易的</b><span style="line-height:22px;">（虚拟物品交易引爆了RMI real money trade中间人这一专业机构，用于收购虚拟商品然后专卖给普通玩家，为不少游戏黑客提供了便利的洗钱渠道，很显然，中间人是不会关注游戏虚拟商品的来源是否合法）</span><span style="line-height:22px;">；</span> 
+</p>
+<p style="text-indent:2em;">
+	有专业做<b>游戏私服</b>的（游戏私服很大程度上需要拿到源码，可以通过买通内部人员或社工入侵公司内外获得源码）；
+</p>
+<p style="text-indent:2em;">
+	有专业做<b>游戏盗号与钓</b>鱼的；
+</p>
+<p style="text-indent:2em;">
+	有以<b>游戏外挂为噱头做广告流量</b>的；
+</p>
+<p style="text-indent:2em;">
+	其中较为成熟的是<b>游戏打金工作室</b>，他们<b>先由专业人员挖掘游戏漏洞（也会配合社工内部人员拿取源码的方法），然后制作入侵工具（外挂），再通过工具在游戏中获取虚拟财产，最后通过交易中心（比如说淘宝，或独立网站）贩卖给其他玩家获利。</b>其中好的游戏打金工作室也会提供良好的售后服务，例如封号处理（游戏管理者会有监控系统来监视作弊行为，并对情节严重者给予封号惩罚，这时候售后的重要性就出来了，售后服务者会挖掘解封流程的漏洞或买通GM进行解封）。这些工作室一般会盯上受欢迎的经济系统庞大的游戏，特别是有许多渠道能将游戏虚拟财产转出游戏换取真实货币的游戏，例如魔兽世界（WoW），在线扑克类游戏。游戏打金工作室一般会配合外挂的使用，但也有完全依靠廉价劳动力正常代练，常见于第三世界国家。
+</p>
+<p style="text-indent:2em;">
+	其中较为曲折的<b style="line-height:22px;">游戏虚拟商品交易</b>，eBay在2007年就宣布禁止网络游戏道具交易，但不包括中国区，国内最大的电商淘宝就支持网络游戏道具交易。
+</p>
+<p style="text-indent:2em;">
+	<b style="line-height:22px;">补充(2013-1-14)</b> 
+</p>
+<p style="text-indent:2em;">
+	还有一种盈利手段，通过收集游戏中的数据给玩家提供有价值的游戏数据来盈利（相当于游戏攻略网），例如某样道具的确切坐标及地图路线，道具获取概率等。最有名的有魔兽（<a href="http://db.178.com/wow/" rel="nofollow" target="_blank">国内魔兽数据库</a>，<a href="http://thottbot.com/" rel="nofollow" target="_blank">Thottbot</a>）的Thottbot插件，它会从Thottbot服务器中读取信息，然后显示出你的角色相关的有用的统计信息，例如在地图上显示给玩家要如何取得他们想要的道具，并且在地图上标出道具的出现率，当然，它在提供帮助的同时，也会将你的客户端的信息发送给Thottbot服务器用来丰富资料库。
+</p>
+<p style="text-indent:2em;">
+	<b><span style="color:#FF0000;font-size:medium;">四、学习游戏外挂制作很有用</span></b> 
+</p>
+<p style="text-indent:2em;">
+	正面的来说通过学习外挂制作也能提高it技能，例如要写一款基本的外挂（以端游外挂为例），我们需要掌握以下技能
+</p>
+<p style="text-indent:2em;">
+	第一步：.学会一种语言，vc++最好，c#也不错（c#适用于跨平台），虽然现在很多外挂都是E语言写的，不过最好还是学开发在用的语言
+</p>
+<p style="text-indent:2em;">
+	第二步：会简单的分析游戏，可以使用工具分析游戏窗口,控件,进程,线程,DLL模块，内存
+</p>
+<p style="text-indent:2em;">
+	第三步：熟悉windows API，可以编写进程线程操作,内存读写,鼠标键盘模拟
+</p>
+<p style="text-indent:2em;">
+	第四步：学会用cheat engine查找动态内存基址
+</p>
+<p style="text-indent:2em;">
+	第五步：学会使用ollydbg来调试游戏找关键CALL 找到一些关键的功能函数入口地址,并分析出该函数的参数,就可以编写CALL代码,来直接调用游戏中的函数,让其实现自动化.&nbsp;
+</p>
+<p style="text-indent:2em;">
+	第六步：学会编写call代码
+</p>
+<p style="text-indent:2em;">
+	第七步：会加密解密封包
+</p>
+<p style="text-indent:2em;">
+	<span style="white-space:pre;"> </span>我们需要阅读以下书籍
+</p>
+<p style="text-indent:2em;">
+	《C++程序设计》
+</p>
+<p style="text-indent:2em;">
+	《windows程序设计第5版》
+</p>
+<p style="text-indent:2em;">
+	《windows核心编程》
+</p>
+<p style="text-indent:2em;">
+	《深入浅出MFC》
+</p>
+<p style="text-indent:2em;">
+	《subverting the windows kernel》
+</p>
+<p style="text-indent:2em;">
+	<span style="white-space:pre;"> </span>这样折腾一回，编程技巧，windows内核的了解也就嗖嗖的提高了。
+</p>
+<p style="text-indent:2em;">
+	<b><span style="color:#FF0000;font-size:medium;">五、游戏外挂防御很飘渺</span></b> 
+</p>
+<p style="text-indent:2em;">
+	要防御先得了解游戏为啥被攻击，攻击方法是什么。为啥被攻击？对于普通玩家而言，<b>快速升级</b>与<b>对稀有道具或购买这些道具的游戏货币的需</b>求是最大的作弊诱因。正是这些普通玩家的需求产生了专业的供应方（打金工作室）。攻击方法在<b style="color:#FF0000;line-height:28px;font-size:large;">二、游戏攻击手段很多样</b>有介绍。
+</p>
+<p style="text-indent:2em;">
+	防御有法律手段也有技术手段。<b>法律手段</b>一般是针对打金工作室的，一般以<b>破坏游戏经济</b>为罪名起诉，其实施效果在天朝真的很不好。<b>技术手段</b>有游戏设计优化的（例如严格限制每日经济上限），也有依赖监控系统与GM反馈后做事后代码修复（这个在页游公司最为常见），也有事前防御的（例如加壳，代码混淆，注入检测）。
+</p>
+<p style="text-indent:2em;">
+	之所以说游戏外挂防御很飘渺，是因为游戏外挂防御的限制很多，最主要的限制是这方面的资源投入往往不够，其次是防御涉及到多方面的配合（游戏外挂信息的反馈是否及时，游戏外挂分析人员的技术是否扎实，游戏负责人是否同意牺牲部分可玩性去换取安全性等等）。
+</p>
+<p style="text-indent:2em;">
+	总的来说外挂的产生是利益驱动，游戏虚拟货币与真实货币之间的紧密关系驱动了这一产业，游戏外挂会加速游戏的死亡，真正爱游戏的人，需要抵制这一行为，当然反外挂的主要职责在游戏制作商，他们有义务给玩家创建一个公平的游戏环境。
+</p>
+<p style="text-indent:2em;">
+	转自：<a href="http://danqingdani.blog.163.com/blog/static/186094195201309112412385/" target="_blank">http://danqingdani.blog.163.com/blog/static/186094195201309112412385/</a>
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">碳基体</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-01-15
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E6%B8%B8%E6%88%8F/">游戏</a>
+          <a href="https://lcx.cc/tags/android/">Android</a>
+          <a href="https://lcx.cc/tags/api/">API</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E4%BF%9D%E6%8A%A4/">保护</a>
+          <a href="https://lcx.cc/tags/%E7%88%86/">爆</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E4%BA%A7%E4%B8%9A/">产业</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E5%9C%B0%E5%9B%BE/">地图</a>
+          <a href="https://lcx.cc/tags/%E9%92%93%E9%B1%BC/">钓鱼</a>
+          <a href="https://lcx.cc/tags/%E6%81%B6%E6%84%8F/">恶意</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E7%A8%8B%E5%B8%88/">工程师</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/%E8%B4%A7%E5%B8%81/">货币</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+          <a href="https://lcx.cc/tags/%E6%A3%80%E6%B5%8B/">检测</a>
+          <a href="https://lcx.cc/tags/%E5%AE%A2%E6%88%B7%E7%AB%AF/">客户端</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E6%8B%9F/">模拟</a>
+          <a href="https://lcx.cc/tags/%E9%80%86%E5%90%91/">逆向</a>
+          <a href="https://lcx.cc/tags/%E5%85%A5%E4%BE%B5/">入侵</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BE%E5%A4%87/">设备</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%B7%98%E5%AE%9D/">淘宝</a>
+          <a href="https://lcx.cc/tags/%E5%9B%BE%E7%89%87/">图片</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E6%BA%90%E7%A0%81/">源码</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3278/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">android 延迟锁定bug，安卓手机锁破解，屏幕解锁保护</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3276/">
+            <span class="next-text nav-default">Python Pickle反序列化带来的安全问题</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

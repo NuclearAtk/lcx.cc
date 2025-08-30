@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【入侵卫星】A Brief Overview on Satellite Hacking - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="A Brief Overview on Satellite Hacking, By Anchises Moraes Guimar&atilde;es de Paula, iDefense. Information Security, July 2010  I  HItb MagazIne 17." />
+<meta name="keywords" content="A Brief Overview on Satellite Hacking" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/1935/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【入侵卫星】A Brief Overview on Satellite Hacking" />
+<meta property="og:description" content="A Brief Overview on Satellite Hacking, By Anchises Moraes Guimar&amp;atilde;es de Paula, iDefense. Information Security, July 2010  I  HItb MagazIne 17." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/1935/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2011-11-22T10:12:00&#43;08:00" />
+<meta property="article:modified_time" content="2011-11-22T10:12:00&#43;08:00" />
+
+<meta itemprop="name" content="【入侵卫星】A Brief Overview on Satellite Hacking">
+<meta itemprop="description" content="A Brief Overview on Satellite Hacking, By Anchises Moraes Guimar&amp;atilde;es de Paula, iDefense. Information Security, July 2010  I  HItb MagazIne 17."><meta itemprop="datePublished" content="2011-11-22T10:12:00&#43;08:00" />
+<meta itemprop="dateModified" content="2011-11-22T10:12:00&#43;08:00" />
+<meta itemprop="wordCount" content="4025">
+<meta itemprop="keywords" content="Hack,IE,入侵,Anonymous,app,ASP,ATM,CIA,Defcon,Dos,EXP,Html,HTTP,IP,Linux,NDS,Net,POS,Rat,SEO,VB,VBS,Web," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【入侵卫星】A Brief Overview on Satellite Hacking"/>
+<meta name="twitter:description" content="A Brief Overview on Satellite Hacking, By Anchises Moraes Guimar&amp;atilde;es de Paula, iDefense. Information Security, July 2010  I  HItb MagazIne 17."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【入侵卫星】A Brief Overview on Satellite Hacking</h1>
+      
+      <div class="post-meta">
+        <time datetime="2011-11-22" class="post-time">
+          2011-11-22
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/hack/"> Hack </a>
+            <a href="https://lcx.cc/categories/ie/"> IE </a>
+            <a href="https://lcx.cc/categories/%E5%85%A5%E4%BE%B5/"> 入侵 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4025 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P align=center><A href="/file/old/397_d529f5fa513d26978ba2d21a55fbb2fb4216d84f.jpg" target=_blank><IMG style="FILTER: ; WIDTH: 800px; HEIGHT: 565px" height=1130 alt="【入侵卫星】A Brief Overview on Satellite Hacking" hspace=0 src="/file/old/397_d529f5fa513d26978ba2d21a55fbb2fb4216d84f.jpg" width=1600 border=0></A></P>
+<P align=center><A href="/file/old/398_463f7f8ba61ea8d3af52ae43970a304e241f584f.jpg" target=_blank><IMG style="FILTER: ; WIDTH: 800px; HEIGHT: 565px" height=1130 alt="【入侵卫星】A Brief Overview on Satellite Hacking" hspace=0 src="/file/old/398_463f7f8ba61ea8d3af52ae43970a304e241f584f.jpg" width=1600 border=0></A></P>
+<P align=center><A href="/file/old/399_7ce15618972bd407b4b409ba7b899e510eb30948.jpg" target=_blank><IMG style="FILTER: ; WIDTH: 800px; HEIGHT: 565px" height=1130 alt="【入侵卫星】A Brief Overview on Satellite Hacking" hspace=0 src="/file/old/399_7ce15618972bd407b4b409ba7b899e510eb30948.jpg" width=1600 border=0></A></P>
+<P align=center><A href="/file/old/400_8e374f119313b07eccee8a4f0cd7912396dd8c68.jpg" target=_blank><IMG style="FILTER: ; WIDTH: 800px; HEIGHT: 565px" height=1130 alt="【入侵卫星】A Brief Overview on Satellite Hacking" hspace=0 src="/file/old/400_8e374f119313b07eccee8a4f0cd7912396dd8c68.jpg" width=1600 border=0></A></P>
+<P style="TEXT-INDENT: 2em">A Brief Overview on Satellite Hacking, By Anchises Moraes Guimar&atilde;es de Paula, iDefense. Information Security, July 2010&nbsp; I&nbsp; HItb MagazIne 17.</P>
+<P style="TEXT-INDENT: 2em">As a large portion of worldwide Internet users increasingly rely on satellite communication technologies to connect to the Web, a number of vulnerabilities within these connections actively expose satellites to potential attacks. The implications of such a successful attack are massive, as satellites are the only means of broadcasting communications in many regions around the globe and an attacker could act from everywhere.</P>
+<P style="TEXT-INDENT: 2em">Satellite Hacking.pdf，下载地址：<A href="http://115.com/file/e6etli97" target=_blank>http://115.com/file/e6etli97</A></P>
+<P style="TEXT-INDENT: 2em"><FONT color=#0000ff>以下为 PDF 直接转换为纯文本，缺少大量图片，并存在大量乱码，段落严重错位，仅做参考！</FONT></P>
+<P align=center><STRONG>------------------------------------------&nbsp;<FONT color=#ff0000>↓&nbsp;PDF To TXT&nbsp;↓</FONT> ------------------------------------------</STRONG></P>
+<P style="TEXT-INDENT: 2em">----------------------- Page 1-----------------------</P>
+<P style="TEXT-INDENT: 2em">information security</P>
+<P style="TEXT-INDENT: 2em">A Brief Overview on</P>
+<P style="TEXT-INDENT: 2em">satellite</P>
+<P style="TEXT-INDENT: 2em">hacking</P>
+<P style="TEXT-INDENT: 2em">By Anchises Moraes Guimaraes de Paula, iDefense</P>
+<P style="TEXT-INDENT: 2em">JULy 2010 I HItb MagazIne 17</P>
+<P style="TEXT-INDENT: 2em">----------------------- Page 2-----------------------</P>
+<P style="TEXT-INDENT: 2em">INFORMATION SECURITy INFORMATION SECURITy</P>
+<P style="TEXT-INDENT: 2em">As a large portion of worldwide Internet users increasingly and telephone transmissions by using Exhibit 1. Unidirectional Access with Terrestrial Return (also known as Satmodem)8</P>
+<P style="TEXT-INDENT: 2em">the transponder, a radio that receives</P>
+<P style="TEXT-INDENT: 2em">rely on satellite communication technologies to connect a conversation at one frequency and</P>
+<P style="TEXT-INDENT: 2em">then amplifies it and retransmits the</P>
+<P style="TEXT-INDENT: 2em">to the Web, a number of vulnerabilities within these signal back to Earth on another fre-</P>
+<P style="TEXT-INDENT: 2em">quency that a ground-based antenna</P>
+<P style="TEXT-INDENT: 2em">connections actively expose satellites to potential may receive. A satellite normally con-</P>
+<P style="TEXT-INDENT: 2em">tains 24 to 32 transponders, which are</P>
+<P style="TEXT-INDENT: 2em">attacks. The implications of such a successful attack are operating on different frequencies.4</P>
+<P style="TEXT-INDENT: 2em">massive, as satellites are the only means of broadcasting Modern communications satellites use</P>
+<P style="TEXT-INDENT: 2em">a variety of orbits including geosta-</P>
+<P style="TEXT-INDENT: 2em">communications in many regions around the globe and an tionary orbits,5 Molniya orbits,6 other</P>
+<P style="TEXT-INDENT: 2em">elliptical orbits and low Earth orbits</P>
+<P style="TEXT-INDENT: 2em">attacker could act from everywhere. (LEO).7 Communications satellites</P>
+<P style="TEXT-INDENT: 2em">are usually geosynchronous because</P>
+<P style="TEXT-INDENT: 2em">ground-based antennas, which op-</P>
+<P style="TEXT-INDENT: 2em">erators must direct toward a satellite,</P>
+<P style="TEXT-INDENT: 2em">can work effectively without the need</P>
+<P style="TEXT-INDENT: 2em">roadband Internet access via satel- services, such as Global Positioning Systems to track the satellite?ˉs motion. This al-</P>
+<P style="TEXT-INDENT: 2em">lite is available almost worldwide. (GPSs), weather forecasts, TV transmissions lows technicians to aim satellite antennas at Internet, with outbound data traveling through</P>
+<P style="TEXT-INDENT: 2em">Satellite Internet services are the and mapping service applications based on an orbiting satellite and leave them in a fixed a telephone modem or a DSL connection, but it</P>
+<P style="TEXT-INDENT: 2em">Bonly possible method of connect- real satellite images (such as Google Maps). position. Each satellite occupies a particular sends downloads via a satellite link at a speed</P>
+<P style="TEXT-INDENT: 2em">ing remote areas, the sea or countries where ?°Although anything that is in orbit around location in orbit and operates at a particular near that of broadband Internet access. Two-</P>
+<P style="TEXT-INDENT: 2em">traditional Internet cable connections are still Earth is technically a satellite, the term ?°satel- frequency assigned by the country?ˉs regula- way satellite Internet service, also known as</P>
+<P style="TEXT-INDENT: 2em">not accessible. Satellite communications are lite?± typically describes a useful object placed tor as the Federal Communications Commis- bidirectional access or ?°astro-modem,?± involves</P>
+<P style="TEXT-INDENT: 2em">also widely adopted as backup connection in orbit purposely to perform some specific sion (FCC) in the U.S. The electromagnetic both sending and receiving data via satellite to</P>
+<P style="TEXT-INDENT: 2em">providers by several organizations and coun- mission or task.?±2 There are several satellite spectrum usage is regulated in every coun- a hub facility, which has a direct connection to</P>
+<P style="TEXT-INDENT: 2em">tries for those times when the terrestrial com- types, defined by their orbits and functions: try, so that each government has its regula- the Internet (see Exhibit 2).</P>
+<P style="TEXT-INDENT: 2em">munications infrastructure is not available, scientific, Earth and space observation, re- tory agency which determines the purpose</P>
+<P style="TEXT-INDENT: 2em">damaged or overloaded. By the end of 2008, connaissance satellites (Earth observation or of each portion of radio frequency, according The required equipment to access satellite</P>
+<P style="TEXT-INDENT: 2em">an estimated 842,000 US consumers relied on communications satellites deployed for mili- to international agreements. communication includes a satellite dish, a</P>
+<P style="TEXT-INDENT: 2em">satellite broadband Internet access.1 tary or intelligence applications) and com- receiver for satellites signals, which is a low-</P>
+<P style="TEXT-INDENT: 2em">munications, which include TV, voice and The satellite provider supports Internet ac- noise block (LNB) converter, a decoder, a</P>
+<P style="TEXT-INDENT: 2em">Communications satellites routinely receive data connections. Most satellites are custom cess and Internet applications through the satellite modem and special personal-com-</P>
+<P style="TEXT-INDENT: 2em">and rebroadcast data, television, image and built to perform their intended functions. provider teleport location, which connects puter software. Usually, a single device or</P>
+<P style="TEXT-INDENT: 2em">some telephone transmissions without the to the public switched telephone network PCI card integrates the decoder and modem.</P>
+<P style="TEXT-INDENT: 2em">proper security measures, leading to frequent Organizations and consumers have used sat- (PSTN) and the Internet. There are three types Several software programs and online tools</P>
+<P style="TEXT-INDENT: 2em">fraud and attacks against satellite ser- ellite communication technology as a means of Internet via satellite access: one-way mul- are widely available.</P>
+<P style="TEXT-INDENT: 2em">vices. Traditional fraud techniques to connect to the Internet via broadband ticast, unidirectional with terrestrial return</P>
+<P style="TEXT-INDENT: 2em">and attack vectors include satel- data connections for a long time. Internet via and bidirectional access. One-way multicast Satellite Internet customers range from indi-</P>
+<P style="TEXT-INDENT: 2em">lite TV hacking and the use of satellite provides consumers with connec- transmits IP multicast-based data, both audio vidual home users to large business sites with</P>
+<P style="TEXT-INDENT: 2em">Satellites are an</P>
+<P style="TEXT-INDENT: 2em">illicit decoding technology tion speeds comparable or superior to digi- and video; however, most Internet protocols several hundred users. The advantages of</P>
+<P style="TEXT-INDENT: 2em">to hack into television sat- tal subscriber line (DSL) and cable modems. will not work correctly because they require this technology include a greater bandwidth essential part of</P>
+<P style="TEXT-INDENT: 2em">ellite signals. In addition, Data communication uses a similar design a return channel. A single channel for data than other broadband technologies, nearly our daily lives.</P>
+<P style="TEXT-INDENT: 2em">satellite communications and protocol to satellite television, known download via a satellite link characterizes worldwide coverage, and additional sup-</P>
+<P style="TEXT-INDENT: 2em">are easily susceptible as Digital Video Broadcasting (DVB), a suite unidirectional access with terrestrial return, port to television and radio services. Satellite Many global</P>
+<P style="TEXT-INDENT: 2em">to eavesdropping if not of open standards for digital television. DVB also known as ?°satmodem?± or a ?°one-way ter- broadband service is available in areas that interactions</P>
+<P style="TEXT-INDENT: 2em">properly encrypted. standards are maintained by the DVB Project, restrial return?± satellite Internet system, and terrestrially based wired technologies (e.g., rely on satellite</P>
+<P style="TEXT-INDENT: 2em">an international industry consortium. Ser- this type of satellite access uses a data uplink cable and DSL) or wireless technologies can-</P>
+<P style="TEXT-INDENT: 2em">SATELLITE BASICS vices using DVB standards are available on channel with slower speed connection tech- not operate. The disadvantages, however, are communications</P>
+<P style="TEXT-INDENT: 2em">Satellites are an essential part every continent with more than 500 million nologies (see Exhibit 1). numerous: weather conditions (rain, storms or satellite-</P>
+<P style="TEXT-INDENT: 2em">of our daily lives. Many global DVB receivers deployed, including at least or solar influences) might affect satellite com- powered</P>
+<P style="TEXT-INDENT: 2em">interactions rely on satellite com- 3 Communica-</P>
+<P style="TEXT-INDENT: 2em">100 million satellite receivers. Unidirectional access systems use traditional munications, satellites demand expensive</P>
+<P style="TEXT-INDENT: 2em">services.</P>
+<P style="TEXT-INDENT: 2em">munications or satellite-powered tions satellites relay data, television, images dial-up or broadband technology to access the hardware and have a complex setup (install-</P>
+<P style="TEXT-INDENT: 2em">18 HItb Magaz Ine I JULy 2010 JULy 2010 I HItb MagazIne 19</P>
+<P style="TEXT-INDENT: 2em">----------------------- Page 3-----------------------</P>
+<P style="TEXT-INDENT: 2em">INFORMATION SECURITy INFORMATION SECURITy</P>
+<P style="TEXT-INDENT: 2em">Exhibit 2. Bidirectional Satellite Communication9 sign and configuration flaws in public- radio programs based on a Linux operating To get an anonymous Internet connection</P>
+<P style="TEXT-INDENT: 2em">ly accessible satellite communication system, he was able to monitor Internet satel- via the satellite broadband network, Nve</P>
+<P style="TEXT-INDENT: 2em">networks and protocols, and they are lite transmission and to pipe its feed into his used this local Internet access connection</P>
+<P style="TEXT-INDENT: 2em">making impressive progress. laptop. From there, he could analyze packets as an uplink and the hacked satellite con-</P>
+<P style="TEXT-INDENT: 2em">using standard programs such as the popular nection as a downlink since he had the</P>
+<P style="TEXT-INDENT: 2em">In 2004, security researcher Warez- network protocol analyzer Wireshark. Accord- necessary means to capture all satellite</P>
+<P style="TEXT-INDENT: 2em">zman presented early studies on satel- ing to The Register, ?°Laurie has also developed traffic, including the IP response packets.</P>
+<P style="TEXT-INDENT: 2em">lite hacking at the Spanish conference software that analyzes hundreds of channels By figuring out the ISP satellite IP address</P>
+<P style="TEXT-INDENT: 2em">UNDERCON 0x08.15 In July 2006, Dan to pinpoint certain types of content, includ- range and using a satellite IP address not</P>
+<P style="TEXT-INDENT: 2em">Veeneman presented additional stud- ing traffic based on transmission control pro- in use, Nev established a TCP connection by</P>
+<P style="TEXT-INDENT: 2em">ies on satellite hacking at Defcon 04.16 tocol (TCP), user datagram protocol (UDP), sending packets with the spoofed satellite</P>
+<P style="TEXT-INDENT: 2em">Recently, various security researchers or simple mail transfer protocol (SMTP). The network?ˉs IP address via his local Internet</P>
+<P style="TEXT-INDENT: 2em">are leading the innovation in this area, program offers a 3D interface that allows the connection (a dial-up or regular broadband</P>
+<P style="TEXT-INDENT: 2em">notably, Jim Geovedi, Raditya Iryandi user to quickly isolate e-mail transmissions, connection) and he received the response</P>
+<P style="TEXT-INDENT: 2em">and Anthony Zboralski from the con- Web surfing sessions or television feeds that by sniffing the packets via the satellite in-</P>
+<P style="TEXT-INDENT: 2em">sulting company Bellua Asia Pacific; have recently been set up.?±20 terface (see Exhibit 3).</P>
+<P style="TEXT-INDENT: 2em">Leonardo Nve Egea from the Spanish</P>
+<P style="TEXT-INDENT: 2em">information security company S21SEC; In 2009, Leonardo Nve, a Spanish senior secu- Such attack is virtually untraceable, once the</P>
+<P style="TEXT-INDENT: 2em">and white-hat hacker Adam Laurie, di- rity researcher, presented his experiments on attacker can establish his or her connection</P>
+<P style="TEXT-INDENT: 2em">rector of security research and consul- satellite communications security at several from anywhere in the world, due to the fact</P>
+<P style="TEXT-INDENT: 2em">ing a satellite dish takes some knowledge to tancy at Aperture Labs Ltd. conferences around the world, including the that the satellite signal is the same for every-</P>
+<P style="TEXT-INDENT: 2em">configure the satellite?ˉs polarization and ori- Argentinean Ekoparty21 and the t2??09 Informa- one within the satellite coverage area. That</P>
+<P style="TEXT-INDENT: 2em">entation), and the satellite providers charge In September 2006, Geovedi and Iryandi pre- tion Security Conference in Finland,22 as well is, if a user based in Berlin uses a satellite</P>
+<P style="TEXT-INDENT: 2em">relatively high monthly fees. Moreover, many sented a ?°Hacking a Bird in the Sky?±17 talk as the 2010 edition of BlackHat DC, among company that provides coverage through-</P>
+<P style="TEXT-INDENT: 2em">types of applications, such as voice-over In- about hijacking very small aperture terminal others. His investigation is concentrated on out Europe, a malicious user could capture</P>
+<P style="TEXT-INDENT: 2em">ternet protocol (VoIP) and videoconferenc- (VSAT) connections at the 2006 Hack in the malicious attacks on satmodem communica- the downstream channel in Sicily or Paris.</P>
+<P style="TEXT-INDENT: 2em">ing, are not suitable for this type of connec- Box security conference (HITBSecConf2006) tions and how to get an anonymous connec- This technique leads to several new possible</P>
+<P style="TEXT-INDENT: 2em">tion due to the high latency. Typical satellite in Malaysia.18 They listed various hypotheti- tion via the satellite provider?ˉs broadband attacks, such as domain name system (DNS) ... data packets</P>
+<P style="TEXT-INDENT: 2em">telephone links have 550- 650 milliseconds of cal attacks against satellite communication network. Previously, satellite studies focused spoofing, TCP hijacking and attacking generic transmitted most</P>
+<P style="TEXT-INDENT: 2em">round-trip delay up to the satellite and back systems, such as denial of service (DoS) condi- only on feeds interception and data capture, routing encapsulation (GRE) protocol.</P>
+<P style="TEXT-INDENT: 2em">down to Earth.10 tions (uplink or downlink jamming, overpower since researchers were focusing on passive of the sensitive</P>
+<P style="TEXT-INDENT: 2em">uplink) and orbital positioning attacks (raging vulnerabilities. Nve was able to run active at- Proven insecure, satellite communications communication</P>
+<P style="TEXT-INDENT: 2em">RESEARCH ON HACKING SATELLITES transponder spoofing, direct commanding, tacks against the satellite clients and providers provide almost no protection against unau- in plain text with</P>
+<P style="TEXT-INDENT: 2em">Typical attacks against satellite networks in- command replay, insertion after confirmation using easy-to-find tools such as a satellite dish, thorized eavesdropping since they broadcast</P>
+<P style="TEXT-INDENT: 2em">clude satellite television hacking (the use but prior to execution), and gave a presenta- an LNB, cables, support, a digital video broad- all communications to a large area without no encryption.</P>
+<P style="TEXT-INDENT: 2em">of illegal reprogrammed descrambler cards tion about how to get access to the data link cast (DVB) system PCI card, a Satfinder</P>
+<P style="TEXT-INDENT: 2em">from legitimate satellite equipment to allow layer. Later, at the 2008 edition of the Hack In tool and a Linux box with the necessary Exhibit 3. Getting Anonymous Internet Access via Satellite Network</P>
+<P style="TEXT-INDENT: 2em">unlimited TV service without a subscription)11 The Box Security Conference, Geovedi, Iryandi free software, such as Linuxtv, kernel</P>
+<P style="TEXT-INDENT: 2em">and hacking into satellite networks to trans- and Zboralski gave a presentation about how drivers for DVB PCI cards, Linuxtv ap-</P>
+<P style="TEXT-INDENT: 2em">mit unauthorized material, such as political to compromise the satellite communication?ˉs plication tools and DVBsnoop (a DVB</P>
+<P style="TEXT-INDENT: 2em">propaganda.12 In March 2009, Brazilian Fed- network layer and how to run a practical ?°sat- protocol analyzer console available at</P>
+<P style="TEXT-INDENT: 2em">eral Police arrested a local group that was us- ellite piggyjacking?± attack, which exploits the http://dvbsnoop.sourceforge.net), and</P>
+<P style="TEXT-INDENT: 2em">ing U.S. Navy satellites for unauthorized com- satellite trust relationship on a VSAT network the Wireshark tool for data capture.23</P>
+<P style="TEXT-INDENT: 2em">munication.13 According to WIRED, ?°to use by finding a ?°free?± (unused) frequency range</P>
+<P style="TEXT-INDENT: 2em">the satellite, pirates typically take an ordinary inside a user-allocated frequency to transmit Nve based his attack research on find-</P>
+<P style="TEXT-INDENT: 2em">ham radio transmitter, which operates in the and receive data. ing open Internet satellite connec-</P>
+<P style="TEXT-INDENT: 2em">144- to 148-MHZ range, and add a frequency tions by running blind scans on avail-</P>
+<P style="TEXT-INDENT: 2em">radio enthusiasts doubler cobbled from coils and a varactor di- At the February 2009 Black Hat DC confer- able satellite channels and hacking</P>
+<P style="TEXT-INDENT: 2em">ode.?± Radio enthusiasts can buy all the hard- ence, Adam Laurie presented how to hack into DVB protocol. During his tests, he</P>
+<P style="TEXT-INDENT: 2em">can buy all the ware near any truck stop for less than USD into satellite transmissions using off-the-shelf was able to capture 7,967 data pack-</P>
+<P style="TEXT-INDENT: 2em">hardware near $500, while ads on specialized websites offer components that Laurie assembled himself by ets from typical Internet traffic in just</P>
+<P style="TEXT-INDENT: 2em">any truck stop to perform the conversion for less than USD spending just $785 US. Laurie claimed that he 10 seconds. According to his reports,</P>
+<P style="TEXT-INDENT: 2em">$100.14 To help the industry fight such inci- has been doing satellite feed hunting19 since data packets transmitted most of the</P>
+<P style="TEXT-INDENT: 2em">for less than</P>
+<P style="TEXT-INDENT: 2em">dents, information security researchers have the late 1990s. By using a modified Dream- sensitive communication in plain text</P>
+<P style="TEXT-INDENT: 2em">USd $500. been investigating the inherent security, de- box, a German receiver for digital TV and with no encryption.24</P>
+<P style="TEXT-INDENT: 2em">20 HItb Magaz Ine I JULy 2010 JULy 2010 I HItb MagazIne 21</P>
+<P style="TEXT-INDENT: 2em">----------------------- Page 4-----------------------</P>
+<P style="TEXT-INDENT: 2em">Advertisement</P>
+<P style="TEXT-INDENT: 2em">High Security Lab: http://lhs.loria.fr</P>
+<P style="TEXT-INDENT: 2em">INFORMATION SECURITy</P>
+<P style="TEXT-INDENT: 2em">proper confidentiality controls. Various pas- &gt;&gt;references Malware 2010</P>
+<P style="TEXT-INDENT: 2em">sive and active threats against insecure In-</P>
+<P style="TEXT-INDENT: 2em">ternet satellite communications include sniff- 1.?°State of the Satellite Industry Report.?± June 2009. Satellite Industry Association.</P>
+<P style="TEXT-INDENT: 2em">ing, DoS attacks and establishing anonymous http://www.sia.org/news_events/2009_State_of_Satellite_Industry_Report.pdf.</P>
+<P style="TEXT-INDENT: 2em">connections. Hacking into satellite receivers 2. Brown, Gary. ?°How Satellites Work.?± HowStuffWorks. http://science.howstuffworks.</P>
+<P style="TEXT-INDENT: 2em">com/satellite1.htm. Accessed on Nov. 5, 2009.</P>
+<P style="TEXT-INDENT: 2em">is much easier now than it was in the past, 3. ?°Introduction to the DVB Project.?± Mar. 23, 2010. DVB. http://www.dvb.org/</P>
+<P style="TEXT-INDENT: 2em">thanks to the widespread availability of Linux technology/fact_sheets/DVB-Project_Factsheet.pdf.</P>
+<P style="TEXT-INDENT: 2em">tools and several online tutorials. 4. ?°Satellite Technology.?± Nov. 5, 2009. Satellite Broadcasting &amp; Communications</P>
+<P style="TEXT-INDENT: 2em">Association (SBCA). http://www.sbca.com/receiver-network/satellite-receiver.htm.</P>
+<P style="TEXT-INDENT: 2em">5. Geostationary orbits (also called geosynchronous or synchronous orbits) are</P>
+<P style="TEXT-INDENT: 2em">CONCLUSION</P>
+<P style="TEXT-INDENT: 2em">orbits in which a satellite always positions itself over the same spot on Earth.</P>
+<P style="TEXT-INDENT: 2em">Governmental, Military organizations and Many geostationary satellites (also known as Geostationary Earth Orbits, or GEOs)</P>
+<P style="TEXT-INDENT: 2em">most of the companies included within the orbit above a band along the equator, with an altitude of about 22,223 miles.</P>
+<P style="TEXT-INDENT: 2em">critical infrastructure sector such as transport, (Brown, Gary. ?°How Satellites Work.?± HowStuffWorks. http://science.howstuffworks.</P>
+<P style="TEXT-INDENT: 2em">com/satellite5.htm. Accessed on Nov. 5, 2009.)</P>
+<P style="TEXT-INDENT: 2em">oil and energy, are using satellite communi- 6.The Molniya orbit is highly eccentric ?a the satellite moves in an extreme ellipse with</P>
+<P style="TEXT-INDENT: 2em">cations for transmitting sensitive information the Earth close to one edge. Because the planet?ˉs gravity accelerates it, the satellite</P>
+<P style="TEXT-INDENT: 2em">across their widespread operations. This in- moves very quickly when it is close to the Earth. As it moves away, its speed slows,</P>
+<P style="TEXT-INDENT: 2em">cludes the use of satellite communication at so it spends more time at the top of its orbit farthest from the Earth. (Holli Riebeek.</P>
+<P style="TEXT-INDENT: 2em">?°Catalog of Earth Satellite Orbits / Three Classes of Orbit.?± Nov. 5, 2009. NASA Earth</P>
+<P style="TEXT-INDENT: 2em">industrial plants operating supervisory control Observatory. http://earthobservatory.nasa.gov/Features/OrbitsCatalog/page2.php.)</P>
+<P style="TEXT-INDENT: 2em">and data acquisition (SCADA) systems. The rel- 7. A satellite in low Earth orbit (LEO) circles the earth 100 to 300 miles above the</P>
+<P style="TEXT-INDENT: 2em">evance of satellite communication protection Earth?ˉs surface..(?°What Is a Satellite??± Satellite Industry Association. Nov. 5,</P>
+<P style="TEXT-INDENT: 2em">and the consequences of a security incident 2009. Boeing. http://www.sia.org/industry_</P>
+<P style="TEXT-INDENT: 2em">overview/sat101.pdf.)</P>
+<P style="TEXT-INDENT: 2em">should enforce these organizations to deploy 8. Warezzman. ?°DVB: Satellite Hacking For</P>
+<P style="TEXT-INDENT: 2em">additional security measures to their internal Dummies.?± 2004. Undercon. http://www.</P>
+<P style="TEXT-INDENT: 2em">communication technologies. Companies and undercon.org/archivo/0x08/UC0x08-DVB-</P>
+<P style="TEXT-INDENT: 2em">organizations that use or provide satellite data Satellite_Hacking.pdf.</P>
+<P style="TEXT-INDENT: 2em">9. Based on ?°DVB: Satellite Hacking for</P>
+<P style="TEXT-INDENT: 2em">connections must be aware of how insecure</P>
+<P style="TEXT-INDENT: 2em">Dummies?± by Warezzman source: http://</P>
+<P style="TEXT-INDENT: 2em">satellite connections are and aware of the pos- www.undercon.org/archivo/0x08/UC0x08-DVB-Satellite_</P>
+<P style="TEXT-INDENT: 2em">sible threats in this environment. Companies Hacking.pdf.</P>
+<P style="TEXT-INDENT: 2em">and users must implement secure protocols to 10. Brown, Gary. ?°How Satellites Work.?± HowStuffWorks.</P>
+<P style="TEXT-INDENT: 2em">http://science.howstuffworks.com/satellite7.htm. 5th IEEE International Conference</P>
+<P style="TEXT-INDENT: 2em">provide data protection, such as virtual private Nov. 5, 2009.</P>
+<P style="TEXT-INDENT: 2em">network (VPN) and secure sockets layer (SSL), 11. Berry, Walter. ?°Arrests Made in TV Satellite on Malicious and U wanted Software</P>
+<P style="TEXT-INDENT: 2em">since most traffic transmits unencrypted and Hacking.?± Jan. 25, 2009. abc News. http://abcnews.</P>
+<P style="TEXT-INDENT: 2em">is widely available in a large geographic area go.com/Technology/story?id=99047. Nancy, France, Oct. 20-21, 2010</P>
+<P style="TEXT-INDENT: 2em">12. Morrill, Dan. ?°Hack a Satellite while it is in orbit.?± April 13, 2007. Toolbox for IT. http://</P>
+<P style="TEXT-INDENT: 2em">under the satellite?ˉs coverage. it.toolbox.com/blogs/managing-infosec/hack-a-satellite-while-it-is-in-orbit-15690. http://malware10.loria.fr</P>
+<P style="TEXT-INDENT: 2em">13.?°PF descobre equipamento capaz de fazer ??gato?ˉ em sat¨|lite dos EUA?± (?°PF discovered</P>
+<P style="TEXT-INDENT: 2em">ABOUT THE AUTHOR equipment to hook into U.S. satellite?±). March 19, 2009. Jornal da Globo. (Global</P>
+<P style="TEXT-INDENT: 2em">Anchises M. G. de Paula, CISSP, is an Interna- Journal). http://g1.globo.com/Noticias/Tecnologia/0,,MUL1049142-6174,00-PF+DESCO Important dates Program Committee</P>
+<P style="TEXT-INDENT: 2em">BRE+EQUIPAMENTO+CAPAZ+DE+FAZER+GATO+EM+SATELITE+DOS+EUA.html.</P>
+<P style="TEXT-INDENT: 2em">tional Cyber Intelligence Analyst at iDefense, 14. Soares, Marcelo. ?°The Great Brazilian Sat-Hack Crackdown.?± Apr. 20, 2009. WIRED. Submission: June 30th, 2010 Anthony Arrott, Trend Micro</P>
+<P style="TEXT-INDENT: 2em">a VeriSign company. He has more than 15 http://www.wired.com/politics/security/news/2009/04/fleetcom. Notification: August 27th, 2010 Pierre-Marc Bureau, ESET</P>
+<P style="TEXT-INDENT: 2em">years of strong experience in Computer Secu- 15. Undercon home page. http://www.undercon.org/archivo.php?ucon=8. Accessed</P>
+<P style="TEXT-INDENT: 2em">on Nov. 5, 2009. Final version: September 10th, 2010 Mila Dalla Preda, Verona University</P>
+<P style="TEXT-INDENT: 2em">rity, and previously worked as Security Officer</P>
+<P style="TEXT-INDENT: 2em">in Brazilian telecom companies before be- 16. DEF CON IV home page. http://www.defcon.org/html/defcon-4/defcon-4.html. Saumya Debray, Arizona University</P>
+<P style="TEXT-INDENT: 2em">Accessed on Nov. 5, 2009.</P>
+<P style="TEXT-INDENT: 2em">coming Security Consultant for local infosec 17. Note: ?°Bird?± is a term for satellite. General Program Chair Thomas Engel, University of Luxembourg</P>
+<P style="TEXT-INDENT: 2em">resellers and consulting companies. Anchises 18. HITBSecConf2006 home page. http://conference.hitb.org/hitbsecconf2006kl. Jos¨| M. Fernandez, Ecole Polytechnique de</P>
+<P style="TEXT-INDENT: 2em">Accessed on Nov. 5, 2009. Fernando C. Colon Osorio, WSSRL and</P>
+<P style="TEXT-INDENT: 2em">holds a Computer Science Bachelor degree Montr¨|al</P>
+<P style="TEXT-INDENT: 2em">from Universidade de Sao Paulo (USP) and a 19. Note: ?°Feed Hunting?± means looking for satellite feeds that no one is supposed to find. Brandeis University</P>
+<P style="TEXT-INDENT: 2em">20. Goodin, Dan. ?°Satellite-hacking boffin sees the unseeable.?± Feb. 17, 2009. The Dr. Olivier Festor, INRIA</P>
+<P style="TEXT-INDENT: 2em">master degree in Marketing from ESPM. He Register. http://www.theregister.co.uk/2009/02/17/satellite_tv_hacking. Chairs of Malware 2010</P>
+<P style="TEXT-INDENT: 2em">has also obtained various professional cer- 21. Ekoparty Security Conference home page. http://www.ekoparty.com.ar. Jean-Yves Marion, Nancy University Prof. Brent Kang, North Carolina University</P>
+<P style="TEXT-INDENT: 2em">tificates including CISSP, GIAC (Cutting Edge Accessed on Nov. 5, 2009. Noam Rathaus, Beyond Security Prof. Felix Leder, Bonn University</P>
+<P style="TEXT-INDENT: 2em">Hacking Techniques) and ITIL Foundations. 22. t2??09 Information Security Conference home page. http://www.t2.fi/conference. Bo Olsen, Kaspersky</P>
+<P style="TEXT-INDENT: 2em">Accessed on Nov. 5, 2009. Cliff Zhou, University Central Florida</P>
+<P style="TEXT-INDENT: 2em">As an active member of Brazilian infosec com- 23. Nve, Leonardo. ?°Playing in a Satellite environment 1.2.?±). Black Hat. http:// Dr. Jose Nazario, Arbor networks</P>
+<P style="TEXT-INDENT: 2em">munity, he was the President of ISSA Chapter blackhat.com/presentations/bh-dc-10/Nve_Leonardo/BlackHat-DC-2010-Nve- Publicity Co-Chairs Dr. Phil Porras, SRI International</P>
+<P style="TEXT-INDENT: 2em">Brazil in 2009 and one of the founding mem- Playing-with-SAT-1.2-wp.pdf. Accessed on May 28, 2010. Jose Morales, University of Texas Fred Raynal, Sogeti</P>
+<P style="TEXT-INDENT: 2em">bers of Brazilian Hackerspace and Brazilian 24. Nve, Leonardo. ?°Sat¨|lite: La senal del cielo que estabas esperando (II)?± (?°Satellite: Daniel Reynaud, Nancy-University</P>
+<P style="TEXT-INDENT: 2em">The sign from sky that you were waiting for (II)?±). Jan. 16, 2009. S21sec. http:// Andrew Walenstein, Lafayette University</P>
+<P style="TEXT-INDENT: 2em">Cloud Security Alliance chapter. * blog.s21sec.com/2009/01/satlite-la-seal-del-cielo-que-estabas_16.html. Local Chair</P>
+<P style="TEXT-INDENT: 2em">Jeff Williams, Microsoft</P>
+<P style="TEXT-INDENT: 2em">Matthieu Kaczmarek, INRIA</P>
+<P style="TEXT-INDENT: 2em">Yang Xiang, Deakin University</P>
+<P style="TEXT-INDENT: 2em">22 HItb MagazIne I JULy 2010</P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2011-11-22
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/hack/">Hack</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/%E5%85%A5%E4%BE%B5/">入侵</a>
+          <a href="https://lcx.cc/tags/anonymous/">Anonymous</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/asp/">ASP</a>
+          <a href="https://lcx.cc/tags/atm/">ATM</a>
+          <a href="https://lcx.cc/tags/cia/">CIA</a>
+          <a href="https://lcx.cc/tags/defcon/">Defcon</a>
+          <a href="https://lcx.cc/tags/dos/">Dos</a>
+          <a href="https://lcx.cc/tags/exp/">EXP</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/linux/">Linux</a>
+          <a href="https://lcx.cc/tags/nds/">NDS</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/seo/">SEO</a>
+          <a href="https://lcx.cc/tags/vb/">VB</a>
+          <a href="https://lcx.cc/tags/vbs/">VBS</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/1936/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">Php安全新闻早8点（2011-11-23 星期三）</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/1934/">
+            <span class="next-text nav-default">远程控制木马：按一次空格木马就执行一次</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

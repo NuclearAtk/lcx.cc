@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>低频RFID卡分析（ID卡为例） - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="lastdinner" /><meta name="description" content="低频RFID卡分析（ID卡为例）。低频RFID卡，目前市场广泛使用门禁系统用的是ID和HID卡。使用PROMARK3进行分析ID卡和HID分析 ，很多人只是用系统自带的lf em4x em410xwatch 和 lf hid fskdemod 命令，而遇到非标准格式的低频卡，这些命令就无法获取正确的信息。拿到一张RFID卡，第一步便是识别该卡到底为何卡。可以用proxmark3带的调频命令（hw tune）初步区分出是高频卡还是低频卡，这一点，网上有很多说明，其次，可以根据卡片上的商标和标志，做进一步的识别，没有明显识别标志的，只能自己慢慢推理。下面，以常见的ID卡为例， 通过proxmark3带的数据分析命令，自己分析低频卡数据。（ HID卡分析原理与步骤基本相同 ）" />
+<meta name="keywords" content="低频RFID卡分析（ID卡为例）" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3604/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="低频RFID卡分析（ID卡为例）" />
+<meta property="og:description" content="低频RFID卡分析（ID卡为例）。低频RFID卡，目前市场广泛使用门禁系统用的是ID和HID卡。使用PROMARK3进行分析ID卡和HID分析 ，很多人只是用系统自带的lf em4x em410xwatch 和 lf hid fskdemod 命令，而遇到非标准格式的低频卡，这些命令就无法获取正确的信息。拿到一张RFID卡，第一步便是识别该卡到底为何卡。可以用proxmark3带的调频命令（hw tune）初步区分出是高频卡还是低频卡，这一点，网上有很多说明，其次，可以根据卡片上的商标和标志，做进一步的识别，没有明显识别标志的，只能自己慢慢推理。下面，以常见的ID卡为例， 通过proxmark3带的数据分析命令，自己分析低频卡数据。（ HID卡分析原理与步骤基本相同 ）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3604/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-06-20T16:28:02&#43;08:00" />
+<meta property="article:modified_time" content="2013-06-20T16:28:02&#43;08:00" />
+
+<meta itemprop="name" content="低频RFID卡分析（ID卡为例）">
+<meta itemprop="description" content="低频RFID卡分析（ID卡为例）。低频RFID卡，目前市场广泛使用门禁系统用的是ID和HID卡。使用PROMARK3进行分析ID卡和HID分析 ，很多人只是用系统自带的lf em4x em410xwatch 和 lf hid fskdemod 命令，而遇到非标准格式的低频卡，这些命令就无法获取正确的信息。拿到一张RFID卡，第一步便是识别该卡到底为何卡。可以用proxmark3带的调频命令（hw tune）初步区分出是高频卡还是低频卡，这一点，网上有很多说明，其次，可以根据卡片上的商标和标志，做进一步的识别，没有明显识别标志的，只能自己慢慢推理。下面，以常见的ID卡为例， 通过proxmark3带的数据分析命令，自己分析低频卡数据。（ HID卡分析原理与步骤基本相同 ）"><meta itemprop="datePublished" content="2013-06-20T16:28:02&#43;08:00" />
+<meta itemprop="dateModified" content="2013-06-20T16:28:02&#43;08:00" />
+<meta itemprop="wordCount" content="3331">
+<meta itemprop="keywords" content="分析,编码,二进制,技术,密码,命令,数据,信号," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="低频RFID卡分析（ID卡为例）"/>
+<meta name="twitter:description" content="低频RFID卡分析（ID卡为例）。低频RFID卡，目前市场广泛使用门禁系统用的是ID和HID卡。使用PROMARK3进行分析ID卡和HID分析 ，很多人只是用系统自带的lf em4x em410xwatch 和 lf hid fskdemod 命令，而遇到非标准格式的低频卡，这些命令就无法获取正确的信息。拿到一张RFID卡，第一步便是识别该卡到底为何卡。可以用proxmark3带的调频命令（hw tune）初步区分出是高频卡还是低频卡，这一点，网上有很多说明，其次，可以根据卡片上的商标和标志，做进一步的识别，没有明显识别标志的，只能自己慢慢推理。下面，以常见的ID卡为例， 通过proxmark3带的数据分析命令，自己分析低频卡数据。（ HID卡分析原理与步骤基本相同 ）"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">低频RFID卡分析（ID卡为例）</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-06-20" class="post-time">
+          2013-06-20
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E5%88%86%E6%9E%90/"> 分析 </a>
+            
+          </div>
+        <span class="more-meta"> 约 3331 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<span style="color:#009900;">低频RFID卡，目前市场广泛使用门禁系统用的是ID和HID卡。</span><span style="color:#009900;">使用PROMARK3进行分析ID卡和HID分析 ，很多人只是用系统自带的lf em4x em410xwatch 和 lf hid fskdemod 命令，而遇到非标准格式的低频卡，这些命令就无法获取正确的信息。</span> 
+</p>
+<p style="text-indent:2em;">
+	<span>拿到一张RFID卡，第一步便是识别该卡到底为何卡。可以用proxmark3带的调频命令（hw tune）初步区分出是高频卡还是低频卡，这一点，网上有很多说明，其次，可以根据卡片上的商标和标志，做进一步的识别，没有明显识别标志的，只能自己慢慢推理。</span> 
+</p>
+<p style="text-indent:2em;">
+	下面，以常见的ID卡为例， 通过proxmark3带的数据分析命令，自己分析低频卡数据。（ HID卡分析原理与步骤基本相同 ）
+</p>
+<p style="text-indent:2em;">
+	<span>首先，了解一下低频卡的数据格式。以ID卡的EM410X数据格式为例，常用的125KHz的ID卡内固化了64位数据，由5个区组成：9个引导位、10个行偶校验位“P0～P9′’、4个列偶校验位“PC0～PC3”、40个数据位“D00～D93”和1个停止位S0。9个引导位是出厂时就已掩膜在芯片内的，其值为“111111111”，当它输出数据时，首先输出9个引导位，然后是10组由4个数据位和1个行偶校验位组成的数据串，其次是4个列偶校验位，最后是停止位“0”。</span> 
+</p>
+<pre class="prettyprint lang-html">1 1 1 1 1 1 1 1 1                        9 bits头
+8 bits 版本或厂商ID  D00 D01 D02 D03 P0
+                     D10 D11 D12 D13 P1
+                     D20 D21 D22 D23 P2
+                     D30 D31 D32 D33 P3
+                     D40 D41 D42 D43 P4  10bits行检验
+                     D50 D51 D52 D53 P5
+   32bits数据        D60 D61 D62 D63 P6
+                     D70 D71 D72 D73 P7
+                     D80 D81 D82 D83 P8
+                     D90 D91 D92 D93 P9
+                     PC0 PC1 PC2 PC3 S0
+                           4位列校验</pre>
+<p style="text-indent:2em;">
+	<span>“D00～D13”是一个8位的版本号或厂商代码。“D20～D93”是8组32位的芯片信息，即卡号。校验是偶校验，因为如果是奇校验的话，在一个字节是FF的情况下，很容易就出现9个1，这样引导位就不是唯一的了，也就无法判断64位数据的起始位了。</span> 
+</p>
+<p style="text-indent:2em;">
+	其次，了解一下EM410x常用的编码方式。EM410x常用曼彻斯特进行编码 (典型方式，RF 周期与数据位周期的比率为 RF/64 ，即每 bit的数据率可为载波频率的64倍)。曼彻斯特编码(Manchester Encoding)，也叫做相位编码(PE)，是一个同步时钟编码技术，用来编码一个同步位流的时钟和数据，在这个技术下，实际上的二进制数据不是作为一个序列的逻辑1或0来发送的，这些位被转换为一个稍微不同的格式，在曼彻斯特编码中，每一位的中间有一跳变，位中间的跳变既作时钟信号，又作数据信号；从高到低跳变表示”1″，从低到高跳变表示”0″。
+</p>
+<p style="text-align:center;">
+	<img title="曼彻斯特编码" alt="曼彻斯特编码" src="/file/old/2430_1.jpg" width="337" height="155" /> 
+</p>
+<p style="text-indent:2em;">
+	<span>编好码的信号，是数字信息，即0、1bit流 ，是基带信号，而实际通信中，信道并不能直接传送基带信号，必须用基带信号对载波波形的某些参量进行控制，载波随基带信号变化而变化，称为数字调制。ID与读卡头通信的数据流必须先进行调制。</span> 
+</p>
+<p style="text-indent:2em;">
+	<span><strong>常用的数字调制方法有三种：</strong></span> 
+</p>
+<pre class="prettyprint lang-html">ASK ——幅移键控调制，把二进制符号0和1分别用不同的幅度来表示。
+FSK ——频移键控调制，即用不同的频率来表示不同的符号。
+PSK ——相移键控调制，通过二进制符号0和1来判断信号前后相位。</pre>
+<p style="text-align:center;">
+	<img title="基带信号" alt="基带信号" src="/file/old/2431_2.jpg" width="360" height="228" /> 
+</p>
+<p style="text-align:center;">
+	<span>（ ID卡用ASK调制，而HID用FSK调制。）</span> 
+</p>
+<p style="text-indent:2em;">
+	了解完格式，以及编码、调制方式后，就可以采集数据进行分析了。pm3数据处理的命令，集中在data命令下，采集到的数据，可用data plot 命令输出图形进行查看。
+</p>
+<p style="text-indent:2em;">
+	低频卡分析(因为我只看过ID卡，类HID卡的数据，因此我此处的低频卡特指ID和HID卡或者类似格式卡)，大致4个步骤：
+</p>
+<pre class="prettyprint lang-html">1、数据采集
+2、bit流周期分析
+3、解调、解码（如有编码的话）
+4、数据分析。</pre>
+<p style="text-indent:2em;">
+	<strong>第一步：数据采集</strong> 
+</p>
+<p style="text-indent:2em;">
+	用到的命令有：
+</p>
+<p style="text-indent:2em;">
+	&gt;lf read
+</p>
+<p style="text-indent:2em;">
+	注：由于是采集低频数据，所以在采集之前，先用命令 lf read
+</p>
+<p style="text-indent:2em;">
+	&gt;data sample 2000
+</p>
+<p style="text-indent:2em;">
+	注：一般采集2000就够了，如果第二步分析没有发现明显的周期，则需要多采集一些数据看看
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2432_3.jpg" target="_blank"><img title="数据采集" alt="数据采集" src="/file/old/2432_3.jpg" width="780" height="85" /></a>
+</p>
+<p style="text-indent:2em;">
+	<span>（看到这类型的波形，第一步先ask解调）</span> 
+</p>
+<p style="text-indent:2em;">
+	<strong>第二步：bit流周期分析：</strong> 
+</p>
+<p style="text-indent:2em;">
+	&gt;data autocorr 2000
+</p>
+<p style="text-indent:2em;">
+	从data autocorr的输出波形，找出波形的周期值，找不到的话，第一步多采集一些再看看……
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2433_4.jpg" target="_blank"><img title="bit流周期分析" alt="bit流周期分析" src="/file/old/2433_4.jpg" width="780" height="111" /></a> 
+</p>
+<p style="text-indent:2em;">
+	<span>这是采集4000数据后，用  data autocorr 4000得到的结果，可以明显的看出周期的存在。</span> 
+</p>
+<p style="text-indent:2em;">
+	<strong>第三步：从波形看调制模式</strong> 
+</p>
+<p style="text-indent:2em;">
+	<span>查看第一步采集到的波形。数字信号 ，都是通过调制后再进行传播的，常用的信号调制模式有 ask 、 fsk、 psk  ， 根据data samples 得到的波形 ，可以初步判定是用那种方式进行调制的 ， 需要用对应的方式进行解调后再进行解码。</span> 
+</p>
+<p style="text-indent:2em;">
+	&gt;lf read
+</p>
+<p style="text-indent:2em;">
+	&gt;data sample 2000
+</p>
+<p style="text-indent:2em;">
+	<span>&gt; data askdemod 1</span> 
+</p>
+<p style="text-indent:2em;">
+	<span> 得到</span> 
+</p>
+<p style="text-indent:2em;">
+	<span> <a href="/file/old/2434_5.jpg" target="_blank"><img title="从波形看调制模式 " alt="从波形看调制模式 " src="/file/old/2434_5.jpg" width="780" height="95" /></a></span> 
+</p>
+<p style="text-indent:2em;">
+	将上图放大，数一跳转周期点距
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2435_6.jpg" target="_blank"><img title="跳转周期点距" alt="跳转周期点距" src="/file/old/2435_6.jpg" width="780" height="50" /></a> 
+</p>
+<p style="text-indent:2em;">
+	<span>使用命令</span> 
+</p>
+<p style="text-indent:2em;">
+	<span>&gt; data mandemod 64</span> 
+</p>
+<p style="text-indent:2em;">
+	<span><strong>结果如下：</strong></span> 
+</p>
+<pre class="prettyprint lang-html"> Warning: Manchester decode error for pulse width detection.
+(too many of those messages mean either the stream is not Manchester encoded, or
+ clock is wrong)
+Manchester decoded bitstream
+0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0
+0 0 0 1 1 0 0 0 1 0 1 0 0 0 1 1
+0 1 1 1 0 1 1 1 1 0 1 1 0 1 0 0
+0 0 0 0 0 1 1 1 1 1 1 1 1 1 0 0
+0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0
+0 0 0 1 1 0 0 0 1 0 1 0 0 0 1 1
+0 1 1 1 0 1 1 1 1 0 1 1 0 1 0 0
+0 0 0 0 0 1 1 1 1 1 1 1 1 1 0 0
+0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0
+0 0 0 1 1 0 0 0 1 0 1 0 0 0 1 1
+0 1 1 1 0 1 1 1 1 0 1 1 0 1 0 0
+0 0 0 0 0 1 1 1 1 1 1 1 1 1 0 0
+0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0
+0 0 0 1 1 0 0 0 1 0 1 0 0 0 1 1
+0 1 1 1 0 1 1 1 1 0 1 1 0 1 0 0</pre>
+<p style="text-indent:2em;">
+	<strong>第四步：运用自己的头脑 ，进行分析 ，从而达到复制的目的</strong> 
+</p>
+<p style="text-indent:2em;">
+	这个就不多说了，文档中一开始描述了ID卡的数据格式，找出数据头开始分析即可。
+</p>
+<p style="text-indent:2em;">
+	<span>至于怎么复制卡，找张T55X7卡，了解到卡结构，0区各位代表的意义，进行对应的写入操作即可。此处不做赘述</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#009900;">感谢lastdinner投递</span> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://www.freebuf.com/articles/wireless/9921.html" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>相关讨论：</strong> 
+</p>
+<p style="text-indent:2em;">
+	anlfi (1级) ??????????????????????????... 2013-05-28 1楼
+</p>
+<p style="text-indent:2em;">
+	…..ID卡有这么复杂？
+</p>
+<p style="text-indent:2em;">
+	学习了真是深入浅出啊
+</p>
+<p style="text-indent:2em;">
+	从下面的bit流分析 波流可视化图就看不懂了
+</p>
+<p style="text-indent:2em;">
+	有点像是信号分析学内容╮(╯▽╰)╭可惜专业不是这个
+</p>
+<p style="text-indent:2em;">
+	弱弱的问下能再简单一点吗 第四步略了 请问是否需要什么相关知识
+</p>
+<p style="text-indent:2em;">
+	求推荐几本专业书籍脑补一下
+</p>
+<p style="text-indent:2em;">
+	话说我楼下配钥匙的
+</p>
+<p style="text-indent:2em;">
+	师傅也可以复制RFID
+</p>
+<p style="text-indent:2em;">
+	ID卡 我去学习一下
+</p>
+<p style="text-indent:2em;">
+	fake 2013-05-28
+</p>
+<p style="text-indent:2em;">
+	@anlfi 大神你又来高端黑了啊
+</p>
+<p style="text-indent:2em;">
+	anlfi (1级) ??????????????????????????... 2013-05-28
+</p>
+<p style="text-indent:2em;">
+	@fake 没别的只是想学习一下 别误解了
+</p>
+<p style="text-indent:2em;">
+	别人说ID卡很简单今天看到这篇文章我觉得没那么容易
+</p>
+<p style="text-indent:2em;">
+	如何分析一张卡并入微的从基本开始
+</p>
+<p style="text-indent:2em;">
+	要比你如何对着别人的文章攻击更重要
+</p>
+<p style="text-indent:2em;">
+	Sandy tea 2013-05-28 2楼
+</p>
+<p style="text-indent:2em;">
+	楼上黑的真好= =+
+</p>
+<p style="text-indent:2em;">
+	低频没玩过 (没环境 摔- -
+</p>
+<p style="text-indent:2em;">
+	高频其实有了pm3 顶多再需要的就是胆量或者说是社工了~
+</p>
+<p style="text-indent:2em;">
+	009 2013-05-28 3楼
+</p>
+<p style="text-indent:2em;">
+	坐等口水
+</p>
+<p style="text-indent:2em;">
+	lastdinner (2级) 2013-05-28 4楼
+</p>
+<p style="text-indent:2em;">
+	标准的ID和HID卡，有命令，不那么复杂，文章开头我已经写了。我只想写一下如果你拿到的不是标准格式的低频卡，可以参考ID卡这个流程做分析。用data 下的命令，看输出。
+</p>
+<p style="text-indent:2em;">
+	第四步 ，上baidu去找一份T55X7卡的说明文档 ，proxmark上有写T55X7的数据命令 。
+</p>
+<p style="text-indent:2em;">
+	txmg 2013-05-28 5楼
+</p>
+<p style="text-indent:2em;">
+	here;http://jointxmg.com/?p=162
+</p>
+<p style="text-indent:2em;">
+	菜鸟不会飞 2013-05-28 6楼
+</p>
+<p style="text-indent:2em;">
+	不错的文章，真正从通讯的交互，去分析ID卡的数据，觉得似乎需要一些专业的信号分析的知识。个人不懂。但很受教。
+</p>
+<p style="text-indent:2em;">
+	bbb 2013-05-28 7楼
+</p>
+<p style="text-indent:2em;">
+	like it
+</p>
+<p style="text-indent:2em;">
+	lanmse 2013-05-28 8楼
+</p>
+<p style="text-indent:2em;">
+	id还是较为简单的。t55x7带密码的该如何分析，请指教下
+</p>
+<p style="text-indent:2em;">
+	lastdinner (2级) 2013-05-30
+</p>
+<p style="text-indent:2em;">
+	@lanmse
+</p>
+<p style="text-indent:2em;">
+	t55x7带密码，刚刚查了一下T5557的说明，块读取才需要密码，用户数据读取并不需要密码，顺便也拿张空白卡做了下读写试验，写了密码，整个用户数据区还是可以采集到的，如果分析的目的仅仅是复制卡数据，是可以做到的，因为一般来说低频的读卡头不会带密码参数读块数据，只要复制的卡能出一样的数据波形即可。
+</p>
+<p style="text-indent:2em;">
+	此外，本人也是个菜鸟，搞这个纯属业余，水平有限，答错也望多多谅解
+</p>
+<p style="text-indent:2em;">
+	lanmse 2013-06-03
+</p>
+<p style="text-indent:2em;">
+	@lastdinner 我感觉不是，应该是你没有把maxlab设置成0，如果设置成0那么就没有可以不用密码读取的块了。另外如果打开AOR的话没有密码是连卡都唤醒不了的。
+</p>
+<p style="text-indent:2em;">
+	呵呵，我也是个菜菜鸟，望互相学习。如有冒失还望谅解。
+</p>
+<p style="text-indent:2em;">
+	lastdinner (2级) 2013-06-04
+</p>
+<p style="text-indent:2em;">
+	@lanmse
+</p>
+<p style="text-indent:2em;">
+	低频的卡,pm3目前除了hitag并没有侦听功能。所以如果一定是带密码读的话 ，目前就俺的水平而言也是无解。
+</p>
+<p style="text-indent:2em;">
+	另外，你是在实际中碰到了maxlab设置成0的卡么？
+</p>
+<p style="text-indent:2em;">
+	jacker (1级) 成为天马博士一样的人。 2013-05-28 9楼
+</p>
+<p style="text-indent:2em;">
+	如今RFID的技术国外很多开始研究国内学习，手机上也有软件的来看公交卡和各种卡的信息，这里面技术有些电路的信号的技术，不错的文章学习一下，看来着找些书籍来学习关键实际操作一边，在买个电路工具学习，推荐我平时看的杂志无线电这本书里的知识讲的实验很详细包含电子方面的技术
+</p>
+<p style="text-indent:2em;">
+	炎羽 2013-05-30 10楼
+</p>
+<p style="text-indent:2em;">
+	我这得小区是T55X7卡,但EM410X卡也认
+</p>
+<p style="text-indent:2em;">
+	rfidjjaa 2013-06-06 11楼
+</p>
+<p style="text-indent:2em;">
+	高手,我想找些5577 0扇区各位代表的意义的资料学习学习,能否指导指导 或者提供点资料学习一下!~
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">lastdinner</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-06-20
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A0%81/">编码</a>
+          <a href="https://lcx.cc/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/">二进制</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E4%BF%A1%E5%8F%B7/">信号</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3605/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">基于云计算的DDOS攻击缓解方案</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3603/">
+            <span class="next-text nav-default">34个使用Raspberry Pi的酷创意</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

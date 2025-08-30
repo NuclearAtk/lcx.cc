@@ -1,0 +1,4961 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" />
+  <meta name="description" content="Nuclear&#39;Atk（核攻击）网络安全实验室，一个技术狂魔的知识分享，低调并专注于研究网络安全技术。Nuclear-Blog v4.0，Nuclear-Blog v5.0，Nuclear-Blog v6.0，Nuclear-Blog v8.0，Nuclear-Blog 博客系统源码下载。" />
+  <meta name="keywords" content="Nuclear&#39;Atk, 核攻击, 黑客, 核总, 武器库, 网络安全, 实验室, 网络安全技术研究, Nuclear-Blog" />
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/" />
+<link href="/index.xml" rel="alternate" type="application/rss+xml" title="Nuclear&#39;Atk（核攻击）网络安全实验室" />
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="Nuclear&#39;Atk（核攻击）网络安全实验室" />
+<meta property="og:description" content="Nuclear&#39;Atk（核攻击）网络安全实验室，一个技术狂魔的知识分享，低调并专注于研究网络安全技术。Nuclear-Blog v4.0，Nuclear-Blog v5.0，Nuclear-Blog v6.0，Nuclear-Blog v8.0，Nuclear-Blog 博客系统源码下载。" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://lcx.cc/" />
+
+<meta itemprop="name" content="Nuclear&#39;Atk（核攻击）网络安全实验室">
+<meta itemprop="description" content="Nuclear&#39;Atk（核攻击）网络安全实验室，一个技术狂魔的知识分享，低调并专注于研究网络安全技术。Nuclear-Blog v4.0，Nuclear-Blog v5.0，Nuclear-Blog v6.0，Nuclear-Blog v8.0，Nuclear-Blog 博客系统源码下载。"><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Nuclear&#39;Atk（核攻击）网络安全实验室"/>
+<meta name="twitter:description" content="Nuclear&#39;Atk（核攻击）网络安全实验室，一个技术狂魔的知识分享，低调并专注于研究网络安全技术。Nuclear-Blog v4.0，Nuclear-Blog v5.0，Nuclear-Blog v6.0，Nuclear-Blog v8.0，Nuclear-Blog 博客系统源码下载。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item active">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          
+<section id="posts" class="posts">
+  
+  
+    
+  
+  
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/958/">【文章】应用密码学：分布式 - 鉴别安全协议</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-22" class="post-time">
+        2010-11-22
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AE%89%E5%85%A8/"> 安全 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          <a href="https://lcx.cc/categories/%E5%8D%8F%E8%AE%AE/"> 协议 </a>
+          
+        </div>
+      <span class="more-meta"> 约 2181 字 </span>
+      <span class="more-meta"> 预计阅读 5 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      DASS &nbsp;&nbsp;&nbsp; 分布式鉴别安全协议（DASS）是由数字设备公司开发的，它也提供相互鉴别和密钥交换[604，1519，1518]。与前面的协议不同，DAS
+    </div>
+    <div class="read-more">
+      <a href="/post/958/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/957/">【文章】应用密码学：Otway-Rees Kerberos</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-22" class="post-time">
+        2010-11-22
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          
+        </div>
+      <span class="more-meta"> 约 2182 字 </span>
+      <span class="more-meta"> 预计阅读 5 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      Otway-Rees &nbsp;&nbsp;&nbsp; 这个协议也是使用对称密码[1224]。 &nbsp;&nbsp;&nbsp; （1）Alice产生一报文，此报文包括一个索引号I、她的名字A、Bob的名字B和一随机数RA，用
+    </div>
+    <div class="read-more">
+      <a href="/post/957/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/956/">【文章】应用密码学 鉴别 密钥交换 Yahalom</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-22" class="post-time">
+        2010-11-22
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E9%92%A5/"> 密钥 </a>
+          
+        </div>
+      <span class="more-meta"> 约 3179 字 </span>
+      <span class="more-meta"> 预计阅读 7 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      3.3&nbsp;鉴别和密钥交换 &nbsp;&nbsp;&nbsp; 这些协议综合利用密钥交换和鉴别，解决了一般的计算机问题：Alice和Bob分别坐在网络的两端，他们想安全地
+    </div>
+    <div class="read-more">
+      <a href="/post/956/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/955/">【文章】应用密码学: 采用公开密钥密码 鉴别</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-21" class="post-time">
+        2010-11-21
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E9%92%A5/"> 密钥 </a>
+          
+        </div>
+      <span class="more-meta"> 约 1894 字 </span>
+      <span class="more-meta"> 预计阅读 4 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      &nbsp;&nbsp;&nbsp; 用联锁协议互相鉴别 &nbsp;&nbsp;&nbsp; Alice和Bob是想要互相鉴别的两个用户。他们每人有一个另一人知道的通行字：Alice通行字是PA，Bob的是PB。
+    </div>
+    <div class="read-more">
+      <a href="/post/955/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/954/">【文章】应用密码学 单向函数 鉴别 字典 Salt</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-21" class="post-time">
+        2010-11-21
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%87%BD%E6%95%B0/"> 函数 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          <a href="https://lcx.cc/categories/%E5%AD%97%E5%85%B8/"> 字典 </a>
+          
+        </div>
+      <span class="more-meta"> 约 1720 字 </span>
+      <span class="more-meta"> 预计阅读 4 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      3.2&nbsp;鉴别 &nbsp;&nbsp;&nbsp; 当Alice登录进入计算机（或自动柜员机、电话银行系统、或其它的终端类型）时，计算机怎么知道她是谁呢？计算机怎么知道
+    </div>
+    <div class="read-more">
+      <a href="/post/954/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/953/">【文章】应用密码学: 使用数字签名 密钥交换</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-21" class="post-time">
+        2010-11-21
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E9%92%A5/"> 密钥 </a>
+          
+        </div>
+      <span class="more-meta"> 约 1556 字 </span>
+      <span class="more-meta"> 预计阅读 4 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      &nbsp;&nbsp;&nbsp; 使用数字签名的密钥交换 &nbsp;&nbsp;&nbsp; 在会话密钥交换协议期间采用数字签名也能防止“中间人攻击”。Trent对Alice和Bob的公开密钥签名。签名的密钥
+    </div>
+    <div class="read-more">
+      <a href="/post/953/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/952/">【文章】应用密码学 基本协议 密钥交换 密码</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-20" class="post-time">
+        2010-11-20
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E9%92%A5/"> 密钥 </a>
+          <a href="https://lcx.cc/categories/%E5%8D%8F%E8%AE%AE/"> 协议 </a>
+          
+        </div>
+      <span class="more-meta"> 约 2704 字 </span>
+      <span class="more-meta"> 预计阅读 6 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      第三章&nbsp; 基本协议 3.1&nbsp;密钥交换 &nbsp;&nbsp;&nbsp; 通常的密码技术是用单独的密钥对每一次单独的会话加密，这个密钥称为会话密钥，因为它只在一
+    </div>
+    <div class="read-more">
+      <a href="/post/952/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/951/">【文章】应用密码学：随机和伪随机序列产生</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-20" class="post-time">
+        2010-11-20
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          
+        </div>
+      <span class="more-meta"> 约 2008 字 </span>
+      <span class="more-meta"> 预计阅读 5 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      2.8&nbsp;随机和伪随机序列的产生 &nbsp;&nbsp;&nbsp; 为什么在一本关于密码学的书中还不厌其烦地谈论随机数产生呢？随机数产生器已嵌入在大多数编译器中了，产
+    </div>
+    <div class="read-more">
+      <a href="/post/951/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/950/">【文章】应用密码学: 加密数字签名 重发攻击</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-20" class="post-time">
+        2010-11-20
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E6%94%BB%E5%87%BB/"> 攻击 </a>
+          <a href="https://lcx.cc/categories/%E5%8A%A0%E5%AF%86/"> 加密 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          
+        </div>
+      <span class="more-meta"> 约 2533 字 </span>
+      <span class="more-meta"> 预计阅读 6 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      2.7&nbsp;带加密的数字签名 &nbsp;&nbsp;&nbsp; 通过把公钥密码和数字签名结合起来，我们能够产生一个协议，可把数字签名的真实性和加密的安全性合起来。想象你
+    </div>
+    <div class="read-more">
+      <a href="/post/950/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/949/">【文章】应用密码学: 多重签名 数字签名应用</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-19" class="post-time">
+        2010-11-19
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          
+        </div>
+      <span class="more-meta"> 约 1731 字 </span>
+      <span class="more-meta"> 预计阅读 4 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      &nbsp;&nbsp;&nbsp; 算法和术语 &nbsp;&nbsp;&nbsp; 有许多数字签名算法，它们都是公钥算法，用秘密信息对文件签名，用公开信息去验证。有时签名过程也叫“用私钥加密”，验证过程也叫“用
+    </div>
+    <div class="read-more">
+      <a href="/post/949/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/948/">【文章】应用密码学: 数字签名 对称密码系统</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-19" class="post-time">
+        2010-11-19
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          <a href="https://lcx.cc/categories/%E7%B3%BB%E7%BB%9F/"> 系统 </a>
+          
+        </div>
+      <span class="more-meta"> 约 4003 字 </span>
+      <span class="more-meta"> 预计阅读 8 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      2.6&nbsp;数字签名 &nbsp;&nbsp;&nbsp; 在文件上手写签名长期以来被用作作者身份的证明，或至少同意文件的内容。签名为什么会如此引人注目呢？[1392] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （
+    </div>
+    <div class="read-more">
+      <a href="/post/948/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/947/">【文章】应用密码学 - 公开密钥密码术的通信</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-19" class="post-time">
+        2010-11-19
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E9%92%A5/"> 密钥 </a>
+          
+        </div>
+      <span class="more-meta"> 约 2942 字 </span>
+      <span class="more-meta"> 预计阅读 6 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      2.5&nbsp;使用公开密钥密码术的通信 &nbsp;&nbsp;&nbsp; 对称算法可看成保险柜，密钥就是保险柜的号码组合。知道号码组合的人能够打开保险柜，放入文件，再关闭
+    </div>
+    <div class="read-more">
+      <a href="/post/947/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/946/">【文章】应用密码学 单向函数 单向Hash函数</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-18" class="post-time">
+        2010-11-18
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/hash/"> Hash </a>
+          <a href="https://lcx.cc/categories/%E5%87%BD%E6%95%B0/"> 函数 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          
+        </div>
+      <span class="more-meta"> 约 1904 字 </span>
+      <span class="more-meta"> 预计阅读 4 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      2.3 单向函数 &nbsp;&nbsp;&nbsp; 单向函数的概念是公开密钥密码的中心。尽管它本身并不是一个协议，但对这本书中所讨论的大多数协议来说却是一个基本结构模块。 &nbsp;&nbsp;&nbsp; 单向函数
+    </div>
+    <div class="read-more">
+      <a href="/post/946/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/945/">【文章】应用密码学：使用对称密码术的通信</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-18" class="post-time">
+        2010-11-18
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          
+        </div>
+      <span class="more-meta"> 约 1332 字 </span>
+      <span class="more-meta"> 预计阅读 3 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      2.2&nbsp;使用对称密码术的通信 &nbsp;&nbsp;&nbsp; 通信双方怎样安全地通信呢？当然，他们可以对通信加密。完整的协议比它更复杂，让我们来看看Alice发送
+    </div>
+    <div class="read-more">
+      <a href="/post/945/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/944/">【文章】应用密码学: 裁决协议 自动执行协议</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-18" class="post-time">
+        2010-11-18
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          <a href="https://lcx.cc/categories/%E5%8D%8F%E8%AE%AE/"> 协议 </a>
+          
+        </div>
+      <span class="more-meta"> 约 1597 字 </span>
+      <span class="more-meta"> 预计阅读 4 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      裁决协议 &nbsp;&nbsp;&nbsp; 由于雇用仲裁者代价高昂，仲裁协议可以分成两个低级的子协议。一个是非仲裁子协议，这个子协议是想要完成协议的各方每次都必须执行的；另一
+    </div>
+    <div class="read-more">
+      <a href="/post/944/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/942/">【文章】应用密码学：一次一密乱码本 - 大数</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-17" class="post-time">
+        2010-11-17
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          
+        </div>
+      <span class="more-meta"> 约 12412 字 </span>
+      <span class="more-meta"> 预计阅读 25 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      1.5&nbsp; 一次一密乱码本 &nbsp;&nbsp;&nbsp; 不管你是否相信它，有一种理想的加密方案，叫做一次一密乱码本，由Major Joseph Mauborgne和AT&amp;T公司的Gil
+    </div>
+    <div class="read-more">
+      <a href="/post/942/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/943/">【文章】应用密码学： - 密码协议，结构模块</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-17" class="post-time">
+        2010-11-17
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          <a href="https://lcx.cc/categories/%E6%A8%A1%E5%9D%97/"> 模块 </a>
+          <a href="https://lcx.cc/categories/%E5%8D%8F%E8%AE%AE/"> 协议 </a>
+          
+        </div>
+      <span class="more-meta"> 约 3339 字 </span>
+      <span class="more-meta"> 预计阅读 7 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      第一篇&nbsp;密码协议 第二章&nbsp;协议结构模块 2.1&nbsp; 协议介绍 &nbsp;&nbsp;&nbsp; 密码学的用途是解决种种难题（实际上，很多人忘记了这也是计算机的主要用途）
+    </div>
+    <div class="read-more">
+      <a href="/post/943/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/941/">【文章】应用密码学 - 隐写术代替和换位密码</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-17" class="post-time">
+        2010-11-17
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          
+        </div>
+      <span class="more-meta"> 约 4661 字 </span>
+      <span class="more-meta"> 预计阅读 10 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      1.2 隐写术 &nbsp;&nbsp;&nbsp; 隐写术是将秘密消息隐藏在其它消息中，这样，真正存在的秘密被隐藏了。通常发送者写一篇无伤大雅的消息，然后在同一张纸中隐藏秘密消息。历
+    </div>
+    <div class="read-more">
+      <a href="/post/941/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/940/">【文章】应用密码学：第一章 - 密码基础知识</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-16" class="post-time">
+        2010-11-16
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          
+        </div>
+      <span class="more-meta"> 约 6468 字 </span>
+      <span class="more-meta"> 预计阅读 13 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      第一章&nbsp; 基础知识 1.1 专业术语 发送者和接收者 &nbsp;&nbsp;&nbsp; 假设发送者想发送消息给接收者，且想安全地发送信息：她想确信偷听者不能阅读发送的消息。 消息
+    </div>
+    <div class="read-more">
+      <a href="/post/940/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/939/">【文章】应用密码学：前言 - 作者简介 - 目录</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-16" class="post-time">
+        2010-11-16
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          
+        </div>
+      <span class="more-meta"> 约 7017 字 </span>
+      <span class="more-meta"> 预计阅读 15 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      应用密码学 前言 &nbsp;&nbsp;&nbsp; 世界上有两种密码：一种是防止你的小妹妹看你的文件；另一种是防止当局者阅读你的文件资料。这本书写的是后一种情况。 &nbsp;&nbsp;&nbsp; 如果把一封信
+    </div>
+    <div class="read-more">
+      <a href="/post/939/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/938/">【文章】应用密码学 W.迪菲(Whitfield Diffie)</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-16" class="post-time">
+        2010-11-16
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/ie/"> IE </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+          
+        </div>
+      <span class="more-meta"> 约 3922 字 </span>
+      <span class="more-meta"> 预计阅读 8 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      &nbsp;&nbsp;&nbsp; 曾经看过，确实写得不错，所以贴上来了，因为实在太长，所以一章一章帖，大家慢慢看，或者自己百度找全本看。以下是图书简介以及“序 - W.迪菲(W
+    </div>
+    <div class="read-more">
+      <a href="/post/938/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/936/">3389 远程桌面 Mstsc RDP协议详细解析 (上)</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-15" class="post-time">
+        2010-11-15
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%8D%8F%E8%AE%AE/"> 协议 </a>
+          <a href="https://lcx.cc/categories/%E8%BF%9C%E7%A8%8B/"> 远程 </a>
+          <a href="https://lcx.cc/categories/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/"> 远程桌面 </a>
+          
+        </div>
+      <span class="more-meta"> 约 8841 字 </span>
+      <span class="more-meta"> 预计阅读 18 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      &nbsp;&nbsp;&nbsp; 这是前一段时间想模拟(3389 远程桌面 Mstsc.exe RDP 协议)做一个蜜罐系统，用来记录各种各样的攻击资料，甚至自己模拟数据流弄个吓人的画面，哈哈哈哈。以
+    </div>
+    <div class="read-more">
+      <a href="/post/936/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/937/">3389 远程桌面 Mstsc RDP协议详细解析 (下)</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-15" class="post-time">
+        2010-11-15
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%8D%8F%E8%AE%AE/"> 协议 </a>
+          <a href="https://lcx.cc/categories/%E8%BF%9C%E7%A8%8B/"> 远程 </a>
+          <a href="https://lcx.cc/categories/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/"> 远程桌面 </a>
+          
+        </div>
+      <span class="more-meta"> 约 6828 字 </span>
+      <span class="more-meta"> 预计阅读 14 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      由于太长了，所以分成了两部分，这是下半部分，上半部分在这里：3389 远程桌面 Mstsc RDP协议详细解析(上) 6-1) 连接过程说明 包序号 接收发送 字符 含义 1
+    </div>
+    <div class="read-more">
+      <a href="/post/937/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/935/">【漏洞】Ecshop 2.72 网上商店系统鸡肋注入</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-15" class="post-time">
+        2010-11-15
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E6%BC%8F%E6%B4%9E/"> 漏洞 </a>
+          <a href="https://lcx.cc/categories/%E7%B3%BB%E7%BB%9F/"> 系统 </a>
+          <a href="https://lcx.cc/categories/%E6%B3%A8%E5%85%A5/"> 注入 </a>
+          
+        </div>
+      <span class="more-meta"> 约 892 字 </span>
+      <span class="more-meta"> 预计阅读 2 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      Ecshop 2.72 网上商店系统鸡肋注入漏洞： by:xhm1n9 2010.11.11 &nbsp;&nbsp; &nbsp;最近好像ecshop的问题蛮多的啊，看到T00LS有人发测试图出来，我也下了份来看看，看到一
+    </div>
+    <div class="read-more">
+      <a href="/post/935/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/934/">【转载】对付星外虚拟主机的一点经验分享！</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-14" class="post-time">
+        2010-11-14
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E5%88%86%E4%BA%AB/"> 分享 </a>
+          <a href="https://lcx.cc/categories/%E8%BD%AC%E8%BD%BD/"> 转载 </a>
+          
+        </div>
+      <span class="more-meta"> 约 790 字 </span>
+      <span class="more-meta"> 预计阅读 2 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      星外主机7i24系统跨目录， 支持Aspx： 以下为原帖内容：http://www.t00ls.net/thread-13030-1-1.htm
+    </div>
+    <div class="read-more">
+      <a href="/post/934/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/933/">Firefox (火狐浏览器) 3.6.8,9,10,11 版 0day</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-14" class="post-time">
+        2010-11-14
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/0day/"> 0day </a>
+          <a href="https://lcx.cc/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/"> 浏览器 </a>
+          
+        </div>
+      <span class="more-meta"> 约 1161 字 </span>
+      <span class="more-meta"> 预计阅读 3 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      一、程序编号：ff3610 二、影响范围： &nbsp;&nbsp;&nbsp; 漏洞针对的软件及系统版本： &nbsp;&nbsp;&nbsp; 系统平台：Windows XP SP2，Windows XP Sp3。 &nbsp;&nbsp;&nbsp; 软件平台：
+    </div>
+    <div class="read-more">
+      <a href="/post/933/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/932/">【Asp】读取任意文件 二进制数据流方式下载</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-13" class="post-time">
+        2010-11-13
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/asp/"> ASP </a>
+          <a href="https://lcx.cc/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6/"> 二进制 </a>
+          <a href="https://lcx.cc/categories/%E6%95%B0%E6%8D%AE/"> 数据 </a>
+          <a href="https://lcx.cc/categories/%E6%96%87%E4%BB%B6/"> 文件 </a>
+          
+        </div>
+      <span class="more-meta"> 约 513 字 </span>
+      <span class="more-meta"> 预计阅读 2 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      Asp 读取任意文件，二进制数据流方式下载： &lt;% Set Fs = Server.CreateObject("Scripting.FileSystemObject") 'Fso对象 Set Ado = Server.CreateObject("Adodb.Stream") 'Ado对象 i = 0&nbsp;&nbsp;&nbsp; '计数器 r = 1024 '每次读取大小(byte) FilePath = Server.MapPath("test.mp3") '文件路
+    </div>
+    <div class="read-more">
+      <a href="/post/932/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/931/">【漏洞】Destoon B2B - 注射与后台代码执行</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-13" class="post-time">
+        2010-11-13
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E4%BB%A3%E7%A0%81/"> 代码 </a>
+          <a href="https://lcx.cc/categories/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C/"> 代码执行 </a>
+          <a href="https://lcx.cc/categories/%E5%90%8E%E5%8F%B0/"> 后台 </a>
+          <a href="https://lcx.cc/categories/%E6%BC%8F%E6%B4%9E/"> 漏洞 </a>
+          <a href="https://lcx.cc/categories/%E6%B3%A8%E5%B0%84/"> 注射 </a>
+          
+        </div>
+      <span class="more-meta"> 约 764 字 </span>
+      <span class="more-meta"> 预计阅读 2 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      Destoon B2B SQL注射 &amp; 后台代码执行漏洞： 发布日期：2010-11.11 发布作者：fjhgx (俺是农村的) 漏洞类型：SQL注射 &amp;&amp; 后台代码执行 文章申明
+    </div>
+    <div class="read-more">
+      <a href="/post/931/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/930/">【漏洞】6kbbs v8.0论坛延迟注射与论坛跨站</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-13" class="post-time">
+        2010-11-13
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/%E8%B7%A8%E7%AB%99/"> 跨站 </a>
+          <a href="https://lcx.cc/categories/%E6%BC%8F%E6%B4%9E/"> 漏洞 </a>
+          <a href="https://lcx.cc/categories/%E8%AE%BA%E5%9D%9B/"> 论坛 </a>
+          <a href="https://lcx.cc/categories/%E6%B3%A8%E5%B0%84/"> 注射 </a>
+          
+        </div>
+      <span class="more-meta"> 约 953 字 </span>
+      <span class="more-meta"> 预计阅读 2 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      6kbbs v8.0 论坛延迟注射与论坛跨站漏洞： &nbsp;&nbsp;&nbsp; 6kbbs V8.0 是一个采用 PHP+MySQL 构建的高效能的论坛程序，拥有代码简洁、使用方便、功能强大、速度极快等优点。 &nbsp;&nbsp;&nbsp; 总体上：采用u
+    </div>
+    <div class="read-more">
+      <a href="/post/930/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+    <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title">
+      
+      <a class="post-link" href="/post/929/">【Asp】 通用插入记录管理登陆账号密码代码</a>
+    </h1>
+    
+    <div class="post-meta">
+      <time datetime="2010-11-12" class="post-time">
+        2010-11-12
+      </time>
+      <div class="post-category">
+          <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+          <a href="https://lcx.cc/categories/asp/"> ASP </a>
+          <a href="https://lcx.cc/categories/%E4%BB%A3%E7%A0%81/"> 代码 </a>
+          <a href="https://lcx.cc/categories/%E7%AE%A1%E7%90%86/"> 管理 </a>
+          <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+          <a href="https://lcx.cc/categories/%E8%B4%A6%E5%8F%B7/"> 账号 </a>
+          
+        </div>
+      <span class="more-meta"> 约 668 字 </span>
+      <span class="more-meta"> 预计阅读 2 分钟 </span>
+      
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      Asp 通用记录管理登陆账号密码的代码： &nbsp;&nbsp;&nbsp; 很久以前收集的，也不知道那个傻鸟写的，又复杂、又累赘，真是太混蛋了，超级傻逼的代码。要是我写，不但兼容所
+    </div>
+    <div class="read-more">
+      <a href="/post/929/" class="read-more-link">阅读全文</a>
+    </div>
+    
+  </div>
+</article>
+
+  
+</section>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+    <nav class="pagination">
+      <ul>
+
+      
+      
+      <li><a href="/">««</a></li>
+      
+
+      
+      
+      <li><a href="/page/120/">«</a></li>
+      
+
+      
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+              
+            
+
+          
+
+        
+        
+
+        
+        
+          <li class="">
+            <a href="/page/115/">
+              115
+            </a>
+          </li>
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+              
+            
+
+          
+
+        
+        
+
+        
+        
+          <li class="">
+            <a href="/page/116/">
+              116
+            </a>
+          </li>
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+              
+            
+
+          
+
+        
+        
+
+        
+        
+          <li class="">
+            <a href="/page/117/">
+              117
+            </a>
+          </li>
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+              
+            
+
+          
+
+        
+        
+
+        
+        
+          <li class="">
+            <a href="/page/118/">
+              118
+            </a>
+          </li>
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+              
+            
+
+          
+
+        
+        
+
+        
+        
+          <li class="">
+            <a href="/page/119/">
+              119
+            </a>
+          </li>
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+              
+            
+
+          
+
+        
+        
+
+        
+        
+          <li class="">
+            <a href="/page/120/">
+              120
+            </a>
+          </li>
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+              
+            
+
+          
+
+        
+        
+
+        
+        
+          <li class="active">
+            <a href="/page/121/">
+              121
+            </a>
+          </li>
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+              
+            
+
+          
+
+        
+        
+
+        
+        
+          <li class="">
+            <a href="/page/122/">
+              122
+            </a>
+          </li>
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+              
+            
+
+          
+
+        
+        
+
+        
+        
+          <li class="">
+            <a href="/page/123/">
+              123
+            </a>
+          </li>
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+              
+            
+
+          
+
+        
+        
+
+        
+        
+          <li class="">
+            <a href="/page/124/">
+              124
+            </a>
+          </li>
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+              
+            
+
+          
+
+        
+        
+
+        
+        
+          <li class="">
+            <a href="/page/125/">
+              125
+            </a>
+          </li>
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+              
+            
+
+          
+
+        
+        
+
+        
+        
+          <li class="">
+            <a href="/page/126/">
+              126
+            </a>
+          </li>
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+              
+            
+
+          
+
+        
+        
+
+        
+        
+          <li class="">
+            <a href="/page/127/">
+              127
+            </a>
+          </li>
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+        
+
+        
+        
+
+          
+          
+          
+
+            
+
+          
+
+        
+        
+
+        
+        
+
+      
+
+      
+      
+      <li><a href="/page/122/">»</a></li>
+      
+
+      
+      
+      <li><a href="/page/149/">»»</a></li>
+      
+
+      </ul>
+    </nav>
+  
+
+
+
+
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

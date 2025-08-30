@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>带点文件夹的创建与删除 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="带点文件夹的创建与删除。附创建一个打不开删不掉文件的方法以建一个6618.文件夹为例：1、在命令提示符下输入:md 6618../2、你就会发现建成了一个6618.的文件夹。3、这个文件夹双击打不开也删不掉，同时普通模式下也删不掉。4、那如何放文件进去呢？可以用COPY命令复制文件进去。copy 文件名 d:/6618../5、那如何打开这个文件夹呢？在运行中输入完整的路径和文件夹的名称就行了6、那如何删除呢？原理：用了windows的非法命名好处：自已想吧" />
+<meta name="keywords" content="带点文件夹的创建与删除" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/77/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="带点文件夹的创建与删除" />
+<meta property="og:description" content="带点文件夹的创建与删除。附创建一个打不开删不掉文件的方法以建一个6618.文件夹为例：1、在命令提示符下输入:md 6618../2、你就会发现建成了一个6618.的文件夹。3、这个文件夹双击打不开也删不掉，同时普通模式下也删不掉。4、那如何放文件进去呢？可以用COPY命令复制文件进去。copy 文件名 d:/6618../5、那如何打开这个文件夹呢？在运行中输入完整的路径和文件夹的名称就行了6、那如何删除呢？原理：用了windows的非法命名好处：自已想吧" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/77/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-05-08T02:28:00&#43;08:00" />
+<meta property="article:modified_time" content="2013-10-16T09:21:04&#43;08:00" />
+
+<meta itemprop="name" content="带点文件夹的创建与删除">
+<meta itemprop="description" content="带点文件夹的创建与删除。附创建一个打不开删不掉文件的方法以建一个6618.文件夹为例：1、在命令提示符下输入:md 6618../2、你就会发现建成了一个6618.的文件夹。3、这个文件夹双击打不开也删不掉，同时普通模式下也删不掉。4、那如何放文件进去呢？可以用COPY命令复制文件进去。copy 文件名 d:/6618../5、那如何打开这个文件夹呢？在运行中输入完整的路径和文件夹的名称就行了6、那如何删除呢？原理：用了windows的非法命名好处：自已想吧"><meta itemprop="datePublished" content="2010-05-08T02:28:00&#43;08:00" />
+<meta itemprop="dateModified" content="2013-10-16T09:21:04&#43;08:00" />
+<meta itemprop="wordCount" content="2396">
+<meta itemprop="keywords" content="文件,文件夹,bug,Cmd,Dos,exe,Windows,病毒,管理,命令,隐藏," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="带点文件夹的创建与删除"/>
+<meta name="twitter:description" content="带点文件夹的创建与删除。附创建一个打不开删不掉文件的方法以建一个6618.文件夹为例：1、在命令提示符下输入:md 6618../2、你就会发现建成了一个6618.的文件夹。3、这个文件夹双击打不开也删不掉，同时普通模式下也删不掉。4、那如何放文件进去呢？可以用COPY命令复制文件进去。copy 文件名 d:/6618../5、那如何打开这个文件夹呢？在运行中输入完整的路径和文件夹的名称就行了6、那如何删除呢？原理：用了windows的非法命名好处：自已想吧"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">带点文件夹的创建与删除</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-05-08" class="post-time">
+          2010-05-08
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E6%96%87%E4%BB%B6/"> 文件 </a>
+            <a href="https://lcx.cc/categories/%E6%96%87%E4%BB%B6%E5%A4%B9/"> 文件夹 </a>
+            
+          </div>
+        <span class="more-meta"> 约 2396 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	附创建一个打不开删不掉文件的方法
+</p>
+<p style="text-indent:2em;">
+	以建一个6618.文件夹为例：
+</p>
+<p style="text-indent:2em;">
+	1、在命令提示符下输入:
+</p>
+<p style="text-indent:2em;">
+	md 6618../
+</p>
+<p style="text-indent:2em;">
+	2、你就会发现建成了一个6618.的文件夹。
+</p>
+<p style="text-indent:2em;">
+	3、这个文件夹双击打不开也删不掉，同时普通模式下也删不掉。
+</p>
+<p style="text-indent:2em;">
+	4、那如何放文件进去呢？可以用COPY命令复制文件进去。
+</p>
+<p style="text-indent:2em;">
+	copy 文件名 d:/6618../
+</p>
+<p style="text-indent:2em;">
+	5、那如何打开这个文件夹呢？
+</p>
+<p style="text-indent:2em;">
+	在运行中输入完整的路径和文件夹的名称就行了
+</p>
+<p style="text-indent:2em;">
+	6、那如何删除呢？
+</p>
+<p style="text-indent:2em;">
+	原理：用了windows的非法命名
+</p>
+<p style="text-indent:2em;">
+	好处：自已想吧
+</p>
+<p style="text-indent:2em;">
+	用过矮人DOS5.0版的朋友应该就知道，装了它后，分区中有一个argho.的文件名，其生成原理我这里发的帖子是一样的。这个是nt系列系统的bug，在dos或者win9x下就可以正常访问nt系统创建的这种文件夹，但不能创建此类文件夹。如果是NTFS格式，9X就无能为力了。病毒利用 MS的其他BUG进行攻击，矮人利用MS的这个BUG进行备份GHO，最了不起的是：GHOST.EXE在DOS下能认识这样的文件夹——兼容MS的这个 BUG。
+</p>
+<p style="text-indent:2em;">
+	再有一种文件夹是可以正常打开不能删的
+</p>
+<p style="text-indent:2em;">
+	创建：MD "D:/6618 / "
+</p>
+<p style="text-indent:2em;">
+	删除：RD /Q /S "D:/6618 / "
+</p>
+<p style="text-indent:2em;">
+	注意：引号最好要有，还有空格，如："D:/6618空格/空格"
+</p>
+<p style="text-indent:2em;">
+	再来个看不见的
+</p>
+<p style="text-indent:2em;">
+	MD D:/.../
+</p>
+<p style="text-indent:2em;">
+	RD /Q /S D:/.../
+</p>
+<p style="text-indent:2em;">
+	【文件夹为 afu.如果文件夹里已经存放了文件，则可以键入“rmdir afu..\ /s”命令，按回车提示“afu..\，是否确认(Y/N)?”时，键入y键，删除该文件夹。】
+</p>
+<p style="text-indent:2em;">
+	注意：这个文件夹在资源管理器里是看不见的，命令提示符就能看见
+</p>
+<p style="text-indent:2em;">
+	打开方式：运行（win+r）输入D:/.../
+</p>
+<p style="text-indent:2em;">
+	注意哦使用RD /s /q D:/.../少个.会把D盘文件都删除了！！！！！！！！！！
+</p>
+<p style="text-indent:2em;">
+	补充一个，可以正常打开当然也是不能通过资源管理器删除
+</p>
+<p style="text-indent:2em;">
+	大家都知道在资源管理器里是不能用空格命名文件夹的
+</p>
+<p style="text-indent:2em;">
+	创建：MD "D:/ / "
+</p>
+<p style="text-indent:2em;">
+	删除：RD /Q /S "D:/ / "
+</p>
+<p style="text-indent:2em;">
+	注意：引号最好要有，还有空格，如："D:/空格/空格"
+</p>
+<p>
+	<strong>补充说明：</strong> 
+</p>
+<p style="text-indent:2em;">
+	一、如果你建个md 6618../这样的非法文件夹。
+</p>
+<p style="text-indent:2em;">
+	再在资源管理器中建个6618的文件夹。原来的6618.就可以打开。不过看不到里面的文件。而且可以删除6618.文件夹。不过删了6618.文件夹的话。里面原来的文件会跑到后面建的6618文件夹里去。这个6618文件夹也会变得无法删除。无法打开。
+</p>
+<p style="text-indent:2em;">
+	但如果是运行*：/6618../的话，还是可以看到里面的文件。
+</p>
+<p style="text-indent:2em;">
+	6618.文件夹和6618文件夹同时存在的时候,可以给6618.文件夹改名成6618文件夹.这时就同时存在两个6618文件夹
+</p>
+<p style="text-indent:2em;">
+	但如果你删除其中的一个文件夹后,刷新后，还是会返回成6618.文件夹
+</p>
+<p style="text-indent:2em;">
+	在xp的命令行可以轻松建立这样删不掉的文件夹，可在纯dos下却不行！
+</p>
+<p style="text-indent:2em;">
+	md 6618../
+</p>
+<p style="text-indent:2em;">
+	二、建一个不带"."&nbsp;&nbsp; 功能与带"."&nbsp;&nbsp; 的"bug文件夹":
+</p>
+<p style="text-indent:2em;">
+	1.md 建立一个带"."文件夹,如:md 6618../
+</p>
+<p style="text-indent:2em;">
+	2.建立一个普通文件夹(名称同上面带''.",没点,如普通方法右键建里文件夹 6618)
+</p>
+<p style="text-indent:2em;">
+	3.普通方法删除带点的文件夹
+</p>
+<p style="text-indent:2em;">
+	4.后面留下的6618文件夹也是普通方法打不开,删不掉,同原6618.文件一样用,就是名称上看起来没"."
+</p>
+<p style="text-indent:2em;">
+	三、再来伪装"bug文件夹"
+</p>
+<p style="text-indent:2em;">
+	1.建6618.文件
+</p>
+<p style="text-indent:2em;">
+	2.copy命令复制文件进6618.文件
+</p>
+<p style="text-indent:2em;">
+	3.普通建6618文件
+</p>
+<p style="text-indent:2em;">
+	4.此时可以打开6618.与6618,且两文件夹似乎使用的是同样的磁盘空间,普通方法复制进其中一个文件夹,另一个文件夹会有同样的文件出现.但是在第2步中copy进文件夹的文件不会显示.
+</p>
+<p style="text-indent:2em;">
+	5.两个文件都可以用普通方法删除,但是不管是删除哪个(6618.或是6618),剩下的那个文件夹(6618或是6618.)与第1步中建立的6618.具有相同功能,普通方法不能打开,不能删除.
+</p>
+<p style="text-indent:2em;">
+	6.命令删除,添加文件方法,就是大家一起在讨论的
+</p>
+<p style="text-indent:2em;">
+	7.所以可以建立名称如同普通文件夹一样的"bug文件夹"(只是名称看起来一样而已),可以把一些想保护起来的文件放到里面,免于误删,被该等问题.
+</p>
+<p style="text-indent:2em;">
+	一些有意思的现象：
+</p>
+<p style="text-indent:2em;">
+	1、如果把文件拖到这个*.文件夹里。那么，他马上会生成个*（同名文件夹）并且拖进去的文件可见，但是见不到之前用在运行D:/*../拷进去的文件。并且。如果在拖进文件之后用D:/*../进去看。是看不到拖进去的文件。你把这同名的两文件夹删掉其中之一后，用运行D:/*../进去看。还是看不到拖进去的文件。
+</p>
+<p style="text-indent:2em;">
+	2、我们可以先建立一个如wuyou的文件夹。再把其设为隐藏属性，然后再利用ＷＩＮＲＡＲ这个软件来对其文件夹命名为WUYOU../至此大功告成,其文件夹达到一般不可删除,隐藏的的功能.再把文件夹选项设为不显示隐藏文件.
+</p>
+<p style="text-indent:2em;">
+	3、现在只是在2000里运行里用*../进入不了文件夹,在XP里就可以进入
+</p>
+<p style="text-indent:2em;">
+	4、在分区建立资源管理器看不见的这个目录,分区必须是FAT32格式,NTFS是无法建立的
+</p>
+<p style="text-indent:2em;">
+	5、其实分区里面*.文件是可以删除的,(注意是文件不是文件夹)
+</p>
+<p style="text-indent:2em;">
+	方法如下,
+</p>
+<p style="text-indent:2em;">
+	用DIR/X来获取*.文件的短文件名.
+</p>
+<p style="text-indent:2em;">
+	再用DEL来删除.
+</p>
+<p style="text-indent:2em;">
+	dir /X 显示为非 8dot3 文件名产生的短名称。格式是 /N 的格式，短名称插在长名称前面。如果没有短名称，在其位置则显示空白。
+</p>
+<p style="text-indent:2em;">
+	补充一下
+</p>
+<p style="text-indent:2em;">
+	这里是一个批处理
+</p>
+<p style="text-indent:2em;">
+	可以进安全模式快速解决问题
+</p>
+<pre class="prettyprint">@echo off
+echo "先中止病毒进程"
+NET STOP "Kerberos Key Distribution Centers"
+
+echo "删除C盘病毒文件"
+DEL c:\WINDOWS\lsass.exe /F /Q /A R H S A
+DEL c:\WINDOWS\setuprs1.pif /F /Q /A R H S A
+DEL c:\WINDOWS\cmd.exe.exe /F /Q /A R H S A
+DEL c:\WINDOWS\regedit.exe.exe /F /Q /A R H S A
+DEL c:\WINDOWS\r.exe /F /Q /A R H S A
+
+echo "删除各个分区根目录下文件，需要根据各个电脑的分区数量进行调整"
+RMDIR c:\runauto...\ /S /Q
+DEL c:\autorun.* /F /Q /A R H S A
+RMDIR D:\runauto...\ /S /Q
+DEL D:\autorun.* /F /Q /A R H S A
+RMDIR E:\runauto...\ /S /Q
+DEL E:\autorun.* /F /Q /A R H S A
+RMDIR F:\runauto...\ /S /Q
+DEL F:\autorun.* /F /Q /A R H S A
+RMDIR G:\runauto...\ /S /Q
+DEL G:\autorun.* /F /Q /A R H S A
+RMDIR G:\runauto...\ /S /Q
+DEL G:\autorun.* /F /Q /A R H S A
+RMDIR h:\runauto...\ /S /Q
+DEL h:\autorun.* /F /Q /A R H S A
+RMDIR i:\runauto...\ /S /Q
+DEL i:\autorun.* /F /Q /A R H S A
+
+COPY C:\WINDOWS\regedit.exe h:\WINDOWS\ghregedi.exe
+echo "注册表编辑器已备份为ghregedi.exe"
+
+COPY h:\WINDOWS\SYSTEM32\cmd.exe h:\WINDOWS\SYSTEM32\ghcmd.exe
+echo "命令行工具已备份为ghcmd.exe"
+
+echo "文件删除完毕，请重新启动并清理注册表相关项。"</pre>
+<p>
+	<strong>相关内容：</strong>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/292/" target="_blank">名字带“\”文件夹的创建与删除</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/77/" target="_blank">带点文件夹的创建与删除</a>
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-10-16
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6%E5%A4%B9/">文件夹</a>
+          <a href="https://lcx.cc/tags/bug/">bug</a>
+          <a href="https://lcx.cc/tags/cmd/">Cmd</a>
+          <a href="https://lcx.cc/tags/dos/">Dos</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E7%97%85%E6%AF%92/">病毒</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E9%9A%90%E8%97%8F/">隐藏</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/78/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">眼睛的幻觉</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/75/">
+            <span class="next-text nav-default">【视频】校园惨案，40个人砍2个人</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

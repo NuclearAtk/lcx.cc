@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>程序员技术练级攻略 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="程序员技术练级攻略。月光博客6月12日发表了《写给新手程序员的一封信》，翻译自《An open letter to those who want to start programming》，我的朋友（他在本站的id是Mailper）告诉我，他希望在酷壳上看到一篇更具操作性的文章。因为他也是喜欢编程和技术的家伙，于是，我让他把他的一些学习Python和Web编程的一些点滴总结一下。于是他给我发来了一些他的心得和经历，我在把他的心得做了不多的增改，并根据我的经历增加了“进阶”一节。这是一篇由新手和我这个老家伙根据我们的经历完成的文章。" />
+<meta name="keywords" content="程序员技术练级攻略" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/1951/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="程序员技术练级攻略" />
+<meta property="og:description" content="程序员技术练级攻略。月光博客6月12日发表了《写给新手程序员的一封信》，翻译自《An open letter to those who want to start programming》，我的朋友（他在本站的id是Mailper）告诉我，他希望在酷壳上看到一篇更具操作性的文章。因为他也是喜欢编程和技术的家伙，于是，我让他把他的一些学习Python和Web编程的一些点滴总结一下。于是他给我发来了一些他的心得和经历，我在把他的心得做了不多的增改，并根据我的经历增加了“进阶”一节。这是一篇由新手和我这个老家伙根据我们的经历完成的文章。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/1951/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2011-11-24T17:45:00&#43;08:00" />
+<meta property="article:modified_time" content="2011-11-24T17:45:00&#43;08:00" />
+
+<meta itemprop="name" content="程序员技术练级攻略">
+<meta itemprop="description" content="程序员技术练级攻略。月光博客6月12日发表了《写给新手程序员的一封信》，翻译自《An open letter to those who want to start programming》，我的朋友（他在本站的id是Mailper）告诉我，他希望在酷壳上看到一篇更具操作性的文章。因为他也是喜欢编程和技术的家伙，于是，我让他把他的一些学习Python和Web编程的一些点滴总结一下。于是他给我发来了一些他的心得和经历，我在把他的心得做了不多的增改，并根据我的经历增加了“进阶”一节。这是一篇由新手和我这个老家伙根据我们的经历完成的文章。"><meta itemprop="datePublished" content="2011-11-24T17:45:00&#43;08:00" />
+<meta itemprop="dateModified" content="2011-11-24T17:45:00&#43;08:00" />
+<meta itemprop="wordCount" content="7979">
+<meta itemprop="keywords" content="程序,程序员,技术,Android,C&#43;&#43;,Google,Html,HTTP,IP,Java,js,Linux,Mysql,Net,nginx,PHP,Python,SQL,Unix,Web,Windows,本地,编程,代码,服务,服务器,工具,管理,函数,脚本,客户端,浏览器,免费,命令,设备,数据,数据库,算法,图片,网络,网站,文件,问题,系统,信号,远程," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="程序员技术练级攻略"/>
+<meta name="twitter:description" content="程序员技术练级攻略。月光博客6月12日发表了《写给新手程序员的一封信》，翻译自《An open letter to those who want to start programming》，我的朋友（他在本站的id是Mailper）告诉我，他希望在酷壳上看到一篇更具操作性的文章。因为他也是喜欢编程和技术的家伙，于是，我让他把他的一些学习Python和Web编程的一些点滴总结一下。于是他给我发来了一些他的心得和经历，我在把他的心得做了不多的增改，并根据我的经历增加了“进阶”一节。这是一篇由新手和我这个老家伙根据我们的经历完成的文章。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">程序员技术练级攻略</h1>
+      
+      <div class="post-meta">
+        <time datetime="2011-11-24" class="post-time">
+          2011-11-24
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E7%A8%8B%E5%BA%8F/"> 程序 </a>
+            <a href="https://lcx.cc/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/"> 程序员 </a>
+            <a href="https://lcx.cc/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            
+          </div>
+        <span class="more-meta"> 约 7979 字 </span>
+          <span class="more-meta"> 预计阅读 16 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>转自：<A href="http://coolshell.cn/articles/4990.html">http://coolshell.cn/articles/4990.html</A></P>
+<P>月光博客6月12日发表了《<A onclick="pageTracker._trackPageview('/outgoing/www.williamlong.info/archives/2700.html?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://www.williamlong.info/archives/2700.html" target=_blank>写给新手程序员的一封信</A>》，翻译自《<A onclick="pageTracker._trackPageview('/outgoing/blog.akash.im/an-open-letter-to-those-who-want-to-start?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://blog.akash.im/an-open-letter-to-those-who-want-to-start" target=_blank>An open letter to those who want to start programming</A>》，我的朋友（他在本站的id是<A href="http://coolshell.cn/?author=3" target=_blank>Mailper</A>）告诉我，他希望在酷壳上看到一篇更具操作性的文章。因为他也是喜欢编程和技术的家伙，于是，我让他把他的一些学习Python和Web编程的一些点滴总结一下。于是他给我发来了一些他的心得和经历，我在把他的心得做了不多的增改，并根据我的经历增加了“进阶”一节。<STRONG>这是一篇由新手和我这个老家伙根据我们的经历完成的文章</STRONG>。</P>
+<P></P>
+<P>我的这个朋友把这篇文章取名叫Build Your Programming Technical Skills，我实在不知道用中文怎么翻译，但我在写的过程中，<STRONG>我觉得这很像一个打网游做任务升级的一个过程，所以取名叫“技术练级攻略”，题目有点大，呵呵，这个标题纯粹是为了好玩</STRONG>。<STRONG>这里仅仅是在分享Mailper和我个人的学习经历。</STRONG>（注：省去了我作为一个初学者曾经学习过的一些技术(今天明显过时了)，如：Delphi/Power builder，也省去了我学过的一些我觉得没意思的技术Lotus Notes/ActiveX/COM/ADO/ATL/.NET ……）</P>
+<H4>前言</H4>
+<P>你是否觉得自己从学校毕业的时候只做过小玩具一样的程序？<WBR>走入职场后哪怕没有什么经验也可以把以下这些课外练习走一遍（朋友的抱怨：学校课程总是从理论出发，<WBR>作业项目都看不出有什么实际作用，不如从工作中的需求出发）</WBR></WBR></P>
+<P>建议：</P>
+<UL>
+<LI>不要乱买书，不要乱追新技术新名词，<WBR>基础的东西经过很长时间积累而且还会在未来至少10年通用。</WBR> 
+<LI>回顾一下历史，看看历史上时间线上技术的发展，你才能明白明天会是什么样。 
+<LI>一定要动手，例子不管多么简单，<WBR>建议至少自己手敲一遍看看是否理解了里头的细枝末节。</WBR> 
+<LI>一定要学会思考，思考为什么要这样，而不是那样。还要举一反三地思考。 </LI></UL>
+<P><STRONG>注</STRONG>：你也许会很奇怪为什么下面的东西很偏Unix/Linux，这是因为我觉得Windows下的编程可能会在未来很没有前途，原因如下：</P>
+<P><SPAN id=more-4990></SPAN></P>
+<UL>
+<LI>现在的用户界面几乎被两个东西主宰了，1）Web，2）移动设备iOS或Android。Windows的图形界面不吃香了。 
+<LI>越来越多的企业在用成本低性能高的Linux和各种开源技术来构架其系统，Windows的成本太高了。 
+<LI>微软的东西变得太快了，很不持久，他们完全是在玩弄程序员。详情参见《<A title=Windows编程革命简史 href="http://coolshell.cn/articles/3008.html" target=_blank>Windows编程革命史</A>》 </LI></UL>
+<P>所以，我个人认为以后的趋势是前端是Web+移动，后端是Linux+开源。开发这边基本上没Windows什么事。</P>
+<H4>启蒙入门</H4>
+<P><STRONG>1、 学习一门脚本语言，例如Python/Ruby</STRONG></P>
+<P>可以让你摆脱对底层语言的恐惧感，脚本语言可以让你很快开发出能用得上的小程序。实践项目:</P>
+<UL>
+<LI>处理文本文件，或者csv (关键词 python csv, python open, python sys) 读一个本地文件，逐行处理（例如 word count，或者处理log） 
+<LI>遍历本地文件系统 (sys, os, path)，例如写一个程序统计一个目录下所有文件大小并按各种条件排序并保存结果 
+<LI>跟数据库打交道 (python sqlite)，写一个小脚本统计数据库里条目数量 
+<LI>学会用各种print之类简单粗暴的方式进行调试 
+<LI>学会用Google (phrase, domain, use reader to follow tech blogs) </LI></UL>
+<P>为什么要学脚本语言，因为他们实在是太方便了，很多时候我们需要写点小工具或是脚本来帮我们解决问题，你就会发现正规的编程语言太难用了。</P>
+<P><STRONG>2、 用熟一种程序员的编辑器(不是IDE) 和一些基本工具</STRONG></P>
+<UL>
+<LI>Vim / Emacs / Notepad++，学会如何配置代码补全，外观，外部命令等。 
+<LI>Source Insight (或 ctag) </LI></UL>
+<P>使用这些东西不是为了Cool，而是这些编辑器在查看、修改代码/配置文章/日志会更快更有效率。</P>
+<P><STRONG>3、 熟悉Unix/Linux Shell和常见的命令行</STRONG></P>
+<UL>
+<LI>如果你用windows，至少学会用虚拟机里的linux， vmware player是免费的，装个Ubuntu吧 
+<LI>一定要少用少用图形界面。 
+<LI>学会使用man来查看帮助 
+<LI>文件系统结构和基本操作 ls/chmod/chown/rm/find/ln/cat/mount/mkdir/tar/gzip … 
+<LI>学会使用一些文本操作命令 sed/awk/grep/tail/less/more … 
+<LI>学会使用一些管理命令 ps/top/lsof/netstat/kill/tcpdump/iptables/dd… 
+<LI>了解/etc目录下的各种配置文章，学会查看/var/log下的系统日志，以及/proc下的系统运行信息 
+<LI>了解正则表达式，使用正则表达式来查找文件。 </LI></UL>
+<P>对于程序员来说Unix/Linux比Windows简单多了。（参看我四年前CSDN的博文《<A onclick="pageTracker._trackPageview('/outgoing/blog.csdn.net/haoel/article/details/1533720?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://blog.csdn.net/haoel/article/details/1533720" target=_blank>其实Unix很简单</A>》）学会使用Unix/Linux你会发现图形界面在某些时候实在是太难用了，相当地相当地降低工作效率。</P>
+<P><STRONG>4、 学习Web基础（HTML/CSS/JS) + 服务器端技术 (LAMP)</STRONG></P>
+<P>未来必然是Web的世界，学习WEB基础的最佳网站是<A onclick="pageTracker._trackPageview('/outgoing/www.w3school.com.cn/?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://www.w3school.com.cn/" target=_blank>W3School</A>。</P>
+<UL>
+<LI>学习HTML基本语法 
+<LI>学习CSS如何选中HTML元素并应用一些基本样式（关键词：box model） 
+<LI>学会用 Firefox + Firebug 或 chrome 查看你觉得很炫的网页结构，并动态修改。 
+<LI>学习使用Javascript操纵HTML元件。理解DOM和动态网页（<A onclick="pageTracker._trackPageview('/outgoing/oreilly.com/catalog/9780596527402?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://oreilly.com/catalog/9780596527402" target=_blank>http://oreilly.com/catalog/9780596527402</A>) 网上有免费的章节，足够用了。或参看 <A onclick="pageTracker._trackPageview('/outgoing/www.w3school.com.cn/htmldom/index.asp?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://www.w3school.com.cn/htmldom/index.asp" target=_blank>DOM</A> 。 
+<LI>学会用 Firefox + Firebug 或 chrome 调试Javascript代码（设置断点，查看变量，性能，控制台等） 
+<LI>在一台机器上配置<A href="www.apache.org" target=_blank>Apache </A>或 <A href="nginx.net" target=_blank>Nginx</A> 
+<LI>学习<A href="www.php.net" target=_blank>PHP</A>，让后台PHP和前台HTML进行数据交互，对服务器相应浏览器请求形成初步认识。实现一个表单提交和反显的功能。 
+<LI>把PHP连接本地或者远程数据库 MySQL（MySQL 和 SQL现学现用够了） 
+<LI>跟完一个名校的网络编程课程（例如：<A onclick="pageTracker._trackPageview('/outgoing/www.stanford.edu/_ouster/cgi-bin/cs142-fall10/index.php?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://www.stanford.edu/~ouster/cgi-bin/cs142-fall10/index.php" target=_blank>http://www.stanford.edu/~ouster/cgi-bin/cs142-fall10/index.php</A> ) 不要觉得需要多于一学期时间，大学生是全职一学期选3-5门课，你业余时间一定可以跟上 
+<LI>学习一个javascript库（例如jQuery 或 ExtJS）+ Ajax (异步读入一个服务器端图片或者数据库内容）+JSON数据格式。 
+<LI>HTTP: The Definitive Guide 读完前4章你就明白你每天上网用浏览器的时候发生的事情了(proxy, gateway, browsers) 
+<LI>做个小网站（例如：一个小的留言板，支持用户登录，Cookie/Session，增、删、改、查，上传图片附件，分页显示） 
+<LI>买个域名，租个空间，做个自己的网站。 </LI></UL>
+<H4>进阶加深</H4>
+<P><STRONG>1、 C语言和操作系统调用</STRONG></P>
+<UL>
+<LI>重新学C语言，理解指针和内存模型，用C语言实现一下各种经典的算法和数据结构。推荐《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/197050?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/197050">计算机程序设计艺术</A>》、《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/31701?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/31701" target=_blank>算法导论</A>》和《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/209243?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/209243" target=_blank>编程珠玑</A>》。 
+<LI>学习<A title=（麻省理工免费课程）计算机科学和编程导论 href="http://coolshell.cn/articles/3723.html" target=_blank>（麻省理工免费课程）计算机科学和编程导论</A> 
+<LI>学习<A title=（麻省理工免费课程）C语言内存管理和C++面向对象编程 href="http://coolshell.cn/articles/2474.html" target=_blank>（麻省理工免费课程）C语言内存管理</A> 
+<LI>学习Unix/Linux系统调用（<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/30181?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/30181" target=_blank>Unix高级环境编程</A>），，了解系统层面的东西。 
+<UL>
+<LI>用这些系统知识操作一下文件系统，用户（实现一个可以拷贝目录树的小程序） 
+<LI>用fork/wait/waitpid写一个多进程的程序，用pthread写一个多线程带同步或互斥的程序。多进程多进程购票的程序。 
+<LI>用signal/kill/raise/alarm/pause/sigprocmask实现一个多进程间的信号量通信的程序。 
+<LI>学会使用gcc和gdb来编程和调试程序（参看我的《<A href="blog.csdn.net/haoel/article/details/2879" target=_blank>用gdb调试程序</A>》） 
+<LI>学会使用makefile来编译程序。（参看我的《<A href="blog.csdn.net/haoel/article/details/2886" target=_blank>跟我一起写makefile</A>》） 
+<LI>IPC和Socket的东西可以放到高级中来实践。 </LI></UL>
+<LI>学习Windows SDK编程（<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/52880?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/52880" target=_blank>Windows 程序设计 </A>，<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/3804?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/3804" target=_blank>MFC程序设计</A>） 
+<UL>
+<LI>写一个窗口，了解WinMain/WinProcedure，以及Windows的消息机制。 
+<LI>写一些程序来操作Windows SDK中的资源文件或是各种图形控件，以及作图的编程。 
+<LI>学习如何使用MSDN查看相关的SDK函数，各种WM_消息以及一些例程。 
+<LI>这本书中有很多例程，在实践中请不要照抄，试着自己写一个自己的例程。 
+<LI>不用太多于精通这些东西，因为GUI正在被Web取代，主要是了解一下Windows 图形界面的编程。@<A title=virushuo onclick="pageTracker._trackPageview('/outgoing/twitter.com/_/virushuo?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://twitter.com/#!/virushuo" data-user-id="49913">virushuo</A> 说：“ 我觉得GUI确实不那么热门了，但充分理解GUI工作原理是很重要的。包括移动设备开发，如果没有基础知识仍然很吃力。或者说移动设备开发必须理解GUI工作，或者在win那边学，或者在mac/iOS上学”。 </LI></UL></LI></UL>
+<P><STRONG>2、学习Java</STRONG></P>
+<UL>
+<LI>Java 的学习主要是看经典的Core Java 《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/208978?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/208978" target=_blank>Java 核心技术编程</A>》和《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/34838?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/34838" target=_blank>Java编程思想</A>》（有两卷，我仅链了第一卷，足够了，因为Java的图形界面了解就可以了） 
+<LI>学习JDK，学会查阅Java API Doc <A onclick="pageTracker._trackPageview('/outgoing/download.oracle.com/javase/6/docs/api/?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://download.oracle.com/javase/6/docs/api/">http://download.oracle.com/javase/6/docs/api/</A> 
+<LI>了解一下Java这种虚拟机语言和C和Python语言在编译和执行上的差别。从C、Java、Python思考一下“跨平台”这种技术。 
+<LI>学会使用IDE Eclipse，使用Eclipse 编译，调试和开发Java程序。 
+<LI>建一个Tomcat的网站，尝试一下JSP/Servlet/JDBC/MySQL的Web开发。把前面所说的那个PHP的小项目试着用JSP和Servlet实现一下。 </LI></UL>
+<DIV><STRONG>3、Web的安全与架构</STRONG></DIV>
+<DIV>
+<UL>
+<LI>学习HTML5，网上有很多很多教程，以前<A href="http://coolshell.cn" target=_blank>酷壳</A>也介绍过很多，我在这里就不罗列了。 
+<LI>学习Web开发的安全问题（参考<A title=新浪微博的XSS攻击 href="http://coolshell.cn/articles/4914.html" target=_blank>新浪微博被攻击的这个事</A>，以及<A onclick="pageTracker._trackPageview('/outgoing/guides.rubyonrails.org/security.html?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://guides.rubyonrails.org/security.html" target=_blank>Ruby的这篇文章</A>） 
+<LI>学习HTTP Server的rewrite机制，Nginx的反向代理机制，<A onclick="pageTracker._trackPageview('/outgoing/en.wikipedia.org/wiki/Fast_CGI?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://en.wikipedia.org/wiki/Fast_CGI" target=_blank>fast-cgi</A>（如：<A href=" http://php-fpm.org/" target=_blank>PHP-FPM</A>） 
+<LI>学习Web的静态页面缓存技术。 
+<LI>学习Web的异步工作流处理，数据Cache，数据分区，负载均衡，水平扩展的构架。 
+<LI><STRONG>实践任务：</STRONG> 
+<UL>
+<LI>使用HTML5的canvas 制作一些Web动画。 
+<LI>尝试在前面开发过的那个Web应用中进行SQL注入，JS注入，以及XSS攻击。 
+<LI>把前面开发过的那个Web应用改成构造在Nginx + PHP-FPM + 静态页面缓存的网站 </LI></UL></LI></UL></DIV>
+<P><STRONG>4、学习关系型数据库</STRONG></P>
+<UL>
+<LI>你可以安装MSSQLServer或MySQL来学习数据库。 
+<LI>学习教科书里数据库设计的那几个范式，1NF，2NF，3NF，…… 
+<LI>学习数据库的存过，触发器，视图，建索引，游标等。 
+<LI>学习SQL语句，明白表连接的各种概念（参看《<A title=图解SQL的Join href="http://coolshell.cn/articles/3463.html">SQL Join的图示</A>》） 
+<LI>学习如何优化数据库查询（参看《<A title=MySQL性能优化的最佳20+条经验 href="http://coolshell.cn/articles/1846.html">MySQL的优化</A>》） 
+<LI><STRONG>实践任务</STRONG>：设计一个论坛的数据库，至少满足3NF，使用SQL语句查询本周，本月的最新文章，评论最多的文章，最活跃用户。 </LI></UL>
+<P><STRONG>5、一些开发工具</STRONG></P>
+<UL>
+<LI>学会使用SVN或Git来管理程序版本。 
+<LI>学会使用JUnit来对Java进行单元测试。 
+<LI>学习C语言和Java语言的coding standard 或 coding guideline。（我N年前写过一篇关C语言非常简单的文章——《<A onclick="pageTracker._trackPageview('/outgoing/blog.csdn.net/haoel/article/category/9200/2?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://blog.csdn.net/haoel/article/category/9200/2" target=_blank>编程修养</A>》，这样的东西你可以上网查一下，一大堆）。 
+<LI>推荐阅读《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/28351?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/28351" target=_blank>代码大全</A>》《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/196374?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/196374" target=_blank>重构</A>》《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/196266?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/196266" target=_blank>代码整洁之道</A>》 </LI></UL>
+<H4>高级深入</H4>
+<P><STRONG>1、C++ / Java 和面向对象</STRONG></P>
+<P>我个人以为学好C++，Java也就是举手之劳。但是C++的学习曲线相当的陡。不过，我觉得C++是最需要学好的语言了。参看两篇趣文“<A title="C++ 程序员自信心曲线图" href="http://coolshell.cn/articles/2287.html" target=_blank>C++学习信心图</A>” 和“<A title=“21天教你学会C++” href="http://coolshell.cn/articles/2250.html" target=_blank>21天学好C++</A>”</P>
+<UL>
+<LI>学习<A title=（麻省理工免费课程）C语言内存管理和C++面向对象编程 href="http://coolshell.cn/articles/2474.html" target=_blank>（麻省理工免费课程）C++面向对象编程</A> 
+<LI>读我的 “<A title=如何学好C++语言 href="http://coolshell.cn/articles/4119.html" target=_blank>如何学好C++</A>”中所推荐的那些书至少两遍以上（如果你对C++的理解能够深入到像我所写的《<A onclick="pageTracker._trackPageview('/outgoing/blog.csdn.net/haoel/article/details/1948051?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://blog.csdn.net/haoel/article/details/1948051" target=_blank>C++虚函数表解析</A>》或是《<A onclick="pageTracker._trackPageview('/outgoing/blog.csdn.net/haoel/article/details/3081328?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://blog.csdn.net/haoel/article/details/3081328" target=_blank>C++对象内存存局</A>（<A onclick="pageTracker._trackPageview('/outgoing/blog.csdn.net/haoel/article/details/3081328?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://blog.csdn.net/haoel/article/details/3081328" target=_blank>上</A>）（<A onclick="pageTracker._trackPageview('/outgoing/blog.csdn.net/haoel/article/details/3081385?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://blog.csdn.net/haoel/article/details/3081385" target=_blank>下</A>）》，或是《<A onclick="pageTracker._trackPageview('/outgoing/blog.csdn.net/haoel/article/details/1388498?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://blog.csdn.net/haoel/article/details/1388498" target=_blank>C/C++返回内部静态成员的陷阱</A>》那就非常不错了） 
+<LI>然后反思为什么C++要干成这样，Java则不是？你一定要学会对比C++和Java的不同。比如，Java中的初始化，垃圾回收，接口，异常，虚函数，等等。 
+<LI><STRONG>实践任务：</STRONG> 
+<UL>
+<LI>用C++实现一个BigInt，支持128位的整形的加减乘除的操作。 
+<LI>用C++封装一个数据结构的容量，比如hash table。 
+<LI>用C++封装并实现一个智能指针（一定要使用模板）。 </LI></UL>
+<LI>《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/25961?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/25961" target=_blank>设计模式</A>》必需一读，两遍以上，思考一下，这23个模式的应用场景。主要是两点：1）钟爱组合而不是继承，2）钟爱接口而不是实现。（也推荐《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/27862?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/27862">深入浅出设计模式</A>》） 
+<LI><STRONG>实践任务：</STRONG> 
+<UL>
+<LI>使用工厂模式实现一个内存池。 
+<LI>使用策略模式制做一个类其可以把文本文件进行左对齐，右对齐和中对齐。 
+<LI>使用命令模式实现一个命令行计算器，并支持undo和redo。 
+<LI>使用修饰模式实现一个酒店的房间价格订价策略——旺季，服务，VIP、旅行团、等影响价格的因素。 </LI></UL>
+<LI>学习STL的用法和其设计概念 - 容器，算法，迭代器，函数子。如果可能，请读一下其源码。 
+<LI><STRONG>实践任务：</STRONG>尝试使用面向对象、STL，设计模式、和WindowsSDK图形编程的各种技能 
+<UL>
+<LI>做一个贪吃蛇或是俄罗斯方块的游戏。支持不同的级别和难度。 
+<LI>做一个文件浏览器，可以浏览目录下的文件，并可以对不同的文件有不同的操作，文本文件可以打开编辑，执行文件则执行之，mp3或avi文件可以播放，图片文件可以展示图片。 </LI></UL>
+<LI>学习C++的一些类库的设计，如： MFC（看看候捷老师的《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/3565?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/3565" target=_blank>深入浅出MFC</A>》） ，Boost, ACE, CPPUnit，STL （STL可能会太难了，但是如果你能了解其中的设计模式和设计那就太好了，如果你能深入到我写的《<A onclick="pageTracker._trackPageview('/outgoing/blog.csdn.net/haoel/article/details/24058?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://blog.csdn.net/haoel/article/details/24058" target=_blank>STL string类的写时拷贝技术</A>》那就非常不错了，ACE需要很强在的系统知识，参见后面的“加强对系统的了解”） 
+<LI>Java是真正的面向对象的语言，Java的设计模式多得不能再多，也是用来学习面向对象的设计模式的最佳语言了（参看<A title=JDK里的设计模式 href="http://coolshell.cn/articles/3320.html" target=_blank>Java中的设计模式</A>）。 
+<LI>推荐阅读《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/195040?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/195040">Effective Java</A>》 and 《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/197212?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/197212">Java解惑</A>》 
+<LI>学习Java的框架，Java的框架也是多，如Spring, Hibernate，Struts 等等，主要是学习Java的设计，如IoC等。 
+<LI>Java的技术也是烂多，重点学习J2EE架构以及JMS， RMI, 等消息传递和远程调用的技术。 
+<LI>学习使用Java做Web Service （<A onclick="pageTracker._trackPageview('/outgoing/download.oracle.com/docs/cd/E17802_01/webservices/webservices/docs/2.0/tutorial/doc/?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://download.oracle.com/docs/cd/E17802_01/webservices/webservices/docs/2.0/tutorial/doc/" target=_blank>官方教程在这里</A>） 
+<LI><STRONG>实践任务： </STRONG>尝试在Spring或Hibernate框架下构建一个有网络的Web Service的远程调用程序，并可以在两个Service中通过JMS传递消息。 </LI></UL>
+<P>C++和Java都不是能在短时间内能学好的，C++玩是的深，Java玩的是广，我建议两者选一个。我个人的学习经历是：</P>
+<UL>
+<LI>深究C++（我深究C/C++了十来年了） 
+<LI>学习Java的各种设计模式。 </LI></UL>
+<P><STRONG>2、加强系统了解</STRONG></P>
+<P>重要阅读下面的几本书：</P>
+<UL>
+<LI>《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/197413?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/197413" target=_blank>Unix编程艺术</A>》了解Unix系统领域中的设计和开发哲学、思想文化体系、原则与经验。你一定会有一种醍醐灌顶的感觉。 
+<LI>《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/196770?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/196770" target=_blank>Unix网络编程卷1，套接字</A>》这是一本看完你就明白网络编程的书。重要注意TCP、UDP，以及多路复用的系统调用select/poll/epoll的差别。 
+<LI>《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/35?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/35" target=_blank>TCP/IP详解 卷1:协议</A>》- 这是一本看完后你就可以当网络黑客的书。了解以太网的的运作原理，了解TCP/IP的协议，运作原理以及如何TCP的调优。 
+<LI><STRONG>实践任务：</STRONG> 
+<UL>
+<LI>理解什么是阻塞（同步IO），非阻塞（异步IO），多路复用（select, poll, epoll）的IO技术。 
+<LI>写一个网络聊天程序，有聊天服务器和多个聊天客户端（服务端用UDP对部分或所有的的聊天客户端进Multicast或Broadcast）。 
+<LI>写一个简易的HTTP服务器。 </LI></UL>
+<LI>《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/196859?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/196859" target=_blank>Unix网络编程卷2，进程间通信</A>》信号量，管道，共享内存，消息等各种IPC…… 这些技术好像有点老掉牙了，不过还是值得了解。 
+<LI><STRONG>实践任务：</STRONG> 
+<UL>
+<LI>主要实践各种IPC进程序通信的方法。 
+<LI>尝试写一个管道程序，父子进程通过管道交换数据。 
+<LI>尝试写一个共享内存的程序，两个进程通过共享内存交换一个C的结构体数组。 </LI></UL>
+<LI>学习《<A onclick="pageTracker._trackPageview('/outgoing/product.china-pub.com/209058?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://product.china-pub.com/209058" target=_blank>Windows核心编程</A>》一书。把CreateProcess，Windows线程、线程调度、线程同步（Event, 信号量，互斥量）、异步I/O，内存管理，DLL，这几大块搞精通。 
+<LI><STRONG>实践任务：</STRONG>使用CreateProcess启动一个记事本或IE，并监控该程序的运行。把前面写过的那个简易的HTTP服务用线程池实现一下。写一个DLL的钩子程序监控指定窗口的关闭事件，或是记录某个窗口的按键。 
+<LI>有了多线程、多进程通信，TCP/IP，套接字，C++和设计模式的基本，你可以研究一下ACE了。使用ACE重写上述的聊天程序和HTTP服务器（带线程池） 
+<LI><STRONG>实践任务：</STRONG>通过以上的所有知识，尝试 
+<UL>
+<LI>写一个服务端给客户端传大文件，要求把100M的带宽用到80%以上。（注意，磁盘I/O和网络I/O可能会很有问题，想一想怎么解决，另外，请注意网络传输最大单元MTU） 
+<LI>了解BT下载的工作原理，用多进程的方式模拟BT下载的原理。 </LI></UL></LI></UL>
+<P><STRONG>3、系统架构</STRONG></P>
+<UL>
+<LI>负载均衡。HASH式的，纯动态式的。（可以到Google学术里搜一些<A onclick="pageTracker._trackPageview('/outgoing/scholar.google.com.hk/scholar?q=_E8_B4_9F_E8_BD_BD_E5_9D_87_E8_A1_A1_amp_hl=zh-CN_amp_as_sdt=0_amp_as_vis=1_amp_oi=scholart&amp;referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://scholar.google.com.hk/scholar?q=%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1&amp;hl=zh-CN&amp;as_sdt=0&amp;as_vis=1&amp;oi=scholart" target=_blank>关于负载均衡的文章</A>读读） 
+<LI>多层分布式系统 – 客户端服务结点层、计算结点层、数据cache层，数据层。J2EE是经典的多层结构。 
+<LI><A onclick="pageTracker._trackPageview('/outgoing/en.wikipedia.org/wiki/Content_delivery_network?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://en.wikipedia.org/wiki/Content_delivery_network" target=_blank>CDN系统</A> – 就近访问，内容边缘化。 
+<LI><A onclick="pageTracker._trackPageview('/outgoing/en.wikipedia.org/wiki/Peer-to-peer?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://en.wikipedia.org/wiki/Peer-to-peer" target=_blank>P2P式系统</A>，研究一下BT和电驴的算法。比如：<A onclick="pageTracker._trackPageview('/outgoing/en.wikipedia.org/wiki/Distributed_hash_table?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://en.wikipedia.org/wiki/Distributed_hash_table" target=_blank>DHT算法</A>。 
+<LI>服务器备份，双机备份系统（Live-Standby和Live-Live系统），两台机器如何通过心跳监测对方？集群主结点备份。 
+<LI><A onclick="pageTracker._trackPageview('/outgoing/en.wikipedia.org/wiki/Virtualization?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://en.wikipedia.org/wiki/Virtualization" target=_blank>虚拟化技术</A>，使用这个技术，可以把操作系统当应用程序一下切换或重新配置和部署。 
+<LI>学习<A onclick="pageTracker._trackPageview('/outgoing/thrift.apache.org/?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://thrift.apache.org/" target=_blank>Thrift</A>，二进制的高性能的通讯中间件，支持数据(对象)序列化和多种类型的RPC服务。 
+<LI>学习<A onclick="pageTracker._trackPageview('/outgoing/hadoop.apache.org/?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://hadoop.apache.org/" target=_blank>Hadoop</A>。Hadoop框架中最核心的设计就是：MapReduce和HDFS。MapReduce的思想是由Google的一篇论文所提及而被广为流传的，简单的一句话解释MapReduce就是“任务的分解与结果的汇总”。HDFS是Hadoop分布式文件系统（Hadoop Distributed File System）的缩写，为分布式计算存储提供了底层支持。 
+<LI>了解<A onclick="pageTracker._trackPageview('/outgoing/en.wikipedia.org/wiki/NoSQL?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://en.wikipedia.org/wiki/NoSQL" target=_blank>NoSQL数据库</A>（有人说可能是一个<A title=那些炒作过度的技术和概念 href="http://coolshell.cn/articles/3609.html" target=_blank>过渡炒作的技术</A>），不过因为超大规模以及高并发的纯动态型网站日渐成为主流，而SNS类网站在数据存取过程中有着实时性等刚性需求，这使得目前NoSQL数据库慢慢成了人们所关注的焦点，并大有成为取代关系型数据库而成为未来主流数据存储模式的趋势。当前NoSQL数据库很多，大部分都是开源的，其中比较知名的有：MemcacheDB、Redis、Tokyo Cabinet(升级版为Kyoto Cabinet)、Flare、MongoDB、CouchDB、Cassandra、Voldemort等。 </LI></UL>
+<P>写了那么多，回顾一下，觉得自己相当的有成就感。希望大家不要吓着，我自己这十来年也在不断地学习，今天我也在学习中，人生本来就是一个不断学习和练级的过程。<STRONG>不过，一定有漏的，也有不对的，还希望大家补充和更正</STRONG>。（<SPAN style="COLOR: #cc0000"><STRONG>我会根据大家的反馈随时更新此文</STRONG></SPAN>）欢迎大家通过我的微博（<A onclick="pageTracker._trackPageview('/outgoing/weibo.com/haoel?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://weibo.com/haoel" target=_blank>@左耳朵耗子</A>）和twitter（@<A onclick="pageTracker._trackPageview('/outgoing/twitter.com/haoel?referer=http%3A%2F%2Fcoolshell.cn%2Farticles%2F5224.html');" href="http://twitter.com/haoel" target=_blank>haoel</A>）和我交流。</P>
+<P><EM><STRONG>—– 更新 2011/07/19 —–</STRONG></EM></P>
+<P>1）有朋友奇怪为什么我在这篇文章开头说了web+移动，却没有在后面提到iOS/Android的前端开发。因为我心里有一种感觉，移动设备上的UI最终也会被Javascript取代。大家可以用iPhone或Android看看google+，你就会明白了。</P>
+<P>2）有朋友说我这里的东西太多了，不能为了学习而学习，我非常同意。我在文章的前面也说了要思考。另外，千万不要以为我说的这些东西是一些新的技术，这份攻略里95%以上的全是基础。而且都是久经考验的基础技术。即是可以让你一通百通的技术，也是可以让你找到一份不错工作的技术。</P>
+<P>3）有朋友说学这些东西学完都40了，还不如想想怎么去挣钱。我想告诉大家，一是我今年还没有40岁，二是学无止境啊，三是我不觉得挣钱有多难，难的是怎么让你值那么多钱？无论是打工还是创业，是什么东西让你自己的价值，让你公司的价值更值钱？别的地方我不敢说，对于互联网或IT公司来说，技术实力绝对是其中之一。</P>
+<P>4）有朋友说技术都是工具，不应该如此痴迷这句话没有错，有时候我们需要更多的是抬起头来看看技术以外的事情，或者是说我们在作技术的时候不去思考为什么会有这个技术，为什么不是别的，问题不在于技术，问题在于我们死读书，读死书，成了技术的书呆子。</P>
+<P>5） 对于NoSQL，最近比较火，但我对其有点保守，所以，我只是说了解就可以。对于Hadoop，我觉得其在分布式系统上有巨大的潜力，所以需要学习。 对于关系型数据库，的确是很重要的东西，这点是我的疏忽，在原文里补充。</P>
+<P><SPAN style="FONT-SIZE: 12pt"><STRONG>（全文完，转载时请注明作者和出处）</STRONG></SPAN></P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2011-11-24
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/android/">Android</a>
+          <a href="https://lcx.cc/tags/c&#43;&#43;/">C&#43;&#43;</a>
+          <a href="https://lcx.cc/tags/google/">Google</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/java/">Java</a>
+          <a href="https://lcx.cc/tags/js/">js</a>
+          <a href="https://lcx.cc/tags/linux/">Linux</a>
+          <a href="https://lcx.cc/tags/mysql/">Mysql</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/nginx/">nginx</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/python/">Python</a>
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/unix/">Unix</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E6%9C%AC%E5%9C%B0/">本地</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+          <a href="https://lcx.cc/tags/%E5%AE%A2%E6%88%B7%E7%AB%AF/">客户端</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          <a href="https://lcx.cc/tags/%E5%85%8D%E8%B4%B9/">免费</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BE%E5%A4%87/">设备</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="https://lcx.cc/tags/%E7%AE%97%E6%B3%95/">算法</a>
+          <a href="https://lcx.cc/tags/%E5%9B%BE%E7%89%87/">图片</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E4%BF%A1%E5%8F%B7/">信号</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/1952/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">组图：世界各国一流天才谁更强</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/1950/">
+            <span class="next-text nav-default">你确信你了解时间吗？</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

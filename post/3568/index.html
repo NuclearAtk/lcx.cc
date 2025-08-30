@@ -1,0 +1,2767 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机) - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机)。核总在几天前与某人开玩笑，说是打卡机的语音提示太单调乏味了，然后有了修改它的想法。于是在几天前的一个晚上，花了点时间研读了中控指纹考勤系统的全部资料，然后入侵了公司的中控指纹语音打卡机。已拿到三个管理接口的超级管理权限！然后将打卡机“调教”了一番，使它“学会”卖萌。。。。同时发现该考勤系统存在诸多安全问题（包括官方后门），具体见我稍后整理的文档，这里先放出部分照片，大家尽情的膜拜吧！（PS：本次入侵没有破坏任何数据，并且没有影响正常打卡，卡机完好无损！）" />
+<meta name="keywords" content="户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机)" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3568/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机)" />
+<meta property="og:description" content="户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机)。核总在几天前与某人开玩笑，说是打卡机的语音提示太单调乏味了，然后有了修改它的想法。于是在几天前的一个晚上，花了点时间研读了中控指纹考勤系统的全部资料，然后入侵了公司的中控指纹语音打卡机。已拿到三个管理接口的超级管理权限！然后将打卡机“调教”了一番，使它“学会”卖萌。。。。同时发现该考勤系统存在诸多安全问题（包括官方后门），具体见我稍后整理的文档，这里先放出部分照片，大家尽情的膜拜吧！（PS：本次入侵没有破坏任何数据，并且没有影响正常打卡，卡机完好无损！）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3568/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-06-10T16:36:24&#43;08:00" />
+<meta property="article:modified_time" content="2014-12-04T21:38:24&#43;08:00" />
+
+<meta itemprop="name" content="户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机)">
+<meta itemprop="description" content="户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机)。核总在几天前与某人开玩笑，说是打卡机的语音提示太单调乏味了，然后有了修改它的想法。于是在几天前的一个晚上，花了点时间研读了中控指纹考勤系统的全部资料，然后入侵了公司的中控指纹语音打卡机。已拿到三个管理接口的超级管理权限！然后将打卡机“调教”了一番，使它“学会”卖萌。。。。同时发现该考勤系统存在诸多安全问题（包括官方后门），具体见我稍后整理的文档，这里先放出部分照片，大家尽情的膜拜吧！（PS：本次入侵没有破坏任何数据，并且没有影响正常打卡，卡机完好无损！）"><meta itemprop="datePublished" content="2013-06-10T16:36:24&#43;08:00" />
+<meta itemprop="dateModified" content="2014-12-04T21:38:24&#43;08:00" />
+<meta itemprop="wordCount" content="24206">
+<meta itemprop="keywords" content="户外,入侵,设备,物理,系统,指纹,360,ASP,HTTP,IE,IP,Java,Linux,Net,Nuclear,Root,VB,Web,WiFi,Windows,安全,暴力,操作系统,程序,电脑,端口,分析,工具,攻击,官网,管理,管理系统,后门,后台,技巧,技术,浏览器,论坛,门禁,密码,免费,模块,破解,权限,全球,软件,上传,身份,数据,数据库,搜索,算法,锁,图片,网络,文件,问题,协议,姓名,银行,隐藏,邮箱,远程,账号,智能," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机)"/>
+<meta name="twitter:description" content="户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机)。核总在几天前与某人开玩笑，说是打卡机的语音提示太单调乏味了，然后有了修改它的想法。于是在几天前的一个晚上，花了点时间研读了中控指纹考勤系统的全部资料，然后入侵了公司的中控指纹语音打卡机。已拿到三个管理接口的超级管理权限！然后将打卡机“调教”了一番，使它“学会”卖萌。。。。同时发现该考勤系统存在诸多安全问题（包括官方后门），具体见我稍后整理的文档，这里先放出部分照片，大家尽情的膜拜吧！（PS：本次入侵没有破坏任何数据，并且没有影响正常打卡，卡机完好无损！）"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机)</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-06-10" class="post-time">
+          2013-06-10
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E6%88%B7%E5%A4%96/"> 户外 </a>
+            <a href="https://lcx.cc/categories/%E5%85%A5%E4%BE%B5/"> 入侵 </a>
+            <a href="https://lcx.cc/categories/%E8%AE%BE%E5%A4%87/"> 设备 </a>
+            <a href="https://lcx.cc/categories/%E7%89%A9%E7%90%86/"> 物理 </a>
+            <a href="https://lcx.cc/categories/%E7%B3%BB%E7%BB%9F/"> 系统 </a>
+            <a href="https://lcx.cc/categories/%E6%8C%87%E7%BA%B9/"> 指纹 </a>
+            
+          </div>
+        <span class="more-meta"> 约 24206 字 </span>
+          <span class="more-meta"> 预计阅读 49 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p align="center">
+	<img title="户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机)" alt="户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机)" src="/file/old/2363_修改了待机图片.jpg" width="800" height="600" />
+</p>
+<p align="center">
+	户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机)
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/" target="_blank">核总</a>在几天前与某人开玩笑，说是打卡机的语音提示太单调乏味了，然后有了修改它的想法。
+</p>
+<p style="text-indent:2em;">
+	于是在几天前的一个晚上，花了点时间研读了中控指纹考勤系统的全部资料，然后入侵了公司的中控指纹语音打卡机。
+</p>
+<p style="text-indent:2em;">
+	已拿到三个管理接口的超级管理权限！<span style="color:#006600;"><strong>然后将打卡机“调教”了一番，使它“学会”卖萌。。。。</strong></span>
+</p>
+<p style="text-indent:2em;">
+	同时发现该考勤系统存在诸多安全问题（包括官方后门），具体见我稍后整理的文档，这里先放出部分照片，大家尽情的膜拜吧！
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#006600;">（PS：本次入侵没有破坏任何数据，并且没有影响正常打卡，卡机完好无损！）</span></strong>
+</p>
+<hr />
+<p style="text-indent:2em;">
+	那么，本次入侵目的已确定，修改中控指纹语音考勤机的语音提示内容以及待机图片。
+</p>
+<p align="center">
+	<img title="型号：北京中控科技(Zksoftware)全球指纹考勤机U260" alt="型号：北京中控科技(Zksoftware)全球指纹考勤机U260" src="/file/old/2354_1 型号：北京中控科技(Zksoftware)全球指纹考勤机U260.jpg" width="800" height="600" />
+</p>
+<p align="center">
+	<img title="型号：北京中控科技(Zksoftware)全球指纹考勤机U260" alt="型号：北京中控科技(Zksoftware)全球指纹考勤机U260" src="/file/old/2355_2 型号：北京中控科技(Zksoftware)全球指纹考勤机U260 (2).jpg" width="800" height="600" />
+</p>
+<p align="center">
+	型号：北京中控科技(Zksoftware)全球指纹考勤机U260
+</p>
+<p align="center">
+	<img title="机身接口" alt="机身接口" src="/file/old/2356_3 机身接口.jpg" width="800" height="600" />
+</p>
+<p align="center">
+	机身接口
+</p>
+<p style="text-indent:2em;">
+	（PS：本文中的考勤机型号为：北京中控科技(Zksoftware)全球指纹考勤机U260，其他型号类似，这里贴一点简单资料。）
+</p>
+<pre class="prettyprint">型号：
+
+北京中控科技(Zksoftware)全球指纹考勤机 u260
+
+http://www.kqj123.com/main.asp?pid=66&amp;id=5
+http://www.zksoftware.com.cn/product_show.asp?photoid=1441
+
+简介：
+
+北京中控科技(Zksoftware)全球指纹考勤机、人脸考勤机、门禁系统...
+中控人脸考勤机,指纹考勤机,北京门禁,刷卡打卡机就上全球领先的中控指纹考勤机官网。专业提供中控考勤机,北京考勤机,中控门禁安装,指纹考勤机生物领域的领导者。
+
+www.kqj123.com
+
+指纹考勤门禁系统_指纹锁_一卡通系统_指纹考勤机_指纹采集器
+广州市中控电子科技有限公司是一家专业从事高科技产品销售及服务的科技公司。公司的产品有指纹考勤门禁系统,指纹锁、一卡通,企业网络解决方案,指纹考勤机等。欢迎广大...
+
+www.zksoftware.com.cn
+
+ZKTeco
+
+http://cn.zksoftware.com/
+
+产品名称: U260
+产品型号: 智能型会说话的指纹考勤机
+所属类别: 指纹识别验证终端
+查看次数: 539
+
+产品介绍:
+
+U260是中控科技基于自主研发的业界领先的多媒体ZEM510系列开发平台设计生产的中高端彩屏指纹考勤机。该产品在系统操作、比对验证时都会有语音提示，无需对照查看说明书就可让客户应用自如，内嵌WEB SERVER管理系统，客户可通过WEB轻松设置TTS语音，可直接通过机器输入汉字，编辑用户姓名，实现智能化操作。采用3寸6万5千色高清彩屏，Linux系统的自助式身份识别终端，光学系统采用了全新防抖设计，保证指纹图像更加清晰有效，可用U盘下载考勤数据及短消息，具有定时定人对公对私发送短消息功能，在接口方面不仅标准配制了TCP/IP接口，而且配置了支持Client模式的USB接口，使得接口技术与IT技术的发展同步，数据传输是232方式数倍以上，另外标准配置的TCP/IP网络接口，支持跨网段，由于采用了全球主流的LINUX系统网络传输稳定可靠，每一台设备均有合法授权的唯一MAC地址，适合在环境复杂的网络环境中使用。U系列目前被业界称为最为领先的指纹考勤终端产品，让我们携手进入没有232接口的高速USB时代！
+
+产品特点:
+
+·混合式引擎识别算法在系统可靠性、准确性、识别速度都有明显提高，可以在2秒内处理3000枚好坏指纹均匀分布的指纹
+·内嵌TTS技术，可以自定义播放各种语音
+·内置强大美国Intel32位嵌入式指纹识别模块(ZEM500)，很容易集成到各种系统中
+·基于主板的嵌入开发系统（EDK）是一个多功能的通用嵌入式Linux脱机指纹产品开发平台，能够满足大多数基于指纹的嵌入式市场需求。
+·中控指纹仪在新版中标配，全面提升指纹识别质量
+·支持射频卡等卡类设备输入和输出，可配置ID卡、Mifare卡多种方式考勤.
+·能够实现休眠模式功能、软件控制关机，设置定时开机
+·光学采集器“增强膜”，提高图象质量，接受干、湿手指，支持手指360度识别，易用性能良好
+·主板设计长时间24小时不间断运行
+·具备电压监控，可编程看门狗定时器功能
+·客户无需附加任何单片机直接利用EDK主板轻松进行量身定制，满足行业客户需求，提升竞争力
+
+产品规格:
+
+指纹容量：3200枚
+记录容量：80000条
+算法：中控VX9.0/10.0高速双引擎指纹识别算法
+硬件平台：ZEM510多媒体平台
+操作系统：Linux
+通讯方式：USB-Client，RS232/485，TCP/IP
+考勤速度：&lt;=2秒
+误判率：&lt;=0.0001%
+拒绝率：&lt;=0.01%
+LED：红、绿双色灯指示（蜂鸣器）
+LCD：3寸6万5千色高清彩屏 400*240像素
+采集器：中控全新高清无膜指纹采集器
+闪存：32M(支持：USB：1.1：协议)
+使用温度：0℃-45℃
+使用湿度：20%-80%
+语言选择：简体中文
+定时响铃：用户可以设定响铃时长和响铃时间段
+记录查询：员工可直接在考勤机中查看考勤记录
+支持T9输入法：可直接通过机器键盘输入汉字，编辑用户姓名，实现智能化操作
+Web管理：内嵌中控科技领先的Webserve系统，随时随地远程访问
+尺寸：187（L）×140（W）×45（H）mm
+
+选配功能
+
+读卡功能：ID卡读卡模块/Mifare读卡模块
+后台软件：RIS后台服务
+后备电池：由后备电池给机器供电，后备电池可使机器持续工作3小时</pre>
+<p style="text-indent:2em;">
+	俗话说：<strong><span style="color:#E53333;">工欲善其事，必先利其器！</span></strong>头一次搞这玩意儿，必先读其大量文档（<strong><span style="color:#006600;">多次实践证明事先阅读大量相关资料极其有用！</span></strong>），例如：
+</p>
+<pre class="prettyprint">\北京中控科技(Zksoftware)全球指纹考勤机、人脸考勤机、门禁系统、打卡机价格，北京门禁上门安装。.htm
+\相关软件\3.6.8版考勤管理系统 2011-04-16.rar
+\相关软件\WIFI配置工具及说明书 2011-04-16.rar
+\相关软件\考勤管理软件（适用于10.0算法设备） 2011-04-16.rar
+\相关软件\考勤管理系统（4.8.5_build141）标准版 2012-05-24.zip
+\相关软件\联机考勤软件(URU) 2011-04-16.rar
+\相关资料\TFTFingerprintV3.4.pdf
+\相关资料\Web A&amp;C manual 3.0.pdf
+\相关资料\简单的机器安装流程.doc
+\相关资料\清除机器上的管理员.doc
+\相关资料\清除软件的管理员.doc
+\相关资料\如何排班.doc
+\相关资料\设备无法连接解决方法.doc
+\相关资料\找不到考勤数据.doc
+……</pre>
+<p style="text-indent:2em;">
+	（以上文档已打包，见文章末尾资料下载……）
+</p>
+<p style="text-indent:2em;">
+	除了上边这些资料，还查阅了官网各种开发文档、资料、各种型号、各种语言的使用说明书，全面彻底、深入的分析了中控考勤系统……
+</p>
+<p style="text-indent:2em;">
+	准备工作完毕，开始入侵，入侵过程烦乱不堪，这里就不讲了，现将整个入侵过程分类整理后贴出来。
+</p>
+<p style="text-indent:2em;">
+	首先讲解一下中控指纹语音考勤机的基本结构：
+</p>
+<p style="text-indent:2em;">
+	1、Linux 嵌入式系统
+</p>
+<p style="text-indent:2em;">
+	2、屏幕：彩屏或黑白（现在都是彩屏了，黑白的老型号很少见）
+</p>
+<p style="text-indent:2em;">
+	3、机身接口：DC 电源 * 1，USB 输出 * 1，USB 输入 * 1，网线接口 * 1
+</p>
+<p style="text-indent:2em;">
+	4、机身按键：数字及功能按键若干，另加一块指纹采集器/指纹仪。
+</p>
+<p style="text-indent:2em;">
+	5、管理方式、接口，通讯方式：
+</p>
+<p style="text-indent:2em;">
+	a. 机身自带的管理功能
+</p>
+<p style="text-indent:2em;">
+	b. USB Device
+</p>
+<p style="text-indent:2em;">
+	c. RS232/485
+</p>
+<p style="text-indent:2em;">
+	d. TCP/IP
+</p>
+<p style="text-indent:2em;">
+	e. Web 3.0
+</p>
+<p style="text-indent:2em;">
+	f. Telnet（隐藏、未开放的秘密入口）
+</p>
+<p style="text-indent:2em;">
+	现在看看各入口的进入及控制方式：
+</p>
+<p>
+	<strong>一、机身自带的管理功能</strong>
+</p>
+<p style="text-indent:2em;">
+	这个就不多说了，机身自带的管理菜单，如果你有管理密码或者拥有管理权限的员工账号，则直接可进入管理菜单，然后进行一些设置或者修改人员资料。
+</p>
+<p style="text-indent:2em;">
+	但不幸的是，无法自定义语音内容及待机图片（有些老版本黑白机器可以自定义，但我这款不可以），所以只能获取更高权限了，修改原始固件信息。
+</p>
+<p style="text-indent:2em;">
+	从官方说明文档里得知，这里存在几个后门：
+</p>
+<p style="text-indent:2em;">
+	<strong>1、万能密码后门</strong>
+</p>
+<p style="text-indent:2em;">
+	在进入管理菜单出现管理者确认时：
+</p>
+<p style="text-indent:2em;">
+	&lt;1&gt;黑白屏考勤机
+</p>
+<p style="text-indent:2em;">
+	如果你的机器与电脑能连接成功后，打开考勤管理程序，点击考勤软件最上边的一行菜单栏里设备管理——设备管理——高级功能——清除管理权限。（如图）
+</p>
+<p style="text-indent:2em;">
+	如果连接不成功的话，需要和我们公司联系（同下）。
+</p>
+<p style="text-indent:2em;">
+	&lt;2&gt;彩屏考勤机
+</p>
+<p style="text-indent:2em;">
+	机器与电脑能连接成功的话同黑白屏考勤机一样操作。
+</p>
+<p style="text-indent:2em;">
+	如果连接不成功的话，发传真。电话回访时，你首先看下考勤机的时间，然后按下考勤机菜单键，出现管理者确认后输入8888加OK，然后提示输入密码，这时你把考勤机的时间告诉我们技术人员后告诉你密码。
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#006600;">（这是一个典型的根据时间变动的超级密码后门，算法还没有具体研究，不过，肯定通杀所有考勤机。）</span></strong>
+</p>
+<p>
+	<strong><span style="color:#E53333;">2014-1-21 10:15:26 补充：</span></strong>
+</p>
+<p style="text-indent:2em;">
+	从网上看到这个根据时间变动的密码的具体计算方法，如下：
+</p>
+<p style="text-indent:2em;">
+	<span style="font-family:KaiTi_GB2312;">销售几台中控彩屏考勤机，由于客户疏忽忘记管理密码。于是寻找不丢失考情记录能找回管理的方法，翻阅中控官网和百度，终于找到相关解决方案。</span>
+</p>
+<p style="text-indent:2em;">
+	<span style="font-family:KaiTi_GB2312;">使用软件就不借鉴了，麻烦。黑白屛机器，按菜单键输入9999&gt;&gt;&gt;按“上”键&gt;&gt;&gt;8888&gt;&gt;&gt;再按“上”键，指纹机右上方会显示一个随机的数字，将这个数字记下来求和，并输入一个四位数，首（千）位是７，百位是随机的数和的首位，十位是0，个位是随机的数和的未位。如和是一位的个位也是0，再按“上”键和菜单键即可进入设置界面，这个过程不能太长，太长的话就失效了。进入设置菜单将管理员的权限清除掉即可。</span>
+</p>
+<p style="text-indent:2em;">
+	<span style="font-family:KaiTi_GB2312;">彩屏须在1分钟内操作完成，记下机器时间，用计算器算9999-机器显示时间的差的平方，就是密码。例如：目前考勤机时间是22：55，那就是9999-2255=7744，接着算7744的平方，7744*7744=59969536 ，考勤机8888的管理密码就是59969536。按菜单键，在指纹机上输入8888&gt;&gt;&gt;按OK键，输入计算出来的密码 OK。</span>
+</p>
+<p style="text-indent:2em;">
+	摘自：<a href="http://www.joming.com/201401112.html" target="_blank">关于中控考勤机</a>
+</p>
+<p>
+	<strong><span style="color:#E53333;">2014-1-21 10:22:44 补充：</span></strong>
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#006600;"><strong>已使用“中控U260指纹考勤机”验证该隐藏的超级管理员密码算法！！！！完全正确！！！！目测通杀所有中控型号彩屏考勤机！！！（黑白屏估计也是通杀！）</strong></span>
+</p>
+<p style="text-indent:2em;">
+	&lt;3&gt;门禁机
+</p>
+<p style="text-indent:2em;">
+	连接电脑后同上操作。
+</p>
+<p style="text-indent:2em;">
+	连接不成功后，发传真。我们公司收到传真后电话回访过去（同上）。
+</p>
+<p style="text-indent:2em;">
+	<strong>2、通过网上搜索还得知早起黑白屏的超级密码算法：</strong>
+</p>
+<p style="text-indent:2em;">
+	如果是早期黑白屏的话，有一套超级管理员密码的算法，需要输入些指令，然后计算输入。
+</p>
+<p style="text-indent:2em;">
+	具体方法为：9999 上 8888 上 右上角出现五位数 相加 710+和的个位 上 菜单
+</p>
+<p>
+	<strong>二、RS232/485 串口线连接</strong>
+</p>
+<p style="text-indent:2em;">
+	由于手头没有工具，所以此接口没有使用过。
+</p>
+<p style="text-indent:2em;">
+	但推测连接后，管理功能和USB及网线连接的方式是一摸一样的。
+</p>
+<p style="text-indent:2em;">
+	默认通讯密码：0 （也就是空密码）
+</p>
+<p>
+	<strong>三、USB 连接方式</strong>
+</p>
+<p style="text-indent:2em;">
+	本来手头有USB线的，但是他娘的貌似机身接口坏了，插上去完全没反应，所以也是没用过。
+</p>
+<p style="text-indent:2em;">
+	但推测连接后，管理功能和RS232/485及网线连接的方式是一摸一样的。
+</p>
+<p style="text-indent:2em;">
+	默认通讯密码：0 （也就是空密码）
+</p>
+<p>
+	<strong>四、网线连接，TCP/IP 通讯</strong>
+</p>
+<p style="text-indent:2em;">
+	直接用网线对插考勤机和PC机，然后设置一下网络参数，就可以开工了。
+</p>
+<p style="text-indent:2em;">
+	以太网方式及连接方法：
+</p>
+<p style="text-indent:2em;">
+	（1）通过集线器：用直通网线(用于连接网卡和集线器)把机器接入网络。
+</p>
+<p style="text-indent:2em;">
+	（2）直接连接：使用交叉网线（直接连接两个以太网端点）把机器与PC机连接起来。
+</p>
+<p style="text-indent:2em;">
+	机器设置：进入菜单－通讯设置－网络设置，请设置如下几项：
+</p>
+<p style="text-indent:2em;">
+	IP&nbsp; 地址：默认IP为192.168.1.201，您可以根据需要进行更改；
+</p>
+<p style="text-indent:2em;">
+	子网掩码：默认子网掩码255.255.255.0，您可以根据需要进行更改；
+</p>
+<p style="text-indent:2em;">
+	网关地址：默认网关地址0.0.0.0，您可以根据需要进行更改；
+</p>
+<p style="text-indent:2em;">
+	网络速率：网络运行的速度，共有“自动适应”、“10M”、“100M”三个选项；
+</p>
+<p style="text-indent:2em;">
+	连接密码：在“连接设置”中设置。为了提高考勤数据的安全保密性，这里可以设置连接密码，当PC 机端软件需要连接设备读取数据必须输入此连接密码才能够连接成功。系统默认的密码为0（即没有密码），可以设置为其它值，设置之后如果软件要与设备通讯时必须输入此密码，否则将连接失败。连接密码长度为1～6位。
+</p>
+<p style="text-indent:2em;">
+	以上是默认网络参数配置，如果想修改的话，可以这样：
+</p>
+<p style="text-indent:2em;">
+	黑白屏：按菜单键（MENU、M/OK、M/回车）→设置→通讯设置→以太网（开启or是）。然后设置IP地址。
+</p>
+<p style="text-indent:2em;">
+	彩屏机：按菜单键（MENU、M/OK、M/回车）→通讯设置→网络设置→IP地址,网关,子网掩码: 通讯设置→连接设置→以太网（开启or是）: 通讯设置→连接参数→连接密码。
+</p>
+<p style="text-indent:2em;">
+	设置完成后保存，并断电重启。
+</p>
+<p style="text-indent:2em;">
+	介绍完参数及连接方法，就可以开工干活了。
+</p>
+<p style="text-indent:2em;">
+	用网线连接考勤机到笔记本后，设置完网络参数，安装官方的管理程序，我这里装的是最新版的：
+</p>
+<p style="text-indent:2em;">
+	考勤管理系统（4.8.5_build141）标准版 2012-05-24.rar
+</p>
+<p style="text-indent:2em;">
+	软件安装很简单，一路下一步，然后默认密码连接卡机，然后xxoo……
+</p>
+<p align="center">
+	<img title="管理软件有各种功能" alt="管理软件有各种功能" src="/file/old/2357_4 管理软件有各种功能1.jpg" width="800" height="600" />
+</p>
+<p align="center">
+	<img title="管理软件有各种功能" alt="管理软件有各种功能" src="/file/old/2358_5 管理软件有各种功能2 + 上传宣传图片.jpg" width="800" height="600" />
+</p>
+<p align="center">
+	管理软件有各种功能
+</p>
+<p style="text-indent:2em;">
+	软件有各种功能（见照片），功能很强大，比机器自带的功能复杂很多<strong>（这里吐个槽：由于太复杂了，以至于用户不知道该怎么操作，官方还没有说明书教你操作，真是蛋疼，花了一些时间才搞明白……）</strong>。
+</p>
+<p style="text-indent:2em;">
+	管理系统功能虽然多、强大，但是都是一些人员资料管理、批量删除、上传、维护等，考勤机基本信息设置等之类的功能（这里就不介绍了），依然没有我想要的功能。
+</p>
+<p align="center">
+	<img title="上传宣传图片" alt="上传宣传图片" src="/file/old/2358_5 管理软件有各种功能2 + 上传宣传图片.jpg" width="800" height="600" />
+</p>
+<p align="center">
+	上传宣传图片
+</p>
+<p align="center">
+	<img title="核总标志性头像" alt="核总标志性头像" src="/file/old/2359_6 核总标志性头像.jpg" width="800" height="600" />
+</p>
+<p align="center">
+	核总标志性头像
+</p>
+<p style="text-indent:2em;">
+	但是有一个上传宣传图片的功能（见照片），于是修改了待机画面为<a href="https://lcx.cc/" target="_blank">核总</a>标志性头像（见照片），宣传图片上传具体规则：
+</p>
+<p style="text-indent:2em;">
+	1、图片必须是jpg格式<strong>（吐个槽：2B工程师，取文件路径时算法2B，如果你不去掉“隐藏已知文件类型的扩展名”，则疯狂的报图片格式错误，无语了……）</strong>
+</p>
+<p style="text-indent:2em;">
+	2、文件名必须是：ad_0 ~ ad_9，例如：ad_0.jpg
+</p>
+<p style="text-indent:2em;">
+	3、重复上传则覆盖同名文件。
+</p>
+<p style="text-indent:2em;">
+	4、每个图片大小不能超过20k，否则不会上传。
+</p>
+<p style="text-indent:2em;">
+	5、图片分辨率为；320*210。
+</p>
+<p style="text-indent:2em;">
+	6、宣传图片最多不能超过10幅。
+</p>
+<p style="text-indent:2em;">
+	然后顺道将自己的员工账号提升为管理员权限，哦呵呵呵……
+</p>
+<p style="text-indent:2em;">
+	已达到一个目的（修改了待机图片），然后把玩了管理软件一番，另辟蹊径……
+</p>
+<p style="text-indent:2em;">
+	（其实这里已经可以修改语音提示了，修改员工名字为搞笑语言即可，打卡的时候会念出来，但是对核总来说嘛，这个并非完美做法，嘿嘿……）
+</p>
+<p style="text-indent:2em;">
+	既然已经连上局域网，那么就彻底将机器扫描一番，看看有什么发现：
+</p>
+<pre class="prettyprint">#Port
+192.168.1.201    23    Open    //Telnet
+192.168.1.201    80    Open    //Web
+192.168.1.201    4370  Open    //TCP/IP Connection Port</pre>
+<p style="text-indent:2em;">
+	发现蛮多的，4370端口即为管理软件连接端口，已看过，不再重复。<strong>（其实管理软件数据包传输为明文，所以可以考虑修改数据包达到其他目的，地下会讲到……）</strong>
+</p>
+<p align="center">
+	<img title="Telnet 会话接口" alt="Telnet 会话接口" src="/file/old/2360_7 Telnet 会话接口.jpg" width="800" height="600" />
+</p>
+<p align="center">
+	Telnet 会话接口
+</p>
+<p style="text-indent:2em;">
+	23端口嘛，标准的 Telnet 会话接口（见照片），等会再介绍，这里先看 80 端口，也就是 Web 管理方式……
+</p>
+<p style="text-indent:2em;">
+	浏览器输入：
+</p>
+<pre class="prettyprint">http://192.168.1.201/</pre>
+<p style="text-indent:2em;">
+	跳转到：
+</p>
+<pre class="prettyprint">http://192.168.1.201/csl/check</pre>
+<p align="center">
+	<img title="Web 3.0 登陆界面" alt="Web 3.0 登陆界面" src="/file/old/2361_8 Web 3.0 登陆界面.jpg" width="800" height="600" />
+</p>
+<p align="center">
+	Web 3.0 登陆界面
+</p>
+<p style="text-indent:2em;">
+	然后出现 Web 3.0 登陆界面（见图片）（<a href="https://lcx.cc/" target="_blank">核总</a>点评：<strong>此处没有验证码，可暴破</strong>，囧rz……），查阅说明书，默认账号密码为：
+</p>
+<pre class="prettyprint">super administrator: administrator;
+password: 123456;</pre>
+<p style="text-indent:2em;">
+	或者也可以使用工号+密码的方式登录，<strong>经测试普通员工账号也可登录（说明书并没有写），但、权限菜单不一样（例如普通员工只能看打卡记录）。</strong>
+</p>
+<p style="text-indent:2em;">
+	同时在这里也发现了一个后门<span style="color:#E53333;">（不确定是官方后门还是安全验证缺陷）</span>，后门登录方法：
+</p>
+<p style="text-indent:2em;">
+	如果密码忘了的话，可以这样，将登陆url中的login替换为start，比如：
+</p>
+<pre class="prettyprint">http://192.168.1.201/csl/login</pre>
+<p style="text-indent:2em;">
+	改为：
+</p>
+<pre class="prettyprint">http://192.168.1.201/csl/start</pre>
+<p style="text-indent:2em;">
+	浏览器访问，直接登陆成功，然后随你操作了，包括改密码，囧rz……
+</p>
+<p align="center">
+	<img title="Web 3.0 功能界面" alt="Web 3.0 功能界面" src="/file/old/2362_9 Web 3.0 功能界面.jpg" width="800" height="600" />
+</p>
+<p align="center">
+	Web 3.0 功能界面
+</p>
+<p style="text-indent:2em;">
+	进去后，功能比较简单（见图片），只有基本的参数设置和人员资料维护<span style="color:#006600;"><strong>（</strong></span><a href="https://lcx.cc/" target="_blank"><span style="color:#006600;"><strong>核总</strong></span></a><span style="color:#006600;"><strong>吐槽：尼玛，员工密码明文的！明文的！！！）</strong></span>，Wifi配置，以及固件升级、设置备份、重启等功能，和家用路由器TP-LINK界面差不多。
+</p>
+<p style="text-indent:2em;">
+	在这里依然没有找到我想要的功能，于是把玩了一番，然后继续深入……
+</p>
+<p style="text-indent:2em;">
+	现已拿到权限：
+</p>
+<p style="text-indent:2em;">
+	1、TCP/IP连接管理权限。
+</p>
+<p style="text-indent:2em;">
+	2、Web 管理权限。
+</p>
+<p style="text-indent:2em;">
+	3、机器管理员权限。
+</p>
+<pre class="prettyprint">#Web http://192.168.1.201/csl/check</pre>
+<p style="text-indent:2em;">
+	尚未拿到权限：
+</p>
+<p style="text-indent:2em;">
+	1、Linux 系统账号密码。
+</p>
+<p style="text-indent:2em;">
+	还有最后一个秘密管理入口（为啥说秘密呢？稍后会讲到）：
+</p>
+<pre class="prettyprint">192.168.1.201    23    Open    //Telnet</pre>
+<p style="text-indent:2em;">
+	使用 Telnet 连接（见照片）：
+</p>
+<pre class="prettyprint">#Telnet
+
+Welcome to Linux (ZEM510) for MIPS
+Kernel 2.4.20 Treckle on an MIPS
+ZEM510 login: 45
+Password:
+Login incorrect
+ZEM510 login:</pre>
+<p style="text-indent:2em;">
+	然后猜了几个账号、密码，均失败，然后百度谷歌得到几个密码：
+</p>
+<pre class="prettyprint">中控最新彩屏机LINUX
+后台密码：pd*@&amp;jz%+
+中控黑白屏机LINUX
+后台密码：solokey
+root
+zksoft3
+zksoft3
+user
+zktime
+用户名admin或 super密码0000或1234</pre>
+<p style="text-indent:2em;">
+	均测试失败，然后网上搜了一下，发现<span style="color:#E53333;"><strong>此系统账号并不对公众开放（官方所有说明文档中都不存在）</strong></span>，也就是说，除了官方技术人员之外，无人知道默认账号密码。
+</p>
+<p style="text-indent:2em;">
+	发现官方论坛也有人发现这个问题：
+</p>
+<p style="text-indent:2em;">
+	<a href="http://hk.zksoftware.com:82/bbs1/viewthread.php?tid=519" target="_blank">telnet to device - Standalone communication SDK -&nbsp; ZK Technical Forum&nbsp; - Powered by ZKSoftware!</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="http://www.seymourdabull.com/.temp/seymourdabull.com/telnet-zem500.html" target="_blank">Telnet Zem500</a>
+</p>
+<p style="text-indent:2em;">
+	但客服却说不能公开密码，让其联系厂商客服，然后发帖到乌云问了下：<a href="http://zone.wooyun.org/content/4133" target="_blank">有没有人搞过中控指纹语音考勤机？</a>
+</p>
+<p style="text-indent:2em;">
+	以下为部分讨论内容：
+</p>
+<hr />
+<p style="text-indent:2em;">
+	1#
+</p>
+<p style="text-indent:2em;">
+	nauscript (&lt;!--&lt;img src="--&gt;&lt;imgsrc=xonerror=alert(document.cookie)//"&gt;) | 2013-06-06 09:19
+</p>
+<p style="text-indent:2em;">
+	沙发围观
+</p>
+<p style="text-indent:2em;">
+	2#
+</p>
+<p style="text-indent:2em;">
+	Nicky | 2013-06-06 10:09
+</p>
+<p style="text-indent:2em;">
+	围观
+</p>
+<p style="text-indent:2em;">
+	3#
+</p>
+<p style="text-indent:2em;">
+	昵称 (&lt;/textarea&gt;'"&gt;&lt;script src) | 2013-06-06 10:19
+</p>
+<p style="text-indent:2em;">
+	围观
+</p>
+<p style="text-indent:2em;">
+	4#
+</p>
+<p style="text-indent:2em;">
+	zeracker | 2013-06-06 10:21
+</p>
+<p style="text-indent:2em;">
+	玩过几款考勤web系统，但是不带你这么玩的啊。。
+</p>
+<p style="text-indent:2em;">
+	5#
+</p>
+<p style="text-indent:2em;">
+	abcdlzy | 2013-06-06 10:49
+</p>
+<p style="text-indent:2em;">
+	中控那个不是提供sdk给开发的么？
+</p>
+<p style="text-indent:2em;">
+	6#
+</p>
+<p style="text-indent:2em;">
+	lion(lp) | 2013-06-06 10:50
+</p>
+<p style="text-indent:2em;">
+	这东西的官方网站上有个类似于远程管理的工具
+</p>
+<p style="text-indent:2em;">
+	7#
+</p>
+<p style="text-indent:2em;">
+	核攻击 (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2013-06-06 14:22
+</p>
+<p style="text-indent:2em;">
+	@lion(lp) 是的，但只是管理人员资料、打卡记录，以及一些基本的系统设置。
+</p>
+<p style="text-indent:2em;">
+	没有关于 Linux 系统本身的管理操作。
+</p>
+<p style="text-indent:2em;">
+	8#
+</p>
+<p style="text-indent:2em;">
+	核攻击 (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2013-06-06 14:23
+</p>
+<p style="text-indent:2em;">
+	@abcdlzy sdk? url 多少?
+</p>
+<p style="text-indent:2em;">
+	9#
+</p>
+<p style="text-indent:2em;">
+	Kevin2600 (Just Hacking it!!!) | 2013-06-06 14:42
+</p>
+<p style="text-indent:2em;">
+	只是个想法..<strong><span style="color:#006600;">也许可以dump 下firmware...分析下？</span></strong>
+</p>
+<p style="text-indent:2em;">
+	10#
+</p>
+<p style="text-indent:2em;">
+	核攻击 (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2013-06-06 15:07
+</p>
+<p style="text-indent:2em;">
+	@Kevin2600 囧，这是没办法的办法。。。
+</p>
+<p style="text-indent:2em;">
+	先暴破看看吧……
+</p>
+<p style="text-indent:2em;">
+	型号：中控U260
+</p>
+<p style="text-indent:2em;">
+	11#
+</p>
+<p style="text-indent:2em;">
+	核攻击 (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2013-06-06 15:08
+</p>
+<p style="text-indent:2em;">
+	最终目的：修改内置语音文件 *.wav
+</p>
+<p style="text-indent:2em;">
+	12#
+</p>
+<p style="text-indent:2em;">
+	ACGT (独喜code不我欺) | 2013-06-06 16:02
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#006600;">官网下固件，IDA反编译，导出strings，开始爆破</span></strong>
+</p>
+<p style="text-indent:2em;">
+	13#
+</p>
+<p style="text-indent:2em;">
+	abcdlzy | 2013-06-06 16:34
+</p>
+<p style="text-indent:2em;">
+	@核攻击 手头上有个 U.are.U4500的，然后我就顺手淘宝了下，看见淘宝那些卖家说配的是中控的SDK ,我也不知道是不是，反正我在我手头上的SDK中，没找到中控两个字
+</p>
+<p style="text-indent:2em;">
+	14#
+</p>
+<p style="text-indent:2em;">
+	啦绯哥 | 2013-06-06 18:50
+</p>
+<p style="text-indent:2em;">
+	@核攻击 核总想把语音改成“吖唛蝶”。。。
+</p>
+<p style="text-indent:2em;">
+	15#
+</p>
+<p style="text-indent:2em;">
+	wefgod (求大牛指点) | 2013-06-06 22:41
+</p>
+<p style="text-indent:2em;">
+	telnet是连接到那个busybox？不过好像我遇到过的没有语音，只是单纯指纹而已
+</p>
+<p style="text-indent:2em;">
+	16#
+</p>
+<p style="text-indent:2em;">
+	wefgod (求大牛指点) | 2013-06-06 22:43
+</p>
+<p style="text-indent:2em;">
+	上次想改点东西，结果找不到数据库放哪里
+</p>
+<p style="text-indent:2em;">
+	17#
+</p>
+<p style="text-indent:2em;">
+	肉肉 | 2013-06-06 22:49
+</p>
+<p style="text-indent:2em;">
+	好厉害的样子
+</p>
+<p style="text-indent:2em;">
+	18#
+</p>
+<p style="text-indent:2em;">
+	applychen | 2013-06-06 23:45
+</p>
+<p style="text-indent:2em;">
+	中控考勤普通管理员账户后台如何获取shell，PY脚本的，求指导……
+</p>
+<hr />
+<p style="text-indent:2em;">
+	如讨论内容，大致有这几个方法：
+</p>
+<p style="text-indent:2em;">
+	1、暴力破解（机器没有登陆次数限制，可任意暴力猜解）
+</p>
+<p style="text-indent:2em;">
+	2、如旺财（Kevin2600）所说“也许可以dump 下firmware...分析下？”，下载固件分析。
+</p>
+<p style="text-indent:2em;">
+	3、官网下固件，IDA反编译，导出strings，开始爆破
+</p>
+<p style="text-indent:2em;">
+	然后逐一进行验证：
+</p>
+<p align="center">
+	<img title="暴力破解 Telnet" alt="暴力破解 Telnet" src="/file/old/2364_10 暴力破解1.jpg" width="800" height="600" />
+</p>
+<p align="center">
+	<img title="暴力破解 Telnet" alt="暴力破解 Telnet" src="/file/old/2365_11 暴力破解2.jpg" width="800" height="1066" />
+</p>
+<p align="center">
+	暴力破解 Telnet
+</p>
+<p style="text-indent:2em;">
+	1、暴力破解了一晚上（见照片），人品不佳，无果（考勤机硬件计算能力较差，还暴死机过好几次）。（可见默认密码很强壮，看之前搜到的，密码很复杂，账号也不定，不一定是root，暴破基本无望）
+</p>
+<p style="text-indent:2em;">
+	2、Web 管理系统中，确实有“备份”这个功能（见图片），但他娘的我这机器貌似有问题，备份下来的数据包，妈的全零：0x00，我了个擦……
+</p>
+<p style="text-indent:2em;">
+	3、官网下固件，晕，虽说有固件升级功能，但<strong>官方根本没有提供任何固件下载</strong>！！而且说明书中建议不要随便升级……
+</p>
+<p style="text-indent:2em;">
+	陷入僵局，随后又想了一阵子，又有几个“提权”方案：
+</p>
+<p style="text-indent:2em;">
+	1、渗透 Web 系统，说不定会有其他发现。
+</p>
+<p style="text-indent:2em;">
+	2、发现TCP/IP的管理软件所发数据包是明文字符串的形式，类似远程shell，可尝试修改下数据包，达到执行其他命令的目的……
+</p>
+<p style="text-indent:2em;">
+	3、拆机！！！！！！！！！！！
+</p>
+<p style="text-indent:2em;">
+	不过，现在主要目的已经达到：
+</p>
+<p style="text-indent:2em;">
+	1、成功修改待机图片！（见照片，看<strong>核总风骚淫荡的老鼠头Logo</strong>！）
+</p>
+<p style="text-indent:2em;">
+	2、修改了语音提示内容，卡机学会卖萌了！（核总会告诉你，当核总一打卡，萌卡机会叫我：<strong><span style="color:#E53333;">女王大人</span></strong>！么？哦呵呵呵……）。
+</p>
+<p style="text-indent:2em;">
+	至此，整个考勤系统运行流程、构架、管理入口、入侵方法、官方后门（坐等官方公关和谐，不过嘛，<span style="color:#006600;">此类“后门”也是必须的，总有小白用户忘密码</span>，是吧……）统统分析完毕！
+</p>
+<p style="text-indent:2em;">
+	这是互联网上首篇全面分析、介绍、入侵、测评“北京中控科技(Zksoftware)全球指纹考勤机/系统”的文章，也是首个讲解“入侵”物理考勤/安保设备的文章（尼玛！我当时在网上搜索的时候，几乎没有任何关于这方面安全检测类的资料！），此乃破天荒头一遭！……
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#006600;">（吐槽“高精尖黑科技”的就免了吧，本文不涉及高深的入侵技巧，因为此类物理设备本来就是很简单的东西，有的甚至连最基本的系统都没有！它毕竟不是PC机，所以没有什么很酷很炫的高级入侵技巧，<strong>户外物理设备入侵基本靠的是细致的观察、技巧和一些经验，当然，少不了默认账号密码！</strong>户外物理设备很多都是很“陌生”的东西，无从上手，所以<strong>事先查阅大量资料积累经验是很必要的！！！</strong>）</span>
+</p>
+<p style="text-indent:2em;">
+	不过，本文不算完全完结，<a href="https://lcx.cc/" target="_blank">核总</a>是个追求完美的人！认为这种修改语音提示内容的方式有局限性，可控性也不强（尼玛斯！哥必须得拿到 System Root！），所以不算十分成功！
+</p>
+<p style="text-indent:2em;">
+	System Root 依然在尝试中！且见下回分解……
+</p>
+<p style="text-indent:2em;">
+	大家尽情的膜拜吧！！！
+</p>
+<p style="text-indent:2em;">
+	户外物理设备/硬件入侵，跟着<a href="https://lcx.cc/" target="_blank">核总</a>喊口号：<span style="color:#E53333;"><strong>只要丫带电！统统干翻它！！！</strong></span>
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#006600;">（核总吐个槽：话说中控科技的考勤机、门禁系统、安保系统真是相当有名，几乎垄断了整个国内市场！！搜索考勤机、打卡机，全特么的是这家公司的！没见过第二家！而且远销国外！俄罗斯、美国使用量很大！尼玛，光说明文档我就见过各种语言的，官网就有N个语言版本，还有纯英文论坛……）</span>
+</p>
+<p style="text-indent:2em;">
+	最后，打包相关文档资料，下载地址如下：
+</p>
+<p style="text-indent:2em;">
+	<a href="http://pan.baidu.com/share/link?shareid=3370278295&uk=771752861" target="_blank"><s>中控考勤机资料.rar</s></a><s>，解压密码：</s><a href="https://lcx.cc/" target="_blank"><s>lcx.cc</s></a><strong><span style="color:#E53333;">（2014-12-4 21:36:53 补充：地址已失效~）</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://pan.baidu.com/s/1kTwuHi3" target="_blank">中控考勤机资料.rar，解压密码：lcx.cc</a><strong><span style="color:#E53333;">（2014-12-4 21:37:20 补充：新的下载地址。）</span></strong>
+</p>
+<p>
+	<strong><span style="color:#E53333;">2013-6-12 9:47:02 补充资料：</span></strong>
+</p>
+<pre class="prettyprint">中控固件下载：
+
+http://www.zkteco.cn/down/class/?4.html
+
+用户指南文档：
+
+http://www.zkteco.cn/down/class/?7.html
+
+官方资料大全：
+
+http://cn.zksoftware.com:82/Product_zktime7.0.asp
+
+http://cn.zksoftware.com/
+
+http://cn.zksoftware.com/view.do?id=109
+
+官方论坛：
+
+http://cn.zksoftware.com:82/forum/
+
+--------------------------------------------------
+
+考勤机u260 telnet登陆用户和口令是多少？
+http://cn.zksoftware.com:82/forum/dispbbs.asp?boardID=34&amp;RootID=12524&amp;ID=12524&amp;page=3
+
+-- 作者：tsliuf
+-- 发布时间：2011-8-8 15:35:09
+
+-- 考勤机u260 telnet登陆用户和口令是多少？
+需要考勤机u260 telnet登陆用户和口令，哪位大侠不吝赐教
+--------------------
+
+-- 作者：zksoft3
+-- 发布时间：2011-8-9 9:30:27
+
+--
+请联系我司技术支持。0755-89602344
+
+--------------------------------------------------
+
+请F7如何telne修改IP地址及网关
+http://cn.zksoftware.com:82/forum/dispbbs.asp?boardID=34&amp;RootID=13132&amp;ID=13132&amp;page=1
+
+-- 作者：jhhuang
+-- 发布时间：2012-4-14 10:50:41
+
+-- 请F7如何telne修改IP地址及网关
+telnet的用户名和密码是什么呢?
+我的F7已经送到分公司,因为有做内部VPN,我没有设置好网关....需要加网关设置进去.
+
+telnet修改IP,子网掩码和网关涉及的命令行是什么.请举例.谢谢.
+另外,M500的web用户名和密码是什么?
+
+本人邮箱: jhhuang2000@gmail.com
+[align=right][此贴子已经被作者于2012-4-14 10:50:41编辑过][/align]
+
+--------------------
+
+-- 作者：zksoft3
+-- 发布时间：2012-4-16 10:52:54
+
+--
+我司不方便提供telnet密码，有什么需求你可直接与我司分公司技术联系。
+--------------------
+
+-- 作者：jhhuang
+-- 发布时间：2012-4-17 12:56:17
+
+--
+晕, 这也太........
+那告诉我如何远程改IP.或者用考勤软件里面的设置去改也可以...
+--------------------
+
+-- 作者：zksoft3
+-- 发布时间：2012-4-17 15:29:00
+
+--
+软件的设备管理可以对机器更改IP.
+
+--------------------------------------------------
+
+U260如何自定义语音？
+http://cn.zksoftware.com:82/forum/dispbbs.asp?boardID=34&amp;RootID=11916&amp;ID=11916&amp;page=3
+
+-- 作者：xyz8009
+-- 发布时间：2011-5-30 8:34:32
+
+-- U260如何自定义语音？
+U260参数介绍里说可以通过web server 管理TTS语音，怎么管理呢？
+
+有没有U260的使用说明书呀？？
+[align=right][此贴子已经被作者于2011-5-30 8:34:32编辑过][/align]
+
+--------------------
+
+-- 作者：zksoft3
+-- 发布时间：2011-5-30 17:46:31
+
+--
+您想该TTS什么语音，我司设备出厂，有TTS语音就有，如果无语音就此机器无此功能，不能增加。
+
+--------------------
+
+-- 作者：xyz8009
+-- 发布时间：2011-6-4 20:16:47
+
+--
+我买的U260有语音功能,但报员工姓名以后总要说个谢谢,能不能把谢谢去掉?
+--------------------
+
+-- 作者：zksoftware8
+-- 发布时间：2011-6-7 11:51:51
+
+--
+可以去掉，只需要将WAV下的谢谢语音删掉就可以了
+--------------------
+
+-- 作者：xyz8009
+-- 发布时间：2011-9-1 1:57:33
+
+--
+怎么删掉呢，求详细
+--------------------
+
+-- 作者：zksoftware8
+-- 发布时间：2011-9-1 9:11:38
+
+--
+这个要修改固件
+
+--------------------------------------------------
+
+U260自定义宣传图片的分辨率是多少？
+http://cn.zksoftware.com:82/forum/dispbbs.asp?boardID=34&amp;RootID=11347&amp;ID=11347&amp;page=6
+
+-- 作者：zjllong
+-- 发布时间：2011-4-18 15:47:20
+
+-- U260自定义宣传图片的分辨率是多少？
+请问U260自定义宣传图片的分辨率是多少？
+给你们打电话咨询过，说是将图片发到我的邮箱，都3个小时了，还没发呢！
+我的邮箱zjllong@163.com
+麻烦回复我或者给我发邮件，谢谢。
+--------------------
+
+-- 作者：zksoftware8
+-- 发布时间：2011-4-18 16:07:06
+
+--
+U260自定义宣传图片的分辨率是多少 320*240
+--------------------
+
+-- 作者：zjllong
+-- 发布时间：2011-4-18 16:35:06
+
+--
+iclock 360 显示 320*240的图片显示正常 可是在U260上显示会压扁
+--------------------
+
+-- 作者：zksoftware8
+-- 发布时间：2011-4-18 17:11:13
+
+--
+iclock360是3.5寸屏,u260是3寸屏
+--------------------
+
+-- 作者：zksoftware8
+-- 发布时间：2011-4-18 17:13:53
+
+--
+你改下320*210看下
+--------------------
+
+-- 作者：zksoftware8
+-- 发布时间：2011-4-18 17:22:06
+
+--
+u260的是 400 * 210
+
+--------------------------------------------------
+
+37，几种开发包的介绍，以及区别
+
+脱机通讯开发包
+收费情况：免费
+机器型号：除K6和M100以外的所有机器。
+开发平台：只支持windows平台
+开发语言：VB、Delphi、VC、PB、VF等
+功能简介：客户购买了脱机指纹/射频卡机器，但是不想使用我们标配的考勤/门禁软件时，可以推荐客户选用此SDK开发他们自己的考勤/门禁软件。只用于脱机机器与电脑之间的数据通讯，不可进行指纹识别。
+获取方法：进入“中控网站-&gt;下载中心-&gt;脱机指纹考勤系统-&gt;脱机考勤通讯开发包”下载
+
+SOAP 开发包
+收费情况：免费
+机器型号: 所有ZEM300、ZEM500机器均可支持，该功能为选配项，可向生产定制，也可提供升级程序。
+开发平台：windows平台、Linux平台
+开发语言：一般主流开发语言都可支持，VB、Delphi、VC、PHP、ASP、Java等
+功能介绍：脱机通讯开发包的补充，真正的HTTP、TCP协议通讯，当客户想开发基于Linux平台，或JAVA语言的程序时，可以给客户推荐SOAP SDK。
+获取方法：联系FAE
+
+RIS 开发包
+收费情况：免费
+机器型号：具有后台验证功能的机器。
+开发平台：只支持windows平台
+开发语言：VB、Delphi、VC、PB、VF
+功能介绍：客户购买了后台验证功能的机器，但是不想使用我们标配的后台验证程序时，可以推荐客户选用此SDK开发他们自己的后台验证程序。
+获取方法：联系FAE
+
+底层通讯协议
+收费情况：免费，但是需要与我公司签定保密协议
+机器型号：所有机器
+开发平台：目前可提供Windows下VC或C#源代码，客户也可自己实现到Linux等平台。
+开发语言：C、C++、Java、C#、VB.Net等
+功能介绍：直接提供通信的底层协议，客户可以不使用我们的sdk而自己开发通讯程序，可以在任意平台上实现应用，不像我们的sdk限制在Windows。
+获取方法：联系FAE
+
+ZKFinger SDK
+收费情况：收费
+机器型号：URU指纹仪，ZK6000
+开发平台：Windows 平台、Linux平台可定制
+开发语言：VB、Delphi、VC、PB、VF
+功能介绍：客户想自行开发指纹比对程序时，可以选择此SDK，它包含中控科技自主知识产权的指纹识别算法。另外需要购买我们的指纹仪或使用他们自己的指纹采集仪进行指纹图像的采集。
+获取方法：开销售单到库房领光盘
+备注：共有两个版本（普通版和标准版），其区别为：
+1、对指纹仪的SDK许可收费不同。配合此SDK使用的指纹仪必须由我们写入SDK许可。购买普通版SDK的客户，他们每购买一个指纹仪就需要收取一次许可费，而购买标准版SDK的客户，购买指纹仪时免收许可费用。
+2、基本的登记、比对功能都一样，唯一的区别是标准版SDK在1：1的控件中包含从图像中提取模板的功能，普通版则没有。也就是说标准版可以支持其他指纹仪采集的图像功能。
+
+ZKOnline SDK
+收费情况：收费
+机器型号：URU指纹仪，ZK6000
+开发平台：Windows 平台
+开发语言：ASP，JSP，PHP，JAVA
+功能介绍： ZKFinger SDK的补充，由于ZKFinger SDK不支持基于web开发，客户需要在浏览器中使用指纹的本地及远程比对，可推荐ZKOnline SDK。其实ZKFinger SDK和ZKOnline SDK是隶属于的关系。只有购买了ZKFinger SDK（标准版8000元）的客户，再购买ZKOnline SDK（2000元）才能开发基于WEB的程序。如果没有购买过ZKFinger SDK
+的客户则需要ZKFinger SDK加ZKOnline SDK（8000+2000元）。
+获取方法：开销售单到库房领光盘
+问：我们URU? SDK? 是否支持FOXpro
+答：不支持。
+
+注：1-22主要涉及脱机SDK。23-33主要为ZKFinger和指纹仪相关的。34和35则涉及ZKOnline和SDK技术支持中可能涉及到的固件升级问题。
+
+--------------------------------------------------
+
+脱机开发工具
+
+&gt; EDK 3.0 for Linux
+&gt; EDK 4.0 for WinCE
+
+
+EDK 3.0 for Linux
+
+中控科技自主知识产权的EDK 3.0 for Linux,该产品基于主板的嵌入开发系统（EDK）是一个多功能的通用嵌入式Linux脱机指纹产品开发平台，
+
+包含TCP/IP,USB,RS232,RS485,Wiegand等各种通信接口，能够满足大多数基于指纹的嵌入式市场需求。
+
+嵌入式主板内置强大RISC处理器和优秀的, 可靠而高效的指纹识别算法，很容易集成到各种系统中。
+
+采用高速RISC处理器构建的，符合工业标准的嵌入式单板计算机, 标准Linux Kernel 2.4.18移植，
+
+支持本地和交叉编译，标准GDB单步调试跟踪。
+
+客户无需附加任何单片机直接利用EDK主板轻松进行量身定制，满足行业客户需求，提升竞争力。
+
+技术规格
+· 指纹仪： U.are.U 4000 / ZK sensor
+· 功耗： &lt;=2W
+· 电压： DC5V
+· CPU： 嵌入高速RISC CPU
+· SDRAM： 16M
+· NOR FLASH： 4M
+· RS232： 8线RS232+3线RS232
+· 以太网： 标准RJ45，含收/发/Link指示灯
+· USB： 两路标准USB1.1HOST
+· Wiegand： 输入/输出 支持26bit/自定义格式
+· RS485：1个
+· 使用环境温度：0℃---45℃
+· 使用环境湿度：20%---80%
+· 保存环境温度：0℃---50℃
+· 保存环境湿度：10%---80%
+· LCM：支持标准规格128*64液晶显示
+· 语音：AC97 Codec
+· 尺寸：90(L)*76(W)mm
+· 支持语言：简体中文，繁体中文，英文
+
+特点：
+· 休眠模式功能
+· 启动时间&lt;=10秒
+· 主板设计长时间24小时不间断运行
+· 避免死机、程序跑飞或进入死循环
+· 实现软件控制关机，设置定时开机
+· 支持射频卡等卡类设备输入和输出
+· 简化开发难度，加速系统开发进度
+· 可以选择接入ZK SENSOR和URU SENSOR
+· 具备电压监控，可编程看门狗定时器功能
+· 提供使用EDK开发完整应用程序示范源码
+· 基于这个平台，满足其自身多种多样的业务需求
+
+应用:
+· 考勤系统或考勤机
+· 门禁控制（家庭、建筑物、重要部门或设备）
+· 证件防伪，如护照、身份证、信用卡等
+· 银行保管箱、ATM、POS机终端等的安全认证
+· 银行储户的身份确认
+· 电子商务、网上银行的安全认证
+· 考生身份确认
+· 公安系统身份确认
+· 银行、证券交易所、保险公司的身份验证
+· 网络、数据库和文件等的安全控制
+· 手机、PDA等个人信息处理设备的使用认证
+· 驾校，交通管理，医疗，计划生育，手持指纹终端
+· 税务 工商 海关 机场 港口身份在线，离线认证
+· 各类指纹锁 保险柜
+
+
+EDK 4.0 for WinCE
+
+中控科技自主知识产权的EDK 4.0 for WinCE, 预装Windows CE实时多任务操作系统, 提供相应SDK开发包，
+
+包括ID卡、Mifare卡、HID卡、中控指纹头、UPEK指纹头、USB Camera、键盘等接口驱动程序API.
+
+支持eVC、VS2005作为基本的应用程序开发环境，支持包括Win32 APIs、MFC、ATL、.NET Campact Framework 2.0 在内的各种典型的Windows应用程序框架.
+
+支持微软的远程调试工具集，实现对目标板的文件、注册表、进程及线程的管理. 提供典型应用参考程序源码.
+
+产品配置
+· CPU：8M Norflash
+· SDRAM： 64M
+· SD Card ： 1G
+· 2个USB host即插即用,可连接鼠标、键盘和读卡器等设备
+· WIFI(可选)
+· Windows CE组件
+· .NET Compact Framework 2.0
+· SQL Server CE 2.0
+· Transaction-Safe FAT文件系统
+· MediaPlayer
+· 具有掉电保存功能的注册表机制
+
+低层驱动支持
+· 提供ID卡、HID卡、Mifare卡操作接口
+· 提供ZK Fingerprint Sensor等指纹相关操作接口
+· 实时时钟RTC，具有掉电保护功能
+
+应用:
+· 考勤系统或考勤机
+· 门禁控制（家庭、建筑物、重要部门或设备）
+· 证件防伪，如护照、身份证、信用卡等
+· 银行保管箱、ATM、POS机终端等的安全认证
+· 银行储户的身份确认
+· 电子商务、网上银行的安全认证
+· 考生身份确认
+· 公安系统身份确认
+· 银行、证券交易所、保险公司的身份验证
+· 网络、数据库和文件等的安全控制
+· 手机、PDA等个人信息处理设备的使用认证
+· 驾校，交通管理，医疗，计划生育，手持指纹终端
+· 税务 工商 海关 机场 港口身份在线，离线认证
+· 各类指纹锁 保险柜
+
+--------------------------------------------------</pre>
+<p style="text-indent:2em;">
+	<strong><span style="color:#E53333;">与中控论坛某版主的部分聊天记录（重要，涉及大量重要情报）：</span></strong>
+</p>
+<pre class="prettyprint">2013/6/11 11:07:24 Nuclear'Atk
+u260 如何修改语音？
+
+2013/6/11 11:07:40 Nuclear'Atk
+telnet 管理不开放？
+
+2013/6/11 11:07:55 中控某论坛版主
+中控自己都不开放的
+
+2013/6/11 11:08:20 Nuclear'Atk
+好吧。那如何修改语音提示内容呢？
+
+2013/6/11 11:08:27 中控某论坛版主
+中控的中文机改语言都要换多国语言固件的
+
+2013/6/11 11:09:14 Nuclear'Atk
+纳尼？机身文件无法操作？也就是说不自带储存，而是直接烧录固件形式的？
+
+2013/6/11 11:11:50 中控某论坛版主
+固件是以文件形式存在的
+
+2013/6/11 11:12:39 Nuclear'Atk
+不是，我的想法是，固件烧录后，是以文件格式存在，有没有可能直接读写 wav 音频文件？还是必须得修改完固件后烧录上去？
+
+2013/6/11 11:15:37 中控某论坛版主
+声音也是文件形式的，能telnet进后台就可以替换，但界面中文不换多国语言固件是改不了，改了会自动恢复成中文，这是中控后面为了限制国内用户自己改语言会扰乱他们自己出口价格而改的
+
+2013/6/11 11:16:33 Nuclear'Atk
+是啊，前几天彻底研究了中控考勤机，查阅了大量资料。
+卡在这里了，除了 telnet，貌似没有功能可以直接读写机器文件的。
+
+2013/6/11 11:16:52 Nuclear'Atk
+只有个宣传图片，可以写
+
+2013/6/11 11:17:31 Nuclear'Atk
+那像我这个型号 u260，如何修改语音提示内容呢？
+
+2013/6/11 11:17:50 中控某论坛版主
+你有密码可以telnet进去吗
+
+2013/6/11 11:18:06 Nuclear'Atk
+不能啊，非公开接口，不知道默认账号密码
+
+2013/6/11 11:20:12 中控某论坛版主
+哦，我们现在也在做中控的机器，可以改。。。
+
+2013/6/11 11:21:27 Nuclear'Atk
+嗯，需要硬件支持吗？比如连接线，拆机。之类的
+
+2013/6/11 11:21:44 中控某论坛版主
+不需要
+
+2013/6/11 11:21:52 中控某论坛版主
+telnet进去改的
+
+2013/6/11 11:21:57 Nuclear'Atk
+直接登录机器？
+
+2013/6/11 11:22:00 中控某论坛版主
+是的
+
+2013/6/11 11:22:53 中控某论坛版主
+中控过段时间就改密码的。。。
+
+2013/6/11 11:23:22 Nuclear'Atk
+嗯，我知道的，中控卡机有后门算法。
+
+2013/6/11 11:23:36 Nuclear'Atk
+超级管理员的账号密码 是按照 机器时间计算的
+
+2013/6/11 11:24:03 中控某论坛版主
+那是进机器管理员的，不是后台telnet密码的
+
+2013/6/11 11:24:15 Nuclear'Atk
+如果我把时间调回去呢？之前根据时间计算的密码 是否 依然有效？
+
+2013/6/11 11:24:17 中控某论坛版主
+是说你在机器上设置了进菜单的管理员
+
+2013/6/11 11:24:29 中控某论坛版主
+有效的
+
+2013/6/11 11:24:46 中控某论坛版主
+所以那应该说是一个巨大的BUG
+
+2013/6/11 11:25:10 Nuclear'Atk
+是呀，逻辑错误
+
+2013/6/11 11:25:11 中控某论坛版主
+都说了那是进机器菜单的管理员，不是telnet
+
+2013/6/11 11:25:24 Nuclear'Atk
+好吧，那telnet 是如何计算的？根据什么？时间？
+
+2013/6/11 11:25:38 中控某论坛版主
+Linux 知道么
+
+2013/6/11 11:25:41 Nuclear'Atk
+知道呀
+
+2013/6/11 11:26:10 中控某论坛版主
+中控机器是Linux操作系统，telnet密码就是Linux的超级用户密码
+
+2013/6/11 11:26:19 中控某论坛版主
+你想可能是怎么计算出来的么
+
+2013/6/11 11:26:35 中控某论坛版主
+是中控出厂的时候就设置好的
+
+2013/6/11 11:26:36 Nuclear'Atk
+这个自然懂啦，系统密码。不是，我刚以为系统密码是按照 时间计算的
+
+2013/6/11 11:26:53 Nuclear'Atk
+你刚说菜单密码是按时间计算的。系统密码写死的
+
+2013/6/11 11:26:53 中控某论坛版主
+他们会定期修改密码的
+
+2013/6/11 11:27:04 Nuclear'Atk
+机器不联网啊？？如何修改呢
+
+2013/6/11 11:27:13 Nuclear'Atk
+是不同时期的修改吧？
+
+2013/6/11 11:27:54 中控某论坛版主
+接网线，局域网telnet就能登陆，一般中控是不会帮你远程改的，返修是发会工厂修的
+
+2013/6/11 11:28:11 Nuclear'Atk
+是啊，这个是自然啦，中控有保密规定
+
+2013/6/11 11:28:57 Nuclear'Atk
+那么，linux root 的账号密码是该机型统统一样，还是按出厂时间变化的？
+
+2013/6/11 11:30:12 中控某论坛版主
+一段时期内一样
+
+2013/6/11 11:30:30 Nuclear'Atk
+机器自身时间？间隔多久呢？
+
+2013/6/11 11:31:19 中控某论坛版主
+是一段时期内所有机器都是这个密码，过两三个月，所有机器换成其它密码，出厂后密码是不变的
+
+2013/6/11 11:31:35 Nuclear'Atk
+那就是我说的啦，按出厂时间变化的啦。
+
+2013/6/11 11:31:55 Nuclear'Atk
+如果我给你 这个机器的出厂日期，你可以到密码吗？
+
+2013/6/11 11:32:02 中控某论坛版主
+你这个时间的机器我有可能知道密码
+
+2013/6/11 11:32:11 Nuclear'Atk
+求赐教
+
+…… 省略 ……</pre>
+<p>
+	<strong>相关内容：</strong>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3380/" target="_blank">物理黑客户外硬件入侵之：某咖啡厅的广告展示终端……</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3361/" target="_blank">[讨论]如何入侵一个户外的电子显示屏</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3247/" target="_blank">远程入侵QQ好友所在网吧监控系统，人脸识别、定位坐标，定点打击</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2506/" target="_blank">美国秘密研制新概念网路武器 可攻击离线电脑 无线电信号渗透</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2429/" target="_blank">华裔黑客 BITcrash44 凭借一台 iPhone4 拿下时代广场大屏幕</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2428/" target="_blank">视频：国外黑客无线入侵、遥控电子路桥系统</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2427/" target="_blank">视频：国外黑客无线入侵保时捷911，并且远程操控、遥控</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2426/" target="_blank">视频：国外黑客利用一部诺基亚N95手机入侵火车站电子屏，并且现场直播</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2425/" target="_blank">视频：国外黑客入侵高速公路交通电子屏</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2423/" target="_blank">大屏系统被黑 泰国国会现场直播不雅照</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2405/" target="_blank">利用电磁波进行入侵、原子级的黑客入侵、利用电磁波毁坏物理设备</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2397/" target="_blank">电视机会收到邻居游戏机画面？小霸王信号干扰？红白机功率这么强悍？</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2259/" target="_blank">末世入侵行动 (Fire Sale!) 末日入侵行动</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1814/" target="_blank">物理攻击、抓频攻击 - 利用雷达来进行扫描网络弱点</a>
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="4230,3568,124.227.27.53">
+<p>核总的脑残粉 @ 2013-06-10 22:09:24</p>
+<p style="text-indent:2em">核总太帅了！我爱你！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">lol~~~</p>
+</blockquote>
+<blockquote id="4231,3568,221.7.151.180">
+<p>Geegle @ 2013-06-11 08:38:21</p>
+<p style="text-indent:2em">风骚的核总直接拆下公司的考勤机来研究？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">亲，不用拆的……</p>
+</blockquote>
+<blockquote id="4232,3568,115.239.85.205">
+<p>咖啡 @ 2013-06-11 08:50:22</p>
+<p style="text-indent:2em">核总的什么笔记本</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">杂牌，没名字。</p>
+</blockquote>
+<blockquote id="4234,3568,125.77.120.42">
+<p>bean @ 2013-06-11 11:08:01</p>
+<p style="text-indent:2em">核总赶紧地教我们如何提权啊~</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">正在尝试中……</p>
+</blockquote>
+<blockquote id="4236,3568,117.40.43.79">
+<p>anlfi @ 2013-06-11 13:49:42</p>
+<p style="text-indent:2em">其实可以用编程器，劫持主控芯片，监听ROM数据，把ROM脱下来再进行汇编处理，然后再植入一个后门，（比如web界面，或者直接来个反弹shellcode）就可以获得root权限。
+由于是嵌入式是 linux 系统，怎么获得加密的，密码配置文件我想你应该懂的 /etc/。这个就跟破解普通刷过 linux Rom 路由的方法一样，不过相关的知识就要很多了，没有进行过逆向处理只能算是，表层常规利用了，我想有些专业知识的会处理的更好。
+没有续集了？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">感谢赐教！不过，你想的略复杂了，只是为了修改语音和图片，既然都拆开机了，你为啥不干脆重写个系统装上去？续集进行中……</p>
+</blockquote>
+<blockquote id="4238,3568,117.40.43.79">
+<p>anlfi @ 2013-06-11 15:42:30</p>
+<p style="text-indent:2em">我的目的是破解telnet密码，并不是完全只是重新编程一个有门的Rom 刷进去，而是植入一个cmdshell为基点，就可以看到telnet的加密文件了，等了解了调式隐藏密码，还不是通杀。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">求赐教完整详细方法……</p>
+</blockquote>
+<blockquote id="4244,3568,202.100.206.141">
+<p>blackeagle @ 2013-06-11 23:37:38</p>
+<p style="text-indent:2em">怎么感觉核总的苹果怪怪的...</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">压根不是苹果……</p>
+</blockquote>
+<blockquote id="4245,3568,180.120.43.71">
+<p>佚名 @ 2013-06-12 00:55:19</p>
+<p style="text-indent:2em">原来一个联网的考勤机也会成为一个公司的安全漏洞之一。。。。囧！ 不容小觑,还是我杞人忧天？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这货默认没联网，手工给它连上……　╮(╯_╰)╭。。</p>
+</blockquote>
+<blockquote id="4248,3568,218.2.216.4">
+<p>佚名 @ 2013-06-12 09:53:22</p>
+<p style="text-indent:2em">再有arm板子的zimage的情况下！怎么得到root密码。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">对arm不清楚，不过，看样子应该是某种镜像文件，应该可以解包。</p>
+</blockquote>
+<blockquote id="4250,3568,113.81.229.169">
+<p>youzhi @ 2013-06-12 12:56:03</p>
+<p style="text-indent:2em">核总的苹果屌炸天，哈哈。
+核总，求一个乌云的邀请码 —_—</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">“苹果”你妹！无邀请码……</p>
+</blockquote>
+<blockquote id="4274,3568,54.226.18.87">
+<p>alpaca @ 2013-06-15 04:04:44</p>
+<p style="text-indent:2em">有时候得看看国外的资料，很多公司对国人不开放的东西对老外开放。。
+http://www.seymourdabull.com/.temp/seymourdabull.com/telnet-zem500.html
+不知道这哥们怎么进去的</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">Unknow.　╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="4276,3568,218.28.10.38">
+<p>泪痕 @ 2013-06-15 19:54:56</p>
+<p style="text-indent:2em">想入侵学校的监控系统，不知道IP。内网环境 有服务器。想查一个录像 具体网段也不清楚。 求核总指教啊。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">自己动手。</p>
+</blockquote>
+<blockquote id="4277,3568,218.28.10.38">
+<p>泪痕 @ 2013-06-15 20:00:17</p>
+<p style="text-indent:2em">神一般的回复啊，指点下啦。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">Baidu &amp; Google</p>
+</blockquote>
+<blockquote id="4278,3568,218.28.10.38">
+<p>泪痕 @ 2013-06-15 20:12:15</p>
+<p style="text-indent:2em">好吧。。。话说留言很麻烦，无法接着问。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">暂无此功能。</p>
+</blockquote>
+<blockquote id="4281,3568,218.28.10.38">
+<p>泪痕 @ 2013-06-16 23:56:10</p>
+<p style="text-indent:2em">我们语文暑假作业发下来了，我的里面有答案。。但是不知道谁给我偷走了。。。我想查监控，求指导啊。。通过老师就算了。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">百度 &amp; 谷歌</p>
+</blockquote>
+<blockquote id="4371,3568,182.151.166.46">
+<p>日月 @ 2013-06-27 11:02:49</p>
+<p style="text-indent:2em">公司打卡机有连接到前台电脑，但前台电脑没连接其它网络，十分蛋疼，本想搞下来以后就不会有迟到了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">色诱前台，你懂的！祝君好运……</p>
+</blockquote>
+<blockquote id="4664,3568,119.254.243.13">
+<p>佚名 @ 2013-08-05 14:06:05</p>
+<p style="text-indent:2em">黑白屏的机器telnet进去用户名root，密码solokey，我进去了，设备OP1000</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">彩屏的呢？</p>
+</blockquote>
+<blockquote id="4904,3568,223.240.140.25">
+<p>船长 @ 2013-09-12 16:59:51</p>
+<p style="text-indent:2em">mJJ</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">八嘎！</p>
+</blockquote>
+<blockquote id="5123,3568,112.86.187.26">
+<p>eva q @ 2013-10-17 23:37:01</p>
+<p style="text-indent:2em">核总你居然用山寨苹果笔记本～不能直视</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">哈哈哈</p>
+</blockquote>
+<blockquote id="5238,3568,14.18.195.64">
+<p>黄同志 @ 2013-11-09 15:35:10</p>
+<p style="text-indent:2em">1、U260，宣传图片，通过U盘就可以上传，当然通过官方的管理软件也是可以的。
+2、在管理员锁住的情下，倒是可以解开进入操作界面，但是现在很多中控的其他型号也已经无法解开了，只能返厂被始化，如F8，F6等设备，目前暂时无法解开。
+3、TELNET的后台密码，中控工厂管得很严的，我们作为深圳地区的核心代理商也没办法得到。（呵呵。。。）
+4、WebServer3.0的漏洞，已发现的还远远不止这些。。。
+
+PS：现在中控管方严禁用户更改机器里面的任何东西：中控科技终端用户《ZKLQ条款举报函》http://cn.zkteco.com/news_detail/newsId=219.html
+
+
+
+PS：想研究中控的考勤机，倒可以提供一些参考信息。联系邮箱：zkteco#21cn.com</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这位兄台说的完全正确！十分详细、准确！看来是中控行内人士木错！
+Telnet 密码确实管得很严，通过和中控官方论坛前版主交流，该密码随日期、型号变更，即使同一个型号的设备，出厂时期不一样（密码隔段时间改一次），密码也不一样，好狗血……
+WebServer3.0 漏洞还木有发现，日后再好好研究下……
+十分感谢兄台提供如此详细的资料！日后多多交流……</p>
+</blockquote>
+<blockquote id="5587,3568,61.181.250.81">
+<p>009 @ 2013-12-31 11:51:20</p>
+<p style="text-indent:2em">单位是op1000的机器，现在成功Telnet 进去啦 可是啥也不能干啊
+
+软件连接上机器啦，通过软件修改的考勤记录实际上 用usb导出的时候显示不出来啊！！ 高手如何解决啊？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没研究过 op1000，不清楚，不过，管理软件操作应该是一样的，你看看官方说明文档。
+亲，你是如何 telnet 进去的呢？</p>
+</blockquote>
+<blockquote id="5588,3568,61.181.250.81">
+<p>009 @ 2013-12-31 14:17:08</p>
+<p style="text-indent:2em">op1000 的账号密码 root solokey</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">好吧，我这个型号就狗血了，密码根据时间变化的……</p>
+</blockquote>
+<blockquote id="5599,3568,60.211.187.11">
+<p>我爱核总 @ 2014-01-01 17:45:09</p>
+<p style="text-indent:2em">我们单位用的是中控的iface101 输入http://192.168.1.201/ 显示DNS错误 找不到web3.0 请问扫描局域网用的什么工具 lansee172 可以吗？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯 试试看</p>
+</blockquote>
+<blockquote id="5600,3568,222.175.169.62">
+<p>我爱核总 @ 2014-01-01 17:55:05</p>
+<p style="text-indent:2em">试了，搜索计算机选项 只找到我电脑的IP 和 考勤机的IP 这两个我都知道。难道是方法不对 还请大人指教。我是小白。想知道您是如何搜索的。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额，我没有搜索，IP固定的，建议你使用扫描软件，扫描一下局域网端口吧。</p>
+</blockquote>
+<blockquote id="5717,3568,211.103.252.162">
+<p>怀念 @ 2014-01-21 09:14:28</p>
+<p style="text-indent:2em">考勤机算法：彩屏须在1分钟内操作完成，记下机器时间，用计算器算9999-机器显示时间的差的平方，就是密码。例如：目前考勤机时间是22：55，那就是9999-2255=7744，接着算7744的平方，7744*7744=59969536 ，考勤机8888的管理密码就是59969536。按菜单键，在指纹机上输入8888&gt;&gt;&gt;按OK键，输入计算出来的密码 OK。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">亲，你这是哪个型号滴？每个型号算法不一样滴……改天去试试……
+2014-1-21 10:22:44 补充：已使用“中控U260指纹考勤机”验证该隐藏的超级管理员密码算法！！！！完全正确！！！！目测通杀所有中控型号彩屏考勤机！！！（黑白屏估计也是通杀！）</p>
+</blockquote>
+<blockquote id="5768,3568,116.112.86.197">
+<p>怀念 @ 2014-01-31 20:53:19</p>
+<p style="text-indent:2em">黑白屏的没试过   彩屏的都可以? 中控的漏洞超级多</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">黑白、彩屏算法不一样，中控目前没有什么漏洞，这些“漏洞”都是默认密码没修改导致的。</p>
+</blockquote>
+<blockquote id="5769,3568,121.14.162.79">
+<p>wormfox @ 2014-02-01 11:50:38</p>
+<p style="text-indent:2em">我看得云里雾里的，冰天雪地原地裸体旋转三百六十度膜拜主公！核总你调戏设备你们老板知道么？上次我在学校刚被河蟹！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">此文章信息量略大，慢慢消化呗……（我老板知道，全办公室人都知道……）</p>
+</blockquote>
+<blockquote id="5813,3568,36.7.113.20">
+<p>kim @ 2014-02-10 17:17:47</p>
+<p style="text-indent:2em">核总,你最后telnet的密码是问到的，还是？我这边有个TX628 telnet求密码。。。抓包部分敏感数据Ver 6.70 Apr  9 2013 这个固件版本号? Platform=ZEM560_TFT  ZKFPVersion=10  SerialNumber=7662333210468 序列号？？ 求system root pwd</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你不看完内容的么，没弄到root密码。</p>
+</blockquote>
+<blockquote id="5871,3568,118.140.1.22">
+<p>depycode @ 2014-02-20 17:53:47</p>
+<p style="text-indent:2em">核总 也是工作人士啊，还以为你是在校学生呢，月薪多少万啊？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">万斤切糕</p>
+</blockquote>
+<blockquote id="6055,3568,96.47.226.21">
+<p>safe121 @ 2014-03-20 10:07:44</p>
+<p style="text-indent:2em">核肿用MTK手机是为了方便改IMEI么，照片居然无GPS信息。。狗日的高通不好改imei。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这不是MTK手机拍摄的，孩纸，不是每张照片都有GPS信息的，首先：
+1、需要手机软件及硬件支持，而且大多数手机相机默认设置不储存地理位置信息。
+2、GPS定位需要时间，所以照片中的信息大多都是不准确的（像室内环境，基本都是空白或错误）。
+3、图片传至电脑后经过其他图片处理工具缩放后，可以选择是否删除附加信息（大部分都是直接删除）。
+4、嘿嘿，我可以写入一个假的GPS位置信息迷惑你。
+所以这种定位方式还是比较鸡肋的。</p>
+</blockquote>
+<blockquote id="6106,3568,122.100.181.233">
+<p>佚名 @ 2014-03-26 10:30:20</p>
+<p style="text-indent:2em">核總搞掂Linux的賬號密碼沒有呢？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没有~</p>
+</blockquote>
+<blockquote id="6166,3568,163.125.219.76">
+<p>佚名 @ 2014-04-09 13:40:44</p>
+<p style="text-indent:2em">厂里面有十几台x628中控考勤机，只有一台帐号root 密码solokey用telnet能连上。
+请问telnet进去之后能不能把考勤机修改成 “定时自动打卡&quot;</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">可以修改，前提是你要懂嵌入式编程，可以增加一个定时打卡功能……
+（能否将您可以用telnet连上的中控设备详细型号和账号密码发出来呢，加入文章中为后人作参考用……）</p>
+</blockquote>
+<blockquote id="6217,3568,163.125.177.78">
+<p>佚名 @ 2014-04-18 02:23:44</p>
+<p style="text-indent:2em">技术帝桑不起！！！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="6361,3568,222.79.111.200">
+<p>遐想 @ 2014-05-08 13:34:44</p>
+<p style="text-indent:2em">站长，那里有修改语言的，没发现啊，能不能详细一点。QQ31415324</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">看你具体设备型号了，说明书上都有写，一般在系统设置里。</p>
+</blockquote>
+<blockquote id="6454,3568,183.189.11.35">
+<p>Flyfish @ 2014-05-24 13:48:31</p>
+<p style="text-indent:2em">我了个擦擦擦，看完了还是没有Telnet密码？好不容易google搜到这篇文章。。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你这还好啦，我之前研究的时候，整个互联网根本就没有这方面的资料，后来我整理了这互联网上第一份资料。</p>
+</blockquote>
+<blockquote id="6470,3568,122.226.226.21">
+<p>佚名 @ 2014-05-26 23:33:32</p>
+<p style="text-indent:2em">我问一下，我已经连接到了iclock 360的型号的彩屏机上了，通过 telnet，但是不知道如何操作能够直接把考勤数据写入那个ZKDB.db的数据表中，用的是sqlite的数据库。因为没有找到sqlite的命令。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">复制出来，修改完，再替换回去。亲，你是如何获得 telnet 密码的~</p>
+</blockquote>
+<blockquote id="6640,3568,125.68.68.227">
+<p>假核攻击 @ 2014-06-23 21:18:10</p>
+<p style="text-indent:2em">核总，个人觉得入侵这类考勤机，打卡机，最酷，最炫的入侵效果是让它能实现定时自动打卡功能《怎样实现啊？》
+2.如果能修改打卡时间就好了《如有一天我没有上班，而打卡机记录的是我在上班，要实现这个效果是不是需要入侵到打卡机的数据库，然后修改打卡时间？》
+3.还有，核总，小菜一直在期待入侵考勤机的下篇。 核总，更新，小菜一直期待中</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">实现定时自动打卡：这类打卡机都有个简单的系统，写个程序运行即可，或者远程管理，在电脑上写程序控制数据库。
+修改打卡时间：直接修改打卡机的数据库即可。（有个简单方法，把打卡机时间调回去，然后再打一次卡，再调到正常时间，-_-|||）
+关于更新：这个目测没啥更新的，想写的内容都有了，基本很全了。</p>
+</blockquote>
+<blockquote id="6650,3568,125.68.68.189">
+<p>假核攻击 @ 2014-06-25 09:11:36</p>
+<p style="text-indent:2em">核总，thank you ,太厉害了。
+不更新，小菜表示想吐槽一下。
+不过，本文不算完全完结，核总是个追求完美的人！认为这种修改语音提示内容的方式有局限性，可控性也不强（尼玛斯！哥必须得拿到 System Root！），所以不算十分成功！ 
+
+System Root 依然在尝试中！且见下回分解…… 
+
+不是还有几个权限没有拿到吗？
+linux系统账号密码，telnet密码</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">文中遗留的那几个问题，一直没解决，等有机会了，一定更新……</p>
+</blockquote>
+<blockquote id="6736,3568,58.241.42.83">
+<p>佚名 @ 2014-07-11 14:36:33</p>
+<p style="text-indent:2em">每次看这样的文章觉得很爽，希望核总多写些</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">哈哈哈，我也想多写，有时间了再整点料，哈哈哈哈，我这还有很多未公开的猛料~</p>
+</blockquote>
+<blockquote id="6800,3568,61.157.243.126">
+<p>佚名 @ 2014-07-28 21:52:23</p>
+<p style="text-indent:2em">看着很厉害的样子，其实无任何技术含量。
+几年前玩过了。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">You Can You UP! No Can No BB~</p>
+</blockquote>
+<blockquote id="6822,3568,121.228.157.136">
+<p>佚名 @ 2014-08-07 23:47:02</p>
+<p style="text-indent:2em">刚好有个机器root用户可以用，但是我用ftpget替换了 S_9.wav ，重新启动就失效了。
+请问我要替换哪个目录下的文件才会永久生效？
+或者有需要其他操作吗？谢谢了。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">具体哪个型号？求详细信息，加Q：624118310，详聊！</p>
+</blockquote>
+<blockquote id="6879,3568,222.128.104.63">
+<p>wwenyunkui @ 2014-08-22 18:26:33</p>
+<p style="text-indent:2em">zem800考勤机的telnet密码能整到吗？刚才打技术支持想咨询一下，结果周五，18：26，人家说睡了，呵呵</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额~</p>
+</blockquote>
+<blockquote id="6903,3568,183.13.207.47">
+<p>佚名 @ 2014-08-28 03:45:30</p>
+<p style="text-indent:2em">测试了一下中控的黑白屏打开机，时间调回去然后打卡，但是失败了！打了指纹，但是机器没有记录，但是测试如果掉到未来某个时间倒是可以记录上~！看来还要测试一下，不知道打卡机是不是有不可逆的问题，就是如果有一个最新的打开时间，就不能增加过去的时间记录~~！？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯，具体有待测试~</p>
+</blockquote>
+<blockquote id="6907,3568,183.13.201.113">
+<p>F708 @ 2014-08-29 02:21:06</p>
+<p style="text-indent:2em">黑白F708，用root和solokey进去了，但是对Linux基本不懂，可否指点一下？
+关于上一个时间的问题，确实不可逆，而且只要有个未来时间点的话，只要机器时间没有达到这个时间点，所有的记录都在那个未来时间点的下一秒依次下去。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">手头没有黑白机，暂时没法看。</p>
+</blockquote>
+<blockquote id="6969,3568,183.233.193.186">
+<p>佚名 @ 2014-09-22 09:31:31</p>
+<p style="text-indent:2em">中控黑白机，连接考勤机的电脑管理软件有管理密码（貌似数据库是明文的MDB文件，密码在USERINFO里），在第二台电脑安装管理软件，物理网线接入可以无密码登录管理。时间调回到9点，打卡，从软件导出上看没问题，调回正常时间。到了考勤管理员导出资料的时候，打卡时间由9点变成11点，调戏失败。。。不知道为何如此。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">目前不清楚原因~</p>
+</blockquote>
+<blockquote id="7009,3568,113.89.233.191">
+<p>黄同志 @ 2014-10-04 17:18:51</p>
+<p style="text-indent:2em">看来还有很多人在讨论此问题。之前有在这里留过言（ID：5238）。
+不知道进展怎么样了？
+有需要帮忙就给我留言。呵呵。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">哈哈哈，一直在讨论，从未停息~Telnet 密码是关键啊~</p>
+</blockquote>
+<blockquote id="7015,3568,60.173.201.3">
+<p>hehehehe @ 2014-10-06 14:05:58</p>
+<p style="text-indent:2em">用留言里的那位朋友提供的root，solokey telnet进去了，机型是iclock360，
+一个ls命令半天都没结果，后来终于好了。
+#ls
+HOSTNAME             mtab                 resolv.conf
+MiniGUI.cfg          passwd               rt73.bin
+filesystems          passwd-              rt73sta.dat
+fstab                pcmcia               run_dpf.sh
+fw_env.config        ppp                  shadow
+group                prelink.conf         start_delegate.sh
+init.d               profile              udev
+inittab              profile.aspenite     udhcpc.d
+inotify.sh           profile.teton        usbaction.sh
+issue                profileback          wpa_supplicant.conf</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">老机型是这个密码，现在都是根据出厂时间定的，没有通用密码了~</p>
+</blockquote>
+<blockquote id="7028,3568,113.116.250.40">
+<p>黄同志 @ 2014-10-08 16:43:21</p>
+<p style="text-indent:2em">嗯，一般是经过初始的考勤机，密码都会还原为最初的初始密码。
+后期的话，工厂那边2~3个月就换一次。现在大概半年换一次。因为，现在的系统已经升级了。
+里面的文件你只要更改了某些参数值，机器将不起动。工厂对自行更改过设备不维修。
+
+root的密码是闭着眼睛乱输入的，每次的密码都是完全没有规律的。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">变态~ -_-|||</p>
+</blockquote>
+<blockquote id="7082,3568,61.235.149.123">
+<p>king @ 2014-10-22 15:17:52</p>
+<p style="text-indent:2em">一直关注这个问题iclock360，TELNET密码！~</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="7088,3568,183.15.18.4">
+<p>佚名 @ 2014-10-23 12:41:42</p>
+<p style="text-indent:2em">我公司的F7 Telnet密码就是TCP/IP的连接密码，你可以参考下。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-||| 纳尼？</p>
+</blockquote>
+<blockquote id="7090,3568,61.235.149.123">
+<p>佚名 @ 2014-10-24 15:24:33</p>
+<p style="text-indent:2em">http://blog.infobytesec.com/2014/07/perverting-embedded-devices-zksoftware_2920.html
+需要过墙才能看！~
+谁能提供
+iClock360
+Linux (ZEM600) for ARM
+的密码最好！~辛苦了！~</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="7135,3568,106.39.255.168">
+<p>佚名 @ 2014-11-09 10:30:35</p>
+<p style="text-indent:2em">向大师们学习，中控考勤机http://www.zkkqj.com</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="7280,3568,112.96.162.110">
+<p>佚名 @ 2014-12-14 18:12:02</p>
+<p style="text-indent:2em">核总，打卡机里面的数据能删除的？增加一条，或者删除一条？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">可以，但是你得有系统权限，例如telnet密码。</p>
+</blockquote>
+<blockquote id="7290,3568,112.5.179.112">
+<p>佚名 @ 2014-12-17 10:09:14</p>
+<p style="text-indent:2em">除了telnet 有别的办法修改机器上的考勤记录吗</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没有。</p>
+</blockquote>
+<blockquote id="7293,3568,112.5.179.112">
+<p>佚名 @ 2014-12-17 14:44:51</p>
+<p style="text-indent:2em">我的平台是ZEM510 出厂是2011年11-7.你知道telnet帐号密码吗</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不知道。</p>
+</blockquote>
+<blockquote id="7339,3568,103.250.227.130">
+<p>怀念 @ 2015-01-05 17:28:40</p>
+<p style="text-indent:2em">telnet 登陆后可以可以更新数据库吗</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">登录后是最高权限，任你修改。</p>
+</blockquote>
+<blockquote id="7379,3568,221.226.0.194">
+<p>佚名 @ 2015-01-26 20:53:12</p>
+<p style="text-indent:2em">诚心问 不知道有何进展没 root</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没有……</p>
+</blockquote>
+<blockquote id="7528,3568,125.46.32.202">
+<p>佚名 @ 2015-04-11 15:29:59</p>
+<p style="text-indent:2em">都2015年了啊，密码，密码........</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">木有~~~ -_-!!!</p>
+</blockquote>
+<blockquote id="7558,3568,112.5.142.2">
+<p>佚名 @ 2015-04-24 13:43:31</p>
+<p style="text-indent:2em">核总看看能不能出个人脸考勤的入侵攻略，现在指纹的都换人脸了。（中控的面部王A106）；通用的官方管理程序现在连时间都无法改了，急死人了。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">手头没有设备，无法测试。　-_-!!!</p>
+</blockquote>
+<blockquote id="7594,3568,121.227.147.9">
+<p>佚名 @ 2015-05-19 20:18:37</p>
+<p style="text-indent:2em">来挖个坟..</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="7605,3568,121.35.176.8">
+<p>佚名 @ 2015-05-25 08:40:26</p>
+<p style="text-indent:2em">Welcome to Linux (ZEM560) for MIPS
+Kernel 2.6.24 Treckle on an MIPS
+ZEM560 login:
+
+
+老大，求root密码 ..   看到回复，持续关注中</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不知道密码……</p>
+</blockquote>
+<blockquote id="7606,3568,121.35.176.8">
+<p>佚名 @ 2015-05-25 11:19:01</p>
+<p style="text-indent:2em">核总，通篇仔仔细细的看了2遍，就是没看到怎么修改语音，求教导</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">几乎所有机型都需要shell权限才能修改文件，目前没法弄到root密码。</p>
+</blockquote>
+<blockquote id="7686,3568,117.169.6.41">
+<p>中控技术——周工 @ 2015-07-08 18:36:03</p>
+<p style="text-indent:2em">人脸指纹考勤机需要专业破解软件才行，我有软件附带教程，到我的云盘去下载
+http://yun.baidu.com/share/link?shareid=3967444940&amp;uk=3177905685
+
+                                                                              中控技术—周工</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">晕，你这个假中控技术！压缩包内为一个淘宝店铺的推广链接，卖一个中控考勤机的时间密码算法程序，而且这个算法超级简单，本文已公开的！
+你妹的，就这破算法也好意思卖200人民币！？？？　-_-!!!
+“彩屏须在1分钟内操作完成，记下机器时间，用计算器算9999-机器显示时间的差的平方，就是密码。例如：目前考勤机时间是22：55，那就是9999-2255=7744，接着算7744的平方，7744*7744=59969536 ，考勤机8888的管理密码就是59969536。按菜单键，在指纹机上输入8888&gt;&gt;&gt;按OK键，输入计算出来的密码 OK。 ”</p>
+</blockquote>
+<blockquote id="7696,3568,112.16.158.178">
+<p>佚名 @ 2015-07-14 10:49:25</p>
+<p style="text-indent:2em">我再国外网站发现一篇关于破解中控考勤机root权限的方法，他们好像是通过备份考勤机固件在修改上传的方法破解的，不知道楼主是否看过这篇文章，如果有兴趣，我把文章地址发给你</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">最早研究这块的时候，确曾接触过提取固件修改破解的资料，但是表示对固件提取、修改完全不懂，所以没从这方便下手。
+你可以将这篇文章地址贴出来，对其他读者可能有帮助。
+补充国外文章链接，原理就是把固件的密码字段改掉再恢复固件：
+http://blog.infobytesec.com/2014/07/perverting-embedded-devices-zksoftware_2920.html</p>
+</blockquote>
+<blockquote id="7732,3568,219.152.25.14">
+<p>佚名 @ 2015-07-24 15:57:00</p>
+<p style="text-indent:2em">我有办法，其实大致思路是上传passwd文件到mtdblock（可通过脱机SDK实现，如果是面部识别需使用U盘更新）。我是通过对固件文件研究的时候发现的
+if [ -f $DEST/passwd ]; then
+        mv $DEST/passwd  /etc/ &amp;&amp; sync
+fi
+当然SDK的部分函数可能他们的开发手册里是没有介绍的，要自己去研究dll文件。
+黑白、彩屏全部可以， 除了面部。面部机不支持用SDK来长传文件，只能是由U盘更新，当然也是更新passwd文件进去。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">方法不错，可以试试。</p>
+</blockquote>
+<blockquote id="7746,3568,58.242.120.91">
+<p>佚名 @ 2015-07-28 02:08:09</p>
+<p style="text-indent:2em">设备名称	U260
+序列号	0050142600032
+出厂日期	2014-06-26 10:34:39
+IP 地址	112.123.170.59
+最大用户数	10000/189
+最大记录数	80000/676
+最大指纹数	3200/160
+门禁功能	关闭
+射频卡	关闭
+短消息	开启
+U盘	开启
+Usb通讯	开启
+远程验证服务	关闭
+备份设备上的数据，分为用户数据和系统数据，用户数据包括用户信息和出入记录，系统数据包括系统配置参数和配置信息
+备份系统数据
+备份用户数据
+核总能不能帮忙分析这个备份出来的数据？？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没法分析。</p>
+</blockquote>
+<blockquote id="7816,3568,221.8.96.12">
+<p>senper @ 2015-08-27 08:27:20</p>
+<p style="text-indent:2em">中控打卡机，现在已可绕过指绞进行打卡，用手机，或局域网通的话都可以搞定。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="7905,3568,112.229.30.221">
+<p>尘缘 @ 2015-09-29 16:51:57</p>
+<p style="text-indent:2em">想调戏公司的指纹机了 想起来你这里的文章 越往后看 竟然越来越对你电脑有兴趣 默默问一句 你这苹果笔记本是哪个版本 看着怎么这么牛逼....</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">山寨上网本，淘宝一千多一个~　-_-!!!</p>
+</blockquote>
+<blockquote id="7967,3568,180.112.171.6">
+<p>佚名 @ 2015-10-27 12:04:56</p>
+<p style="text-indent:2em">中控VF300，TELNET的用户名，密码不知道。我想修改里面的广域网模块。请哪位大神指教。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="7968,3568,180.112.171.6">
+<p>佚名 @ 2015-10-27 12:07:07</p>
+<p style="text-indent:2em">中控VF300，TELNET的用户名，密码不知道。我想修改里面的广域网模块。请哪位大神指教。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="7971,3568,14.18.182.231">
+<p>佚名 @ 2015-10-29 14:09:53</p>
+<p style="text-indent:2em">请问如何读到考勤机里的数据库。
+上面提到的SOAP，没找到文件在哪。
+我们公司打算在线读取到最新的打卡记录。
+用官方的客户端时常会断开，而且要占用一台电脑开着也是麻烦。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这个暂时不清楚。</p>
+</blockquote>
+<blockquote id="7972,3568,112.64.25.222">
+<p>逸笙 @ 2015-10-29 16:34:11</p>
+<p style="text-indent:2em">lcx.exe -slave
+挖个坟，以前来看过，现在2015年快过完啦~密码能跑得出来吗？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">么有  -_-!!!</p>
+</blockquote>
+<blockquote id="7975,3568,124.239.213.162">
+<p>佚名 @ 2015-10-30 16:52:50</p>
+<p style="text-indent:2em">我这是zem500，Telnet无解，只能通过把时间调到过去补打卡，已经测试过，没有问题，哈哈</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你赢了~！-_-!!!</p>
+</blockquote>
+<blockquote id="8152,3568,125.68.67.73">
+<p>佚名 @ 2016-02-18 20:17:24</p>
+<p style="text-indent:2em">核总，更新文章
+http://223.87.19.7:16139/ehmsexp/loginpage.ac</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">?</p>
+</blockquote>
+<blockquote id="8157,3568,221.233.194.36">
+<p>佚名 @ 2016-02-21 16:10:52</p>
+<p style="text-indent:2em">核总，中控H10能改数据库吗，为脱机指纹彩屏考勤机，我想删除某人某天的考勤数据，不知道怎么做。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这个型号没试过，不清楚。不过，肯定要进系统修改数据库才行。</p>
+</blockquote>
+<blockquote id="8159,3568,27.29.229.243">
+<p>佚名 @ 2016-02-23 00:01:32</p>
+<p style="text-indent:2em">我也在百度上面搜过，说是用考勤软件可以删除某条考勤记录，具体没试过，还有你说的修改数据库，就是你之前一直没破解的那个linux系统的账户密码，如果是这个，那我就没办法了，那个用考勤软件删除考勤记录的，我还没试过。接上一个问题。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">修改数据库，需要系统权限。</p>
+</blockquote>
+<blockquote id="8216,3568,222.243.207.3">
+<p>佚名 @ 2016-04-15 16:53:06</p>
+<p style="text-indent:2em">可不可以用电脑连接考勤机，直接修改考勤机里的打卡记录！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">知道 root 密码即可。</p>
+</blockquote>
+<blockquote id="8218,3568,222.243.207.3">
+<p>佚名 @ 2016-04-16 00:34:41</p>
+<p style="text-indent:2em">不晓得ROOT密码，像我们公司下面很多分店，总部直接取门店打卡机的数据，那能不能直接发送假的数据包来做到考勤呢？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">网络取数据还是上门取数据？发送假数据包很有难度。</p>
+</blockquote>
+<blockquote id="8219,3568,222.243.207.3">
+<p>TX9999 @ 2016-04-16 15:21:01</p>
+<p style="text-indent:2em">网络取数据，总比要ROOT密码简单吧！
+设备名称 MU260  
+序列号 1911300460034  
+出厂日期 2010-11-15 11:44:20  
+IP 地址 192.168.28.11  
+最大用户数 30000/893  
+最大记录数 100000/28  
+最大指纹数 30000/0  
+门禁功能 关闭  
+射频卡 开启  
+短消息 开启  
+U盘 开启  
+Usb通讯 开启  
+远程验证服务 关闭</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">重点在模拟假数据。</p>
+</blockquote>
+<blockquote id="8228,3568,121.35.251.97">
+<p>佚名 @ 2016-04-19 14:58:14</p>
+<p style="text-indent:2em">请在这里填写留言内容，最长不超过 1000 字。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[暂无回复]</p>
+</blockquote>
+<blockquote id="8246,3568,124.228.41.44">
+<p>核总小粉丝 @ 2016-05-06 10:28:05</p>
+<p style="text-indent:2em">核总，我用密码破解那个方式，（9999-系统时间）的平方，进去总是不对，是不是因为管理员电脑的时间与考勤机时间不一致？ 我按照考勤机上的时间这么操作，总是不对。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">针对彩屏机有效（不知道新出的机型是否有效），时间使用彩屏机显示的时间，要在分钟变化之前完成输入，不然每分钟更新一次。</p>
+</blockquote>
+<blockquote id="8257,3568,60.218.122.22">
+<p>佚名 @ 2016-05-17 14:06:55</p>
+<p style="text-indent:2em">话说我单位的考勤机已经可以telnet连接成功了，但是进去之后的系统操作很生疏，进去了也做不了什么。我的想法是，已经不求可以发送假数据包这种方式了，可否改下考勤机里的数据，使得我明明是用密码考勤的，但是查的时候是指纹？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">研究一下数据库结构吧。具体不太清楚，没资料。</p>
+</blockquote>
+<blockquote id="8264,3568,101.81.74.208">
+<p>木羽 @ 2016-05-23 14:17:32</p>
+<p style="text-indent:2em">用 solokey 登进去了，里面有 ZKDB.db 的 sqlite 数据库，也有 tftp ，如果要改打卡数据，可以把这个文件导出去，用 sqlite 改了后再拉回来。ATT_LOG 这个表就是门禁事件记录。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯，猜就是 sqllite。</p>
+</blockquote>
+<blockquote id="8268,3568,101.81.74.208">
+<p>木羽 @ 2016-05-25 15:23:40</p>
+<p style="text-indent:2em">UPDATE-8264:
+
+我试了一下，ZKDB.DB 里的数据必须在 telnet 中现场改（旁边应该有个 sqlite3_mips 的程序，这个就是 sqlite 工具），如果门禁程序的进程没有结束，拖出去再拖回来 inode 会变，进程中文件 link 会被标记为 deleted，并且修改后的内容将不会体现在考勤系统中，也许重启系统或重启该程序可以重新载入文件，但是我还没有试过，公司的门禁正在使用，太过危险的动作不太好做。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!，试一下。</p>
+</blockquote>
+<blockquote id="8272,3568,123.159.180.71">
+<p>佚名 @ 2016-05-26 22:22:02</p>
+<p style="text-indent:2em">U160 I360 telnet 用 root solokey 能进，且已撸语音</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">恭喜恭喜！</p>
+</blockquote>
+<blockquote id="8278,3568,222.88.194.51">
+<p>MEIAM @ 2016-05-31 22:49:31</p>
+<p style="text-indent:2em">和 木羽一样 telnet 进了公司的 面部识别考勤机之后 在里面翻出来了 sqlite 数据库文件 ZKDB.db 
+通过 tftp  下载回来修改了 ATT_LOG 表中的考勤数据之后 ,上传回去,再去同步数据发现下载不了数据
+当时直接吓尿了. 后来经过分析是大概是因为 tftp 上传回去的时候 , ZKDB.db 文件被占用 ,考勤机无法读取
+所以所以考勤机程序挂掉了. 不过重启考勤机即可解决问题.
+后来我直接使用 sqlite3_mips 对 ZKDB.db 插入数据 已撸脚本</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="8279,3568,222.88.194.51">
+<p>MEIAM @ 2016-05-31 22:50:34</p>
+<p style="text-indent:2em">#!/bin/bash
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+
+#选择要进行的操作?
+echo &quot;===========================&quot;
+DateTime=$(date &#39;+%Y-%m-%dT%H:%M:%S&#39;)
+DateNow=$(date -d now  &#39;+%Y-%m-%d&#39;)
+Tomorrow=$(date -d tomorrow &#39;+%Y-%m-%d&#39;)
+	
+#echo &quot;当前时间: ${DateTime}&quot;
+	
+read -p &quot;请输入签到的时间(默认用户ID 1): &quot; UserID
+	if [ &quot;${UserID}&quot; = &quot;&quot; ]; then
+		UserID=1
+	fi
+echo &quot;签到用户: ${UserID}&quot;
+	
+#Echo_Yellow &quot;请输入签到的时间&quot;
+read -p &quot;请输入签到的时间(默认当前时间): &quot; DateTime
+	if [ &quot;${DateTime}&quot; = &quot;&quot; ]; then
+		DateTime=$(date &#39;+%Y-%m-%dT%H:%M:%S&#39;)
+	fi
+echo &quot;签到时间: ${DateTime}&quot;	
+sqlite3_mips ZKDB.db &quot;INSERT INTO ATT_LOG VALUES (null,&#39;${UserID}&#39;,15,&#39;${DateTime}&#39;,&#39;0&#39;,&#39;0&#39;,null,null,null,null,0);&quot;
+echo  &quot;用户编号 ${UserID} 签到数据插入&quot;
+sqlite3_mips ZKDB.db &quot;SELECT * FROM ATT_LOG WHERE User_PIN = &#39;${UserID}&#39; ORDER BY ID DESC LIMIT 0,1;&quot;		
+sqlite3_mips ZKDB.db &quot;.quit&quot;</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="8280,3568,222.88.194.51">
+<p>MEIAM @ 2016-05-31 23:00:50</p>
+<p style="text-indent:2em">前面那个脚本删了吧,有点问题
+
+https://github.com/x91270/update/blob/master/Add.sh</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="8281,3568,73.29.24.225">
+<p>佚名 @ 2016-06-02 11:43:31</p>
+<p style="text-indent:2em">http://blog.infobytesec.com/2014/07/perverting-embedded-devices-zksoftware_2920.html
+这个底下有人说过了，上传固件 加了一句修改密码的脚本 重启 然后就成了
+不过我不太敢
+
+我只是想拿到sql数据库，学学编程，然后做个时间管理软件而已（我只是个可怜的小IT菜鸟），我以为必须得进到busybox的权限才能拿到读取sql的权限，不过好像读取sql的话，只要有个sql server验证密码就好了,这个阿三http://kishfellow.blogspot.com/2013/11/website-www.html 说配套的管理软件里面有一个弱加密的密码，不过我也不会整。。是需要逆向这个软件吧？
+
+不过到最后，我发现配套的管理软件里头直接带存为SQL的选项。。。。=。=
+
+不过在入侵/爆破/安全这些领域转了一圈儿，觉得好有意思，哈哈，mark了你的博客，经常来转转，涨涨姿势</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">共同学习！</p>
+</blockquote>
+<blockquote id="8282,3568,73.29.24.225">
+<p>bc257 @ 2016-06-02 11:44:56</p>
+<p style="text-indent:2em">http://blog.infobytesec.com/2014/07/perverting-embedded-devices-zksoftware_2920.html
+这个底下有人说过了，上传固件 加了一句修改密码的脚本 重启 然后就成了
+不过我不太敢
+
+我只是想拿到sql数据库，学学编程，然后做个时间管理软件而已（我只是个可怜的小IT菜鸟），我以为必须得进到busybox的权限才能拿到读取sql的权限，不过好像读取sql的话，只要有个sql server验证密码就好了,这个阿三http://kishfellow.blogspot.com/2013/11/website-www.html 说配套的管理软件里面有一个弱加密的密码，不过我也不会整。。是需要逆向这个软件吧？
+
+不过到最后，我发现配套的管理软件里头直接带存为SQL的选项。。。。=。=
+
+不过在入侵/爆破/安全这些领域转了一圈儿，觉得好有意思，哈哈，mark了你的博客，经常来转转，涨涨姿势
+ps验证码好诡异。。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="8285,3568,220.168.204.130">
+<p>、Monster @ 2016-06-07 05:43:42</p>
+<p style="text-indent:2em">哈哈，只有在核总这儿能学到东西!</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">共同学习！</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2014-12-04
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E6%88%B7%E5%A4%96/">户外</a>
+          <a href="https://lcx.cc/tags/%E5%85%A5%E4%BE%B5/">入侵</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BE%E5%A4%87/">设备</a>
+          <a href="https://lcx.cc/tags/%E7%89%A9%E7%90%86/">物理</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E6%8C%87%E7%BA%B9/">指纹</a>
+          <a href="https://lcx.cc/tags/360/">360</a>
+          <a href="https://lcx.cc/tags/asp/">ASP</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/java/">Java</a>
+          <a href="https://lcx.cc/tags/linux/">Linux</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/nuclear/">Nuclear</a>
+          <a href="https://lcx.cc/tags/root/">Root</a>
+          <a href="https://lcx.cc/tags/vb/">VB</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/wifi/">WiFi</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E6%9A%B4%E5%8A%9B/">暴力</a>
+          <a href="https://lcx.cc/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E8%84%91/">电脑</a>
+          <a href="https://lcx.cc/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E5%AE%98%E7%BD%91/">官网</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">管理系统</a>
+          <a href="https://lcx.cc/tags/%E5%90%8E%E9%97%A8/">后门</a>
+          <a href="https://lcx.cc/tags/%E5%90%8E%E5%8F%B0/">后台</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E5%B7%A7/">技巧</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BA%E5%9D%9B/">论坛</a>
+          <a href="https://lcx.cc/tags/%E9%97%A8%E7%A6%81/">门禁</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E5%85%8D%E8%B4%B9/">免费</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E5%9D%97/">模块</a>
+          <a href="https://lcx.cc/tags/%E7%A0%B4%E8%A7%A3/">破解</a>
+          <a href="https://lcx.cc/tags/%E6%9D%83%E9%99%90/">权限</a>
+          <a href="https://lcx.cc/tags/%E5%85%A8%E7%90%83/">全球</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E4%B8%8A%E4%BC%A0/">上传</a>
+          <a href="https://lcx.cc/tags/%E8%BA%AB%E4%BB%BD/">身份</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="https://lcx.cc/tags/%E6%90%9C%E7%B4%A2/">搜索</a>
+          <a href="https://lcx.cc/tags/%E7%AE%97%E6%B3%95/">算法</a>
+          <a href="https://lcx.cc/tags/%E9%94%81/">锁</a>
+          <a href="https://lcx.cc/tags/%E5%9B%BE%E7%89%87/">图片</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          <a href="https://lcx.cc/tags/%E5%A7%93%E5%90%8D/">姓名</a>
+          <a href="https://lcx.cc/tags/%E9%93%B6%E8%A1%8C/">银行</a>
+          <a href="https://lcx.cc/tags/%E9%9A%90%E8%97%8F/">隐藏</a>
+          <a href="https://lcx.cc/tags/%E9%82%AE%E7%AE%B1/">邮箱</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          <a href="https://lcx.cc/tags/%E8%B4%A6%E5%8F%B7/">账号</a>
+          <a href="https://lcx.cc/tags/%E6%99%BA%E8%83%BD/">智能</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3569/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">Dedecms getshell exp &#43; 临时补丁</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3567/">
+            <span class="next-text nav-default">分享一个WordPress后台密码暴力破解脚本</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

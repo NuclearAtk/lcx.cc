@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ngnix 空字节可远程执行代码漏洞 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="Ngnix 空字节可远程执行代码漏洞 Possible Arbitrary Code Execution with Null Bytes, PHP, and Old Versions of nginx" />
+<meta name="keywords" content="Ngnix 空字节可远程执行代码漏洞 arbitrary code execution, nginx, PHP, security, Ubuntu, web application security / Add Comment " />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/1716/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="Ngnix 空字节可远程执行代码漏洞" />
+<meta property="og:description" content="Ngnix 空字节可远程执行代码漏洞 Possible Arbitrary Code Execution with Null Bytes, PHP, and Old Versions of nginx" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/1716/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2011-08-26T20:42:00&#43;08:00" />
+<meta property="article:modified_time" content="2011-08-26T20:42:00&#43;08:00" />
+
+<meta itemprop="name" content="Ngnix 空字节可远程执行代码漏洞">
+<meta itemprop="description" content="Ngnix 空字节可远程执行代码漏洞 Possible Arbitrary Code Execution with Null Bytes, PHP, and Old Versions of nginx"><meta itemprop="datePublished" content="2011-08-26T20:42:00&#43;08:00" />
+<meta itemprop="dateModified" content="2011-08-26T20:42:00&#43;08:00" />
+<meta itemprop="wordCount" content="1624">
+<meta itemprop="keywords" content="代码,漏洞,远程,app,CGI,CIA,exe,HTTP,IE,IP,nginx,PHP,POS,Rat," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ngnix 空字节可远程执行代码漏洞"/>
+<meta name="twitter:description" content="Ngnix 空字节可远程执行代码漏洞 Possible Arbitrary Code Execution with Null Bytes, PHP, and Old Versions of nginx"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Ngnix 空字节可远程执行代码漏洞</h1>
+      
+      <div class="post-meta">
+        <time datetime="2011-08-26" class="post-time">
+          2011-08-26
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E4%BB%A3%E7%A0%81/"> 代码 </a>
+            <a href="https://lcx.cc/categories/%E6%BC%8F%E6%B4%9E/"> 漏洞 </a>
+            <a href="https://lcx.cc/categories/%E8%BF%9C%E7%A8%8B/"> 远程 </a>
+            
+          </div>
+        <span class="more-meta"> 约 1624 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>&nbsp;&nbsp;&nbsp; 摘自微博</P>
+<P>&nbsp;&nbsp;&nbsp; Ngnix出现高危漏洞，可远程执行代码：</P>
+<P>&nbsp;&nbsp;&nbsp; Ngnix在遇到%00空字节时与后端FastCGI处理不一致，导致可以在图片中嵌入PHP代码然后通过访问xxx.jpg%00.php来执行其中的代码。</P>
+<P>&nbsp;&nbsp;&nbsp; 影响版本：0.5.*, 0.6.*, 0.7 &lt;= 0.7.65, 0.8 &lt;= 0.8.37。</P>
+<P>&nbsp;&nbsp;&nbsp; 详细参考：<A href="https://nealpoole.com/blog/2011/07/possible-arbitrary-code-execution-with-null-bytes-php-and-old-versions-of-nginx/" target=_blank>https://nealpoole.com/blog/2011/07/possible-arbitrary-code-execution-with-null-bytes-php-and-old-versions-of-nginx/</A></P>
+<P>&nbsp;</P>
+<H3 align=center>Possible Arbitrary Code Execution with Null Bytes, PHP, and Old Versions of nginx</H3>
+<P align=center>Category:&nbsp;<SPAN class=category><FONT color=#0000ff>Vulnerability Writeups</FONT></SPAN>&nbsp;/ Tag:&nbsp;<SPAN><FONT color=#0000ff>arbitrary code execution</FONT>,&nbsp;<FONT color=#0000ff>nginx</FONT>,&nbsp;<FONT color=#0000ff>PHP</FONT>,&nbsp;<FONT color=#0000ff>security</FONT>,&nbsp;<FONT color=#0000ff>Ubuntu</FONT>,&nbsp;<FONT color=#0000ff>web application security</FONT></SPAN>&nbsp;/ <SPAN class=comments><FONT color=#800080>Add Comment</FONT></SPAN></P><SPAN class=comments>
+<P>&nbsp;&nbsp;&nbsp; After publishing <A href="https://nealpoole.com/blog/2011/04/setting-up-php-fastcgi-and-nginx-dont-trust-the-tutorials-check-your-configuration/"><FONT color=#0000ff>my previous blog post on PHP, nginx configuration, and potential arbitrary code execution</FONT></A>, I came across a separate null-byte injection vulnerability in older versions of nginx (0.5.*, 0.6.*, 0.7 &lt;= 0.7.65, 0.8 &lt;= 0.8.37). By taking advantage of this vulnerability, an attacker can cause a server that uses PHP-FastCGI to execute any publicly accessible file on the server as PHP.</P>
+<P>&nbsp;&nbsp;&nbsp; In vulnerable versions of nginx, null bytes are allowed in URIs by default (their presence is indicated via a variable named <TT><FONT face=新宋体>zero_in_uri</FONT></TT> defined in <TT><FONT face=新宋体>ngx_http_request.h</FONT></TT>). Individual modules have the ability to opt-out of handling URIs with null bytes. However, not all of them do; in particular, the FastCGI module does not.</P>
+<P>&nbsp;&nbsp;&nbsp; The attack itself is simple: a malicious user who makes a request to <A href='https://nealpoole.com/blog/2011/07/possible-arbitrary-code-execution-with-null-bytes-php-and-old-versions-of-nginx/#"'><FONT color=#800080>http://example.com/file.ext%00.php</FONT></A> causes <TT><FONT face=新宋体>file.ext</FONT></TT> to be parsed as PHP. If an attacker can control the contents of a file served up by nginx (ie: using an avatar upload form) the result is arbitrary code execution. This vulnerability <STRONG><EM>can not</EM></STRONG> be mitigated by nginx configuration settings like <TT><FONT face=新宋体>try_files</FONT></TT> or PHP configuration settings like <TT><FONT face=新宋体>cgi.fix_pathinfo</FONT></TT>: the only defense is to upgrade to a newer version of nginx or to explicitly block potentially malicious requests to directories containing user-controlled content.</P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">以下是引用片段：</FONT></P>
+<P># This location block will prevent an attacker from exploiting <br />
+# this vulnerability using files in the 'uploads' or 'other_uploads' directory <br />
+location ~ ^/(uploads|other_uploads)/.*.php$ <br />
+{ <br />
+&nbsp;&nbsp;&nbsp; deny all; <br />
+}</P></TD></TR></TBODY></TABLE></P>
+<P>&nbsp;&nbsp;&nbsp; Although the affected versions of nginx are relatively old (0.7.66 was released June 7th, 2010, 0.8.38 was released May 24th 2010), no mention of the change appears in the release notes. As a result, administrators may be running vulnerable servers without realizing their risk. I discovered a couple places where vulnerable packages were being distributed:</P>
+<OL>
+<LI>Ubuntu Lucid Lynx (Ubuntu's current LTS offering) and Hardy Heron (via both the hardy and hardy-backports repositories) provided vulnerable versions of nginx via apt-get. The lucid and hardy packages have been updated: hardy-backports is awaiting approval. <SUP><A href="https://bugs.launchpad.net/ubuntu/+source/nginx/+bug/783508" jQuery16106030575686413866="11"><FONT color=#0000ff>[1]</FONT></A> <A href="https://bugs.launchpad.net/ubuntu/+source/nginx/+bug/803720" jQuery16106030575686413866="12"><FONT color=#0000ff>[2]</FONT></A></SUP> 
+<LI>Fedora <A href="https://bugzilla.redhat.com/show_bug.cgi?id=717078" jQuery16106030575686413866="13"><FONT color=#0000ff>provides a vulnerable version</FONT></A> in its EPEL-4 repository. At this time, an updated package has not been released. </LI></OL>
+<P>&nbsp;&nbsp;&nbsp; I sent several emails to igor@sysoev.ru regarding the vulnerability. I sent the first on June 24th and I sent followups on July 4th, July 20th, and August 2nd. I received the following reply to my August 2nd email:</P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">以下是引用片段：</FONT></P>
+<BLOCKQUOTE>
+<P>Thank you for report.</P>
+<P>I do not consider this as nginx security issue since every application <br />
+should validate its input data, so nginx passed the data to application. <br />
+Also this is PHP installation issue where scripts and user uploaded <br />
+data are not separated. This issue was discussed several times on mailing <br />
+list.</P>
+<P>At some point I've decided that zero byte in URI should not appear <br />
+in any encoding, operating system, etc., and just makes more problems <br />
+than helps. So I have remove zero byte test. </P></BLOCKQUOTE></TD></TR></TBODY></TABLE></P>
+<P>&nbsp;&nbsp;&nbsp; For anyone who's curious, the changes can be found at r3528 from <A href="svn://svn.nginx.org/"><FONT color=#0000ff>svn://svn.nginx.org</FONT></A>. At that time, it appears trunk corresponded to nginx 0.8: r3599 merged r3528 into the nginx 0.7 branch. The corresponding commit message is "remove r-&gt;zero_in_uri." I've reproduced the output of <TT><FONT face=新宋体>svn diff</FONT></TT> below:</P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#000000>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">以下是引用片段：</FONT></P>
+<DIV class="line number1 index0 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>Index: src/http/ngx_http_request.h </FONT></CODE></DIV>
+<DIV class="line number2 index1 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>=================================================================== </FONT></CODE></DIV>
+<DIV class="line number3 index2 alt2"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>--- src/http/ngx_http_request.h (revision 3527) </FONT></CODE></DIV>
+<DIV class="line number4 index3 alt1"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>+++ src/http/ngx_http_request.h (revision 3528) </FONT></CODE></DIV>
+<DIV class="line number5 index4 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -56,7 +56,7 @@ </FONT></CODE></DIV>
+<DIV class="line number6 index5 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>#define NGX_HTTP_PARSE_INVALID_HEADER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 13 </FONT></CODE></FONT></DIV>
+<DIV class="line number7 index6 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number8 index7 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-#define NGX_HTTP_ZERO_IN_URI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 </FONT></CODE></DIV>
+<DIV class="line number9 index8 alt2"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+/* unused&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 */ </FONT></CODE></DIV>
+<DIV class="line number10 index9 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>#define NGX_HTTP_SUBREQUEST_IN_MEMORY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2 </FONT></CODE></FONT></DIV>
+<DIV class="line number11 index10 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>#define NGX_HTTP_SUBREQUEST_WAITED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4 </FONT></CODE></FONT></DIV>
+<DIV class="line number12 index11 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>#define NGX_HTTP_LOG_UNSAFE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8 </FONT></CODE></FONT></DIV>
+<DIV class="line number13 index12 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -435,9 +435,6 @@ </FONT></CODE></DIV>
+<DIV class="line number14 index13 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>/* URI with "+" */ </FONT></CODE></FONT></DIV>
+<DIV class="line number15 index14 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>unsigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; plus_in_uri:1; </FONT></CODE></FONT></DIV>
+<DIV class="line number16 index15 alt1"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number17 index16 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; /* URI with "\0" or "%00" */ </FONT></CODE></DIV>
+<DIV class="line number18 index17 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; unsigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; zero_in_uri:1; </FONT></CODE></DIV>
+<DIV class="line number19 index18 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number20 index19 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>unsigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; invalid_header:1; </FONT></CODE></FONT></DIV>
+<DIV class="line number21 index20 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number22 index21 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>unsigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; valid_location:1; </FONT></CODE></FONT></DIV>
+<DIV class="line number23 index22 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>Index: src/http/ngx_http_core_module.c </FONT></CODE></DIV>
+<DIV class="line number24 index23 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>=================================================================== </FONT></CODE></DIV>
+<DIV class="line number25 index24 alt2"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>--- src/http/ngx_http_core_module.c (revision 3527) </FONT></CODE></DIV>
+<DIV class="line number26 index25 alt1"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>+++ src/http/ngx_http_core_module.c (revision 3528) </FONT></CODE></DIV>
+<DIV class="line number27 index26 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -1341,7 +1341,7 @@ </FONT></CODE></DIV>
+<DIV class="line number28 index27 alt1"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number29 index28 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>/* no content handler was found */ </FONT></CODE></FONT></DIV>
+<DIV class="line number30 index29 alt1"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number31 index30 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; if (r-&gt;uri.data[r-&gt;uri.len - 1] == '/' &amp;&amp; !r-&gt;zero_in_uri) { </FONT></CODE></DIV>
+<DIV class="line number32 index31 alt1"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp; if (r-&gt;uri.data[r-&gt;uri.len - 1] == '/') { </FONT></CODE></DIV>
+<DIV class="line number33 index32 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number34 index33 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>if (ngx_http_map_uri_to_path(r, &amp;path, &amp;root, 0) != NULL) { </FONT></CODE></FONT></DIV>
+<DIV class="line number35 index34 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>ngx_log_error(NGX_LOG_ERR, r-&gt;connection-&gt;log, 0, </FONT></CODE></FONT></DIV>
+<DIV class="line number36 index35 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -2104,7 +2104,6 @@ </FONT></CODE></DIV>
+<DIV class="line number37 index36 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>ngx_log_debug2(NGX_LOG_DEBUG_HTTP, c-&gt;log, 0, </FONT></CODE></FONT></DIV>
+<DIV class="line number38 index37 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>"http subrequest \"%V?%V\"", uri, &amp;sr-&gt;args); </FONT></CODE></FONT></DIV>
+<DIV class="line number39 index38 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number40 index39 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; sr-&gt;zero_in_uri = (flags &amp; NGX_HTTP_ZERO_IN_URI) != 0; </FONT></CODE></DIV>
+<DIV class="line number41 index40 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>sr-&gt;subrequest_in_memory = (flags &amp; NGX_HTTP_SUBREQUEST_IN_MEMORY) != 0; </FONT></CODE></FONT></DIV>
+<DIV class="line number42 index41 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>sr-&gt;waited = (flags &amp; NGX_HTTP_SUBREQUEST_WAITED) != 0; </FONT></CODE></FONT></DIV>
+<DIV class="line number43 index42 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number44 index43 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>Index: src/http/ngx_http_special_response.c </FONT></CODE></DIV>
+<DIV class="line number45 index44 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>=================================================================== </FONT></CODE></DIV>
+<DIV class="line number46 index45 alt1"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>--- src/http/ngx_http_special_response.c&nbsp;&nbsp;&nbsp; (revision 3527) </FONT></CODE></DIV>
+<DIV class="line number47 index46 alt2"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>+++ src/http/ngx_http_special_response.c&nbsp;&nbsp;&nbsp; (revision 3528) </FONT></CODE></DIV>
+<DIV class="line number48 index47 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -517,8 +517,6 @@ </FONT></CODE></DIV>
+<DIV class="line number49 index48 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number50 index49 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>r-&gt;err_status = overwrite; </FONT></CODE></FONT></DIV>
+<DIV class="line number51 index50 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number52 index51 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; r-&gt;zero_in_uri = 0; </FONT></CODE></DIV>
+<DIV class="line number53 index52 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number54 index53 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>if (ngx_http_complex_value(r, &amp;err_page-&gt;value, &amp;uri) != NGX_OK) { </FONT></CODE></FONT></DIV>
+<DIV class="line number55 index54 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>return NGX_ERROR; </FONT></CODE></FONT></DIV>
+<DIV class="line number56 index55 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number57 index56 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>Index: src/http/ngx_http_upstream.c </FONT></CODE></DIV>
+<DIV class="line number58 index57 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>=================================================================== </FONT></CODE></DIV>
+<DIV class="line number59 index58 alt2"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>--- src/http/ngx_http_upstream.c&nbsp;&nbsp;&nbsp; (revision 3527) </FONT></CODE></DIV>
+<DIV class="line number60 index59 alt1"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>+++ src/http/ngx_http_upstream.c&nbsp;&nbsp;&nbsp; (revision 3528) </FONT></CODE></DIV>
+<DIV class="line number61 index60 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -1815,10 +1815,6 @@ </FONT></CODE></DIV>
+<DIV class="line number62 index61 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>return NGX_DONE; </FONT></CODE></FONT></DIV>
+<DIV class="line number63 index62 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number64 index63 alt1"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number65 index64 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (flags &amp; NGX_HTTP_ZERO_IN_URI) { </FONT></CODE></DIV>
+<DIV class="line number66 index65 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; r-&gt;zero_in_uri = 1; </FONT></CODE></DIV>
+<DIV class="line number67 index66 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } </FONT></CODE></DIV>
+<DIV class="line number68 index67 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number69 index68 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>if (r-&gt;method != NGX_HTTP_HEAD) { </FONT></CODE></FONT></DIV>
+<DIV class="line number70 index69 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>r-&gt;method = NGX_HTTP_GET; </FONT></CODE></FONT></DIV>
+<DIV class="line number71 index70 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number72 index71 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>Index: src/http/ngx_http_parse.c </FONT></CODE></DIV>
+<DIV class="line number73 index72 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>=================================================================== </FONT></CODE></DIV>
+<DIV class="line number74 index73 alt1"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>--- src/http/ngx_http_parse.c&nbsp;&nbsp; (revision 3527) </FONT></CODE></DIV>
+<DIV class="line number75 index74 alt2"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>+++ src/http/ngx_http_parse.c&nbsp;&nbsp; (revision 3528) </FONT></CODE></DIV>
+<DIV class="line number76 index75 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -438,8 +438,7 @@ </FONT></CODE></DIV>
+<DIV class="line number77 index76 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>r-&gt;plus_in_uri = 1; </FONT></CODE></FONT></DIV>
+<DIV class="line number78 index77 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>break; </FONT></CODE></FONT></DIV>
+<DIV class="line number79 index78 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>case '\0': </FONT></CODE></FONT></DIV>
+<DIV class="line number80 index79 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; r-&gt;zero_in_uri = 1; </FONT></CODE></DIV>
+<DIV class="line number81 index80 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break; </FONT></CODE></DIV>
+<DIV class="line number82 index81 alt1"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return NGX_HTTP_PARSE_INVALID_REQUEST; </FONT></CODE></DIV>
+<DIV class="line number83 index82 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>default: </FONT></CODE></FONT></DIV>
+<DIV class="line number84 index83 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>state = sw_check_uri; </FONT></CODE></FONT></DIV>
+<DIV class="line number85 index84 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>break; </FONT></CODE></FONT></DIV>
+<DIV class="line number86 index85 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -496,8 +495,7 @@ </FONT></CODE></DIV>
+<DIV class="line number87 index86 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>r-&gt;plus_in_uri = 1; </FONT></CODE></FONT></DIV>
+<DIV class="line number88 index87 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>break; </FONT></CODE></FONT></DIV>
+<DIV class="line number89 index88 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>case '\0': </FONT></CODE></FONT></DIV>
+<DIV class="line number90 index89 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; r-&gt;zero_in_uri = 1; </FONT></CODE></DIV>
+<DIV class="line number91 index90 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break; </FONT></CODE></DIV>
+<DIV class="line number92 index91 alt1"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return NGX_HTTP_PARSE_INVALID_REQUEST; </FONT></CODE></DIV>
+<DIV class="line number93 index92 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number94 index93 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>break; </FONT></CODE></FONT></DIV>
+<DIV class="line number95 index94 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number96 index95 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -526,8 +524,7 @@ </FONT></CODE></DIV>
+<DIV class="line number97 index96 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>r-&gt;complex_uri = 1; </FONT></CODE></FONT></DIV>
+<DIV class="line number98 index97 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>break; </FONT></CODE></FONT></DIV>
+<DIV class="line number99 index98 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>case '\0': </FONT></CODE></FONT></DIV>
+<DIV class="line number100 index99 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; r-&gt;zero_in_uri = 1; </FONT></CODE></DIV>
+<DIV class="line number101 index100 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break; </FONT></CODE></DIV>
+<DIV class="line number102 index101 alt1"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return NGX_HTTP_PARSE_INVALID_REQUEST; </FONT></CODE></DIV>
+<DIV class="line number103 index102 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number104 index103 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>break; </FONT></CODE></FONT></DIV>
+<DIV class="line number105 index104 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number106 index105 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -1202,7 +1199,7 @@ </FONT></CODE></DIV>
+<DIV class="line number107 index106 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>ch = *p++; </FONT></CODE></FONT></DIV>
+<DIV class="line number108 index107 alt1"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number109 index108 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} else if (ch == '\0') { </FONT></CODE></FONT></DIV>
+<DIV class="line number110 index109 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; r-&gt;zero_in_uri = 1; </FONT></CODE></DIV>
+<DIV class="line number111 index110 alt2"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return NGX_HTTP_PARSE_INVALID_REQUEST; </FONT></CODE></DIV>
+<DIV class="line number112 index111 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number113 index112 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number114 index113 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>state = quoted_state; </FONT></CODE></FONT></DIV>
+<DIV class="line number115 index114 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -1304,8 +1301,7 @@ </FONT></CODE></DIV>
+<DIV class="line number116 index115 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number117 index116 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number118 index117 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>if (ch == '\0') { </FONT></CODE></FONT></DIV>
+<DIV class="line number119 index118 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *flags |= NGX_HTTP_ZERO_IN_URI; </FONT></CODE></DIV>
+<DIV class="line number120 index119 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; continue; </FONT></CODE></DIV>
+<DIV class="line number121 index120 alt2"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto unsafe; </FONT></CODE></DIV>
+<DIV class="line number122 index121 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number123 index122 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number124 index123 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>if (ngx_path_separator(ch) &amp;&amp; len &gt; 2) { </FONT></CODE></FONT></DIV>
+<DIV class="line number125 index124 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -1449,34 +1445,19 @@ </FONT></CODE></DIV>
+<DIV class="line number126 index125 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>void </FONT></CODE></FONT></DIV>
+<DIV class="line number127 index126 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>ngx_http_split_args(ngx_http_request_t *r, ngx_str_t *uri, ngx_str_t *args) </FONT></CODE></FONT></DIV>
+<DIV class="line number128 index127 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>{ </FONT></CODE></FONT></DIV>
+<DIV class="line number129 index128 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; u_char&nbsp; ch, *p, *last; </FONT></CODE></DIV>
+<DIV class="line number130 index129 alt1"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp; u_char&nbsp; *p, *last; </FONT></CODE></DIV>
+<DIV class="line number131 index130 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number132 index131 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; p = uri-&gt;data; </FONT></CODE></DIV>
+<DIV class="line number133 index132 alt2"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp; last = uri-&gt;data + uri-&gt;len; </FONT></CODE></DIV>
+<DIV class="line number134 index133 alt1"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number135 index134 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; last = p + uri-&gt;len; </FONT></CODE></DIV>
+<DIV class="line number136 index135 alt1"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp; p = ngx_strlchr(uri-&gt;data, last, '?'); </FONT></CODE></DIV>
+<DIV class="line number137 index136 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number138 index137 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; args-&gt;len = 0; </FONT></CODE></DIV>
+<DIV class="line number139 index138 alt2"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp; if (p) { </FONT></CODE></DIV>
+<DIV class="line number140 index139 alt1"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; uri-&gt;len = p - uri-&gt;data; </FONT></CODE></DIV>
+<DIV class="line number141 index140 alt2"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; p++; </FONT></CODE></DIV>
+<DIV class="line number142 index141 alt1"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; args-&gt;len = last - p; </FONT></CODE></DIV>
+<DIV class="line number143 index142 alt2"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; args-&gt;data = p; </FONT></CODE></DIV>
+<DIV class="line number144 index143 alt1"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number145 index144 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; while (p &lt; last) { </FONT></CODE></DIV>
+<DIV class="line number146 index145 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number147 index146 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ch = *p++; </FONT></CODE></DIV>
+<DIV class="line number148 index147 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number149 index148 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (ch == '?') { </FONT></CODE></DIV>
+<DIV class="line number150 index149 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; args-&gt;len = last - p; </FONT></CODE></DIV>
+<DIV class="line number151 index150 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; args-&gt;data = p; </FONT></CODE></DIV>
+<DIV class="line number152 index151 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number153 index152 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; uri-&gt;len = p - 1 - uri-&gt;data; </FONT></CODE></DIV>
+<DIV class="line number154 index153 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number155 index154 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (ngx_strlchr(p, last, '\0') != NULL) { </FONT></CODE></DIV>
+<DIV class="line number156 index155 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; r-&gt;zero_in_uri = 1; </FONT></CODE></DIV>
+<DIV class="line number157 index156 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } </FONT></CODE></DIV>
+<DIV class="line number158 index157 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number159 index158 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return; </FONT></CODE></DIV>
+<DIV class="line number160 index159 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } </FONT></CODE></DIV>
+<DIV class="line number161 index160 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number162 index161 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (ch == '\0') { </FONT></CODE></DIV>
+<DIV class="line number163 index162 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; r-&gt;zero_in_uri = 1; </FONT></CODE></DIV>
+<DIV class="line number164 index163 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; continue; </FONT></CODE></DIV>
+<DIV class="line number165 index164 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } </FONT></CODE></DIV>
+<DIV class="line number166 index165 alt1"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp; } else { </FONT></CODE></DIV>
+<DIV class="line number167 index166 alt2"><CODE class="diff string"><FONT face=新宋体 color=#5ce638>+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; args-&gt;len = 0; </FONT></CODE></DIV>
+<DIV class="line number168 index167 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number169 index168 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number170 index169 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>Index: src/http/modules/ngx_http_gzip_static_module.c </FONT></CODE></DIV>
+<DIV class="line number171 index170 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>=================================================================== </FONT></CODE></DIV>
+<DIV class="line number172 index171 alt1"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>--- src/http/modules/ngx_http_gzip_static_module.c&nbsp; (revision 3527) </FONT></CODE></DIV>
+<DIV class="line number173 index172 alt2"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>+++ src/http/modules/ngx_http_gzip_static_module.c&nbsp; (revision 3528) </FONT></CODE></DIV>
+<DIV class="line number174 index173 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -89,10 +89,6 @@ </FONT></CODE></DIV>
+<DIV class="line number175 index174 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>return NGX_DECLINED; </FONT></CODE></FONT></DIV>
+<DIV class="line number176 index175 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number177 index176 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number178 index177 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; if (r-&gt;zero_in_uri) { </FONT></CODE></DIV>
+<DIV class="line number179 index178 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return NGX_DECLINED; </FONT></CODE></DIV>
+<DIV class="line number180 index179 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; } </FONT></CODE></DIV>
+<DIV class="line number181 index180 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number182 index181 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>gzcf = ngx_http_get_module_loc_conf(r, ngx_http_gzip_static_module); </FONT></CODE></FONT></DIV>
+<DIV class="line number183 index182 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number184 index183 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>if (!gzcf-&gt;enable) { </FONT></CODE></FONT></DIV>
+<DIV class="line number185 index184 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>Index: src/http/modules/ngx_http_index_module.c </FONT></CODE></DIV>
+<DIV class="line number186 index185 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>=================================================================== </FONT></CODE></DIV>
+<DIV class="line number187 index186 alt2"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>--- src/http/modules/ngx_http_index_module.c&nbsp;&nbsp;&nbsp; (revision 3527) </FONT></CODE></DIV>
+<DIV class="line number188 index187 alt1"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>+++ src/http/modules/ngx_http_index_module.c&nbsp;&nbsp;&nbsp; (revision 3528) </FONT></CODE></DIV>
+<DIV class="line number189 index188 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -116,10 +116,6 @@ </FONT></CODE></DIV>
+<DIV class="line number190 index189 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>return NGX_DECLINED; </FONT></CODE></FONT></DIV>
+<DIV class="line number191 index190 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number192 index191 alt1"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number193 index192 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; if (r-&gt;zero_in_uri) { </FONT></CODE></DIV>
+<DIV class="line number194 index193 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return NGX_DECLINED; </FONT></CODE></DIV>
+<DIV class="line number195 index194 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; } </FONT></CODE></DIV>
+<DIV class="line number196 index195 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number197 index196 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>ilcf = ngx_http_get_module_loc_conf(r, ngx_http_index_module); </FONT></CODE></FONT></DIV>
+<DIV class="line number198 index197 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>clcf = ngx_http_get_module_loc_conf(r, ngx_http_core_module); </FONT></CODE></FONT></DIV>
+<DIV class="line number199 index198 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number200 index199 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>Index: src/http/modules/ngx_http_random_index_module.c </FONT></CODE></DIV>
+<DIV class="line number201 index200 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>=================================================================== </FONT></CODE></DIV>
+<DIV class="line number202 index201 alt1"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>--- src/http/modules/ngx_http_random_index_module.c (revision 3527) </FONT></CODE></DIV>
+<DIV class="line number203 index202 alt2"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>+++ src/http/modules/ngx_http_random_index_module.c (revision 3528) </FONT></CODE></DIV>
+<DIV class="line number204 index203 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -86,10 +86,6 @@ </FONT></CODE></DIV>
+<DIV class="line number205 index204 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>return NGX_DECLINED; </FONT></CODE></FONT></DIV>
+<DIV class="line number206 index205 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number207 index206 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number208 index207 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; if (r-&gt;zero_in_uri) { </FONT></CODE></DIV>
+<DIV class="line number209 index208 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return NGX_DECLINED; </FONT></CODE></DIV>
+<DIV class="line number210 index209 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; } </FONT></CODE></DIV>
+<DIV class="line number211 index210 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number212 index211 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>if (!(r-&gt;method &amp; (NGX_HTTP_GET|NGX_HTTP_HEAD|NGX_HTTP_POST))) { </FONT></CODE></FONT></DIV>
+<DIV class="line number213 index212 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>return NGX_DECLINED; </FONT></CODE></FONT></DIV>
+<DIV class="line number214 index213 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number215 index214 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>Index: src/http/modules/ngx_http_dav_module.c </FONT></CODE></DIV>
+<DIV class="line number216 index215 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>=================================================================== </FONT></CODE></DIV>
+<DIV class="line number217 index216 alt2"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>--- src/http/modules/ngx_http_dav_module.c&nbsp; (revision 3527) </FONT></CODE></DIV>
+<DIV class="line number218 index217 alt1"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>+++ src/http/modules/ngx_http_dav_module.c&nbsp; (revision 3528) </FONT></CODE></DIV>
+<DIV class="line number219 index218 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -146,10 +146,6 @@ </FONT></CODE></DIV>
+<DIV class="line number220 index219 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>ngx_int_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rc; </FONT></CODE></FONT></DIV>
+<DIV class="line number221 index220 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>ngx_http_dav_loc_conf_t&nbsp; *dlcf; </FONT></CODE></FONT></DIV>
+<DIV class="line number222 index221 alt1"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number223 index222 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; if (r-&gt;zero_in_uri) { </FONT></CODE, ,></DIV>
+<DIV class="line number224 index223 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return NGX_DECLINED; </FONT></CODE></DIV>
+<DIV class="line number225 index224 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; } </FONT></CODE></DIV>
+<DIV class="line number226 index225 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number227 index226 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>dlcf = ngx_http_get_module_loc_conf(r, ngx_http_dav_module); </FONT></CODE></FONT></DIV>
+<DIV class="line number228 index227 alt1"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number229 index228 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>if (!(r-&gt;method &amp; dlcf-&gt;methods)) { </FONT></CODE></FONT></DIV>
+<DIV class="line number230 index229 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>Index: src/http/modules/ngx_http_flv_module.c </FONT></CODE></DIV>
+<DIV class="line number231 index230 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>=================================================================== </FONT></CODE></DIV>
+<DIV class="line number232 index231 alt1"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>--- src/http/modules/ngx_http_flv_module.c&nbsp; (revision 3527) </FONT></CODE></DIV>
+<DIV class="line number233 index232 alt2"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>+++ src/http/modules/ngx_http_flv_module.c&nbsp; (revision 3528) </FONT></CODE></DIV>
+<DIV class="line number234 index233 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -80,10 +80,6 @@ </FONT></CODE></DIV>
+<DIV class="line number235 index234 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>return NGX_DECLINED; </FONT></CODE></FONT></DIV>
+<DIV class="line number236 index235 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number237 index236 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number238 index237 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; if (r-&gt;zero_in_uri) { </FONT></CODE></DIV>
+<DIV class="line number239 index238 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return NGX_DECLINED; </FONT></CODE></DIV>
+<DIV class="line number240 index239 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; } </FONT></CODE></DIV>
+<DIV class="line number241 index240 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number242 index241 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>rc = ngx_http_discard_request_body(r); </FONT></CODE></FONT></DIV>
+<DIV class="line number243 index242 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number244 index243 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>if (rc != NGX_OK) { </FONT></CODE></FONT></DIV>
+<DIV class="line number245 index244 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>Index: src/http/modules/ngx_http_static_module.c </FONT></CODE></DIV>
+<DIV class="line number246 index245 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>=================================================================== </FONT></CODE></DIV>
+<DIV class="line number247 index246 alt2"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>--- src/http/modules/ngx_http_static_module.c&nbsp;&nbsp; (revision 3527) </FONT></CODE></DIV>
+<DIV class="line number248 index247 alt1"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>+++ src/http/modules/ngx_http_static_module.c&nbsp;&nbsp; (revision 3528) </FONT></CODE></DIV>
+<DIV class="line number249 index248 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -66,10 +66,6 @@ </FONT></CODE></DIV>
+<DIV class="line number250 index249 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>return NGX_DECLINED; </FONT></CODE></FONT></DIV>
+<DIV class="line number251 index250 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number252 index251 alt1"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number253 index252 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; if (r-&gt;zero_in_uri) { </FONT></CODE></DIV>
+<DIV class="line number254 index253 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return NGX_DECLINED; </FONT></CODE></DIV>
+<DIV class="line number255 index254 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; } </FONT></CODE></DIV>
+<DIV class="line number256 index255 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number257 index256 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>log = r-&gt;connection-&gt;log; </FONT></CODE></FONT></DIV>
+<DIV class="line number258 index257 alt1"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number259 index258 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>/* </FONT></CODE></FONT></DIV>
+<DIV class="line number260 index259 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>Index: src/http/modules/ngx_http_autoindex_module.c </FONT></CODE></DIV>
+<DIV class="line number261 index260 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>=================================================================== </FONT></CODE></DIV>
+<DIV class="line number262 index261 alt1"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>--- src/http/modules/ngx_http_autoindex_module.c&nbsp;&nbsp;&nbsp; (revision 3527) </FONT></CODE></DIV>
+<DIV class="line number263 index262 alt2"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>+++ src/http/modules/ngx_http_autoindex_module.c&nbsp;&nbsp;&nbsp; (revision 3528) </FONT></CODE></DIV>
+<DIV class="line number264 index263 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -160,10 +160,6 @@ </FONT></CODE></DIV>
+<DIV class="line number265 index264 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>return NGX_DECLINED; </FONT></CODE></FONT></DIV>
+<DIV class="line number266 index265 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number267 index266 alt2"><CODE class="diff spaces"><FONT face=新宋体>&nbsp;</FONT></CODE>&nbsp;</DIV>
+<DIV class="line number268 index267 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; if (r-&gt;zero_in_uri) { </FONT></CODE></DIV>
+<DIV class="line number269 index268 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return NGX_DECLINED; </FONT></CODE></DIV>
+<DIV class="line number270 index269 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; } </FONT></CODE></DIV>
+<DIV class="line number271 index270 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number272 index271 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>if (!(r-&gt;method &amp; (NGX_HTTP_GET|NGX_HTTP_HEAD))) { </FONT></CODE></FONT></DIV>
+<DIV class="line number273 index272 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>return NGX_DECLINED; </FONT></CODE></FONT></DIV>
+<DIV class="line number274 index273 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>} </FONT></CODE></FONT></DIV>
+<DIV class="line number275 index274 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>Index: src/http/modules/perl/ngx_http_perl_module.c </FONT></CODE></DIV>
+<DIV class="line number276 index275 alt1"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>=================================================================== </FONT></CODE></DIV>
+<DIV class="line number277 index276 alt2"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>--- src/http/modules/perl/ngx_http_perl_module.c&nbsp;&nbsp;&nbsp; (revision 3527) </FONT></CODE></DIV>
+<DIV class="line number278 index277 alt1"><CODE class="diff color2"><FONT face=新宋体 color=#ffffff>+++ src/http/modules/perl/ngx_http_perl_module.c&nbsp;&nbsp;&nbsp; (revision 3528) </FONT></CODE></DIV>
+<DIV class="line number279 index278 alt2"><CODE class="diff plain"><FONT face=新宋体 color=#b9bdb6>@@ -168,10 +168,6 @@ </FONT></CODE></DIV>
+<DIV class="line number280 index279 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>static ngx_int_t </FONT></CODE></FONT></DIV>
+<DIV class="line number281 index280 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>ngx_http_perl_handler(ngx_http_request_t *r) </FONT></CODE></FONT></DIV>
+<DIV class="line number282 index281 alt1"><FONT face=新宋体><CODE class="diff spaces">&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>{ </FONT></CODE></FONT></DIV>
+<DIV class="line number283 index282 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; if (r-&gt;zero_in_uri) { </FONT></CODE></DIV>
+<DIV class="line number284 index283 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return NGX_HTTP_NOT_FOUND; </FONT></CODE></DIV>
+<DIV class="line number285 index284 alt2"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>-&nbsp;&nbsp;&nbsp; } </FONT></CODE></DIV>
+<DIV class="line number286 index285 alt1"><CODE class="diff comments"><FONT face=新宋体 color=#878a85>- </FONT></CODE></DIV>
+<DIV class="line number287 index286 alt2"><FONT face=新宋体><CODE class="diff spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE><CODE class="diff color1"><FONT color=#e0e8ff>r-&gt;main-&gt;count++; </FONT></CODE></FONT></DIV></CODE></TD></TR></TBODY></TABLE></P></SPAN>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2011-08-26
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/cgi/">CGI</a>
+          <a href="https://lcx.cc/tags/cia/">CIA</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/nginx/">nginx</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/1717/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">XpressEngine 1.4.5.9 XSS - 脚本漏洞</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/1715/">
+            <span class="next-text nav-default">黑客盯上外贸公司业务员邮箱 入侵员工电脑 跨国诈骗案</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

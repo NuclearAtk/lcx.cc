@@ -1,0 +1,3474 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>黑客讲故事:攻下隔壁女生路由器后,我都做了些什么,无线路由器被蹭网后,入侵女神 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Evi1m0" /><meta name="description" content="黑客讲故事：攻下隔壁女生路由器后，我都做了些什么，无线路由器被蹭网后，入侵女神。路由器被蹭网后，我有被黑的风险吗？Evi1m0，来自知道创宇，邪红色信息安全组织创始人。 其实这个问题可以理解为：蹭网之后，能做些什么？不少人的八卦心窥探欲还是很强烈的，强烈到让人恐惧。所以很多人喜欢看一些八卦文章，比如：如何优雅的窥探别人？通常这样的文章很容易火起来，因为不少人都喜欢看而且百看不厌。最近路由安全沸沸扬扬，可以翻阅我微信公众号历史文章查看关于路由安全的文章以及央视当时的采访。鉴于天时地利人和，最后我成功的在现实生活中上演了这样一场精彩好戏，为了满足众人的欲望，我就写成故事。大家好好琢磨琢磨蹭网之后，我们还能做些什么？" />
+<meta name="keywords" content="黑客讲故事：攻下隔壁女生路由器后，我都做了些什么，无线路由器被蹭网后，入侵女神" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4257/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="黑客讲故事:攻下隔壁女生路由器后,我都做了些什么,无线路由器被蹭网后,入侵女神" />
+<meta property="og:description" content="黑客讲故事：攻下隔壁女生路由器后，我都做了些什么，无线路由器被蹭网后，入侵女神。路由器被蹭网后，我有被黑的风险吗？Evi1m0，来自知道创宇，邪红色信息安全组织创始人。 其实这个问题可以理解为：蹭网之后，能做些什么？不少人的八卦心窥探欲还是很强烈的，强烈到让人恐惧。所以很多人喜欢看一些八卦文章，比如：如何优雅的窥探别人？通常这样的文章很容易火起来，因为不少人都喜欢看而且百看不厌。最近路由安全沸沸扬扬，可以翻阅我微信公众号历史文章查看关于路由安全的文章以及央视当时的采访。鉴于天时地利人和，最后我成功的在现实生活中上演了这样一场精彩好戏，为了满足众人的欲望，我就写成故事。大家好好琢磨琢磨蹭网之后，我们还能做些什么？" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4257/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-03-26T10:09:45&#43;08:00" />
+<meta property="article:modified_time" content="2014-03-26T10:49:58&#43;08:00" />
+
+<meta itemprop="name" content="黑客讲故事:攻下隔壁女生路由器后,我都做了些什么,无线路由器被蹭网后,入侵女神">
+<meta itemprop="description" content="黑客讲故事：攻下隔壁女生路由器后，我都做了些什么，无线路由器被蹭网后，入侵女神。路由器被蹭网后，我有被黑的风险吗？Evi1m0，来自知道创宇，邪红色信息安全组织创始人。 其实这个问题可以理解为：蹭网之后，能做些什么？不少人的八卦心窥探欲还是很强烈的，强烈到让人恐惧。所以很多人喜欢看一些八卦文章，比如：如何优雅的窥探别人？通常这样的文章很容易火起来，因为不少人都喜欢看而且百看不厌。最近路由安全沸沸扬扬，可以翻阅我微信公众号历史文章查看关于路由安全的文章以及央视当时的采访。鉴于天时地利人和，最后我成功的在现实生活中上演了这样一场精彩好戏，为了满足众人的欲望，我就写成故事。大家好好琢磨琢磨蹭网之后，我们还能做些什么？"><meta itemprop="datePublished" content="2014-03-26T10:09:45&#43;08:00" />
+<meta itemprop="dateModified" content="2014-03-26T10:49:58&#43;08:00" />
+<meta itemprop="wordCount" content="14922">
+<meta itemprop="keywords" content="黑客,路由,路由器,入侵,无线,Android,DNS,HTTP,IP,iPhone,MAC,Python,QQ,Root,Web,WiFi,安全,安卓,暴力,爆,病毒,测试,程序,电脑,电视,端口,恶意,服务,工具,攻击,管理,后台,互联网,技术,加密,劫持,解密,局域网,客户端,浏览器,密码,骗,破解,欺骗,设备,世界,手机,数据,搜索,锁,淘宝,网络,微博,微信,问题,物理,信号,嗅探,远程,账号,账户,字典," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="黑客讲故事:攻下隔壁女生路由器后,我都做了些什么,无线路由器被蹭网后,入侵女神"/>
+<meta name="twitter:description" content="黑客讲故事：攻下隔壁女生路由器后，我都做了些什么，无线路由器被蹭网后，入侵女神。路由器被蹭网后，我有被黑的风险吗？Evi1m0，来自知道创宇，邪红色信息安全组织创始人。 其实这个问题可以理解为：蹭网之后，能做些什么？不少人的八卦心窥探欲还是很强烈的，强烈到让人恐惧。所以很多人喜欢看一些八卦文章，比如：如何优雅的窥探别人？通常这样的文章很容易火起来，因为不少人都喜欢看而且百看不厌。最近路由安全沸沸扬扬，可以翻阅我微信公众号历史文章查看关于路由安全的文章以及央视当时的采访。鉴于天时地利人和，最后我成功的在现实生活中上演了这样一场精彩好戏，为了满足众人的欲望，我就写成故事。大家好好琢磨琢磨蹭网之后，我们还能做些什么？"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">黑客讲故事:攻下隔壁女生路由器后,我都做了些什么,无线路由器被蹭网后,入侵女神</h1>
+      
+      <div class="post-meta">
+        <time datetime="2014-03-26" class="post-time">
+          2014-03-26
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E9%BB%91%E5%AE%A2/"> 黑客 </a>
+            <a href="https://lcx.cc/categories/%E8%B7%AF%E7%94%B1/"> 路由 </a>
+            <a href="https://lcx.cc/categories/%E8%B7%AF%E7%94%B1%E5%99%A8/"> 路由器 </a>
+            <a href="https://lcx.cc/categories/%E5%85%A5%E4%BE%B5/"> 入侵 </a>
+            <a href="https://lcx.cc/categories/%E6%97%A0%E7%BA%BF/"> 无线 </a>
+            
+          </div>
+        <span class="more-meta"> 约 14922 字 </span>
+          <span class="more-meta"> 预计阅读 30 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<img title="黑客讲故事：攻下隔壁女生路由器后，我都做了些什么，无线路由器被蹭网后，入侵女神" alt="黑客讲故事：攻下隔壁女生路由器后，我都做了些什么，无线路由器被蹭网后，入侵女神" src="/file/old/4130_1.jpg" width="640" height="640" /> 
+</p>
+<p style="text-indent:2em;">
+	黑客讲故事：攻下隔壁女生路由器后，我都做了些什么；无线路由器被蹭网后，入侵女神。
+</p>
+<p style="text-indent:2em;">
+	路由器被蹭网后，我有被黑的风险吗？
+</p>
+<p style="text-indent:2em;">
+	<span style="font-family:KaiTi_GB2312;">Evi1m0，来自知道创宇，邪红色信息安全组织创始人。</span> 
+</p>
+<p style="text-indent:2em;">
+	其实这个问题可以理解为：<strong>蹭网之后，能做些什么？</strong> 
+</p>
+<p style="text-indent:2em;">
+	不少人的八卦心窥探欲还是很强烈的，强烈到让人恐惧。所以很多人喜欢看一些八卦文章，比如：<strong style="line-height:1.5;font-size:16px;">如何优雅的窥探别人？</strong> 
+</p>
+<p style="text-indent:2em;">
+	通常这样的文章很容易火起来，因为不少人都喜欢看而且百看不厌。
+</p>
+<p style="text-indent:2em;">
+	最近路由安全沸沸扬扬，可以翻阅我微信公众号历史文章查看关于路由安全的文章以及央视当时的采访。鉴于天时地利人和，最后我成功的在现实生活中上演了这样一场精彩好戏，为了满足众人的欲望，我就写成故事。大家好好琢磨琢磨蹭网之后，我们还能做些什么？
+</p>
+<p style="text-indent:2em;">
+	<strong>声明： 这是一个虚构故事，图片均加万恶马赛克。</strong> 
+</p>
+<p style="text-indent:2em;">
+	———————
+</p>
+<p style="text-indent:2em;">
+	记忆中隔壁是一个还算不错的妹子，那天 Z 来找我的时候恰巧碰到了，进屋后跑到我耳边说：“隔壁那个妹子你能不能要到微信，我觉得挺不错的呢~”
+</p>
+<p style="text-indent:2em;">
+	这么三俗的场景竟然发生在我的身边，我说等两天我给你消息。
+</p>
+<p style="text-indent:2em;">
+	<strong>入口</strong> 
+</p>
+<p style="text-indent:2em;">
+	既然是住在隔壁的年轻人，必然不可缺少的就是路由器，于是我打算从路由器当做入口开始这次旅程，将 wifi 打开后发现了三个信号，我首先选择这个名字非常独特的路由： ** LOVE **
+</p>
+<p style="text-indent:2em;">
+	<img title="这个名字非常独特的路由： ** LOVE **" alt="这个名字非常独特的路由： ** LOVE **" src="/file/old/4131_2.jpg" width="542" height="252" /> 
+</p>
+<p style="text-indent:2em;">
+	根据名字 ** LOVE ** 可大概看出两个人名，应该是男朋友，想到这心里为 Z 君凉了一半。
+</p>
+<p style="text-indent:2em;">
+	找到疑似对方入口的地方就好说了，翻出 minidwep（一款 linux 下破解 wifi 密码的工具）导入部分密码字典，开始进行爆破。因对方使用 WPA2 加密方式，所以只能使用暴力破解方式进入，WEP 则目前可以直接破解密码，所以破解 WPA2 加密方式的路由基本上成功率取决于黑客手中字典的大小。
+</p>
+<p style="text-indent:2em;">
+	喝了杯咖啡回来，发现密码已经出来了：<strong>198707**</strong>，于是愉快的连接了进去。
+</p>
+<p style="text-indent:2em;">
+	<img title="愉快的连接了进去" alt="愉快的连接了进去" src="/file/old/4132_3.jpg" width="556" height="348" /> 
+</p>
+<p style="text-indent:2em;">
+	<strong>困难</strong> 
+</p>
+<p style="text-indent:2em;">
+	成功连接到对方路由后，下面我需要做的就是连接路由的 WEB 管理界面（进入 WEB 路由管理界面后便可以将路由 DNS 篡改、查看 DHCP 客户端连接设备以及各种功能）。
+</p>
+<p style="text-indent:2em;">
+	<img title="查看网段" alt="查看网段" src="/file/old/4133_4.jpg" width="600" height="207" /> 
+</p>
+<p style="text-indent:2em;">
+	查看网段后开始访问路由器 WEB 管理界面，发现女神竟然机智的修改了默认登录帐号密码。
+</p>
+<p style="text-indent:2em;">
+	<img title="访问路由器 WEB 管理界面" alt="访问路由器 WEB 管理界面" src="/file/old/4134_5.jpg" width="366" height="231" /> 
+</p>
+<p style="text-indent:2em;">
+	TP-LINK W89841N，通过路由设备漏洞进入失败后，想必只能使用暴力美学了。
+</p>
+<p style="text-indent:2em;">
+	通过抓取登录路由器的请求，然后遍历帐号密码发送请求查看返回数据包大小则判断是否登录成功，抓到的 GET 请求如下：
+</p>
+<p style="text-indent:2em;">
+	<img title="抓取登录路由器的请求" alt="抓取登录路由器的请求" src="/file/old/4135_6.jpg" width="600" height="233" /> 
+</p>
+<p style="text-indent:2em;">
+	其中：Authorization: Basic <strong>YWRtaW46YWRtaW4= </strong>为登录的帐号密码
+</p>
+<p style="text-indent:2em;">
+	使用 Base64 解密开查看内容：<strong>admin:admin</strong> 
+</p>
+<p style="text-indent:2em;">
+	于是我编写了一个 python 脚本将字典中的密码与“admin:”进行组合然后进行 base64 加密，进行破解。十一点的钟声响起，发现密码已经成功爆破出来，成功登录：
+</p>
+<p style="text-indent:2em;">
+	<img title="成功登录" alt="成功登录" src="/file/old/4136_7.jpg" width="600" height="152" /> 
+</p>
+<p style="text-indent:2em;">
+	查看设备连接列表，发现只有孤零零的自己，看来女神早已歇息，等待时机。
+</p>
+<p style="text-indent:2em;">
+	<strong>时机</strong> 
+</p>
+<p style="text-indent:2em;">
+	第二天晚饭过后，登录路由管理界面，这时已经有好几个设备了，时机到了：
+</p>
+<p style="text-indent:2em;">
+	客户端名
+</p>
+<p style="text-indent:2em;">
+	android-b459ce5294bd721f
+</p>
+<p style="text-indent:2em;">
+	android-44688379be6b9139
+</p>
+<p style="text-indent:2em;">
+	**********iPhone
+</p>
+<p style="text-indent:2em;">
+	******-iPad
+</p>
+<p style="text-indent:2em;">
+	******-PC
+</p>
+<p style="text-indent:2em;">
+	我统计了一下，设备为两个安卓设备、一部 Iphone、一个 ipad、一台个人 PC。
+</p>
+<p style="text-indent:2em;">
+	从 iphone\ipad\pc 命名来看，我开始的猜测没错，** 确实是路由主人的名字，直觉告诉我非常大的可能这个路由的主人就是 Z 所心仪的女神。
+</p>
+<p style="text-indent:2em;">
+	首先测试两台安卓设备，发现其中一台开放端口很多，隐隐约约中感觉是一台小米盒子或者百度影棒这种产品，这样事情就变得有趣了，因为控制电视可就有机会了。
+</p>
+<p style="text-indent:2em;">
+	使用 ARP 嗅探安卓开放端口较多的设备，果然是一个影视盒子：
+</p>
+<p style="text-indent:2em;">
+	<img title="使用 ARP 嗅探安卓开放端口较多的设备" alt="使用 ARP 嗅探安卓开放端口较多的设备" src="/file/old/4137_8.jpg" width="600" height="468" /> 
+</p>
+<p style="text-indent:2em;">
+	最后基本摸清：电视使用影视盒子，iphone，ipad 以及一台个人电脑。
+</p>
+<p style="text-indent:2em;">
+	<strong>寻找</strong> 
+</p>
+<p style="text-indent:2em;">
+	找到了那么多有趣的东西，但我仍然没有忘记 Z 让我帮忙的事情，于是便开始对 iphone 进行了嗅探。
+</p>
+<p style="text-indent:2em;">
+	<img title="对 iphone 进行了嗅探" alt="对 iphone 进行了嗅探" src="/file/old/4138_9.jpg" width="600" height="260" /> 
+</p>
+<p style="text-indent:2em;">
+	嗅探不一会便找到了有趣的东西，女神的照片在她查看自己相册的时候已经被嗅探到，于是我将照片发给了 Z，他已经激动的语无伦次了。
+</p>
+<p style="text-indent:2em;">
+	之后我仍然在等待机会，寻找到对方的微信以便我完成 Z 的愿望，希望出现了。
+</p>
+<p style="text-indent:2em;">
+	查看流量日志的时候我发现她在刷新浪微博，于是根据 URL 很方便的找到了微博：
+</p>
+<p style="text-indent:2em;">
+	<img title="根据 URL 很方便的找到了微博" alt="根据 URL 很方便的找到了微博" src="/file/old/4139_10.jpg" width="600" height="905" /> 
+</p>
+<p style="text-indent:2em;">
+	看到生日让我想起了 wifi 连接密码，原来是她的出生日期，心想把微信找到就可以让 Z 安心了。
+</p>
+<p style="text-indent:2em;">
+	通过女神新浪微博个性化域名地址和获取到信息加以组合，开始猜测微信帐号，很快便搞定了：
+</p>
+<p style="text-indent:2em;">
+	<img title="猜测微信帐号" alt="猜测微信帐号" src="/file/old/4140_11.jpg" width="600" height="515" /> 
+</p>
+<p style="text-indent:2em;">
+	将 Z 的心愿完成后，回过头发现还有很多有趣的事情没做，怎能轻易结束。
+</p>
+<p style="text-indent:2em;">
+	<strong>电视</strong> 
+</p>
+<p style="text-indent:2em;">
+	随着时代的进步科技的发展，互联网逐渐到了物联网层度，从电视使用各种智能盒子便可以看出。影视盒子通常为了方便调试而开启远程调试端口，<strong>盒子究竟安全吗？</strong> 
+</p>
+<p style="text-indent:2em;">
+	去年腾讯安全送的小米盒子让我有幸好好研究一番，扫描端口后发现各种各样的端口大开，其中最有趣的就是 5555 端口（adb 远程调试），使用 adb connect ip 直接可连接设备进行远程调试。
+</p>
+<p style="text-indent:2em;">
+	虽然是 Z 的女神，但是我想也可以调侃一番，于是我随手写了一个安卓 APK 程序。
+</p>
+<p style="text-indent:2em;">
+	adb 远程连接到盒子，然后 adb install 远程安装 apk，最后使用 am start -n *** 进行远程启动。
+</p>
+<p style="text-indent:2em;">
+	我本地使用 Genymotion 建立 android 模拟器进行测试：
+</p>
+<p style="text-indent:2em;">
+	<img title="本地使用 Genymotion 建立 android 模拟器进行测试" alt="本地使用 Genymotion 建立 android 模拟器进行测试" src="/file/old/4141_12.jpg" width="600" height="299" /> 
+</p>
+<p style="text-indent:2em;">
+	当输入 am stat - n *** 敲击回车的那一刹那，脑海中曾想象过千万种女神的表情。
+</p>
+<p style="text-indent:2em;">
+	但我始终没有忍下心来给电视播放<strong>爱情动作片</strong>。
+</p>
+<p style="text-indent:2em;">
+	<strong>账户</strong> 
+</p>
+<p style="text-indent:2em;">
+	<img title="账户" alt="账户" src="/file/old/4142_13.jpg" width="600" height="375" /> 
+</p>
+<p style="text-indent:2em;">
+	<img title="新浪微博" alt="新浪微博" src="/file/old/4143_14.jpg" width="600" height="170" /> 
+</p>
+<p style="text-indent:2em;">
+	微博、人人、淘宝等等凡是登录过后的帐号全部劫持，通过劫持后的帐号又能看到许多表面看不到的东西。
+</p>
+<p style="text-indent:2em;">
+	于是理所当然的账户全部被劫持掉了，当然我并没有去翻阅什么东西，<strong>窥探欲早已麻痹。</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>联系</strong> 
+</p>
+<p style="text-indent:2em;">
+	我想是时候做一个结束了，当然故事过程中还有很多有趣而又精彩的东西实在无法用言语来表达。
+</p>
+<p style="text-indent:2em;">
+	<img title="拿她的微博发了一条消息：hey,test" alt="拿她的微博发了一条消息：hey,test" src="/file/old/4144_15.jpg" width="600" height="295" /> 
+</p>
+<p style="text-indent:2em;">
+	于是我没有恶意的拿她的微博发了一条消息：hey,test
+</p>
+<p style="text-indent:2em;">
+	通过 MITM 中间人我又向网页中注入了 javascript，大概是这样的：alert(/ 早点休息，QQ:***/);
+</p>
+<p style="text-indent:2em;">
+	<img title="大概是这样的：alert(/ 早点休息，QQ:***/);" alt="大概是这样的：alert(/ 早点休息，QQ:***/);" src="/file/old/4145_16.jpg" width="420" height="153" /> 
+</p>
+<p style="text-indent:2em;">
+	当然这个 QQ 是我为了取得对方最后联系而注册的：
+</p>
+<p style="text-indent:2em;">
+	<img title="你是？" alt="你是？" src="/file/old/4146_17.jpg" width="125" height="61" /> 
+</p>
+<p style="text-indent:2em;">
+	—————————
+</p>
+<p style="text-indent:2em;">
+	追溯源头，其实无非就是很常见的蹭网，连接 wifi 之后设备处于同一个局域网中，于是才能做出那么多有趣的事情，上面这个故事中我未曾有过恶意以及 DNS 劫持，那么我通过路由究竟控制或者得到了哪些信息：
+</p>
+<ul>
+	<li>
+		微博
+	</li>
+	<li>
+		微信
+	</li>
+	<li>
+		人人网
+	</li>
+	<li>
+		QQ 号码
+	</li>
+	<li>
+		手机号（淘宝获取）
+	</li>
+	<li>
+		照片
+	</li>
+	<li>
+		电视
+	</li>
+	<li>
+		More
+	</li>
+</ul>
+<p style="text-indent:2em;">
+	常说不要连接陌生公开 WIFI，有点儿安全意识。不是没办法黑你，只是你没有被黑的价值。
+</p>
+<p style="text-indent:2em;">
+	但是人们总是毫不在意，常说我本来就没啥价值。这样放弃治疗的人令你头疼。
+</p>
+<p style="text-indent:2em;">
+	<strong>防御</strong> 
+</p>
+<p style="text-indent:2em;">
+	作为小白用户，下面几点做到的越多，你就越安全：
+</p>
+<p style="text-indent:2em;">
+	1、路由器连接密码要复杂一点，比如 testak47521test 要比 ak47521 好很多
+</p>
+<p style="text-indent:2em;">
+	2、赶紧把路由器管理后台的帐号和密码改掉。90% 的懒人还在 admin admin
+</p>
+<p style="text-indent:2em;">
+	3、不要告诉不可信人员你的 Wi-Fi 密码。
+</p>
+<p style="text-indent:2em;">
+	4、移动设备不要越狱不要 ROOT，ROOT/ 越狱后的设备等于公交车随便上
+</p>
+<p style="text-indent:2em;">
+	5、常登陆路由器管理后台，看看有没有连接不认识的设备连入了 Wi-Fi，有的话断开并封掉 Mac 地址。封完以后马上修改 Wi-Fi 密码和路由器后台帐号密码。
+</p>
+<p style="text-indent:2em;">
+	6、More
+</p>
+<p style="text-indent:2em;">
+	上面这些方法都搜索的到，防御 ARP 劫持嗅探很简单，电脑上装个杀软基本就差不多，被攻击劫持时候会弹出警告，但是人们却丝毫不当回事儿，出现弹框就把杀软给关掉了，继续上网冲浪。
+</p>
+<p style="text-indent:2em;">
+	至于手机上的杀软，还真没啥用，劫持嗅探样样不拦截。
+</p>
+<p style="text-indent:2em;">
+	<strong>最后 Z 请我吃了一顿大餐 —— 热干面</strong> 
+</p>
+<p style="text-indent:2em;">
+	————————
+</p>
+<p style="text-indent:2em;">
+	<strong>微信公众号：Evil-say</strong> 
+</p>
+<p style="text-indent:2em;">
+	关于这个世界，“不为人知”的事情太多了，不定期分享关于黑客、互联网、各种观点。
+</p>
+<p style="text-indent:2em;">
+	<a href="http://daily.zhihu.com/story/3603866" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4256/" target="_blank">女黑客Oona，分析直升机现场拍摄警车追捕画面中的信号声，绘出飞机飞行轨迹</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4251/" target="_blank">WIFI蜜灌之路由上的会话劫持</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4238/" target="_blank">揭露一个飞机退改签的诈骗：借口机票退改签要退款，索要银行卡号，套取个人信息</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4231/" target="_blank">新型“变色龙”：可以通过空气传播的Wifi网络病毒</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4227/" target="_blank">玩转无线 -- GNURADIO 简单运用</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4151/" target="_blank">FreeBuf2014贺岁视频: 极客教你如何劫持无人机</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4142/" target="_blank">国外成功使用电视棒接收玉兔登陆信号</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4074/" target="_blank">关于伪基站的一些问题：信号覆盖范围？设备成本？是否违法？教程资料？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4067/" target="_blank">伪基站是怎么定位的呢？定位并抓捕伪基站、圈地短信、垃圾短信犯罪团伙！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4030/" target="_blank">为什么所有的无线频率都是2.4GHz？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4013/" target="_blank">谈谈时事：电话“诈”弹导致多地机场飞机被迫返航，论如何打电话不被追踪</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3945/" target="_blank">俺在国外当会棍 -- WIFI 篇</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3932/" target="_blank">Windows下的无线热点蜜罐</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3913/" target="_blank">未来利用大脑频率杀死人类猜想(讨论)</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3865/" target="_blank">小米云服务同步“wlan设置”的安全性，小米已收集了32万wifi明文密码</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3863/" target="_blank">电影/电视剧/纪实片 信用卡信息泄漏猜想</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3790/" target="_blank">“伪基站”任意冒用手机号短信诈骗</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3771/" target="_blank">物理设备安全大牛 Barnaby Jack 挂了...</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3763/" target="_blank">技术讨论: 楼宇广告终端 怎么破? 入侵户外广告大屏幕！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3754/" target="_blank">(视频）USRP 来Sniffing 无线键盘，27Mhz keyboard sniffing</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3754/" target="_blank">(视频）USRP 来 Sniffing 无线键盘，27Mhz keyboard sniffing</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3728/" target="_blank">全面披露华硕十款无线路由器 - AiCloud启用单位的多个漏洞</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3668/" target="_blank">麻省理工发明可以穿墙透视的WiFi雷达</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3658/" target="_blank">使用电视棒接收飞机信号简单的实现方法</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3658/" target="_blank">使用电视棒接收飞机信号 简单的实现方法</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3657/" target="_blank">超级短信DDOS 女生一天收上万条10086短信 还有近50万条等着她</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3650/" target="_blank">讨论如何通过航空飞机的互联网入侵、劫持飞机上的乘客，入侵劫持卫星</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3634/" target="_blank">R820T电视棒+软件无线电跟踪飞机飞行轨迹（SDR&amp;ADS-B）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3633/" target="_blank">rtl-sdr,RTL2832+E4k tuner电视棒跟踪飞机轨迹ADS-B/TCAS/SSR</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3633/" target="_blank">rtl-sdr,RTL2832+E4k tuner电视棒跟踪飞机轨迹 ADS-B/TCAS/SSR</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3632/" target="_blank">电视棒跟踪飞机轨迹教程(ADS-B), SDR GPS 飞机追踪</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3632/" target="_blank">rtl-sdr,RTL2832电视棒跟踪飞机轨迹教程(ADS-B), SDR GPS 飞机追踪</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3615/" target="_blank">揭秘美国网军：纯铜包裹建筑防信号外泄</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3602/" target="_blank">黑客改造脑波耳机，让您可以通过思想控制建筑物</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3575/" target="_blank">视频: Dtac：将宠物变成了WiFi热点，泰国运营商将宠物变成WiFi热点</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3568/" target="_blank">户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机)</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3564/" target="_blank">视频: 可以用手势控制的Wi-Fi：WiSee</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3558/" target="_blank">WIFI信号可用于识别身体姿势</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3545/" target="_blank">公共无线安全——FakeAP之WiFi钓鱼</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3536/" target="_blank">GNU Radio USRP OpenBTS 小区短信 区域短信</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3535/" target="_blank">一种牛逼的短信群发技术 GNU Radio 小区短信 区域短信 免费发 无法拦截</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3509/" target="_blank">监听空中的无线电，监听polices对讲机</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3471/" target="_blank">周末湖边 Sniffing ADS-B，Hack 私人小型机场</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3429/" target="_blank">如何用Android智能手机劫持一架飞机（PPT下载）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3379/" target="_blank">陌陌猥琐流定位妹纸精准位置 有图有真相 + 安卓工具</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3361/" target="_blank">[讨论]如何入侵一个户外的电子显示屏</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3263/" target="_blank">关于X卧底的通话监听、短信记录、定位追踪等侵犯隐私的行为讨论</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3209/" target="_blank">dSploit—Android网络渗透套件测试小记（含视频）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3208/" target="_blank">实时抓取移动设备上的通信包(ADVsock2pipe+Wireshark+nc+tcpdump)</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3203/" target="_blank">android 手机系统、平台渗透测试神器 dSploit</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3139/" target="_blank">电话诈骗手段升级 听按键音破译银行密码</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3109/" target="_blank">公共WiFi免费蛋糕能否长久 成本谁来埋单</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3106/" target="_blank">如果大量短信攻击会不会造成拒绝服务，导致手机接不进电话？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3093/" target="_blank">手机连接不明WiFi网购 网友账户内1200元被盗</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3034/" target="_blank">美国极超音速飞机90分钟飞越半球，时速可达4000千米，飞行在太空边缘</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3022/" target="_blank">试验无线网络监听 网络账户密码也可被获取</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3021/" target="_blank">美国电视节目用波音飞机做坠机实验，让飞机多一些撞击试验</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3018/" target="_blank">视频:FPSRussia的俄式军火秀 遥控武装四桨直升机[中英双语字幕]</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3015/" target="_blank">免费 WiFi 是“披着羊皮的狼”，女子蹭网引来20多名警察</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2963/" target="_blank">谷歌获智能手表专利：原理似谷歌眼镜(图)</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2895/" target="_blank">Flightradar24 网站“直播”天上“堵飞机” 看全球实时航班</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2850/" target="_blank">街机、捕鱼机、上分器、解码器、打码器、写码器、无线、遥控</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2842/" target="_blank">美国试点超级无线网络 覆盖范围达数公里</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2840/" target="_blank">电话机真的可以用嘴巴模拟拨号音来拨号？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2839/" target="_blank">用音响打电话，揭秘柯南电话拨号，如果电话键失灵了，直接用音响打电话</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2839/" target="_blank">用音响打电话,揭秘柯南电话拨号,如果电话键失灵了,直接用音响打电话</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2838/" target="_blank">如何从按键音中听出360总裁周鸿祎的手机号码 + 详细剖析</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2829/" target="_blank">iPhone 短信欺骗漏洞攻击器、伪造短信号码工具、伪装发件人攻击器</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2812/" target="_blank">Never trust SMS: iOS text spoofing，永远不要相信短信：iOS的文字欺骗</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2811/" target="_blank">iPhone 短信欺骗漏洞披露，伪造短信号码、自定义短信手机号</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2791/" target="_blank">视频:Sight 未来视网膜成像技术 科幻微电影</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2764/" target="_blank">德安全专家破解GSM加密算法 GSM网络破解 监听全球40亿部手机</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2731/" target="_blank">支付宝错发中奖短信 送236台iPad2</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2727/" target="_blank">视频:纸飞机驱动模组，电子纸飞机</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2692/" target="_blank">视频:如何动手改造iPhone添加无线充电功能</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2632/" target="_blank">瑞典研发新技术可让WiFi每秒传输2.5TB数据</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2567/" target="_blank">男子侵入上海移动平台群发广告短信牟利获刑</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2559/" target="_blank">802.11b 无线网络固件级攻击、802.11b Firmware-Level Attacks</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2527/" target="_blank">谷歌放出首个由Google眼镜拍摄的视频 720P格式</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2506/" target="_blank">美国秘密研制新概念网路武器 可攻击离线电脑 无线电信号渗透</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2484/" target="_blank">从技术角度深入剖析：改号软件，电话号码任意显示，伪造来电显示</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2429/" target="_blank">华裔黑客 BITcrash44 凭借一台 iPhone4 拿下时代广场大屏幕</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2428/" target="_blank">视频：国外黑客无线入侵、遥控电子路桥系统</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2427/" target="_blank">视频：国外黑客无线入侵保时捷911，并且远程操控、遥控</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2426/" target="_blank">视频：国外黑客利用一部诺基亚N95手机入侵火车站电子屏，并且现场直播</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2425/" target="_blank">视频：国外黑客入侵高速公路交通电子屏</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2423/" target="_blank">大屏系统被黑 泰国国会现场直播不雅照</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2417/" target="_blank">美军投资新型隐形眼镜 可将信息投射到眼球上</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2405/" target="_blank">利用电磁波进行入侵、原子级的黑客入侵、利用电磁波毁坏物理设备</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2397/" target="_blank">电视机会收到邻居游戏机画面？小霸王信号干扰？红白机功率这么强悍？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2386/" target="_blank">Google开发扩展现实眼镜 基于Android系统运行</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2267/" target="_blank">伪造免费 WiFi 盗你账号密码</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2207/" target="_blank">视频:德国牛人！手工打造电力驱动的载人多浆式直升飞机！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2206/" target="_blank">视频:看牛人是怎么玩遥控飞机的 - 变矩螺旋桨倒飞</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2205/" target="_blank">视频:鬼佬的室内四轴定位系统，震惊，飞机模型能玩到如此地步！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2064/" target="_blank">GSM蜂窝基站定位基本原理浅析</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2056/" target="_blank">用黑客方式找回失窃的电脑 - GSM基站定位 - Wifi热点定位</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1814/" target="_blank">物理攻击、抓频攻击 - 利用雷达来进行扫描网络弱点</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1754/" target="_blank">金山截获国内首个QQ群蠕虫病毒</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1733/" target="_blank">1970年左右发现最早黑客技术——哨子</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1686/" target="_blank">美国号称世界最快飞机试飞时失去联系</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1621/" target="_blank">北京东城警方强装WIFI监控软件遭质疑</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1518/" target="_blank">【视频】NRF24L01无线射频模块实现无线视频通讯实例</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1518/" target="_blank">【视频】NRF24L01无线射频模块 实现无线视频通讯实例</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1484/" target="_blank">美“赤脚大盗”科尔顿面临6年监禁 曾偷5架飞机</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1442/" target="_blank">美国“末日飞机”曝光 面临大灾难可保护首脑 可抗核武器袭击、核辐射</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1439/" target="_blank">CMCC【中国移动】无线热点破解思路</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1366/" target="_blank">破解无线wifi密码后不能上网的问题解析</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1103/" target="_blank">能直接在眼球上投影图像的隐形眼镜,智子?</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/502/" target="_blank">【计算机常识】双机无线wifi互联教程</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/441/" target="_blank">【视频】永远不会掉下来的纸飞机 - 折纸滑翔机</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/391/" target="_blank">【技巧】用无线路由实现无线桥接</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/309/" target="_blank">【工具】无线破解/渗透工具 Beini-1.2.1</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/201/" target="_blank">渗透某餐厅无线点餐服务器</a> 
+</p>
+<p>
+	<strong>知乎<a href="http://www.zhihu.com/question/23061570" target="_blank">吐槽</a>：</strong> 
+</p>
+<p style="text-indent:2em;">
+	无线路由器被蹭网后，有被黑的风险吗？
+</p>
+<p style="text-indent:2em;">
+	如果路由器被会技术的人蹭网后，他会不会威胁到我，或者能够黑了我？或者路由器被恶意的陌生人连接后，他们能做什么？
+</p>
+<p style="text-indent:2em;">
+	----------
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	给你32个赞！
+</p>
+<p style="text-indent:2em;">
+	2014-03-16 14 赞
+</p>
+<p style="text-indent:2em;">
+	Depth
+</p>
+<p style="text-indent:2em;">
+	…………我已经目测出女的在哪了
+</p>
+<p style="text-indent:2em;">
+	2014-03-16 6 赞
+</p>
+<p style="text-indent:2em;">
+	魏天一
+</p>
+<p style="text-indent:2em;">
+	已关注。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	赞啊！太精彩
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	林熙佑
+</p>
+<p style="text-indent:2em;">
+	可怕的嗅探 是一打开相册啥的别人就知道吗 第一反应就是删自拍
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	Ricter
+</p>
+<p style="text-indent:2em;">
+	太精彩。我是蘑菇脑残粉！！
+</p>
+<p style="text-indent:2em;">
+	2014-03-16 7 赞
+</p>
+<p style="text-indent:2em;">
+	张一羽
+</p>
+<p style="text-indent:2em;">
+	厉害
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	李伟啊
+</p>
+<p style="text-indent:2em;">
+	学习了
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	我们都是蘑菇脑残粉！
+</p>
+<p style="text-indent:2em;">
+	2014-03-16 4 赞
+</p>
+<p style="text-indent:2em;">
+	付嘉
+</p>
+<p style="text-indent:2em;">
+	移动设备ROOT后改掉密码可以吗
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	加密WIFI环境下，连接上加密的WIFI之后是怎么嗅探到其他设备的数据包的？不是有加密吗？
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	Evi1m0（作者） 知乎用户
+</p>
+<p style="text-indent:2em;">
+	<a href="http://baike.baidu.com/view/155386.htm" target="_blank">ARP欺骗_百度百科</a> 
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	知乎用户 Evi1m0（作者）
+</p>
+<p style="text-indent:2em;">
+	谢谢！我之前抓包都是把无线网卡开在混杂模式，然后抓不加密的数据包。请问在加密WIFI下，混杂模式抓包的方法是不是不可行了啊？
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	换句话说，都是路由使用简单密码的造成的？
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	朱焕杰 Evi1m0（作者）
+</p>
+<p style="text-indent:2em;">
+	ARP 欺骗很容易被 360 之流发现的……（当然如果开了那个功能的话）
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	Evi1m0（作者） 朱焕杰
+</p>
+<p style="text-indent:2em;">
+	首先很多人采取的是弹窗后，不理睬甚至关闭杀毒。第二点就是移动设备的防火墙基本没啥用。
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	WPA破解起来就比较蛋疼了
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	为毛同行差距这么大……看书去……哇啊啊啊啊
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	蔡真
+</p>
+<p style="text-indent:2em;">
+	武汉能？
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	朱焕杰 Evi1m0（作者）
+</p>
+<p style="text-indent:2em;">
+	这倒也确实，我看到那个提示也会直接关闭……（不过很多时候显示的攻击者 IP 就是本机，误报吧……）也只有我小学五六年级那时候局域网 ARP 病毒爆发，那段日子才会很关注 ARP 欺骗问题。
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	追妹子的技能&gt;get 。不错的一回渗透测试
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	万恶的马赛克
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	冷爱
+</p>
+<p style="text-indent:2em;">
+	那如果对方关掉动态ip地址分配和限制了mac的话，那是有没有机会突破。我上次有找到过1篇关于突破mac的文章（关于突破限制国内好像很少），因为很久以前写的。后来因为我网卡不兼容，所以就没测试。所以请教一下到底有没有突破的可能。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	redrain root 知乎用户
+</p>
+<p style="text-indent:2em;">
+	这个问题我来帮蘑菇回答吧，他可能不太说得清，首先要区分你是否连接上AP，连上了就是 managed，和一个段内嗅探基本不差，没有连上就是monitor，无所谓你的wifi使用什么加密方式
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	未央
+</p>
+<p style="text-indent:2em;">
+	如果路由器没有广播SSID，还可以破解吗
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	刘宽
+</p>
+<p style="text-indent:2em;">
+	劫持下dns不是更好？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	王栌烽
+</p>
+<p style="text-indent:2em;">
+	怒赞
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	Oldplusnew
+</p>
+<p style="text-indent:2em;">
+	妈的技术宅实在太恐怖了，人森的赢家。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 7 赞
+</p>
+<p style="text-indent:2em;">
+	谢东平
+</p>
+<p style="text-indent:2em;">
+	非加密链接的后果+basic authentication真危险。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 2 赞
+</p>
+<p style="text-indent:2em;">
+	晓琦
+</p>
+<p style="text-indent:2em;">
+	微信号没有那横杠～～
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	Peter茄
+</p>
+<p style="text-indent:2em;">
+	碉堡！
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	我觉得下次装修要考虑一下：<a href="http://www.36kr.com/p/108470.html" target="_blank">法国研发出反WiFi墙纸：屏蔽WiFi信号的同时可让手机、无线电信号穿越。</a> 
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 5 赞
+</p>
+<p style="text-indent:2em;">
+	exuxu xia
+</p>
+<p style="text-indent:2em;">
+	你的字典真给力
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	牛精
+</p>
+<p style="text-indent:2em;">
+	嗅探工具怎么弄吖哥……能否指点一下
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	Claret
+</p>
+<p style="text-indent:2em;">
+	好可怕！
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	关闭SSID广播+Mac地址白名单，组合效果如何？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	高亮
+</p>
+<p style="text-indent:2em;">
+	没有然后吗？？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	最后z成功了吗？哈哈哈哈
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	一句都没看懂....但还是看完了....
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 13 赞
+</p>
+<p style="text-indent:2em;">
+	北上
+</p>
+<p style="text-indent:2em;">
+	已收藏
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户 朱焕杰
+</p>
+<p style="text-indent:2em;">
+	360腾讯金山这些的ARP防火墙都是默认关闭的，而且想开启入口很深来着.....前段时间怀疑局域网有病毒于是拿其他人电脑都试了下。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 1 赞
+</p>
+<p style="text-indent:2em;">
+	冯浩
+</p>
+<p style="text-indent:2em;">
+	你这个活动时间很久了啊，那时你微博还说要写一个女神上线提醒的程序。黑客真是最好的职业了，这比光纤导入，干扰卡，加密卡，视频肤辐射监视器什么的是高价硬件来的方便一百倍啊！！！！
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	好可怕…
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	淫魔
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	李里
+</p>
+<p style="text-indent:2em;">
+	到底女神追了没 上了没啊
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	周癫
+</p>
+<p style="text-indent:2em;">
+	点赞已点断手。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	暴力跑WPA真有这么流畅就好了
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 6 赞
+</p>
+<p style="text-indent:2em;">
+	陈龙飞
+</p>
+<p style="text-indent:2em;">
+	直接找女神要微信号不行吗，曲里拐弯的。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 1 赞
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	果断好顶赞啊！
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	管致远
+</p>
+<p style="text-indent:2em;">
+	其实有WPS功能的路由可以用WPS暴力破解的。如果路由本身没有防范而且信号够好，最多几个小时攻破而且不用字典。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 2 赞
+</p>
+<p style="text-indent:2em;">
+	李辉
+</p>
+<p style="text-indent:2em;">
+	看完之后去微薄上试了一下，发现登录果然不是HTTPS的
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户 redrain root
+</p>
+<p style="text-indent:2em;">
+	谢谢回答！其实我的问题是，在连接上 AP 之后，如果不用 ARP 劫持的方法，接收到 AP 发给其他客户端的数据包，能否直接读取，还是需要解密？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	paper super
+</p>
+<p style="text-indent:2em;">
+	一旦被入侵再想防御就比较难了，因为除了小白基本不会让你发现被入侵了，比如你不会在路由器里发现多余的客户端……
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	杨脑残
+</p>
+<p style="text-indent:2em;">
+	凶残的人类
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	何永南
+</p>
+<p style="text-indent:2em;">
+	想请问一下，我的路由接入到别人的路由，这样子也是可以按你说的那样子弄不？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	何永南
+</p>
+<p style="text-indent:2em;">
+	想请问一下，我的路由接入到别人的路由，这样子也是可以按你说的那样子弄不？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	寐游云
+</p>
+<p style="text-indent:2em;">
+	真的不是被女神骗进去的吗！
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 3 赞
+</p>
+<p style="text-indent:2em;">
+	kang xi
+</p>
+<p style="text-indent:2em;">
+	首先字典看来真的很屌 其次你得不到微信微博密码把？那些都是密文传输的啊
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	金tom
+</p>
+<p style="text-indent:2em;">
+	大武汉 热干面
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	三十年
+</p>
+<p style="text-indent:2em;">
+	作为小白，最关心的是银行卡方面的安全问题，答主可以解释下么
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	惊叹于故事主人跑字典的顺利，事实上对于数字＋字母＋符号组合的wpa2密码，跑字典跟买彩票差不多。。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 5 赞
+</p>
+<p style="text-indent:2em;">
+	知乎用户 管致远
+</p>
+<p style="text-indent:2em;">
+	对于新出的防pin的路由器，pin10个码给你来个300秒延时就够你蛋疼的了。。更别说人家要是把wps给关了，连pin的机会都木有。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	晏厚荣 付嘉
+</p>
+<p style="text-indent:2em;">
+	你ROOT后 很多厂家本来设置的安全措施被你全部废掉了。。应该是没用的
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	王超
+</p>
+<p style="text-indent:2em;">
+	我看到热干面后瞬间有了亲切感
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	女神的路由是另外一个备胎宅男设置的，已经布下木马，并且锁定了无线连接MAC
+</p>
+<p style="text-indent:2em;">
+	=-=
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 3 赞
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	这算软文么。。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	李大大
+</p>
+<p style="text-indent:2em;">
+	瞅把你累的，你又黑大TP了
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	技术宅拯救世界！
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	风泽
+</p>
+<p style="text-indent:2em;">
+	答主arp嗅探用的啥？命令行下的。。我一般用cain
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	风力
+</p>
+<p style="text-indent:2em;">
+	关键还是在密码长度问题，还能被爆破的密码没啥可讲的，像我的Meisterstuck149这种密码，没个几天怕是爆不出来。反之一个8位的生日密码……
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 3 赞
+</p>
+<p style="text-indent:2em;">
+	朱Kevin
+</p>
+<p style="text-indent:2em;">
+	不明觉厉
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	鸟蛋
+</p>
+<p style="text-indent:2em;">
+	无线路由下面可以设mac地址允许表，很方便设置的。不过好像可以伪造mac。。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	啊橙
+</p>
+<p style="text-indent:2em;">
+	不给电视播放爱情动作片太不完美啦哈哈哈！！！！
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	哥们，难道没意识到自己的黑客行为完全是犯法的吗，还进别人的微博留言。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 1 赞
+</p>
+<p style="text-indent:2em;">
+	余澈
+</p>
+<p style="text-indent:2em;">
+	这种行为有点略猥琐啊，我是女的会很烦这样。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 4 赞
+</p>
+<p style="text-indent:2em;">
+	Evi1m0（作者） 知乎用户
+</p>
+<p style="text-indent:2em;">
+	只是一个虚构的故事，你想多了：）全部是我本地演练的
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 8 赞
+</p>
+<p style="text-indent:2em;">
+	James Hu
+</p>
+<p style="text-indent:2em;">
+	finch！
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 1 赞
+</p>
+<p style="text-indent:2em;">
+	陈大
+</p>
+<p style="text-indent:2em;">
+	我一直想破解我能搜到的WIFI，自己能力有限啊，看了这篇过程很是威武啊！！！
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	Chiang
+</p>
+<p style="text-indent:2em;">
+	Nice.但太可怕了啊啊啊啊啊啊！！！还有一个问题，这种方式理财通的钱能黑掉吗？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	余元
+</p>
+<p style="text-indent:2em;">
+	北京朝阳
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	武汉的？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	当你在跑字典那个时间，我已经亲自过去问女神要得电话了。 -- &lt;当然这也是个虚构 :p &gt;
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	Gavin 余澈
+</p>
+<p style="text-indent:2em;">
+	不是很烦，应该是恐惧吧
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	千草堇
+</p>
+<p style="text-indent:2em;">
+	@雨声敲敲 大师可以教我这招么
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	徐雨
+</p>
+<p style="text-indent:2em;">
+	有什么用，上得了女神的网不代表上得了女神的床。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 9 赞
+</p>
+<p style="text-indent:2em;">
+	姜乔治
+</p>
+<p style="text-indent:2em;">
+	突然有一种森森的恐惧感
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	wpa2加密，暴力破解，你这咖啡要喝多久啊。不过现在有pin码破解。。所以一个好的路由器和一个复杂的密码很重要。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	张菁晶
+</p>
+<p style="text-indent:2em;">
+	@jin zhao 知道创宇是专业做安全的 你别太激动
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	Evi1m0（作者） 张菁晶
+</p>
+<p style="text-indent:2em;">
+	:D
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	金典
+</p>
+<p style="text-indent:2em;">
+	楼主的地理位置都给暴露了，武汉的热干面涨到4块钱一碗了
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	张小昂
+</p>
+<p style="text-indent:2em;">
+	cmd界面配色好评！
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	郑东彬
+</p>
+<p style="text-indent:2em;">
+	比较好奇楼主和Z的后续发展
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	redrain root 知乎用户
+</p>
+<p style="text-indent:2em;">
+	需要解密的，不仅仅是密码加密，数据传输也是加密的，需要有密码才能解密
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	热干面，啊！这就是生活!
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	redrain root 知乎用户
+</p>
+<p style="text-indent:2em;">
+	如果你感兴趣可以参看这里：<a href="http://www.freebuf.com/articles/wireless/5351.html" target="_blank">浅析无线网络数据窥探技术</a>，其实我们一般情况在做无线hacking的wlan的时候都是用aircrack ng，蘑菇文中那个反而我没用过
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 1 赞
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	太厉害了@
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	小伟朱
+</p>
+<p style="text-indent:2em;">
+	后来Z有没有跟女神啪啪啪呢？？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	苏甘霖
+</p>
+<p style="text-indent:2em;">
+	收徒弟吗
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	wolfccb
+</p>
+<p style="text-indent:2em;">
+	TP系列路由器登录密码压根不用上档次的技术手段也不用爆破就能破解我会乱说？答主可私信我。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	小鸣
+</p>
+<p style="text-indent:2em;">
+	爆破字典的原理是？？？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	热干面是？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	于光荣
+</p>
+<p style="text-indent:2em;">
+	关注后我的手机就要被黑了，现在还好，只是回复了答主这么一句，顶多知乎账号被盗，我才不关注呢.....
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	林羽
+</p>
+<p style="text-indent:2em;">
+	不设置wifi密码，使用无线地址过滤中的仅允许列表中生效的MAC地址访问本无线网络呢？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	Fuuy
+</p>
+<p style="text-indent:2em;">
+	哇哦 求蹭wifi密码破解
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	朱焕杰 张小昂
+</p>
+<p style="text-indent:2em;">
+	那不是 cmd，那是 OS X 的 Terminal
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	张小昂 朱焕杰
+</p>
+<p style="text-indent:2em;">
+	新手程序员，没见过什么世面……
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	用的那个嗅探工具是什么？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户 wolfccb
+</p>
+<p style="text-indent:2em;">
+	愿闻其详
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	Mark
+</p>
+<p style="text-indent:2em;">
+	用自己的设备做测试，物理机连接路由器，并开启下载保证有数据包。虚拟机用USB网卡抓包，但搜索不到客户端，怎么解决？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	哈达 kang xi
+</p>
+<p style="text-indent:2em;">
+	其实可以很蛋疼的搞个dns劫持，指向你自己的网站，然后等她登录就行了。只要有耐心去做个差不多的网站。当然了，我这是本办法。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	如果开启 Wireless Isolation 是否能有效防御呢？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	陈明易
+</p>
+<p style="text-indent:2em;">
+	请问假如隐藏ssid安全性会不会高一点？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	热干面！！
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	强颜欢笑
+</p>
+<p style="text-indent:2em;">
+	喂喂喂，大家不要在意那些细节好么?重点是Z哥的后续发展好吧！！！
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	梅sir
+</p>
+<p style="text-indent:2em;">
+	能不能评论一下wp8的安全性
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 1 赞
+</p>
+<p style="text-indent:2em;">
+	杨昕
+</p>
+<p style="text-indent:2em;">
+	这技术到最后只值一碗热干面。。。是有多不值钱。。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	杨昕
+</p>
+<p style="text-indent:2em;">
+	抓取登陆路由器的包有够难等的啊。还有WPA的破解，密钥设长点就有的等了。
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	Somnus Song
+</p>
+<p style="text-indent:2em;">
+	好可怕
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	彭伟成 wolfccb
+</p>
+<p style="text-indent:2em;">
+	求给力思路XD
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	知乎用户 redrain root
+</p>
+<p style="text-indent:2em;">
+	谢啦！内容很好~
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	雨声敲敲 千草堇
+</p>
+<p style="text-indent:2em;">
+	没搞过黑客。。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	王哲军
+</p>
+<p style="text-indent:2em;">
+	然少Z和你好上了，兄弟反目
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	方方
+</p>
+<p style="text-indent:2em;">
+	不敢不点赞。。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	冰淇淋
+</p>
+<p style="text-indent:2em;">
+	喝杯咖啡。。这密码也太好破了。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	sadan
+</p>
+<p style="text-indent:2em;">
+	我是来赞热干面的
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	这世界太黑暗了~~呜呜
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	张大海 管致远
+</p>
+<p style="text-indent:2em;">
+	我也举得，作者这里得到的密码看似8位pin码，从破解速度上来看应该是开启了WPS的路由吧，不然wpa怎会如此好破
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	黄慕洁
+</p>
+<p style="text-indent:2em;">
+	小白表示不懂=_=
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	冯仕杰
+</p>
+<p style="text-indent:2em;">
+	我啥都没看懂 但是你能教教我怎么蹭网么...我特别想窥探别人的隐私........
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	技术大侠叫你泡妹子。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	李靖锋
+</p>
+<p style="text-indent:2em;">
+	案例中，楼主“得逞”的关键就在于那个路由器了，虽然ssid和web登录密码不同，但是都一个毛病：太简单，甚至是默认的。即使是WPA2加密 采用词典楼主也没耗费多少时间就进去了。拿掉这个网关中枢，其他设备就相对简单多了，arp嗅探、抓取数据包，其它诸如微博账号、QQ号码都相继拿下（不过我估计楼主QQ密码应该是拿不到的）。还有一些人提到网银安全的，如果楼主别有用心，把路由dns改成劫持的，相信楼主坐着就把钱挣了。真心觉得路由这个家庭网络中枢一旦被拿下，后果真的是不堪设想。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	太古
+</p>
+<p style="text-indent:2em;">
+	自从我换了网件路由后每天在日志里都能看到一堆的DDoS攻击记录，是代表我电脑有病毒吗 - -
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	菠菜仔
+</p>
+<p style="text-indent:2em;">
+	女神的wifi密码好弱，要不然用字典破解不累死才怪
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	Bluemouth
+</p>
+<p style="text-indent:2em;">
+	没有犯法吗？答主自首去吧，我就不举报了。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	苏哲
+</p>
+<p style="text-indent:2em;">
+	绝对要点32个赞
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	假如早点认识兄台，我岂止是百人斩。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	Evi1m0（作者） 知乎用户
+</p>
+<p style="text-indent:2em;">
+	哈哈 兄台也来捧小生场了
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	知乎用户 Evi1m0（作者）
+</p>
+<p style="text-indent:2em;">
+	兄台值得32个赞。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	看来需要提高警惕啊
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	张逸冰
+</p>
+<p style="text-indent:2em;">
+	求本文所有软件工具的名称，及运行环境。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	另一只怪兽
+</p>
+<p style="text-indent:2em;">
+	我就是那种放弃治疗的人。。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	宋琦
+</p>
+<p style="text-indent:2em;">
+	泡妞还是找 @刘念 吧，把这些东西弄完竟然就只打招呼了……
+</p>
+<p style="text-indent:2em;">
+	本题问的什么？
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	Evi1m0（作者） 宋琦
+</p>
+<p style="text-indent:2em;">
+	为了泡妞而去浪费时间搞这个，太没道理了 ：P
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	刘继丰
+</p>
+<p style="text-indent:2em;">
+	你知道谷歌搜图吗
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	李勇气
+</p>
+<p style="text-indent:2em;">
+	神人啊，服
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	钟斌
+</p>
+<p style="text-indent:2em;">
+	我的路由都要 6、绑定IP MAC地址
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	Alfred
+</p>
+<p style="text-indent:2em;">
+	几个疑点：1.qq号的获取方式楼主没有讲清楚，局域网嗅探应该是获取不到的。至少仅仅PC端登录是无法获取的，通过手机客户端登录的过程中是否有加密不是很清楚，如果加密了也应该获取不了，没加密应该可以。2.taobao全程https加密，也是应该获取不到的，同理如QQ。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	Evi1m0（作者） Alfred
+</p>
+<p style="text-indent:2em;">
+	1. QQ号是可以通过人人网资料查看到的，以及让对方主动联系你。
+</p>
+<p style="text-indent:2em;">
+	2. 推荐使用dSplot
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	真厉害啊....
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	Cleric Re
+</p>
+<p style="text-indent:2em;">
+	成功被转化为蘑菇君脑残粉。劫路由系列其实在技术圈内其实早就流传n年了，但是蘑菇字里行间流露出的男神气息深深迷住了唔。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18 1 赞
+</p>
+<p style="text-indent:2em;">
+	哈达 梅sir
+</p>
+<p style="text-indent:2em;">
+	也一样，我wp手机上知乎，我电脑可以直接找到账号密码。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	黄东成
+</p>
+<p style="text-indent:2em;">
+	我们都是蘑菇脑残粉！
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	梅sir 哈达
+</p>
+<p style="text-indent:2em;">
+	找到什么账号密码？怎么找到的
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	哈达 梅sir
+</p>
+<p style="text-indent:2em;">
+	就用ARP嗅探啊，可以监控到password。知乎账号密码都是没加密的，同一局域网内你只要登录，就能查到
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	王斌
+</p>
+<p style="text-indent:2em;">
+	如果我的邻居有如此技术，我应该很高兴和他认识。。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-19
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	自从xx档案停刊再没看过这样的《一个人的战争》。。。大赞～
+</p>
+<p style="text-indent:2em;">
+	2014-03-19
+</p>
+<p style="text-indent:2em;">
+	知乎用户 知乎用户
+</p>
+<p style="text-indent:2em;">
+	ettercap
+</p>
+<p style="text-indent:2em;">
+	2014-03-19
+</p>
+<p style="text-indent:2em;">
+	知乎用户 张大海
+</p>
+<p style="text-indent:2em;">
+	大部分路由器是白痴密码
+</p>
+<p style="text-indent:2em;">
+	2014-03-19
+</p>
+<p style="text-indent:2em;">
+	Alfred Evi1m0（作者）
+</p>
+<p style="text-indent:2em;">
+	1.不好意思，我描述有误，应该不是QQ号，是QQ密码的获取。后来我仔细看了文章，QQ密码貌似没有得到。得到的是weibo以及renren。
+</p>
+<p style="text-indent:2em;">
+	2.dSplot应该还是抓不到taobao密码的吧？ 我不是很了解，请教一下。如果也能获取那我就要对taobao的https的安全性打个大大的疑问了。
+</p>
+<p style="text-indent:2em;">
+	2014-03-19
+</p>
+<p style="text-indent:2em;">
+	Evi1m0（作者） Alfred
+</p>
+<p style="text-indent:2em;">
+	没有获取到密码，劫持登录。
+</p>
+<p style="text-indent:2em;">
+	2014-03-19
+</p>
+<p style="text-indent:2em;">
+	Alfred Evi1m0（作者）
+</p>
+<p style="text-indent:2em;">
+	https的也能劫持？ 中间人攻击？
+</p>
+<p style="text-indent:2em;">
+	2014-03-19
+</p>
+<p style="text-indent:2em;">
+	张集慧
+</p>
+<p style="text-indent:2em;">
+	wifi的纯数字8位密码，和路由器默认账户密码是破解的关键。
+</p>
+<p style="text-indent:2em;">
+	2014-03-19
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	太吓人了
+</p>
+<p style="text-indent:2em;">
+	2014-03-19
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	直接找机会要电话啊（难道技术就是这么练起来的？世事难料啊）·······最后大亮
+</p>
+<p style="text-indent:2em;">
+	2014-03-19
+</p>
+<p style="text-indent:2em;">
+	清如许
+</p>
+<p style="text-indent:2em;">
+	很精彩，但我更关注拿到微信号的后续动作，btw，你朋友Z得手了么？
+</p>
+<p style="text-indent:2em;">
+	2014-03-19
+</p>
+<p style="text-indent:2em;">
+	徐永昌
+</p>
+<p style="text-indent:2em;">
+	请问小白如何成为像您这样技术的人？
+</p>
+<p style="text-indent:2em;">
+	2014-03-19
+</p>
+<p style="text-indent:2em;">
+	yanga zhe
+</p>
+<p style="text-indent:2em;">
+	好腻害。。。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-20
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	你这么刁，全知乎的宅男都沸腾了
+</p>
+<p style="text-indent:2em;">
+	2014-03-20
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	始终没忍下心来播放。。。那么饶！到底放没放。。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-20
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	额……如果无缘无故被人侵入电脑打招呼，第一反应是关机准备搬家好么……这里叫好的都是宅男吧……-_-#
+</p>
+<p style="text-indent:2em;">
+	2014-03-20
+</p>
+<p style="text-indent:2em;">
+	陈振麟
+</p>
+<p style="text-indent:2em;">
+	太牛了！！！收徒弟不！！！
+</p>
+<p style="text-indent:2em;">
+	2014-03-20
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	为什么用Base64已经查看到帐号密码后，还要用python用字典暴力破解？
+</p>
+<p style="text-indent:2em;">
+	2014-03-20
+</p>
+<p style="text-indent:2em;">
+	Evi1m0（作者） 知乎用户
+</p>
+<p style="text-indent:2em;">
+	那是登录的帐号密码包，而密码不是admin，所以需要将密码字典与账户进行组合后进行base64编码，然后遍历登录。而不是admin:admin这是正确的：）
+</p>
+<p style="text-indent:2em;">
+	2014-03-20
+</p>
+<p style="text-indent:2em;">
+	wisk lina
+</p>
+<p style="text-indent:2em;">
+	只有四个字：我了个去
+</p>
+<p style="text-indent:2em;">
+	2014-03-20
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	我想请问，如果是在群租房中连入的网络该怎么防范呢？路由器属于房东管制，无法触碰。
+</p>
+<p style="text-indent:2em;">
+	2014-03-20
+</p>
+<p style="text-indent:2em;">
+	知乎用户 Evi1m0（作者）
+</p>
+<p style="text-indent:2em;">
+	继续请教一下，既然能 看到帐号，是不能看到密码还是只能看到部分密码？密码那部分的包抓多次能抓到吗？
+</p>
+<p style="text-indent:2em;">
+	2014-03-20
+</p>
+<p style="text-indent:2em;">
+	Evi1m0（作者） 知乎用户
+</p>
+<p style="text-indent:2em;">
+	帐号也看不到，只是个人直觉到帐号是默认的admin，只是密码被修改掉了。
+</p>
+<p style="text-indent:2em;">
+	2014-03-20
+</p>
+<p style="text-indent:2em;">
+	知乎用户 Evi1m0（作者）
+</p>
+<p style="text-indent:2em;">
+	我还是没看懂啊，那用Base64看的是什么呢?
+</p>
+<p style="text-indent:2em;">
+	2014-03-20
+</p>
+<p style="text-indent:2em;">
+	Evi1m0（作者） 知乎用户
+</p>
+<p style="text-indent:2em;">
+	不看出来是怎么样的请求，怎么批量发送请求爆破呢？抓取的包就是为了自己伪造包进行爆破。
+</p>
+<p style="text-indent:2em;">
+	2014-03-20
+</p>
+<p style="text-indent:2em;">
+	秦少游
+</p>
+<p style="text-indent:2em;">
+	膜拜
+</p>
+<p style="text-indent:2em;">
+	2014-03-21
+</p>
+<p style="text-indent:2em;">
+	知乎用户 Evi1m0（作者）
+</p>
+<p style="text-indent:2em;">
+	懂了，谢了！
+</p>
+<p style="text-indent:2em;">
+	2014-03-21
+</p>
+<p style="text-indent:2em;">
+	牧阳
+</p>
+<p style="text-indent:2em;">
+	简直就是男神的节奏。。。。
+</p>
+<p style="text-indent:2em;">
+	2014-03-22
+</p>
+<p style="text-indent:2em;">
+	鱼丸
+</p>
+<p style="text-indent:2em;">
+	嗯嗯 我家的wifi是隐藏的 必须手动输入网络名称才能接入。这样真的安全吗？
+</p>
+<p style="text-indent:2em;">
+	2014-03-22
+</p>
+<p style="text-indent:2em;">
+	星予
+</p>
+<p style="text-indent:2em;">
+	这种典型的技术宅男的极客玩法……在面对女神的时候，我想还是不如创造聊天机会直接要电话来的实在和成功率高吧
+</p>
+<p style="text-indent:2em;">
+	2014-03-22
+</p>
+<p style="text-indent:2em;">
+	DIM shi
+</p>
+<p style="text-indent:2em;">
+	你给女神放了哪部爱情动作片啊？加勒比的吗？
+</p>
+<p style="text-indent:2em;">
+	2014-03-22
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	哈哈，路由器硬件锁锁着呢 ，你来破试试？
+</p>
+<p style="text-indent:2em;">
+	2014-03-23
+</p>
+<p style="text-indent:2em;">
+	罗利
+</p>
+<p style="text-indent:2em;">
+	微信公众号：Evil-say，应该除掉—号吧。楼主
+</p>
+<p style="text-indent:2em;">
+	2014-03-23
+</p>
+<p style="text-indent:2em;">
+	Evi1m0（作者） 罗利
+</p>
+<p style="text-indent:2em;">
+	去掉-号搜索微信会出现同名，所以还是直接：Evil-say了：）
+</p>
+<p style="text-indent:2em;">
+	2014-03-23
+</p>
+<p style="text-indent:2em;">
+	知乎用户
+</p>
+<p style="text-indent:2em;">
+	之前听了TED的《Mikko Hypponen：美国如何出卖了世界？——采取行动的时候到了》，就是一身冷汗的醒脑！我们真的对互联网的东西太盲目的诚实，想想都很可怕。
+</p>
+<p style="text-indent:2em;">
+	昨天 10:21
+</p>
+<p style="text-indent:2em;">
+	成博
+</p>
+<p style="text-indent:2em;">
+	我看过这个文章，图一样，内容不一样
+</p>
+<p style="text-indent:2em;">
+	昨天 14:37
+</p>
+<p style="text-indent:2em;">
+	Evi1m0（作者） 成博
+</p>
+<p style="text-indent:2em;">
+	看来又是一个转载不留版权且阉割的？麻烦发一下地址：）
+</p>
+<p style="text-indent:2em;">
+	昨天 14:39
+</p>
+<p style="text-indent:2em;">
+	核磁
+</p>
+<p style="text-indent:2em;">
+	个人觉得，这个是在打法律的擦边球，以后法规完善了，是可能定性为犯罪的。
+</p>
+<p style="text-indent:2em;">
+	昨天 23:25
+</p>
+<p style="text-indent:2em;">
+	谢向阳，数码爱好者
+</p>
+<p style="text-indent:2em;">
+	陈二蕾、米乐、知乎用户 等人赞同
+</p>
+<p style="text-indent:2em;">
+	补充一个: 被蹭网后，最简单的攻击就是启用网络执法官、p2p终结者等基于ARP欺骗的工具限制你的网速，高端一点的可以继续利用ARP欺骗做DNS劫持，然后做一个淘宝、支付宝之类的钓鱼页面，这样在你访问淘宝的时候就会自动连上钓鱼页面，要命的是这个时候你的浏览器显示的网址还都是正确的，连起疑心的机会都不留给你...
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 5 条评论
+</p>
+<p style="text-indent:2em;">
+	季翁
+</p>
+<p style="text-indent:2em;">
+	安德鲁奉、sf zhuang、黄泽凯 等人赞同
+</p>
+<p style="text-indent:2em;">
+	不懂技术。难道直接关闭广播（SSID)不更安全么？
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 6 条评论
+</p>
+<p style="text-indent:2em;">
+	知乎用户，重要的不是说了什么和别人评论了什么，重…
+</p>
+<p style="text-indent:2em;">
+	知乎用户、G weaming 赞同
+</p>
+<p style="text-indent:2em;">
+	1：mac地址过滤，指定设备才能连接。
+</p>
+<p style="text-indent:2em;">
+	2：更改路由管理界面的IP，不已192开头。
+</p>
+<p style="text-indent:2em;">
+	3：更改路由管理界面登录用户名和密码。
+</p>
+<p style="text-indent:2em;">
+	4：mac过滤，指定设备才能登录管理界面。
+</p>
+<p style="text-indent:2em;">
+	5：开启ap隔离，通过本路由联网的设备间不能互相访问。
+</p>
+<p style="text-indent:2em;">
+	6：关闭ssid广播，本路由的无线广播名称不能被搜索，需要手动设置才能联网。
+</p>
+<p style="text-indent:2em;">
+	7：开启路由具备的所有安全设置。
+</p>
+<p style="text-indent:2em;">
+	8：关闭远端web管理。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	知乎用户，职业路过
+</p>
+<p style="text-indent:2em;">
+	米乐、华阴先生 赞同
+</p>
+<p style="text-indent:2em;">
+	其实要分析别人会干啥也简单，自己住的地方特地不设密码，随便让别人连，我只是在电脑前看着别人会干啥而已，会蹭网会破解上我的路由器，当然也得相应拿出点东西给我分享。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18 1 条评论
+</p>
+<p style="text-indent:2em;">
+	zckevin，不装懂 / 坚定不移抵制网络用语
+</p>
+<p style="text-indent:2em;">
+	知乎用户、谢向阳 赞同
+</p>
+<p style="text-indent:2em;">
+	徒劳：
+</p>
+<p style="text-indent:2em;">
+	1.关闭SSID广播，有害无益。
+</p>
+<p style="text-indent:2em;">
+	2.绑定MAC地址，朋友来家里玩上网很麻烦，还可能乌龙指把自己屏蔽了只好重置路由。。。
+</p>
+<p style="text-indent:2em;">
+	必须做的：
+</p>
+<p style="text-indent:2em;">
+	1.WPA2-PSK强密码，越长越好，越没规律越好。当然没必要用“O9ockOtiSOTNwkcop3Iv”这种级别的密码，不方便也没必要，但最好还是不要用生日、手机号、常见单词、拼音。。。。
+</p>
+<p style="text-indent:2em;">
+	2.路由器登录密码一定得改，一定得。。。越长越复杂越好，然后记下来存个邮箱里之类的。
+</p>
+<p style="text-indent:2em;">
+	3.如果路由器有端口隔离，可以考虑使用，当然会很不方便，自己权衡。
+</p>
+<p style="text-indent:2em;">
+	4.定期更换Wi-Fi名字（ESSID）和密码，你看安全和方便总是对立的。。
+</p>
+<p style="text-indent:2em;">
+	我小时候读过一本刑侦技术方面的译著，对卷首语“凡触摸，必留下痕迹”这句话印象很深。任何信息，只要放进存储介质，就要假设在某一天会被所有人看到。即使难以洁身自好，起码忍住别拍艳照。
+</p>
+<p style="text-indent:2em;">
+	http://weibo.com/1401527553/ABFpnsGXE...
+</p>
+<p style="text-indent:2em;">
+	2014-03-19 3 条评论
+</p>
+<p style="text-indent:2em;">
+	余弦，黑客，来自知道创宇的懒人
+</p>
+<p style="text-indent:2em;">
+	SoJaBing 赞同
+</p>
+<p style="text-indent:2em;">
+	fly: <a href="http://www.zhihu.com/question/22448626/answer/21393107" target="_blank">被人蹭网之后除了蹭网这个损失外，会不会被蹭网的人入侵电脑？</a> 
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p style="text-indent:2em;">
+	匿名用户
+</p>
+<p style="text-indent:2em;">
+	知乎用户、知乎用户 赞同
+</p>
+<p style="text-indent:2em;">
+	大学时候放假回家，因为宽带没包月就去蹭网，总能看到些有意思的东西。
+</p>
+<p style="text-indent:2em;">
+	防蹭网也没什么高深的技巧：
+</p>
+<p style="text-indent:2em;">
+	1.加密级别：最好用WPA2，WEP一定不要用了。
+</p>
+<p style="text-indent:2em;">
+	2.路由密码：一般默认都是admin admin，最好都改掉，并且复杂一点。
+</p>
+<p style="text-indent:2em;">
+	3.MAC绑定：只允许家庭内部的设备访问。
+</p>
+<p style="text-indent:2em;">
+	做好以上这些就差不多了，至于劫持、MITM神马，除非白富美也就不要太在意了 =,=
+</p>
+<p style="text-indent:2em;">
+	当选择在天朝上网的那一刻起，就不要对隐私抱有太多幻想...
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	灭度需三生，业火焚天地，灭度需三生
+</p>
+<p style="text-indent:2em;">
+	知乎用户 赞同
+</p>
+<p style="text-indent:2em;">
+	“路由器DNS劫持”问题的说明：
+</p>
+<p style="text-indent:2em;">
+	近期部分媒体报道“路由器DNS劫持”问题，引起一些用户的关注和担忧，特作以下说明：
+</p>
+<p style="text-indent:2em;">
+	1.TP-LINK早前已关注并解决了该问题，目前在售的所有TP-LINK产品均已具备反劫持能力，用户可以放心购买和使用；
+</p>
+<p style="text-indent:2em;">
+	2.不要轻信任何安全软件。不管使用哪家的路由器，应对此问题唯一直接有效的防范方法是：不使用厂商出厂默认的管理员用户名和密码，一定要修改成自己编的；（TP-LINK产品已取消默认管理员用户名密码机制，并限制密码尝试次数，用户必须自己编写管理员密码。不要编成"admin"。）
+</p>
+<p style="text-indent:2em;">
+	3.不要选择让浏览器记住用户名和密码，路由器设置完成后关闭浏览器。为避免忘记用户名密码的不便，请书面记录并妥善保存。（TP-LINK产品已提供用户名密码记录便签，敬请使用。）
+</p>
+<p style="text-indent:2em;">
+	2014-03-19 10 条评论
+</p>
+<p style="text-indent:2em;">
+	小虫子，小虫子吃
+</p>
+<p style="text-indent:2em;">
+	凌风、知乎用户 赞同
+</p>
+<p style="text-indent:2em;">
+	用奶瓶一样可以起到暴利破解的作用。其实破解的前提就是不安全的用网习惯造成。
+</p>
+<p style="text-indent:2em;">
+	但是预防也很简单：
+</p>
+<p style="text-indent:2em;">
+	1、wifi密码设置 数字+英文大小写+标点，wap2加密，一般就不会被破解。
+</p>
+<p style="text-indent:2em;">
+	2、路由器管理登陆密码也要改，不能默认admin~
+</p>
+<p style="text-indent:2em;">
+	3、暴利破解时间跟计算机性能有关系，复杂的密码有的计算机几个月也破解不出来。
+</p>
+<p style="text-indent:2em;">
+	注意：养成安全上网的习惯，做好防护措施，杀毒、防arp，补丁一个不少。女生要特别注意！
+</p>
+<p style="text-indent:2em;">
+	2014-03-17
+</p>
+<p style="text-indent:2em;">
+	沐清涵，欢迎鸽友关注微信公众号“信鸽俱乐部”
+</p>
+<p style="text-indent:2em;">
+	zaiyong yao、王文平 赞同
+</p>
+<p style="text-indent:2em;">
+	别人通过的路由器上网
+</p>
+<p style="text-indent:2em;">
+	别人有被黑的可能
+</p>
+<p style="text-indent:2em;">
+	生杀大权在你手中
+</p>
+<p style="text-indent:2em;">
+	别人黑你 好搞笑
+</p>
+<p style="text-indent:2em;">
+	你随便弄个淘宝客 CS啥的人家只要购物都替你赚钱了
+</p>
+<p style="text-indent:2em;">
+	这等好事我咋遇不到呢
+</p>
+<p style="text-indent:2em;">
+	2014-03-17 3 条评论
+</p>
+<p style="text-indent:2em;">
+	知乎用户，知识改变命运，科技改变生活。
+</p>
+<p style="text-indent:2em;">
+	不用时，关闭宽带共享路由器。
+</p>
+<p style="text-indent:2em;">
+	如果不影响使用的话，设置WIFI信号的为最弱。
+</p>
+<p style="text-indent:2em;">
+	使用DHCP服务时，指定每个设备的MAC和IP对应值。
+</p>
+<p style="text-indent:2em;">
+	关闭控制台远端(互联网)访问功能，设置访问控制台访问端的IP为你的PC机的IP地址。
+</p>
+<p style="text-indent:2em;">
+	常看看宽带路由器的日志，如果担心被黑清空日志，可以使用email转发日志功能将日志发出去。这样，即使宽带路由器被黑，清空日志，发出去的日志email无法被追回。
+</p>
+<p style="text-indent:2em;">
+	使用nmap对设备进行端口扫描，关闭不必要的服务，比如telnet/http/uPNP服务。
+</p>
+<p style="text-indent:2em;">
+	定期更换强度足够(字母大小写，符号，数字组合，长度12位以上)的密码是个好习惯。
+</p>
+<p style="text-indent:2em;">
+	2014-03-18
+</p>
+<p style="text-indent:2em;">
+	Lyuyee Chow，所有事在变得容易之前，都是困难的。
+</p>
+<p style="text-indent:2em;">
+	表示非常可怕
+</p>
+<p style="text-indent:2em;">
+	2014-03-20
+</p>
+<p style="text-indent:2em;">
+	朱洪流，网络安全界的大牛
+</p>
+<p style="text-indent:2em;">
+	小伙伴们,如果你担心你的女生可能会被2楼窥探,我们可以来进行这样的一个操作,开启路由器物理地址验证.
+</p>
+<p style="text-indent:2em;">
+	每台机器都有一个mac物理地址,主流浏览器目前都支持mac地址验证.
+</p>
+<p style="text-indent:2em;">
+	2014-03-21
+</p>
+<p style="text-indent:2em;">
+	福建松，學生
+</p>
+<p style="text-indent:2em;">
+	我家的路由器怕发生冲突把局域网地址安装的客服设置成了192.168.？.1（客服填了一个数）
+</p>
+<p style="text-indent:2em;">
+	好死不死有一天没网了，我只好看说明书按图索骥，登录了192.168.1.1点了个遍，弄了个健康模式，晚上限制了网速什么的，后来无意间听见楼上的阿姨打电话电信公司投诉说自己的网怎么慢到连电视剧都看不了。。
+</p>
+<p style="text-indent:2em;">
+	我想这也是一种蹭网，一种黑吧。小区局域网不要把路由器密码设成admin啊，真的会有人不小心给你弄个健康模式定时模式的啊，尽管他是不小心的。
+</p>
+<p style="text-indent:2em;">
+	2014-03-22
+</p>
+<p style="text-indent:2em;">
+	金浩
+</p>
+<p style="text-indent:2em;">
+	如何通过抓取登录路由器的请求，遍历帐号密码发送请求查看返回数据包大小？
+</p>
+<p style="text-indent:2em;">
+	2014-03-22
+</p>
+<p style="text-indent:2em;">
+	罗威
+</p>
+<p style="text-indent:2em;">
+	看了这文章后有点疑惑想请教几个问题。
+</p>
+<p style="text-indent:2em;">
+	1，你是怎么有权限抓取登录路由器的请求.你不是得首先远程诊断或者telnet连接路由器吗？
+</p>
+<p style="text-indent:2em;">
+	2，你怎么知道别人的密码YWRtaW46YWRtaW4= 是base64加密的，然后既然使用Base64解密开查看内容：admin:admin。为什么还要编写了一个python脚本将字典中的密码与“admin:”进行组合然后进行base64加密，进行破解呢？
+</p>
+<p style="text-indent:2em;">
+	2014-03-24
+</p>
+<p style="text-indent:2em;">
+	匿名用户
+</p>
+<p style="text-indent:2em;">
+	会,内网可以猜测你的路由器后台密码,进入后台后可以做的事就多了,比如修改DNS进而控制你所有的上网行为
+</p>
+<p style="text-indent:2em;">
+	2014-03-16
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="6113,4257,182.18.102.167">
+<p>那个疼 @ 2014-03-27 10:37:14</p>
+<p style="text-indent:2em">这么屌,只为了给兄弟找女人...活该丝一辈子~~</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">2014-03-17 4 赞
+Evi1m0（作者） 知乎用户
+只是一个虚构的故事，你想多了：）全部是我本地演练的</p>
+</blockquote>
+<blockquote id="6116,4257,27.184.174.173">
+<p>佚名 @ 2014-03-27 16:10:12</p>
+<p style="text-indent:2em">虚构的？ so 作者假设的是wep加密</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">yep?~</p>
+</blockquote>
+<blockquote id="6767,4257,182.18.32.92">
+<p>草民 @ 2014-07-21 12:28:34</p>
+<p style="text-indent:2em">哇，不愧为一代黑侠，遗憾的是这么高的高手用在了女人身上就遗憾了啊！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">哈哈哈，此文纯属意淫，内容仅供参考！</p>
+</blockquote>
+<blockquote id="6768,4257,118.144.128.52">
+<p>佚名 @ 2014-07-21 12:41:58</p>
+<p style="text-indent:2em">有屌用？除了YY还是YY</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">哈哈哈，此文纯属意淫，内容仅供参考！</p>
+</blockquote>
+<blockquote id="7104,4257,183.34.240.51">
+<p>佚名 @ 2014-10-28 01:54:11</p>
+<p style="text-indent:2em">这大概就是传说中的隔墙YY了，只不过由单手变成双手</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="8186,4257,58.60.169.158">
+<p>佚名 @ 2016-03-17 14:19:07</p>
+<p style="text-indent:2em">网站不更新了吗</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">比较忙，还有很多内容不公开，所以~~~</p>
+</blockquote>
+<blockquote id="8245,4257,106.37.205.206">
+<p>佚名 @ 2016-05-05 19:52:02</p>
+<p style="text-indent:2em">路由器攻击是不是很难，现在wifi搜不到，搜到了如果没有手动验证也进不去（即使有密码）！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Evi1m0</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2014-03-26
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/%E8%B7%AF%E7%94%B1/">路由</a>
+          <a href="https://lcx.cc/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/">路由器</a>
+          <a href="https://lcx.cc/tags/%E5%85%A5%E4%BE%B5/">入侵</a>
+          <a href="https://lcx.cc/tags/%E6%97%A0%E7%BA%BF/">无线</a>
+          <a href="https://lcx.cc/tags/android/">Android</a>
+          <a href="https://lcx.cc/tags/dns/">DNS</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/iphone/">iPhone</a>
+          <a href="https://lcx.cc/tags/mac/">MAC</a>
+          <a href="https://lcx.cc/tags/python/">Python</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/root/">Root</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/wifi/">WiFi</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%8D%93/">安卓</a>
+          <a href="https://lcx.cc/tags/%E6%9A%B4%E5%8A%9B/">暴力</a>
+          <a href="https://lcx.cc/tags/%E7%88%86/">爆</a>
+          <a href="https://lcx.cc/tags/%E7%97%85%E6%AF%92/">病毒</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E8%84%91/">电脑</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E8%A7%86/">电视</a>
+          <a href="https://lcx.cc/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+          <a href="https://lcx.cc/tags/%E6%81%B6%E6%84%8F/">恶意</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E5%90%8E%E5%8F%B0/">后台</a>
+          <a href="https://lcx.cc/tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+          <a href="https://lcx.cc/tags/%E5%8A%AB%E6%8C%81/">劫持</a>
+          <a href="https://lcx.cc/tags/%E8%A7%A3%E5%AF%86/">解密</a>
+          <a href="https://lcx.cc/tags/%E5%B1%80%E5%9F%9F%E7%BD%91/">局域网</a>
+          <a href="https://lcx.cc/tags/%E5%AE%A2%E6%88%B7%E7%AB%AF/">客户端</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E9%AA%97/">骗</a>
+          <a href="https://lcx.cc/tags/%E7%A0%B4%E8%A7%A3/">破解</a>
+          <a href="https://lcx.cc/tags/%E6%AC%BA%E9%AA%97/">欺骗</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BE%E5%A4%87/">设备</a>
+          <a href="https://lcx.cc/tags/%E4%B8%96%E7%95%8C/">世界</a>
+          <a href="https://lcx.cc/tags/%E6%89%8B%E6%9C%BA/">手机</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%90%9C%E7%B4%A2/">搜索</a>
+          <a href="https://lcx.cc/tags/%E9%94%81/">锁</a>
+          <a href="https://lcx.cc/tags/%E6%B7%98%E5%AE%9D/">淘宝</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E5%BE%AE%E5%8D%9A/">微博</a>
+          <a href="https://lcx.cc/tags/%E5%BE%AE%E4%BF%A1/">微信</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%89%A9%E7%90%86/">物理</a>
+          <a href="https://lcx.cc/tags/%E4%BF%A1%E5%8F%B7/">信号</a>
+          <a href="https://lcx.cc/tags/%E5%97%85%E6%8E%A2/">嗅探</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          <a href="https://lcx.cc/tags/%E8%B4%A6%E5%8F%B7/">账号</a>
+          <a href="https://lcx.cc/tags/%E8%B4%A6%E6%88%B7/">账户</a>
+          <a href="https://lcx.cc/tags/%E5%AD%97%E5%85%B8/">字典</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4258/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">WiFi里的猫腻：变色龙病毒，无线破解、蹭网，蜜罐路由器，黑吃黑</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4256/">
+            <span class="next-text nav-default">女黑客Oona，分析直升机现场拍摄警车追捕画面中的信号声，绘出飞机飞行轨迹</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

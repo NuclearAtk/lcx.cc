@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Arp EMP v1.0 发布 &amp; 技术文档 &amp; 详细分析 hijackport &#43; rdpproxy - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="Arp EMP v1.0 发布 & 技术文档 & 详细分析 hijackport &#43; rdpproxy。呵呵，各位朋友也许会问，你这两天怎么没有更新网站，更新的很少？呵呵，我在忙，在忙什么呢，在忙着写：Arp EMP v1.0 ！呵呵，我为什么要写这个呢？这个说来话长，源于这篇文章：嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结" />
+<meta name="keywords" content="Arp EMP v1.0 发布 & 技术文档 & 详细分析 hijackport &#43; rdpproxy" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/2272/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="Arp EMP v1.0 发布 &amp; 技术文档 &amp; 详细分析 hijackport &#43; rdpproxy" />
+<meta property="og:description" content="Arp EMP v1.0 发布 &amp; 技术文档 &amp; 详细分析 hijackport &#43; rdpproxy。呵呵，各位朋友也许会问，你这两天怎么没有更新网站，更新的很少？呵呵，我在忙，在忙什么呢，在忙着写：Arp EMP v1.0 ！呵呵，我为什么要写这个呢？这个说来话长，源于这篇文章：嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/2272/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-02-26T22:16:37&#43;08:00" />
+<meta property="article:modified_time" content="2012-02-27T15:10:49&#43;08:00" />
+
+<meta itemprop="name" content="Arp EMP v1.0 发布 &amp; 技术文档 &amp; 详细分析 hijackport &#43; rdpproxy">
+<meta itemprop="description" content="Arp EMP v1.0 发布 &amp; 技术文档 &amp; 详细分析 hijackport &#43; rdpproxy。呵呵，各位朋友也许会问，你这两天怎么没有更新网站，更新的很少？呵呵，我在忙，在忙什么呢，在忙着写：Arp EMP v1.0 ！呵呵，我为什么要写这个呢？这个说来话长，源于这篇文章：嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结"><meta itemprop="datePublished" content="2012-02-26T22:16:37&#43;08:00" />
+<meta itemprop="dateModified" content="2012-02-27T15:10:49&#43;08:00" />
+<meta itemprop="wordCount" content="7018">
+<meta itemprop="keywords" content="hijack,分析,技术,Html,HTTP,IP,MAC,VB,Windows,本地,端口,防火墙,工具,攻击,劫持,局域网,密码,命令,骗,欺骗,数据,思路,协议,嗅探,转载," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Arp EMP v1.0 发布 &amp; 技术文档 &amp; 详细分析 hijackport &#43; rdpproxy"/>
+<meta name="twitter:description" content="Arp EMP v1.0 发布 &amp; 技术文档 &amp; 详细分析 hijackport &#43; rdpproxy。呵呵，各位朋友也许会问，你这两天怎么没有更新网站，更新的很少？呵呵，我在忙，在忙什么呢，在忙着写：Arp EMP v1.0 ！呵呵，我为什么要写这个呢？这个说来话长，源于这篇文章：嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Arp EMP v1.0 发布 &amp; 技术文档 &amp; 详细分析 hijackport &#43; rdpproxy</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-02-26" class="post-time">
+          2012-02-26
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/hijack/"> hijack </a>
+            <a href="https://lcx.cc/categories/%E5%88%86%E6%9E%90/"> 分析 </a>
+            <a href="https://lcx.cc/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            
+          </div>
+        <span class="more-meta"> 约 7018 字 </span>
+          <span class="more-meta"> 预计阅读 15 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p align="center">
+	<a href="/file/old/138_e2185c44ad34598246a5d9250cf431adcaef84a4.jpg" target="_blank"><img alt="" src="/file/old/138_e2185c44ad34598246a5d9250cf431adcaef84a4.jpg" width="800" height="670" /></a> 
+</p>
+<p align="center">
+	Arp EMP v1.0 - 点击图片查看高清大图
+</p>
+<p style="text-indent:2em;">
+	我这两天在忙着写：Arp EMP v1.0，呵呵，我为什么要写这个呢？
+</p>
+<p style="text-indent:2em;">
+	这个说来话长，源于这篇文章：<a href="https://lcx.cc/post/2257/" target="_blank">嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结</a> 
+</p>
+<p style="text-indent:2em;">
+	这个矛盾的缘由，是由于我在文章底部写了一句话（出于礼貌，这句话已经于几天前去掉了）：***************************************。
+</p>
+<p style="text-indent:2em;">
+	于是乎，这篇文章被转载，紧接着，当天下午，open 本人就看到了，然后在其博客吐槽（几天后，有人在我博客挑衅时我才看到的），内容如下：
+</p>
+<p style="text-indent:2em;">
+	<br />
+</p>
+<p style="text-indent:2em;">
+	地址：<a href="http://hi.baidu.com/0x24/blog/item/602c917ae0f71bf22e73b3fc.html" target="_blank">http://hi.baidu.com/0x24/blog/item/602c917ae0f71bf22e73b3fc.html</a> 
+</p>
+<p style="text-indent:2em;">
+	内容：发发唠叨，2012-02-21 23:38，转来转去转到我这里来了.写文章别引用过多我的语言.那货.你就点评下整个过程哪点技术含量不高就得了.还有.坐等那货也能出一款这样的...
+</p>
+<p style="text-indent:2em;">
+	文章底下还有他朋友“cnmoker”的吐槽：2012-02-22 13:32 | 回复：他妈的，叫你不要爆。这下拉的自己跟2B一个智商了吧。会写点VB的货都哇哇叫了。
+</p>
+<p style="text-indent:2em;">
+	<br />
+</p>
+<p style="text-indent:2em;">
+	地址：<a href="http://hi.baidu.com/artcracker/blog/item/81f02e191a7e841834fa412e.html" target="_blank">http://hi.baidu.com/artcracker/blog/item/81f02e191a7e841834fa412e.html</a> 
+</p>
+<p style="text-indent:2em;">
+	这是一篇转载的文章，底下“cnmoker”吐槽：
+</p>
+<p style="text-indent:2em;">
+	cnmoker 2012-02-21 23:16 | 回复：如果这篇文章是你自己写的，不是转载的话，我要说，你从上到下的所谓思路全部是零碎的从open口里的来的。要不就是我们说出去，你从别人哪里听到的。有本事可以写一个出来，没本事不用YY。。。就是你这样的货太多了，我们才不愿意共享。
+</p>
+<p style="text-indent:2em;">
+	cnmoker 2012-02-21 23:21 | 回复：看了下，原文出自<a href="https://lcx.cc/post/2257/" target="_blank"> https://lcx.cc/post/2257/</a>，会点VB的货也敢出来混！擦。口出狂言。
+</p>
+<p style="text-indent:2em;">
+	<br />
+</p>
+<p style="text-indent:2em;">
+	呵呵，在此事件之前，我从来没有听说过 open 是谁，请问：又是如何“从open口里的来的”呢？
+</p>
+<p style="text-indent:2em;">
+	再者，“……要不就是我们说出去，你从别人哪里听到的。……”，哥，你这是国家机密吗？
+</p>
+<p style="text-indent:2em;">
+	另外，“……会点VB的货也敢出来混！擦。口出狂言。……”，哥会 VB 又怎么了？怎么就口出狂言了！？跟你又有什么关系？
+</p>
+<p style="text-indent:2em;">
+	<br />
+</p>
+<p style="text-indent:2em;">
+	地址：<a href="https://lcx.cc/liuyan/index.asp?Number=2257" target="_blank">https://lcx.cc/liuyan/index.asp?Number=2257</a> 
+</p>
+<p style="text-indent:2em;">
+	内容：见，ID：1112、ID：1113
+</p>
+<p style="text-indent:2em;">
+	<br />
+</p>
+<p style="text-indent:2em;">
+	“……OPEN写出这个花了半个月你也许得半年，不要以为自己多牛B。”
+</p>
+<!--
+<p style="text-indent:2em;">
+	呵呵，很抱歉让您失望了，本人也就是花了不到两天的时间……
+</p>
+<p style="text-indent:2em;">
+	（PS：不出所料的话，本站留言板那些就是“cnmoker”你写的吧。）
+</p>
+-->
+<p style="text-indent:2em;">
+	<br />
+</p>
+<p style="text-indent:2em;">
+	事件前因描述完了，所以我花了两天时间写了这个软件，然后又写了这篇文章。
+</p>
+<!--
+<p style="text-indent:2em;">
+	你们所谓的“高级原理”、“牛逼思路”，不想吐槽了，2006、2007 年玩剩下的东西了。
+</p>
+<p style="text-indent:2em;">
+	那些功能也都很简单，“NetFuke v1.07”、“WinArpAttacker 3.70”、“Zxarps”、“幻境网盾(Skiller) V3.7”，仅仅是所列的这些软件的一些小功能而已，当然，功能也许有所变动，原理也都是很多年前的东西了……
+</p>
+-->
+<p style="text-indent:2em;">
+	Arp 攻击的由来，以及原理，就不多说了，网上有可查大把的资料，今天我就在这里简单的讲一下单向、双向 Arp 攻击的原理，以及剖析“hijackport + rdpproxy”这个工具的原理。
+</p>
+<p style="text-indent:2em;">
+	Arp 攻击讲解起来十分的绕口，数据包绕来绕去的，我尽量以比较通俗的语言、清晰的思路和逻辑，再次讲解一下，内容如下。
+</p>
+<p style="text-indent:2em;">
+	首先，什么是 Arp 攻击？
+</p>
+<p style="text-indent:2em;">
+	ARP 攻击，是针对以太网地址解析协议（ARP）的一种攻击技术。此种攻击可让攻击者取得局域网上的数据封包甚至可篡改封包，且可让网络上特定计算机或所有计算机无法正常连接。最早探讨ARP攻击的文章是由Yuri Volobue所写的《ARP与ICMP转向游戏》。
+</p>
+<p style="text-indent:2em;">
+	具体原理就不说了，不然又是长篇大论，具体去看：<a href="http://baike.baidu.com/view/700129.htm" target="_blank">http://baike.baidu.com/view/700129.htm</a> 
+</p>
+<p style="text-indent:2em;">
+	在这里，大家只需要简单的理解为：通过 Arp 攻击，你可以监听所有通讯数据，或者伪装成另外一台机器，为所欲为。
+</p>
+<p style="text-indent:2em;">
+	Arp 欺骗分为两种，一种是双向欺骗，一种是单向欺骗，我都简单的讲一下。
+</p>
+<p style="text-indent:2em;">
+	假设现在有三台机器，分别是：
+</p>
+<p style="text-indent:2em;">
+	A、网关，IP 地址：192.168.1.1
+</p>
+<p style="text-indent:2em;">
+	B、普通客户机，IP 地址：192.168.1.2
+</p>
+<p style="text-indent:2em;">
+	C、普通客户机，IP 地址：192.168.1.3
+</p>
+<p>
+	<strong>Arp 单向欺骗：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1、掐断 A 与 B 的通讯，实现原理：C 向 A 发送一条 Arp 数据包，内容为：B 的地址是 00:00:00:00:00:00 （一个错误的地址），那么 A 此后向 B 发的数据包都会发到 00，而这个地址是错误的，所以通讯中断了，<span style="color:#4c33e5;">但是要注意了，这里只是 A --&gt; B 中断了，B --&gt; A 没有中断，所以这个叫单向欺骗。</span> 
+</p>
+<p style="text-indent:2em;">
+	2、掐断 B 与 A 的通讯，实现原理和第一条一样，如果和第一条一起发，那么 A 和 B 的通讯就完全中断了，即：A &lt;-- × --&gt; B
+</p>
+<p style="text-indent:2em;">
+	3、嗅探 A 与 B 的通讯，实现原理：C 向 A 发送一条 Arp 数据包，内容为：B 的地址是 AA:BB:CC:DD:EE:FF （C自己的地址），也就是说，C 对 A 说：我才是 B，于是 A 把向 B 发送的数据都发给 C 了，C 得到数据后就可以为所欲为了，可以直接丢弃，那么通讯中断，也可以再次转发给 B，那么又形成回路，<span style="color:#4c33e5;">C 当了个中间人，监视 A 和 B 的通讯，此时你就可以用CAIN等任何抓包工具进行本地嗅探了，因为目标机器数据完全从你这你走，任意嗅探</span>。当然你可以不转发所有数据，<span style="color:#e53333;">只转发部分数据，把某些特定协议的数据分离出来，然后单独处理，例如替换、修改（类似 zxarp 等 Arp 工具的插入、劫持数据功能），或者干点其他啥，都行。</span> 
+</p>
+<p style="text-indent:2em;">
+	4、嗅探 B 与 A 的通讯，同上。
+</p>
+<p>
+	<strong>Arp 双向欺骗：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1、将单项欺骗的 1、2 或 3、4 同时做，就是双向欺骗了，很简单。
+</p>
+<p style="text-indent:2em;">
+	接下来详细分析 open 的录像内容，内容如下：
+</p>
+<hr />
+<p style="text-indent:2em;">
+	没有看过他的录像的朋友，请先去他的网盘下载：<a href="http://9780399.ys168.com/" target="_blank">http://9780399.ys168.com/</a> （在：动画演示\hijackportrdpproxy.rar 2,667KB RDP协议安全），以下是他的录像内容详细分析。
+</p>
+<p style="text-indent:2em;">
+	首先是测试环境状况：
+</p>
+<p>
+	<strong>自己：</strong> 
+</p>
+<p style="text-indent:2em;">
+	IP: 192.168.0.189 --&gt; Mac:00:23:CD:95:17:A1 --&gt; Windows XP (经典主题) 或 Windows 2003
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#4c33e5;">189 在这里是充当一个机房网关的角色，备注中有详细说明。</span> 
+</p>
+<p>
+	<strong>虚拟机：</strong> 
+</p>
+<p style="text-indent:2em;">
+	IP: 192.168.0.220 --&gt; Mac:00:03:FF:95:17:A1 --&gt; Windows XP
+</p>
+<p style="text-indent:2em;">
+	IP: 192.168.0.221 --&gt; Mac:00:03:FF:97:17:A1 --&gt; Windows 2003
+</p>
+<p>
+	<strong>第一种：</strong> 
+</p>
+<p style="text-indent:2em;">
+	钓鱼，也就是把要连接方欺骗让其连接到我自己，这时你可以在自己身上安装一个密码记录，记录密码。
+</p>
+<p style="text-indent:2em;">
+	命令：hijackport 0 192.168.0.189 192.168.0.221:3389 3389
+</p>
+<p>
+	<strong>分析：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1、hijackport 那个 Arp 劫持目标机器，并修改流经数据到本地指定端口的东西。
+</p>
+<p style="text-indent:2em;">
+	2、参数 0，这个是网卡编号，指定使用哪个网卡，不解释了……
+</p>
+<p style="text-indent:2em;">
+	3、192.168.0.189，被欺骗的“连接方”，到时候会给它发 Arp 欺骗数据包，底下解释。
+</p>
+<p style="text-indent:2em;">
+	4、192.168.0.221:3389，要欺骗的机器，底下解释。
+</p>
+<p style="text-indent:2em;">
+	5、3389，转发到本地3389端口。
+</p>
+<p>
+	<strong>整个功能流程如下：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1、220 对 189 发送 Arp 包，说：我是：221，于是 189 把本来对 221 发送的包都给发到 220 了。
+</p>
+<p style="text-indent:2em;">
+	2、220 拿到这些数据包后，将其又转发到本机 3389 端口，形成回路。
+</p>
+<p style="text-indent:2em;">
+	3、正常的数据包流程为：189 --&gt; 221
+</p>
+<p style="text-indent:2em;">
+	4、被欺骗后的流程为：189 --&gt; 220
+</p>
+<p style="text-indent:2em;">
+	5、欺骗完成，<span style="color:#4c33e5;">实际上这里没有 221 什么事，221 在一边打酱油。</span> 
+</p>
+<p>
+	<strong>第二种：</strong> 
+</p>
+<p style="text-indent:2em;">
+	基本和第一种一致，只是多了转发、解包的过程，我在这里只写出区别的地方。
+</p>
+<p style="text-indent:2em;">
+	命令：hijackport 0 192.168.0.189 192.168.0.221:3389 8080
+</p>
+<p style="text-indent:2em;">
+	参数功能一样，不多说了……
+</p>
+<p style="text-indent:2em;">
+	区别就在于，这次是转发到本地 8080 端口，然后 8080 端口又监听了一个东西：rdpproxy
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#4c33e5;">rdpproxy 的功能很简单，这个玩意儿就是一个端口转发工具，类似 lcx.exe 的东西，区别就是多了一个解包的过程</span>，解开加密的 rdp 数据包，然后做记录，最后提取密码用。
+</p>
+<p style="text-indent:2em;">
+	命令：rdpproxy 8080 192.168.0.221:3389
+</p>
+<p style="text-indent:2em;">
+	功能：监听本机 8080 端口，然后把收到的数据全部发到 192.168.0.221:3389，形成回路，完成欺骗。
+</p>
+<p style="text-indent:2em;">
+	你也许会问，为什么 221 可以连接，不是被欺骗了吗？
+</p>
+<p style="text-indent:2em;">
+	呵呵，<strong>这就是关键所在，</strong><strong>整个流程压根没 221 什么事，221 只是在打酱油，欺骗的是网关，所以目标机器的 Arp 防火墙是没有任何反应的，因为根本和他无关。</strong> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#e53333;">而局域网数据发送是不经过网关的，所以即使网关被欺骗，也不影响局域网内机器互相访问，所以完全是可以连接的，没有任何异常。</span> 
+</p>
+<p style="text-indent:2em;">
+	PS：这里引申一下，如果是双向欺骗的话，局域网互相访问是需要修改数据包中的源 MAC 地址，然后再发出去的，这个比较复杂抽象，就不多说了。
+</p>
+<p>
+	<strong>备注：</strong> 
+</p>
+<p style="text-indent:2em;">
+	为什么说 189 在这里充当一个网关的角色？
+</p>
+<p style="text-indent:2em;">
+	以为从外网发来的所有数据，都是从网关处中转，再发给目标机器的，目标向外网发的数据，也是通过网关处中转，再发到外网。
+</p>
+<p style="text-indent:2em;">
+	他在这里直接把自己“充当为”网关，向目标机器发数据，实际上和外网发送是一样的，只是为了方便测试。
+</p>
+<p style="text-indent:2em;">
+	这个单向 Arp 欺骗的目的就是为了欺骗网关处，让网管把本来从外网发到 221 的数据，发到 220，也就是 220 对网关说：我是 221。
+</p>
+<p style="text-indent:2em;">
+	220 拿到 221 的数据后，就可以为所欲为了……
+</p>
+<hr />
+<p style="text-indent:2em;">
+	录像内容分析完了，这个工具没有完全发挥单项欺骗的魅力，其实是这样的：
+</p>
+<p style="text-indent:2em;">
+	“2、220 拿到这些数据包后，将其又转发到本机 3389 端口，形成回路。”
+</p>
+<p style="text-indent:2em;">
+	在这一步中，<strong>根本不用转发到本机 3389 端口，直接把原始数据包中的 MAC 地址改成正确的，再发出去，形成回路，你直接就成了中间人了，监视通讯</strong>，不需要再转发到本机了。
+</p>
+<p style="text-indent:2em;">
+	而且他的方法2中，还单独写了个转发工具进行转发，这其实是完全不需要的……
+</p>
+<p style="text-indent:2em;">
+	就到这里吧，不写了，文章也够长了，底下附上“Arp EMP v1.0”的演示录像和下载地址。
+</p>
+<p>
+	<strong>Arp EMP v1.0：</strong> 
+</p>
+<p style="text-indent:2em;">
+	单向 Arp 攻击可以突破 Arp 防火墙，<span style="color:#e53333;">只要网关与目标中任何一方没有绑定 MAC，就可以攻击成功！</span>在大多数机房中，网关都是没有绑定 MAC 地址的，<span style="color:#e53333;">可以无视目标防火墙！</span> 
+</p>
+<p style="text-indent:2em;">
+	而双向 Arp 攻击，需要网关与目标都没有绑定MAC的情况下，才可以成功。这种情况比较少，常见于家庭或公司局域网中。
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#e53333;">只要没双绑，横扫局域网！</span> 
+</p>
+<p>
+	<strong>演示录像：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://115.com/file/c2xzm5ig" target="_blank">http://115.com/file/c2xzm5ig</a> 
+</p>
+<p>
+	<strong>下载地址：</strong> 
+</p>
+<p style="text-indent:2em;">
+	出于尊敬别人，也给自己留后路，我不打算公开发布，本人的好友，可以私下找我要，多谢大家捧场！
+</p>
+<hr />
+<p>
+	<strong><span style="color:#e53333;">2012-2-27 14:53:49 补充：</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#e53333;"><a href="https://lcx.cc/post/2273/" target="_blank">哈哈，此事就此打住，互相攻击没好处，握手交友，和为贵！</a></span></strong> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="1127,2272,219.142.122.100">
+<p>【匿名者】 @ 2012-02-27 10:52:20</p>
+<p style="text-indent:2em">这个工具碉堡了。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">\(^o^)/</p>
+</blockquote>
+<blockquote id="1128,2272,58.208.187.8">
+<p>【匿名者】 @ 2012-02-27 13:19:18</p>
+<p style="text-indent:2em">会VB，更会装B！写个壳子谁不会，有能耐写出来。一张嘴没人说得过你!!
+下次装B前请务必把工具完全写出来了！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">看完教程再喷，我最喜欢你这种“只看标题”的喷子了。。
+open 姐姐在她博客也承认了，O(∩_∩)O</p>
+</blockquote>
+<blockquote id="1129,2272,58.62.190.19">
+<p>Open @ 2012-02-27 14:07:54</p>
+<p style="text-indent:2em">好吧.你赢了.放工具吧.</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">哈哈哈，不管你是不是真的 open 姐，我昨晚三、四点才睡觉，刚刚起来，迟了点，不好意思。
+昨天比较愤怒，文章带有攻击性的语言，在这里道歉了，等一会我去掉（昨晚有去掉一部分）。
+呵呵，大家握手言和，就再好不过了，大家还是朋友，互相学习进步！</p>
+</blockquote>
+<blockquote id="1137,2272,59.54.230.177">
+<p>鬼哥 @ 2012-02-27 19:29:16</p>
+<p style="text-indent:2em">老大就是牛呀，什么都可以搞出来。支持。强烈鄙视opE?</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">囧rz，木有鄙视的意思。。，</p>
+</blockquote>
+<blockquote id="1138,2272,222.211.196.6">
+<p>伟大娃娃 @ 2012-02-28 09:34:40</p>
+<p style="text-indent:2em">楼上那些攻击VB的,我替我们小组的御用程序员骂你一句傻逼.</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">娃娃好久不见撒……</p>
+</blockquote>
+<blockquote id="1141,2272,117.42.121.50">
+<p>鬼哥 @ 2012-02-28 19:44:43</p>
+<p style="text-indent:2em">昨天下了演示教程，好象解压包出问题了。无法解压？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你的 WinRar 可能是旧版，我是用的“WinRAR 4.01 简体中文版”打包的，如果还出问题的话，就不知道了。</p>
+</blockquote>
+<blockquote id="1145,2272,74.125.112.95">
+<p>【匿名者】 @ 2012-03-01 13:10:46</p>
+<p style="text-indent:2em">太给力了。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">- -</p>
+</blockquote>
+<blockquote id="1150,2272,60.190.244.178">
+<p>【匿名者】 @ 2012-03-02 04:00:35</p>
+<p style="text-indent:2em">看起来很强大呀</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">晕，一般的东西，Arp 攻击技术非常古老了，2006 - 2007 年盛行的东西。</p>
+</blockquote>
+<blockquote id="1151,2272,118.32.138.69">
+<p>404 @ 2012-03-02 13:21:17</p>
+<p style="text-indent:2em">不支持2008</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">本软件支持：Windows XP、Windows 2003、Windows Vista、Windows 2008、Windows 7，等 32 位操作系统，你的可能是64位的2008或系统环境问题，要看具体报什么错误。</p>
+</blockquote>
+<blockquote id="1310,2272,27.19.69.16">
+<p>【匿名者】 @ 2012-04-10 11:21:36</p>
+<p style="text-indent:2em">“下载地址：
+出于尊敬别人，也给自己留后路，我不打算公开发布，本人的好友，可以私下找我要，多谢大家捧场”老大，等了你很久了，结果今天看到这句话，不知道能不能跟我分享一分？邮箱：liufeng097#gmail.com</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">我记得三月几号网上就有下载地址了，很明显你根本没关心，那个公开版的我早删掉了，你搜下“Arp EMP v1.0”，还有下载的，自己找找……</p>
+</blockquote>
+<blockquote id="1370,2272,219.159.136.173">
+<p>【匿名者】 @ 2012-04-22 12:28:06</p>
+<p style="text-indent:2em">Nuclear'Atk 大大，能否发一份Arp EMP v1.0本人研究研究
+本人保证未经过你同意，绝不外传。E:178481998@qq.com</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">早有人发到网上了，你搜一下就有下载了。</p>
+</blockquote>
+<blockquote id="1613,2272,125.69.54.160">
+<p>日月 @ 2012-05-21 15:46:48</p>
+<p style="text-indent:2em">4月份下了个，但不知道核老大你的这个软件的md5值是多少，网络上下的暂时还没用</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不知道，没保留软件，MD5不清楚。不过，加了 VMP 壳，无法修改。</p>
+</blockquote>
+<blockquote id="1708,2272,171.212.2.158">
+<p>【匿名者】 @ 2012-05-31 17:11:22</p>
+<p style="text-indent:2em">用了2次  一启动肉鸡就断线了  你看是不是该升下级</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">掉线是因为一个Bug，当时忘记写绑定本机Mac功能了，不绑定的话，欺骗目标的时候，把本机也欺骗了，导致本机掉线了。
+要解决这个问题，你只需要手动在本机绑定目标、网关的 Mac 地址就可以了，例如：
+arp -s 192.168.1.1 01-02-03-04-05-06
+本软件不会再升级了……</p>
+</blockquote>
+<blockquote id="2667,2272,60.25.137.201">
+<p>佚名 @ 2012-11-14 19:16:37</p>
+<p style="text-indent:2em">象hijackport 那样劫持3389怎么弄 试了一下没搞明白啊</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">慢慢看，会明白的。</p>
+</blockquote>
+<blockquote id="3050,2272,173.231.32.245">
+<p>佚名 @ 2013-01-18 23:18:39</p>
+<p style="text-indent:2em">&quot; rdpproxy 的功能很简单，这个玩意儿就是一个端口转发工具，类似 lcx.exe 的东西，区别就是多了一个解包的过程，&quot;
+核总  rdpproxy这个工具，解包的方法是替换证书吗？那里还能找到？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没有解包功能。</p>
+</blockquote>
+<blockquote id="3255,2272,123.150.183.177">
+<p>寻 @ 2013-02-22 18:26:16</p>
+<p style="text-indent:2em">核总，确定网上有流传的吗？貌似只有测试版，貌似网上下的木有3389转发功能，双向等功能。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">公开版的无此功能。</p>
+</blockquote>
+<blockquote id="3258,2272,212.225.201.222">
+<p>佚名 @ 2013-02-23 07:36:12</p>
+<p style="text-indent:2em">大神，一嗅探。马上断网。啥问题哦？怎么解决呢？？
+一开始用你的ARP EMP 断网。后来换个CAIN 也断网。换了NetFuke也是</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">检查你网络环境。</p>
+</blockquote>
+<blockquote id="3301,2272,119.39.119.212">
+<p>佚名 @ 2013-03-06 11:35:31</p>
+<p style="text-indent:2em">求下载 求包养啊 网上基本都帮马 这社会，求推荐几本arp方面的书籍，不胜感激</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">Arp只是一种简单的网络基础通讯协议，任何一本讲底层网络协议的书都会提到。</p>
+</blockquote>
+<blockquote id="3303,2272,125.71.228.154">
+<p>finder @ 2013-03-06 15:28:34</p>
+<p style="text-indent:2em">核总，如果是网关上绑定了服务器的mac为啥不行啊。
+cain嗅探的时只能嗅到服务器返回网关的数据，这种情况下怎么用呢</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">文中已写过，自己参阅单向欺骗。</p>
+</blockquote>
+<blockquote id="3468,2272,120.209.195.47">
+<p>佚名 @ 2013-03-22 17:52:03</p>
+<p style="text-indent:2em">如果获取不到mac怎么办 是arp防火墙的原因么</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">1、非同网关；2、防火墙拦截；3、其他原因</p>
+</blockquote>
+<blockquote id="3493,2272,120.209.195.47">
+<p>佚名 @ 2013-03-25 09:05:32</p>
+<p style="text-indent:2em">核总 arp EMP 单向欺骗可以像hijackport一样解决无法获取mac的问题么</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">造成无法获取MAC有很多原因，对症下药即可解决。</p>
+</blockquote>
+<blockquote id="3495,2272,120.209.195.47">
+<p>佚名 @ 2013-03-25 15:13:13</p>
+<p style="text-indent:2em">不好意思 多问一句 防火墙拦截  应当如何对症下药</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">金山贝壳 Arp 防火墙 v2.0、等其他 Arp 防火墙的破墙方法以及原理：
+http://lcx.cc/?i=2395</p>
+</blockquote>
+<blockquote id="3613,2272,119.42.147.59">
+<p>佚名 @ 2013-04-09 07:40:30</p>
+<p style="text-indent:2em">现在ARP成功率感觉都爆低..要吗就是放火墙.楼下那个连接办法也不行.要吗就一嗅探马上断网.
+要吗就嗅探可以.嗅不到任何数据.x.x.x.2-x.x.x.254 随便嗅一台都嗅不到.
+总不会254台都装放火墙吧?核总.求思路...</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">呵呵</p>
+</blockquote>
+<blockquote id="3640,2272,120.38.46.125">
+<p>lag @ 2013-04-13 14:48:08</p>
+<p style="text-indent:2em">核总。我是来吐槽的。今天用了下1.0。本地一会十几万的数据量。分了4个小时。找不到目标的关键数据。头都大了。有啥好方法木有撒。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">木有　╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="3661,2272,110.52.204.156">
+<p>scan_z @ 2013-04-15 00:35:36</p>
+<p style="text-indent:2em">核老总啊。。。网上公布的版本没有3389劫持功能啊。。。
+都一年了。。还是没找到rdpproxy 或者你的这个3389劫持功能类似的东西。。
+能不能提供下rdpproxy或者你这个未阉割3389劫持功能的版本。。
+谢谢啦。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">哦，这东西不公开。不过，有很多替代品，各种支持单向arp的工具都可以。</p>
+</blockquote>
+<blockquote id="3738,2272,220.178.87.51">
+<p>佚名 @ 2013-04-24 15:52:40</p>
+<p style="text-indent:2em">你好 我是新手 也在研究arp单向欺骗 捕获rdp数据包 然后详解析其中的内容 但是rdp协议太麻烦了 看到你说的rdpproxy工具 我网上下载了源码 可是是Linux的 我要Win的 改了好长时间 可是也没解析出什么可用的内容 用户名和密码都没有 怎么办啊？能说一下原理或是问题所在吗？QQ 1908642811 不胜感激！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">呵呵，片面描述，不知你问题在何处。</p>
+</blockquote>
+<blockquote id="3889,2272,220.178.87.51">
+<p>佚名 @ 2013-05-10 14:15:09</p>
+<p style="text-indent:2em">open姐姐的博客是多少？求学习</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">http://hi.baidu.com/0x24/，不过，貌似已经关了。</p>
+</blockquote>
+<blockquote id="4282,2272,124.117.224.102">
+<p>佚名 @ 2013-06-17 12:51:28</p>
+<p style="text-indent:2em">有个问题，cain截获的HTTP数据，只能是已知的比如username、password这样的字段，而未知的字段，cain是无能为力的，只有全数据捕获才可以，不知道本工具，有全数据捕获的功能吗，不需要类似CAIN的字段分析功能。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">目测你不清楚arp原理，所有的arp工具都是拦截目标机的所有数据，至于“字段”那只是不同工具的数据包过滤规则（无视无用数据）。
+举个例子，arp欺骗成功后你可以使用任何一个本地抓包工具，然后就可以看到目标机的所有数据（本机转发的数据包）。</p>
+</blockquote>
+<blockquote id="4283,2272,124.117.224.102">
+<p>佚名 @ 2013-06-17 16:24:20</p>
+<p style="text-indent:2em">我是ID：4282的朋友，我懂ARP的原理，我就是想知道什么工具可以查看所有的数据包，因为CAIN没有这样的功能。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">看你问题，就知道你还是不懂，前边提到了“可以使用任何一个本地抓包工具”……</p>
+</blockquote>
+<blockquote id="4284,2272,124.117.224.102">
+<p>佚名 @ 2013-06-17 16:36:34</p>
+<p style="text-indent:2em">我知道，所有的数据包都会经过我，然后转发，抓包工具很多，因为你的经验比我丰富的多，就是想问您有没有推荐给我的，好用些的抓包工具。我是这个意思。不好意思呀。O(∩_∩)O</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">很多呀，HTTP Analyzer，Wireshark，科来网络分析系统……</p>
+</blockquote>
+<blockquote id="4558,2272,182.252.177.79">
+<p>入门菜鸟 @ 2013-07-24 15:54:22</p>
+<p style="text-indent:2em">mountaisea@outlook.com
+这个工具很厉害啊，很好奇。能不能把它发给我？谢谢了。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">该工具暂不公开，谢谢！</p>
+</blockquote>
+<blockquote id="5099,2272,110.190.196.172">
+<p>黑客菜鸟 @ 2013-10-13 09:02:16</p>
+<p style="text-indent:2em">这软件我有了，但不太会用，好像漏洞有点多啊</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额，你拿的应该是最初的演示版……</p>
+</blockquote>
+<blockquote id="6060,2272,218.75.129.35">
+<p>佚名 @ 2014-03-20 16:27:48</p>
+<p style="text-indent:2em">核总！不同交换机下，为什么cain不能截获服务器的3389密码？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">原因很多，建议你了解一下局域网通讯原理。</p>
+</blockquote>
+<blockquote id="6138,2272,218.106.145.34">
+<p>@我爱这个世界 @ 2014-04-01 00:58:35</p>
+<p style="text-indent:2em">为什么端口转发的那个不开发了啊T_T这个功能别的软件很少有的</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯，这是一个演示版的，不具备该功能。</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-02-27
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/hijack/">hijack</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/mac/">MAC</a>
+          <a href="https://lcx.cc/tags/vb/">VB</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E6%9C%AC%E5%9C%B0/">本地</a>
+          <a href="https://lcx.cc/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+          <a href="https://lcx.cc/tags/%E9%98%B2%E7%81%AB%E5%A2%99/">防火墙</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E5%8A%AB%E6%8C%81/">劫持</a>
+          <a href="https://lcx.cc/tags/%E5%B1%80%E5%9F%9F%E7%BD%91/">局域网</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E9%AA%97/">骗</a>
+          <a href="https://lcx.cc/tags/%E6%AC%BA%E9%AA%97/">欺骗</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%80%9D%E8%B7%AF/">思路</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          <a href="https://lcx.cc/tags/%E5%97%85%E6%8E%A2/">嗅探</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AC%E8%BD%BD/">转载</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2273/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">哈哈，此事就此打住，互相攻击没好处，握手交友，和为贵！</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2274/">
+            <span class="next-text nav-default">最牛“乞丐”坐飞机全国乞讨 男子穿西装坐飞机行乞收入超千元</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

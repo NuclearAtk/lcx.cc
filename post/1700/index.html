@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>远程OS探测中的网络协议栈指纹识别技术 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="远程OS探测中的网络协议栈指纹识别技术 远程探测计算机系统的OS（操作系统）类型、版本号等信息，是黑客入侵行为的重要步骤，也是网络安全中的一种重要的技术。在探测技术中，有一类是通过网络协议栈指纹来进行的。协议栈指纹是指不同操作系统的网络协议栈存在的细微差别，这些差别可以用来区分不同的操作系统。本文研究和分析了此技术的原理和实践，并提出了防止指纹探测的方法。" />
+<meta name="keywords" content="远程OS探测中的网络协议栈指纹识别技术 远程OS探测、协议栈指纹、TCP/IP协议" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/1700/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="远程OS探测中的网络协议栈指纹识别技术" />
+<meta property="og:description" content="远程OS探测中的网络协议栈指纹识别技术 远程探测计算机系统的OS（操作系统）类型、版本号等信息，是黑客入侵行为的重要步骤，也是网络安全中的一种重要的技术。在探测技术中，有一类是通过网络协议栈指纹来进行的。协议栈指纹是指不同操作系统的网络协议栈存在的细微差别，这些差别可以用来区分不同的操作系统。本文研究和分析了此技术的原理和实践，并提出了防止指纹探测的方法。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/1700/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2011-08-18T20:10:00&#43;08:00" />
+<meta property="article:modified_time" content="2011-08-18T20:10:00&#43;08:00" />
+
+<meta itemprop="name" content="远程OS探测中的网络协议栈指纹识别技术">
+<meta itemprop="description" content="远程OS探测中的网络协议栈指纹识别技术 远程探测计算机系统的OS（操作系统）类型、版本号等信息，是黑客入侵行为的重要步骤，也是网络安全中的一种重要的技术。在探测技术中，有一类是通过网络协议栈指纹来进行的。协议栈指纹是指不同操作系统的网络协议栈存在的细微差别，这些差别可以用来区分不同的操作系统。本文研究和分析了此技术的原理和实践，并提出了防止指纹探测的方法。"><meta itemprop="datePublished" content="2011-08-18T20:10:00&#43;08:00" />
+<meta itemprop="dateModified" content="2011-08-18T20:10:00&#43;08:00" />
+<meta itemprop="wordCount" content="4086">
+<meta itemprop="keywords" content="技术,网络,协议,远程,指纹,HTTP,IIS,IP,Linux,Net,Unix,Web,Windows,安全,操作系统,程序,端口,服务,黑客,检测,入侵,数据,系统,泄漏," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="远程OS探测中的网络协议栈指纹识别技术"/>
+<meta name="twitter:description" content="远程OS探测中的网络协议栈指纹识别技术 远程探测计算机系统的OS（操作系统）类型、版本号等信息，是黑客入侵行为的重要步骤，也是网络安全中的一种重要的技术。在探测技术中，有一类是通过网络协议栈指纹来进行的。协议栈指纹是指不同操作系统的网络协议栈存在的细微差别，这些差别可以用来区分不同的操作系统。本文研究和分析了此技术的原理和实践，并提出了防止指纹探测的方法。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">远程OS探测中的网络协议栈指纹识别技术</h1>
+      
+      <div class="post-meta">
+        <time datetime="2011-08-18" class="post-time">
+          2011-08-18
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            <a href="https://lcx.cc/categories/%E7%BD%91%E7%BB%9C/"> 网络 </a>
+            <a href="https://lcx.cc/categories/%E5%8D%8F%E8%AE%AE/"> 协议 </a>
+            <a href="https://lcx.cc/categories/%E8%BF%9C%E7%A8%8B/"> 远程 </a>
+            <a href="https://lcx.cc/categories/%E6%8C%87%E7%BA%B9/"> 指纹 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4086 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P><STRONG>摘要</STRONG></P>
+<P>&nbsp;&nbsp;&nbsp; 远程探测计算机系统的OS（操作系统）类型、版本号等信息，是黑客入侵行为的重要步骤，也是网络安全中的一种重要的技术。在探测技术中，有一类是通过网络协议栈指纹来进行的。协议栈指纹是指不同操作系统的网络协议栈存在的细微差别，这些差别可以用来区分不同的操作系统。本文研究和分析了此技术的原理和实践，并提出了防止指纹探测的方法。</P>
+<P><STRONG>关键词</STRONG></P>
+<P>&nbsp;&nbsp;&nbsp; 远程OS探测、协议栈指纹、TCP/IP协议</P>
+<P><STRONG>1、引言</STRONG></P>
+<P>&nbsp;&nbsp;&nbsp; 探测和识别一个计算机系统在运行什么OS是黑客入侵的重要步骤。如果不知道目标系统在运行什么OS，就很难在目标系统上执行操作，也无法判断是否存在安全漏洞，更谈不上攻击。</P>
+<P>&nbsp;&nbsp;&nbsp; 从管理和防范的角度来说，如果能减少被探测时泄漏的信息，就减少了黑客入侵行为的信息来源，使其入侵行为变得相当困难。因此，研究这方面的技术，对于提高系统的安全性和抵抗入侵的能力具有重要的意义。</P>
+<P><STRONG>2、简单的OS探测技术</STRONG></P>
+<P>&nbsp;&nbsp;&nbsp; 在早期，黑客经常采用一些简单的探测方法来获取目标系统的信息。如通过telnet标题，ftp的标题和STAT命令，通过HTTP服务程序，DNS ，SNMP等都可以得到很多有用信息。</P>
+<P>&nbsp;&nbsp;&nbsp; 但是，在长期的入侵和防入侵的斗争中，通过简单的手段即可获得的信息越来越少了。管理员努力地减少通过网络泄漏的信息，有时还修改OS的代码，给出虚假的信息。在这种情况下，简单的方法已经很难奏效了,因此出现了通过网络协议栈指纹来识别OS的技术。</P>
+<P><STRONG>3、网络协议栈指纹原理</STRONG></P>
+<P>&nbsp;&nbsp;&nbsp; 常用的网络协议是标准的，因而从理论上讲各个操作系统的协议栈应该是相同的。但是，在实践中，各种操作系统的协议栈的实现存在细微的差异。这些差异称作网络协议栈的“指纹”。</P>
+<P>&nbsp;&nbsp;&nbsp; 对TCP协议族来说，这些差异通常表现在数据包头的标志字段中。如window size、ACK序号、TTL等的不同取值。通过对这些差别进行归纳和总结，可以比较准确地识别出远程系统的OS类型。</P>
+<P>&nbsp;&nbsp;&nbsp; 由于Internet广泛使用TCP/IP协议族，因此下面的讨论主要围绕TCP/IP来进行。</P>
+<P><STRONG>4、网络协议栈指纹构成</STRONG></P>
+<P>&nbsp;&nbsp;&nbsp; 下面列出了不同OS的网络协议栈的差异，这些差异可作为协议栈指纹识别的依据。</P>
+<P>1) TTL</P>
+<P>&nbsp;&nbsp;&nbsp; TTL：Time To Live，即数据包的“存活时间”，表示一个数据包在被丢弃之前可以通过多少跃点(Hop)。不同操作系统的缺省TTL值往往是不同的。</P>
+<P>&nbsp;&nbsp;&nbsp; 常见操作系统的TTL值：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>Windows 9x/NT/2000 Intel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128  <br />
+Digital Unix 4.0 Alpha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 60  <br />
+Linux 2.2.x Intel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 64  <br />
+Netware 4.11 Intel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128  <br />
+AIX 4.3.x IBM/RS6000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 60  <br />
+Cisco 12.0 2514&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 255  <br />
+Solaris 8 Intel/Sparc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 64  <br />
+… </P></BLOCKQUOTE>
+<P>2) DF位</P>
+<P>&nbsp;&nbsp;&nbsp; DF（不分段）位识别：不同OS对DF位有不同的处理方式，有些OS设置DF位，有些不设置DF位；还有一些OS在特定场合设置DF位，在其它场合不设置DF位。</P>
+<P>3) Window Size</P>
+<P>&nbsp;&nbsp;&nbsp; Window Size：TCP接收（发送）窗口大小。它决定了接收信息的机器在收到多少数据包后发送ACK包。</P>
+<P>&nbsp;&nbsp;&nbsp; 特定操作系统的缺省Window Size基本是常数，例如，AIX 用0x3F25，Windows、OpenBSD 、FreeBSD用0x402E。</P>
+<P>&nbsp;&nbsp;&nbsp; 一般地，UNIX的Window Size较大。MSWindows，路由器，交换机等的较小。</P>
+<P>4) ACK 序号</P>
+<P>&nbsp;&nbsp;&nbsp; 不同的OS处理ACK序号时是不同的。如果发送一个FIN|PSH|URG的数据包到一个关闭的TCP 端口，大多数OS会把回应ACK包的序号设置为发送的包的初始序号，而Windows 和一些打印机则会发送序号为初始序号加1的ACK包。</P>
+<P>5) ICMP地址屏蔽请求</P>
+<P>&nbsp;&nbsp;&nbsp; 对于ICMP地址屏蔽请求，有些OS会产生相应的应答，有些则不会。会产生应答的系统有OpenVMS, MSWindows, SUN Solaris等。在这些产生应答的系统中，对分片ICMP地址屏蔽请求的应答又存在差别，可以做进一步的区分。</P>
+<P>6) 对FIN包的响应</P>
+<P>&nbsp;&nbsp;&nbsp; 发送一个只有FIN标志位的TCP数据包给一个打开的端口，Linux等系统不响应；有些系统，例如 MS Windows, CISCO, HP/UX等，发回一个RESET。</P>
+<P>7) 虚假标记的SYN包</P>
+<P>&nbsp;&nbsp;&nbsp; 在SYN包的TCP头里设置一个未定义的TCP 标记，目标系统在响应时，有的会保持这个标记，有的不保持。还有一些系统在收到这样的包的时候会复位连接。</P>
+<P>8) ISN (初始化序列号)</P>
+<P>&nbsp;&nbsp;&nbsp; 不同的OS在选择TCP ISN时采用不同的方法。一些UNIX系统采用传统的64K递增方法，较新的Solaris,IRIX,FreeBSD,Digital Unix,Cray等系统采用随机增量的方法；Linux 2.0,OpenVMS, AIX等系统采用真随机方法。Windows系统采用一种时间相关的模型。还有一些系统使用常数。如，3Com集线器使用0x803，Apple LaserWriter打印机使用0xC7001。</P>
+<P>9) ICMP 错误信息</P>
+<P>&nbsp;&nbsp;&nbsp; 在发送ICMP错误信息时，不同的OS有不同的行为。RFC 1812建议限制各种错误信息的发送率。有的OS做了限制，而有的没做。</P>
+<P>10) ICMP 消息引用</P>
+<P>&nbsp;&nbsp;&nbsp; RFC 规定ICMP错误消息可以引用一部分引起错误的源消息。</P>
+<P>&nbsp;&nbsp;&nbsp; 在处理端口不可达消息时，大多数OS送回IP请求头外加8 字节。Solaris 送回的稍多，Linux 更多。</P>
+<P>&nbsp;&nbsp;&nbsp; 有些OS会把引起错误消息的头做一些改动再发回来。例如，FreeBSD，OpenBSD，ULTRIX，VAXen等会改变头的ID。</P>
+<P>&nbsp;&nbsp;&nbsp; 这种方法功能很强，甚至可以在目标主机没有打开任何监听端口的情况下就识别出Linux和Solaris。</P>
+<P>11) TOS(服务类型)</P>
+<P>&nbsp;&nbsp;&nbsp; 对于ICMP端口不可达消息，送回包的服务类型(TOS)值也是有差别的。大多数OS是0，而Linux 是0xc0。</P>
+<P>12) 分段重组处理</P>
+<P>&nbsp;&nbsp;&nbsp; 在做IP包的分段重组时，不同OS的处理方式不同。有些OS会用新IP段覆盖旧的IP段，而有些会用旧的IP段覆盖新的IP段。</P>
+<P>13) MSS(最大分段尺寸)</P>
+<P>&nbsp;&nbsp;&nbsp; 不同的OS有不同的缺省MSS值，对不同的MSS值的回应也不同。如，给Linux发送一个MSS值很小的包，它一般会把这个值原封不动地返回；其它的系统会返回不同的值。</P>
+<P>14) SYN Flood限度</P>
+<P>&nbsp;&nbsp;&nbsp; 在处理SYN Flood的时候，不同的OS有不同的特点。如果短时间内收到很多的伪造SYN包，一些OS会停止接受新的连接。有的系统支持扩展的方式来防止SYN flood。</P>
+<P>15) 主机使用的端口</P>
+<P>&nbsp;&nbsp;&nbsp; 一些OS会开放特殊的端口，比如：WINDOWS的137、139,WIN2K的445；一些网络设备，如入侵检测系统、防火墙等也开放自己特殊的端口。</P>
+<P>16) Telnet选项指纹</P>
+<P>&nbsp;&nbsp;&nbsp; 建立Telnet会话时，Socket连接完成后，会收到telnet守候程序发送的一系列telnet选项信息。不同OS有不同的Telnet选项排列顺序。</P>
+<P>17) Http指纹</P>
+<P>&nbsp;&nbsp;&nbsp; 执行Http协议时,不同的Web Server存在差异。而从Web Server往往可以判断OS类型。Web Server的差异体现在如下方面：</P>
+<P>&nbsp;&nbsp;&nbsp; 1：基本Http请求</P>
+<P>&nbsp;&nbsp;&nbsp; 处理HEAD / Http/1.0这样的请求时，不同系统返回信息基本相同，但存在细节差别。如，Apache返回的头信息里的Server和Date项的排序和其它的服务器不同。</P>
+<P>&nbsp;&nbsp;&nbsp; 2：DELETE请求</P>
+<P>&nbsp;&nbsp;&nbsp; 对于DELETE / Http/1.0这样的非法请求，Apache响应"405 Method Not Allowed",IIS响应"403 Forbidden", Netscape响应 "401 Unauthorized"。</P>
+<P>&nbsp;&nbsp;&nbsp; 3：非法Http协议版本请求</P>
+<P>&nbsp;&nbsp;&nbsp; 对于GET / Http/3.0这样的请求,Apache响应"400 Bad Request",IIS忽略这种请求,响应信息是OK, Netscape响应"505 Http Version Not Supported"。</P>
+<P>&nbsp;&nbsp;&nbsp; 4： 不正确规则协议请求</P>
+<P>&nbsp;&nbsp;&nbsp; 对不规则协议的请求,Apache忽视不规则的协议并返回200 "OK",IIS响应"400 Bad Request", Netscape几乎不返回Http头信息。</P>
+<P>18) 打印机服务程序指纹</P>
+<P>&nbsp;&nbsp;&nbsp; RFC 1179规定了请求打印服务时须遵循的协议。</P>
+<P>&nbsp;&nbsp;&nbsp; 在实践中，如果打印请求符合RFC1179的格式，不同OS表现行为相同。但当打印请求不符合RFC1179的格式时，不同OS就会体现出差别。如对一个非法格式的请求，Solaris这样回应：</P>
+<P align=center>Reply: Invalid protocol request (77): xxxxxx</P>
+<P>&nbsp;&nbsp;&nbsp; 而AIX系统这样回应： </P>
+<P align=center>Reply: 0781-201 ill-formed FROM address.&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; 大多数OS会给出不同的响应信息。个别OS会给出长度为0的回应。</P>
+<P>&nbsp;&nbsp;&nbsp; 对于Windows，则是通过专有的SMB协议（Server Message Block Protocol）来实现打印机的共享。</P>
+<P>19) 网络协议栈指纹实践</P>
+<P>&nbsp;&nbsp;&nbsp; 在实践中，网络协议栈指纹方法通常这样应用：总结各种操作系统网络协议栈的上述细微差异，形成一个指纹数据库。在探测一个系统的时候，通过网络和目标系统进行交互，或者侦听目标系统发往网络的数据包，收集其网络协议栈的行为特点，然后以操作系统指纹数据库为<FONT color=#333333>参考</FONT>，对收集的信息进行分析，从而得出目标系统运行何种OS的结论。</P>
+<P>20) 远程OS探测的防护方法</P>
+<P>&nbsp;&nbsp;&nbsp; 由于协议栈指纹方法是建立在操作系统底层程序差别的基础上的，所以要彻底防护指纹识别是很难的。但是有一些方法可以减少信息泄漏并干扰指纹识别的结果，在很大程度上提高系统的安全性。</P>
+<P>21) 检测和拦截</P>
+<P>&nbsp;&nbsp;&nbsp; 对于主动向主机发送数据包的协议栈指纹识别，可以使用IDS检测到异常包或异常的行为，从而加以记录和拦截。</P>
+<P>&nbsp;&nbsp;&nbsp; 对于通过Sniffer来进行的协议栈指纹识别，这种方法是无效的。</P>
+<P>22) 修改参数</P>
+<P>&nbsp;&nbsp;&nbsp; 一些操作系统的协议栈参数，如缺省WINDOW、MSS、MTU等值，是可以修改的。在Solaris和Linux操作系统下，很多TCP/IP协议栈的参数可以通过系统配置程序来修改。在WINDOWS系统中，可以通过对注册表的修改来配置一些协议栈参数。通过修改这些可设置参数的值，可以给指纹识别造成干扰，从而减少真实信息的泄漏。</P>
+<P>23) 修改程序</P>
+<P>&nbsp;&nbsp;&nbsp; 修改参数可以给指纹识别造成一些干扰，但是对于一些协议栈的行为特征，比如数据包序列号的生成方式，是无法通过参数来修改的。</P>
+<P>&nbsp;&nbsp;&nbsp; 对于这些行为特征，可以通过修改系统底层程序来实现，但是这么做通常需要付出较高的开发成本，并可能降低一些网络功能。</P>
+<P>&nbsp;&nbsp;&nbsp; 在实践中，可以综合上述几种防护方法，来达到比较好的安全性。</P>
+<P><FONT color=#333333>参考</FONT><FONT color=#333333>文献：</FONT></P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>[1] Fyodor,《X - Remote ICMP Based OS Fingerprinting Techniques》, Phrack Magazine Volume 54 <br />
+[2] Fyodor《Remote OS detection via TCP/IP Stack FingerPrinting》,&nbsp; Phrack Magazine Volume 8 <br />
+[3] Lance Spitzner《Passive Fingerprinting》, http://www.securityfocus.com/ focus/ids/articles/pfinger.html <br />
+[4] RFC 1179: Line Printer Daemon Protocol, Network Printing Working Group, L. McLaughlin III, 1990</P></BLOCKQUOTE>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2011-08-18
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          <a href="https://lcx.cc/tags/%E6%8C%87%E7%BA%B9/">指纹</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/iis/">IIS</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/linux/">Linux</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/unix/">Unix</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/%E6%A3%80%E6%B5%8B/">检测</a>
+          <a href="https://lcx.cc/tags/%E5%85%A5%E4%BE%B5/">入侵</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E6%B3%84%E6%BC%8F/">泄漏</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/1701/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">渗透测试踩点之 Http 指纹识别技术 - Http指纹识别技术.pdf</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/1699/">
+            <span class="next-text nav-default">postgresql 注入和管理小记 - 技术文章</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

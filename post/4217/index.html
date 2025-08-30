@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>任意修改学校食堂饭卡余额，RFID Hack，rfid 射频卡数据修改，饭卡黑客 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="0749orz" /><meta name="description" content="任意修改学校食堂饭卡余额，RFID Hack，rfid 射频卡数据修改，饭卡黑客。本来卡上面有2块！ 2块数据：C8000000 37FFFFFF C80000000 8F708F7 充了10块：E8030000 17FD0000 E80300000 8F708F7 12块-去了3块， 买了两个荼叶蛋。（盛9块) 刷过之后，9块：84030000 7BFCFFFF 840300000 8F708F7 之后大牛给了一个算法，结果去试刷了成功显示的是100块 充了100块：10270000 EFD8FFFF 102700000 8F708F7 1027 把下面的那个位换位了一下对不对呢？我是这样想的、求大牛 2710 这个数值是16进制的2710 之后十进制是10000（这个2710怎么得出来的）｛10000也就是100.00元｝ 10270000 这个是十六进制的之后NOt一下就变成了EFD8FFFF 10270000&#43; EFD8FFFF&#43; 10270000 &#43;不变的一个值：08F708F7" />
+<meta name="keywords" content="任意修改学校食堂饭卡余额，RFID Hack，rfid 射频卡数据修改，饭卡黑客" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4217/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="任意修改学校食堂饭卡余额，RFID Hack，rfid 射频卡数据修改，饭卡黑客" />
+<meta property="og:description" content="任意修改学校食堂饭卡余额，RFID Hack，rfid 射频卡数据修改，饭卡黑客。本来卡上面有2块！ 2块数据：C8000000 37FFFFFF C80000000 8F708F7 充了10块：E8030000 17FD0000 E80300000 8F708F7 12块-去了3块， 买了两个荼叶蛋。（盛9块) 刷过之后，9块：84030000 7BFCFFFF 840300000 8F708F7 之后大牛给了一个算法，结果去试刷了成功显示的是100块 充了100块：10270000 EFD8FFFF 102700000 8F708F7 1027 把下面的那个位换位了一下对不对呢？我是这样想的、求大牛 2710 这个数值是16进制的2710 之后十进制是10000（这个2710怎么得出来的）｛10000也就是100.00元｝ 10270000 这个是十六进制的之后NOt一下就变成了EFD8FFFF 10270000&#43; EFD8FFFF&#43; 10270000 &#43;不变的一个值：08F708F7" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4217/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-02-19T10:20:08&#43;08:00" />
+<meta property="article:modified_time" content="2014-02-19T10:20:08&#43;08:00" />
+
+<meta itemprop="name" content="任意修改学校食堂饭卡余额，RFID Hack，rfid 射频卡数据修改，饭卡黑客">
+<meta itemprop="description" content="任意修改学校食堂饭卡余额，RFID Hack，rfid 射频卡数据修改，饭卡黑客。本来卡上面有2块！ 2块数据：C8000000 37FFFFFF C80000000 8F708F7 充了10块：E8030000 17FD0000 E80300000 8F708F7 12块-去了3块， 买了两个荼叶蛋。（盛9块) 刷过之后，9块：84030000 7BFCFFFF 840300000 8F708F7 之后大牛给了一个算法，结果去试刷了成功显示的是100块 充了100块：10270000 EFD8FFFF 102700000 8F708F7 1027 把下面的那个位换位了一下对不对呢？我是这样想的、求大牛 2710 这个数值是16进制的2710 之后十进制是10000（这个2710怎么得出来的）｛10000也就是100.00元｝ 10270000 这个是十六进制的之后NOt一下就变成了EFD8FFFF 10270000&#43; EFD8FFFF&#43; 10270000 &#43;不变的一个值：08F708F7"><meta itemprop="datePublished" content="2014-02-19T10:20:08&#43;08:00" />
+<meta itemprop="dateModified" content="2014-02-19T10:20:08&#43;08:00" />
+<meta itemprop="wordCount" content="3539">
+<meta itemprop="keywords" content="Hack,黑客,数据,算法," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="任意修改学校食堂饭卡余额，RFID Hack，rfid 射频卡数据修改，饭卡黑客"/>
+<meta name="twitter:description" content="任意修改学校食堂饭卡余额，RFID Hack，rfid 射频卡数据修改，饭卡黑客。本来卡上面有2块！ 2块数据：C8000000 37FFFFFF C80000000 8F708F7 充了10块：E8030000 17FD0000 E80300000 8F708F7 12块-去了3块， 买了两个荼叶蛋。（盛9块) 刷过之后，9块：84030000 7BFCFFFF 840300000 8F708F7 之后大牛给了一个算法，结果去试刷了成功显示的是100块 充了100块：10270000 EFD8FFFF 102700000 8F708F7 1027 把下面的那个位换位了一下对不对呢？我是这样想的、求大牛 2710 这个数值是16进制的2710 之后十进制是10000（这个2710怎么得出来的）｛10000也就是100.00元｝ 10270000 这个是十六进制的之后NOt一下就变成了EFD8FFFF 10270000&#43; EFD8FFFF&#43; 10270000 &#43;不变的一个值：08F708F7"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">任意修改学校食堂饭卡余额，RFID Hack，rfid 射频卡数据修改，饭卡黑客</h1>
+      
+      <div class="post-meta">
+        <time datetime="2014-02-19" class="post-time">
+          2014-02-19
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/hack/"> Hack </a>
+            <a href="https://lcx.cc/categories/%E9%BB%91%E5%AE%A2/"> 黑客 </a>
+            <a href="https://lcx.cc/categories/%E6%95%B0%E6%8D%AE/"> 数据 </a>
+            
+          </div>
+        <span class="more-meta"> 约 3539 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	（我是小学生）有懂这个算法的吗？数值。小白表示不太会
+</p>
+<p style="text-indent:2em;">
+	0749orz (一头人，牵着一头牛！) | 2014-02-19 03:46
+</p>
+<p style="text-indent:2em;">
+	<img title="学校食堂饭卡" alt="学校食堂饭卡" src="/file/old/4087_1.jpg" width="615" height="461" />
+</p>
+<p style="text-indent:2em;">
+	本来卡上面有2块！
+</p>
+<p style="text-indent:2em;">
+	2块数据：C8000000 37FFFFFF C80000000 8F708F7
+</p>
+<p style="text-indent:2em;">
+	充了10块：E8030000 17FD0000 E80300000 8F708F7
+</p>
+<p style="text-indent:2em;">
+	12块-去了3块， 买了两个荼叶蛋。（盛9块)
+</p>
+<p style="text-indent:2em;">
+	刷过之后，9块：84030000 7BFCFFFF 840300000 8F708F7
+</p>
+<p style="text-indent:2em;">
+	之后大牛给了一个算法，结果去试刷了成功显示的是100块
+</p>
+<p style="text-indent:2em;">
+	充了100块：10270000 EFD8FFFF 102700000 8F708F7
+</p>
+<p style="text-indent:2em;">
+	1027 把下面的那个位换位了一下对不对呢？我是这样想的、求大牛
+</p>
+<p style="text-indent:2em;">
+	2710 这个数值是16进制的2710 之后十进制是10000（这个2710怎么得出来的）｛10000也就是100.00元｝
+</p>
+<p style="text-indent:2em;">
+	10270000 这个是十六进制的之后NOt一下就变成了EFD8FFFF
+</p>
+<p style="text-indent:2em;">
+	<img title="计算器：EFD8FFFF" alt="计算器：EFD8FFFF" src="/file/old/4088_2.jpg" width="523" height="282" />
+</p>
+<p style="text-indent:2em;">
+	10270000+ EFD8FFFF+ 10270000 +不变的一个值：08F708F7
+</p>
+<p style="text-indent:2em;">
+	100块的结果就是：
+</p>
+<p style="text-indent:2em;">
+	10270000EFD8FFFF1027000008F708F7
+</p>
+<p style="text-indent:2em;">
+	100块的：
+</p>
+<p style="text-indent:2em;">
+	刚刚用十进制算过
+</p>
+<p style="text-indent:2em;">
+	等于讲就是把
+</p>
+<p style="text-indent:2em;">
+	1027
+</p>
+<p style="text-indent:2em;">
+	倒过来等于
+</p>
+<p style="text-indent:2em;">
+	2710 他是十六进制，转换成十进制就是10000 也就相当于是100.00一百块
+</p>
+<p style="text-indent:2em;">
+	那么2块：
+</p>
+<p style="text-indent:2em;">
+	数据的C800
+</p>
+<p style="text-indent:2em;">
+	可以转换成00C8
+</p>
+<p style="text-indent:2em;">
+	00C8 转换成了十进制是200 200也就是2.00两块钱
+</p>
+<p style="text-indent:2em;">
+	求2710怎么得出来的：
+</p>
+<p style="text-indent:2em;">
+	十进制的10000转为十六进制是2710
+</p>
+<p style="text-indent:2em;">
+	2710
+</p>
+<p style="text-indent:2em;">
+	1027
+</p>
+<p style="text-indent:2em;">
+	1027+四个0000再加十六进制的10270000NOt一下结果就是EFD8FFFF
+</p>
+<p style="text-indent:2em;">
+	10270000+EFD8FFFF+10270000+08F708F7
+</p>
+<p style="text-indent:2em;">
+	求祥细的算法，谢谢
+</p>
+<p style="text-indent:2em;">
+	假如200块 应该怎么算呢？
+</p>
+<p style="text-indent:2em;">
+	假如200是十进制的20000（200.00）
+</p>
+<p style="text-indent:2em;">
+	转为十六进制是：4E20
+</p>
+<p style="text-indent:2em;">
+	4E20
+</p>
+<p style="text-indent:2em;">
+	倒一下
+</p>
+<p style="text-indent:2em;">
+	204E
+</p>
+<p style="text-indent:2em;">
+	204E+0000=204E0000
+</p>
+<p style="text-indent:2em;">
+	204E0000+DFB1FFFF ） （DFB1FFFF是由204E0000十六进制Not出来的
+</p>
+<p style="text-indent:2em;">
+	结果是204E0000+NOT出来的DFB1FFFF+204E0000+不变的值是08F708F7
+</p>
+<p style="text-indent:2em;">
+	200块的结果也就是成了：204E0000DFB1FFFF204E000008F708F7
+</p>
+<p style="text-indent:2em;">
+	求我算出来的200块有误吗？
+</p>
+<p style="text-indent:2em;">
+	给出一个结论：你想要的钱比如100块的十进制就是100+00=10000=100.00也就是100块钱
+</p>
+<p style="text-indent:2em;">
+	十进制的：10000转为十六进制是2710再倒过来一下就等于了
+</p>
+<p style="text-indent:2em;">
+	1027再加上四个0就等于了10270000再加上（十六进制）10270000 Not 一下结果就是 EFD8FFFF
+</p>
+<p style="text-indent:2em;">
+	10270000+EFD8FFFF+10270000+不变的值08F708F7
+</p>
+<p style="text-indent:2em;">
+	100块钱的数值是下面：
+</p>
+<p style="text-indent:2em;">
+	10270000+EFD8FFFF+1027000008F708F7
+</p>
+<p style="text-indent:2em;">
+	这个是正确的100块钱数值
+</p>
+<p style="text-indent:2em;">
+	结论二：200块钱的十进制是20000也就是200.00
+</p>
+<p style="text-indent:2em;">
+	十六进制的值是：4E20再倒过来一下204E
+</p>
+<p style="text-indent:2em;">
+	204E+0000=204E0000
+</p>
+<p style="text-indent:2em;">
+	204E0000+十六进制的204E0000 not得出来的DFB1FFFF
+</p>
+<p style="text-indent:2em;">
+	204E0000+DFB1FFFF+204E0000+不变的08F708F7
+</p>
+<p style="text-indent:2em;">
+	204E0000DFB1FFFF204E000008F708F7 这个不知道对不对是不是200块钱
+</p>
+<p style="text-indent:2em;">
+	这个值永远不会变的：08F708F7
+</p>
+<p style="text-indent:2em;">
+	你想要的钱十进制是xx块钱=xx.00
+</p>
+<p style="text-indent:2em;">
+	再把这个十进制十六进制一下就是XXoo再倒过来一下就是ooXX
+</p>
+<p style="text-indent:2em;">
+	ooXX+四个0+十六进制的ooXX0000 not 一下就有了一个8位的xxxxxxxx
+</p>
+<p style="text-indent:2em;">
+	ooxx0000+xxxxxxxx+ooxx0000+不变的08F708F7
+</p>
+<p style="text-indent:2em;">
+	结果就成了你想要的算法和钱喽。
+</p>
+<p style="text-indent:2em;">
+	反汇编一下：
+</p>
+<p style="text-indent:2em;">
+	E803000017FD0000E803000008F708F7 10块
+</p>
+<p style="text-indent:2em;">
+	这个取前四位E803
+</p>
+<p style="text-indent:2em;">
+	倒过来一下，就得到了03E8
+</p>
+<p style="text-indent:2em;">
+	03E8 是十六进制 之后转为十进制就是：1000 1000 也就是10.00是十块钱
+</p>
+<p style="text-indent:2em;">
+	这样后面的就有得算出来了。
+</p>
+<p style="text-indent:2em;">
+	840300007BFCFFFF8403000008F708F7 9块 原卡1
+</p>
+<p style="text-indent:2em;">
+	还是取前四位：8403倒一下得到了0384
+</p>
+<p style="text-indent:2em;">
+	0384是十六进制。。之后转一下到十进制就得到了900 900也就是9.00也就是9块钱
+</p>
+<p style="text-indent:2em;">
+	10270000EFD8FFFF1027000008F708F7 100块
+</p>
+<p style="text-indent:2em;">
+	还是取前四位：1027 倒2710
+</p>
+<p style="text-indent:2em;">
+	十六进制的2710 转为十进制得到了：10000 10000 也就是100.00也是100块钱
+</p>
+<p style="text-indent:2em;">
+	10270000EFD8FFFF1027000008F708F7 自己得出来的100块
+</p>
+<p style="text-indent:2em;">
+	204E0000DFB1FFFF204E000008F708F7 自己算出来的200没验证过的
+</p>
+<p style="text-indent:2em;">
+	204E倒过来一下，就是4E20 4E20的十进制就是：20000 20000 也就是200.00
+</p>
+<p style="text-indent:2em;">
+	204E+四个0+上DFB1FFFF由 204E0000Not一下得出来的
+</p>
+<p style="text-indent:2em;">
+	204E0000+DFB1FFFF+204E0000加最后的一个不变的值08F708F7
+</p>
+<p style="text-indent:2em;">
+	200块钱的结果就是了下面的：
+</p>
+<p style="text-indent:2em;">
+	204E0000DFB1FFFF204E000008F708F7
+</p>
+<p style="text-indent:2em;">
+	DC05000023FAFFFFDC05000008F708F7 15块
+</p>
+<p style="text-indent:2em;">
+	15块也照样转换一下前四位：DC05 05DC
+</p>
+<p style="text-indent:2em;">
+	十六进制的05DC就是1500 1500 15.00
+</p>
+<p style="text-indent:2em;">
+	E803000017FD0000E803000008F708F7 10块
+</p>
+<p style="text-indent:2em;">
+	E803 03E8 1000 10.00
+</p>
+<p style="text-indent:2em;">
+	C800000037FFFFFFC800000008F708F7
+</p>
+<p style="text-indent:2em;">
+	C800 00C8 200 2.00
+</p>
+<p style="text-indent:2em;">
+	就是这样了吗？大牛们，写好了。求对不对
+</p>
+<p style="text-indent:2em;">
+	再算一个600块钱的
+</p>
+<p style="text-indent:2em;">
+	十进制的6百转成十六进制是EA60
+</p>
+<p style="text-indent:2em;">
+	EA60倒一下就是60EA
+</p>
+<p style="text-indent:2em;">
+	60EA+四个0=60EA0000
+</p>
+<p style="text-indent:2em;">
+	十六进制的60EA0000 NOt 一下就是 9F15FFFF
+</p>
+<p style="text-indent:2em;">
+	<img title="9F15FFFF" alt="9F15FFFF" src="/file/old/4089_3.jpg" width="517" height="288" />
+</p>
+<p style="text-indent:2em;">
+	60EA0000+9F15FFFF+60EA0000+不变的08F708F7
+</p>
+<p style="text-indent:2em;">
+	结果就明了了
+</p>
+<p style="text-indent:2em;">
+	60EA00009F15FFFF60EA000008F708F7
+</p>
+<p style="text-indent:2em;">
+	60EA00009F15FFFF60EA000008F708F7 就是600块钱吗？
+</p>
+<p style="text-indent:2em;">
+	求大牛来帮助我。谢了、
+</p>
+<p style="text-indent:2em;">
+	刚刚看误了：不变的值是08F708F7
+</p>
+<p style="text-indent:2em;">
+	是不是这样推算的呢？大牛们！
+</p>
+<p style="text-indent:2em;">
+	<a href="http://zone.wooyun.org/content/10597" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>各种讨论：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1#
+</p>
+<p style="text-indent:2em;">
+	0749orz (一头人，牵着一头牛！) | 2014-02-19 03:59
+</p>
+<p style="text-indent:2em;">
+	<img title="饭卡金额转换-3.xls" alt="饭卡金额转换-3.xls" src="/file/old/4090_4.jpg" width="557" height="450" />
+</p>
+<p style="text-indent:2em;">
+	这个是群里的大牛发的，上面看懂了下面还是不懂了。
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4091_5.jpg" target="_blank"><img title="饭卡金额转换-3.xls" alt="饭卡金额转换-3.xls" src="/file/old/4091_5.jpg" width="780" height="639" /></a>
+</p>
+<p style="text-indent:2em;">
+	2#
+</p>
+<p style="text-indent:2em;">
+	伟大娃娃 (=======================) | 2014-02-19 04:33
+</p>
+<p style="text-indent:2em;">
+	为了那点钱被开除犯不上的.
+</p>
+<p style="text-indent:2em;">
+	3#
+</p>
+<p style="text-indent:2em;">
+	0749orz (一头人，牵着一头牛！) | 2014-02-19 04:49
+</p>
+<p style="text-indent:2em;">
+	@伟大娃娃 怎么能这么讲呢？做技术上的研究不可以吗？
+</p>
+<p style="text-indent:2em;">
+	4#
+</p>
+<p style="text-indent:2em;">
+	yangff | 2014-02-19 07:36
+</p>
+<p style="text-indent:2em;">
+	1）10进制的充值金额这个没问题吧。
+</p>
+<p style="text-indent:2em;">
+	2）转成16进制在前面补充0
+</p>
+<p style="text-indent:2em;">
+	3）把每个byte拆分开
+</p>
+<p style="text-indent:2em;">
+	4）把byte的顺序反过来连接得到dump，这个的意义在于 http://www.cnblogs.com/graphics/archive/2011/04/22/2010662.html
+</p>
+<p style="text-indent:2em;">
+	5）你框出来的东西使用FFFFFFFF减去dump值得到的，右边那个是16进制，左边的是10进制。
+</p>
+<p style="text-indent:2em;">
+	5#
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/" target="_blank">核攻击</a> (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2014-02-19 09:33
+</p>
+<p style="text-indent:2em;">
+	good jd~
+</p>
+<p style="text-indent:2em;">
+	每次少改点，细水长流……
+</p>
+<p style="text-indent:2em;">
+	6#
+</p>
+<p style="text-indent:2em;">
+	生生不息 | 2014-02-19 09:41
+</p>
+<p style="text-indent:2em;">
+	相机型号
+</p>
+<p style="text-indent:2em;">
+	ZTE ZTE-C N880S
+</p>
+<p style="text-indent:2em;">
+	拍摄日期
+</p>
+<p style="text-indent:2em;">
+	2014:02:16 20:25:18
+</p>
+<p style="text-indent:2em;">
+	......................................................
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="5872,4217,49.68.241.7">
+<p>佚名 @ 2014-02-20 18:01:14</p>
+<p style="text-indent:2em">屌炸天，看不懂。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">很乱的赶脚……</p>
+</blockquote>
+<blockquote id="5882,4217,121.14.162.70">
+<p>wormfox @ 2014-02-21 23:41:42</p>
+<p style="text-indent:2em">我学校用的是ID厚卡，无金额信息，只有身份信息，复制同学的卡倒是可以，哈哈！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯，看来是联网校验的，可以试试把ID改成update，你懂的……</p>
+</blockquote>
+<blockquote id="5887,4217,122.198.132.146">
+<p>Moon @ 2014-02-22 11:51:59</p>
+<p style="text-indent:2em">曾经在学校RFID实验试过用实验的读卡器读饭卡 但读不出数据</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">纳尼？</p>
+</blockquote>
+<blockquote id="5897,4217,121.14.162.73">
+<p>wormfox @ 2014-02-22 23:50:06</p>
+<p style="text-indent:2em">update,good job! 回学校试试！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">当心被开除！　-_-|||</p>
+</blockquote>
+<blockquote id="5898,4217,125.68.84.228">
+<p>呵呵 @ 2014-02-23 00:50:37</p>
+<p style="text-indent:2em">求   改金龙卡</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不做死就不会死。</p>
+</blockquote>
+<blockquote id="5908,4217,113.139.206.248">
+<p>x @ 2014-02-25 00:26:07</p>
+<p style="text-indent:2em">没啥用
+期末一对帐就发现了
+到时候死的很惨</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不做死就不会死。</p>
+</blockquote>
+<blockquote id="6233,4217,61.47.132.63">
+<p>芒果奶茶 @ 2014-04-20 16:12:28</p>
+<p style="text-indent:2em">好牛逼啊，总算找到这个原文了，那次在别人的说说看到了这个，只是残文 让我气馁了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额，硬件黑客。</p>
+</blockquote>
+<blockquote id="6874,4217,59.38.64.221">
+<p>佚名 @ 2014-08-22 10:52:07</p>
+<p style="text-indent:2em">什么是将id改为update</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额，意思就是把卡号（ID）构造成一个SQL注入语句，例如构造成update语句，在刷卡联网数据库验证时，产生注入漏洞，使你饭卡金额增加~</p>
+</blockquote>
+<blockquote id="6875,4217,59.38.64.221">
+<p>佚名 @ 2014-08-22 10:53:25</p>
+<p style="text-indent:2em">什么是将id改为update</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额，意思就是把卡号（ID）构造成一个SQL注入语句，例如构造成update语句，在刷卡联网数据库验证时，产生注入漏洞，使你饭卡金额增加~</p>
+</blockquote>
+<blockquote id="6881,4217,125.77.92.247">
+<p>阿桑地方 @ 2014-08-23 11:42:40</p>
+<p style="text-indent:2em">阿斯顿</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">阿斯顿</p>
+</blockquote>
+<blockquote id="6882,4217,125.77.92.247">
+<p>lium @ 2014-08-23 11:54:53</p>
+<p style="text-indent:2em">不靠谱，每次刷卡肯定会跟后台数据库对账，一对就发现错误。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">看哪种数据结构了，离线验证还是在线验证（你这种），直接修改后台数据库即可。</p>
+</blockquote>
+<blockquote id="6997,4217,222.42.240.131">
+<p>0749orz @ 2014-10-02 11:09:12</p>
+<p style="text-indent:2em">updata?</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">yep~</p>
+</blockquote>
+<blockquote id="6998,4217,221.207.83.170">
+<p>佚名 @ 2014-10-02 15:20:56</p>
+<p style="text-indent:2em">这个还真弄过  记得前几年上学，把校园网整个渗透了，学校有8个食堂，有一个中心服务器，把里面数据库金额改了，卡没动，但是一刷 还是没钱。每个月有30元补助 到时间到食堂一刷 钱就到账了，但是为什么改了数据库 一刷就没钱不清楚 ，因为没多长时间就毕业走了 所以没继续研究</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="7000,4217,124.132.197.217">
+<p>RainShine @ 2014-10-02 16:40:21</p>
+<p style="text-indent:2em">好文，收藏了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="7242,4217,58.20.238.42">
+<p>佚名 @ 2014-12-01 23:11:14</p>
+<p style="text-indent:2em">请问楼主买的读卡器是哪一种呢??  我现在 可以确定我们学校的卡  数据是存在IC卡上的,,求更改方法QQ664851038</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">淘宝有很多~</p>
+</blockquote>
+<blockquote id="7243,4217,58.20.238.42">
+<p>佚名 @ 2014-12-01 23:14:35</p>
+<p style="text-indent:2em">请问楼主用的什么读卡器.. 我确定我们的IC卡的数据是储存在卡上的.,,求更改方法  +QQ664851038</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">淘宝IC卡读卡器一堆~</p>
+</blockquote>
+<blockquote id="7244,4217,58.20.238.42">
+<p>佚名 @ 2014-12-01 23:16:29</p>
+<p style="text-indent:2em">麻烦楼主  私信给我或者  有哪位大牛给个群号,让我们加一加啊</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||，木有群~</p>
+</blockquote>
+<blockquote id="7269,4217,58.20.238.43">
+<p>佚名 @ 2014-12-09 21:13:15</p>
+<p style="text-indent:2em">楼主你的用什么读写技术....大神进群啊..QQ群:423288204 进群验证:注明是此网站看到的..</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">读卡器。</p>
+</blockquote>
+<blockquote id="7348,4217,182.149.90.179">
+<p>佚名 @ 2015-01-09 00:33:59</p>
+<p style="text-indent:2em">如果改成别的同学的id会不会显示卡被挂失？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">具体看情况了。</p>
+</blockquote>
+<blockquote id="7557,4217,218.240.131.190">
+<p>佚名 @ 2015-04-24 13:38:24</p>
+<p style="text-indent:2em">求群号啊</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">QQ群：160029832</p>
+</blockquote>
+<blockquote id="7601,4217,133.51.75.72">
+<p>佚名 @ 2015-05-23 04:14:03</p>
+<p style="text-indent:2em">居然现在还有写卡不需要读卡器端用SAM卡相互验证的这种卡
+日本的Suica之类的卡，连读取余额信息都要进入卡片状态3（卡验证、读卡端验证完成后）
+要黑这种卡，必须要把卡本身OS的bug挖出来，或者设法黑掉一台带有SAM卡并连接到读卡器的PC</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">学到了！这么晚还不睡？哈哈</p>
+</blockquote>
+<blockquote id="7603,4217,61.177.75.194">
+<p>BLKC @ 2015-05-24 13:07:08</p>
+<p style="text-indent:2em">..我渗透了整个学校一卡通网络，和楼上一个评论一样，中心数据库改了没有用，钱还是不变，要改一卡通软件的数据库（我们学校是新中新的系统，其他的不晓得）钱就变了，但是留下了删不掉的流水日志，一卡通的数据库貌似是一个企业自主开发的数据库，没有工具可以读写，除了他软件自身。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!（友情提示：你的IP暴露了你所在的学校……）</p>
+</blockquote>
+<blockquote id="7973,4217,180.107.198.133">
+<p>佚名 @ 2015-10-29 21:48:23</p>
+<p style="text-indent:2em">怎么看饭卡数据是存在IC卡上还是存在数据库？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">数据读取出来才知道。</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">0749orz</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2014-02-19
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/hack/">Hack</a>
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E7%AE%97%E6%B3%95/">算法</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4218/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">一种很鸡肋的XSS，我喜欢叫它【No refresh Xss】，自爆菊花型</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4216/">
+            <span class="next-text nav-default">视频监控的一种通杀问题？大部分视频监控系统客户端无需密码？</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

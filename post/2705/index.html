@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>讲述一个关于高考的“黑客”故事：用2B铅笔“注入”阅卷系统 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="A_Zhao" /><meta name="description" content="讲述一个关于高考的“黑客”故事：用2B铅笔“注入”阅卷系统。一个考生在16年前用一支2B铅笔挑战全市阅卷器，致使该机器所辖所有考生答题卡无法读取的例子。这个故事告诉我们，千万别让熊孩子乱填空！" />
+<meta name="keywords" content="讲述一个关于高考的“黑客”故事：用2B铅笔“注入”阅卷系统" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/2705/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="讲述一个关于高考的“黑客”故事：用2B铅笔“注入”阅卷系统" />
+<meta property="og:description" content="讲述一个关于高考的“黑客”故事：用2B铅笔“注入”阅卷系统。一个考生在16年前用一支2B铅笔挑战全市阅卷器，致使该机器所辖所有考生答题卡无法读取的例子。这个故事告诉我们，千万别让熊孩子乱填空！" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/2705/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-07-21T09:04:22&#43;08:00" />
+<meta property="article:modified_time" content="2012-07-21T09:04:22&#43;08:00" />
+
+<meta itemprop="name" content="讲述一个关于高考的“黑客”故事：用2B铅笔“注入”阅卷系统">
+<meta itemprop="description" content="讲述一个关于高考的“黑客”故事：用2B铅笔“注入”阅卷系统。一个考生在16年前用一支2B铅笔挑战全市阅卷器，致使该机器所辖所有考生答题卡无法读取的例子。这个故事告诉我们，千万别让熊孩子乱填空！"><meta itemprop="datePublished" content="2012-07-21T09:04:22&#43;08:00" />
+<meta itemprop="dateModified" content="2012-07-21T09:04:22&#43;08:00" />
+<meta itemprop="wordCount" content="10488">
+<meta itemprop="keywords" content="黑客,系统,注入,Windows,测试,定位,分析,技术,模拟,软件,扫描,设备,事件,数据,问题,信号," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="讲述一个关于高考的“黑客”故事：用2B铅笔“注入”阅卷系统"/>
+<meta name="twitter:description" content="讲述一个关于高考的“黑客”故事：用2B铅笔“注入”阅卷系统。一个考生在16年前用一支2B铅笔挑战全市阅卷器，致使该机器所辖所有考生答题卡无法读取的例子。这个故事告诉我们，千万别让熊孩子乱填空！"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">讲述一个关于高考的“黑客”故事：用2B铅笔“注入”阅卷系统</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-07-21" class="post-time">
+          2012-07-21
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E9%BB%91%E5%AE%A2/"> 黑客 </a>
+            <a href="https://lcx.cc/categories/%E7%B3%BB%E7%BB%9F/"> 系统 </a>
+            <a href="https://lcx.cc/categories/%E6%B3%A8%E5%85%A5/"> 注入 </a>
+            
+          </div>
+        <span class="more-meta"> 约 10488 字 </span>
+          <span class="more-meta"> 预计阅读 21 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	A_Zhao 楼主发表于：2012-06-08 22:07:29
+</p>
+<hr />
+<p style="text-indent:2em;">
+	讲述一个关于高考的“黑客”故事：用2B铅笔“注入”阅卷系统
+</p>
+<p style="text-indent:2em;">
+	今天，又是一年一度高考的日子。
+</p>
+<p style="text-indent:2em;">
+	回想起16年前（1996年）……那是高中的一段艰苦岁月……
+</p>
+<p style="text-indent:2em;">
+	几乎每天都要进行一场考高模拟测试，同学和老师们，都是叫苦不迭。
+</p>
+<p style="text-indent:2em;">
+	那时候，用2B铅笔填涂答题卡的答卷方式，已经在高考中开始实施。教育主管部门和校方，为了“实战演练”考生们的临场技能，在模拟考试中，也实行了答题卡方式。
+</p>
+<p style="text-indent:2em;">
+	那是一次全市范围的英语模拟考试，答题卡将被上交到市级考试中心机构，进行计算机阅卷处理。
+</p>
+<p style="text-indent:2em;">
+	我早早地就做完了试题。闲着没事，就开始琢磨起这个“答题卡”来。
+</p>
+<p style="text-indent:2em;">
+	直到现在，我还清楚地记得，在那张长方形答题卡上面的最右边，从上到下，几十个小黑块与空白相间排列。
+</p>
+<p style="text-indent:2em;">
+	这一长条相间排列的小黑块与空白，是做什么用的呢？
+</p>
+<p style="text-indent:2em;">
+	我的直觉告诉我：
+</p>
+<p style="text-indent:2em;">
+	（1）当答题卡被送入电子阅卷设备之后，设备的接纳口，一定要比答题卡更宽一些。就像较小的豆子要通过较大口径的漏斗口，才能被漏斗收进去一样。如果设备的接纳口跟答题卡的宽度一样，那么难免会发生卡纸。
+</p>
+<p style="text-indent:2em;">
+	（2）因为电子阅卷设备的接纳口，存在上述的冗余空间，又因为答题卡在被摆放和被传送的过程中，一定会出现“抖动”，那么，每张答题卡对于设备接纳口的位置，都是随机的。
+</p>
+<p style="text-indent:2em;">
+	（3）因为答题卡相对于设备接纳口的位置是随机的，那么，接下来要让电子阅卷设备的读卷探头（一种指针），能够准确地识别答题卡上的填涂信息，就必然要有一种“定位机制”，使得读卷探头和答题卡的相对位置，是可以被精准测量的“偏移量”。
+</p>
+<p style="text-indent:2em;">
+	（4）那么，观察现在手上的这张答题卡。在整张答题卡上，最有可能用来实现这种“定位机制”的，就应该是那一长条相间排列的小黑块与空白了。
+</p>
+<p style="text-indent:2em;">
+	（5）之所以选用2B铅笔来填涂，是因为2B铅笔留下的石墨厚度，可以对电子阅卷设备所发出的信号（猜想是光信号）做出影响。也就是说，当石墨的厚度足以使其吸收光信号，而不是像白纸的空白处反射光信号而被设备俘获的时候，电子阅卷设备就知道该考生的答项是什么了。
+</p>
+<p style="text-indent:2em;">
+	（6）那么，第（4）点中所假象的“定位机制”，应该同样也是利用光信号的被吸收和被反射来实现。这样的话，如果在那一长条相隔排列的小黑块之间的空白处，全部用2B铅笔涂满的话，石墨将与小黑块连为一体，成为一个黑色的整长条。如此一来，上述的“定位机制”就失效了。
+</p>
+<p style="text-indent:2em;">
+	（7）当“定位机制”失效之后，答题卡相对于电子阅卷设备的位置，就永远是不确定的了，那么，电子阅卷设备将失效，它将无法判别考生的答项是什么了。
+</p>
+<p style="text-indent:2em;">
+	就这么胡思乱想了一通之后，我开始动手把以上的设想付诸实施，就是用2B铅笔，把答题卡上面最右边的，相隔排列的小黑块之间的空白，全部涂黑。
+</p>
+<p style="text-indent:2em;">
+	交卷。
+</p>
+<p style="text-indent:2em;">
+	过了两天之后，我知道了结局：
+</p>
+<p style="text-indent:2em;">
+	当我们这次模拟考试的答题卡，被送到市级考试中心之后，那里的电子阅卷设备彻底失灵。当次的所有答题卡全被绞成一团，险些全部废掉。后来不得不采用老师人工阅卷的方式，来批阅这些烂纸。电子阅卷中心的工作人员，排查了好久，最后终于发现，就是因为我这张“诡异”的答题卡，惹的祸。
+</p>
+<p style="text-indent:2em;">
+	我们的英语老师，不可能理解我这个小孩儿能动那么多“鬼脑筋”，他认定我是在考试时“思想不集中”。他对我说：“以后不要再这样了……”
+</p>
+<p style="text-indent:2em;">
+	同班同学，不论我跟他们怎么解释，这次事故是如何实现的，他们都始终听不懂。
+</p>
+<p style="text-indent:2em;">
+	这样的事情，此后我再也没有做过，因为我已经亲自地充分验证了我的一次“白日梦”式的假想，我已经非常满足了。
+</p>
+<hr />
+<p>
+	<strong>原帖精华评论：</strong> 
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	baichi4141 #16楼 回复于：2012-06-11 08:58:02
+</p>
+<p style="text-indent:2em;">
+	输入异常并不稀奇
+</p>
+<p style="text-indent:2em;">
+	但如果输入异常居然能导致设备异常动作，甚至进行原本设计时都没有设计的功能，那只能说这个设备不管是硬件还是软件都太神奇了
+</p>
+<p style="text-indent:2em;">
+	简而言之，怎么看都是编出来的故事，就像用钢针刻windows光盘一样
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	wshjldaxiong #20楼 回复于：2012-06-11 09:58:25
+</p>
+<p style="text-indent:2em;">
+	我高中模拟考时也想到了这个问题，只是我觉得那个机器应该不会这么烂，错误检查都木有，所以我没试，不过楼主是96年，也是很有可能，我那时要是试了估计也不会有效果了。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	A_Zhao #23楼 回复于：2012-06-11 12:51:06
+</p>
+<p style="text-indent:2em;">
+	引用 16 楼 的回复:简而言之，怎么看都是编出来的故事，就像用钢针刻windows光盘一样
+</p>
+<p style="text-indent:2em;">
+	这是我的真人真事。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	ckc #24楼 回复于：2012-06-11 14:34:47
+</p>
+<p style="text-indent:2em;">
+	你只涂了你自己的卡，为什么可以影响到别人？
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	liangbch #25楼 回复于：2012-06-11 19:34:50
+</p>
+<p style="text-indent:2em;">
+	阅卷系统没有经过充分的Corner测试和robustness测试。如果经过测试的话，应该显示"无效的答题卡，不能找到同步信号”，然后将卷子退出来。
+</p>
+<hr />
+<p style="text-indent:2em;">
+	楼主于 4 天后，又补充了续集……
+</p>
+<p style="text-indent:2em;">
+	（在第 29 楼有很长的“续集”的，很多网站都没有转载续集，我找到原帖才发现有续集的）
+</p>
+<hr />
+<p style="text-indent:2em;">
+	A_Zhao 回复于：2012-06-13 07:59:49 #29楼
+</p>
+<p style="text-indent:2em;">
+	有一些网友认为，我在主帖里所讲述的故事，是“吹牛逼”、“编故事”、“骗傻子呢”、“这都信？”……
+</p>
+<p style="text-indent:2em;">
+	他们的理由，是这么一个意思：按照我所讲述的做法，应该只有属于我自己的那唯一的一张答题卡，无法被设备正确判读，至于其他的答题卡，应该仍然能够被设备正确地处理，但我却说，在那次事件中，其他的答题卡也无法被正确处理且被报废，所以，认定我是在“吹牛逼”、“编故事”。
+</p>
+<p style="text-indent:2em;">
+	我认为，上述这种质疑的理由，是非常合理的。甚至，这种理由所揭示的，对事件最终结局的判断，也在我的那次“白日梦”设想的范围之中 —— 我的设想是：让电子阅卷系统仅仅是无法判读我的答题卡。（我再重申一下：）至于最后让整批答题卡报废的结局，是出乎我意料之外的。甚至可以这么说，如果我能预估到，最终的结局是那样的话，那么，我肯定不会依旧我行我素地，去那样验证我的设想了。
+</p>
+<p style="text-indent:2em;">
+	当1996年那次英语模拟考试结束两天之后，我知道了事件的结局的时候，我的心情是有一些复杂的：首先，我觉得有一些羞愧和忐忑，主要是因为担心我们无辜的英语老师，可能会被教育主管部门追究责任，甚至我们这所“省内名重点中学”也会由此而蒙羞。其次，虽然事件的结果超乎我的预料，令我有些讶异，但是很快，我不得不又做起“白日梦”，那就是，我必须进一步设想：在我的那张答题卡被送入电子阅卷设备之后，对该设备到底如何地发生了干扰。
+</p>
+<p style="text-indent:2em;">
+	任何看似不和谐的结果，必须规整成为我所要求的“可以理喻”的体系中的一部分。没办法，这简直就是我的一种心病。
+</p>
+<p style="text-indent:2em;">
+	下面讲述我的第二次“白日梦”。
+</p>
+<p style="text-indent:2em;">
+	（1）将答题卡上面最右边的原本相隔排列的小黑块之间的空白，全部涂黑，按照我第一次“白日梦”的设想，将导致电子阅卷设备无法判读我的答题卡上的答项。然而，显然地，在这次事件中，我这样的做法，最终造成了对其他答题卡的影响。准确地说，是导致了设备无法正确处理其他答题卡。
+</p>
+<p style="text-indent:2em;">
+	（2）上述第（1）点的结局性的事实得以成立，首先必须排除一种“极端情况”，那就是：本批次所有的其他的考生（也就是他们的答题卡与我的，是同一批被送入设备的），在他们各自的答题卡上，均做了跟我所做的同样的事情。这是一种“极端的极端情况”。还有一种“较弱的极端情况”： 在本批次中，只有部分考生，跟我同样地这么做了。现在，将“极端的极端情况”和“较弱的极端情况”统统排除，那就是，在本批次考生中，唯有我一人做了这样的事情。—— 这可以从事件发生之后，我所得到的关于事件结局的反馈信息，所揭示出来的事实，得到验证，那就是，阅卷中心的工作人员，最后排查所得的结论是：我的那张答题卡“惹的祸”。
+</p>
+<p style="text-indent:2em;">
+	（3）显然，我的那张答题卡，是搅动全局的唯一因子。更具体和准确地说，是我的那张答题卡上的那诡异的一个“黑色的整长条”，是这个唯一因子。现在，根据官方的说法，我的那张答题卡所在的那一整批答题卡，都在电子阅卷设备中，遭到了破坏（被全部“绞纸”）。那么，这又延伸出来两种不同的情况：
+</p>
+<p style="text-indent:2em;">
+	（i）官方的说法有一些报复性的夸张，而事实是在由整批答题卡所组成的序列中，只有以我的那张答题卡作为标杆的，单单某一侧的答题卡遭遇到了破坏；
+</p>
+<p style="text-indent:2em;">
+	（ii）官方的说法严格符合事实，事实的确是整批答题卡遭遇到了破坏，也就是说，在我的那张答题卡的两侧（不会再有第二个维度了，即，不会在“前-后”维度之外再冒出一个“左-右”维度）的所有答题卡，均遭到了破坏。
+</p>
+<p style="text-indent:2em;">
+	我现在选取第（ii）种情况来考虑整个问题，理由是，第（i）种情况基本上可以视为第（ii）种情况的一个真子集。当然，理论上还有第（iii）种情况，那是一种极端情况：我的那张答题卡，位于整批答题卡所组成的序列中的“端”位置（即顶端或末端）。其实，仔细想想，这第（iii）种情况，也可以被视为第（ii）种情况的一个真子集。综上，我只选取第（ii）种情况来进行我的“白日梦”。
+</p>
+<p style="text-indent:2em;">
+	（4）上述第（3）点中的第（ii）种情况，换一种说法来表述，就是，我的那张答题卡，在整批答题卡所组成的序列中的位置，是随机的。如果把位置视为一个量，那么，这个量是随机量。现在的“梦境”是：随机量对整个序列产生了全局性的干扰。那么整个序列对于电子阅卷设备来说，是怎么样被呈现出来的呢？直观地看，整个序列的每一个元素，是按照前后顺序逐个经过电子设备的“探头”的可视范围中的，也就是说，电子设备不可能同时判读N张答题卡（N&gt;1）。电子设备可以同时判读N张答题卡这种极端情况，以及一切类似的并行机制，在“梦境”中把它统统剔除。
+</p>
+<p style="text-indent:2em;">
+	（5）上述“前后顺序”的现象，自然地将“时间”这个范畴引入。萨特（(J-P Sartre）的名著提醒我（只要书名就足够提醒我了），考虑到“时间”这个范畴的时候，应该联想到“存在”。“时间”和“存在”这两个范畴，总是习惯性地成对出现。我的“白日梦”已经处于胶着状态，我用简单一些的话来说吧：在“时间”序列上，能对整个序列产生搅动的因子，应该以“存在”这个属性来彰显。在本事件中，这种关系的表达是：答题卡上面最右边那些相隔排列的小黑块以及其间的空白，是整个序列中的一个“存在性标志”，而不再仅仅是某一张答题卡与电子设备“探头”关系下的“定位标志”。换句话说，电子设备透过俘获一张答题卡上面最右边那些相隔排列的小黑块以及其间的空白，来“感知”该张答题卡的存在。
+</p>
+<p style="text-indent:2em;">
+	（6）如果某一张答题卡上面最右边那些相隔排列的小黑块以及其间的空白这个整体被破坏了，比如我把那些空白处全部涂黑，小黑块和空白所组成的信息将丧失，那么，即便电子阅卷设备里面，那个负责传送答题卡的装置（猜想是由对纸张粘滞度较高的定轴轮所组成的）将这样的答题卡，送入设备的“探头”处，因为该张答题卡已经丧失了对于“探头”所属于的“大脑”的存在性标志，那么“大脑”也认为“探头”下没有答题卡，于是，“大脑”向传输装置下达指令：重新传送答题卡。实际上，就是序列中的下一张答题卡被传送进来。
+</p>
+<p style="text-indent:2em;">
+	（7）当电子阅卷设备的“大脑”对某张答题卡的存在与否的认知（即逻辑上的）与答题卡真实的存在与否的情况（即物理上的）发生矛盾的时候，接下来的事情，就将以混乱的形态呈现。当然，设备的“大脑”依旧是无法知道这种混乱的。比如说，我的那张答题卡，被滞留在判读容器（即“探头”所在的地方）里面，因为它“不存在”所以它也不会被传送出去而离开判读容器。它没有“滚蛋”（被吐出），它留在了这个狭促的地方。接着，序列中的下一张答题卡，被传送进这个狭促的地方。这个狭促的地方原本只应该放置一张答题卡，但是现在却有了两张，该怎么放？下一张答题卡完全有可能，被塞进了我的那张答题卡的下面的空间。因为这个地方十分狭促，而答题卡在经过上百分钟内的填涂、擦改、拿捏、汗水的浸渍，难免会发生翘曲，所以上述情况，并不是极端情况，而是几率约为50%的概率事件。当发生了这种情况的时候，第二张答题卡（以我的那张答题卡计为第一张），因为被第一张答题卡给覆盖住了，所以仍然被设备的“大脑”视为“不存在”，于是，第三张答题卡又被传送进来。举这样的例子，并不是要强调接下来的每张答题卡，都有可能被我的那张答题卡覆盖，而是揭示出：这么一种逻辑上的存在与真实的存在发生矛盾的现实，将导致整个系统的混乱程度呈爆炸性增长，不可预测的分支事件，将会越来越多、越来越复杂。当设备的传送装置，所进行的“传入-传出”行为（次数），不能准确符合真实的答题卡的数量的要求的时候，第（3）点中的第（ii）种情况，就完全可能出现，即整个序列都将遭到破坏 —— 包括那些已经被传出判读容器的答题卡，只要还在电子阅卷设备整个系统的可控范围之内，就有可能被“卷回”，参与到混乱现场的进程中来，为整个系统的混乱状态，增加更多不可预测的因素。
+</p>
+<p style="text-indent:2em;">
+	综上所述，整批答题卡被全部绞纸，这在我的第二次“白日梦”中，是完全“可以理喻”的。这才平复了我在获悉事件结局之后，心中的纠结。
+</p>
+<p style="text-indent:2em;">
+	当然，白日梦终归是白日梦，它或许离当时的真实情况相差很远，我也不会再去做什么“验证”的工作了。直到今天，我仍然完全不知道现实中的电子阅卷设备，究竟是如何工作的。这个设备，对于我来说，恐怕将是一个长期的“黑箱子”。
+</p>
+<p style="text-indent:2em;">
+	在我于今年高考的日子，贴出了我的第一个“白日梦”被验证的故事之后，有来自全国范围内的网友的跟帖。其中，有的网友说，他／她也这么做了，而且结局和我的那次一样，即整批答题卡被“搞乱”。还有的网友说，他们学校提前跟考生打好招呼，不允许他们那么做，“看来有前车之鉴”。这么看来，我的那次事件，也绝对不是一个孤例。
+</p>
+<p style="text-indent:2em;">
+	如果有人认为，这还不能成为对我的真人真事的一个佐证的话，那么，请查阅《维基百科》，关于“Optical Mark Recognition”这一条，网址是：
+</p>
+<p style="text-indent:2em;">
+	http://en.wikipedia.org/wiki/Optical_Mark_Recognition
+</p>
+<p style="text-indent:2em;">
+	其中“Disadvantages”这一节，是这么说的（原文摘录）：
+</p>
+<p style="text-indent:2em;">
+	There is also the possibility of missing data in the scanning process,&nbsp;and incorrectly or unnumbered pages can lead to their being scanned in&nbsp;the wrong order. Also, unless safeguards are in place, a page could be&nbsp;rescanned providing duplicate data and skewing the data (Bergeron, 1998).
+</p>
+<p style="text-indent:2em;">
+	请特别注意，其中“unless safeguards are in place”这个条件状语，以及“incorrectly or unnumbered pages”、“the wrong order”、“rescanned”这些词，还有，这一类事件的报告年份，是1998年。
+</p>
+<p style="text-indent:2em;">
+	整段英语原文，非常简单明晰，我就不翻译了。
+</p>
+<p>
+	<strong>※注 1：</strong> 
+</p>
+<p style="text-indent:2em;">
+	我这里提到的名著，的确就是萨特的《存在与虚无》，不是海德格尔（M. Heidegger）的《存在与时间》。虽然后者的书名包括了“存在”和“时间”两个词。
+</p>
+<p style="text-indent:2em;">
+	我在上文中所说的关于“书名”的“提醒”，意指萨特的《存在与虚无》书名提示到了“存在”这个词。
+</p>
+<p style="text-indent:2em;">
+	我在高中的时候，只了解萨特，根本不了解海德格尔。
+</p>
+<p style="text-indent:2em;">
+	我比较系统地学习从胡塞尔（E. Husserl）到海德格尔再到我的头像这位的现象学，那是比较晚的事情了。
+</p>
+<hr />
+<p>
+	<strong>原帖精华回复：</strong> 
+</p>
+<p style="text-indent:2em;">
+	wshjldaxiong #30楼 回复于：2012-06-13 11:49:50
+</p>
+<p style="text-indent:2em;">
+	哈哈哈，government 部门的机器烂是理所当然的，知道烂还不去换也是理所当然的，除非在正式高考中来场大的事故，不然永远都不会有人去管这个问题。而且这种机器基本是国家的厂产的，就更不可能换了。你看看 government 部门里的其他东西为啥换得那么勤快？预算不花怎么可能再回扣回来进自己口袋呢？人性，如此。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	wshjldaxiong #31楼 回复于：2012-06-13 11:55:06
+</p>
+<p style="text-indent:2em;">
+	这个机器的现象，其实从编程的角度就很好理解，就是少一句错误检查的事，说崩溃就崩溃，一点也不稀奇。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	deepmist #37楼 回复于：2012-06-18 11:11:19
+</p>
+<p style="text-indent:2em;">
+	我当年也想过和楼主类似的事情，不过没有去实践，不敢耽误人生大事
+</p>
+<p style="text-indent:2em;">
+	另外，我们学校模拟考试虽然涂卡，但不会拿去机读，老师阅卷一般是在答题纸上把正确的答案扣空，
+</p>
+<p style="text-indent:2em;">
+	然后放在考生的答题卡上去，有做记号的就对了
+</p>
+<p style="text-indent:2em;">
+	于是乎我每次考试都会在没有把握的题目处，图多个选项，不过这样对高考无用
+</p>
+<p style="text-indent:2em;">
+	不知大家有和我一样的吗
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">（站长点评：尼玛，奇葩呀，有才~）</span> 
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	woxuevc2015 #41楼 回复于：2012-06-18 12:14:46
+</p>
+<p style="text-indent:2em;">
+	引用 1 楼 的回复:好聪明：）当年那么爱思考，对你现在的生活有没有影响呢，一定很成功吧：）
+</p>
+<p style="text-indent:2em;">
+	这种聪明有什么样，想当初我在大学的时候还研究出了彩票的数学模型呢，绝对是真正的彩票数学模型，现在我在学VC++决定把这种彩票模型用软件实现，不用软件，靠人工无法分析海量的数据，如果能赚到钱，那就说明我就是一个天才，如果不能，那我就是彻底的傻逼和废物！不能赚到钱，那些小聪明有什么用？？？
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">（站长评论：你他妈的脑残，谁他妈的教你用钱来衡量聪明的？这你妈两者有什么关系？能在一起比较吗？你说的一点没错，你就是彻底的傻逼和废物！）</span> 
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	zhuruibing #42楼 回复于：2012-06-18 12:49:23
+</p>
+<p style="text-indent:2em;">
+	引用 41 楼 的回复:这种聪明有什么样，想当初我在大学的时候还研究出了彩票的数学模型呢，绝对是真正的彩票数学模型，现在我在学VC++决定把这种彩票模型用软件实现，不用软件，靠人工无法分析海量的数据，如果能赚到钱，那就说明我就是一个天才，如果不能，那我就是彻底的傻逼和废物！不能赚到钱，那些小聪明有什么用？？……
+</p>
+<p style="text-indent:2em;">
+	被中国的功利教育深深的毒害了！
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	cangencong #49楼 回复于：2012-06-18 13:51:18
+</p>
+<p style="text-indent:2em;">
+	楼主分析得有理，但是我有个疑问，就是系统肯定会尽力压力测试，错误测试，等，如果出现你刚才说的，你这张有问题，那也只会你这张读不出，根本不能影响其他的呀，也应该也是为什么每张纸都有这个黑色的边的原因，而且每张机读卡也不是完全一致，肯定会重定位的。所以对于楼主所言，貌似有理，但是影响我觉得绝不至于所有的答卷。请楼主解释下
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	MissedYan #51楼 回复于：2012-06-18 14:13:25
+</p>
+<p style="text-indent:2em;">
+	引用 16 楼 的回复:
+</p>
+<p style="text-indent:2em;">
+	输入异常并不稀奇
+</p>
+<p style="text-indent:2em;">
+	但如果输入异常居然能导致设备异常动作，甚至进行原本设计时都没有设计的功能，那只能说这个设备不管是硬件还是软件都太神奇了
+</p>
+<p style="text-indent:2em;">
+	简而言之，怎么看都是编出来的故事，就像用钢针刻windows光盘一样
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	+1
+</p>
+<p style="text-indent:2em;">
+	我看后也是这么想的， 读取异常会把这个应该把这个“答题卡”“吐”出来， 就像ATM取款一样
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	MissedYan #52楼 回复于：2012-06-18 14:25:30
+</p>
+<p style="text-indent:2em;">
+	看了楼主的第二个回复，我折服了
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	tomur #61楼 回复于：2012-06-18 17:14:20
+</p>
+<p style="text-indent:2em;">
+	引用 33 楼 的回复:
+</p>
+<p style="text-indent:2em;">
+	有一些网友认为，我在主帖里所讲述的故事，是“吹牛逼”、“编故事”、“骗傻子呢”、“这都信？”……
+</p>
+<p style="text-indent:2em;">
+	他们的理由，是这么一个意思：按照我所讲述的做法，应该只有属于我自己的那唯一的一张答题卡，无法被设备正确判读，至于其他的答题卡，应该仍然能够被设备正确地处理，但我却说，在那次事件中，其他的答题卡也无法被正确处理且被报废，所以，认定我是在“吹牛逼”、“编故事”。
+</p>
+<p style="text-indent:2em;">
+	我认为，上述这种质疑的理由，……
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	高中用了那么多次答题卡也却从来没有像楼主这样细心的注意观察，分析答题卡中的答案能被正确识别的原理。
+</p>
+<p style="text-indent:2em;">
+	如果楼主不说到现在甚至以后若干年也不一定能明白其中的奥秘。
+</p>
+<p style="text-indent:2em;">
+	再一次说明楼主很强大。
+</p>
+<p style="text-indent:2em;">
+	真希望有机会能和楼主聊聊，向楼主多学习学习。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	gdujian0119 #69楼 回复于：2012-06-18 22:14:35
+</p>
+<p style="text-indent:2em;">
+	没时间看完那么假的帖子
+</p>
+<p style="text-indent:2em;">
+	关于定位那部分，以前答题的时候也考虑过，好像每张答题卡都有个角是被剪掉的。
+</p>
+<p style="text-indent:2em;">
+	至于会影响到别人的答题卡感觉更是无稽之谈，两个原因：设计机器的人“无证”程序员，另外就是根本就是放出来的假消息。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	Linux_lee #70楼 回复于：2012-06-18 22:18:08
+</p>
+<p style="text-indent:2em;">
+	我初中的时候就用过这一招类似的，说给大家听听，
+</p>
+<p style="text-indent:2em;">
+	我们那时候期末考试英语就是用的答题卡，但是阅卷的时候不用机器，是人工评的，怎么阅卷呢？先找一张答题卡，样铅笔涂上正确答案，然后用蚊香把正确答案的地反烫一个孔，这样阅卷老师就可以用这个答题卡套在同学们的答卷上，看见黑色表示正确，反之扣分。于是....我将一些自己不确定的题目做成了多选：D，结果那次我英语考试分数很高，但不是第一，嘿嘿，我真是个坏孩子啊....
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	happyyangkh #76楼 回复于：2012-06-19 09:13:23
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	引用 23 楼 的回复:
+</p>
+<p style="text-indent:2em;">
+	引用 16 楼 的回复:
+</p>
+<p style="text-indent:2em;">
+	简而言之，怎么看都是编出来的故事，就像用钢针刻windows光盘一样。
+</p>
+<p style="text-indent:2em;">
+	这是我的真人真事。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	这个可信性还是比较高的。我曾经做过几个基于这种读卡器上的软件，当然不是用用于阅卷，而是用于投票选举啥的。其实实现统计，分析等功能都不难，调用API再加上若干行代码就行了，最难的反倒是对于机器的异常处理，例如卡纸，一次走两张纸，纸没有摆正等等，换句话说，如果一切正常，那么这个机器还是效率很高的，但发生异常，就真不知道会有什么事情发生了。我99年在这类机器上编程的时候，被搞得焦头烂额，最后总算搞出一个勉强可用的版本——在运行之前，先进行筛选，把一些可能出现问题的卡挑选出来，人工去统计，剩下的再机读。楼主的是96年的机器，因为出现异常把硬件和软件都搞挂，完全是有可能的。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	cxnvn #84楼 回复于：2012-06-19 13:09:22
+</p>
+<p style="text-indent:2em;">
+	这个事情其实我当年也想过，不过比楼主抵挡很多，我分别用圆珠笔，钢笔等试验过是否能替代2B（结果只有圆珠笔可以），然后又想到那个机器没那么神奇，估计是判断在正确的答案上是反光还是吸光，所以我四个答案都涂试过，但是失败了，全错，估计是有专门判断多选的程序，于是再试一次每道题答两个答案，成功，在寄读在某落后地区高中那段时间是两周一次模拟高考，每次选两个答案，直到很久才被发现，我也很知足了，高考实在没敢试，楼主你离我们太远，你是真正的黑客。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	zhxh008 #85楼 回复于：2012-06-19 15:04:27
+</p>
+<p style="text-indent:2em;">
+	机读卡原理：这是一种简单的光学字符识别（OCR）技术读卡机只对黑色敏感 所以卡上红色绿色的部分读卡机实际是认不出来的卡上原本印有黑色的条块 来帮助读卡机确认卡的方向与位置铅笔在卡上的填涂的黑块和印好的黑块共同组成了一个只有黑与白的图像 其原理与二进制的"0""1"近似读卡机扫描后与预先存储的答案生成的图像进行比较 相符的部分就是得分 不符的就是错误。其实现在的家用扫描仪也能做到这些 而且能做得更好 比如将报纸上的文章扫描进电脑形成真正的文字编码 当然准确率就没有读卡机那种只有"错与对"的识别准确率高了。侧面有一条黑白相间的道，看到了吧，叫导引道然后用光电元件测量光通量，再通过数字处理，就可以得出分数。这样速度快而且准. 光电读卡机的工作原理是通过机器光电头对信息的识别来录入有关信息自动判断正误。铅笔芯是石墨,铅和粘土组成的. 机读卡用的是光学识别系统, 利用x射线实时成像监测系统软件、缺陷与图片数据库管理系统软件、专用图像处理软件来识别学生的答案. 在固定的位置设置一定数量的X射线小型探针,作为标准答案的模型孔.纸张和钢笔等等均能被X线射穿,是反映不出信号的,而X射线不能穿过铅,所以必须用铅笔填写才能造成X射线的阴影,机读卡上的答案才能反映出来. 这一原理就是X射线对物质的穿透力差异造成的,在核反应堆防护方面也得到了应用. 中国自80年代从英国引进“微机读卡”技术之后，为客观题的阅卷，提供了一个非常实用，快速，有力的解决方案。“微机读卡机器”和卡片也更新换代很快，机读技术现在已经发展成为利用红外线感应炭（石墨）技术！目前我国产用的读卡设备就是按照2B铅笔的石墨浓度的进行设计的就是：指标1：铅笔中炭（石墨）的浓度指标2：被涂黑区域的面积的大小补充注释：：炭（石墨，2B铅笔中的主要成分）因此衡量你的答案是否正确的涂在了答题卡上，“电脑读卡设备”就是利用 炭 对 红外线的电敏感性。通过炭对红外线的敏感反应主要得到两个数据：答题卡上被涂区域的“浓度”和“面积”大小！！
+</p>
+<p style="text-indent:2em;">
+	楼主涂黑的应该是导引道
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	yp87120700 #88楼 回复于：2012-06-19 16:57:46
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	引用 85 楼 的回复:
+</p>
+<p style="text-indent:2em;">
+	机读卡原理：这是一种简单的光学字符识别（OCR）技术读卡机只对黑色敏感 所以卡上红色绿色的部分读卡机实际是认不出来的卡上原本印有黑色的条块 来帮助读卡机确认卡的方向与位置铅笔在卡上的填涂的黑块和印好的黑块共同组成了一个只有黑与白的图像 其原理与二进制的"0""1"近似读卡机扫描后与预先存储的答案生成的图像进行比较 相符的部分就是得分 不符的就是错误。其实现在的家用扫描仪也能做到这些 而且能做得……
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	答题卡上被涂区域的“浓度”和“面积”大小！！我觉得这个有问题，要是我4个都涂满，那个机器区分的时候肯定会出现问题，或者把4个连起来涂，那些被涂区域是一样大的，肯定还有其他处理
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	snipersu #98楼 回复于：2012-06-20 13:49:02
+</p>
+<p style="text-indent:2em;">
+	故事不错，没见过答题卡怎么阅卷吧？
+</p>
+<p style="text-indent:2em;">
+	我干过这活，类似于验钞机，一摞放进去，（这点又和验钞机不同，平移着过纸）一张张过，出现问题就卡在那里报错，阅卷人挑出来，看看有啥问题，然后其他的继续，根本不可能出现你填的有问题就将答题卡绞碎的问题。
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">（站长评论：仁兄，仔细看看楼主后来写的续集，详细讲述了原理，然后再决定是否吐槽……）</span> 
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	clj1017772778 #99楼 回复于：2012-06-20 15:12:33
+</p>
+<p style="text-indent:2em;">
+	无需要对该LZ经历的事件进行猜错，怀疑，其实楼主主要是在阐述自己一种思考问题的逻辑方式而已！
+</p>
+<p style="text-indent:2em;">
+	由这句话就可以得知“闲着没事，就开始琢磨起这个“答题卡”来”。而且退一万步说，楼主即便是在写小说，这也是算的上是一篇逻辑合理的小说！
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	原帖地址：<a href="http://topic.csdn.net/u/20120608/22/007dd0fc-faa7-4261-9bf5-198bf2eea5ae.html" target="_blank">http://topic.csdn.net/u/20120608/22/007dd0fc-faa7-4261-9bf5-198bf2eea5ae.html</a>
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="2024,2705,183.20.251.60">
+<p>晴天小铸 @ 2012-07-21 11:18:47</p>
+<p style="text-indent:2em">我明年高考,如果可以:我的英语科目试试 O(∩_∩)O~</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">现在的读卡机，应该早已不存在此类问题了……</p>
+</blockquote>
+<blockquote id="2028,2705,119.249.152.198">
+<p>【匿名者】 @ 2012-07-22 09:19:59</p>
+<p style="text-indent:2em">答题卡四周的是图像定位点 （每次考试喇叭都说 禁止在附近填涂干扰定位）
+定位点是直接把答题卡分割成一块一块的小方块  然后判断每个方块是否被填涂。
+其他的作用还没想过= =</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">他那个时代是96年，当时这类机器应该是刚刚投入应用，所以应该存在大量bug，经过这么多年的发展，现在的话，应该早已不存在此类问题了……</p>
+</blockquote>
+<blockquote id="7706,2705,98.126.63.251">
+<p>我累哥去 @ 2015-07-17 14:50:23</p>
+<p style="text-indent:2em">我完全相信楼主的话
+话说今年第#次参加高考,还是有些经历,八一八哈.
+
+现在(至少最近#年)用的都是光电扫描机器,原理也就类似OCR(但是不完全),精确度还是比较高的.
+用的是山东山大鸥玛的硬件和软件,试卷比两张A4铺开还大些,以前看过他们的技术文档,
+图片白色和灰度都可以,用的CCD或者CMOS,说白了就是个快速照相机.大概200k一张图片.
+
+考虑到楼主的他们的年代96年,程序控制硬件方面比较落后.
+那个阅读器很可能因为没有读出信息而导致认为机读卡未经如或者已经吐出去了.
+造成了卡纸.说白了,打印机卡纸大家都遇到过吧,打印机吃一次两张纸也遇到过吧?
+这就不难理解了.
+
+的确按照现在的思路应该是一张纸纸张异常,但是那时候程序不完善...所以...</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">+1</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">A_Zhao</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-07-21
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%85%A5/">注入</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E5%AE%9A%E4%BD%8D/">定位</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E6%8B%9F/">模拟</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E6%89%AB%E6%8F%8F/">扫描</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BE%E5%A4%87/">设备</a>
+          <a href="https://lcx.cc/tags/%E4%BA%8B%E4%BB%B6/">事件</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E4%BF%A1%E5%8F%B7/">信号</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2706/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">阿凡达成真？俄富豪计划人脑移植机器人使人永生</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2704/">
+            <span class="next-text nav-default">苹果也爱偷窥？曝iOS应用窥探用户隐私</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

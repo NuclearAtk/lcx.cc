@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>腾讯之行的感悟（续），黑客入侵对公司无影响？ &#43; 核总霸气点评 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="刺 & Nuclear&#39;Atk" /><meta name="description" content="腾讯之行的感悟（续），黑客入侵对公司无影响？ &#43; 核总霸气点评。我在闭门会议里抛了一个有点惊世骇俗的观点：有什么公司是因为黑客入侵而走向衰落的？拍拍脑袋，几乎都找不到一家。—- 吓死你们这些玩安全的。当时为了讲我的主题，所以对这个观点的解读不够深刻，现在我展开讲讲我都想到了些什么。我这个问题是针对所有做“反黑客”的公司来说的，他们是售卖各种入侵检测产品、扫描器、安全评估服务。所以就“反黑客”这件事情来说，黑客把网站黑了又如何？CSDN被拖库了，现在还活的好好的。Evernote被拖库了，Linode被拖库了，道个歉就完了，该咋样继续咋样，大家还得用它。网站被黑客入侵了，So What？" />
+<meta name="keywords" content="腾讯之行的感悟（续），黑客入侵对公司无影响？ &#43; 核总霸气点评" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3506/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="腾讯之行的感悟（续），黑客入侵对公司无影响？ &#43; 核总霸气点评" />
+<meta property="og:description" content="腾讯之行的感悟（续），黑客入侵对公司无影响？ &#43; 核总霸气点评。我在闭门会议里抛了一个有点惊世骇俗的观点：有什么公司是因为黑客入侵而走向衰落的？拍拍脑袋，几乎都找不到一家。—- 吓死你们这些玩安全的。当时为了讲我的主题，所以对这个观点的解读不够深刻，现在我展开讲讲我都想到了些什么。我这个问题是针对所有做“反黑客”的公司来说的，他们是售卖各种入侵检测产品、扫描器、安全评估服务。所以就“反黑客”这件事情来说，黑客把网站黑了又如何？CSDN被拖库了，现在还活的好好的。Evernote被拖库了，Linode被拖库了，道个歉就完了，该咋样继续咋样，大家还得用它。网站被黑客入侵了，So What？" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3506/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-05-17T15:39:41&#43;08:00" />
+<meta property="article:modified_time" content="2013-05-17T19:15:59&#43;08:00" />
+
+<meta itemprop="name" content="腾讯之行的感悟（续），黑客入侵对公司无影响？ &#43; 核总霸气点评">
+<meta itemprop="description" content="腾讯之行的感悟（续），黑客入侵对公司无影响？ &#43; 核总霸气点评。我在闭门会议里抛了一个有点惊世骇俗的观点：有什么公司是因为黑客入侵而走向衰落的？拍拍脑袋，几乎都找不到一家。—- 吓死你们这些玩安全的。当时为了讲我的主题，所以对这个观点的解读不够深刻，现在我展开讲讲我都想到了些什么。我这个问题是针对所有做“反黑客”的公司来说的，他们是售卖各种入侵检测产品、扫描器、安全评估服务。所以就“反黑客”这件事情来说，黑客把网站黑了又如何？CSDN被拖库了，现在还活的好好的。Evernote被拖库了，Linode被拖库了，道个歉就完了，该咋样继续咋样，大家还得用它。网站被黑客入侵了，So What？"><meta itemprop="datePublished" content="2013-05-17T15:39:41&#43;08:00" />
+<meta itemprop="dateModified" content="2013-05-17T19:15:59&#43;08:00" />
+<meta itemprop="wordCount" content="3383">
+<meta itemprop="keywords" content="黑客,入侵,腾讯,DDOS,Dos,安全,代码,骗,事件,算法,淘宝,网站,问题,云,支付宝," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="腾讯之行的感悟（续），黑客入侵对公司无影响？ &#43; 核总霸气点评"/>
+<meta name="twitter:description" content="腾讯之行的感悟（续），黑客入侵对公司无影响？ &#43; 核总霸气点评。我在闭门会议里抛了一个有点惊世骇俗的观点：有什么公司是因为黑客入侵而走向衰落的？拍拍脑袋，几乎都找不到一家。—- 吓死你们这些玩安全的。当时为了讲我的主题，所以对这个观点的解读不够深刻，现在我展开讲讲我都想到了些什么。我这个问题是针对所有做“反黑客”的公司来说的，他们是售卖各种入侵检测产品、扫描器、安全评估服务。所以就“反黑客”这件事情来说，黑客把网站黑了又如何？CSDN被拖库了，现在还活的好好的。Evernote被拖库了，Linode被拖库了，道个歉就完了，该咋样继续咋样，大家还得用它。网站被黑客入侵了，So What？"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">腾讯之行的感悟（续），黑客入侵对公司无影响？ &#43; 核总霸气点评</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-05-17" class="post-time">
+          2013-05-17
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E9%BB%91%E5%AE%A2/"> 黑客 </a>
+            <a href="https://lcx.cc/categories/%E5%85%A5%E4%BE%B5/"> 入侵 </a>
+            <a href="https://lcx.cc/categories/%E8%85%BE%E8%AE%AF/"> 腾讯 </a>
+            
+          </div>
+        <span class="more-meta"> 约 3383 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<img title="腾讯之行的感悟（续），黑客入侵对公司无影响？" alt="腾讯之行的感悟（续），黑客入侵对公司无影响？" src="/file/old/2239_pennywise.jpg" width="500" height="353" /> 
+</p>
+<p style="text-indent:2em;">
+	昨天写累了，今天继续。这篇又是在飞机上完成的。
+</p>
+<p style="text-indent:2em;">
+	腾讯之行见了一些朋友，聊了很多，也让我对以前的一些想法更清晰了。
+</p>
+<p style="text-indent:2em;">
+	我在闭门会议里抛了一个有点惊世骇俗的观点：
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#006600;"><strong>有什么公司是因为黑客入侵而走向衰落的？拍拍脑袋，几乎都找不到一家。</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	—- 吓死你们这些玩安全的。
+</p>
+<p style="text-indent:2em;">
+	当时为了讲我的主题，所以对这个观点的解读不够深刻，现在我展开讲讲我都想到了些什么。
+</p>
+<p style="text-indent:2em;">
+	我这个问题是针对所有做“反黑客”的公司来说的，他们是售卖各种入侵检测产品、扫描器、安全评估服务。
+</p>
+<p style="text-indent:2em;">
+	（DDOS我没有包含在内，因为DDOS确实是刚需，而且是拼钱的。以前我做的一个很成功的论坛“幻影”就是被DDOS搞死的，当时一群穷学生什么都不懂，也没钱找能抗D的机房。业内的权威社区xfocus也被DDOS打过很长一段时间，打到差点关站。）
+</p>
+<p style="text-indent:2em;">
+	所以就“反黑客”这件事情来说，黑客把网站黑了又如何？
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#006600;"><strong>CSDN被拖库了，现在还活的好好的。Evernote被拖库了，Linode被拖库了，道个歉就完了，该咋样继续咋样，大家还得用它。网站被黑客入侵了，So What？</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	公司走向衰落可能有各种各样的原因，但是极少有因为黑客入侵而直接走向衰落的。那么对这些公司而言既然无损业务，凭什么要重视安全？
+</p>
+<p style="text-indent:2em;">
+	所以我的疑问是：假如这些网站被黑了后，仍然该干啥就干啥，甚至还越活越滋润，那你们整天为之奋斗的事业意义何在？
+</p>
+<p style="text-indent:2em;">
+	估计很多行业内的朋友看到这里要流冷汗了。别急，且待我把个脉。
+</p>
+<p style="text-indent:2em;">
+	我讲几个事情。
+</p>
+<p style="text-indent:2em;">
+	<strong>1. 以前有一家叫“港湾”的公司，做网络设备的，据说就是因为被人雇佣黑客偷了核心代码，而死掉了。当然这件事情的真实性不可考证，而且涉及到另一家令人尊敬的公司，不敢妄言。<span style="color:#006600;">但就这个案例来看，在软件时代，黑客入侵可以直接导致一家公司走向没落。</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	2. 在淘宝的时候，有人跟我说就算今天有人把淘宝的代码全部给拖走了，也搭不起来（几百G、上T的源代码）。就算搭起来了，也无法做出第二个淘宝。 —- <strong><span style="color:#006600;">在互联网时代，代码的重要性远远的降低了。</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	3. 据说马云在看到三鹿奶粉因为三聚氰胺事件而垮掉后，明白了安全的重要性。
+</p>
+<p style="text-indent:2em;">
+	所以，安全对于一家公司来说重不重要，需要结合场景来看。
+</p>
+<p style="text-indent:2em;">
+	在公司规模还不大的时候，如果遭遇黑客入侵，打击可能是毁灭性的。昨晚我就接到了客户的紧急求助，创业公司还是经不起折腾，要是被黑客多玩两次，可能就玩完了。
+</p>
+<p style="text-indent:2em;">
+	在市场充分竞争时，如果遭遇黑客入侵，可能会导致用户流向竞争对手。这点应该很容易理解吧，昨天的文章里也提到了腾讯的态度就是如此。benjurry后来在微博上回复：我记得pony（马化腾）是这么说的：“我们所遭遇的安全问题，其他竞争对手也必然会遇到，那时候，安全就会成为我们的壁垒。”
+</p>
+<p style="text-indent:2em;">
+	一些对安全比较敏感的行业，会对黑客入侵比较重视。比如支付宝、云计算等，<span style="color:#E53333;"><strong>如果出现一次黑客事件，用户可能就不再信任了</strong></span>，而会去寻求其他替代者。支付宝对安全的品牌形象就非常敏感，有兴趣的朋友可以去尝试发个文测试下支付宝的反应。
+</p>
+<p style="text-indent:2em;">
+	所谓的“黑客入侵对公司无影响”其实是个伪命题，因为安全问题而流失的客户数很难准确的统计出来，也没有一家机构站在第三方的角度统计过。
+</p>
+<p style="text-indent:2em;">
+	但话又说回来了，从结果看，因为“黑客入侵”导致公司走向衰落的情况确实很少。这些不幸的公司，最后或者加大了安全投入，找到了解决方案；<strong>或者是靠公关把负面新闻给和谐了；或者是用户们选择了健忘，依然好好的活着。</strong>对于他们来说，每天要面临的“业务安全”问题，可能比虚无缥缈的“黑客入侵”要来的更加实在和具体。
+</p>
+<p style="text-indent:2em;">
+	让马云担心的“三聚氰胺”问题，正是业务安全问题。支付宝曾一度有野心把反欺诈的解决方案推广成行业标准，如果阿里单独成立个安全公司来搞搞，也许还有点搞头。
+</p>
+<p style="text-indent:2em;">
+	在过去，业务安全问题因为其复杂性与个性化，很难有统一的解决方案。所以安全公司一般都只做“反黑客”而几乎不做“业务安全”，这其实是捡了芝麻丢了西瓜。
+</p>
+<p style="text-indent:2em;">
+	所以，我看到的未来，可能会出现一些商业上能取得成功的案例，以创业公司或者是开源的、不开源的软件的方式，解决业务安全问题。会涉及到反诈骗、反钓鱼、anti-spam、anti-abuse、刷票、刷粉、秒杀、垃圾注册等诸多领域。
+</p>
+<p style="text-indent:2em;">
+	—— 我是万恶的分割线 ——
+</p>
+<p style="text-indent:2em;">
+	最近DoNews社区对我作为“道哥的黑板报”的host，进行了一次采访，点击“阅读原文”可以查看这篇文章。
+</p>
+<p style="text-indent:2em;">
+	照片是我本人，是去年在千岛湖附近拍的。
+</p>
+<p style="text-indent:2em;">
+	======
+</p>
+<p style="text-indent:2em;">
+	本文内容来自微信公众账号：<a href="http://taosay.net/?p=339" target="_blank">道哥的黑板报</a>。微信ID：taosay。转载请注明出处。
+</p>
+<p>
+	<strong>摘录部分评论：</strong> 
+</p>
+<p style="text-indent:2em;">
+	lin 四 23, 2013 下午 9:39
+</p>
+<p style="text-indent:2em;">
+	刺总，淘宝已经在做业务安全的事情了。虽然现阶段有困难，但是会继续前进的。
+</p>
+<p style="text-indent:2em;">
+	Reply buy 四 23, 2013 下午 10:04
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#006600;"><strong>认识的某人入侵某游戏公司长期刷库几年把人家刷倒闭掉.</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#006600;"><strong>还有几个把好几家购物站刷倒闭掉，各种截单拿数据.然后数据转N手给各种骗子回访等.终于刷到那公司一天不到几十单而倒闭掉。还有等等好多就不说了，话说知道太多会被抓杀灭口的。</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	Reply囧窘 四 24, 2013 上午 9:46
+</p>
+<p style="text-indent:2em;">
+	说的有道理，我觉得对公司来说业务涉及的是否合理往往要比算法选择的是否抗破解更重要。在网上报道过有人对公交卡私自充资的事件，但是基于算法破解的却很少，很多是钻的业务漏洞。而，很多人都不太深研算法，觉得她很神秘，觉得她是最重要的，一旦出了问题应该是算法出了漏洞。
+</p>
+<p style="text-indent:2em;">
+	ReplyMaizero四 23, 2013 下午 11:43
+</p>
+<p style="text-indent:2em;">
+	期待淘宝的业务安全能做出点名堂，让我们这些用户更为受益。
+</p>
+<p style="text-indent:2em;">
+	非常认同刺总最后那句“所以安全公司一般都只做“反黑客”而几乎不做“业务安全”，这其实是捡了芝麻丢了西瓜”，说出了我的心声，包括甲方，如果只关注技术安全，不关注业务流程安全，是不行的。其实这就是那天会上强烈想表达的。关于淘宝业务安全这个事情，很早源于自己的一次经历曾经反馈过，不过当时“道行”还不够深，没有上升到探讨业务安全这个高度，但是最近给客户做风险评估，提到基于资产还是基于业务流程来做的区别，找了当年淘宝被坑（我一直不承认那是被骗或钓鱼！我丢不起这人~）的经历，但却引发激烈的讨论，甚至有“老鸟”认为，安全公司就是做IT安全的，不可能触碰太多“业务安全”的东西，讨论见链接，有兴趣可以去参加拍砖
+</p>
+<p style="text-indent:2em;">
+	http://bbs.cisps.org/viewtopic.php?f=71&amp;t=34137
+</p>
+<p style="text-indent:2em;">
+	Reply ctm 四 25, 2013 下午 6:02
+</p>
+<p style="text-indent:2em;">
+	吴翰清先生好帅。另外感觉贵圈的门槛好高，如果技术不是很好的话根本不能和你们搭话。吴翰清先生能否推荐一些贵圈中好说话并且愿意和菜鸟交流的大牛呢，万分拜谢。
+</p>
+<p style="text-indent:2em;">
+	Reply linf 五 3, 2013 下午 12:23
+</p>
+<p style="text-indent:2em;">
+	道哥05年进阿里，文中所述打杂七年，那应该是今年离开的，希望以后能和道哥多多交流
+</p>
+<p style="text-indent:2em;">
+	Reply zhi 五 10, 2013 上午 9:41
+</p>
+<p style="text-indent:2em;">
+	老师在讲电子商务很无聊，一个阿里巴巴激励多少人关注电商，多少高校开电商课。想做白日梦发财而不考虑可行性和自己的兴趣。
+</p>
+<p style="text-indent:2em;">
+	Reply niao 五 12, 2013 下午 1:58
+</p>
+<p style="text-indent:2em;">
+	权利是用来保卫利益 而非获取利益
+</p>
+<p>
+	<strong><a href="https://lcx.cc/" target="_blank"><span style="color:#E53333;">核总</span></a><span style="color:#E53333;">点评：</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">刺总文中的分析很片面……</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">首先，“没有一家因黑客入侵而导致倒闭的” 从而推导出 “黑客入侵对公司无影响”，这个思路本身就是个错误的！</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">“没有”，并不代表“不能做到”，而是取决于“有没有这个必要去做”！</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">为什么这样说呢，首先从“黑客事件”的性质来谈一谈……</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">本文评论已写成单独文章，详见：</span>“<a href="https://lcx.cc/post/3507/" target="_blank">黑客打倒大型跨国公司，大型财团/商业集团/政治阴谋，发动大规模网络战争</a>”
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2259/" target="_blank">末世入侵行动 (Fire Sale!) 末日入侵行动</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2477/" target="_blank">很少有人注意的一个细节，未来网络战争的严重安全隐患！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3374/" target="_blank">地球Online，你是玩家还是NPC？不要被传统观念所束缚！做真正的玩家！</a> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="3978,3506,122.4.234.130">
+<p>小宇 @ 2013-05-17 17:44:51</p>
+<p style="text-indent:2em">老哥这么牛了 还天天逛博客呢</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">多吸收一点知识可以丰富你的人生阅历，还可以使你变得更牛，这是成为牛人的基础条件，怎么可以舍弃呢……</p>
+</blockquote>
+<blockquote id="4009,3506,118.194.241.126">
+<p>佚名 @ 2013-05-21 09:29:47</p>
+<p style="text-indent:2em">我一直有个问题，想听听核总的看法：
+搞安全做技术的，一般在公司上班的，平时做做渗透，了解些web方面/业务方面的漏洞基本就可以了。公司做安全的好像基本都很忽略客户端安全这一块。但是偏黑客方面、像做木马、游戏辅助、免杀、又肯定离不开客户端方面的技术。前些日子我有个朋友，和我说客户端这块安全技术已经过时了。
+难道真是这样了么？以后Windows下客户端方面的安全就真的没有必要再关注了么？说的再直白一点，真的就没有利润可以从这里挖了么？
+请核总指点迷津～</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">永远没有过时的技术，客户端技术并没有过时，只是现在客户端关注的人少了，关注web的人更多了。
+关注的人少了，它就没有利润了，但并不表示没有利润可挖。</p>
+</blockquote>
+<blockquote id="5517,3506,163.125.238.59">
+<p>不是不可能啊 @ 2013-12-19 22:05:23</p>
+<p style="text-indent:2em">以前听说过hacker把一家ssl安全证书公司的证书源代码窃取了，把恶意网站添加为认证网站，直接导致了公司倒闭。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">有此可能……</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">刺 & Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-05-17
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/%E5%85%A5%E4%BE%B5/">入侵</a>
+          <a href="https://lcx.cc/tags/%E8%85%BE%E8%AE%AF/">腾讯</a>
+          <a href="https://lcx.cc/tags/ddos/">DDOS</a>
+          <a href="https://lcx.cc/tags/dos/">Dos</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E9%AA%97/">骗</a>
+          <a href="https://lcx.cc/tags/%E4%BA%8B%E4%BB%B6/">事件</a>
+          <a href="https://lcx.cc/tags/%E7%AE%97%E6%B3%95/">算法</a>
+          <a href="https://lcx.cc/tags/%E6%B7%98%E5%AE%9D/">淘宝</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E4%BA%91/">云</a>
+          <a href="https://lcx.cc/tags/%E6%94%AF%E4%BB%98%E5%AE%9D/">支付宝</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3507/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">黑客打倒大型跨国公司，大型财团/商业集团/政治阴谋，发动大规模网络战争</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3505/">
+            <span class="next-text nav-default">如何管理一流的人才 &#43; 这次真的谈谈如何管理一流人才：圈养牛人</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

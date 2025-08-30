@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>纯手工玩转 Nginx 日志 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="梧桐雨" /><meta name="description" content="纯手工玩转 Nginx 日志。Nginx 日志对于大部分人来说是个未被发掘的宝藏，总结之前做某日志分析系统的经验，和大家分享一下 Nginx 日志的纯手工分析方式。Nginx 日志相关配置有 2 个地方：access_log 和 log_format 。相信大部分用过 Nginx 的人对默认 Nginx 日志格式配置都很熟悉，对日志的内容也很熟悉。但是默认配置和格式虽然可读，但是难以计算。Nginx 日志刷盘相关策略可配置：比如，设置 buffer，buffer 满 32k 才刷盘；假如 buffer 不满 5s 钟强制刷盘的配置如下：" />
+<meta name="keywords" content="纯手工玩转 Nginx 日志" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4393/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="纯手工玩转 Nginx 日志" />
+<meta property="og:description" content="纯手工玩转 Nginx 日志。Nginx 日志对于大部分人来说是个未被发掘的宝藏，总结之前做某日志分析系统的经验，和大家分享一下 Nginx 日志的纯手工分析方式。Nginx 日志相关配置有 2 个地方：access_log 和 log_format 。相信大部分用过 Nginx 的人对默认 Nginx 日志格式配置都很熟悉，对日志的内容也很熟悉。但是默认配置和格式虽然可读，但是难以计算。Nginx 日志刷盘相关策略可配置：比如，设置 buffer，buffer 满 32k 才刷盘；假如 buffer 不满 5s 钟强制刷盘的配置如下：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4393/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-07-10T10:16:50&#43;08:00" />
+<meta property="article:modified_time" content="2014-07-10T10:16:50&#43;08:00" />
+
+<meta itemprop="name" content="纯手工玩转 Nginx 日志">
+<meta itemprop="description" content="纯手工玩转 Nginx 日志。Nginx 日志对于大部分人来说是个未被发掘的宝藏，总结之前做某日志分析系统的经验，和大家分享一下 Nginx 日志的纯手工分析方式。Nginx 日志相关配置有 2 个地方：access_log 和 log_format 。相信大部分用过 Nginx 的人对默认 Nginx 日志格式配置都很熟悉，对日志的内容也很熟悉。但是默认配置和格式虽然可读，但是难以计算。Nginx 日志刷盘相关策略可配置：比如，设置 buffer，buffer 满 32k 才刷盘；假如 buffer 不满 5s 钟强制刷盘的配置如下："><meta itemprop="datePublished" content="2014-07-10T10:16:50&#43;08:00" />
+<meta itemprop="dateModified" content="2014-07-10T10:16:50&#43;08:00" />
+<meta itemprop="wordCount" content="2334">
+<meta itemprop="keywords" content="nginx,0day,HTTP,查找,分析,分享,数据,文件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="纯手工玩转 Nginx 日志"/>
+<meta name="twitter:description" content="纯手工玩转 Nginx 日志。Nginx 日志对于大部分人来说是个未被发掘的宝藏，总结之前做某日志分析系统的经验，和大家分享一下 Nginx 日志的纯手工分析方式。Nginx 日志相关配置有 2 个地方：access_log 和 log_format 。相信大部分用过 Nginx 的人对默认 Nginx 日志格式配置都很熟悉，对日志的内容也很熟悉。但是默认配置和格式虽然可读，但是难以计算。Nginx 日志刷盘相关策略可配置：比如，设置 buffer，buffer 满 32k 才刷盘；假如 buffer 不满 5s 钟强制刷盘的配置如下："/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">纯手工玩转 Nginx 日志</h1>
+      
+      <div class="post-meta">
+        <time datetime="2014-07-10" class="post-time">
+          2014-07-10
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/nginx/"> nginx </a>
+            
+          </div>
+        <span class="more-meta"> 约 2334 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	Nginx 日志对于大部分人来说是个未被发掘的宝藏，总结之前做某日志分析系统的经验，和大家分享一下 Nginx 日志的纯手工分析方式。
+</p>
+<p style="text-indent:2em;">
+	Nginx 日志相关配置有 2 个地方：access_log 和 log_format 。
+</p>
+<p style="text-indent:2em;">
+	默认的格式：
+</p>
+<pre class="prettyprint">access_log /data/logs/nginx-access.log;
+
+log_format old '$remote_addr [$time_local] $status $request_time $body_bytes_sent '
+'"$request" "$http_referer" "$http_user_agent"';</pre>
+<p style="text-indent:2em;">
+	相信大部分用过 Nginx 的人对默认 Nginx 日志格式配置都很熟悉，对日志的内容也很熟悉。但是默认配置和格式虽然可读，但是难以计算。
+</p>
+<p style="text-indent:2em;">
+	Nginx 日志刷盘相关策略可配置：
+</p>
+<p style="text-indent:2em;">
+	比如，设置 buffer，buffer 满 32k 才刷盘；假如 buffer 不满 5s 钟强制刷盘的配置如下：
+</p>
+<pre class="prettyprint">access_log /data/logs/nginx-access.log buffer=32k flush=5s;</pre>
+<p style="text-indent:2em;">
+	这决定了是否实时看到日志以及日志对磁盘 IO 的影响。
+</p>
+<p style="text-indent:2em;">
+	Nginx 日志能够记录的变量还有很多没出现在默认配置中：
+</p>
+<p style="text-indent:2em;">
+	比如：
+</p>
+<p style="text-indent:2em;">
+	请求数据大小：$request_length
+</p>
+<p style="text-indent:2em;">
+	返回数据大小：$bytes_sent
+</p>
+<p style="text-indent:2em;">
+	请求耗时：$request_time
+</p>
+<p style="text-indent:2em;">
+	所用连接序号：$connection
+</p>
+<p style="text-indent:2em;">
+	当前连接发生请求数：$connection_requests
+</p>
+<p style="text-indent:2em;">
+	Nginx 的默认格式不可计算，需要想办法转换成可计算格式，比如用控制字符 ^A (Mac 下 ctrl+v ctrl+a 打出)分割每个字段。
+</p>
+<p style="text-indent:2em;">
+	log_format 的格式可以变成这样：
+</p>
+<pre class="prettyprint">log_format new '$remote_addr^A$http_x_forwarded_for^A$host^A$time_local^A$status^A'
+'$request_time^A$request_length^A$bytes_sent^A$http_referer^A$request^A$http_user_agent';</pre>
+<p style="text-indent:2em;">
+	这样之后就通过常见的 Linux 命令行工具进行分析了：
+</p>
+<p style="text-indent:2em;">
+	查找访问频率最高的 URL 和次数：
+</p>
+<p style="text-indent:2em;">
+	cat access.log | awk -F ‘^A’ ‘{print $10}’ | sort | uniq -c
+</p>
+<p style="text-indent:2em;">
+	查找当前日志文件 500 错误的访问：
+</p>
+<p style="text-indent:2em;">
+	cat access.log | awk -F ‘^A’ ‘{if($5 == 500) print $0}’
+</p>
+<p style="text-indent:2em;">
+	查找当前日志文件 500 错误的数量：
+</p>
+<p style="text-indent:2em;">
+	cat access.log | awk -F ‘^A’ ‘{if($5 == 500) print $0}’ | wc -l
+</p>
+<p style="text-indent:2em;">
+	查找某一分钟内 500 错误访问的数量:
+</p>
+<p style="text-indent:2em;">
+	cat access.log | awk -F ‘^A’ ‘{if($5 == 500) print $0}’ | grep ’09:00’ | wc-l
+</p>
+<p style="text-indent:2em;">
+	查找耗时超过 1s 的慢请求：
+</p>
+<p style="text-indent:2em;">
+	tail -f access.log | awk -F ‘^A’ ‘{if($6&gt;1) print $0}’
+</p>
+<p style="text-indent:2em;">
+	假如只想查看某些位：
+</p>
+<p style="text-indent:2em;">
+	tail -f access.log | awk -F ‘^A’ ‘{if($6&gt;1) print $3″|”$4}’
+</p>
+<p style="text-indent:2em;">
+	查找 502 错误最多的 URL：
+</p>
+<p style="text-indent:2em;">
+	cat access.log | awk -F ‘^A’ ‘{if($5==502) print $11}’ | sort | uniq -c
+</p>
+<p style="text-indent:2em;">
+	查找 200 空白页
+</p>
+<p style="text-indent:2em;">
+	cat access.log | awk -F ‘^A’ ‘{if($5==200 &amp;&amp; $8 &lt; 100) print $3″|”$4″|”$11″|”$6}’
+</p>
+<p style="text-indent:2em;">
+	查看实时日志数据流
+</p>
+<p style="text-indent:2em;">
+	tail -f access.log | cat -e
+</p>
+<p style="text-indent:2em;">
+	或者
+</p>
+<p style="text-indent:2em;">
+	tail -f access.log | tr ‘^A’ ‘|’
+</p>
+<p style="text-indent:2em;">
+	总结
+</p>
+<p style="text-indent:2em;">
+	照着这个思路可以做很多其他分析，比如 UA 最多的访问；访问频率最高的 IP；请求耗时分析；请求返回包大小分析；等等。
+</p>
+<p style="text-indent:2em;">
+	这就是一个大型 Web 日志分析系统的原型，这样的格式也是非常方便进行后续大规模 batching 和 streaming 计算。
+</p>
+<p style="text-indent:2em;">
+	link：http://blog.eood.cn/nginx_logs
+</p>
+<p style="text-indent:2em;">
+	想起很早之前zone有人问过nginx日志分析，正好今天看到这篇文章，自己实践了下，觉得不错，分享下：）
+</p>
+<p style="text-indent:2em;">
+	<a href="http://zone.wooyun.org/content/13651" target="_blank">[原文地址]</a>
+</p>
+<p>
+	<strong>各种吐槽：</strong>
+</p>
+<p style="text-indent:2em;">
+	1#
+</p>
+<p style="text-indent:2em;">
+	RedFree (‮1:1 1-1-1112 |※(器杀制自) | 2014-07-09 20:00
+</p>
+<p style="text-indent:2em;">
+	感谢楼主分享！
+</p>
+<p style="text-indent:2em;">
+	2#
+</p>
+<p style="text-indent:2em;">
+	梧桐雨 (‮ofni.uygnotuw‮) | 2014-07-09 20:01
+</p>
+<p style="text-indent:2em;">
+	@RedFree 我也是看了文章才知道原来还可以这么玩的。嘿嘿=。=
+</p>
+<p style="text-indent:2em;">
+	3#
+</p>
+<p style="text-indent:2em;">
+	sqzr | 2014-07-09 20:11
+</p>
+<p style="text-indent:2em;">
+	还是比较喜欢用goaccess之类的软件.
+</p>
+<p style="text-indent:2em;">
+	4#
+</p>
+<p style="text-indent:2em;">
+	梧桐雨 (‮ofni.uygnotuw‮) | 2014-07-09 20:13
+</p>
+<p style="text-indent:2em;">
+	@sqzr 软件也可以，但是手工比较灵活，很多时候还是需要结合自身需求去写规则。
+</p>
+<p style="text-indent:2em;">
+	5#
+</p>
+<p style="text-indent:2em;">
+	从容 (快点交出0day，我保证不砍死你- -.) | 2014-07-09 20:37
+</p>
+<p style="text-indent:2em;">
+	梧桐雨大牛真不愧是社区活跃用户，总发神贴
+</p>
+<p style="text-indent:2em;">
+	6#
+</p>
+<p style="text-indent:2em;">
+	梧桐雨 (‮ofni.uygnotuw‮) | 2014-07-09 20:38
+</p>
+<p style="text-indent:2em;">
+	@从容 = =从容大牛，求不黑哈。
+</p>
+<p style="text-indent:2em;">
+	7#
+</p>
+<p style="text-indent:2em;">
+	从容 (快点交出0day，我保证不砍死你- -.) | 2014-07-09 20:41
+</p>
+<p style="text-indent:2em;">
+	@梧桐雨 你可别闹了，话说月爆快出了吧~
+</p>
+<p style="text-indent:2em;">
+	8#
+</p>
+<p style="text-indent:2em;">
+	梧桐雨 (‮ofni.uygnotuw‮) | 2014-07-09 20:42
+</p>
+<p style="text-indent:2em;">
+	@从容 快了，你肉肉姐姐在给大伙画T恤呢。
+</p>
+<p style="text-indent:2em;">
+	9#
+</p>
+<p style="text-indent:2em;">
+	剑气如霜 | 2014-07-09 20:45
+</p>
+<p style="text-indent:2em;">
+	感谢分享。
+</p>
+<p style="text-indent:2em;">
+	10#
+</p>
+<p style="text-indent:2em;">
+	从容 (快点交出0day，我保证不砍死你- -.) | 2014-07-09 20:46
+</p>
+<p style="text-indent:2em;">
+	@梧桐雨 哈哈，我看到了，难道真的是一个一个画的？不会吧，我看都像是印上去的
+</p>
+<p style="text-indent:2em;">
+	11#
+</p>
+<p style="text-indent:2em;">
+	梧桐雨 (‮ofni.uygnotuw‮) | 2014-07-09 20:47
+</p>
+<p style="text-indent:2em;">
+	@从容 亲手画的，你不信 可以问问她哦 @肉肉
+</p>
+<p style="text-indent:2em;">
+	12#
+</p>
+<p style="text-indent:2em;">
+	小胖子 (全世界背叛我又怎样，有z7y就足够了。) | 2014-07-09 20:49
+</p>
+<p style="text-indent:2em;">
+	顶妹子一下
+</p>
+<p style="text-indent:2em;">
+	13#
+</p>
+<p style="text-indent:2em;">
+	梧桐雨 (‮ofni.uygnotuw‮) | 2014-07-09 20:50
+</p>
+<p style="text-indent:2em;">
+	@小胖子 =.=胖子哥，这些你应该都知道的，献丑了。。。
+</p>
+<p style="text-indent:2em;">
+	14#
+</p>
+<p style="text-indent:2em;">
+	Mujj (Krypt VPS特价www.80host.com) | 2014-07-09 21:22
+</p>
+<p style="text-indent:2em;">
+	西盟喜欢玩这个啊，第一次乌云成都聚会的时候，大家就看他在那玩AWK了
+</p>
+<p style="text-indent:2em;">
+	15#
+</p>
+<p style="text-indent:2em;">
+	从容 (快点交出0day，我保证不砍死你- -.) | 2014-07-09 21:25
+</p>
+<p style="text-indent:2em;">
+	@梧桐雨 我擦，他不得累死啊，我问问她去
+</p>
+<p style="text-indent:2em;">
+	16#
+</p>
+<p style="text-indent:2em;">
+	梧桐雨 (‮ofni.uygnotuw‮) | 2014-07-09 21:28
+</p>
+<p style="text-indent:2em;">
+	@Mujj 大哥哥，pm私信你了~~看下站内短信
+</p>
+<p style="text-indent:2em;">
+	17#
+</p>
+<p style="text-indent:2em;">
+	小土豆 (加油ing~~) | 2014-07-09 21:30
+</p>
+<p style="text-indent:2em;">
+	@梧桐雨 那个。我只想说梧桐雨妹子 grep tail awk 之类玩的很嗨！ 另外,有个建议,可以加上发信功能,设定任务管理计划,每隔一段时间,对日志进行分析整理,将error或者其他的一些错误日志给重定向输出到一个文件,然后发送到指定email.大牛别打我.
+</p>
+<p style="text-indent:2em;">
+	18#
+</p>
+<p style="text-indent:2em;">
+	insight-labs (Root Yourself in Success) | 2014-07-09 21:37
+</p>
+<p style="text-indent:2em;">
+	我的可视化实时日志分析都做出来了，手动得看到什么时候
+</p>
+<p style="text-indent:2em;">
+	19#
+</p>
+<p style="text-indent:2em;">
+	小胖胖要减肥 | 2014-07-09 23:27
+</p>
+<p style="text-indent:2em;">
+	@insight-labs 啥 大数据可视化+自动追踪？ 查的话各种前端都比较方便
+</p>
+<p style="text-indent:2em;">
+	20#
+</p>
+<p style="text-indent:2em;">
+	老树 | 2014-07-10 09:27
+</p>
+<p style="text-indent:2em;">
+	这个不错，用nginx自带的看
+</p>
+<p style="text-indent:2em;">
+	21#
+</p>
+<p style="text-indent:2em;">
+	从容 (快点交出0day，我保证不砍死你- -.) | 2014-07-10 09:29
+</p>
+<p style="text-indent:2em;">
+	话说乌云就是nginx的
+</p>
+<p style="text-indent:2em;">
+	22#
+</p>
+<p style="text-indent:2em;">
+	winsyk | 2014-07-10 09:39
+</p>
+<p style="text-indent:2em;">
+	nginx和apache没啥区别，只是注意下nginx日志格式化字段的定义，分析的话也没啥技术含量。。。
+</p>
+<p style="text-indent:2em;">
+	23#
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/" target="_blank">核攻击</a> (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2014-07-10 09:40
+</p>
+<p style="text-indent:2em;">
+	方法真不错，学到了。
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="6733,4393,36.250.182.138">
+<p>为什么 @ 2014-07-10 15:55:29</p>
+<p style="text-indent:2em">核总有什么办法可以查出自己网站有没有跳转木马或者后门什么的，我们老板有一个站做广告，光有ip和流量，就是没有人注册和下单，说网站可能有问题，因为模板是别人给的，叫我们查问题，所以想请教老大下有简单的方法能测试这个问题吗，感激不尽了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这个还真不好查，相当麻烦，没有简单方法，只有挨个排查了。</p>
+</blockquote>
+<blockquote id="6757,4393,110.73.38.28">
+<p>佚名 @ 2014-07-20 08:26:14</p>
+<p style="text-indent:2em">呵呵</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">？</p>
+</blockquote>
+<blockquote id="7008,4393,49.71.231.91">
+<p>匿名 @ 2014-10-04 14:35:38</p>
+<p style="text-indent:2em">核总。久仰大名。
+关键问题：首页百万年薪广告可否属实？在你上边做的广告，你为了兄弟们，也要审核下。自身利益是小。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">广告属实，前提是得有能力啊。</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">梧桐雨</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2014-07-10
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/nginx/">nginx</a>
+          <a href="https://lcx.cc/tags/0day/">0day</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/%E6%9F%A5%E6%89%BE/">查找</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E4%BA%AB/">分享</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4394/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">Modsecurity 防火墙简单绕过实战</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4392/">
+            <span class="next-text nav-default">央视曝光中行造假洗黑钱，银行抢地下钱庄生意，中国银行洗钱</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

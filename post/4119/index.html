@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>如何用各种编程语言杀死一条龙 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="如何用各种编程语言杀死一条龙。这篇有趣的文章编译自一篇西班牙博客。有一位美丽的公主，被关押在一个城堡中最高的塔上，一条凶恶的巨龙看守着她，需要有一位勇士营救她…下面是各种语言如何想办法将公主从巨龙手中营救出来的。Java – 赶到那里，找到巨龙，开发出一套由多个功能层组成的恶龙歼灭框架，写几篇关于这种框架的文章…但巨龙并没有被消灭掉。.NET – 赶到哪里，看到了Java程序员的做法，完全拷贝过来，试图去杀掉巨龙，但巨龙把他吃掉了。C - 赶到那里，对巨龙不屑一顾，举起剑，砍掉巨龙的头，找到公主…把公主晾在一边，去看看有没有最新提交的linux内核代码。" />
+<meta name="keywords" content="如何用各种编程语言杀死一条龙" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4119/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="如何用各种编程语言杀死一条龙" />
+<meta property="og:description" content="如何用各种编程语言杀死一条龙。这篇有趣的文章编译自一篇西班牙博客。有一位美丽的公主，被关押在一个城堡中最高的塔上，一条凶恶的巨龙看守着她，需要有一位勇士营救她…下面是各种语言如何想办法将公主从巨龙手中营救出来的。Java – 赶到那里，找到巨龙，开发出一套由多个功能层组成的恶龙歼灭框架，写几篇关于这种框架的文章…但巨龙并没有被消灭掉。.NET – 赶到哪里，看到了Java程序员的做法，完全拷贝过来，试图去杀掉巨龙，但巨龙把他吃掉了。C - 赶到那里，对巨龙不屑一顾，举起剑，砍掉巨龙的头，找到公主…把公主晾在一边，去看看有没有最新提交的linux内核代码。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4119/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-12-28T20:38:45&#43;08:00" />
+<meta property="article:modified_time" content="2013-12-28T21:19:45&#43;08:00" />
+
+<meta itemprop="name" content="如何用各种编程语言杀死一条龙">
+<meta itemprop="description" content="如何用各种编程语言杀死一条龙。这篇有趣的文章编译自一篇西班牙博客。有一位美丽的公主，被关押在一个城堡中最高的塔上，一条凶恶的巨龙看守着她，需要有一位勇士营救她…下面是各种语言如何想办法将公主从巨龙手中营救出来的。Java – 赶到那里，找到巨龙，开发出一套由多个功能层组成的恶龙歼灭框架，写几篇关于这种框架的文章…但巨龙并没有被消灭掉。.NET – 赶到哪里，看到了Java程序员的做法，完全拷贝过来，试图去杀掉巨龙，但巨龙把他吃掉了。C - 赶到那里，对巨龙不屑一顾，举起剑，砍掉巨龙的头，找到公主…把公主晾在一边，去看看有没有最新提交的linux内核代码。"><meta itemprop="datePublished" content="2013-12-28T20:38:45&#43;08:00" />
+<meta itemprop="dateModified" content="2013-12-28T21:19:45&#43;08:00" />
+<meta itemprop="wordCount" content="10897">
+<meta itemprop="keywords" content="编程,app,ASP,C&#43;&#43;,CTF,Html,IE,IP,Java,js,Jsp,NDS,Net,PHP,POS,Python,Shell,SQL,SSH,SSL,VB,Web,程序,程序员,程序猿,代码,二进制,分析,服务,服务器,技巧,脚本,摄像机,世界,数据,图片,网页,问题,系统,溢出," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="如何用各种编程语言杀死一条龙"/>
+<meta name="twitter:description" content="如何用各种编程语言杀死一条龙。这篇有趣的文章编译自一篇西班牙博客。有一位美丽的公主，被关押在一个城堡中最高的塔上，一条凶恶的巨龙看守着她，需要有一位勇士营救她…下面是各种语言如何想办法将公主从巨龙手中营救出来的。Java – 赶到那里，找到巨龙，开发出一套由多个功能层组成的恶龙歼灭框架，写几篇关于这种框架的文章…但巨龙并没有被消灭掉。.NET – 赶到哪里，看到了Java程序员的做法，完全拷贝过来，试图去杀掉巨龙，但巨龙把他吃掉了。C - 赶到那里，对巨龙不屑一顾，举起剑，砍掉巨龙的头，找到公主…把公主晾在一边，去看看有没有最新提交的linux内核代码。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">如何用各种编程语言杀死一条龙</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-12-28" class="post-time">
+          2013-12-28
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E7%BC%96%E7%A8%8B/"> 编程 </a>
+            
+          </div>
+        <span class="more-meta"> 约 10897 字 </span>
+          <span class="more-meta"> 预计阅读 22 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<a href="/file/old/3766_Girl_Dragon13.jpg" target="_blank"><img title="美女和龙，公主和恶龙" alt="美女和龙，公主和恶龙" src="/file/old/3766_Girl_Dragon13.jpg" width="600" height="450" /></a> 
+</p>
+<p style="text-indent:2em;">
+	这篇有趣的文章编译自一篇西班牙博客。
+</p>
+<p style="text-indent:2em;">
+	有一位美丽的公主，被关押在一个城堡中最高的塔上，一条凶恶的巨龙看守着她，需要有一位勇士营救她…
+</p>
+<p style="text-indent:2em;">
+	下面是各种语言如何想办法将公主从巨龙手中营救出来的。
+</p>
+<p style="text-indent:2em;">
+	Java – 赶到那里，找到巨龙，开发出一套由多个功能层组成的恶龙歼灭框架，写几篇关于这种框架的文章…但巨龙并没有被消灭掉。
+</p>
+<p style="text-indent:2em;">
+	.NET – 赶到哪里，看到了Java程序员的做法，完全拷贝过来，试图去杀掉巨龙，但巨龙把他吃掉了。
+</p>
+<p style="text-indent:2em;">
+	C - 赶到那里，对巨龙不屑一顾，举起剑，砍掉巨龙的头，找到公主…把公主晾在一边，去看看有没有最新提交的linux内核代码。
+</p>
+<p style="text-indent:2em;">
+	C++ – 先打造出一根针，然后在上面添加各种功能特征，直到最后汇聚成一把复杂的剑，这把剑复杂到只有他能理解其中的功能…杀死龙，但他过桥时遇到了麻烦，因为内存溢出了。
+</p>
+<p style="text-indent:2em;">
+	COBOL - 赶到那里，看到巨龙，认为自己太老了，杀不死这条巨龙，营救不出公主，于是离开了。
+</p>
+<p style="text-indent:2em;">
+	Pascal - 他花10年时间开发出一套巨龙歼灭系统…当战斗开始时，他发现这套系统只能关住蜥蜴。
+</p>
+<p style="text-indent:2em;">
+	VB - 使用各种组件开发出一套巨龙毁灭武器，他跳到巨龙的后面，在最关键的时刻，他发现这种武器只能在雨夜里工作…
+</p>
+<p style="text-indent:2em;">
+	PL/SQL – 分析其它屠龙者的数据，创建出具有多维数据、n向关系的数据表模型、OLAP，花15年时间分析这些数据…当结果出来时，公主已经变成了同性恋者。
+</p>
+<p style="text-indent:2em;">
+	Ruby - 盛大出征，号称自己不管做什么都是最强的，当面对巨龙，他亮出了一张画有他杀死一条瘸腿的巨龙的图片…巨龙懒洋洋的吃掉了他。
+</p>
+<p style="text-indent:2em;">
+	Smalltalk - 赶到那里，分析巨龙和公主，转身走了，它们是次要问题。
+</p>
+<p style="text-indent:2em;">
+	shell - 创造一个超级强大的灭龙武器…但当面对龙的时刻，他忘了如何使用它。
+</p>
+<p style="text-indent:2em;">
+	Assembler - 他认为他的方法是正确的，而且是最高效的…但他把D写成了A，杀死了公主。
+</p>
+<p style="text-indent:2em;">
+	Fortran - 赶到那里，开发出来一套4万5千行的解决方案，杀死巨龙，与公主见了面…但公主认为他是懦夫，反而倾心于高富帅的Java程序员。
+</p>
+<p style="text-indent:2em;">
+	FOX PRO - 开发出一套杀龙系统。外表看起来华丽好用，但实际内部到处补丁，所以，当开始运行这套杀龙武器时，他才发现忘了给DBF加索引。
+</p>
+<p style="text-indent:2em;">
+	Lisp：这是一位著名的游侠骑士，在跟很多的屠龙专家交谈后，将他们的技巧模型化，他开发出这套系统，当开始运行系统时，他认识到，他少写了一个括弧。
+</p>
+<p style="text-indent:2em;">
+	HTML: 用各种著名的杀龙的剑拼装成一个网页，但他忽视了W3C标准。在跟龙相遇的时刻，他发现他的代码跟浏览器不兼容，于是他变成了赤手空拳。巨龙把他当成小甜点吃了。
+</p>
+<p style="text-indent:2em;">
+	Prolog: 他认为需要有一件杀龙的武器。于是在一个有182014件武器的目录里搜索。截止到公主死的那一年，他的成就包括：通晓了各种武器的制造方法，从索引A开始：Atomic Bombs, Anti-Air Weapons, Arches, Ammunition, Axes…
+</p>
+<p style="text-indent:2em;">
+	PHP: 开发出一个web网页，当这个运行时，它能通过一个Apache服务器从一个MySQL武器数据库里检索出武器消灭掉$dragon。然而，他在DELETE语句里忘了写WHERE语句，于是杀死了公主，巨龙，女侍，女巫，魔法师，和程序员自己。
+</p>
+<p style="text-indent:2em;">
+	JavaScript: 他创建了脚本网页，当网页运行时，脚本会除掉巨龙，他一加载页面，一些美丽的少女就向他抛来了鲜花，发出来尖叫。不幸的是，他没有认真分析这个类似蜥蜴的怪物——也被称作Mozilla，他得到的只是让控制台里填满了error信息，《Book of Mozilla》记载了他是如何被吞掉的。
+</p>
+<p style="text-indent:2em;">
+	Basic：他开发出来一种能够杀死纸龙的武器，但不论他如何改进，他发现，他都不能杀死一只比卷毛狮子狗大的龙。
+</p>
+<p style="text-indent:2em;">
+	Matlab: 他写出循环语句能计算出用巨箭射死巨龙的弹道。这个程序运行的完美无瑕疵。现在需要的是人能有这样大的力量按这种精度发射这支巨箭。
+</p>
+<hr />
+<h3 align="center">
+	How to kill a dragon with various programming languages
+</h3>
+<p style="text-indent:2em;">
+	<em>By Roman Strobl on IX 20, 2007</em> 
+</p>
+<p style="text-indent:2em;">
+	This funny text comes from Ibon from the dream team who got it from a Spanish blog.
+</p>
+<p style="text-indent:2em;">
+	There's a beautiful princess, prisoner in the highest tower of a castle, guarded by a mighty dragon, and a fearless knight must rescue her…
+</p>
+<p style="text-indent:2em;">
+	This is how each language would manage to rescue the princess from the hands of the dragon
+</p>
+<p style="text-indent:2em;">
+	•Java - Gets there, finds the dragon, develops a framework for dragon anihilation with multiple layers, writes several articles about the framework… But doesn't kill the dragon.
+</p>
+<p style="text-indent:2em;">
+	•.NET - Gets there, sees the idea of the Java developer and copies it. Tries to kill the dragon, but the monster eats him.
+</p>
+<p style="text-indent:2em;">
+	•C - Arrives, looks down at the dragon, pulls out his sword, beheads the dragon, finds the princess… And ignores her to see the last checkins of linux kernel cvs.
+</p>
+<p style="text-indent:2em;">
+	•C++ - Creates a basic needle, and gathers funcionality until he has a complex sword that he can barely understand… He kills the dragon, but gets stuck crossing the bridge because of memory leaks.
+</p>
+<p style="text-indent:2em;">
+	•COBOL - Arrives, sees the dragon and thinks that he is too old to kill a monster that big and rescuing the princess, so he leaves.
+</p>
+<p style="text-indent:2em;">
+	•Pascal - He prepares for 10 years to create a dragon anihilation system… When the moment comes, he discovers the program can only take lizards as an entry.
+</p>
+<p style="text-indent:2em;">
+	•VB - Builds a dragon destruction weapon based on several components, jumps to the back of the dragon and in the most critical time he discovers that the sword works only on rainy nights…
+</p>
+<p style="text-indent:2em;">
+	•PL/SQL - Gets data from other dragon slayers, creates tables with n ternary complexity relations, tridimensional data, OLAP, takes 15 years to process the information… And by then, the princess became a lesbian.
+</p>
+<p style="text-indent:2em;">
+	•Ruby - Arrives with massive fame, saying he is the best at anything and when he faces the dragon, he shows a lame motion picture of himself killing a dragon… The dragon eats him out of boredom.
+</p>
+<p style="text-indent:2em;">
+	•Smalltalk - Arrives, analyzes the dragon and princess, turns around and leaves, they are way too inferior.
+</p>
+<p style="text-indent:2em;">
+	•shell - Creates a very powerful dragon slaying weapon… But in the moment of truth, he can't remember how to use it.
+</p>
+<p style="text-indent:2em;">
+	•shell(2)- The guy approaches the dragon with a two line script that kills, cuts, disembowels, impales, chops to pieces and packs the beast, but when he runs it the script grows, it fattens, irritates and puts alcohol in the fire of the dragon…
+</p>
+<p style="text-indent:2em;">
+	•Assembler - He thinks he's doing the right and most efficient things… But he writes an A instead of a D and kills the princess to end up f\*\*\*ing the dragon.
+</p>
+<p style="text-indent:2em;">
+	•Fortran - Arrives and develops a 45-thousand-code-line-solution, kills the dragon, meets the princess… But she calls him a weakling and runs after the Java programmer who was elegant, and also rich.
+</p>
+<p style="text-indent:2em;">
+	•FOX PRO - Develops a dragon killing system. It's gorgeous and works on the outside, but it's really patched inside, so when he runs the dragon anihilator, he realizes he forgot to index the DBFs.
+</p>
+<p style="text-indent:2em;">
+	•PROCESS ANALYST - Approaches the dragon with two tons of documentation, develops the unified dragon-killing process, he develops a DFD to free the princess and marry her, convinces the dragon that it's the best for him and it won't hurt. When he executes the process, he estimates the effort and the damage he will cause with a plan signed by the Pope, Buddha and Michael Jackson. Then he buys a couple of nukes, 45 cannons, an aircraft carrier and hires 300 heavily armed men… When all he needed was the sword he was holding in his hand in the beginning…
+</p>
+<p style="text-indent:2em;">
+	•CLIPPER: Sets up a routine that loads a codeblock array to insult the dragon, serenade the princess, load the sword in memory, beat the crap out of the dragon, clean the mess, prepare a raspberry milkshake for the princess, make love to her, take a bath, start the car, put it some gas and come back home. When he runs it, he gets a "Bound Error: Array Access" and the dragon eats him with fries.
+</p>
+<p style="text-indent:2em;">
+	•Lisp, where the famous knight-errant, after speaking with numerous experts in dragon-killing, and modeling the knowledge they posess, he programs the system, and when he runs it he realizes he forgot a bracket (bender the offender).
+</p>
+<p style="text-indent:2em;">
+	•HTML: Mounts a web on famous swords used to kill dragons, but he ignores the W3C standards. When he meets the dragon, he finds out the code isn't compatible with his browser, so he's left swordless. The dragon eats him as an appetizer.
+</p>
+<p style="text-indent:2em;">
+	•Prolog: Thinks he needs a weapon to kill the dragon. Searches in a catalog for 182014 weapons. By the time the princess dies of her age, he's achieved to know how to make every weapon starting with A: Atomic Bombs, Anti-Air Weapons, Arches, Ammunition, Axes...
+</p>
+<p style="text-indent:2em;">
+	•PHP: Creates a web page that when he executes it would eliminate the $dragon selecting from a weapons databese in MySQL over an Apache server. Nevertheless he forgot the WHERE in the DELETE query and kills the princess, the dragon, the peasants, the witch, the sorceror and the programmer himself.
+</p>
+<p style="text-indent:2em;">
+	•JavaScript: The programmer tries to kill the great green dragon that spits fire throug his mouth. He creates a script that will delete the dragon when he loads a webpage, to create seconds after, some damsels to throw him flowers and make clapping sounds. Unfortunately he didn't take into account the DOM structure of the lizard, also known as Mozilla, and the only thing he gets is to fill his console of errors and that the Book of Mozilla tells how he was devoured.
+</p>
+<p style="text-indent:2em;">
+	•ActiveX: The programmers create a tunnel to enter the dragon's lair from the castle and run a program that will kil the dragon from a safe and prudential distance. The dragon discovers the tunnel, eats the workers who dug, the dragon slayers, and enslaves every servant in the castle. The castle becomes a dragon-breeding place, full of little dragons that the dragon sends in pop-ups to other castles. The untasty remains of the knights are put in cans of Spam and sent to other castles as well as a warning. (aquelquesiente)
+</p>
+<p style="text-indent:2em;">
+	•Basic. He creates a weapon able to kill paper dragons, but no matter how they improve it, they discover it's not good enough to kill any dragon bigger than a baby poodle.
+</p>
+<p style="text-indent:2em;">
+	•Matlab: They create a loop that calculates the trajectories to shoot a giant arrow at the dragon. The program works flawlessly. What they need now are the voluntaries caoable to launch tha arrow with the necessary strength and accuracy.
+</p>
+<p style="text-indent:2em;">
+	•Videogame Programmer : Spends two years programming a state-of-the-art sword with shaders and all. When the time comes to kill the dragon, he finds that half the knights aren't strong enough to raise the sword. Then someone programs a patch that reveals the sex scenes with the princess and Hillary Clinton makes it a scandal.
+</p>
+<p style="text-indent:2em;">
+	英文原文：<a href="https://blogs.oracle.com/roumen/entry/how_to_kill_a_dragon" target="_blank">How to kill a dragon with various programming languages</a> 
+</p>
+<hr />
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3903/" target="_blank">一句话讲清楚</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3847/" target="_blank">你尽力了吗？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3846/" target="_blank">如何成为一名“黑客”？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3709/" target="_blank">论“重复造轮子”</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3397/" target="_blank">V，背后的故事 + 网友细致分析讨论 + 核总终极点评</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3396/" target="_blank">互联网到底有多大</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3393/" target="_blank">中国黑客传说：游走在黑暗中的精灵</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3324/" target="_blank">字节的高低位知识，Ascii,GB2312,UNICODE等编码的关系与来历</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2970/" target="_blank">关于 Asp、关于 PHP、关于编程语言、关于程序员，雕像与工具</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2917/" target="_blank">程序员的纹身</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2913/" target="_blank">如果编程语言是一条船…</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2912/" target="_blank">不懂技术的人不要对懂技术的人说这很容易实现</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2909/" target="_blank">编程能力的四种境界</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2907/" target="_blank">如果用编程语言来写作文</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2861/" target="_blank">从“李聪娜90天40万行”谈程序员一天要写多少代码</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2575/" target="_blank">软件编程走火入魔之：程序对人身心的残忍摧残</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2288/" target="_blank">C#语言病毒旨在攻击.Net 17岁美媚黑客一举成名 荷兰美女黑客</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2270/" target="_blank">为什么编程语言以及数据库要从1970年1月1日开始计算时间</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1951/" target="_blank">程序员技术练级攻略</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1850/" target="_blank">人工智能之父与 Lisp 编程语言发明人麦卡锡去世</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1842/" target="_blank">C，C++，C# 三者区别 C、C++、C# 编程语言的区别</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1841/" target="_blank">面向对象和面向过程的区别 用例子说明面向对象和面向过程的区别</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1831/" target="_blank">“C语言之父”丹尼斯·里奇辞世</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1731/" target="_blank">黑客之门的魅力：感染与加载</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1052/" target="_blank">64K 数字动画影像之王：德国“Farbrausch”</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/752/" target="_blank">【炒作】90后IT强人 IFN-RE53 天才少年姚志浩</a> 
+</p>
+<hr />
+<p>
+	<strong>各种吐槽：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong></strong>&nbsp;
+</p>
+<p style="text-indent:2em;">
+	<strong>外刊IT评论网</strong> 
+</p>
+<p style="text-indent:2em;">
+	《如何用各种编程语言杀死一条龙》<a href="http://www.aqee.net/how-to-kill-a-dragon-with-various-programming-languages/" target="_blank">有 11 条评论</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://www.aqee.net/how-to-kill-a-dragon-with-various-programming-languages/#comment-14979" target="_blank">2013年12月27日9:14 上午 menglf 说</a>：
+</p>
+<p style="text-indent:2em;">
+	我要是那头巨龙，我绝对不会是看着她那么简单。
+</p>
+<p style="text-indent:2em;">
+	peach5460说，2013年12月27日8:48 上午
+</p>
+<p style="text-indent:2em;">
+	木有python耶…
+</p>
+<p style="text-indent:2em;">
+	我还很好奇,号称全能的python怎么描述呢…
+</p>
+<p style="text-indent:2em;">
+	healer说，2013年12月27日9:57 上午
+</p>
+<p style="text-indent:2em;">
+	Python就是那条龙啊。。。
+</p>
+<p style="text-indent:2em;">
+	menglf说，2013年12月27日9:14 上午
+</p>
+<p style="text-indent:2em;">
+	我要是那头巨龙，我绝对不会是看着她那么简单。
+</p>
+<p style="text-indent:2em;">
+	byeyear说，2013年12月27日2:40 下午
+</p>
+<p style="text-indent:2em;">
+	你要去拿个篮子？
+</p>
+<p style="text-indent:2em;">
+	pythoner说，2013年12月27日10:21 上午
+</p>
+<p style="text-indent:2em;">
+	为啥 没python。。elang也没。新兴golang也没。
+</p>
+<p style="text-indent:2em;">
+	aa说，2013年12月27日3:04 下午
+</p>
+<p style="text-indent:2em;">
+	python is dragon
+</p>
+<p style="text-indent:2em;">
+	独行猫儿说，2013年12月27日3:24 下午
+</p>
+<p style="text-indent:2em;">
+	python import C
+</p>
+<p style="text-indent:2em;">
+	C成为了巨龙的伙伴（奏乐）
+</p>
+<p style="text-indent:2em;">
+	lv说，2013年12月27日7:58 下午
+</p>
+<p style="text-indent:2em;">
+	别有一番风味呀，python啥时候变成龙了
+</p>
+<p style="text-indent:2em;">
+	wales说，2013年12月27日9:06 下午
+</p>
+<p style="text-indent:2em;">
+	需求就是那条龙。
+</p>
+<p style="text-indent:2em;">
+	clarkdony说，2013年12月28日4:41 下午
+</p>
+<p style="text-indent:2em;">
+	也来凑个热闹：
+</p>
+<p style="text-indent:2em;">
+	Erlang：他用全副武装把自己保护的严严实实，还没有走到龙面前，就把自己累瘫在了地上。
+</p>
+<p style="text-indent:2em;">
+	Ocaml：他的屠龙刀熠熠发光，可是没有人告诉他龙在哪。
+</p>
+<p style="text-indent:2em;">
+	Node.js：他的嘴里念念有词，很快变化出无数的分身，并铺天盖地的向龙掷飞镖，龙在大惊之后，发现这些飞镖打在自己的鳞甲上酥酥痒痒的，好似按摩，于是安逸的睡着了。
+</p>
+<p style="text-indent:2em;">
+	Lisp（改写）：他挥舞着一条鞭子，因为思考究竟该从尾巴开始杀（尾递归）还是从头杀而陷入了精神分裂。
+</p>
+<p style="text-indent:2em;">
+	eLisp：他挥舞着一条短的多的鞭子，因为思考究竟该从尾巴开始杀（尾递归）还是从头杀而陷入了精神分裂。
+</p>
+<p style="text-indent:2em;">
+	Haskell：当看到Haskell怪模怪样，背着一把巨大的算盘傲然挺立在巨龙面前时，公主嗷的一声扭头对龙说到：“杀了他，我就是你的人了”
+</p>
+<p style="text-indent:2em;">
+	Perl：所有人都相信，只要Perl能够把他的那张渔网解开，他就可以用它活捉那条龙。
+</p>
+<p style="text-indent:2em;">
+	Go：当C挥舞着大剑跳到空中的时候，他惊讶的发现Go闪现在他前面，用一把匕首把龙秒掉，扭头对C说了声谢谢，然后嗖的一下消失了
+</p>
+<p style="text-indent:2em;">
+	九点说，2013年12月28日5:07 下午
+</p>
+<p style="text-indent:2em;">
+	C够霸气
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	<strong>Acfun 的<a href="http://www.acfun.tv/a/ac970059" target="_blank">吐槽</a></strong><a href="http://www.acfun.tv/a/ac970059" target="_blank"> </a> 
+</p>
+<p style="text-indent:2em;">
+	c++怎么杀死龙？c++本身就是龙。。。。比如递归就有8种写法，很平衡。以下是新出的写法：auto factorial = fix((auto&amp;&amp; self, int n) - int { return n 2 ? 1: n * self(self, n -1);});assert( factorial(5)==120 );//-----------assert( 能看懂的一定没有女朋友 )；
+</p>
+<p style="text-indent:2em;">
+	#54 华南虎
+</p>
+<p style="text-indent:2em;">
+	。。。。看得懂注释符号的怎么算
+</p>
+<p style="text-indent:2em;">
+	#89 林登万
+</p>
+<p style="text-indent:2em;">
+	谁看不懂啊，不就是菲波拉契数。但我不会以这种写法
+</p>
+<p style="text-indent:2em;">
+	#104 asahui
+</p>
+<p style="text-indent:2em;">
+	说错了，是阶乘大家挂我吧
+</p>
+<p style="text-indent:2em;">
+	#106 asahui
+</p>
+<p style="text-indent:2em;">
+	既然你诚心诚意的求挂了
+</p>
+<p style="text-indent:2em;">
+	#108 用菊花迎接明天
+</p>
+<p style="text-indent:2em;">
+	事实再次证明我是个有女朋友的人
+</p>
+<p style="text-indent:2em;">
+	#118 你的女友在我这
+</p>
+<p style="text-indent:2em;">
+	我拷贝粘贴了一下，发现编译不了，于是改成了递归8种写法里面的另一种。
+</p>
+<p style="text-indent:2em;">
+	#136 FFF团委员会主席
+</p>
+<p style="text-indent:2em;">
+	std::functionint(int) factorial = (int n) - int { return n2 ? 1: n * factorial(n -1);};assert(factorial(5)==120);当然我也还没有女朋友。
+</p>
+<p style="text-indent:2em;">
+	#139 FFF团委员会主席
+</p>
+<p style="text-indent:2em;">
+	你们为何这么碉
+</p>
+<p style="text-indent:2em;">
+	#158 LS·撸sir无双
+</p>
+<p style="text-indent:2em;">
+	同看不懂，不过我有女朋友
+</p>
+<p style="text-indent:2em;">
+	#166 吐槽啥好呢
+</p>
+<p style="text-indent:2em;">
+	妈蛋我又看不懂又没有女朋友，我才是最惨的！
+</p>
+<p style="text-indent:2em;">
+	#179 胖胖的猛犸
+</p>
+<p style="text-indent:2em;">
+	吃我模版元编程templateunsigned Nstruct Fibonacci {static const unsigned val = FibonacciN-1::val + FibonacciN-2::val;}template struct Fibonacci2 { static const unsigned val = 1; };template struct Fibonacci1 { static const unsigned val = 1; };template struct Fibonacci0 { static const unsigned val = 0; };unsigned a = Fibonacci10::val;unsigned b = Fibonacci20::val;
+</p>
+<p style="text-indent:2em;">
+	#184 性本爱秋山
+</p>
+<p style="text-indent:2em;">
+	啊咧，尖括号显示不出来，这就是纯表真相么template〈unsigned N〉struct Fibonacci {static const unsigned val = Fibonacci〈N-1〉::val + Fibonacci〈N-2〉::val;}template〈〉 struct Fibonacci〈2〉 { static const unsigned val = 1; };template〈〉 struct Fibonacci〈1〉 { static const unsigned val = 1; };template〈〉 struct Fibonacci〈0〉 { static const unsigned val = 0; };unsigned a = Fibonacci〈10〉::val;unsigned b = Fibonacci〈20〉::val;
+</p>
+<p style="text-indent:2em;">
+	#185 性本爱秋山
+</p>
+<p style="text-indent:2em;">
+	#214 Orpine
+</p>
+<p style="text-indent:2em;">
+	楼上作死啊
+</p>
+<p style="text-indent:2em;">
+	#217 传说哥也寂寞
+</p>
+<p style="text-indent:2em;">
+	所以说你们就是程序员，这么简单的问题还用想，拔了电源不就完事。
+</p>
+<p style="text-indent:2em;">
+	#219 基友在故我在
+</p>
+<p style="text-indent:2em;">
+	前两天我就是在另外一个程序员帖子里发现纯表神技然后被猴子封掉的程序猿何苦为难程序猿
+</p>
+<p style="text-indent:2em;">
+	#220 奥哈巴姆怒龙炮
+</p>
+<p style="text-indent:2em;">
+	你介不介意再发一下，我们是不会介意的
+</p>
+<p style="text-indent:2em;">
+	#225 hqzz
+</p>
+<p style="text-indent:2em;">
+	一篇帖子钓上来无数程序员…旁观的试剂农觉得好厉害的样子。PS，咱也没有女朋友。
+</p>
+<p style="text-indent:2em;">
+	#238 殒殁
+</p>
+<p style="text-indent:2em;">
+	#257 买部iPad俾猫瞓
+</p>
+<p style="text-indent:2em;">
+	请不要作死……//你们为什么喜欢用unsigned而不是int....
+</p>
+<p style="text-indent:2em;">
+	#260 丶Stalker
+</p>
+<p style="text-indent:2em;">
+	据不完全统计，喜欢unsigned的，大多是嵌入式或者底层出身。。
+</p>
+<p style="text-indent:2em;">
+	#264 仙堂麻寻
+</p>
+<p style="text-indent:2em;">
+	unsigned范围大，用着爽，更开心的是不会因为类型转换一不小心将FF和-1弄混什么的。话说程序猿常打交道的0xFF和FFF团什么关系...
+</p>
+<p style="text-indent:2em;">
+	#265 马甲无极限
+</p>
+<p style="text-indent:2em;">
+	#266 工口之光 发表于 2013-12-28 20:34:57
+</p>
+<p style="text-indent:2em;">
+	看不懂又没有女朋友怎么办？
+</p>
+<p style="text-indent:2em;">
+	#265 马甲无极限 发表于 2013-12-28 20:26:38
+</p>
+<p style="text-indent:2em;">
+	unsigned范围大，用着爽，更开心的是不会因为类型转换一不小心将FF和-1弄混什么的。话说程序猿常打交道的0xFF和FFF团什么关系...
+</p>
+<p style="text-indent:2em;">
+	#264 仙堂麻寻 发表于 2013-12-28 20:20:19
+</p>
+<p style="text-indent:2em;">
+	据不完全统计，喜欢unsigned的，大多是嵌入式或者底层出身。。
+</p>
+<p style="text-indent:2em;">
+	#263 苍穹之昼。 发表于 2013-12-28 20:10:34
+</p>
+<p style="text-indent:2em;">
+	#261 中央组织部调查统计局
+</p>
+<p style="text-indent:2em;">
+	#262 熊孩子他娘 发表于 2013-12-28 20:09:49
+</p>
+<p style="text-indent:2em;">
+	顶风大作死啊
+</p>
+<p style="text-indent:2em;">
+	#261 中央组织部调查统计局 发表于 2013-12-28 20:06:06
+</p>
+<p style="text-indent:2em;">
+	<br />
+</p>
+<p style="text-indent:2em;">
+	#260 丶Stalker 发表于 2013-12-28 19:56:27
+</p>
+<p style="text-indent:2em;">
+	请不要作死……//你们为什么喜欢用unsigned而不是int....
+</p>
+<p style="text-indent:2em;">
+	10种人，懂二进制和不懂二进制的，我是第0个那种
+</p>
+<p style="text-indent:2em;">
+	#7 鈴木このみ
+</p>
+<p style="text-indent:2em;">
+	还有一种哪里去了？
+</p>
+<p style="text-indent:2em;">
+	#23 某控-Rf
+</p>
+<p style="text-indent:2em;">
+	另一个就像我一样是第1个那种
+</p>
+<p style="text-indent:2em;">
+	#31 Equinox
+</p>
+<p style="text-indent:2em;">
+	10种人，第00种是懂二进制的，假定01种是不懂二进制的，那么10种是什么?
+</p>
+<p style="text-indent:2em;">
+	#48 某控-Rf
+</p>
+<p style="text-indent:2em;">
+	10种是“烫烫烫烫烫烫烫烫……”
+</p>
+<p style="text-indent:2em;">
+	#78 TeddyBear14
+</p>
+<p style="text-indent:2em;">
+	戳中笑点顺便@某控-Rf10种就是两种，然后在那个array里面两种人的编号分别是第0种和第1种，而不是第1和第2种
+</p>
+<p style="text-indent:2em;">
+	#88 鈴木このみ
+</p>
+<p style="text-indent:2em;">
+	你在逗我……00：101：210：311：4100：5难道不是这样的么？
+</p>
+<p style="text-indent:2em;">
+	#146 某控-Rf
+</p>
+<p style="text-indent:2em;">
+	0永远是01永远是11+1=1010+1=1111+1=100100+1=101101+1=110
+</p>
+<p style="text-indent:2em;">
+	#170 左耳敏感
+</p>
+<p style="text-indent:2em;">
+	第0种.....
+</p>
+<p style="text-indent:2em;">
+	#195 可萝可御
+</p>
+<p style="text-indent:2em;">
+	〖 01, 10 〗 第0种..话说怎么 打半角啊. 被吞了.
+</p>
+<p style="text-indent:2em;">
+	#196 可萝可御
+</p>
+<p style="text-indent:2em;">
+	上面的意思是数组是从0开始的，00种和01种，10就越界了，大部分没内容的用中文表示为烫。相信大家用vc的时候经常看见一大窜烫
+</p>
+<p style="text-indent:2em;">
+	#197 zerozzc
+</p>
+<p style="text-indent:2em;">
+	看起来我属于第0种啊
+</p>
+<p style="text-indent:2em;">
+	#199 罪恶工口怪大叔
+</p>
+<p style="text-indent:2em;">
+	a站果然不愧是哔站.一上来就看到一大群人在讨论是0是1的问题
+</p>
+<p style="text-indent:2em;">
+	#215 pigdog
+</p>
+<p style="text-indent:2em;">
+	世界上一共有10种人：0.不懂得二进制1.懂得二进制2.把所有01串都当做2进制，但是从未认识到还可能是3（or more）进制中只用到了前两个计数符号。
+</p>
+<p style="text-indent:2em;">
+	#248 O(n)排序字符串
+</p>
+<p style="text-indent:2em;">
+	#259 欢愉的文盲 发表于 2013-12-28 16:59:56
+</p>
+<p style="text-indent:2em;">
+	厉害！佩服！
+</p>
+<p style="text-indent:2em;">
+	内存溢出啥情况，说是野指针或者空指针导致程序崩溃还差不多C++是世界上最好的语言不过其实我用过C/C++, SHELL(各种脚本语言), COBOL, HTML5, JS当然没有女朋友
+</p>
+<p style="text-indent:2em;">
+	#18 虐猫狂徒薛定谔
+</p>
+<p style="text-indent:2em;">
+	java里没指针所以不用担心自己胡搞毛搞会崩溃java是世界上最好的语言不过其实我用java，jsp,ssh框架，html/css和JS当然没有女朋友
+</p>
+<p style="text-indent:2em;">
+	#28 丁叔居然是萝莉控
+</p>
+<p style="text-indent:2em;">
+	JAVA 有指针的好不好
+</p>
+<p style="text-indent:2em;">
+	#41 寶貝心跳麵包
+</p>
+<p style="text-indent:2em;">
+	就和.NET一样有指针但是非安全 不建议用唉只能说一部分程序员功力还有待提高啊
+</p>
+<p style="text-indent:2em;">
+	#76 屁股眼吸烟
+</p>
+<p style="text-indent:2em;">
+	java和C#到处都是指针
+</p>
+<p style="text-indent:2em;">
+	#82 我的M之魂终于觉醒了
+</p>
+<p style="text-indent:2em;">
+	java用指针的地方很少，不像c++更多时候和数据结构打交道，还要free()手动释放内存
+</p>
+<p style="text-indent:2em;">
+	#96 吃香蕉的人才会
+</p>
+<p style="text-indent:2em;">
+	东西全都自己new，不是指针是啥，不过封装了下把-换成普通的.了
+</p>
+<p style="text-indent:2em;">
+	#101 我的M之魂终于觉醒了
+</p>
+<p style="text-indent:2em;">
+	Java只有传值，没有传址。（把pointer换个reference的说法罢了，还是为了OO而OO；但是话说回来，所有语言底层都是传值，不可能传址。地址是逻辑层的，现实都是传指传01）
+</p>
+<p style="text-indent:2em;">
+	#109 上流小宝
+</p>
+<p style="text-indent:2em;">
+	前.net程序员路过觉得世界上没有最好的语言，只有最好的分析和开发用过vb、.net、html+css、javascript和一点java你们也许觉得我也没有女朋友吧……抱歉我已婚了目前在转行做摄像
+</p>
+<p style="text-indent:2em;">
+	#117 bloodgull
+</p>
+<p style="text-indent:2em;">
+	我想问一下,学这些C++还是JAVA还是.NET也好 有没必要去了解底层语言也就是汇编呢? 我都不知道该从什么学起---来自大一某渣
+</p>
+<p style="text-indent:2em;">
+	#235 窝是比战
+</p>
+<p style="text-indent:2em;">
+	给你个中肯的建议235L如果你是刚刚入门JAVA和.NET会给你个相对规范的编程习惯，注意这很重要。那么C++可以在你入门后学，如果你是从java开始学起后来学C++的话对你的编程风格会有不小的帮助。至于为什么要学C++,因为许多语言的解译器是用这货写的。那么最后，javascript和As3这些弱类型语言熟悉一两门就好不一定要很深入~~（深入的话就会很苦逼了！）至于我用过的语言：C++ JAVA VB .net php js as3 都玩过另外，说用过什么语言的时候别把SSH打出来~~当心你家师傅拖你回去重修！！
+</p>
+<p style="text-indent:2em;">
+	#241 暗月大君
+</p>
+<p style="text-indent:2em;">
+	大致明白了不过有一点就是,我看那些什么各种JSP,JQ架构 一股很高深的样子啊
+</p>
+<p style="text-indent:2em;">
+	#244 窝是比战
+</p>
+<p style="text-indent:2em;">
+	那是忽悠人的，其实没有那么复杂你循序渐进 没多久你就懂了~
+</p>
+<p style="text-indent:2em;">
+	#246 暗月大君
+</p>
+<p style="text-indent:2em;">
+	多写两行代码就会了
+</p>
+<p style="text-indent:2em;">
+	#247 硬起来不足5字符
+</p>
+<p style="text-indent:2em;">
+	Ruby路过
+</p>
+<p style="text-indent:2em;">
+	#249 水龙头君
+</p>
+<p style="text-indent:2em;">
+	這可不是寫代碼多就會懂的！
+</p>
+<p style="text-indent:2em;">
+	#255 暗月大君
+</p>
+<p style="text-indent:2em;">
+	#258 忧止符 发表于 2013-12-28 14:32:03
+</p>
+<p style="text-indent:2em;">
+	JAVA程序猿应该是这样开发了一套强大的可在不同环境下重复使用的杀龙系统结果跟巨龙火拼的时候才发现，巨龙巢穴里没有JRE，也没有足够的空间，卒.NET 效仿JAVA开发了沙龙系统，并且带上了.Net Framework，结果发现.Net Framework与巨龙巢穴不兼容，卒C 设计了杀龙武器的框架，找个几个工匠来制作，并且实现调查了龙巢的情况。结果杀龙的时候兵刃从破包裹里滑出，刺穿了自己的菊花，卒C++ 直接找到了著名的屠龙勇士，继承他的屠龙神器，并且根据自身条件和龙巢状况进行了调整，但是继承武器并调整的过程中没处理好override、redefine和overload，导致杀龙时武器工作不符合预期，卒
+</p>
+<p style="text-indent:2em;">
+	#257 买部iPad俾猫瞓 发表于 2013-12-28 12:52:50
+</p>
+<p style="text-indent:2em;">
+	#256 依雪米 发表于 2013-12-28 09:41:54
+</p>
+<p style="text-indent:2em;">
+	果然没有LUA？
+</p>
+<p style="text-indent:2em;">
+	#255 暗月大君 发表于 2013-12-28 09:35:56
+</p>
+<p style="text-indent:2em;">
+	這可不是寫代碼多就會懂的！
+</p>
+<p style="text-indent:2em;">
+	#254 爱情36P 发表于 2013-12-28 08:18:38
+</p>
+<p style="text-indent:2em;">
+	皿煮的编程语言就是牛逼
+</p>
+<p style="text-indent:2em;">
+	程序员：你跑到巨龙面前，痛哭流涕的告诉巨龙自己这30年过的多么辛苦，只有左右手为伴的日子又是多么艰辛，看着各种人生赢家左拥右抱，自己却只能对着苍老师做快速摩擦运动的生活又是多么绝望，最后告诉他，如果再没有女朋友，自己可能就会在31岁那年练成举世无双的魔法，并且在“程序员必然孤单一辈子”的诅咒下毁灭掉自己外加整个世界。巨龙虽然认为毁灭世界这种事情没啥可能实现，但是看你实在是过于可怜，还是决定放了公主。公主走出牢笼后便看到了手捧鲜花，跪在路边的你，一时间显得非常感动“学程序的？滚！”然后公主就和你不远处路过打酱油的，学钢琴的跑了。..............................巨看着呆滞住，犹如爱德华·蒙克所绘《呐喊》那幅画中的你，叹息一声，化作了一个英俊的壮汉，拍了拍你的肩膀“亚拉那一卡？”
+</p>
+<p style="text-indent:2em;">
+	#239 诚哥-Rgo
+</p>
+<p style="text-indent:2em;">
+	然后你和巨龙就过上了有时一次，有时两次，有时N+1次的性福的生活，可喜可贺，可喜可贺啊！
+</p>
+<p style="text-indent:2em;">
+	#240 诚哥-Rgo
+</p>
+<p style="text-indent:2em;">
+	故意不换马甲？
+</p>
+<p style="text-indent:2em;">
+	#242 Vc焱晗
+</p>
+<p style="text-indent:2em;">
+	不，只是写完之后觉得应该有一个如同童话般美好的结局，特地加上去一句话而已。
+</p>
+<p style="text-indent:2em;">
+	#243 诚哥-Rgo
+</p>
+<p style="text-indent:2em;">
+	诚哥和巨龙的没羞没臊的日常生活
+</p>
+<p style="text-indent:2em;">
+	#250 一大波沉思者
+</p>
+<p style="text-indent:2em;">
+	我这满满的希望是怎么回事？
+</p>
+<p style="text-indent:2em;">
+	#251 walkall
+</p>
+<p style="text-indent:2em;">
+	想起了一部小说男孩与龙
+</p>
+<p style="text-indent:2em;">
+	#252 他们都叫我神
+</p>
+<p style="text-indent:2em;">
+	#253 walkall 发表于 2013-12-28 08:18:01
+</p>
+<p style="text-indent:2em;">
+	快说头像是怎么回事
+</p>
+<p style="text-indent:2em;">
+	#252 他们都叫我神 发表于 2013-12-28 08:15:44
+</p>
+<p style="text-indent:2em;">
+	想起了一部小说男孩与龙
+</p>
+<p style="text-indent:2em;">
+	#251 walkall 发表于 2013-12-28 08:09:40
+</p>
+<p style="text-indent:2em;">
+	我这满满的希望是怎么回事？
+</p>
+<p style="text-indent:2em;">
+	#250 一大波沉思者 发表于 2013-12-28 07:58:03
+</p>
+<p style="text-indent:2em;">
+	诚哥和巨龙的没羞没臊的日常生活
+</p>
+<p style="text-indent:2em;">
+	#249 水龙头君 发表于 2013-12-28 07:48:01
+</p>
+<p style="text-indent:2em;">
+	Ruby路过
+</p>
+<p style="text-indent:2em;">
+	#248 O(n)排序字符串 发表于 2013-12-28 03:02:44
+</p>
+<p style="text-indent:2em;">
+	世界上一共有10种人：0.不懂得二进制1.懂得二进制2.把所有01串都当做2进制，但是从未认识到还可能是3（or more）进制中只用到了前两个计数符号。
+</p>
+<p style="text-indent:2em;">
+	#247 硬起来不足5字符 发表于 2013-12-28 01:52:15
+</p>
+<p style="text-indent:2em;">
+	多写两行代码就会了
+</p>
+<p style="text-indent:2em;">
+	#246 暗月大君 发表于 2013-12-28 01:26:24
+</p>
+<p style="text-indent:2em;">
+	那是忽悠人的，其实没有那么复杂你循序渐进 没多久你就懂了~
+</p>
+<p style="text-indent:2em;">
+	#245 自律回路MKII 发表于 2013-12-28 01:10:23
+</p>
+<p style="text-indent:2em;">
+	C++, C#, Java, Javascript, Python，每种都至少写上万行。我的目标是成为精通全系魔法的大法师。
+</p>
+<p style="text-indent:2em;">
+	#244 窝是比战 发表于 2013-12-28 00:33:03
+</p>
+<p style="text-indent:2em;">
+	大致明白了不过有一点就是,我看那些什么各种JSP,JQ架构 一股很高深的样子啊
+</p>
+<p style="text-indent:2em;">
+	#243 诚哥-Rgo 发表于 2013-12-27 23:58:54
+</p>
+<p style="text-indent:2em;">
+	不，只是写完之后觉得应该有一个如同童话般美好的结局，特地加上去一句话而已。
+</p>
+<p style="text-indent:2em;">
+	#242 Vc焱晗 发表于 2013-12-27 23:55:19
+</p>
+<p style="text-indent:2em;">
+	故意不换马甲？
+</p>
+<p style="text-indent:2em;">
+	#241 暗月大君 发表于 2013-12-27 23:53:03
+</p>
+<p style="text-indent:2em;">
+	给你个中肯的建议235L如果你是刚刚入门JAVA和.NET会给你个相对规范的编程习惯，注意这很重要。那么C++可以在你入门后学，如果你是从java开始学起后来学C++的话对你的编程风格会有不小的帮助。至于为什么要学C++,因为许多语言的解译器是用这货写的。那么最后，javascript和As3这些弱类型语言熟悉一两门就好不一定要很深入~~（深入的话就会很苦逼了！）至于我用过的语言：C++ JAVA VB .net php js as3 都玩过另外，说用过什么语言的时候别把SSH打出来~~当心你家师傅拖你回去重修！！
+</p>
+<p style="text-indent:2em;">
+	#240 诚哥-Rgo 发表于 2013-12-27 23:49:32
+</p>
+<p style="text-indent:2em;">
+	然后你和巨龙就过上了有时一次，有时两次，有时N+1次的性福的生活，可喜可贺，可喜可贺啊！
+</p>
+<p style="text-indent:2em;">
+	#239 诚哥-Rgo 发表于 2013-12-27 23:47:20
+</p>
+<p style="text-indent:2em;">
+	程序员：你跑到巨龙面前，痛哭流涕的告诉巨龙自己这30年过的多么辛苦，只有左右手为伴的日子又是多么艰辛，看着各种人生赢家左拥右抱，自己却只能对着苍老师做快速摩擦运动的生活又是多么绝望，最后告诉他，如果再没有女朋友，自己可能就会在31岁那年练成举世无双的魔法，并且在“程序员必然孤单一辈子”的诅咒下毁灭掉自己外加整个世界。巨龙虽然认为毁灭世界这种事情没啥可能实现，但是看你实在是过于可怜，还是决定放了公主。公主走出牢笼后便看到了手捧鲜花，跪在路边的你，一时间显得非常感动“学程序的？滚！”然后公主就和你不远处路过打酱油的，学钢琴的跑了。..............................巨看着呆滞住，犹如爱德华·蒙克所绘《呐喊》那幅画中的你，叹息一声，化作了一个英俊的壮汉，拍了拍你的肩膀“亚拉那一卡？”
+</p>
+<p style="text-indent:2em;">
+	#238 殒殁 发表于 2013-12-27 23:39:37
+</p>
+<p style="text-indent:2em;">
+	一篇帖子钓上来无数程序员…旁观的试剂农觉得好厉害的样子。PS，咱也没有女朋友。
+</p>
+<p style="text-indent:2em;">
+	#237 爱卿平身谢万岁 发表于 2013-12-27 23:19:18
+</p>
+<p style="text-indent:2em;">
+	你们忘了labview吐艳！
+</p>
+<p style="text-indent:2em;">
+	#236 琥珀主 发表于 2013-12-27 23:11:49
+</p>
+<p style="text-indent:2em;">
+	在中学的时候参加编程兴趣小组学过PASCAL……直到今天才又看见这个名字
+</p>
+<p style="text-indent:2em;">
+	#235 窝是比战 发表于 2013-12-27 23:10:52
+</p>
+<p style="text-indent:2em;">
+	我想问一下,学这些C++还是JAVA还是.NET也好 有没必要去了解底层语言也就是汇编呢? 我都不知道该从什么学起---来自大一某渣
+</p>
+<p style="text-indent:2em;">
+	我们结合LS发的这张表情图片来看他说的两个条件(1)他已婚了——一般我们说，A站的基佬只有两个女朋友（小佐和小佑），为什么LS说他已婚了呢？仔细看他发的图片，我们只能看到“小佑”，而“小佐”不见了，那么一个合理的解释就是他放弃了小佐，和小佑结婚了(2)目前转行做摄像——图片里我们没有看到摄像机，但是有一副眼镜，这很可能是带有摄像功能的眼镜，眼镜拍到是什么呢？是小佑，也就是LS的妻子。一个用摄像机拍摄自己妻子（而且是全裸的妻子）的人，他可能从事什么工作呢？答案只有一个，那就是老司机综上所述，LS是一个断了左臂的老司机，猜的可对？
+</p>
+<p style="text-indent:2em;">
+	#233 吃饱了撑的吧
+</p>
+<p style="text-indent:2em;">
+	#234 jean圣女贞德 发表于 2013-12-27 23:09:51
+</p>
+<p style="text-indent:2em;">
+	不不不，LSS的左手在下垂，明显是在撸管，为什么做摄像的时候能撸管呢，那一定是有PAPAPA,所以一定是酒店摄像管理员
+</p>
+<p style="text-indent:2em;">
+	#233 吃饱了撑的吧 发表于 2013-12-27 23:00:04
+</p>
+<p style="text-indent:2em;">
+	我们结合LS发的这张表情图片来看他说的两个条件(1)他已婚了——一般我们说，A站的基佬只有两个女朋友（小佐和小佑），为什么LS说他已婚了呢？仔细看他发的图片，我们只能看到“小佑”，而“小佐”不见了，那么一个合理的解释就是他放弃了小佐，和小佑结婚了(2)目前转行做摄像——图片里我们没有看到摄像机，但是有一副眼镜，这很可能是带有摄像功能的眼镜，眼镜拍到是什么呢？是小佑，也就是LS的妻子。一个用摄像机拍摄自己妻子（而且是全裸的妻子）的人，他可能从事什么工作呢？答案只有一个，那就是老司机综上所述，LS是一个断了左臂的老司机，猜的可对？
+</p>
+<p style="text-indent:2em;">
+	#232 王八蛋老板黄鹤 发表于 2013-12-27 22:57:40
+</p>
+<p style="text-indent:2em;">
+	非程序员为什么文章中没有出现phython如果有的话phython会怎么解决巨龙？
+</p>
+<p style="text-indent:2em;">
+	Lisp：这是一位著名的游侠骑士，在跟很多的屠龙专家交谈后，将他们的技巧模型化，他开发出这套系统，当开始运行系统时，他认识到，他少写了一个括弧。--这个我笑了半天。
+</p>
+<p style="text-indent:2em;">
+	#224 钟大树
+</p>
+<p style="text-indent:2em;">
+	#231 渡边麻友俺的嫁 发表于 2013-12-27 22:35:15
+</p>
+<p style="text-indent:2em;">
+	你懂个肾，lisp的精髓就在于括弧
+</p>
+<p style="text-indent:2em;">
+	内存溢出啥情况，说是野指针或者空指针导致程序崩溃还差不多内存溢出其中一种原因就是你说的 指针跟内存不能对应的情况呀
+</p>
+<p style="text-indent:2em;">
+	#121 wecrs
+</p>
+<p style="text-indent:2em;">
+	.net的机器人已经平稳的挂在 服务器上 2月了 我很放心
+</p>
+<p style="text-indent:2em;">
+	#227 色狼领袖
+</p>
+<p style="text-indent:2em;">
+	#230 情报战士 发表于 2013-12-27 22:22:10
+</p>
+<p style="text-indent:2em;">
+	我们来合个照吧本尊
+</p>
+<p style="text-indent:2em;">
+	#229 ACG投资咨询有限责任公司 发表于 2013-12-27 22:04:01
+</p>
+<p style="text-indent:2em;">
+	C 赶到那里，遇到了尾巴，又遇到了锋利的爪子，然后是散发着臭气的嘴和利齿，但是，龙在哪里？龙在哪里？然后他遇到了蠕动的胃、小肠、大肠，最后是肛门，他发现自己现在是一泡屎了，可是龙到底在哪里嘛？转自 Oschina.net - karlcoder 的神评论
+</p>
+<p style="text-indent:2em;">
+	#228 daily 发表于 2013-12-27 22:01:25
+</p>
+<p style="text-indent:2em;">
+	又黑我大.NET，跟你丫死磕。
+</p>
+<p style="text-indent:2em;">
+	#227 色狼领袖 发表于 2013-12-27 22:00:59
+</p>
+<p style="text-indent:2em;">
+	.net的机器人已经平稳的挂在 服务器上 2月了 我很放心
+</p>
+<p style="text-indent:2em;">
+	#226 领卡如同领便当 发表于 2013-12-27 21:08:13
+</p>
+<p style="text-indent:2em;">
+	看得懂的我打赌你们一定有两个女朋友
+</p>
+<p style="text-indent:2em;">
+	#225 hqzz 发表于 2013-12-27 20:48:54
+</p>
+<p style="text-indent:2em;">
+	你介不介意再发一下，我们是不会介意的
+</p>
+<p style="text-indent:2em;">
+	#224 钟大树 发表于 2013-12-27 20:48:14
+</p>
+<p style="text-indent:2em;">
+	Lisp：这是一位著名的游侠骑士，在跟很多的屠龙专家交谈后，将他们的技巧模型化，他开发出这套系统，当开始运行系统时，他认识到，他少写了一个括弧。--这个我笑了半天。
+</p>
+<p style="text-indent:2em;">
+	我最擅长的Perl竟然都入不了大名单Perl难道不是一种编程语言吗我果然只能算半个码农啊（不对，我是该哭还是该笑呢？）
+</p>
+<p style="text-indent:2em;">
+	#183 鹰柳Airin
+</p>
+<p style="text-indent:2em;">
+	Perl: The programmer kills the dragon using as few strokes as possible. The princess later kicks him out of bed for insisting that There is More than One Way to Do It.
+</p>
+<p style="text-indent:2em;">
+	#221 Uhuru
+</p>
+<p style="text-indent:2em;">
+	#223 Uhuru 发表于 2013-12-27 20:43:14
+</p>
+<p style="text-indent:2em;">
+	APL: kills dragon with just a single poop. But then princess takes sword and kills APL, because he is such pervert.
+</p>
+<p style="text-indent:2em;">
+	#222 Uhuru 发表于 2013-12-27 20:41:17
+</p>
+<p style="text-indent:2em;">
+	Python: realizes that dragons and snakes are both reptiles. Refuses to kill family member. Uses dragon&amp;#39;s fire to cook princess and share a meal with dragon.
+</p>
+<p style="text-indent:2em;">
+	#221 Uhuru 发表于 2013-12-27 20:38:18
+</p>
+<p style="text-indent:2em;">
+	Perl: The programmer kills the dragon using as few strokes as possible. The princess later kicks him out of bed for insisting that There is More than One Way to Do It.
+</p>
+<p style="text-indent:2em;">
+	#220 奥哈巴姆怒龙炮 发表于 2013-12-27 20:37:58
+</p>
+<p style="text-indent:2em;">
+	前两天我就是在另外一个程序员帖子里发现纯表神技然后被猴子封掉的程序猿何苦为难程序猿
+</p>
+<p style="text-indent:2em;">
+	#219 基友在故我在 发表于 2013-12-27 19:31:31
+</p>
+<p style="text-indent:2em;">
+	所以说你们就是程序员，这么简单的问题还用想，拔了电源不就完事。
+</p>
+<p style="text-indent:2em;">
+	#218 童话小狐狸 发表于 2013-12-27 19:00:59
+</p>
+<p style="text-indent:2em;">
+	换一个电灯泡需要几个程序员？答案是一个也不要，这是硬件问题。
+</p>
+<p style="text-indent:2em;">
+	#217 传说哥也寂寞 发表于 2013-12-27 19:00:20
+</p>
+<p style="text-indent:2em;">
+	楼上作死啊
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="5654,4119,42.88.200.161">
+<p>佚名 @ 2014-01-09 18:13:14</p>
+<p style="text-indent:2em">易语言呢？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你猜~</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-12-28
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/asp/">ASP</a>
+          <a href="https://lcx.cc/tags/c&#43;&#43;/">C&#43;&#43;</a>
+          <a href="https://lcx.cc/tags/ctf/">CTF</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/java/">Java</a>
+          <a href="https://lcx.cc/tags/js/">js</a>
+          <a href="https://lcx.cc/tags/jsp/">Jsp</a>
+          <a href="https://lcx.cc/tags/nds/">NDS</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/python/">Python</a>
+          <a href="https://lcx.cc/tags/shell/">Shell</a>
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/ssh/">SSH</a>
+          <a href="https://lcx.cc/tags/ssl/">SSL</a>
+          <a href="https://lcx.cc/tags/vb/">VB</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F%E7%8C%BF/">程序猿</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/">二进制</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E5%B7%A7/">技巧</a>
+          <a href="https://lcx.cc/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+          <a href="https://lcx.cc/tags/%E6%91%84%E5%83%8F%E6%9C%BA/">摄像机</a>
+          <a href="https://lcx.cc/tags/%E4%B8%96%E7%95%8C/">世界</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E5%9B%BE%E7%89%87/">图片</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E9%A1%B5/">网页</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E6%BA%A2%E5%87%BA/">溢出</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4121/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">黑吃黑到底谁吃谁？冒用身份也敢这么叼! - 绿盟也中枪</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4118/">
+            <span class="next-text nav-default">关于JBOSS解密数据库连接池的问题汇总小白贴</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

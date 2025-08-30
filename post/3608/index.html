@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>XSS解决方案系列之二：知其所以然—浏览器是如是解码的 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="jiayzhan" /><meta name="description" content="XSS解决方案系列之二：知其所以然—浏览器是如是解码的。先说一个关于学习的感受：我本人一直关注“知识”与“知识运用”之间的区别，我曾经举过一个例子说：“知识”与“知识运用”就如牛郎星与织女星，感觉二者之间似乎关系密切，实则相隔甚远！我在初学平面几何时，经常会这么想： 两条线平行则永远不会相交，这不是废话吗! 三角形两边之和当然大于第三边了！…… 在实际运用当中，我经常是需要用它的时候想不起来或者用错了它们。我的第二篇文章输入验证–避免50%（只是经验值）以上的应用安全攻击，对于此文我相信是IT业界的人都能看明白，但是对于一个企业来说，它的价值万金，有多少人可以体味呢？对于XSS问题的系统性解决方案上也是一样的。许多公司已经90%以上的程度解决了XSS问题，但是依然存在那10%的风险，风险在哪里，我想我会一步一步给大家分享清楚。XSS问题是全球性普遍性问题，没有深度的探索就不可能有彻底的解决方案，没有灵丹妙药，只有正确的方法！" />
+<meta name="keywords" content="XSS解决方案系列之二：知其所以然—浏览器是如是解码的" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3608/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="XSS解决方案系列之二：知其所以然—浏览器是如是解码的" />
+<meta property="og:description" content="XSS解决方案系列之二：知其所以然—浏览器是如是解码的。先说一个关于学习的感受：我本人一直关注“知识”与“知识运用”之间的区别，我曾经举过一个例子说：“知识”与“知识运用”就如牛郎星与织女星，感觉二者之间似乎关系密切，实则相隔甚远！我在初学平面几何时，经常会这么想： 两条线平行则永远不会相交，这不是废话吗! 三角形两边之和当然大于第三边了！…… 在实际运用当中，我经常是需要用它的时候想不起来或者用错了它们。我的第二篇文章输入验证–避免50%（只是经验值）以上的应用安全攻击，对于此文我相信是IT业界的人都能看明白，但是对于一个企业来说，它的价值万金，有多少人可以体味呢？对于XSS问题的系统性解决方案上也是一样的。许多公司已经90%以上的程度解决了XSS问题，但是依然存在那10%的风险，风险在哪里，我想我会一步一步给大家分享清楚。XSS问题是全球性普遍性问题，没有深度的探索就不可能有彻底的解决方案，没有灵丹妙药，只有正确的方法！" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3608/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-06-20T17:42:45&#43;08:00" />
+<meta property="article:modified_time" content="2013-06-20T18:40:50&#43;08:00" />
+
+<meta itemprop="name" content="XSS解决方案系列之二：知其所以然—浏览器是如是解码的">
+<meta itemprop="description" content="XSS解决方案系列之二：知其所以然—浏览器是如是解码的。先说一个关于学习的感受：我本人一直关注“知识”与“知识运用”之间的区别，我曾经举过一个例子说：“知识”与“知识运用”就如牛郎星与织女星，感觉二者之间似乎关系密切，实则相隔甚远！我在初学平面几何时，经常会这么想： 两条线平行则永远不会相交，这不是废话吗! 三角形两边之和当然大于第三边了！…… 在实际运用当中，我经常是需要用它的时候想不起来或者用错了它们。我的第二篇文章输入验证–避免50%（只是经验值）以上的应用安全攻击，对于此文我相信是IT业界的人都能看明白，但是对于一个企业来说，它的价值万金，有多少人可以体味呢？对于XSS问题的系统性解决方案上也是一样的。许多公司已经90%以上的程度解决了XSS问题，但是依然存在那10%的风险，风险在哪里，我想我会一步一步给大家分享清楚。XSS问题是全球性普遍性问题，没有深度的探索就不可能有彻底的解决方案，没有灵丹妙药，只有正确的方法！"><meta itemprop="datePublished" content="2013-06-20T17:42:45&#43;08:00" />
+<meta itemprop="dateModified" content="2013-06-20T18:40:50&#43;08:00" />
+<meta itemprop="wordCount" content="7306">
+<meta itemprop="keywords" content="XSS,解码,浏览器,C&#43;&#43;,Hack,Html,HTTP,IE,IP,Java,js,PHP,URL,Web,安全,编码,程序,程序员,代码,工程师,攻击,函数,技术,企业,讨论,网站,问题,系统,中国," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="XSS解决方案系列之二：知其所以然—浏览器是如是解码的"/>
+<meta name="twitter:description" content="XSS解决方案系列之二：知其所以然—浏览器是如是解码的。先说一个关于学习的感受：我本人一直关注“知识”与“知识运用”之间的区别，我曾经举过一个例子说：“知识”与“知识运用”就如牛郎星与织女星，感觉二者之间似乎关系密切，实则相隔甚远！我在初学平面几何时，经常会这么想： 两条线平行则永远不会相交，这不是废话吗! 三角形两边之和当然大于第三边了！…… 在实际运用当中，我经常是需要用它的时候想不起来或者用错了它们。我的第二篇文章输入验证–避免50%（只是经验值）以上的应用安全攻击，对于此文我相信是IT业界的人都能看明白，但是对于一个企业来说，它的价值万金，有多少人可以体味呢？对于XSS问题的系统性解决方案上也是一样的。许多公司已经90%以上的程度解决了XSS问题，但是依然存在那10%的风险，风险在哪里，我想我会一步一步给大家分享清楚。XSS问题是全球性普遍性问题，没有深度的探索就不可能有彻底的解决方案，没有灵丹妙药，只有正确的方法！"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">XSS解决方案系列之二：知其所以然—浏览器是如是解码的</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-06-20" class="post-time">
+          2013-06-20
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/xss/"> XSS </a>
+            <a href="https://lcx.cc/categories/%E8%A7%A3%E7%A0%81/"> 解码 </a>
+            <a href="https://lcx.cc/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/"> 浏览器 </a>
+            
+          </div>
+        <span class="more-meta"> 约 7306 字 </span>
+          <span class="more-meta"> 预计阅读 15 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<strong>说明：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#009900;">1. 本ID所有文章皆为原创，写文章时没有参考任何文档，推荐参考的link是网络搜索的，不涉及版权。</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#009900;">2. 此文是纯技术文章，如果不幸遇冷，本ID将无限孤独。</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#009900;">3. 技术是没有司界的，能帮助你是我的快乐，如果不想偷着乐，可以站出来乐一下。</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#009900;">4. 理解了本文，我相信您就打下了可以解决任何复杂的XSS问题的基础，到今天为止才正式说到XSS的核心问题不是卖官子，而是以我的经验深知如何一步一步让人理解它。</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#009900;">5. 如果您真想做专业渗透测试，深入了解了它，你将有能力发现更牛X的XSS问题，甚至知名主流网站上的潜藏的XSS问题。</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#009900;">6. 依然诚请编辑修订，以增加可读性。上篇文章由于涉及到百度的一点小问题(已经火速解决)，故声明禁止转载，以避免对其造成不必要的影响，本文您随意。</span> 
+</p>
+<p style="text-indent:2em;">
+	<strong>先说一个关于学习的感受：</strong>我本人一直关注“知识”与“知识运用”之间的区别，我曾经举过一个例子说：“知识”与“知识运用”就如牛郎星与织女星，感觉二者之间似乎关系密切，实则相隔甚远！我在初学平面几何时，经常会这么想： 两条线平行则永远不会相交，这不是废话吗! 三角形两边之和当然大于第三边了！…… 在实际运用当中，我经常是需要用它的时候想不起来或者用错了它们。
+</p>
+<p style="text-indent:2em;">
+	我的第二篇文章<a href="http://www.freebuf.com/articles/web/9672.html" target="_blank">输入验证–避免50%（只是经验值）以上的应用安全攻击</a><a href="http://www.freebuf.com/articles/web/9672.html" target="_blank"></a>，对于此文我相信是IT业界的人都能看明白，但是对于一个企业来说，它的价值万金，有多少人可以体味呢？
+</p>
+<p style="text-indent:2em;">
+	对于XSS问题的系统性解决方案上也是一样的。许多公司已经90%以上的程度解决了XSS问题，但是依然存在那10%的风险，风险在哪里，我想我会一步一步给大家分享清楚。XSS问题是全球性普遍性问题，没有深度的探索就不可能有彻底的解决方案，没有灵丹妙药，只有正确的方法！
+</p>
+<p style="text-indent:2em;">
+	<strong>好，进入正题。</strong> 
+</p>
+<p style="text-indent:2em;">
+	基于HTTP协议的B/S(browser/server)架构的Web应用程序，有它的特殊性，它结构松散、多标签语言相互嵌入以及服务端与客户端使用了相互关联实现上却完全不同等等复杂的技术，以至于给基于HTTP协议的Web应用程序埋下了诸多潜在的安全问题，XSS问题就是其中之一。我们使用C/C++/Javascript，大家都清楚，如果我想在字符串当中表达字符【”】，很自然的就会想到转义【\”】，想在字符串当中表达【\】，就得使用转义(与本文中所说“编码”概念相同)形式【\\】，在HTML文档当中也是这样，但是大家有没有想过这几个问题：
+</p>
+<pre class="prettyprint lang-html">1. 这个转义后的字符串是为谁而转义的？
+2. 这个转义后的字符串是何时被还原成转义前的字符串的？
+3. 有没有可能还原之后的字符被重新放回到代码中而忽略了转义？</pre>
+<p style="text-indent:2em;">
+	<strong>答案：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1. 为解释器（或编译器，为了简单，后面只称解释器）而转义，字符串被解释后在内存当中的字符串等同于转义前字符串
+</p>
+<p style="text-indent:2em;">
+	2. 通常解释器是在读取语言（C/C++/Javascript…）字符串后进行本地语言转换前进行还原的
+</p>
+<p style="text-indent:2em;">
+	3. 有，在基于HTML架构的前端（浏览器端）应用程序，尤为常见。比如: var myString="&lt;script&gt;alert(\"jiayzhan\")&lt;\/script&gt;"; 这个myString想表达的字符串是
+</p>
+<p style="text-indent:2em;">
+	&lt;script&gt;alert("jiayzhan")&lt;/script&gt;，如果被document.write(myString)重新写到DOM里，结果是什么呢？ 或者也可能会直接赋值给某一HTML节点的innerHTML/outerHTML属性，这里的问题就复杂了，二次赋值之后，你的程序没那么聪明，它不会主动替你转义一下再赋值，你可能会说：这不就是DOM Base XSS吗？ 你想的简单了，对于我来说是DOM Based、反射式的还是存储式的，这种分类意义不大，解决方案都是一样，这就是高级别抽象后的解决方案的统一。这个问题较复杂，我们循序渐进的来了解它，您先知道有这么回事儿。有心的读者可能会问：C/C++/Java会有这种情形吗？ 答案是：当然有，有一些软件为了兼容性等诸多因素考虑，会在编译时依据条件不同动态生成新的代码然后再进行编译，此时你该如何是好？这不是本文讨论的重点，为了叙述的完整性，提一下有这么回事儿就行。本文的重点是Web应用当中的XSS问题。
+</p>
+<p style="text-indent:2em;">
+	<strong>铺垫的差不多了，我们来一起看一段以下的HTML的document:</strong> 
+</p>
+<pre class="prettyprint lang-html">&lt;html&gt;
+&lt;body&gt;
+&lt;h1&gt;jiayzhan's item&lt;/h1&gt;
+&lt;a ID="jiayzhan" onclick="alert('jiayzhan\'s onclick')" href="http://www.jiayzhan.org" "&gt;jiayzhan's link&lt;/a&gt;
+&lt;/body&gt;
+&lt;script&gt;
+location.replace("jiayzhan's URL")
+&lt;/script&gt;
+&lt;/html&gt;</pre>
+<p style="text-indent:2em;">
+	【说明】带有字符串【jiayzhan】的一整串，您需要将它们理解为类似于这样的JSP代码：&lt;%=request.getParameter(“jiayzhan”);%&gt;
+</p>
+<p style="text-indent:2em;">
+	<span></span> 
+</p>
+<p style="text-indent:2em;">
+	<span><strong>下面一步一步来说浏览器是如何解码(反转义)的，我就用字符串本身作为位置标识来解释：</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	<span>1. 位置：jiayzhan’s item, 浏览器在解析这个位置的字符串时，无论如何，会对其进行一次HTML解码，（HTML编码、解码，请</span><a href="http://www.w3schools.com/html/html_entities.asp" target="_blank">参考</a><span>）</span> 
+</p>
+<p style="text-indent:2em;">
+	2. 位置：jiayzhan\’s onclick，无论如何，浏览器会对其进行：1） 先做HTML解码 2）再做JS解码
+</p>
+<p style="text-indent:2em;">
+	3. 位置: http://www.jiayzhan.org，无论如何，浏览器会对其进行：URL解码
+</p>
+<p style="text-indent:2em;">
+	4. 位置：jiayzhan’s URL， 无论如何，浏览器会对此位置字符串进行：1）先JavaScript解码 (JS编解码请<a href="http://www.w3schools.com/js/js_obj_string.asp" target="_blank">参考</a>）  2）后URL解码
+</p>
+<p style="text-indent:2em;">
+	以上只是一维与二维组合的情形，实际当中还会有三维以上的解码组合，特别是大量使用Web2.0技术的网站。您理解了吗？ 如果您真的理解了，请分析一下以下代码段中的变量&lt;%=request.getParameter(“jiyazhan_url”)%&gt;，浏览器如何做解码？如果你真的理解了浏览器的解码过程，你何尝不知道你在解决XSS问题时的编码过程？<strong> 请在评论中回复，我会及时与您讨论：</strong> 
+</p>
+<p style="text-indent:2em;">
+	&lt;a href="javascript:backToHome(&lt;%=request.getParameter("jiyazhan_url")%&gt;)" &gt;click jiayzhan&lt;/a&gt;
+</p>
+<p style="text-indent:2em;">
+	说明：backToHome是一个javascript函数
+</p>
+<p style="text-indent:2em;">
+	在这里先不说它的解码过程，提示一下它是一个三维解码过程，供读者讨论吧。
+</p>
+<p style="text-indent:2em;">
+	写到这里，我想点睛一下我上文所述的”许多公司已经90%以上的程度解决了XSS问题”而不是100%的原因了。本ID曾给某一知名公司报了一个XSS问题，其存在XSS问题的地方因为是一个三维的解码语法环境，应用安全与开发人员许久也没有找到合理的解决方案，最终此公司删除了那个有XSS问题的功能点。不点名了，如果有幸遇到此公司的应用安全人员，这篇文章读明白了，问题应该就好解决了。还是那句话：知识与知识运用相隔甚远，我无法保证您可以正确运用它。
+</p>
+<p style="text-indent:2em;">
+	既然知道浏览器是如何解码的了，我们该如何做编码的事应该水到渠成了，不过依我的经验看，许多专业做XSS问题fix的解决方案的安全人员依然存在难以转过这个弯的情况。下篇文章我将举几个具体的例子来说明如何利用解码原理用来彻底解决XSS问题的编码问题，以及在涉及到多重解码的环境如果考虑维数不足所带来的安全隐患是什么（透露一下:如果编码维数考虑不足的可能结果是：
+</p>
+<pre class="prettyprint lang-html">1). 其实等于没解决，只是漏洞发现的难度大了一些而已，对于我来说都一样 
+2). 改变了用户的输入，比如：用户想找一个【“】，结果系统帮它找的是【\"】或【%22】或【&amp;quot;】......）。</pre>
+<p style="text-indent:2em;">
+	<strong>今天先这样吧，纯技术文章，不知道有多少同行会耐心的阅读它，我坚信在这个平台上有更多的类似的无保留的分享，才可以共同提高我们应用系统的安全性。<span style="color:#009900;">请您告诉我关于XSS问题的思考，是否与您想的不一样？&nbsp;</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://www.freebuf.com/articles/web/10121.html" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3611/" target="_blank">XSS解决方案系列之一：淘宝、百度、腾讯的解决方案之瑕疵</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3608/" target="_blank">XSS解决方案系列之二：知其所以然—浏览器是如是解码的</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3607/" target="_blank">XSS解决方案系列之三: 例解过后，再回首您正在维护的产品</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3585/" target="_blank">XSS解决方案系列之四：关于编码</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3610/" target="_blank">防御XSS的七条原则</a> 
+</p>
+<p>
+	<strong>相关讨论：</strong> 
+</p>
+<p style="text-indent:2em;">
+	fake 2013-06-03 1楼
+</p>
+<p style="text-indent:2em;">
+	输入过滤影响应用性能，lZ怎么看待这个问题的
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-03
+</p>
+<p style="text-indent:2em;">
+	@fake 准确的说本文所述叫:输出过滤。关于性能问题，多虑了，对于一个具有密集输出点的页面，我们做过实验，整体性能影响＜5%，多数情况下性能影响都远＜5%
+</p>
+<p style="text-indent:2em;">
+	无节操 2013-06-03 2楼
+</p>
+<p style="text-indent:2em;">
+	期待下篇文章。
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-03
+</p>
+<p style="text-indent:2em;">
+	@无节操 尽量快一些吧
+</p>
+<p style="text-indent:2em;">
+	test 2013-06-03 3楼
+</p>
+<p style="text-indent:2em;">
+	这篇微博转发很高啊
+</p>
+<p style="text-indent:2em;">
+	大佬 2013-06-03 4楼
+</p>
+<p style="text-indent:2em;">
+	指望程序员去做这些过滤难度太大了，楼主的方案是？提供一个自己写的过滤函数吗？还是别的？求支招
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-03
+</p>
+<p style="text-indent:2em;">
+	@大佬 有，公司安全策略原因不能提供，我可以给些建议，后文再续吧
+</p>
+<p style="text-indent:2em;">
+	大佬 2013-06-03
+</p>
+<p style="text-indent:2em;">
+	@jiayzhan 期待也说说解决方案，程序员伤不起
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-03
+</p>
+<p style="text-indent:2em;">
+	@jiayzhan 解决方案会说的，有了原理方案不难了
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-03
+</p>
+<p style="text-indent:2em;">
+	@大佬 解决方案并不能解决谁来fix的问题，理论上必需由程序员来完成，应用安全人员是做solution的。这样对开发人员来说也是一种提升。
+</p>
+<p style="text-indent:2em;">
+	Justin (1级) 2013-06-03 5楼
+</p>
+<p style="text-indent:2em;">
+	关于那个三维解码的问题，确实不太理解，先HTML再JS再URL？请大神指点一二。。
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-03
+</p>
+<p style="text-indent:2em;">
+	@Justin 恭喜你，你看明白了，呵呵,现实当中还可能会有3维以上情形。多维解码对应的就是多维编码的问题，这就是solution了，只是对于开发来说会有一些困难。
+</p>
+<p style="text-indent:2em;">
+	Justin (1级) 2013-06-07
+</p>
+<p style="text-indent:2em;">
+	@jiayzhan 多维编码解码的问题，也就是嵌套的问题，如果能搞清楚单一语法环境下顺序，可能也就迎刃而解了。。。在HTML中，不外乎就是DOM和SCRIPT。是不是可以理解成，DOM中的解码一定是HTML第一维，SCRIPT中的解码一定是JS第一维？？
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-08
+</p>
+<p style="text-indent:2em;">
+	@Justin 如果&lt;script&gt;&lt;/script&gt;内的值永远不被涉及到HTML规范中规定的节点中，可以不不做HTML编码。如:在&lt;script&gt;&lt;/script&gt;调用location.replace()函数，只需URL与JS的组合编码。
+</p>
+<p style="text-indent:2em;">
+	s3cj0y 2013-06-03 6楼
+</p>
+<p style="text-indent:2em;">
+	也就是说，只需要针对不同的标签使用相应的编码，解码，转义，反转义。把每一维都做好是不是就ok了，求大神指点
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-03
+</p>
+<p style="text-indent:2em;">
+	@s3cj0y 理论上我们解决 XSS问题是不需要手动去解码的，解码是浏览固有机制，我们需要遵循它进行正确的编码就可以。
+</p>
+<p style="text-indent:2em;">
+	admin 2013-06-03
+</p>
+<p style="text-indent:2em;">
+	@jiayzhan 意思就是解码全交给浏览器去做。期待楼主续作。
+</p>
+<p style="text-indent:2em;">
+	robert 2013-06-03 7楼
+</p>
+<p style="text-indent:2em;">
+	浏览器最后执行什么，我们就做后解码什么。在一个复杂的业务环境里，确实会有对输出转义，在什么地方转义的问题。
+</p>
+<p style="text-indent:2em;">
+	anlfi (1级) ??????????????????????????... 2013-06-03 8楼
+</p>
+<p style="text-indent:2em;">
+	好厉害
+</p>
+<p style="text-indent:2em;">
+	依稀记得刚接触电脑的时候 说的超文本传输的概念
+</p>
+<p style="text-indent:2em;">
+	就是转义 编码 解释器 过滤器 妈妈再也不用担心我学习xss了
+</p>
+<p style="text-indent:2em;">
+	其实每一个标签在浏览器的栈 函数都有关系 高级的xss 就是溢出了吧 bypass
+</p>
+<p style="text-indent:2em;">
+	什么的都是从汇编调试开始的
+</p>
+<p style="text-indent:2em;">
+	或者能直接执行shellcode 做到用户劫持 比如Flash xss第三方也很重要
+</p>
+<p style="text-indent:2em;">
+	还有浏览器插件啦 可以说的多了
+</p>
+<p style="text-indent:2em;">
+	在浏览器机制方面做好xss安全 其实本质都是User side 问题
+</p>
+<p style="text-indent:2em;">
+	只不过现在 Server side也为了User安全进行了一些安全加固吧
+</p>
+<p style="text-indent:2em;">
+	求一些绕过浏览器xss防御机制 和标签漏洞调试的文章
+</p>
+<p style="text-indent:2em;">
+	其实我什么都不懂的呀 只能乱扯扯 白帽子将web安全我还没看懂呢（吐舌头
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-03
+</p>
+<p style="text-indent:2em;">
+	@anlfi 白帽子讲web安全本ID拜读过，内容多数是黑客思维方式，没有体现出将解决方案作为重点的成分。系统性不错，值得企业应用安全工程师通览一遍。我崇尚的思路是：将问题的root cause表达出来，从root cause上给出解决方案，才是理想的。一个小小的理想主义者~_~
+</p>
+<p style="text-indent:2em;">
+	anlfi (1级) ??????????????????????????... 2013-06-03
+</p>
+<p style="text-indent:2em;">
+	@jiayzhan
+</p>
+<p style="text-indent:2em;">
+	酱紫呀 学习了
+</p>
+<p style="text-indent:2em;">
+	Dante (1级) archer &amp; 讨厌复杂的东西 2013-06-04 9楼
+</p>
+<p style="text-indent:2em;">
+	最喜欢这个种文章了，目前还不能理解透彻，这阶段时间我也在学习xss，拿个pentesterlab在练习，但是有很多不懂的地方，希望可以获得你的指导。
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-04
+</p>
+<p style="text-indent:2em;">
+	@Dante 有问题可以问，我一有空就回复。
+</p>
+<p style="text-indent:2em;">
+	Dante (1级) archer &amp; 讨厌复杂的东西 2013-06-04 10楼
+</p>
+<p style="text-indent:2em;">
+	感觉越是猥琐的人，对xss 利用的越有意思，嘎嘎
+</p>
+<p style="text-indent:2em;">
+	jeremy 2013-06-04 11楼
+</p>
+<p style="text-indent:2em;">
+	关于三维转义，我的理解不知道对不对~
+</p>
+<p style="text-indent:2em;">
+	文本需要进行了什么操作就需要进行相关的解码，需要html显示就要html解码,需要在js中使用就要js解码,需要放到url中的就要url解码，
+</p>
+<p style="text-indent:2em;">
+	上面那个三维的话，要看backtourl函数里面的操作吧，函数里面用字符串去操作url的时候就用到三维转义了，如果没有操作url就么有（当然函数的字面意思就是操作url了）
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-04
+</p>
+<p style="text-indent:2em;">
+	@jeremy
+</p>
+<p style="text-indent:2em;">
+	你的疑问是有效的，此处是假设backToHome就是一个简单的跳转，没有复杂的操作。
+</p>
+<p style="text-indent:2em;">
+	此处的href是URL属性，于是浏览器会对其进行URL解码一回。这里需要注意的是：URL/URLComponent的区别，通常URL解码只针对URL本身的合法性与完整性(http://x.y.z)检查, 而URLComponent而是需要对URL当中的参数值进行合法性与完整性检查，这个地方也是开发人员在理解与使用过程当中的容易混淆的地方。
+</p>
+<p style="text-indent:2em;">
+	Dante (1级) archer &amp; 讨厌复杂的东西 2013-06-04 12楼
+</p>
+<p style="text-indent:2em;">
+	现在在练习xss，/xss/example7.php?name=，这个页面页面对我的输入进行了转义，把我的’&lt;’转了，现在我没有想出办法构建tag来标识js，
+</p>
+<pre class="prettyprint lang-php">&lt;?php require_once '../header.php'; ?&gt;
+Hello
+&lt;script&gt;
+var $a= '&lt;?php echo htmlentities($_GET["name"]); ?&gt;';
+&lt;/script&gt;
+&lt;?php require_once '../footer.php'; ?&gt;</pre>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-04
+</p>
+<p style="text-indent:2em;">
+	@Dante htmlentities函数从字面上看是进行HTML编码的，这明显是用错了，在JS里使用HTML编码要么会有问题，要么改变了用户的输入。我不知道你的目的是什么？ 解决问题还是完成攻击？
+</p>
+<p style="text-indent:2em;">
+	Dante (1级) archer &amp; 讨厌复杂的东西 2013-06-04
+</p>
+<p style="text-indent:2em;">
+	@jiayzhan 点错了，这是pentesterlab的源代码，我只是想做出跨站的效果就好，并且希望知道为什么，
+</p>
+<p style="text-indent:2em;">
+	Dante (1级) archer &amp; 讨厌复杂的东西 2013-06-04
+</p>
+<p style="text-indent:2em;">
+	@jiayzhan
+</p>
+<p style="text-indent:2em;">
+	This example is similar to the one before, however, you won’t be able to use special
+</p>
+<p style="text-indent:2em;">
+	characters since they will be HTML encoded. As you will see, you don’t really need
+</p>
+<p style="text-indent:2em;">
+	any of these characters.
+</p>
+<p style="text-indent:2em;">
+	This issue is common in PHP web application because the well known function
+</p>
+<p style="text-indent:2em;">
+	used to HTML-encode character (htmlentities) does not encode single quotes (‘)
+</p>
+<p style="text-indent:2em;">
+	unless you told it to using the ENT_QUOTES flag.
+</p>
+<p style="text-indent:2em;">
+	这是手册，实话，我看的不是太明白，
+</p>
+<p style="text-indent:2em;">
+	Dante (1级) archer &amp; 讨厌复杂的东西 2013-06-04
+</p>
+<p style="text-indent:2em;">
+	@jiayzhan 你可以这样理解，如果你是我，现在网站的源文件已经看到，就是刚刚贴的这个，对他进行xss攻击，你会怎么做？ 随便学习一下，大牛怎么思考的
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-04
+</p>
+<p style="text-indent:2em;">
+	@jiayzhan 从代码上看貌似没有直接导致XSS问题的地方，但是有隐患，隐患就是这个地方不应该使用HTML编码，这个隐患会在哪里爆发不知道，得看在哪里使用$a及如何使用。
+</p>
+<p style="text-indent:2em;">
+	anlfi (1级) ??????????????????????????... 2013-06-04 13楼
+</p>
+<p style="text-indent:2em;">
+	请问lz 是程序员吗
+</p>
+<p style="text-indent:2em;">
+	厂商
+</p>
+<p style="text-indent:2em;">
+	防范
+</p>
+<p style="text-indent:2em;">
+	策略
+</p>
+<p style="text-indent:2em;">
+	方案
+</p>
+<p style="text-indent:2em;">
+	应急响应
+</p>
+<p style="text-indent:2em;">
+	听的都想吐了
+</p>
+<p style="text-indent:2em;">
+	能不能别那么多专业术语 我已经受不了
+</p>
+<p style="text-indent:2em;">
+	一个xss都可以扯这么久 不深入就是赤裸裸的….
+</p>
+<p style="text-indent:2em;">
+	———————————————–
+</p>
+<p style="text-indent:2em;">
+	好吧我觉得 一个做前端美工的妹子都可以跟我说css hack js hack
+</p>
+<p style="text-indent:2em;">
+	xxx风格绕过ie机制来现实某些特殊效果 是多么有意思的事
+</p>
+<p style="text-indent:2em;">
+	我已经不再相信hack了 难道你们都是这样的程序员？只是因为这样出现了问题才去找解决方案的研究
+</p>
+<p style="text-indent:2em;">
+	我想问你们开心吗 有点hack精神吗 我真没话说了
+</p>
+<p style="text-indent:2em;">
+	如有不适请无视 我只是觉得自由比较好哪怕只有我一个人这么想自己研究 也不想去讨论这个
+</p>
+<p style="text-indent:2em;">
+	当你的兴趣变成工作 变成一成不变的无数解决方案 生活还有什么意义？
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-04
+</p>
+<p style="text-indent:2em;">
+	@anlfi 呵呵，可爱的妹子，我对前端UI Design很有兴趣，有机会请教你。你说的这些名词我好像极少提及。XSS问题长期困扰着Web应用程序安全性，它确实麻烦，以至于许多公司花了非常大的气力依然无法从根本上解决它，这是我写这些系列的原因与动力。千万别说：一个XSS都可以扯这么久，其实若是想扯的清清楚楚明明白白，还得许久。XSS在owasp排名中基本上没有退出过Top10，如果很简单，它早就消失了。到目前为止它就如Web应用程序的癌症一样始终折磨着web应用。
+</p>
+<p style="text-indent:2em;">
+	直觉动物 (1级) 2013-06-07
+</p>
+<p style="text-indent:2em;">
+	@anlfi 你的最后一句“当你的兴趣变成工作 变成一成不变的无数解决方案 生活还有什么意义？”这句话真是让我欢喜让我忧！欢喜的是，很庆幸我的兴趣跟工作毫无关系；忧的是，要想工作上有成就，那么感兴趣的工作肯定更容易出成就。
+</p>
+<p style="text-indent:2em;">
+	网络安全是我的职业，但是我不喜欢，也不讨厌，我只是本着我能帮助更多人的原则在做事情。可能没有楼主那么牛的技术，但是我能做多少我就做多少。
+</p>
+<p style="text-indent:2em;">
+	不管你信不信，这只是我心中所想！
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-07
+</p>
+<p style="text-indent:2em;">
+	@直觉动物 您谦虚了，没有牛与不牛，人人都有知道与不知道的地方，各取所长。
+</p>
+<p style="text-indent:2em;">
+	anlfi (1级) ??????????????????????????... 2013-06-08
+</p>
+<p style="text-indent:2em;">
+	@直觉动物
+</p>
+<p style="text-indent:2em;">
+	你走入了误区 没人逼你做到最好 也没说一定做什么都要有兴趣
+</p>
+<p style="text-indent:2em;">
+	就像达芬奇 是建筑师 科学家 军事家 等等等
+</p>
+<p style="text-indent:2em;">
+	但是你认为他有吧全部的生活都投入进去吗
+</p>
+<p style="text-indent:2em;">
+	这所有的一切都只是生活就像吃饭喝水一样
+</p>
+<p style="text-indent:2em;">
+	只是能给你带来惊讶与意外的快乐然而成就只是附带的
+</p>
+<p style="text-indent:2em;">
+	假如你把所有时间都投入进去并且十分期望
+</p>
+<p style="text-indent:2em;">
+	那么你就会失望而这个就是你的执念也就是你的烦恼
+</p>
+<p style="text-indent:2em;">
+	假如你能平静的看待一切
+</p>
+<p style="text-indent:2em;">
+	知道到底什么能使自己开心才是最关键的
+</p>
+<p style="text-indent:2em;">
+	你到底能做多少其实别并不关心 而是你能做到什么程度
+</p>
+<p style="text-indent:2em;">
+	每个人都有自己的长短 你擅长的未必感兴趣 你感兴趣的未必能做到最好就是这样
+</p>
+<p style="text-indent:2em;">
+	cnLuu2nd 2013-06-09 14楼
+</p>
+<pre class="prettyprint lang-php">&lt;?php require_once '../header.php'; ?&gt;
+Hello
+&lt;script&gt;
+var $a= '&lt;?php echo htmlentities($_GET["name"]); ?&gt;';
+&lt;/script&gt;
+&lt;?php require_once '../footer.php'; ?&gt;</pre>
+<p style="text-indent:2em;">
+	:
+</p>
+<p style="text-indent:2em;">
+	x.php?name=a’;alert(‘x’);var b=’x
+</p>
+<p style="text-indent:2em;">
+	lxsec (1级) 2013-06-11
+</p>
+<p style="text-indent:2em;">
+	@cnLuu2nd &lt;?php echo htmlentities($_GET["name"], ENT_QUOTES);?&gt;’;
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-13
+</p>
+<p style="text-indent:2em;">
+	@cnLuu2nd 应该增加一些文字说明，尽管我可以猜出部分你的意思，但是我靠猜总归是不靠谱的~_~
+</p>
+<p style="text-indent:2em;">
+	lxsec (1级) 2013-06-11 15楼
+</p>
+<p style="text-indent:2em;">
+	@jiayzhan 对于您说的位置3 http://www.jiayzhan.org 这个字符串
+</p>
+<p style="text-indent:2em;">
+	是只需要URL解码还是需要先HTML再URL
+</p>
+<p style="text-indent:2em;">
+	我目前的理解是
+</p>
+<p style="text-indent:2em;">
+	将JS 和 HTML 分开来看分别对应JS解码和HTML解码，存在URL再进行URL
+</p>
+<p style="text-indent:2em;">
+	如果JS没有对HTML进行DOM操作或者嵌套就视为单独层
+</p>
+<p style="text-indent:2em;">
+	如果存在DOM操作或嵌套。那嵌套可以理解成先HTML再JS
+</p>
+<p style="text-indent:2em;">
+	那DOM也是这样理解吗？
+</p>
+<p style="text-indent:2em;">
+	表述可能不清楚！
+</p>
+<p style="text-indent:2em;">
+	jiayzhan (5级) 硅谷某知名IT企业中国区高级应用安全工程师 2013-06-13
+</p>
+<p style="text-indent:2em;">
+	@lxsec 你说的没错，先HTML再URL，需要注意的是我所说的URL编码，绝不是JS里的URL参数编码，而只是URL本身http://a.b.c/?a=b&amp;c=d的格式的合法性检查。它的敏感字符集与URL参数编码是不一样的。
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">jiayzhan</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-06-20
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/xss/">XSS</a>
+          <a href="https://lcx.cc/tags/%E8%A7%A3%E7%A0%81/">解码</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          <a href="https://lcx.cc/tags/c&#43;&#43;/">C&#43;&#43;</a>
+          <a href="https://lcx.cc/tags/hack/">Hack</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/java/">Java</a>
+          <a href="https://lcx.cc/tags/js/">js</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A0%81/">编码</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E7%A8%8B%E5%B8%88/">工程师</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E4%BC%81%E4%B8%9A/">企业</a>
+          <a href="https://lcx.cc/tags/%E8%AE%A8%E8%AE%BA/">讨论</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E4%B8%AD%E5%9B%BD/">中国</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3609/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">WAF绕过的奇技淫巧</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3607/">
+            <span class="next-text nav-default">XSS解决方案系列之三: 例解过后，再回首您正在维护的产品</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>关于下一代木马的设计理念的讨论 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="关于下一代木马的设计理念的讨论。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="关于下一代木马的设计理念的讨论,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/207/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="关于下一代木马的设计理念的讨论" />
+<meta property="og:description" content="关于下一代木马的设计理念的讨论。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/207/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-06-16T13:13:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-06-16T13:13:00&#43;08:00" />
+
+<meta itemprop="name" content="关于下一代木马的设计理念的讨论">
+<meta itemprop="description" content="关于下一代木马的设计理念的讨论。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-06-16T13:13:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-06-16T13:13:00&#43;08:00" />
+<meta itemprop="wordCount" content="8540">
+<meta itemprop="keywords" content="木马,讨论,Hack,HTTP,IE,IP,Root,Windows,安全,病毒,操作系统,程序,代码,端口,恶意,分析,服务,管理,技术,加密,解密,密码,密钥,模块,软件,沙盒,数据,思路,算法,锁,网络,文件,问题,系统,协议,隐藏,注册表," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="关于下一代木马的设计理念的讨论"/>
+<meta name="twitter:description" content="关于下一代木马的设计理念的讨论。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">关于下一代木马的设计理念的讨论</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-06-16" class="post-time">
+          2010-06-16
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E6%9C%A8%E9%A9%AC/"> 木马 </a>
+            <a href="https://lcx.cc/categories/%E8%AE%A8%E8%AE%BA/"> 讨论 </a>
+            
+          </div>
+        <span class="more-meta"> 约 8540 字 </span>
+          <span class="more-meta"> 预计阅读 18 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>楼主：qszzsq发言···· <br />
+************************************************************************************************************************ <br />
+*&nbsp;&nbsp;&nbsp; 写在前面的话 <br />
+*&nbsp;&nbsp;&nbsp; 几天前，曾经把一部分想法发表在 暗组论坛了 <br />
+*&nbsp;&nbsp;&nbsp; 有幸应冰血之约，来这里好好畅谈一下下一代木马的问题 <br />
+*&nbsp;&nbsp;&nbsp; 文中提到诸多思路，比较邪恶，大家若写出什么恶意的新代码并进行恶意行为，与我无关 <br />
+*&nbsp;&nbsp;&nbsp; 让我们共同的智慧，一起引领下一代木马的发展 <br />
+************************************************************************************************************************ <br />
+&nbsp;&nbsp;&nbsp; 98年的时候，第一次看BO2K代码的时候，体会到远程控制技术将是整个信息安全领域的一个重要支撑技术。再看十几年来 <br />
+，木马的设计、免杀、功能、查杀、拦截、反制等等技术不断推出又不断演进，伴随着漏洞挖掘和利用，木马脱胎于病毒又不同于病毒。历史的车轮是滚来滚去的，说实话，十年来木马设计本身没有大的突破，无非是各种ROOTKIT加入而已，只要拿到木马完整样本，（即使无源码），反木马技术找木马的命门---SO EASY。所谓你消我长，魔道有异。木马要走出新路，必须在设计理念上有新想法。 <br />
+&nbsp;&nbsp;&nbsp; 在下抛个破砖，以我十几年来的体会和积累，说说我自己对下一代木马的设计理念。大家一起交流。其实，设计一个下一代木马，也是为安全提供了新的靶子和研究对象，要不然是不是很无聊：） <br />
+&nbsp;&nbsp;&nbsp; 言归正传，就此问题，我想讲3-5个方面的考虑。 <br />
+一、密码的问题： 我认为：密码，特别是公钥密码，将铸成下一代木马的通信基石。 <br />
+&nbsp;&nbsp;&nbsp; As we all 知道，早期木马是没有加密的，特别是通信过程都是明文传输。其实，现阶段不少木马也是明文传输的，我做过简单的统计，现在1/3的木马是明文通信，1/3是简单线性加密，1/3是分组密码加密。 <br />
+&nbsp;&nbsp;&nbsp; 通信是明文，是非常恐怖的，也是非常不安全的。试想，只要在C段内一个交换机下，该木马所有的通信数据一览无余，通过简单的分析即可澄清木马的协议，这样很方便的进行监控、监管，甚至反制（方法很多，可以进行中间人欺骗，也可以直接劫持等，有机会专门再讲），最起码，能够轻松的还原木马的所有行文、上传、下载等。恐怖吗？ <br />
+&nbsp;&nbsp;&nbsp; 简单的线性加密有很多，最常见的是各种XOR、XOR+FOR循环，也有才用一些替换+置换的早期密码，如凯撒密码等等。这种东西，二战的时候厉害，现在SO EASY，用简单的字符表统计，即可破解。这种简单的线性加密，实现起来简单，代码量很小，貌似加了一道屏障。但是，密码强度太低，破译太简单。 <br />
+&nbsp;&nbsp;&nbsp; 分组密码，采用的越来越多，现在用的多的是DES、AES、TWOFISH、IDEA等，PI使用的CAMELA，这些分组加密算法有一定的加密强度，密钥从64到256BITE不等。 <br />
+&nbsp;&nbsp;&nbsp; 用分组密码就好了吗？？？ <br />
+&nbsp;&nbsp;&nbsp; 我认为不是。第一，木马基本上密码是锁死在程序里面的。一个控制端下的所有植入端，都用一样的，当然有些木马做到了不同的植入端采用不同的密钥。但是密码锁死在程序中是肯定的，这样的话，通过逆向，OD足够。密码就无处遁形，于是中间人欺骗的干活。。。。 <br />
+&nbsp;&nbsp;&nbsp; 第二，密码锁死以后，不能替换，不能更替，没有认证机制。于是谁都可以伪造密码，甚至伪造主控端。这样，你辛辛苦苦的木马资源就成了别的东西了。 <br />
+&nbsp;&nbsp;&nbsp; 因此，我断言：下一代木马必须考虑让公钥木马加入其中。也就是说，下一代木马本身将是一个自主体系的安全系统，有CA来进行密钥管理和分发，大家都在一个大的公钥体系之内（如4096位的RSA体系），每一个植入端都有自己的私钥。这样所有的数据都可以进行认证，并且不可抵赖。即使得到了一个被控端，也无法破解整个木马系统。 <br />
+&nbsp;&nbsp;&nbsp; 呵呵，很像银行系统（只是没有U盾）。没错，下一代木马系统本身就应该是这样自主体系的。并且，应加入群签名机制，设立多层体系的管理机制，一次一密的协商通信密钥。 <br />
+&nbsp;&nbsp;&nbsp; 这样我想还可以实现，多对多的控制。也就是说，在运行的情况下，用同一个木马系统，多个用户可以同时控制所有的木马资源。当然，控制的过程要有权限的设定，对不同的控制者来说是不一样的。 <br />
+&nbsp;&nbsp;&nbsp; 谈了密码的问题，也就是说木马通信加密的问题，下一代远控应该采用公钥+私钥的体系结构。</P>
+<P>二、木马特征的隐藏，将进入全新的时代 <br />
+&nbsp;&nbsp;&nbsp; 第二方面，谈谈下一代木马的特征问题。 <br />
+&nbsp;&nbsp;&nbsp; 所谓特征，分静态特征和动态特征两种。下一代木马应具备颇高的特征异变机制，静非纯静，动非纯动，静动视变，互相联系。 <br />
+&nbsp;&nbsp;&nbsp; 木马静态特征，也就是木马本体在非执行态的特征，主要是木马存储的特征，更直白的说，就是木马在计算机中所有存贮信息（包括木马文件本身）的特征的总和。从木马启动来看，包括注册表、服务项、替换的系统文件、修改的系统SYS等。从木马文件来看，包括木马文件的静态隐藏、文件的自动变形等等。 <br />
+&nbsp;&nbsp; 这些年来，木马静态特征的隐藏方面教十年前还是有进步的，这里我想谈几个新的想法： <br />
+&nbsp;&nbsp; （1）木马文件体从磁盘体走向芯片内部，木马不依赖注册表、服务项等方式启动。 <br />
+&nbsp;&nbsp; （2）木马静态体本身是一个多变的壳，拥有对抗沙盒的能力，木马功能实体在静态时不在本机存贮，需要什么功能就从远程有信任的下载何种功能代码。 <br />
+&nbsp;&nbsp;&nbsp; first,操作系统中可以存贮的地方很多，直观的印象是以文件的形成存在于磁盘中。其实，基于FILE/DISK的ROOTKIT很容易实现驱动层的隐藏。实现的思路有几类：一类是HOOK系统FILE处理函数，过滤掉自己的木马文件，使之“隐藏”。另一类是直接在DISK上创建一个隐蔽的分区，当然这个分区可以是基于标准格式的（如FAT32、NTFS）等，在隐蔽分区中写入木马程序；还可以自定义个分区，且分区的文件格式也是自定义的，这种可以更好的隐蔽，但是需要自己写程序协调DISK镜像和FILE的各类关系，编程方面需要较强的技巧。 <br />
+&nbsp; 下一代木马，一方面应该在磁盘体内进行好的隐蔽，另一方面要走向芯片。这就是所谓的芯片隐藏，或CHIPKIT。已公布实现的思路有两类，一类是隐藏于BIOS（包括主板BIOS和PCI的BIOS，如PCI显卡、声卡等），另一类是通过VT技术，让一部分HOOK代码跑在CPU的Ring-1层，然后再相应的磁盘或BIOS中写入更底层的程序。值得注意的是，埋藏在芯片中的木马，不需要担心其启动的问题，不需要注册表等简陋的其中方式，无须替换系统文件。 <br />
+&nbsp; BIOS级别的恶意代码，在网上其实已经存在，并且被N多人研究过。其实质，是利用WIndows系统的INT13中断，在系统执行前调用刷写在BIOS中的代码，先于系统执行，然后把执行权交给Windows的loader。VT技术也开始逐步成熟，不过真正意义上给予VT的恶意代码发现极少，我想肯定有，但是范围极小。利用CPU支持的VMM指令集，可以设计小型的OS，让这个OS跑在CPU层面，所以说是Ring-1，可以调试、修改任何Windows内部的东西。&nbsp; BIOS+VT，我想将成为下一步木马隐藏的顶级技术。所谓会者不难，主要是思路吧。不晓得我这个想法公布以后，会不会造成一批新型木马的诞生。。。。本人只站在技术的角度进行分析，希望大家别用在邪恶的地方。 <br />
+&nbsp;&nbsp;&nbsp; 说实话，自动变形的修改木马的静态特征码，十几年前的病毒就具备这样的功能。不过将其应用在木马中，也是近5年的事情。下一代木马，自动变形是需要的，而且更“疯狂”。一般意义上的自动变形，是木马本体维护一个加有随机数发生器的一个加密算法，按照作者的要求，每隔一段时间或其他情况下，将木马静态本体进行一次加密，因为每次的KEY不一样，所以每次本体中的静态特征都变化。 <br />
+&nbsp; 这种意义层面的自动变形，无法避免沙盒分析，只要木马执行之后，在内存中始终是完整的。 <br />
+&nbsp; ANTI-SANBOX技术，其实是一个很好玩的东西，怎么反沙盒？关键还是思路的问题。典型的反沙盒，是增加沙盒的难度，不让木马体有效的执行，但是对于完全内存分析--则无法躲避。难度是要增加的，同时要想办法让木马体在内存中也不断的变化，这才是关键。 <br />
+&nbsp; 让木马在内存中变异，方法也有很多。提几个思路吧，别拿去邪恶。 <br />
+&nbsp; 一个典型想法是设计“分段加密解密执行，密钥在畸形的地方存储”。分段加密解密执行，就是木马在执行时，在内存中用到什么内容就解密什么内容，同时将无用的东西去除或加密，始终保持内存中只有当前在用的模块，并且这个模块是不断被加密、解密的。不同的时刻都不一样。并且，密钥特别关键，密钥若得到，就让程序陷入了沙盒分析的汪洋大海中。密钥应该存储在本地畸形的地方，比如沙盒程序无法顺利访问的地方--如自定义的disk空间、BIOS、MBR等。当然，密钥也可以存储在远处，前文提到下一代木马将是公钥体制的，那么木马本体的内容，可以按照插件或内存分段的形式，向远处申请（申请的过程是加密认证的）。这样的话，木马体在内存中始终是不完整的，并且是不断加密的。这样的木马，现有的手段无法分析，---当然用社会工程的方法除外。。。</P>
+<P>三、木马所关系的所用资源，将会进入协作，达成一体化的联合功防 <br />
+&nbsp;&nbsp; go on，谈谈木马的通信协作问题。 <br />
+&nbsp;&nbsp; 我们知道，早期的木马是C-S结构的，Client是控制端，Server是被控制端。Server本身开启port,等待client连接，Client需要准确的知晓被控端的IP并发起连接connet, Server于是accept连接。于是通信渠道建立。 <br />
+&nbsp;&nbsp; 之后的木马，普遍采用端口反弹模式。虽然也是C_S结构，但是 Client是被控端，Server是控制端。一般需要在一个公共的资源上面，表面server的IP地址，比如动态域名、网页空间、FTP空间，甚至EMAIL、BLOG、TWITTER内容等等。被控端从中，解析出Server--也就是主控端的IP，进而主动CONNET。这样，被控端即使在内网中，也能成功连接出来。 <br />
+&nbsp;&nbsp; 细而观之，端口反弹木马，被控端的程序体内，必须封装进去serverIP的信息，一般是动态域名等。凡事经不起推敲，在逆向分析面前，ServerIP往往一览无余，尤其是Cilent端容易被获得，通过简单的虚拟执行，即可准确获得控制端的IP信息。这样，控制者无所遁形。 <br />
+&nbsp;&nbsp; 所以，反查部门或人员，很容易即可准确定位木马的控制者。 <br />
+&nbsp;&nbsp; 大家还敢用木马吗？ <br />
+&nbsp;&nbsp; 有人说，可以“多跳”。是的，可以用VPN、虚拟机、跳板肉机，增加主控端被显形的难度。但是，这些，对于专业的分析者而言，形同虚设。 <br />
+&nbsp;&nbsp; 我认为下一代木马，将不再是C_S结构的木马。木马将广泛采用P2P协议，或者自己定义的类似于P2P协议的模式。所有的木马被控者和主控者，在安全算法的支持下，构成一个互相平等，相互依存的大型P2P网络。其中，每一个节点都可以成为控制端，也同时是可以被别人控制，是否被控制，取决于该木马网络的管理协议。这个协议应该很复杂，我觉得可以再SNMP协议基础上进行修改完善。此外，ANYCAST协议也是可以被考虑进来的，这个协议是当前DNS系统实现“不同地域多个主机，实现同一IP”的协议。下一代木马必将充分吸收此协议的精华，通过维护一个较庞大的可信的P2P网络，让IP地址变幻莫测。 </P>
+<P>四、木马的跨平台执行 <br />
+&nbsp;&nbsp; 还有木马跨平台的问题。 <br />
+&nbsp; 一般意义的跨平台，比如Windows各个平台之间的垮接，很EASY。基本上标准程序编译后问题不大，有ROOTKIT的部分，通过事先的GetVersionEX函数，即可得到WINDOWS的子版本，于是不同的版本区别对待就是了。 <br />
+&nbsp;&nbsp; 我这里说的跨平台，是指所有木马可能生存平台上的垮接。现实中，一部分网马已经实现了多种系统、多种平台下的垮接，如SPY系列的新PHP网马等。那么，实现一个能垮接“WINDOWS+*NIX+各手机系统+网络设备”的马，是完全可能的。 <br />
+&nbsp;&nbsp; 有两种跨平台的思路： <br />
+&nbsp;&nbsp; 一种是基于源代码的，利用不同操作系统对同一类源代码的解析支持。比如，基于脚本语言的木马。这种木马容易实现，但是源代码本身难以进行隐藏，即使可以进行诸多变异和加密，但虚拟执行以后也无所遁形。 <br />
+&nbsp;&nbsp; 另一种是“源代码施放”。也就是说在源代码中封装N多不同针对不同系统的木马小体，先技术源代码执行起来，再判断当前系统版本和软件环境，再施放不同的木马执行小体。 <br />
+&nbsp;&nbsp; 说实话，木马本身的话，有执行权限即可。木马的核心，在于通信协议。只要不同的木马小体采用同样的通信协议进行编制，就OK了。 </P>
+<P>&nbsp;&nbsp; 稍微总结一下。 <br />
+&nbsp;&nbsp; 我觉得，下一代木马系统由主控端群、被控端群和服务中心三部分组成。每一个主控端都可实现对所有被控端的安全控守，所有主控端、被控端都满足PKI体系，服务中心是PKI体系的密钥管理和安全管理中心，并且所有主控端、被控端一起构成一个互相连通互为依托的僵尸型网络，可达成一体化联合攻防效能。 <br />
+&nbsp;&nbsp; 服务中心：生成并分发所有的公钥、私钥，为所有主控端、被控端管理维护公钥信息供其查询。维护主控端群和被控端群组建的僵尸型木马网络，为被控端回联、信息回传提供解析向导，维护整个网络的控守，也发布各种复杂的联合攻防指令。 <br />
+&nbsp;&nbsp;&nbsp; 主控端群：每一个主控端都将自己的私钥，每一个主控端都可以控制所有被控端，主控与被控之间的通信采用定期一次一密方式，每次都用RSA算法协商一次通信密钥，然后用分组算法进行分组数据加密传输。主控端控制任一个被控端，都要经过服务中心的许可，在服务中心的调配下进行。 <br />
+&nbsp;&nbsp;&nbsp; 被控端群：在服务中心的调配下，每一个被控端都可受控于任一主控端，进行直接的控制取情。被控端本身进行自动文件搜集等行为，他们之间也进行必要的信息均衡，一个被控端！！ <br />
+10多年来，大家都木马的看法很单一，也较片面，集中在几个方面 <br />
+（1）是否免杀，过主防 <br />
+（2）是否能回联 <br />
+（3）功能是否够 <br />
+其实这些话题，很古老，很头疼，也很实际 <br />
+说实话，我觉得应该从木马是什么、怎么用、怎么好用等角度，重新审视木马。 <br />
+特别，在木马的设计结构上来一次彻底的革新和变化。只有新的理念，才能促进木马迈向新时代，才能推动新的需求，引领新的攻击模式，也促进安全防御技术的跟进。 <br />
+木马， 远远不仅仅是一个简单的原创控制程序木马，早该重新被审视为艺术，这门艺术已经呆滞了很多年了。。。。 <br />
+&nbsp; <br />
+二楼：zhuwg发言···· <br />
+&nbsp; <br />
+膜拜森哥大牛 <br />
+密码方面，俺不评价，因为俺是认为过分的加密是为了这点安全牺牲了很多效率，再说也没有“真正”靠得住的加密，作为一个木马，用不着向网银看齐 哈哈 <br />
+不过我对算法和加密不了解，牛人来评判把</P>
+<P>木马特征的隐藏，这个有不少成品的了，biosrk和vt的相关产品都有了，至于根植于之上和各种应用就看你自己怎么去用的，都有现成的模型可以使用</P>
+<P>多态变形，反虚拟机，虽然俺不懂，不过某牛人说很easy的。。这儿略过不提。。。</P>
+<P>木马将广泛采用P2P协议，貌似现在有成品了，只是不知道是不是楼主也搞了搞呵，本人不懂网络协议，细节部分，找老张吧</P>
+<P>跨平台之类的，貌似现在需要windows+linux都支持的情形不多，老张很精通的</P>
+<P>其实楼主所谓的“10多年来，大家都木马的看法很单一，”，重要原因就是 <br />
+很多小hacker只关心了抓肉鸡，刷点流量什么的，相应的木马作者也是 <br />
+迎合着这种需求 <br />
+楼主的这种真正的木马（高精尖的需要）为数不多，主要目的就是要实现 <br />
+这种－－间谍的功能，，换言之，拿走资料，全身而退，由于没什么需要， <br />
+一些产品也就不为人知了，其实还是有不少的呵 <br />
+&nbsp; <br />
+三楼：张予帅发言···· <br />
+&nbsp; <br />
+首先要先膜拜一下 森哥 和 猪娃哥 两位大牛!!! <br />
+对于"1.密码的问题"我也是个超级大菜鸟,故要等大牛来; <br />
+"2. 木马特征的隐藏" 这个问题, 猪娃牛哥和其他一些大牛非常专业, 小弟不敢多言; <br />
+那么就"网络协议"和"跨平台"这两个方面,小弟斗胆说几句.</P>
+<P>(1) 不管是早期的C/S模式,还是端口反弹模式,协议的本质是一样的,都是以IP协议为基础来设计应用层协议,而"多跳"也无非就是多了几次转发,所以我比较认同森哥的说法,下一代的马将广泛采用P2P或者类似的协议,但是P2P协议是在资源统一的基础上才能达到比较好的效果,对于木马来说,每个点的数据需要传输的数据不一致,所以采用P2P协议还存在一定的问题, 具体的实现也有一定难度, 对于被控者和主控者的选择问题,还要考虑到以后的木马设计的架构;</P>
+<P>(2) 对于跨平台来说,我个人认为,可以和芯片隐藏技术联系起来,BIOS中的代码首先获得执行权,然后可以根据boot loader的类型来判断用户的操作系统类型,然后把控制权交给系统的同时,释放该平台上的可执行代码,从而达到跨平台的目的. 当然具体的实现是复杂的,还要对多系统引导做相关的处理,而且被控端还得包含多个平台的可执行代码等许多问题; <br />
+呵呵,小弟的见解可能有误,请大牛们指出~~~ <br />
+&nbsp; <br />
+四楼：mika发言···· <br />
+&nbsp; <br />
+首先膜拜下，现在高人真是多。楼主几乎把能涉及的面都说到了，而且都说到了点子上，实在是没得说了。其实这种东西无论咋变，无外乎隐蔽性，稳定性，通用性这三个方面。而且这三个方面都是相互关联的，BOOTKIT也好CHIPKIT也罢，涉及到底层越深，稳定性和通用性就越难,vice versa.不过隐蔽性这个东西关系到木马的成活率的高低或者说生命期的长短，说白了，其他的东西做得再好，隐蔽性如果达不到相应的等级，也是一匹脑残马。其实通讯不仅仅要加密，更要隐藏,最起码能躲过本机的sniffer。偶碰到过N会了，MBR马还是BIOS马都照样被发现，不是别的就是人家闲着没事就wireshark一下，虽然数据是加密了，但是人家只要感觉这个东西不对劲了这个马也就死了。因此本机通讯隐藏也是个老长的话题了，呵呵从长计议啊。 <br />
+看了这个文章，想说点嘛，就找了这么个脑残的话题发表下个人想法，高人路过别扔砖头就好。最后，再次膜拜下！ <br />
+&nbsp; <br />
+五楼：jo_dy发言···· <br />
+&nbsp; <br />
+仰望森哥大牛和zhuwg大哥 <br />
+一下纯属于，俺这个成年小屁孩乱说的。 <br />
+下一代木马应具备颇高的特征异变机制，静非纯静，动非纯动，静动视变，互相联系。我可以认为是“双向”互调法吗?.。。。 <br />
+Zhuwg大哥说加密的方面，如果采用加密的话，那么木马的安全性或者，大大折扣是吧。（我是说“如果”啊），按照这样说法，木马不加密，和谈，新一代的木马，我坚信着，木马采用加密方式，是新一代的木马一个特点，至于加密方面，（先加后解吧个人乱想的，可以54）我想的，只是很多人不愿公考罢了。木马采用P2P协议，是有成品的。至于跨平台之类的，我个人认为，随着不同的系统推出，新一代的木马，必须要跨平台，甚至跨更多的平台。森哥和zhuwg大哥说的“10多年来，大家都木马的看法很单一”我个人理解了一下，如果说，10年前的木马小孩的话，那么新一代的木马就是，小孩的爸爸了，Zhuwg大哥词疑“重要原因就是很多小hacker只关心了抓肉鸡，刷点流量什么的，相应的木马作者也是迎合着这种需求”那么那些“很多小hacker”随着时间成长的话，那他们的需要是不是也随着时间跟着成长呢？就像10年前的木马跟着小孩一起随着时间的移动，10年的后，新一代木马是不是也要提升呢？。 <br />
+如果老是停留在10年前的木马，就应该绝种了。。 <br />
+&nbsp; <br />
+六楼：qszzsq发言···· <br />
+&nbsp; <br />
+大家讨论的很好：）看得出，都是写马、用马、御马之能人啊。 <br />
+&nbsp; 诚如大家所言，把之上的想法毕其功于一役，用一个木马实现之，工程量很大，调试量绝非一日之功。 <br />
+&nbsp; 我觉得，在程序开发方面，只要有决心，还是有希望实现的，就如同PI木马出现之前，很难想象有人会用ＳＨＥＬＬＣＯＤＥ模式写综合性的木马，结果ＰＩ达到了，而且很成功，自ＰＩ之后，模仿ＰＩ者甚多，基于ＳＨＥＬＬＣＯＤＥ的木马代码开发也成为当今木马开发者不得不学习和掌握的技术。 <br />
+　记得０５年ＢＬＡＣＫＨＡＴ会议上的一篇BIOS－PCIkit的论文，引起轩然大波。不过，在众多质疑声中，即3个月，我就有幸从国外朋友那看到了当时最强大的ROOTKIT，如今想来，依然赞叹。 <br />
+&nbsp; 甚至于，我想，下一代木马会成为一个具有 智能自动化模块的东西-----类似于metasploit的架子，重要的功能模块，插件化、SHELLCOED化。。。。。 <br />
+&nbsp; 越想越是一个庞大的系统工程啊------------ <br />
+&nbsp; 数年前，曾仿照metasploit做过一个简单的小型恶意代码生成软件，其中之艰辛，N多夜晚啊。。。不过，现在想起来，那也不算什么，只是验证了一个想法而已 <br />
+&nbsp; 做这样的东西，一个人肯定不行。需要用软件工程的办法，集大家之能，汇百家之长。 <br />
+&nbsp; <br />
+十楼：asm发言···· <br />
+&nbsp; <br />
+首先膜拜一下大牛</P>
+<P>在通信方面，下一代木马不管怎么样，只要往外发送数据包，sniffer一下是可以看得出来的~因此说哪怕加密再牛B，还不如直接设置木马的回连时间~~加密只是一个形式罢了~</P>
+<P>隐蔽性方面，越往底边，越是脱离系统，通用性实用性越差~~所以什么MBR马还是BIOS马都根本没必要搞那么深，只需要pass目前流行的ark工具即可~目前的危险始终来自这些ark工具是否被管理员使用进而发现木马~</P>
+<P>好的木马应该被这样定义：具有阶段性的回连，跟管理员玩几率，我一个礼拜当中就只有礼拜天的下午5点回连，而下一次回连时间又在礼拜二晚上8点~管理员也是要有假期的~；具有绕过流行ark的扫描~</P>
+<P>具备以上两点足以~~我土鸡，只能发表一些幼稚看法~~~ <br />
+&nbsp; <br />
+本文来源：<A href="http://forum.eviloctal.com/thread-41069-1-1.html">http://forum.eviloctal.com/thread-41069-1-1.html</A> <br />
+本文来源于Ｅｖｉｌ的博客<A href="http://www.evilhk.com/">http://www.evilhk.com/</A> , 原文地址：<A href="http://www.evilhk.com/cat_7/319/">http://www.evilhk.com/cat_7/319/</A> </P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-06-16
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+          <a href="https://lcx.cc/tags/%E8%AE%A8%E8%AE%BA/">讨论</a>
+          <a href="https://lcx.cc/tags/hack/">Hack</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/root/">Root</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E7%97%85%E6%AF%92/">病毒</a>
+          <a href="https://lcx.cc/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+          <a href="https://lcx.cc/tags/%E6%81%B6%E6%84%8F/">恶意</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+          <a href="https://lcx.cc/tags/%E8%A7%A3%E5%AF%86/">解密</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E9%92%A5/">密钥</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E5%9D%97/">模块</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E6%B2%99%E7%9B%92/">沙盒</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%80%9D%E8%B7%AF/">思路</a>
+          <a href="https://lcx.cc/tags/%E7%AE%97%E6%B3%95/">算法</a>
+          <a href="https://lcx.cc/tags/%E9%94%81/">锁</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          <a href="https://lcx.cc/tags/%E9%9A%90%E8%97%8F/">隐藏</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%86%8C%E8%A1%A8/">注册表</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/208/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">非诚勿扰这种垃圾节目终于倒闭了</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/206/">
+            <span class="next-text nav-default">【琐事】今天是端午节</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>扔掉工具跟我一起学ASP手工注入! - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="扔掉工具跟我一起学ASP手工注入!。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="扔掉工具跟我一起学ASP手工注入!,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/165/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="扔掉工具跟我一起学ASP手工注入!" />
+<meta property="og:description" content="扔掉工具跟我一起学ASP手工注入!。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/165/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-06-05T13:29:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-06-05T13:29:00&#43;08:00" />
+
+<meta itemprop="name" content="扔掉工具跟我一起学ASP手工注入!">
+<meta itemprop="description" content="扔掉工具跟我一起学ASP手工注入!。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-06-05T13:29:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-06-05T13:29:00&#43;08:00" />
+<meta itemprop="wordCount" content="11978">
+<meta itemprop="keywords" content="ASP,工具,注入,Ascii,exe,Hack,HTTP,IE,mssql,SQL,Windows,测试,查询,程序,分析,服务,服务器,管理,函数,检测,脚本,漏洞,论坛,苹果,入侵,数据,数据库,网页,网站,文件,问题,系统," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="扔掉工具跟我一起学ASP手工注入!"/>
+<meta name="twitter:description" content="扔掉工具跟我一起学ASP手工注入!。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">扔掉工具跟我一起学ASP手工注入!</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-06-05" class="post-time">
+          2010-06-05
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/asp/"> ASP </a>
+            <a href="https://lcx.cc/categories/%E5%B7%A5%E5%85%B7/"> 工具 </a>
+            <a href="https://lcx.cc/categories/%E6%B3%A8%E5%85%A5/"> 注入 </a>
+            
+          </div>
+        <span class="more-meta"> 约 11978 字 </span>
+          <span class="more-meta"> 预计阅读 24 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>扔掉工具 跟我一起学ASP手工注入!&nbsp;&nbsp;&nbsp; </P>
+<P>前言： <br />
+&nbsp;&nbsp;&nbsp; 现在的网络，脚本入侵十分的流行，而脚本注入漏洞更是风靡黑客界。不管是老鸟还是新起步的小菜，都会为它那巨大的威力和灵活多变的招式所着迷！ <br />
+&nbsp;&nbsp;&nbsp; 正是因为注入攻击的流行，使的市面上的注入工具层出不穷！比较出名的有小竹的NBSI、教主的HDSI和啊D的注入工具等等！这大大方便的小菜们掌握注入漏洞！可是，工具是死的，注入的手法却是活的，能否根据实际情况灵活地构造SQL注入语句，得到自己想要的信息，是高手与小菜的根本区别！只用工具，而不去管它的原理，是不可能得到提高的，当然，在遇到一些特殊情况的时候，那些只会用工具的小菜们也只能放弃了！所以学会手工注入自己构造SQL注入语句是一个黑客爱好者必上的一堂课！我希望这篇文章能够给那些还不会手工注入的朋友一点启发！帮助大家早日摆脱工具，早日踏入高手的行列！ <br />
+恶补基础： <br />
+&nbsp;&nbsp;&nbsp; 要想学会手工注入，有一个名词是不得不提的，那就是数据库系统！ <br />
+1。简介  <br />
+&nbsp;&nbsp;&nbsp; 数据库系统分为数据库和数据库管理系统！数据库是存放数据的地方，数据库管理系统则是管理数据库的软件！数据库中数据的存储节构叫数据模型！有四种常见的数据模型，分别是层次模型、网状模型、关系模型和面向对象模型。其中关系数据模型是最主要的数据模型，ACCESS、MSSQL、ORACLE等都是关系模型数据库系统。其中以ACCESS、MSSQL数据库系统最为常见！这些都是理论的知识，希望大家理解！ <br />
+2。基本概念 <br />
+&nbsp;&nbsp;&nbsp; 表：表是一个关系数据库的基本组成元素！它按行与列组合排列成相关信息。通常行称为记录，列称为域。每个域称为一个字段！每一条记录都由多个字段组成。每个字段的名字叫做字段名，每个字段的值叫估字段值。表中的每一行即每一条记录都拥有相同的结构！ <br />
+3。注入的条件 <br />
+&nbsp;&nbsp;&nbsp; 只有调用数据库的动态页面才有可有存在注入漏洞，动态页面包括asp php jsp cgi等。本文只讲对ASP页面的注入。那什么是调用数据库的页面呢？比如这样的形势： <br />
+asp?id= php?id=&nbsp;&nbsp; 这样的样子的都是调用数据库的页面。"?"后面加的id的名字叫变量，注意这个变量是可以随便换的，"="号后面的值名字叫参数！这个参数也是可以变的！大家的思路一定要灵活，要学会举一反三，不要太死板！ <br />
+4。注入漏洞的原理分析： <br />
+&nbsp;&nbsp;&nbsp; 程序对用户提交的变量没有进行有效的过滤，就直接带入查询语句中，这样，我们就可以提交具有数据查询功能的语句，加入到程序将要提交的信息中去，再根据服务器返回的信息来判断数据库里的内容！光这样说大家可能不太好理解，不要紧，接着往下看。</P>
+<P> <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 有关的基础已经讲完了 下面开始实战练习部分！ <br />
+实战部分 <br />
+&nbsp;&nbsp; 如果是刚刚接触注入的新手朋友，我们要做的第一步就是，用鼠标右键点击桌面上的IE图标，再点属性，然后再点“高级”，然后往下拉滚动条，找到“显示友好HTTP错误信息”，把前面的勾去掉，再点“确定”，这样做是为了让我们得到更多的服务器返回的信息！ <br />
+第一部分：ACCESS数据库手工注入 <br />
+1。判断是否存在注入漏洞： <br />
+&nbsp;&nbsp;&nbsp; 这个相信大家都应该知道！ 就是在一个调用数据库的网址后面加上分别加上 and 1=1和 and 1=2 ，如果加入and 1=1返回正常（就是和原来没有加 and 1=1时页面样子的一样)，而加入 and 1=2返回错误（和原来没有加 and 1=2时页面的样子不一样），就可以证明这个页面存在注入漏洞。比如： <br />
+<A href="http://www.xxx.com/a.asp?id=7">http://www.xxx.com/a.asp?id=7</A>，这个网页，我们在后面加上 and 1=1(两个空格，and前面一个，and和1=1之间一个！)，网址就变成了 <br />
+<A href="http://www.xxx.com/a.asp?id=7">http://www.xxx.com/a.asp?id=7</A> and 1=1，用IE打开这个网页，返回正常！再尝试在后面加上and 1=2，网址就变成了 <br />
+<A href="http://www.xxx.com/a.asp?id=7">http://www.xxx.com/a.asp?id=7</A> and 1=2，同样用IE打开这个网页，返回错误！这就说明这个网页<A href="http://www.xxx.com/a.asp?id=7">http://www.xxx.com/a.asp?id=7</A>存在注入漏洞，是一个注入点！（存在注入漏洞的网页叫注入点！）可是，并不是所有的页面都可以这样判断，有的页面不管你加入 and 1=1 还是 and 1=2，返回的都是错误的页面，难道这样的页面就没有注入漏洞吗？不一定！比如这个页面：<A href="http://www.xxxxxx.com/b.asp?id=ade7">http://www.xxxxxx.com/b.asp?id=ade7</A>, 不管我们在后面上的是and 1=1还是and 1=2，它都返回错误的页面！这个时候我们就要尝试用另一种方法来测试漏洞了，这种方法可以说是and 1=1和and 1=2的变种方法。原来的网址是这样的：<A href="http://www.xxxxxx.com/b.asp?id=ade7">http://www.xxxxxx.com/b.asp?id=ade7</A>，现在我们把它变成这个样子：<A href="http://www.xxxxxx.com/b.asp?id=ade7'">http://www.xxxxxx.com/b.asp?id=ade7'</A> and '1'='1 ，用IE打开它，看看返回正不正常！如果正常，那就可以接着用这个地址来进一步测试漏洞是否存在（如果返回不正常那这个页面就很有可能不存在注入漏洞！）：<A href="http://www.xxxxxx.com/b.asp?id=ade7'">http://www.xxxxxx.com/b.asp?id=ade7'</A> and '1'='2 ，用IE打开这个网址，如果返回错误的话，那这个网址<A href="http://www.xxxxxx.com/b.asp?id=1">http://www.xxxxxx.com/b.asp?id=1</A>就存在注入漏洞！ <br />
+&nbsp;&nbsp;  <br />
+&nbsp;&nbsp; A。数字型参数注入点分析！ <br />
+&nbsp;&nbsp; 这时肯定有朋友要问了，为什么用一开始那种and 1=1 and 1=2不行呢！呵呵，先不要急，先看看这两个存在注入漏洞的页面有什么不一样？ <br />
+（你不要告诉偶第二个网址比第一个网址多了几个X），相信大家已经看到了，第二个网址后跟的参数是ade7，是字符！而第一个网址后跟的参数是7，是数字！就是因为这里，才引起了测试漏洞的语句的不同！学过数据库的朋友们应该知道，在查询中，字符型的值，是要用单引号包起来的，也就是这个样子'字符型数据'。这里假设第一个注入页面所对应的查询语句是这样的（凡是调用数据库的页面都会有一条或者几条对应的查询语句，用来对数据库里的内容进行查询！） <br />
+:select * from 表名 where id=7。这是原来的那条查询语句，这条语句是正确的，可以在数据库中查询出相应的内容！可是如果我们在网址后面加上了 and 1=1，那这条查询语句就会变成select * from 表名 where id=7 and 1=1(这下知道了注入漏洞原理分析那里讲的变量没有过滤的意思了吧！），这里有必要说一些数据库的有关知识，这条语句里，and是逻辑运算符！（这个记住就行了），用中文翻译过来就是“和”的意思！在高中的数学里讲过，用“和”来连接的两个句子，必须都是真的，不然整个句子就不是真的！比如：苹果和大象都是水果。这句话就是错的，苹果是水果，可是大象不是！这下大家应该可以理解“用“和”来连接的两个句子，必须都是真的，不然整个句子就不是真的”这句话了吧。如果换成苹果和梨都是水果，那这句话就是对的。知道了and的用处后，再回来看select * from 表名 where id=7 and 1=1这个句子，and 前面的select * from 表名 where id=7肯定是对的，（为什么呢，如果这条查询语句都不对，那这个注入页而就有问题了！所以and前面的那个句子一定是对的！）。再看and后面，1=1，不用我说了吧，也是对的（难道一不等于一吗？）根据刚才说的and用处，现在我们可以判定select * from 表名 where id=7 and 1=1这条查询语句，仍然是对的！所以它还是可以正确地从数据库里查询出信息，返回给我们！ <br />
+&nbsp;&nbsp;&nbsp; 举一反三，那这个句子：select * from 表名 where id=7 and 1=2，肯定是不对的了，那这条查询语句就不能正确地从数据库里查询出信息，所以我们就会看到一个错误的页面！ 以上是注入点参数是int(整数型）时的分析！ <br />
+&nbsp;&nbsp;  <br />
+&nbsp;&nbsp; B。字符型参数注入点分析 <br />
+&nbsp;&nbsp; 和刚才一样，我们先来看第二个字符型注入页面里的查询语句，比如是这个select * from 表 where id='ade7'(为什么加引号？看前面吧！)。原来的查询语句是这个样子的，如果我们还按照数字型参数的那种测试漏洞的方法的话，语句就会变成这样：select * from 表 where id='ade7 and 1=1'和 <br />
+select * from 表 where id='ade7 and 1=2' ，因为程序会自动查询引号里的内容，如果我们按前面这两个语句这样提交的话，程序就会查询id值为ade7 and 1=1和ade7 and 1=2的记录，这样是查不到结果的（你可不要告诉我数据库里正好有两个记录的id就是ade7 and 1=1 和and 1=2）。这里可能有朋友要问了，为什么不是查询id为'ade7,然后and 1='1呢？好，我现在回答你们，就算可以查询id值为'ade7的记录，那这个句子也是错的，1怎么会等于'1呢？对吧？更何况程序是不可能查询'ade7的，更准备的说是数据库中不可能有一个字段的值是'ade7，因为这个字符串少一个引号，如果直接把这个字符串存入数据库的话，程序会报错的！怎么样？明白了吧？现在再说用 ' and '1'='1和' and '1'='2来测试的的原理！同样是这个查询语句：  <br />
+select * from 表 where id='ade7'，如果我们在网址后面加了' and '1'='1，那这个查询语句就会变成 <br />
+select * from 表 where id='ade7' and '1'='1'(这里最外面的那一层引号是程序自动加上的)，变成这个样子！这个语句对不对呢？我们分析一下。如果我们提交个语句，那程序就会自动查询id值是ade7的记录！因为这个记录是存在的（不存在的话那就是这个网页有问题了！），然and后面跟的'1'='1'是正确的，所以这个语句是正确的！如果我们把' and '1'='1换成' and '1'='2，那语句就成了select * from 表 where id='ade7' and '1'='2'，只看后面我们就可以知道这个语句对不对了！'1'怎么可能等于'2'呢？是吧？好了，字符型参数的注入点的原理就介绍到这里！ <br />
+2。数据库类型的判断 <br />
+&nbsp;&nbsp; 在确定了一个地址是注入点后，我们首先要判断这个注入点所连接的数据库的类型！这里介绍几种简单的方法。如果一种判断不出来就再换另一种判断方法！ <br />
+A。在注入点后直接加上单引号。有的时候我们可以根据服务器报错的信息来判断它用的是什么数据库。如图2！通过这个错误信息我们可以看出来这个注入点所连接的数据库的类型是ACCESS，为什么呢，仔细看！它说的是Microsoft JET Database Engine 錯誤 '80040e14' ，说明是通过JET引擎连接数据库，而不是ODBC！如果是用JET方法连接的话就说明用的是ACCESS数据库，如果是ODBC的话就说明数据库是MSSQL！这个记住就行了。其实还有详细的错误信息，它直接把数据库的类型告诉你了！因为我没有找到这样的注入点，这里就截不了图了。大家遇的到话肯定一眼就可以看出来！ <br />
+B。在注入点后加上（注意，你先确定了它是注入点后再加，不是注入点你加了也没用！)： ;--（一个分号，两个横线！）比如这个网址 <br />
+<A href="http://www.xxxxxxxx.com/article/as.asp?id=875">http://www.xxxxxxxx.com/article/as.asp?id=875</A>，我们事先已经确定了它是注入点了， 这样的话我们就可以在后面加上;--让它变成 <br />
+<A href="http://www.xxxxxxxx.com/article/as.asp?id=875">http://www.xxxxxxxx.com/article/as.asp?id=875</A>;-- 提交这个网址，如果页面返回正常的话，说明数据库是MSSQL。因为在MSSQL数据库里，；和--都是存在的，";" 用来分离两个语句，而"--"就是注释符，在它后面的语句都不执行！而ACCESS数据库里没有！所以如果是ACCESS的数据库，当你在注入地址 <br />
+后面加上";--"的话那程序就会把";--"当成参数的一部分，这样查询就会出错！如果错误，那基本上可以肯定是ACCESS了（因为网上用这两种数据库的网站最多！） <br />
+C。用以上方法都判断不出来的话，那可以用这一招！利用ACCESS和MSSQL数据库的差异来进行判断！要用到两个查询语句！同样，如果注入点是<A href="http://www.xxxxxxxx.com/article/as.asp?id=875">http://www.xxxxxxxx.com/article/as.asp?id=875</A>，那我们在后面加上 and exists (select count(*) from sysobjects),那么地址就变成了 <br />
+<A href="http://www.xxxxxxxx.com/article/as.asp?id=875">http://www.xxxxxxxx.com/article/as.asp?id=875</A> and exists (select count(*) from sysobjects)。如果页面正常返回，那就可以证明数据库是MSSQL的。我来解释一下这个语句：这个句子的意思是查询sysobjects表里的记录数大于0！（有点别扭！）如果返回正常，说明大于0，也就说明存在sysobjects这个表，因为这个表只有MSSQL数据库里才有，所以可以确定数据库的MSSQL的！如果返回错误，那就不是！那我们怎么用查询语句来判断数据库是不是ACCESS的呢！别急，往下看！我们在注入点后加上 and exists (select count(*) from msysobjects)。就成了 <br />
+<A href="http://www.xxxxxxxx.com/article/as.asp?id=875">http://www.xxxxxxxx.com/article/as.asp?id=875</A> and exists (select count(*) from msysobjects)，按刚才理解MSSQL数据库的方法去理解这条语句！这里要注意，提交这个语句是不会返回正常页面的！就算是ACCESS数据库也不会返回正常的页面！因为默认情况下，我们是没有权限查询这个表里的数据的！不过WEB会提示我们 “记录无法读取;'msysobjects'没有读取权限”！如果返回的是这个错误信息的话，那就证明是ACCESS数据库了！如图3！简单地来说就是两条查询语句： <br />
+and exists (select count(*) from sysobjects) <br />
+and exists (select count(*) from msysobjects) <br />
+如果第一条返回正常，那就是MSSQL数据库，如果两条都不正常，那就是ACCESS数据库了（这里只讨论MSSQL和ACCESS) <br />
+注意：上面讲的全是参数是int的时候的检测方法，如果参数是字符型的，那就先要在参数后面加上单引号，然后再在查询语句最后加上";--" <br />
+3。猜表、字段名、检测记录数、检测字段长度。 <br />
+&nbsp;&nbsp;&nbsp; 我按照工具注入的流程给大家讲！ <br />
+A。猜表！ <br />
+&nbsp;&nbsp;&nbsp; 用到的语句：and exists (select count(*) from 你要猜的表名) 。在注入点后加上这句话，如果返回正常，说明你猜的表是存在的！比如 <br />
+<A href="http://www.xxxxxxxx.com/article/as.asp?id=875">http://www.xxxxxxxx.com/article/as.asp?id=875</A> and exists (select count(*) from admin)，如果返回正常，说明admin这张表存在！如果返回错误，就说明不存在！。别的表也都是这么猜！ <br />
+B。猜列！ <br />
+&nbsp;&nbsp;&nbsp; 用到的语句：and (select count(列名) from 猜到的表名)&gt;0 。在注入点后加上这句话，如果返回正常，说明你猜的列是存在的！比如 <br />
+<A href="http://www.xxxxxxxx.com/article/as.asp?id=875">http://www.xxxxxxxx.com/article/as.asp?id=875</A> and (select count(username) from admin)&gt;0，如果返回正常，那username这个列就存在！不过首先要确定from后面跟的表名要是存在的哦！不然你怎么猜都是错的！ <br />
+C。检测记录数 <br />
+&nbsp;&nbsp; 用到的语句：and (select count(*) from 猜到的表名)&gt;X （X是个数字）。在注入点后加上这句话，并不停地变换X这个数字，直到猜到准确的记录数为止！比如<A href="http://www.xxxxxxxx.com/article/as.asp?id=875">http://www.xxxxxxxx.com/article/as.asp?id=875</A> and (select count(*) from admin)&gt;2 ，这个句子是猜admin表里有几条记录的，也就是有几个管理员（因为一个管理员对应一条记录嘛！）。如果返回正常，说明admin这张表里的记录数大于2。这个时候我们把2改成别的大一点的数！比如5，如果返回错误，说明管理员的个数在2和5之间，2和5之间的整数是3和4，这个时候我们变换语句为<A href="http://www.xxxxxxxx.com/article/as.asp?id=875">http://www.xxxxxxxx.com/article/as.asp?id=875</A> and (select count(*) from admin)=3或者=4，哪个返回正常那管理员的个数就是哪个。如果提交&gt;5还返回错误，那就再取一个更大的数，再重复刚才的动作就可以猜到记录数！ <br />
+D。检测字段长度 <br />
+&nbsp;&nbsp;&nbsp; 用到的语句：and (select top 1 len(列) from 表)&gt;X (X和刚才一样！)。我来解释一下这个句子，select top 1是查询第一条数据的意思！（在WEB环境下不支持多行回显！只是一次查询的数据不能超过一行！）,len是MSSQL里的一个函数，用法是len(),（）里可以是字符串也可以是表达式也可以是列名！知道这些，大家应该可以看懂了吧！后面那个X的变换方法上面的一样！</P>
+<P> <br />
+4。猜解列的值！ <br />
+&nbsp;&nbsp;&nbsp; 这是重点了，相信大家看到这里也会激动起来吧？好，费话不多说，现在我就教大家怎么来猜！用到的语句是 <br />
+and (select top 1 asc(mid(列,X,1)) from 表)&gt;N，这个句子里的N和X都是数字！先来给大家讲一下这个语句中用到的两个函数！第一个就是asc(),这个函数是用来得到()里的字符串的ASCII码。什么 是ASCII码呢？计算机内部采用二进制的方式计数，那么它为什么又能识别十进制数和各种字符、图形呢？其实，不论是数值数据还是文字、图形等，在计算机内部都采用了一种编码标准。通过编码标准可以把它转换成二进制数来进行处理，计算机将这些信息处理完毕再转换成可视的信息显示出来。常用的字符代码是ASCII码，它原来是美国的国家标准，1967年被定为国际标准。 这是我从网上找的，因为我也不知道怎么跟大家说，大家知道一下就行了，能理解更好！简单地说任何字符都可以用数字来表示，这个数字就是这个字符所对应的ASCII码。（不知道对不对，我是这么理解的）！比如a所对应的ASCII码就是97,好了，这个明白了，下面再看另一个函数：mid(字符串,A,N) ，这个函数是用来截取()里字符串从第A个长度起往后截取N个字符！比如吧，mid(username,2,3)，这个小句子的意思呢，就是从username的第二位截取3个字符！截取完后也就是ser了！明白了吧！注意，我们在注入的时候用这个函数的时候都是这么用的！mid(列,A,1)，最后面那个数字是1，为什么呢！因为asc()这个函数一下就只把一个字符转换成ASCII码，所以我们用mid()函数来截取列值的时候只截取一位！函数介绍到这里！大家看完这两个函数后应该就可以看明白上面那个句子的意思了吧。就是：（再讲一下SQL语句是有运算先后顺序的，就好像数学一样，先算乘除，后算加减，不过如果加了括号就先算括号里的，SQL也是这样归定的！）先用mid函数截取出从第X位开始往后一位的字符（注，包括第X位，其实说白了就是截取第X位的字符）！然后再用asc()函数来得到这个字符的ASCII码，前面的select top 1前面已经讲过了。from 表 就更不用说了！那个&gt;X呢，就像刚才猜列值长度一样，用来猜所截获的字符的ASCII码的大小的！光这么说可能有的朋友还是不懂，所以我打算做一下教程出来。不过时间可能慢点！用这个句子就可以把列值的第一位的ASCII码猜出来：select top 1 asc(mid(username,1,1) from admin)&gt;N <br />
+就这样把username列值的第一位猜出来！如果要猜第二位怎么办呢，很简单，把mid(username,1,1)改成mid(username,2,1)就可以了，刚才我们不是已经用上面讲过的猜列值长度的句子把长度猜出来了么，那如果一个列值的长度是7 我们就一直改变到mid(username,7,1)就可以把值全部猜出来！如果想猜别的列就把username改成别的列的名字！对了，现在说一下，在注入过程中，会有一些特殊的情况！这些情况以后再给大家讲。再说一点，我以后用的例子都是参数是数字型 的注入点！如果是字符型的，就按我前面说的方法稍微把语句改动一下就可以了！ <br />
+5。懒人的绝招！union联合查询！ <br />
+&nbsp;&nbsp;&nbsp; 怎么样，看完刚才猜列值的语句，是不是觉得很麻烦啊！呵呵，现在我来教大家一种快速度得到列值的方法！不过这种方法有一定的局限性，不是在哪里都可以用的！至于是什么局限性，那就是我问大家的问题了。呵呵，我也不知道哎~我去网上查过N多资料去过N多论坛问过，郁闷，都没人回答，所以，知道的朋友一定要告诉我啊！好了，进入正题！ <br />
+&nbsp;&nbsp;&nbsp; 先简单地介绍一下union,这个也是数据库里的一个小知识了。所以，劝大家去学学数据库，对脚本入侵很有帮助的！！union是用来把两个查询语句联合起来的，所以用union的语句我都叫它联合查询语句！比如这两个查询语句！select * from admin, select * from user,我想把它们的查询结果保存到一个表里，这个时候union就起到作用了！我们可以用这个语句来实现我们的目的！select * from admin union select * from user!怎么样？很简单吧？对，它就是这么简单！不过他在入侵时的作用可不简单哦！现在来说用union联合查询来快速得到列值的方法！注：union所连接的两个查询语句，它们所查询的字段数据一定要相同，不然会出错的！比如前面那个句子查询了一个字段，后面那个句子查了两个，那这个句子就是错的！一定要一样哦！根据union的这个性质！我们要想用union联合查询，就一定要知道注入点所对应的SQL查询语句查询了多少个字段！我们可以一个一个地猜，比如注入点是 <br />
+<A href="http://www.xxx.com/xx.asp?x=1">http://www.xxx.com/xx.asp?x=1</A>，那我们就可以用这个句子来猜这个注入点所对应的查询语句查询了多少个字段！<A href="http://www.xxx.com/xx.asp?x=1">http://www.xxx.com/xx.asp?x=1</A> union select 1,2 from 表！如果返回的信息是 <br />
+Microsoft JET Database Engine 错误 '80040e14'  <br />
+在联合查询中所选定的两个数据表或查询中的列数不匹配。  <br />
+这就说明我们猜的字段数不对，然后我们接着猜，一个一个数往后加，注意喽！有的注入点查询了几十个字段呢！哈哈！那什么时候算是猜对字段了呢？那当然是不报错的时候啦！还要注意，这里的不报错指的是不报出刚才那个错误，而是在网面里显示出了几个数字！这个时候就说明我们查询字段查对了！现在我们就可以直接得到列值了，再注意，表名和列名我们一定要事先已经知道或者已经猜出来了。不然没用！如果我们猜到第10个字段的时候，页面里显示出了数字！ <br />
+<A href="http://http://www.xxx.com/xx.asp?x=1">http://http://www.xxx.com/xx.asp?x=1</A> union select 1,2,3,4,5,6,7,8,9,10 from admin&nbsp;&nbsp; 。比如语句是这样的，这个时候我们就看页面里显出了哪几个数字！比如显出了3，那我们就把3换成我们要猜的列名！比如我们要猜username，就把注入语句改成 <br />
+<A href="http://www.xxx.com/xx.asp?x=1">http://www.xxx.com/xx.asp?x=1</A> union select 1,2,username,4,5,6,7,8,9,10 from admin 。要猜其它的也一样！呵呵，这样快多了吧！如果在猜查询多少个字段的时候显示的错误不是上面那个 “在联合查询中所选定的两个数据表或查询中的列数不匹配。” 那就说明不可以用联合查询了，这招也就没用了！ 可能又有朋友要说了，如果查询的字段很多，那一个一个猜不是要累死么？呵呵，真是的！哪有那么多的牢骚！好，再教你们另一个快速猜字段的方法！ <br />
+order by!这两个单词在SQL里是给查询结果排序用的！这个大家知道就行！怎么用这个句子来猜字段数呢！大家看！还是这个注入点！ <br />
+<A href="http://www.xxx.com/xx.asp?x=1">http://www.xxx.com/xx.asp?x=1</A>，在后面加上order by N （N是数字！）,就成了<A href="http://www.xxx.com/xx.asp?x=1">http://www.xxx.com/xx.asp?x=1</A> order by N,这里我让N为10，就是<A href="http://www.xxx.com/xx.asp?x=1">http://www.xxx.com/xx.asp?x=1</A> order by 10，如果返回正常！就接着加大这个数字，如果加到20返回正常，到21返回错误，那就是查询了20个字段！就是这样猜查询了多少个字段！如果我们猜出来它查询了20个，就和刚才一下提交这个语句： <br />
+<A href="http://www.xxx.com/xx.asp?x=1">http://www.xxx.com/xx.asp?x=1</A> union select 1,2,3........20 from 表！ 然后看看哪个数字会显示在页面里，把那个数字改成你要猜的字段，就可以了！呵呵！如果这招不行就只能一个一个猜列值喽！ <br />
+6。汉字的猜解！ <br />
+&nbsp;&nbsp;&nbsp; 刚才忘了这里了，直到在做教程的时候碰到一个用户名是汉字的，才想起来！ <br />
+有的时候大家会遇到这样的情况，用逐字猜解列值的方法，有的时候是 &gt;0 页面还是返回错误！看到这样的情况不要慌！不大于0就说晚这个值的ASCII码是负数，也就是汉字喽！这个时候我们要想得到它的ASCII码，就要用到一个函数了！abs()这个函数是用来返回一个值的绝对值的！我们只要把这个函数加在句子里，就可以按照平常的方法猜ASCII码了。具体是这么加的：and (select top 1 abs(asc(mid(列,X,1))) from admin)&gt;N 就是这样了，不过等猜出来后不要忘了加负号哦！猜出ASCII码后就可以用字符转换工具转换成字符了！我以前写了一个小工具，大家可以下载用用！这里提醒大家一下，汉字的ASCII码都是很小的，也就是说在取它们的绝对值后他们会变的很大！所以最好从10000猜起，这样快点！ <br />
+跨库查询！ <br />
+&nbsp;&nbsp;&nbsp; 这可能是这篇教程的最后一部分了，对不起大家了，因为我在策划MSSQL注入的教程怎么写的时候，发现了不少问题，我没有搞清楚，所以这些要等我搞清楚后再写，如果现在写出来会误导大家的！所以写完这篇后，我决定深入学习一下MSSQL，学过这个的朋友一定要加我QQ啊！一起交流一下！我的QQ是1924627!加的时候注明：X档案！学过ASP的也可以加加，呵呵，我最近也在自学ASP~！小菜朋友们也可以加我讨论一些问题，在此说明哦，难的问题我可不会！加的时候表问偶有没有学过这个有没有学过那个，伤自尊的！偶基本上什么也没有学过！呵呵，好了，不多说了。教程开始！ <br />
+&nbsp;&nbsp;&nbsp; 大家可能都遇到过这种情况！就是在找到注入点的时候，猜不出来表名或者是列名！这个时候可能好多刚接触这方面的小菜就要犯难了，有的还专程到论坛里去问！（我那个时候就问过这种问题，郁闷，被一群SB取笑了！）其实，猜不出来是正常的！既然叫“猜”！当然不能每次都猜中了！工具只会按预先设定好的表名或者列名来猜！如果网站所用的数据库里存在一张工具里没有存着的表名或者列名，那工具就猜不出来喽！MSSQL是用爆的，不是用猜的！这点大家要知道！。大家肯定认为那些猜不出来列或者表的注入点就没有用了吧！其实不然，说它的用处大，也不大，用处小，也不小！为什么这么说呢！因为它有另一个用法！不过这个用法在入侵中不常用，有的时候甚至用不了！什么用法呢？就是跨库查询！相信大家还记的，猜表名的语句是这样的！ <br />
+and exists(select count(*) from 表)，是这样的吧？什么？忘了？去看看前面的教程去！这里我告诉大家，其实from后面可以跟路径的！不过要绝对路径！这个路径指向一个数据库，就可以实现跨库查询！比如吧，有一个数据库的路径是 D:\hack\1.mdb ，我们想要跨库查询它的内容！就要用到这个语句：and exists (select count(*) from D:\hack\1.mdb.admin),大家可能看到了，1.mdb后面跟了“.admin”,这是什么呢！其实admin是这个1.mdb里的一个表！当然，在注入网站的时候，我们是不知道要跨的那个数据库是有哪些表的，所以我们要用这种方法去猜！把admin改成别的表，就可以猜别的表存在不存在了！记的哦！如果刚才我们构造的那个注入语句返回正常的话，就说明1.mdb 这个数据库里存在admin这张表！接着就是猜列！和以前的猜法一样，只不过from后面跟的变了变，这里也给大家写一下吧！其实我更希望大家自己思考， 有帮助的！猜列的语句是and (select count(列名) from 数据库路径.表名)&gt;0,知道了吧 ，就是from后面跟的东东变了变！别的没变！一定要记的，数据库路径后面还要加上一个点和一个表名！这就是简单的跨库查询！可能有朋友要问了，这个有什么用呢！现在我告诉大家，当我们知道了一个对我们有用的数据库的绝对路径，可是不能下载，也没有注入点是连接到这个数据库的，这个时候我们就可以随便找一下注入点，前提是这个注入点连接的数据库和你要跨的数据库在同一服务器上！这个时候我们就可以通过这个注入点来跨库查询那一个数据库的内容！明白了吧！其实也不只这一点用处！大家想想，from后面不是可以跟路径么！这个时候我们可不可以用它来猜服务器上的文件内容呢！当然是可以的，只要把from后面跟的数据库站径改成我们要猜的就可以了。这里来一个例子！  <br />
+and exists (select count(*) from 路径),就可以了（这里我记的不太清了，应该是这样没错，如果有错的话请告诉我一下！）我们把路径改成 <br />
+C:\windows\1.c&nbsp;&nbsp; ，（注意：这个c可以是任意的字母！）这个时候如果提示 'c:\windows\a.mdb' 不是一個有效的路徑，就说明不存在c:\windows\这个文件夹！（不要想是不是我写错了或者是忘了找mdb了，没有，等你们自己试验的时候就知道了！）。可是如果提示找不到文件 的话呢，说明存在这个文件夹，可是不存在1.mdb这个文件！这个时候可能大家要问了，这样不是只可以猜mdb的数据吗？因为不管在文件名后面加上什么字母，都会自己变成mdb格式的文件来检测！其实可以查询其它的文件格式的。这么写就可以了。把1.c改成1.exe.c就可以查询这个1.exe是不是存在！如果存在的话，就会提示c:\windows\1.exe不是一个有效的数据库文件！（或者有别的不同的提示，反正不会提示找不到文件！）如果提示找不到文件的话，就说明没有这个文件！这样可以大概确定是服务器是什么系统了！如果存在c:\winnt\的话就是2000以，存在c:\windows\的话应该就是2003了！好！跨库查询的作用就写到这里！等下我给大家制作一下教程！其实还有一个比较实用的方法。就是只要知道一个列名就可以爆所有列名的值。这个方法用到了联接查询join语句！因为我也没有理解这个方法是什么意思，所以这里就不做介绍了！大家如果想要学的话自己到网上找一下相应的资料！当然，如果哪一天 我理解了的话就再补充给大家！ <br />
+8。补充！ <br />
+&nbsp;&nbsp;&nbsp; 在注入的时候，可能没有那么顺利，有的时候程序过滤了这个字符或者过滤了那个。或者干脆用了防注入程序。！或者监控器！这个时候我们就没有办法了吗？不！肯定有的！只不过我们没有发现而已，因为这方面的知识我知道的很少，所以只能给大家一点点的思路！如果谁还有知道的就请补充一下！第一，如果程序过滤了空格，我们可以用/**/来代替，也可以用空格的URL编程%20来代替，最近在论坛里看到了另一种方法，我没有试过！地址是这个：<A href="http://www.hackerxfiles.net/view">http://www.hackerxfiles.net/view</A> ... =%E7%A9%BA%E6%A0%BC&nbsp;&nbsp;&nbsp; 大家有时间试一下！第二，过滤了"&gt;"或者"&lt;",我们可以用between用代替！有点英语基础的朋友都知道它是什么意思！ 如果程序过滤了&gt;&lt;号的话，就证明我们不可以用以前那种方法猜字符的ASCII码了！这个时候我们可以用between!比如，这里我猜admin第一位a的ASCII码！以前我们用到的方法是select asc(mid(admin,1,1))&gt;X 这样猜。可是现在过滤了"&gt;" <br />
+了，我们不能用这个句子了。我们就可以这样select asc(mid(admin,1,1)) between 80 and 100（有点记不清了，如果说错了还靖见谅！）如果返回正常，就说明admin的每一个字符a的ASCII码处在80到100之间，这样我们就一点点的缩小范围！直到猜出ASCII码！ 第三，如果用了防注入程序，我们就从防注入程序的漏洞下手！以前在网上看过一篇文章，是讲通用防注入程序3。0的漏洞的。地址多少忘了，朋友们自己找一下吧！这方面突破过滤的知识我只知道一点点，不好意思了！ <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 好了，这次ACCES的手工注入教程算是不圆满的结束了！我会以最快的速度学好MSSQL的，到时候再来给大家写！</P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-06-05
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/asp/">ASP</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%85%A5/">注入</a>
+          <a href="https://lcx.cc/tags/ascii/">Ascii</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/hack/">Hack</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/mssql/">mssql</a>
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E6%9F%A5%E8%AF%A2/">查询</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E6%A3%80%E6%B5%8B/">检测</a>
+          <a href="https://lcx.cc/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BA%E5%9D%9B/">论坛</a>
+          <a href="https://lcx.cc/tags/%E8%8B%B9%E6%9E%9C/">苹果</a>
+          <a href="https://lcx.cc/tags/%E5%85%A5%E4%BE%B5/">入侵</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E9%A1%B5/">网页</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/166/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">中国黑客谱系</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/164/">
+            <span class="next-text nav-default">汇编语言超浓缩教程</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

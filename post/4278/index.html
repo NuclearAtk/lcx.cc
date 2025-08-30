@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Angry Birds和广告系统泄露个人信息——FireEye对Angry Birds的分析 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="我是壮丁" /><meta name="description" content="Angry Birds和广告系统泄露个人信息——FireEye对Angry Birds的分析。很多流行的app，包括愤怒的小鸟在内，收集并且分享玩家的个人信息的广泛程度，远远超过大多数人所了解的。一些媒体只是进行了表面的报道，没有深入追踪。在去年十月，纽约时报发表了一些关于愤怒的小鸟和其他一些app收集数据的相关报道。在今年2月，多家报社联合公共利益网站ProPublica和英国报社进行一些列报道，详细说明政府机构使用游戏(和一些app)收集用户数据。甚至是历史悠久的CBS在早些时候用了60分钟来对Rovio分享用户位置信息的事情进行了报道。" />
+<meta name="keywords" content="Angry Birds和广告系统泄露个人信息——FireEye对Angry Birds的分析" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4278/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="Angry Birds和广告系统泄露个人信息——FireEye对Angry Birds的分析" />
+<meta property="og:description" content="Angry Birds和广告系统泄露个人信息——FireEye对Angry Birds的分析。很多流行的app，包括愤怒的小鸟在内，收集并且分享玩家的个人信息的广泛程度，远远超过大多数人所了解的。一些媒体只是进行了表面的报道，没有深入追踪。在去年十月，纽约时报发表了一些关于愤怒的小鸟和其他一些app收集数据的相关报道。在今年2月，多家报社联合公共利益网站ProPublica和英国报社进行一些列报道，详细说明政府机构使用游戏(和一些app)收集用户数据。甚至是历史悠久的CBS在早些时候用了60分钟来对Rovio分享用户位置信息的事情进行了报道。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4278/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-04-14T15:38:08&#43;08:00" />
+<meta property="article:modified_time" content="2014-04-14T15:53:11&#43;08:00" />
+
+<meta itemprop="name" content="Angry Birds和广告系统泄露个人信息——FireEye对Angry Birds的分析">
+<meta itemprop="description" content="Angry Birds和广告系统泄露个人信息——FireEye对Angry Birds的分析。很多流行的app，包括愤怒的小鸟在内，收集并且分享玩家的个人信息的广泛程度，远远超过大多数人所了解的。一些媒体只是进行了表面的报道，没有深入追踪。在去年十月，纽约时报发表了一些关于愤怒的小鸟和其他一些app收集数据的相关报道。在今年2月，多家报社联合公共利益网站ProPublica和英国报社进行一些列报道，详细说明政府机构使用游戏(和一些app)收集用户数据。甚至是历史悠久的CBS在早些时候用了60分钟来对Rovio分享用户位置信息的事情进行了报道。"><meta itemprop="datePublished" content="2014-04-14T15:38:08&#43;08:00" />
+<meta itemprop="dateModified" content="2014-04-14T15:53:11&#43;08:00" />
+<meta itemprop="wordCount" content="5219">
+<meta itemprop="keywords" content="分析,广告,系统,泄露,Android,app,ASP,cookie,EXP,Google,Html,HTTP,IE,IIS,IP,Linux,MAC,Microsoft,Net,POS,Rat,Web,代码,第三方,分享,上传,设备,数据,邮箱,游戏,云,账户," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Angry Birds和广告系统泄露个人信息——FireEye对Angry Birds的分析"/>
+<meta name="twitter:description" content="Angry Birds和广告系统泄露个人信息——FireEye对Angry Birds的分析。很多流行的app，包括愤怒的小鸟在内，收集并且分享玩家的个人信息的广泛程度，远远超过大多数人所了解的。一些媒体只是进行了表面的报道，没有深入追踪。在去年十月，纽约时报发表了一些关于愤怒的小鸟和其他一些app收集数据的相关报道。在今年2月，多家报社联合公共利益网站ProPublica和英国报社进行一些列报道，详细说明政府机构使用游戏(和一些app)收集用户数据。甚至是历史悠久的CBS在早些时候用了60分钟来对Rovio分享用户位置信息的事情进行了报道。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Angry Birds和广告系统泄露个人信息——FireEye对Angry Birds的分析</h1>
+      
+      <div class="post-meta">
+        <time datetime="2014-04-14" class="post-time">
+          2014-04-14
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E5%88%86%E6%9E%90/"> 分析 </a>
+            <a href="https://lcx.cc/categories/%E5%B9%BF%E5%91%8A/"> 广告 </a>
+            <a href="https://lcx.cc/categories/%E7%B3%BB%E7%BB%9F/"> 系统 </a>
+            <a href="https://lcx.cc/categories/%E6%B3%84%E9%9C%B2/"> 泄露 </a>
+            
+          </div>
+        <span class="more-meta"> 约 5219 字 </span>
+          <span class="more-meta"> 预计阅读 11 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	from:<a href="http://www.fireeye.com/blog/technical/mobile-threats/2014/03/a-little-bird-told-me-personal-information-sharing-in-angry-birds-and-its-ad-libraries.html" target="_blank">http://www.fireeye.com/blog/technical/mobile-threats/2014/03/a-little-bird-told-me-personal-information-sharing-in-angry-birds-and-its-ad-libraries.html</a> 
+</p>
+<p style="text-indent:2em;">
+	<strong>0x00 背景</strong> 
+</p>
+<p style="text-indent:2em;">
+	很多流行的app，包括愤怒的小鸟在内，收集并且分享玩家的个人信息的广泛程度，远远超过大多数人所了解的。
+</p>
+<p style="text-indent:2em;">
+	一些媒体只是进行了表面的报道，没有深入追踪。在去年十月，纽约时报发表了一些关于愤怒的小鸟和其他一些app收集数据的相关报道。在今年2月，多家报社联合公共利益网站ProPublica和英国报社进行一些列报道，详细说明政府机构使用游戏(和一些app)收集用户数据。甚至是历史悠久的CBS在早些时候用了60分钟来对Rovio分享用户位置信息的事情进行了报道。
+</p>
+<p style="text-indent:2em;">
+	google应用商店中Android版的愤怒的小鸟是在3月4号更新的，这个版本依旧在分享个人信息。事实上，超过2.5亿的用户为了方便在不同设备上访问，创建了Rovio账户，他们的年龄、性别等等很多信息，会在不知不觉中被分享。并且很多在玩游戏时没有使用Rovio账户的用户，他们的设备信息也会被共享了。
+</p>
+<p style="text-indent:2em;">
+	一旦Rovio账户创建，用户信息就会被收集，但是用户很难阻止这些app收集信息。他们把收集到的用户信息可能会放到多个地方:愤怒小鸟的云端，Burstly(广告中介平台)和一些第三方的广告网络，就像Jumptap和Millennial Media这类。虽然用户可以通过在玩愤怒小鸟时不使用Rovio账户来避免信息被收集，但是不能阻止游戏共享这些设备信息。
+</p>
+<p style="text-indent:2em;">
+	在这篇blog中，我们将分析“愤怒的小鸟”收集信息的过程。我们还会演示应用程序、广告中介平台和广告云之间的关系，展示三者之间如果共享收集到用户的数据。当然我们会拿出证据来支持我们的观点，比如FireEye Mobile Thread Prevention(MTP)捕获的数据包(PCap)，来支持我们的分析结果。最后我们会通过逆向，在代码层面进行分析。
+</p>
+<p style="text-indent:2em;">
+	为了调查信息共享的机制和内容，我们对多个版本进行了研究，发现很多版本都是明文传递收集到的电子邮件，地址，年龄和性别这些信息。
+</p>
+<p style="text-indent:2em;">
+	我们发现愤怒的小鸟多个版本存在收集信息的问题，包含最新版本4.1.0(3月4号在google应用商店中更新的版本)，到目前为止，超过2亿用户进行了下载，很多用户会被收集信息。
+</p>
+<p style="text-indent:2em;">
+	<strong>0x01 什么信息会被收集？</strong> 
+</p>
+<p style="text-indent:2em;">
+	Angry Birds鼓励用户创建Rovio账户，这样会给用户带来以下好处:
+</p>
+<p style="text-indent:2em;">
+	1、保存分数和游戏中的武器。
+</p>
+<p style="text-indent:2em;">
+	2、在不同的设备中保持相同的进度。第二个好处对玩家特别有吸引力，因为它允许在一个设备上停止游戏，一个设备就可以接着上个设备上的进度接着游戏。
+</p>
+<p style="text-indent:2em;">
+	图一显示Rovio的注册页面
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4179_Fig1.png" target="_blank"><img title="图一：Rovio的注册页面" alt="图一：Rovio的注册页面" src="/file/old/4179_Fig1.png" width="780" height="468" /></a> 
+</p>
+<p style="text-indent:2em;">
+	图一：Rovio的注册页面
+</p>
+<p style="text-indent:2em;">
+	图二显示了在注册过程中收集生日信息，遵循最终使用许可协议(EULA)和授权Rovio可以上传用户信息，同时把信息上传到第三方机构进行营销。
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4180_Fig2.png" target="_blank"><img title="图二:Rovio注册过程中收集信息和遵守EULA" alt="图二:Rovio注册过程中收集信息和遵守EULA" src="/file/old/4180_Fig2.png" width="780" height="468" /></a> 
+</p>
+<p style="text-indent:2em;">
+	图二:Rovio注册过程中收集信息和遵守EULA
+</p>
+<p style="text-indent:2em;">
+	图三，注册页面提示用户输入邮件地址和性别。当用户点击注册按钮。Rovio上传收集到的数据到云端，同时创建用户
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4181_Fig3.png" target="_blank"><img title="图三，注册页面提示用户输入邮件地址和性别。" alt="图三，注册页面提示用户输入邮件地址和性别。" src="/file/old/4181_Fig3.png" width="780" height="468" /></a> 
+</p>
+<p style="text-indent:2em;">
+	图三:Rovio在注册过程中输入邮箱地址和性别
+</p>
+<p style="text-indent:2em;">
+	图四显示愤怒的小鸟通过其他方式收藏用户信息。Rovio推送给注册用户更新游戏的提示，信息片段和特殊优惠。在时事通讯注册过程中，Rovio收集用户的名字、邮箱、生日、居住国和性别。这些信息会和用户的Rovio账户信息的邮箱进行比对
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4182_Fig4.png" target="_blank"><img title="图四:时事通讯注册页面要求更多的用户信息" alt="图四:时事通讯注册页面要求更多的用户信息" src="/file/old/4182_Fig4.png" width="780" height="565" /></a> 
+</p>
+<p style="text-indent:2em;">
+	图四:时事通讯注册页面要求更多的用户信息
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4177_AngryBirds_illustration_v8.png" target="_blank"><img title="图五:愤怒的小鸟、广告平台和广告云之间的信息流。" alt="图五:愤怒的小鸟、广告平台和广告云之间的信息流。" src="/file/old/4177_AngryBirds_illustration_v8.png" width="780" height="1035" /></a> 
+</p>
+<p style="text-indent:2em;">
+	图五:愤怒的小鸟、广告平台和广告云之间的信息流。
+</p>
+<p style="text-indent:2em;">
+	首先，我们关注的是那些信息被传送到广告库中。图5显示了“愤怒小鸟”的信息流：“愤怒小鸟”的云端，Burstly(内嵌广告库和广告中介平台)，以及Jumptap和Millennial Media等这些基于云的广告服务。
+</p>
+<p style="text-indent:2em;">
+	“愤怒的小鸟”通过Burstly对广告进行植入，它提供了大量的第三方广告云包括Jumptap和Millennial Media，通过识别用户信息来实现精确广告推送。
+</p>
+<p style="text-indent:2em;">
+	如图所示。愤怒的小鸟保持与广告平台Burstly和广告提供商Millennial Media之类相关平台的HTTP连接。
+</p>
+<p style="text-indent:2em;">
+	数据流：
+</p>
+<p style="text-indent:2em;">
+	表一是一个总结，下面会有详细讲解
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4178_f.jpg" target="_blank"><img title="表1：“愤怒的小鸟”，Burstly和第三方广告云之间的信息传递" alt="表1：“愤怒的小鸟”，Burstly和第三方广告云之间的信息传递" src="/file/old/4178_f.jpg" width="780" height="206" /></a> 
+</p>
+<p style="text-indent:2em;">
+	表1：“愤怒的小鸟”，Burstly和第三方广告云之间的信息传递
+</p>
+<p style="text-indent:2em;">
+	“愤怒的小鸟”在本地调用叫做libAngryBird.so的代码来访问存储，同时帮助广告库存储日志，缓存，数据库，配置文件和AES加密游戏数据。对于用户使用的Rovio账户，这些包含用户信息的数据是明文或者只是进行了简单的加密。
+</p>
+<p style="text-indent:2em;">
+	例如:一些信息被明文存储在缓存中，被称为webviewCacheChromium。
+</p>
+<pre class="prettyprint">{“accountId”:”AC3XXX…XXXA62B”,”accountExtRef”:”hE…fDc”,”personal”:{“firstName”:null,”lastName”:null,“birthday”:”19XXXXX-01″, “age”:”30″, “gender”:”FEMALE”, “country”:”United States” , “countryCode”:”US”, “marketingConsent”:false, “avatarId”:”AVXXX…XXX2c”,”imageAssets”:[...], “nickName”:null}, “abid”:{“email”:”eXXX…XXXe@XXX.XXX”, “isConfirmed”:false}, “phoneNumber”:null, “facebook”:{“facebookId”:”",”email”:”"},”socialNetworks”:[]}</pre>
+<p style="text-indent:2em;">
+	这个设备被赋予一个通用id 1XXXXX8,这是明文存储在webviewCookieChromiun
+</p>
+<pre class="prettyprint">cu1XXXX8|{“name”:”cu1XXXX8“,”value”:”3%2XXX…XXX6+PM”}|13XXX…XXX1</pre>
+<p style="text-indent:2em;">
+	当上传用户信息到广告中介平台时，这个id "1XXXX8"是用户信息的标签。然后将信息传递给广告云
+</p>
+<p style="text-indent:2em;">
+	1、捕获的初始数据包流量显示什么信息会被"愤怒的小鸟"上传到Burstly
+</p>
+<pre class="prettyprint">HTTP/1.1 200 OK
+Cache-Control: private
+Date: Thu, 06 Mar 2014 XX:XX:XX GMT
+Server: Microsoft-IIS/7.5
+ServerName: P-ADS-OR-WEBC #22
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+X-ReqTime: 0
+Content-Length: 0
+Connection: keep-alive
+
+POST /Services/PubAd.svc/GetSingleAdPlacement HTTP/1.1
+Content-type: text/json; charset=utf-8&nbsp;&nbsp;
+User-Agent: Mozilla/5.0 (Linux; U; Android 4.4.2; en-us; Ascend Y300 Build/KOT49H) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30
+
+Content-Length: 1690
+Host: neptune.appads.com
+Connection: Keep-Alive
+
+{“data”:{“Id”:”8XXX5″,”acceptLanguage”:”en”,”adPool”:0,”androidId”:”u1XXX…XXXug”,”bundleId”: “com.rovio.angrybirds”,…,”cookie”:[{"name":"cu1XXX8","value":"3XXX6+PM"},{"name":"vw","value":"ref=1XXX2&amp;dgi=,eL,default,GFW"},{"name":"lc","value":"1XXX8"},{"name":"iuXXXg","value":"x"},{"name":"cuXXX8","value":"3%2XXXPM"},{"name":"fXXXg","value":"ref=1XXX712&amp;crXXX8=2,1&amp;crXXX8=,1"}], “crParms”:”age=30,androidstore=’com.android.vending’, customer=’googleplay’, gender=’FEMALE’, version=’4.1.0′”, “debugFlags”:0, “deviceId”:”aXXX…XXXd”, “encDevId”:”xXXX….XXXs=”, “encMAC”:”iXXX…XXXg=”, “ipAddress”:”",“mac”:”1XXX…XXX9″, “noTrack”:0,”placement”:”", “pubTargeting”:”age=30, androidstore=’com.android.vending’, customer=’googleplay’, gender=’FEMALE’, version=’4.1.0′”,”rvCR”:”", “type”:”iq”,”userAgentInfo”:{“Build”:”1.35.0.50370″, “BuildID”:”323″, “Carrier”:”",”Density”:”High”, “Device”:“AscendY300″, “DeviceFamily”:“Huawei”, “MCC”:”0″,”MNC”:”0″,…</pre>
+<p style="text-indent:2em;">
+	我们可以看到上传到neptune.appads.com的信息包括，性别、年龄、安卓id、设备id、mac地址、设备类型等等
+</p>
+<p style="text-indent:2em;">
+	在其他数据包中看到、"愤怒的小鸟"通过POST把IP地址发送到同一个主机
+</p>
+<pre class="prettyprint">HTTP/1.1 200 OK
+…
+POST /Services/v1/SdkConfiguration/Get HTTP/1.1
+…
+Host: neptune.appads.com
+…
+IpAddress”:”fXXX…XXX9%eth0″,…</pre>
+<p style="text-indent:2em;">
+	根据Whois记录，注册neptune.appads.com的组织就是Burstly,上述信息被发送到Burstly。在数据包中都包含 “crParms.” 这个关键字，当源码发送个人信息时，这个关键字是作为有效载荷的。
+</p>
+<p style="text-indent:2em;">
+	Skyrocket.com是Burstly提供的一个应用货币虚拟化的服务。跟踪数据包，发现"愤怒的小鸟"，通过HTTP GET请求，从Skyrocket.com查询用户ID
+</p>
+<pre class="prettyprint">HTTP/1.1 200 OK
+Cache-Control: private
+Content-Type: text/html
+Date: Thu, 06 Mar 2014 07:12:25 GMT
+Server: Microsoft-IIS/7.5
+ServerName: P-ADS-OR-WEBA #5
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+X-ReqTime: 2
+X-Stats: geo-0
+Content-Length: 9606
+Connection: keep-alive
+
+GET /7….4/ad/image/1…c.jpg HTTP/1.1
+User-Agent: Mozilla/5.0 (Linux; U; Android 4.4.2; en-us; Ascend Y300 Build/KOT49H) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30
+Host: cdn.skyrocketapp.com
+Connection: Keep-Alive
+
+{“type”:”ip”,”Id”:”9XXX8″,…”data”:[{"imageUrl":"http://cdn.skyrocketapp.com/79...2c.jpg","adType":{"width":300, "height":250, "extendedProperty":80}, "dataType": 64, "textAdType":0,"destType":1,"destParms":"","cookie":[{"name":"fXXXg", "value": "ref=1XXX2&amp;cr1XXX8=2,1&amp;cr1XXX8=1&amp;aoXXX8=", "path":"/", "domain": "neptune.appads.com", "expires":"Sat, 05 Apr 2014 XXX GMT", "maxage": 2…0}, {"name":"vw","value":"ref=1XXX2&amp;...},...,"cbi":"http://bs.serving-sys.com/Burstin...25&amp;rtu=-1","cbia":["http://bs….":1,"expires":60},..."color":{"bg":"0…0"}, "isInterstitial":1}</pre>
+<p style="text-indent:2em;">
+	2、在这个数据包中。通过HTTP POST从jumptap.com(即Millennial Media)获得包含用户id的广告信息
+</p>
+<pre class="prettyprint">HTTP/1.1 200 OK
+Cache-Control: private
+Content-Type: text/html
+Date: Thu, XX Mar 2014 XX:XX:XX GMT
+Server: Microsoft-IIS/7.5
+ServerName: P-ADS-OR-WEBC #17
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+X-ReqTime: 475
+X-Stats: geo-0;rcf88626-255;rcf75152-218
+Content-Length: 2537
+Connection: keep-alive
+
+GET /img/1547/1XXX2.jpg HTTP/1.1
+Host: i.jumptap.com
+Connection: keep-alive
+Referer: http://bar/
+X-Requested-With: com.rovio.angrybirds
+User-Agent: Mozilla/5.0 (Linux; U; Android 4.4.2; en-us; Ascend Y300 Build/KOT49H) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30
+Accept-Encoding: gzip,deflate
+Accept-Language: en-US
+Accept-Charset: utf-8, iso-8859-1, utf-16, *;q=0.7
+
+{"type":"ip","Id":"8XXX5","width":320,"height":50,"cookie":[],”data”:[{"data":"&lt;!-- AdPlacement : banner_ingame_burstly…","adType":{"width":320, "height":50, "extendedProperty":2064 },"dataType":1, "textAdType":0, "destType":10, "destParms":"", "cookie":[{"name":"...", "value":"ref=...&amp;cr1XXX8=4,1&amp;cr1XXX8=2,1", "path":"/", "domain":"neptune.appads.com", "expires":"Sat, 0X Apr 2014 0X:XX:XX GMT", "maxage":2XXX0}, {"name":"vw",..., "crid":7XXX2, "aoid":3XXX3, "iTrkData":"...", "clkData":"...","feedName":"Nexage"}]}</pre>
+<p style="text-indent:2em;">
+	这个数据包中，广告是从jumptap.com得到，我们也能使用相同的用户id"1XXXX8"去跟踪不同的广告库
+</p>
+<p style="text-indent:2em;">
+	3、例如，在其他来自turn.com的数据包，用户id和刚才的相同
+</p>
+<pre class="prettyprint">HTTP/1.1 200 OK
+Cache-Control: private
+Content-Type: text/html
+Date: Thu, 06 Mar 2014 07:30:54 GMT
+Server: Microsoft-IIS/7.5
+ServerName: P-ADS-OR-WEBB #6
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+X-ReqTime: 273
+X-Stats: geo-0;rcf88626-272
+Content-Length: 4714
+Connection: keep-alive
+
+GET /server/ads.js?pub=24…
+PvctPFq&amp;acp=0.51 HTTP/1.1
+Host: ad.turn.com
+Connection: keep-alive
+Referer: http://bar/
+Accept: */*
+X-Requested-With: com.rovio.angrybirds
+User-Agent: Mozilla/5.0 (Linux; U; Android 4.4.2; en-us; Ascend Y300 Build/KOT49H) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30
+Accept-Encoding: gzip,deflate
+Accept-Language: en-US
+Accept-Charset: utf-8, iso-8859-1, utf-16, *;q=0.7
+
+{“type”:”ip”,”Id”:”0…b”,”width”:320,”height”:50,”cookie”:[],”data”:[{"data":"&lt;!-- AdPlacement : banner_ingame_burstly --&gt; \"http://burstly.ads.nexage.com:80..." destParms":"", "cookie":[{"name":"f...g", "value":"ref=1...0&amp;cr1XXXX8=k,1&amp;cr...8=i, 1","path":"/", "domain":"neptune.appads.com", "expires":"Sat, 0X Apr 2014 0X:XX:XX</pre>
+<p style="text-indent:2em;">
+	<strong>0x02 个人信息是怎么被分享的？</strong> 
+</p>
+<p style="text-indent:2em;">
+	我们研究了Burstly(广告中介平台)的源代码，来跟踪叫做信息贡献的方法。
+</p>
+<p style="text-indent:2em;">
+	首先在 com/burstly/lib/conveniencelayer/BurstlyAnimated Banner.java
+</p>
+<p style="text-indent:2em;">
+	当"愤怒的小鸟"和Burstly初始话连接时，initNewAnimatedBanner() 会被调用
+</p>
+<pre class="prettyprint">this.initNewAnimatedBanner (arg7.getActivity(), arg8, arg9, arg10, arg11);
+Inside initNewAnimatedBanner(), it instantiates the BurstlyView object by calling:
+BurstlyView v0 = new BurstlyView(((Context)arg3));
+v0.setZoneId(arg6);</pre>
+<p style="text-indent:2em;">
+	在Zoneld设置之前， initializeView()被BurstlyView这个构造函数调用，此外在 initializeView() 中，我们发现以下几点：
+</p>
+<pre class="prettyprint">new BurstlyViewConfigurator(this).configure(this.mAttributes);</pre>
+<p style="text-indent:2em;">
+	最后在 BurstlyViewConfigurator.configure()中，设置了一些参数
+</p>
+<pre class="prettyprint">this.extractAndApplyBurstlyViewId();
+this.extractAndApplyCrParams();
+this.extractAndApplyDefaultSessionLife();
+this.extractAndApplyPublisherId();
+this.extractAndApplyPubTargetingParams();
+this.extractAndApplyUseCachedResponse();
+this.extractAndApplyZoneId();</pre>
+<p style="text-indent:2em;">
+	下面这个方法被用作从burstly.com还原信息。例如，在extractAndApplyCrParams()中,从burstly.com得到一些参数同时把它们存储到BurstlyView对象
+</p>
+<pre class="prettyprint">String v0 = this.mAttributes.getAttributeValue("http://burstly.com/lib/ui/schema", "crParams");
+if(v0 != null) {
+BurstlyViewConfigurator.LOG.logDebug("BurstlyViewConfigurator", "Setting CR params to: {0}", new Object[]{v0});
+this.mBurstlyView.setCrParms(v0);
+}</pre>
+<p style="text-indent:2em;">
+	关键字crParms和第一个数据包中的标签一样，都是被用来标识像年龄和性别这类的用户信息
+</p>
+<p style="text-indent:2em;">
+	<strong>0x03 结论</strong> 
+</p>
+<p style="text-indent:2em;">
+	综上所述、"愤怒的小鸟"会收集用户个人信息和自定义的ID，在存储到本地之前进行上传。然后Burstly的广告库导入到“愤怒的小鸟”的自定义ID，上传相应的个人信息给Burstly云和其他广告云系统。
+</p>
+<p style="text-indent:2em;">
+	我们在网络中捕获到响应的数据包、同时逆向分析了代码。
+</p>
+<p style="text-indent:2em;">
+	<a href="http://drops.wooyun.org/news/1408" target="_blank">[原文地址]</a>
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">我是壮丁</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2014-04-14
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E5%B9%BF%E5%91%8A/">广告</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E6%B3%84%E9%9C%B2/">泄露</a>
+          <a href="https://lcx.cc/tags/android/">Android</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/asp/">ASP</a>
+          <a href="https://lcx.cc/tags/cookie/">cookie</a>
+          <a href="https://lcx.cc/tags/exp/">EXP</a>
+          <a href="https://lcx.cc/tags/google/">Google</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/iis/">IIS</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/linux/">Linux</a>
+          <a href="https://lcx.cc/tags/mac/">MAC</a>
+          <a href="https://lcx.cc/tags/microsoft/">Microsoft</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E7%AC%AC%E4%B8%89%E6%96%B9/">第三方</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E4%BA%AB/">分享</a>
+          <a href="https://lcx.cc/tags/%E4%B8%8A%E4%BC%A0/">上传</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BE%E5%A4%87/">设备</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E9%82%AE%E7%AE%B1/">邮箱</a>
+          <a href="https://lcx.cc/tags/%E6%B8%B8%E6%88%8F/">游戏</a>
+          <a href="https://lcx.cc/tags/%E4%BA%91/">云</a>
+          <a href="https://lcx.cc/tags/%E8%B4%A6%E6%88%B7/">账户</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4279/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">WordPress 3.8.2 cookie伪造漏洞再分析</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4277/">
+            <span class="next-text nav-default">openssl 多线程 多域名 EXP，支持自定义端口，保存二进制文件，节省空间</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

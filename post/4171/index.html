@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>由“正方”jiam、jiemi之逆向思及Base64之逆编码表 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="RedFree" /><meta name="description" content="由“正方”jiam、jiemi之逆向思及Base64之逆编码表。申明：本文旨在技术交流，并不针对“正方”（新版正方教务系统密码处理方式也换了，只是用这个做个引子而已……）！本文并没有什么深度，仅探讨已知明文、密文和算法的情况下逆向得Key的可能！经常遇到基友求助类似Base64编码的解码(先不说是不是Base64,下文会做说明)。如：p6FDpXlnQ1tHlLZK&#43;NvA1hwfeND8NdXt1q6whqP6WODTEBP4UzzjnDQ== 这个很像Base64编码吧，但你用标准Base64去解码得到的结果明显不是想要的(这个有N多可能)。" />
+<meta name="keywords" content="由“正方”jiam、jiemi之逆向思及Base64之逆编码表" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4171/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="由“正方”jiam、jiemi之逆向思及Base64之逆编码表" />
+<meta property="og:description" content="由“正方”jiam、jiemi之逆向思及Base64之逆编码表。申明：本文旨在技术交流，并不针对“正方”（新版正方教务系统密码处理方式也换了，只是用这个做个引子而已……）！本文并没有什么深度，仅探讨已知明文、密文和算法的情况下逆向得Key的可能！经常遇到基友求助类似Base64编码的解码(先不说是不是Base64,下文会做说明)。如：p6FDpXlnQ1tHlLZK&#43;NvA1hwfeND8NdXt1q6whqP6WODTEBP4UzzjnDQ== 这个很像Base64编码吧，但你用标准Base64去解码得到的结果明显不是想要的(这个有N多可能)。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4171/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-01-15T10:37:58&#43;08:00" />
+<meta property="article:modified_time" content="2014-01-15T10:37:58&#43;08:00" />
+
+<meta itemprop="name" content="由“正方”jiam、jiemi之逆向思及Base64之逆编码表">
+<meta itemprop="description" content="由“正方”jiam、jiemi之逆向思及Base64之逆编码表。申明：本文旨在技术交流，并不针对“正方”（新版正方教务系统密码处理方式也换了，只是用这个做个引子而已……）！本文并没有什么深度，仅探讨已知明文、密文和算法的情况下逆向得Key的可能！经常遇到基友求助类似Base64编码的解码(先不说是不是Base64,下文会做说明)。如：p6FDpXlnQ1tHlLZK&#43;NvA1hwfeND8NdXt1q6whqP6WODTEBP4UzzjnDQ== 这个很像Base64编码吧，但你用标准Base64去解码得到的结果明显不是想要的(这个有N多可能)。"><meta itemprop="datePublished" content="2014-01-15T10:37:58&#43;08:00" />
+<meta itemprop="dateModified" content="2014-01-15T10:37:58&#43;08:00" />
+<meta itemprop="wordCount" content="4911">
+<meta itemprop="keywords" content="IE,编码,逆向,HTTP,POS,VB,代码,二进制,函数,加密,解码,解密,密码,破解,算法,系统," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="由“正方”jiam、jiemi之逆向思及Base64之逆编码表"/>
+<meta name="twitter:description" content="由“正方”jiam、jiemi之逆向思及Base64之逆编码表。申明：本文旨在技术交流，并不针对“正方”（新版正方教务系统密码处理方式也换了，只是用这个做个引子而已……）！本文并没有什么深度，仅探讨已知明文、密文和算法的情况下逆向得Key的可能！经常遇到基友求助类似Base64编码的解码(先不说是不是Base64,下文会做说明)。如：p6FDpXlnQ1tHlLZK&#43;NvA1hwfeND8NdXt1q6whqP6WODTEBP4UzzjnDQ== 这个很像Base64编码吧，但你用标准Base64去解码得到的结果明显不是想要的(这个有N多可能)。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">由“正方”jiam、jiemi之逆向思及Base64之逆编码表</h1>
+      
+      <div class="post-meta">
+        <time datetime="2014-01-15" class="post-time">
+          2014-01-15
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/ie/"> IE </a>
+            <a href="https://lcx.cc/categories/%E7%BC%96%E7%A0%81/"> 编码 </a>
+            <a href="https://lcx.cc/categories/%E9%80%86%E5%90%91/"> 逆向 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4911 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	申明：本文旨在技术交流，并不针对“正方”（新版正方教务系统密码处理方式也换了，只是用这个做个引子而已……）！本文并没有什么深度，仅探讨已知明文、密文和算法的情况下逆向得Key的可能！
+</p>
+<p style="text-indent:2em;">
+	<strong>0x00 背景</strong>
+</p>
+<p style="text-indent:2em;">
+	经常遇到基友求助类似Base64编码的解码(先不说是不是Base64,下文会做说明)。如：p6FDpXlnQ1tHlLZK+NvA1hwfeND8NdXt1q6whqP6WODTEBP4UzzjnDQ== 这个很像Base64编码吧，但你用标准Base64去解码得到的结果明显不是想要的(这个有N多可能)。
+</p>
+<p style="text-indent:2em;">
+	<strong>0x01 编解码</strong>
+</p>
+<p style="text-indent:2em;">
+	且从编码、解码说起吧，最简单的编码（为什么不叫加密、解密呢？看你用它干什么了……）是将字符映射，例如：
+</p>
+<pre class="prettyprint">a=e
+b=f
+c=g
+……
+v=z
+w=a
+x=b
+y=c
+z=d</pre>
+<p style="text-indent:2em;">
+	这只是个例子，还有数字、特殊字符等没写进去呢。当然你也可以用没有规律的映射方式去编码。这样的编码如果用于加密密码的话会有什么缺陷呢？
+</p>
+<p style="text-indent:2em;">
+	假定某人已经拥有了几组明文和对应的密文，那么他可以用手上的这几组明文和密文寻找规律来还原映射关系，然后再由这个映射关系轻松破解其它密文。
+</p>
+<p style="text-indent:2em;">
+	由此，我们将可还原明文的加密算法分为如下几类(为什么要密文可还原？还是让厂商来回答吧！)：
+</p>
+<p style="text-indent:2em;">
+	① 如：bcdef=fghij &nbsp; cdefg=ghijk…… 这样的加密不需要工具，目测到规律然后还原。
+</p>
+<p style="text-indent:2em;">
+	② 略复杂一点的加密算法，密文找不到规律，可以防止用户的破解。但是如果加密解密算法侧漏了，那样所有用户的密码都会惨遭破解！
+</p>
+<p style="text-indent:2em;">
+	③ 复杂的加密算法，使用自定义Key加密明文，也就是说密码是明文和Key的某种运算之后生成的。这种算法有个优点，就算算法侧漏，没有Key也是无法解密的(下面开始讨论)。类似：pass=encode(str,key); str=decode(pass,key) 。
+</p>
+<p style="text-indent:2em;">
+	④ 更复杂的算法……(待补充)
+</p>
+<p style="text-indent:2em;">
+	<strong>0x02 再议“正方”之jiam、jiemi</strong>
+</p>
+<p style="text-indent:2em;">
+	为什么是再议呢？因为正方教务系统的“加密”、“解密”运作方式早已被讨论N多次了，网上甚至可以找到此算法的N多版本(可自行Baidu、Google)。
+</p>
+<p style="text-indent:2em;">
+	两个典型的场景是：
+</p>
+<p style="text-indent:2em;">
+	① 有多组密文，已知几组密文对应的明文和加密算法，但是由于无法获得加密所使用的Key，无法解密其它密文。
+</p>
+<p style="text-indent:2em;">
+	② 由系统某缺陷可以获得加密后的密文（当然明文是自己的密码这个是可控的），获得了别人的密文后由于无Key，无法解密。
+</p>
+<p style="text-indent:2em;">
+	为了研究此算法尝试逆得Key，我决定再写个VB版的。由于事先已从网上查知算法位于/bin/zjdx.dll中，所以找起来就简单了，网上找得一份“源码”使用Reflector载入zjdx.dll，由登录页Default2跟进到jiam方法如图：
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4005_1.jpg" target="_blank"><img title="算法位于/bin/zjdx.dll" alt="算法位于/bin/zjdx.dll" src="/file/old/4005_1.jpg" width="780" height="405" /></a>
+</p>
+<p style="text-indent:2em;">
+	源码如下(已写上注释)：
+</p>
+<pre class="prettyprint">public string jiam(string PlainStr, string key)
+{
+      string text3;
+      int num3 = 1;
+      int num4 = Strings.Len(PlainStr);//取密码明文长度
+      for (int num1 = 1; num1 &lt;= num4; num1++)
+      {
+            string text6 = Strings.Mid(PlainStr, num1, 1);//从第一位开始每一次循环取密码中的下一个字符
+            string text2 = Strings.Mid(key, num3, 1);
+            if (((((Strings.Asc(text6) ^ Strings.Asc(text2)) &lt; 0x20) | ((Strings.Asc(text6) ^ Strings.Asc(text2)) &gt; 0x7e)) | (Strings.Asc(text6) &lt; 0)) | (Strings.Asc(text6) &gt; 0xff))//将明文中截到的某位字符的ASSCII码和Key中截到的某位字符的ASSCII码进行异或运算，若结果是不可打印字符的ASSCII码则临时字串直接加上明文中截到的这个字符
+            {
+                  text3 = text3 + text6;
+            }
+            else//若异或后的结果是可打印字符的ASSCII码(33-126)，则临时字串加上ASSCII码是异或结果的字符
+            {
+                  text3 = text3 + StringType.FromChar(Strings.Chr(Strings.Asc(text6) ^ Strings.Asc(text2)));
+            }
+            if (num3 == Strings.Len(key))//假如Key中截到的字符用到最后一位了，则从头开始使用Key
+            {
+                  num3 = 0;
+            }
+            num3++;
+      }
+      if ((Strings.Len(text3) % 2) == 0)//假如最后的临时结果字符长度是偶数个，那么最终结果=反转字符的前半部分+反转字符的后半部分
+      {
+            string text4 = Strings.StrReverse(Strings.Left(text3, (int) Math.Round(((double) Strings.Len(text3)) / 2)));
+            string text5 = Strings.StrReverse(Strings.Right(text3, (int) Math.Round(((double) Strings.Len(text3)) / 2)));
+            text3 = text4 + text5;
+      }
+      return text3;//返回最终结果
+} </pre>
+<p style="text-indent:2em;">
+	可见jiami函数中传入了两个参数，其中PlainStr为要加密的明文，key为加密使用的key。此函数逻辑如注释。
+</p>
+<p style="text-indent:2em;">
+	关于异或运算请参见：http://technet.microsoft.com/zh-cn/subscriptions/csw1x2a6(v=vs.80).aspx
+</p>
+<p style="text-indent:2em;">
+	为了方便于理解下文，作如此解释：三个数a,b,c 假如(a xor b=c)那么(a xor b xor a=b),(a xor b xor b=a)。
+</p>
+<p style="text-indent:2em;">
+	ASSCII码对照表请参见：http://www.96yx.com/tool/ASC2.htm 33-126为可打印字符。
+</p>
+<p style="text-indent:2em;">
+	至此，已完全清晰了jiam的逻辑，将此函数移植于VB程序，代码如下：
+</p>
+<pre class="prettyprint">Public Function jiam(ByVal PlainStr As String, ByVal key As String) As String
+        Dim strChar, KeyChar, NewStr As String
+        Dim Pos As Integer
+        Dim i, intLen As Integer
+        Dim Side1, Side2 As String
+        Pos = 1
+        For i = 1 To Len(PlainStr)
+            strChar = Mid(PlainStr, i, 1)
+            KeyChar = Mid(key, Pos, 1)
+            If ((Asc(strChar) Xor Asc(KeyChar)) &lt; 32) Or ((Asc(strChar) Xor Asc(KeyChar)) &gt; 126) Or (Asc(strChar) &lt; 0) Or (Asc(strChar) &gt; 255) Then
+                NewStr = NewStr &amp; strChar
+            Else
+                NewStr = NewStr &amp; Chr(Asc(strChar) Xor Asc(KeyChar))
+            End If
+            If Pos = Len(key) Then Pos = 0
+            Pos = Pos + 1
+        Next
+        If Len(NewStr) Mod 2 = 0 Then
+            Side1 = StrReverse(Left(NewStr, CInt((Len(NewStr) / 2))))
+            Side2 = StrReverse(Right(NewStr, CInt((Len(NewStr) / 2))))
+            NewStr = Side1 &amp; Side2
+        End If
+        jiam = NewStr
+    End Function </pre>
+<p style="text-indent:2em;">
+	那么如果已知Key的情况下，要解密该如何书写解密的代码呢？
+</p>
+<p style="text-indent:2em;">
+	在zjdx.dll中反编译得到的解密函数如下：
+</p>
+<pre class="prettyprint">public string jiemi(string PlainStr, string key)
+{
+      string text3;
+      int num2 = 1;
+      if ((Strings.Len(PlainStr) % 2) == 0)
+      {
+            string text4 = Strings.StrReverse(Strings.Left(PlainStr, (int) Math.Round(((double) Strings.Len(PlainStr)) / 2)));
+            string text5 = Strings.StrReverse(Strings.Right(PlainStr, (int) Math.Round(((double) Strings.Len(PlainStr)) / 2)));
+            PlainStr = text4 + text5;
+      }
+      int num3 = Strings.Len(PlainStr);
+      for (int num1 = 1; num1 &lt;= num3; num1++)
+      {
+            string text6 = Strings.Mid(PlainStr, num1, 1);
+            string text2 = Strings.Mid(key, num2, 1);
+            if (((((Strings.Asc(text6) ^ Strings.Asc(text2)) &lt; 0x20) | ((Strings.Asc(text6) ^ Strings.Asc(text2)) &gt; 0x7e)) | (Strings.Asc(text6) &lt; 0)) | (Strings.Asc(text6) &gt; 0xff))
+            {
+                  text3 = text3 + text6;
+            }
+            else
+            {
+                  text3 = text3 + StringType.FromChar(Strings.Chr(Strings.Asc(text6) ^ Strings.Asc(text2)));
+            }
+            if (num2 == Strings.Len(key))
+            {
+                  num2 = 0;
+            }
+            num2++;
+      }
+      return text3;
+}</pre>
+<p style="text-indent:2em;">
+	其实不需要这个函数，稍懂编程的人便可根据加密函数写出对应的解密函数。
+</p>
+<p style="text-indent:2em;">
+	解密逻辑：
+</p>
+<p style="text-indent:2em;">
+	+--判断密文长度是否是偶数|下一步
+</p>
+<p style="text-indent:2em;">
+	|是(重组密文) 否|下一步
+</p>
+<p style="text-indent:2em;">
+	|一位位截得密码和key的某位异或|下一步
+</p>
+<p style="text-indent:2em;">
+	|根据异或结果组合字符|下一步
+</p>
+<p style="text-indent:2em;">
+	+最终结果|
+</p>
+<p style="text-indent:2em;">
+	根据此逻辑书写的VB代码如下：
+</p>
+<pre class="prettyprint">Public Function jiemi(ByVal PlainStr As String, ByVal key As String) As String
+        Dim strChar, KeyChar, NewStr As String
+        Dim Pos As Integer
+        Dim i As Integer
+        Dim Side1 As String
+        Dim Side2 As String
+        Pos = 1
+        If Len(PlainStr) Mod 2 = 0 Then
+            Side1 = StrReverse(Left(PlainStr, CInt((Len(PlainStr) / 2)))) '反转明文密码最左边一半的字符
+            Side2 = StrReverse(Right(PlainStr, CInt((Len(PlainStr) / 2)))) '反转明文密码最右边一半的字符
+            PlainStr = Side1 &amp; Side2
+        End If
+        For i = 1 To Len(PlainStr)
+            strChar = Mid(PlainStr, i, 1) '一个一个处理plainstr中的字符
+            KeyChar = Mid(key, Pos, 1) '循环使用key中的字符
+            If ((Asc(strChar) Xor Asc(KeyChar)) &lt; 32) Or ((Asc(strChar) Xor Asc(KeyChar)) &gt; 126) Or (Asc(strChar) &lt; 0) Or (Asc(strChar) &gt; 255) Then
+                NewStr = NewStr &amp; strChar
+            Else
+                NewStr = NewStr &amp; Chr(Asc(strChar) Xor Asc(KeyChar))
+            End If
+            If Pos = Len(key) Then Pos = 0
+            Pos = Pos + 1
+        Next
+        jiemi = NewStr
+    End Function</pre>
+<p style="text-indent:2em;">
+	现在加密和解密的函数都已完全写出来了，由此得到了两个公式：jiam(明文,key)=密文 &nbsp; &nbsp;jiemi(密文,key)=明文
+</p>
+<p style="text-indent:2em;">
+	但是在上面的场景是已知明文和密文，有没有可能运算得到Key呢：GetKey(明文,密文)=key ？
+</p>
+<p style="text-indent:2em;">
+	答案是肯定的，因为由jiam()函数得知：明文和密文的长度一定相等。由于已知异或运算的法则如此：明文(异或)循环key=密文、{明文(异或)key}(异或)明文=循环Key，所以密文(异或)明文=循环Key。
+</p>
+<p style="text-indent:2em;">
+	根据此逻辑书写VB代码如下：
+</p>
+<pre class="prettyprint">Public Function GetKey(ByVal PlainStr As String, ByVal Pass As String) As String
+        Dim strChar, KeyChar, NewStr As String
+        Dim Pos As Integer
+        Dim i As Integer
+        Dim Side1 As String
+        Dim Side2 As String
+        Pos = 1
+        If Len(PlainStr) Mod 2 = 0 Then
+            Side1 = StrReverse(Left(PlainStr, CInt((Len(PlainStr) / 2)))) '反转明文密码最左边一半的字符
+            Side2 = StrReverse(Right(PlainStr, CInt((Len(PlainStr) / 2)))) '反转明文密码最右边一半的字符
+            PlainStr = Side1 &amp; Side2
+        End If
+        For i = 1 To Len(PlainStr)
+            strChar = Mid(PlainStr, i, 1) '一个一个处理plainstr中的字符
+            KeyChar = Mid(Pass, Pos, 1) '循环使用pass中的字符
+            If strChar = KeyChar Then
+                NewStr = NewStr &amp; "*"
+            Else
+                NewStr = NewStr &amp; Chr(Asc(strChar) Xor Asc(KeyChar))
+            End If
+            Pos = Pos + 1
+        Next
+        GetKey = NewStr
+End Function</pre>
+<p style="text-indent:2em;">
+	到这里，我们遇到了一个问题，那就是密文中的有些字符并没有经过异或运算而直接加入到了结果之中，也就是Key在某此字符处并没有起作用，所以在这些地方无法逆出相应的Key字符。那该怎么办呢？前面我们已经提到了，我们有几组明文和密码的对照，所以可以通过N组逆运算来确定最终的Key(当然如果密码足够长也可以达到此效果，因为key的长度是一定的[一直在循环使用])，未参与运算部分的key用<em>号来代替(如果Key中有</em>号呢，就用其它符号代替呗！)
+</p>
+<p style="text-indent:2em;">
+	测试了几组对照的明文密文，得到如下key,
+</p>
+<pre class="prettyprint">A***l*36*j*
+Ac**lf****w
+A*xy*f*65*w
+Acxy*f3**j*
+……</pre>
+<p style="text-indent:2em;">
+	最终可以确定key值为：Acxylf365jw
+</p>
+<p style="text-indent:2em;">
+	<strong>0x03 反观Base64编码</strong>
+</p>
+<p style="text-indent:2em;">
+	看一看类似的可以编码且可还原原码的Base64编码吧!
+</p>
+<p style="text-indent:2em;">
+	Base64的介绍请看：http://zh.wikipedia.org/zh-cn/Base64
+</p>
+<p style="text-indent:2em;">
+	Base64的逻辑是：字符串&gt;&gt;每个字符的8位二进制连接&gt;&gt;每6位转换为十进制对应编码表连接转换后字符；如果要编码的字节数不能被3整除，最后会多出1个或2个字节，那么可以使用下面的方法进行处理：先使用0字节值在末尾补足，使其能够被3整除，然后再进行base64的编码。在编码后的base64文本后加上一个或两个'='号，代表补足的字节数。
+</p>
+<p style="text-indent:2em;">
+	由于6位二进制最大为111111即63最小为000000所以编码表中共有64个字符。
+</p>
+<p style="text-indent:2em;">
+	Base标准编码表：
+</p>
+<p style="text-indent:2em;">
+	<img title="Base标准编码表" alt="Base标准编码表" src="/file/old/4006_2.jpg" width="422" height="415" />
+</p>
+<p style="text-indent:2em;">
+	示例：
+</p>
+<p style="text-indent:2em;">
+	<img title="Base标准编码表" alt="Base标准编码表" src="/file/old/4007_3.jpg" width="307" height="103" />
+</p>
+<p style="text-indent:2em;">
+	<img title="Base标准编码表" alt="Base标准编码表" src="/file/old/4008_4.jpg" width="389" height="96" />
+</p>
+<p style="text-indent:2em;">
+	A &nbsp; QQ==
+</p>
+<p style="text-indent:2em;">
+	BC &nbsp;QkM=
+</p>
+<p style="text-indent:2em;">
+	正常情况下Base64的编码表是：ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=，但如果将编码表中的字符换其它顺序排一下结果又是什么样子呢？
+</p>
+<p style="text-indent:2em;">
+	我使用了这个编码表(等同于key)：abcdefghijklmnopqrstuvwxyz0123456789+/=ABCDEFGHIJKLMNOPQRSTUVWXYZ，编码字符：I Love You!
+</p>
+<p style="text-indent:2em;">
+	得到字符串：ssbm1Qz/if/I3se=，但使用标准编码表解码得到：ƦՌȞǀ 几个“乱码”……  那么在已知编码前字符和编码后字符但编码表不知的情况下能不能根据数组对照来确定编码表呢？
+</p>
+<p style="text-indent:2em;">
+	答案也是肯定的：首先根据明文和密文的长度来确定使用的有没有可能是Base64编码(详情Baidu、Google)，然后再将明文转换为8位二进制每6位再转为十进制。
+</p>
+<p style="text-indent:2em;">
+	假如我们有明文：11CA467C5B1C3C0AB1D6C8A81104CC868CDC0A91 和密文：mtfdqtq2n0m1qJfdm0mWquiXrdzdoee4mteWnendody4q0rdmee5mq==那确定编码表的过程如下：
+</p>
+<p style="text-indent:2em;">
+	<strong>Step1:明文转为8位二进制：</strong>
+</p>
+<p style="text-indent:2em;">
+	00110001001100010100001101000001001101000011011000110111010000110011010101000010001100010100001100110011010000110011000001000001010000100011000101000100001101100100001100111000010000010011100000110001001100010011000000110100010000110100001100111000001101100011100001000011010001000100001100110000010000010011100100110001
+</p>
+<p style="text-indent:2em;">
+	<strong>Step2:每6位二进制数转为十进制(我以|分割便于查看)：</strong>
+</p>
+<p style="text-indent:2em;">
+	12|19|5|3|16|19|16|54|13|52|12|53|16|35|5|3|12|52|12|48|16|20|8|49|17|3|25|3|14|4|4|56|12|19|4|48|13|4|13|3|14|3|24|56|16|52|17|3|12|4|4|57|12|16|
+</p>
+<p style="text-indent:2em;">
+	<strong>Step3对应加密后字串：</strong>
+</p>
+<p style="text-indent:2em;">
+	mtfdqtq2n0m1qJfdm0mWquiXrdzdoee4mteWnendody4q0rdmee5mq==
+</p>
+<p style="text-indent:2em;">
+	得到m在编码表中的位置是12，t在编码表中的位置是19，f在编码表中的位置是5……(因后面的m都是12，t都是19……，所以可以确定这是换了编码表的Base64)。在使用了多组明文和密文对照之后得到了变异的编码表：abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=
+</p>
+<p style="text-indent:2em;">
+	至此成功完成了编码表的逆算。
+</p>
+<p style="text-indent:2em;">
+	对于一次Base64编码的的运算可以通过几组对照的明、密文轻松逆得编码表，假如是两次使用同编码表的Base64编码，还有没有可能得到编码表呢？
+</p>
+<p style="text-indent:2em;">
+	可以做如下分析：(简单的举例，因第一个字符编码后不受后面字符的影响，所以下面分析的是每一次编码后的第一个字符)
+</p>
+<p style="text-indent:2em;">
+	第一次编码后字符空间位于编码表的8位至31位(可打印字符的ASSCII码为32-126)
+</p>
+<pre class="prettyprint">……
+Bin(A)= 01000001  Base64(A)=编码表中第16位
+Bin(E)= 01000101  Base64(E)=编码表中第17位
+Bin(I)= 01001001  Base64(I)=编码表中第18位
+Bin(M)= 01001101  Base64(M)=编码表中第19位
+Bin(Q)= 01010001  Base64(Q)=编码表中第20位
+Bin(U)= 01010101  Base64(U)=编码表中第21位
+Bin(Y)= 01011001  Base64(Y)=编码表中第22位
+……</pre>
+<p style="text-indent:2em;">
+	由于第一次编码后字符范围一定在下面这些字符范围中：
+</p>
+<pre class="prettyprint">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=</pre>
+<p style="text-indent:2em;">
+	其中ASSCII码最小的为”43” 最大的为”122”
+</p>
+<p style="text-indent:2em;">
+	所以二次编码后字符空间位于编码表的第10位至30位。
+</p>
+<p style="text-indent:2em;">
+	由于二次编码的结果是知道的，所以可以用多组密文来确定编码表位于10-30之间的所有字符(但顺序是不知道的)。
+</p>
+<pre class="prettyprint">……
+Base64(Base64(A))= Base64(编码表中第16位的字符)
+Base64(Base64(E))= Base64(编码表中第17位的字符)
+Base64(Base64(I))= Base64(编码表中第18位的字符)
+……</pre>
+<p style="text-indent:2em;">
+	这样编码表10-30位所有字符的Base编码结果都知道了(结果字符还位于10至30位之间)
+</p>
+<p style="text-indent:2em;">
+	由此得到了一个21元的方程(如果解的出来那么编码表中的一部分字符的位置就确定了，不过还没有尝试能不能解出来……)
+</p>
+<p style="text-indent:2em;">
+	可见如果经过了二次编码，要还原编码表还是很困难的(大牛支招吧！)
+</p>
+<p style="text-indent:2em;">
+	<strong>0x04 反思</strong>
+</p>
+<p style="text-indent:2em;">
+	本文只尝试了从首字符去还原二次编码的Base64编码表，是不是有其它方法能很轻易的还原编码表呢？
+</p>
+<p style="text-indent:2em;">
+	对于类似edcode(str,key)一次加密得到的密文且已知算法(密码可还原)的情况下，是不是都可以通过明文和密文逆到key呢？
+</p>
+<p style="text-indent:2em;">
+	<a href="http://drops.wooyun.org/tips/847" target="_blank">[原文地址]</a>
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">RedFree</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2014-01-15
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A0%81/">编码</a>
+          <a href="https://lcx.cc/tags/%E9%80%86%E5%90%91/">逆向</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/vb/">VB</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/">二进制</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+          <a href="https://lcx.cc/tags/%E8%A7%A3%E7%A0%81/">解码</a>
+          <a href="https://lcx.cc/tags/%E8%A7%A3%E5%AF%86/">解密</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E7%A0%B4%E8%A7%A3/">破解</a>
+          <a href="https://lcx.cc/tags/%E7%AE%97%E6%B3%95/">算法</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4172/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">Bypass xss过滤的测试方法</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4170/">
+            <span class="next-text nav-default">Attacking MongoDB</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

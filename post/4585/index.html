@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="wolf" /><meta name="description" content="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集。在渗透测试(特别是内网)中经常需要对目标进行网络资产收集，即对方服务器都有哪些IP，IP上开了哪些端口，端口上运行着哪些服务，此脚本即为实现此过程，相比其他探测脚本有以下优点：1、轻巧简洁,只需python环境，无需安装额外外库。2、扫描完成后生成独立页面报告。" />
+<meta name="keywords" content="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4585/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集" />
+<meta property="og:description" content="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集。在渗透测试(特别是内网)中经常需要对目标进行网络资产收集，即对方服务器都有哪些IP，IP上开了哪些端口，端口上运行着哪些服务，此脚本即为实现此过程，相比其他探测脚本有以下优点：1、轻巧简洁,只需python环境，无需安装额外外库。2、扫描完成后生成独立页面报告。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4585/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2016-04-16T11:11:47&#43;08:00" />
+<meta property="article:modified_time" content="2016-04-16T11:31:41&#43;08:00" />
+
+<meta itemprop="name" content="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集">
+<meta itemprop="description" content="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集。在渗透测试(特别是内网)中经常需要对目标进行网络资产收集，即对方服务器都有哪些IP，IP上开了哪些端口，端口上运行着哪些服务，此脚本即为实现此过程，相比其他探测脚本有以下优点：1、轻巧简洁,只需python环境，无需安装额外外库。2、扫描完成后生成独立页面报告。"><meta itemprop="datePublished" content="2016-04-16T11:11:47&#43;08:00" />
+<meta itemprop="dateModified" content="2016-04-16T11:31:41&#43;08:00" />
+<meta itemprop="wordCount" content="4080">
+<meta itemprop="keywords" content="测试,内网,扫描,渗透,网络,exe,FTP,Hack,HTTP,IP,js,JSON,Python,SQL,Web,安全,编码,端口,服务,狗,脚本,漏洞,文件,问题," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集"/>
+<meta name="twitter:description" content="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集。在渗透测试(特别是内网)中经常需要对目标进行网络资产收集，即对方服务器都有哪些IP，IP上开了哪些端口，端口上运行着哪些服务，此脚本即为实现此过程，相比其他探测脚本有以下优点：1、轻巧简洁,只需python环境，无需安装额外外库。2、扫描完成后生成独立页面报告。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集</h1>
+      
+      <div class="post-meta">
+        <time datetime="2016-04-16" class="post-time">
+          2016-04-16
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E6%B5%8B%E8%AF%95/"> 测试 </a>
+            <a href="https://lcx.cc/categories/%E5%86%85%E7%BD%91/"> 内网 </a>
+            <a href="https://lcx.cc/categories/%E6%89%AB%E6%8F%8F/"> 扫描 </a>
+            <a href="https://lcx.cc/categories/%E6%B8%97%E9%80%8F/"> 渗透 </a>
+            <a href="https://lcx.cc/categories/%E7%BD%91%E7%BB%9C/"> 网络 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4080 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	网络资产信息扫描(F-NAScan)
+</p>
+<p style="text-indent:2em;">
+	wolf (@伏宸安全) | 2016-04-14 13:00
+</p>
+<p style="text-indent:2em;">
+	<strong>网络资产信息扫描</strong> 
+</p>
+<p style="text-indent:2em;">
+	在渗透测试(特别是内网)中经常需要对目标进行网络资产收集，即对方服务器都有哪些IP，IP上开了哪些端口，端口上运行着哪些服务，此脚本即为实现此过程，相比其他探测脚本有以下优点：
+</p>
+<p style="text-indent:2em;">
+	1、轻巧简洁,只需python环境，无需安装额外外库。
+</p>
+<p style="text-indent:2em;">
+	2、扫描完成后生成独立页面报告。
+</p>
+<p style="text-indent:2em;">
+	此脚本的大概流程为：
+</p>
+<p style="text-indent:2em;">
+	ICMP存活探测--&gt;端口开放探测--&gt;端口指纹服务识别--&gt;提取快照(若为WEB)--&gt;生成结果报表
+</p>
+<p style="text-indent:2em;">
+	<strong>运行环境：</strong> 
+</p>
+<p style="text-indent:2em;">
+	python 2.6 +
+</p>
+<p style="text-indent:2em;">
+	<strong>参数说明</strong> 
+</p>
+<p style="text-indent:2em;">
+	-h 必须输入的参数，支持ip(192.168.1.1)，ip段（192.168.1），ip范围指定（192.168.1.1-192.168.1.254）,ip列表文件（ip.ini），最多限制一次可扫描65535个IP。
+</p>
+<p style="text-indent:2em;">
+	-p 指定要扫描端口列表，多个端口使用,隔开 例如：22,23,80,3306。未指定即使用内置默认端口进行扫描(21,22,23,25,53,80,110,139,143,389,443,445,465,873,993,995,1080,1723,1433,1521,3306,3389,3690,5432,5800,5900,6379,7001,8000,8001,8080,8081,8888,9200,9300,9080,9999,11211,27017)
+</p>
+<p style="text-indent:2em;">
+	-m 指定线程数量 默认100线程
+</p>
+<p style="text-indent:2em;">
+	-t 指定HTTP请求超时时间，默认为10秒，端口扫描超时为值的1/2。
+</p>
+<p style="text-indent:2em;">
+	-n 不进行存活探测(ICMP)直接进行扫描。
+</p>
+<p style="text-indent:2em;">
+	结果报告保存在当前目录(扫描IP-时间戳.html)。
+</p>
+<p style="text-indent:2em;">
+	<strong>例子：</strong> 
+</p>
+<p style="text-indent:2em;">
+	python NAScan.py -h 10.111.1
+</p>
+<p style="text-indent:2em;">
+	python NAScan.py -h 192.168.1.1-192.168.2.111
+</p>
+<p style="text-indent:2em;">
+	python NAScan.py -h 10.111.1.22 -p 80,7001,8080 -m 200 -t 6
+</p>
+<p style="text-indent:2em;">
+	python NAScan.py -h ip.ini -p port.ini -n
+</p>
+<p style="text-indent:2em;">
+	服务识别在server_info.ini文件中配置
+</p>
+<p style="text-indent:2em;">
+	格式为：服务名|默认端口|正则 例 ftp|21|^220.*?ftp|^220-
+</p>
+<p style="text-indent:2em;">
+	正则为空时则使用端口进行匹配，否则以正则匹配结果为准。
+</p>
+<p style="text-indent:2em;">
+	<strong>效果图</strong> 
+</p>
+<p style="text-indent:2em;">
+	<img title="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集" alt="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集" src="/file/old/4754_1.jpg" width="669" height="722" /> 
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4755_2.jpg" target="_blank"><img title="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集" alt="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集" src="/file/old/4755_2.jpg" width="780" height="500" /></a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4756_3.jpg" target="_blank"><img title="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集" alt="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集" src="/file/old/4756_3.jpg" width="780" height="502" /></a> 
+</p>
+<p style="text-indent:2em;">
+	下载地址<span style="color:#000000;">：</span><a href="http://down.future-sec.com/F-NAScan.zip" target="_blank">http://down.future-sec.com/F-NAScan.zip</a> 
+</p>
+<p style="text-indent:2em;">
+	项目地址<span style="color:#000000;">：</span><a href="https://github.com/ywolf/F-NAScan" target="_blank">https://github.com/ywolf/F-NAScan</a> 
+</p>
+<p style="text-indent:2em;">
+	欢迎大家反馈建议和BUG
+</p>
+<p style="text-indent:2em;">
+	<a href="http://zone.wooyun.org/content/26588" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4584/" target="_blank">King Of The Proxy (代理之王) v2.0,http/https/socks4/5代理采集/验证工具</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4583/" target="_blank">批量检查域名是否已注册（抢注域名神器）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4572/" target="_blank">讨论：边界之后下一步你会做什么？内网渗透、局域网入侵</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4570/" target="_blank">一个获取windows系统信息的批处理脚本</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4548/" target="_blank">Jboss JMX/EJBInvokerServlet 批量检测工具</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4517/" target="_blank">【APT】NodeJS 应用仓库钓鱼,大规模入侵开发人员电脑,批量渗透各大公司内网</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4513/" target="_blank">批量扫描互联网无线路由设备telnet，并获取WIFI密码</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4505/" target="_blank">Masscan：3分钟扫描整个互联网的极速扫描器</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4491/" target="_blank">Nscan.py - Fast Network Scanner，高速网络扫描器，全网端口扫描神器</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4490/" target="_blank">JS绕过代理、VPN获取真实IP及内网IP，逆向追踪</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4353/" target="_blank">关于 linux shell 内网如何做代理</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4326/" target="_blank">网站应用程序指纹识别工具，网站系统、脚本程序指纹识别工具</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4284/" target="_blank">关于FTP弱口令扫描的，为什么经常见有人搞一些FTP弱口令扫描？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4169/" target="_blank">自制分布式漏洞扫描</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4064/" target="_blank">安卓下有没有可以扫描内网中 手机型号活手机系统版本的？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4016/" target="_blank">跨过边界防火墙，我拿菜刀砍内网</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4003/" target="_blank">社工个人电脑到内网渗透系列</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3938/" target="_blank">一段通过WebRTC获取客户端内网IP的js （无需java/ActiveX支持）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3837/" target="_blank">linux内网渗透一些乱写 欢迎大家讨论</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3806/" target="_blank">InsightScan:Python多线程Ping/端口扫描 + HTTP服务/APP 探测</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3434/" target="_blank">再谈内网渗透</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2844/" target="_blank">King Of The Proxy (代理之王) v1.0 发布、HTTP代理采集、验证工具</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2341/" target="_blank">Crazy Scan v1.0 - 疯狂扫描 v1.0 - 独立版</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2330/" target="_blank">长安刺客 - 旁注杀手 v1.3 + Crazy Scan v1.0 - 疯狂扫描 v1.0，发布！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2318/" target="_blank">Crazy Scan v1.0 - 疯狂扫描 v1.0</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2252/" target="_blank">只用一行cmd命令扫描指定域名C段所有存活的主机</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1959/" target="_blank">查找“CDN、负载均衡、反向代理”等大型网络真实IP地址的方法</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1916/" target="_blank">PHP Web 木马扫描器 - 安全测试工具</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1904/" target="_blank">长安刺客 - 旁注杀手 v1.2 版 + CDN 终结者 v1.1 发布</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1871/" target="_blank">长安刺客 - 旁注杀手 v1.1 版发布，外加强力新功能：CDN 终结者 v1.0</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1814/" target="_blank">物理攻击、抓频攻击 - 利用雷达来进行扫描网络弱点</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/680/" target="_blank">扫描指定IP网段存在的网络摄像头、监控设备</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/442/" target="_blank">【Bat】扫描内网指定用户能获取管理权限的机器</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/430/" target="_blank">【VC源码】Wscan.exe 源码（网站目录/文件扫描）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/178/" target="_blank">DEDE 0DAY 批量扫描程序 DEDE5.5批量拿shell工具</a> 
+</p>
+<p>
+	<strong>各种吐槽：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1#
+</p>
+<p style="text-indent:2em;">
+	园长 (喵~) | 2016-04-14 13:02
+</p>
+<p style="text-indent:2em;">
+	前排，支持狼狗
+</p>
+<p style="text-indent:2em;">
+	2#
+</p>
+<p style="text-indent:2em;">
+	_Thorns (舍就是得。) | 2016-04-14 13:02
+</p>
+<p style="text-indent:2em;">
+	赞
+</p>
+<p style="text-indent:2em;">
+	3#
+</p>
+<p style="text-indent:2em;">
+	齐迹 (sec.zbj.com 欢迎来撸) | 2016-04-14 13:03
+</p>
+<p style="text-indent:2em;">
+	前排，支持狼狗
+</p>
+<p style="text-indent:2em;">
+	4#
+</p>
+<p style="text-indent:2em;">
+	小胖子 (z7y首席代言人，园长的表哥...) | 2016-04-14 13:03
+</p>
+<p style="text-indent:2em;">
+	前排，支持狼狗
+</p>
+<p style="text-indent:2em;">
+	5#
+</p>
+<p style="text-indent:2em;">
+	Hackshy (嘘....告诉你个秘密) | 2016-04-14 13:05
+</p>
+<p style="text-indent:2em;">
+	感谢分享。
+</p>
+<p style="text-indent:2em;">
+	6#
+</p>
+<p style="text-indent:2em;">
+	wolf (@伏宸安全) | 2016-04-14 13:05
+</p>
+<p style="text-indent:2em;">
+	@小胖子 @齐迹 @园长 你们都被谁带坏了 wolf = 狼
+</p>
+<p style="text-indent:2em;">
+	7#
+</p>
+<p style="text-indent:2em;">
+	闰土。 (骗我长胖 ?) | 2016-04-14 13:06
+</p>
+<p style="text-indent:2em;">
+	前排，支持狼狗
+</p>
+<p style="text-indent:2em;">
+	8#
+</p>
+<p style="text-indent:2em;">
+	路人N (?) | 2016-04-14 13:21
+</p>
+<p style="text-indent:2em;">
+	赞赞赞~
+</p>
+<p style="text-indent:2em;">
+	9#
+</p>
+<p style="text-indent:2em;">
+	小牛牛 | 2016-04-14 13:25
+</p>
+<p style="text-indent:2em;">
+	牛逼，支持WOlf
+</p>
+<p style="text-indent:2em;">
+	10#
+</p>
+<p style="text-indent:2em;">
+	Mystery。 (设计师一枚) | 2016-04-14 13:35
+</p>
+<p style="text-indent:2em;">
+	支持师傅
+</p>
+<p style="text-indent:2em;">
+	11#
+</p>
+<p style="text-indent:2em;">
+	BloodSword | 2016-04-14 13:38
+</p>
+<p style="text-indent:2em;">
+	中排，支持狼狗
+</p>
+<p style="text-indent:2em;">
+	12#
+</p>
+<p style="text-indent:2em;">
+	luwikes (土豆你个西红柿，番茄你个马铃薯～～～) | 2016-04-14 13:47
+</p>
+<p style="text-indent:2em;">
+	后排，支持狼狗
+</p>
+<p style="text-indent:2em;">
+	13#
+</p>
+<p style="text-indent:2em;">
+	JiuShao | 2016-04-14 14:06
+</p>
+<p style="text-indent:2em;">
+	@wolf 我能来你们办公室走吗 我在你们楼下。
+</p>
+<p style="text-indent:2em;">
+	14#
+</p>
+<p style="text-indent:2em;">
+	ver007 | 2016-04-14 14:07
+</p>
+<p style="text-indent:2em;">
+	输出效果不错拿来用用
+</p>
+<p style="text-indent:2em;">
+	15#
+</p>
+<p style="text-indent:2em;">
+	DNS | 2016-04-14 14:10
+</p>
+<p style="text-indent:2em;">
+	@JiuShao 来来
+</p>
+<p style="text-indent:2em;">
+	16#
+</p>
+<p style="text-indent:2em;">
+	JiuShao | 2016-04-14 14:15
+</p>
+<p style="text-indent:2em;">
+	@DNS 你们在了么 我真上来了哟
+</p>
+<p style="text-indent:2em;">
+	17#
+</p>
+<p style="text-indent:2em;">
+	prolog (事了拂衣去，不收一分钱) | 2016-04-14 14:18
+</p>
+<p style="text-indent:2em;">
+	前排，支持狼狗
+</p>
+<p style="text-indent:2em;">
+	18#
+</p>
+<p style="text-indent:2em;">
+	Azui | 2016-04-14 14:29
+</p>
+<p style="text-indent:2em;">
+	赞！
+</p>
+<p style="text-indent:2em;">
+	19#
+</p>
+<p style="text-indent:2em;">
+	luwikes (土豆你个西红柿，番茄你个马铃薯～～～) | 2016-04-14 14:42
+</p>
+<p style="text-indent:2em;">
+	感谢楼主分享．提个小bug，不加-n参数的话会一直显示提示信息，可是提示信息里的-n参数写的是可选．．
+</p>
+<p style="text-indent:2em;">
+	20#
+</p>
+<p style="text-indent:2em;">
+	HackBraid | 2016-04-14 14:44
+</p>
+<p style="text-indent:2em;">
+	这个比nmap好用吗
+</p>
+<p style="text-indent:2em;">
+	21#
+</p>
+<p style="text-indent:2em;">
+	wolf (@伏宸安全) | 2016-04-14 14:50
+</p>
+<p style="text-indent:2em;">
+	@luwikes 测试不存在这个问题 发下你的环境信息看看
+</p>
+<p style="text-indent:2em;">
+	@HackBraid 比不上NMAP全面,但也有自己的优点
+</p>
+<p style="text-indent:2em;">
+	22#
+</p>
+<p style="text-indent:2em;">
+	null_z | 2016-04-14 14:51
+</p>
+<p style="text-indent:2em;">
+	赞赞赞！ py还有个nmap的包扫描结果是json格式的跟其他工具对接也超级棒。
+</p>
+<p style="text-indent:2em;">
+	23#
+</p>
+<p style="text-indent:2em;">
+	rockes | 2016-04-14 14:59
+</p>
+<p style="text-indent:2em;">
+	为什么我在WIN10下面跑， F-NAScan.py 172.19.2.0 任何回显都没有 又弹出dos框呢？我的python版本是2.7
+</p>
+<p style="text-indent:2em;">
+	24#
+</p>
+<p style="text-indent:2em;">
+	L.N. (http://ln.sycsec.com/) | 2016-04-14 15:03
+</p>
+<p style="text-indent:2em;">
+	必须点赞
+</p>
+<p style="text-indent:2em;">
+	25#
+</p>
+<p style="text-indent:2em;">
+	wolf (@伏宸安全) | 2016-04-14 15:08
+</p>
+<p style="text-indent:2em;">
+	@rockes -h 172.19.2
+</p>
+<p style="text-indent:2em;">
+	26#
+</p>
+<p style="text-indent:2em;">
+	带馅儿馒头 (我就一小小小小鸟) | 2016-04-14 15:19
+</p>
+<p style="text-indent:2em;">
+	赞
+</p>
+<p style="text-indent:2em;">
+	27#
+</p>
+<p style="text-indent:2em;">
+	newbie0086 | 2016-04-14 15:19
+</p>
+<p style="text-indent:2em;">
+	这个在内网配合插件自动化测试 效果一级棒
+</p>
+<p style="text-indent:2em;">
+	28#
+</p>
+<p style="text-indent:2em;">
+	wolf (@伏宸安全) | 2016-04-14 15:23
+</p>
+<p style="text-indent:2em;">
+	@newbie0086 最近这2个工具都是在客户现场做渗透测试为了方便写出来的。
+</p>
+<p style="text-indent:2em;">
+	29#
+</p>
+<p style="text-indent:2em;">
+	pyphrb (please called 强爷) | 2016-04-14 15:28
+</p>
+<p style="text-indent:2em;">
+	前排，支持狼狗
+</p>
+<p style="text-indent:2em;">
+	30#
+</p>
+<p style="text-indent:2em;">
+	Master (小菜一枚) | 2016-04-14 15:40
+</p>
+<p style="text-indent:2em;">
+	冒泡
+</p>
+<p style="text-indent:2em;">
+	31#
+</p>
+<p style="text-indent:2em;">
+	wolf (@伏宸安全) | 2016-04-14 15:44
+</p>
+<p style="text-indent:2em;">
+	@luwikes 解决这个问题了 https://github.com/ywolf/F-NAScan 重新下载试试
+</p>
+<p style="text-indent:2em;">
+	32#
+</p>
+<p style="text-indent:2em;">
+	凌零1 | 2016-04-14 16:15
+</p>
+<p style="text-indent:2em;">
+	后排学习
+</p>
+<p style="text-indent:2em;">
+	33#
+</p>
+<p style="text-indent:2em;">
+	好基友一辈子 | 2016-04-14 16:31
+</p>
+<p style="text-indent:2em;">
+	<img title="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集" alt="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集" src="/file/old/4757_4.png" width="706" height="447" /> 
+</p>
+<p style="text-indent:2em;">
+	34#
+</p>
+<p style="text-indent:2em;">
+	好基友一辈子 | 2016-04-14 16:31
+</p>
+<p style="text-indent:2em;">
+	@wolf 权限是777
+</p>
+<p style="text-indent:2em;">
+	35#
+</p>
+<p style="text-indent:2em;">
+	wolf (@伏宸安全) | 2016-04-14 16:35
+</p>
+<p style="text-indent:2em;">
+	@好基友一辈子 是不稳定吗？ 超时调高一点试试看，默认为10秒。
+</p>
+<p style="text-indent:2em;">
+	36#
+</p>
+<p style="text-indent:2em;">
+	wolf (@伏宸安全) | 2016-04-14 16:43
+</p>
+<p style="text-indent:2em;">
+	@好基友一辈子 在print 'Results output failure'上面加上print e 看看是什么错误信息
+</p>
+<p style="text-indent:2em;">
+	37#
+</p>
+<p style="text-indent:2em;">
+	路人N (?) | 2016-04-14 17:13
+</p>
+<p style="text-indent:2em;">
+	@wolf 帮你换了个皮肤(⌒▽⌒)
+</p>
+<p style="text-indent:2em;">
+	使用方法：把write_result函数改成下面的，扫描结束，打开这个文件http://paste.ubuntu.net/15825793/
+</p>
+<p style="text-indent:2em;">
+	def write_result():
+</p>
+<p style="text-indent:2em;">
+	try:
+</p>
+<p style="text-indent:2em;">
+	content = "var servers="+str(json.dumps(re_data))+";\n"
+</p>
+<p style="text-indent:2em;">
+	content += "var portdata="+str(json.dumps(port_data))+";\n"
+</p>
+<p style="text-indent:2em;">
+	content += "var statistics="+str(json.dumps(statistics))+";\n"
+</p>
+<p style="text-indent:2em;">
+	result = open("result.js","w")
+</p>
+<p style="text-indent:2em;">
+	result.write(content)
+</p>
+<p style="text-indent:2em;">
+	result.close()
+</p>
+<p style="text-indent:2em;">
+	except Exception,e:
+</p>
+<p style="text-indent:2em;">
+	print 'Results output failure'
+</p>
+<p style="text-indent:2em;">
+	效果图：
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4758_5.png" target="_blank"><img title="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集" alt="网络资产信息扫描(F-NAScan)：NAScan.py，内网渗透测试主机信息收集" src="/file/old/4758_5.png" width="780" height="441" /></a> 
+</p>
+<p style="text-indent:2em;">
+	38#
+</p>
+<p style="text-indent:2em;">
+	wolf (@伏宸安全) | 2016-04-14 17:14
+</p>
+<p style="text-indent:2em;">
+	@路人N 好评
+</p>
+<p style="text-indent:2em;">
+	39#
+</p>
+<p style="text-indent:2em;">
+	乌云小秘书 (第1.绝对不意气用事!第2.绝对不漏判任何一件坏事) | 2016-04-14 18:24
+</p>
+<p style="text-indent:2em;">
+	@路人N 666
+</p>
+<p style="text-indent:2em;">
+	40#
+</p>
+<p style="text-indent:2em;">
+	终于乌云了 | 2016-04-14 18:55
+</p>
+<p style="text-indent:2em;">
+	大赞
+</p>
+<p style="text-indent:2em;">
+	41#
+</p>
+<p style="text-indent:2em;">
+	白开水 | 2016-04-14 18:59
+</p>
+<p style="text-indent:2em;">
+	mark
+</p>
+<p style="text-indent:2em;">
+	42#
+</p>
+<p style="text-indent:2em;">
+	scanf (www.scanfsec.com 网络尖刀) | 2016-04-14 19:08
+</p>
+<p style="text-indent:2em;">
+	可以打包成exe吗？
+</p>
+<p style="text-indent:2em;">
+	43#
+</p>
+<p style="text-indent:2em;">
+	toomi | 2016-04-14 20:58
+</p>
+<p style="text-indent:2em;">
+	狼哥真是赞啊，学习了
+</p>
+<p style="text-indent:2em;">
+	44#
+</p>
+<p style="text-indent:2em;">
+	Sai、 | 2016-04-14 21:22
+</p>
+<p style="text-indent:2em;">
+	内网探测很好用
+</p>
+<p style="text-indent:2em;">
+	45#
+</p>
+<p style="text-indent:2em;">
+	从容 (@寂寞的瘦子 其实是个死胖子！) | 2016-04-14 21:57
+</p>
+<p style="text-indent:2em;">
+	支持狼狗
+</p>
+<p style="text-indent:2em;">
+	46#
+</p>
+<p style="text-indent:2em;">
+	LoveSnow (我要努力，争取开发自己的神器) | 2016-04-15 00:24
+</p>
+<p style="text-indent:2em;">
+	支持狼狗
+</p>
+<p style="text-indent:2em;">
+	47#
+</p>
+<p style="text-indent:2em;">
+	LoveSnow (我要努力，争取开发自己的神器) | 2016-04-15 01:00
+</p>
+<p style="text-indent:2em;">
+	@路人N js获取的结果怎么进不来呢？
+</p>
+<p style="text-indent:2em;">
+	48#
+</p>
+<p style="text-indent:2em;">
+	ADO (为啥我名字又短又简单，因为我智商低啊) | 2016-04-15 08:41
+</p>
+<p style="text-indent:2em;">
+	@路人N 非常好用，赞！
+</p>
+<p style="text-indent:2em;">
+	@wolf 干的漂亮，Thanks！
+</p>
+<p style="text-indent:2em;">
+	49#
+</p>
+<p style="text-indent:2em;">
+	cf_hb (10000定律&lt;=&gt;实践ing) | 2016-04-15 09:34
+</p>
+<p style="text-indent:2em;">
+	赞，以后内网探测就用这个小脚本了。
+</p>
+<p style="text-indent:2em;">
+	50#
+</p>
+<p style="text-indent:2em;">
+	x1aoh4i (灰狗 、 就是灰狗) | 2016-04-15 09:42
+</p>
+<p style="text-indent:2em;">
+	后排，支持狼狗
+</p>
+<p style="text-indent:2em;">
+	51#
+</p>
+<p style="text-indent:2em;">
+	猪猪 | 2016-04-15 09:48
+</p>
+<p style="text-indent:2em;">
+	下载的压缩文件是损坏的？
+</p>
+<p style="text-indent:2em;">
+	52#
+</p>
+<p style="text-indent:2em;">
+	wolf (@伏宸安全) | 2016-04-15 10:02
+</p>
+<p style="text-indent:2em;">
+	@猪猪 多谢提醒 重新上传了
+</p>
+<p style="text-indent:2em;">
+	@scanf 可以的
+</p>
+<p style="text-indent:2em;">
+	53#
+</p>
+<p style="text-indent:2em;">
+	好基友一辈子 | 2016-04-15 10:05
+</p>
+<p style="text-indent:2em;">
+	@wolf 应该是编码问题，扫描过程中web页面如果有乱码或者编码不同的时候会导致导出失败
+</p>
+<p style="text-indent:2em;">
+	54#
+</p>
+<p style="text-indent:2em;">
+	东方不败 (日出东方，唯我不败) | 2016-04-15 10:23
+</p>
+<p style="text-indent:2em;">
+	赞 结合路人甲的 内网以后不用了
+</p>
+<p style="text-indent:2em;">
+	55#
+</p>
+<p style="text-indent:2em;">
+	风之传说 | 2016-04-15 10:25
+</p>
+<p style="text-indent:2em;">
+	前后用了三个，一个没有指纹识别，一个打开报告有错误，还有一个需要加载其他的库。 这个接近完美了，在我看来。 感谢了一个。
+</p>
+<p style="text-indent:2em;">
+	56#
+</p>
+<p style="text-indent:2em;">
+	小葵 (burpsuite+metasploit就是我爹。) | 2016-04-15 11:40
+</p>
+<p style="text-indent:2em;">
+	大赞.. 不错不错 内网神器.. 收下啦. 自己改改代码... 省的自己再写了.
+</p>
+<p style="text-indent:2em;">
+	57#
+</p>
+<p style="text-indent:2em;">
+	东方不败 (日出东方，唯我不败) | 2016-04-15 14:06
+</p>
+<p style="text-indent:2em;">
+	@路人N 这个每次打开不同报告都要改名result.js么- -有不有直接封装html啊。。不然好麻烦啊@wolf
+</p>
+<p style="text-indent:2em;">
+	58#
+</p>
+<p style="text-indent:2em;">
+	wolf (@伏宸安全) | 2016-04-15 15:24
+</p>
+<p style="text-indent:2em;">
+	@好基友一辈子 解决这个问题了 增加了编码识别环节，增加了忽略证书验证+容错 https://github.com/ywolf/F-NAScan
+</p>
+<p style="text-indent:2em;">
+	59#
+</p>
+<p style="text-indent:2em;">
+	wolf (@伏宸安全) | 2016-04-15 16:12
+</p>
+<p style="text-indent:2em;">
+	@scanf 已经打包成独立exe文件 http://down.future-sec.com/F-NAScan.exe
+</p>
+<p style="text-indent:2em;">
+	60#
+</p>
+<p style="text-indent:2em;">
+	小歪 | 2016-04-15 17:20
+</p>
+<p style="text-indent:2em;">
+	可以放弃iisputscan了
+</p>
+<p style="text-indent:2em;">
+	61#
+</p>
+<p style="text-indent:2em;">
+	路人N (?) | 2016-04-15 17:37
+</p>
+<p style="text-indent:2em;">
+	@wolf @东方不败 http://paste.ubuntu.net/15846036/
+</p>
+<p style="text-indent:2em;">
+	62#
+</p>
+<p style="text-indent:2em;">
+	wolf (@伏宸安全) | 2016-04-15 22:05
+</p>
+<p style="text-indent:2em;">
+	@路人N 不错不错
+</p>
+<p style="text-indent:2em;">
+	63#
+</p>
+<p style="text-indent:2em;">
+	廷廷 (想法最重要) | 2016-04-15 23:47
+</p>
+<p style="text-indent:2em;">
+	不错支持共享
+</p>
+<p style="text-indent:2em;">
+	64#
+</p>
+<p style="text-indent:2em;">
+	指尖上的故事 | 2016-04-16 00:39
+</p>
+<p style="text-indent:2em;">
+	@wolf @路人N
+</p>
+<p style="text-indent:2em;">
+	[img src="http://imgur.com/HBj1A8A" alt="报表"/]
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4759_6.png" target="_blank"><img title="提供一个思路：增加功能让这个更强大些（半自动化）。" alt="提供一个思路：增加功能让这个更强大些（半自动化）。" src="/file/old/4759_6.png" width="780" height="497" /></a> 
+</p>
+<p style="text-indent:2em;">
+	提供一个思路：增加功能让这个更强大些（半自动化）。
+</p>
+<p style="text-indent:2em;">
+	port = '21,22,23,25,53,80,110,139,143,389,443,445,465,873,993,995,1080,1723,1433,1521,3306,3389,3690,5432,5800,5900,6379,7001,8000,8001,8080,8081,8888,9200,9300,9080,9999,11211,27017'
+</p>
+<p style="text-indent:2em;">
+	如果： 21 ftp 22 ssh 80 web 3389 rdp 3306 mysql
+</p>
+<p style="text-indent:2em;">
+	先是扫描出了开始IP段 &amp; 结束IP段，然后比如扫描出来的某IP地址存在3389 3306 22 21 80 这些端口服务。
+</p>
+<p style="text-indent:2em;">
+	然后比如：3389弱口令字典爆破什么的在python中编写如下测试逻辑。
+</p>
+<p style="text-indent:2em;">
+	在然后比如：80 web端口可以用到的漏洞测试逻辑脚本加入到代码中。
+</p>
+<p style="text-indent:2em;">
+	然后比如：3306 mysql默认端口数据库首先检测远程端口是否开放，如果开放进行字典爆破或者根据SQL漏洞进行测试写入等等。
+</p>
+<p style="text-indent:2em;">
+	这样的话就更方便了，能写的话可以试试加入漏洞检测环节。
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="8222,4585,115.209.46.127">
+<p>佚名 @ 2016-04-17 08:36:31</p>
+<p style="text-indent:2em">竟然又活了。。。难得啊</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="8224,4585,60.190.102.60">
+<p>不死牛 @ 2016-04-18 10:35:07</p>
+<p style="text-indent:2em">核总，还以为进去了呢。看到你又活了，真好</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="8226,4585,61.144.241.236">
+<p>佚名 @ 2016-04-18 11:56:49</p>
+<p style="text-indent:2em">哇，这么快就出来，菊花变成向日葵了吧。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">变成核弹发射井了，要不朝你来一发？</p>
+</blockquote>
+<blockquote id="8231,4585,123.158.168.93">
+<p>站长好 @ 2016-04-20 17:37:18</p>
+<p style="text-indent:2em">站长 你这网站记录了我哪些信息啊    浏览一个网站，网站都会记录哪些个人信息呢？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">时间，IP，浏览的网址，浏览器类型，系统类型，以及一些基本系统信息。</p>
+</blockquote>
+<blockquote id="8235,4585,218.66.140.115">
+<p>佚名 @ 2016-04-23 10:29:52</p>
+<p style="text-indent:2em">忘记买春哥了 核总、
+丞相我还不能死</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!! ......</p>
+</blockquote>
+<blockquote id="8237,4585,14.215.165.51">
+<p>宝宝 @ 2016-04-26 00:04:09</p>
+<p style="text-indent:2em">核总居然没进去</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">进啥？现在天天替国安抓人，忙的都没时间更新网站……</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">wolf</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2016-04-16
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E5%86%85%E7%BD%91/">内网</a>
+          <a href="https://lcx.cc/tags/%E6%89%AB%E6%8F%8F/">扫描</a>
+          <a href="https://lcx.cc/tags/%E6%B8%97%E9%80%8F/">渗透</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/ftp/">FTP</a>
+          <a href="https://lcx.cc/tags/hack/">Hack</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/js/">js</a>
+          <a href="https://lcx.cc/tags/json/">JSON</a>
+          <a href="https://lcx.cc/tags/python/">Python</a>
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A0%81/">编码</a>
+          <a href="https://lcx.cc/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E7%8B%97/">狗</a>
+          <a href="https://lcx.cc/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4586/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【趣事】大家来一起柯南一下、分析下案情，迷の密室盗窃案！</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4584/">
+            <span class="next-text nav-default">King Of The Proxy (代理之王) v2.0,http/https/socks4/5代理采集/验证工具</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

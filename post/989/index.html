@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【文章】第二篇 密码技术 - 第七章 密钥长度 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="应用密码学，第二篇 密码技术，第七章 密钥长度，7.1 对称密钥长度，硬件穷举攻击，56比特密钥，64比特密钥，80比特密钥，80 比特密钥，112 比特密钥，软件破译机，神经网络，病毒，中国式抽彩法，使用中国式抽彩的穷举攻击估计，生物工程技术，热力学的局限性。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="应用密码学,第二篇 密码技术,第七章 密钥长度,7.1 对称密钥长度,硬件穷举攻击,56比特密钥,64比特密钥,80比特密钥,80 比特密钥,112 比特密钥,软件破译机,神经网络,病毒,中国式抽彩法,使用中国式抽彩的穷举攻击估计,生物工程技术,热力学的局限性,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/989/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【文章】第二篇 密码技术 - 第七章 密钥长度" />
+<meta property="og:description" content="应用密码学，第二篇 密码技术，第七章 密钥长度，7.1 对称密钥长度，硬件穷举攻击，56比特密钥，64比特密钥，80比特密钥，80 比特密钥，112 比特密钥，软件破译机，神经网络，病毒，中国式抽彩法，使用中国式抽彩的穷举攻击估计，生物工程技术，热力学的局限性。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/989/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-12-02T16:40:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-12-02T16:40:00&#43;08:00" />
+
+<meta itemprop="name" content="【文章】第二篇 密码技术 - 第七章 密钥长度">
+<meta itemprop="description" content="应用密码学，第二篇 密码技术，第七章 密钥长度，7.1 对称密钥长度，硬件穷举攻击，56比特密钥，64比特密钥，80比特密钥，80 比特密钥，112 比特密钥，软件破译机，神经网络，病毒，中国式抽彩法，使用中国式抽彩的穷举攻击估计，生物工程技术，热力学的局限性。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-12-02T16:40:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-12-02T16:40:00&#43;08:00" />
+<meta itemprop="wordCount" content="6870">
+<meta itemprop="keywords" content="技术,密码,密钥,IE,NDS,安全,病毒,测试,电视,分析,攻击,加密,密码学,软件,设备,数据,算法,讨论,网络,文件,问题,系统,中国," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【文章】第二篇 密码技术 - 第七章 密钥长度"/>
+<meta name="twitter:description" content="应用密码学，第二篇 密码技术，第七章 密钥长度，7.1 对称密钥长度，硬件穷举攻击，56比特密钥，64比特密钥，80比特密钥，80 比特密钥，112 比特密钥，软件破译机，神经网络，病毒，中国式抽彩法，使用中国式抽彩的穷举攻击估计，生物工程技术，热力学的局限性。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【文章】第二篇 密码技术 - 第七章 密钥长度</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-12-02" class="post-time">
+          2010-12-02
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+            <a href="https://lcx.cc/categories/%E5%AF%86%E9%92%A5/"> 密钥 </a>
+            
+          </div>
+        <span class="more-meta"> 约 6870 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<H1 align=center>第二篇&nbsp;密码技术</H1>
+<H2 align=center>第七章&nbsp;密钥长度</H2>
+<H3>7.1 对称密钥长度</H3>
+<P>&nbsp;&nbsp;&nbsp; 对称密码体制的安全性是算法强度和密钥长度的函数：前者更加重要而后者则更容易描述。</P>
+<P>&nbsp;&nbsp;&nbsp; 假设算法具有足够的强度，实际上这点极难做到，不过本例却很容易。这里我所指的足够是：除了用穷举攻击的方式试探所有的密钥外没有更好的方法破译该密码系统。</P>
+<P>&nbsp;&nbsp;&nbsp; 为了发动对密码系统的攻击，密码分析者需要少量的密文和对应的明文，穷举攻击是一种已知明文的攻击。对分组密码来说，密码分析者需要密文分组和对应的明文分组：通常是64比特。获得明文和密文比你想象的要容易，密码分析者可通过一些手段获取明文消息的副本而后去截取相应的密文。他们可能知道有关密文格式的一些信息：如，它是一个WordPerfect文件，它有一个标准的电子邮件消息头，它是一个UNIX目录文件，一幅TIFF图像，或用户数据库中的一个标准记录。而所有这些格式都有一些予定义字节。密码分析者不需要太多的明文来发起这种攻击。</P>
+<P>&nbsp;&nbsp;&nbsp; 很容易计算一次穷举攻击的复杂程度：如果密钥长度为8比特，那么有2<SUP>8</SUP>=256种可能的密钥，因而找出正确的密钥将需要256次尝试，在128次尝试后找到正确密钥的概率是百分之五十。假如密钥长度为56比特，会有2<SUP>56</SUP>种可能密钥。设想有一台每秒能检验一百万个密钥的超级计算机，也需要2285年时间才能找出正确的密钥。如果密钥长度为64比特，则将需要585,000年才能在2<SUP>64</SUP>种可能的密钥中找出正确的密钥；如果密钥长128比特，则需要10<SUP>25</SUP>年的时间。宇宙也只有10<SUP>10</SUP>年的历史，相对而言10<SUP>25</SUP>年太长了。对于一个长为2048比特的密钥，用每秒尝试百万个密钥的百万个计算机并行工作要10<SUP>597</SUP>年才能完成。到那时宇宙或许早已爆炸或膨胀得无影无踪了。</P>
+<P>&nbsp;&nbsp;&nbsp; 在你急着去发明一个8K字节密钥的密码体制之前，请记住其强度问题的另一面：加密算法必须非常安全，以致于除穷举攻击外没有其它更好的方法来破译它。这并不像看上去那样容易。密码学是一门奇妙的艺术，看上去完美的密码系统往往是非常脆弱的。很强的密码系统，哪怕是一点点的改变就会使它变得非常脆弱。对业余密码设计人员的忠告是要对任意新的算法进行健康的、执着的怀疑，最好去信任那些专业密码人员分析了多年而未能攻破的算法，以及去怀疑那些设计者宣称其安全性是如何好的算法。</P>
+<P>&nbsp;&nbsp;&nbsp; 回忆一下1.1 节里的一个重要点：密码体制的安全性应依赖于密钥，而不是依赖于算法的细节。假设密码分析者已经获得了你的算法的所有细节；假设他们能够得到发起唯密文攻击的足够多的密文；假设他们能得到所需要的尽可能多的数据发起明文攻击；甚至假设他们能进行选择明文攻击。在这些情况下，如果你的密码体制仍然是安全的，那么它就达到所需要的安全性要求了。</P>
+<P>&nbsp;&nbsp;&nbsp; 忠告归忠告，在密码学领域业余密码人员还是有许多事是可以做的。其实，这里讨论的安全性在许多情况下并非必须，大多数敌手并不具备这方面的知识，也不具有一个强大国家所拥有的计算资源，甚至他们连破译密码的兴趣都没有。要是你正密谋推翻一个强大的政府，就得依靠本书后面讲的那些可靠而正确的算法。剩下的，就是玩得开心了。</P>
+<P>&nbsp;&nbsp;&nbsp; 穷举攻击所需时间和代价估计</P>
+<P>&nbsp;&nbsp;&nbsp; 要记住，穷举攻击是一种典型的已知明文攻击,它需要少量的密文及相应的明文。如果你假设穷举攻击是对算法最有效的攻击的话——一个大的假设——密钥必须足够长以致使攻击不可行，那么密钥要多长呢？</P>
+<P>&nbsp;&nbsp;&nbsp; 有两个参数决定穷举攻击的速度：需测试的密钥量及每个测试的速度。大多数对称密码算法接受一个固定比特长度模式作为密钥，DES有56比特的密钥；共2<SUP>56</SUP>个可能密钥。本书讨论的算法一些有64比特的密钥，也就是说有2<SUP>64</SUP>个可能密钥，另外一些有128比特密钥。</P>
+<P>&nbsp;&nbsp;&nbsp; 每一个可能密钥的测试速度也是一个因素，但重要性次之。为了分析的目的，我们将假定每种不同算法的测试时间是相同的。实际上测试一种算法的速度可能比另一种算法的速度快两、三倍，甚至十倍。但由于我们正在寻找的密钥长度比破译密码的难度大百万倍之多，这个密钥长度是可行的，所以测试速度小小的差异是可以忽略的。</P>
+<P>&nbsp;&nbsp;&nbsp; 在保密通信中关于穷举攻击效率的多数讨论都集中在DES算法上。1977年Whitfield Diffie和Martin Hellman[497]假设了一种专用破译DES的机器。这台机器由一百万个芯片组成，每秒能测试一百万个密钥。这样它可在20个小时内测试2<SUP>56</SUP>个密钥，如果制造出来用于破译64比特密钥的算法，它可在214天内尝试所有的密钥。</P>
+<P>&nbsp;&nbsp;&nbsp; 穷举攻击必须有并行处理器的存在。每个处理器测试密钥空间中的一个子集，它们之间不需要什么通信，要说通信那就是报道成功的消息，并且它们没有共享的内存。设计这样一台具有一百万个并行处理器的机器，并让它们彼此独立地工作是很容易的。</P>
+<P>&nbsp;&nbsp;&nbsp; 最近，Micheal Wiener 决定设计一台穷举攻击机器[1597，1598]。（这台机器是为攻击DES设计的，但对任何算法都适用。）他设计了专门的芯片、主板、支架，并且估算了其价格。他发现只要给定一百万美元就能制造出一台这样的机器使其在平均3.5小时（最多不超过7小时）里能破译密钥长为56比特的DES算法。他还发现机器的价格和破译速度之比是呈线性的，表7.1列出了各种密钥长度的对应数据。记住Moore定律：大约每经18个月计算机的计算能力就翻一番。这意味着每5年价格就会下降到原来的百分之十，所以在1995年所需要的一百万美元到了2000年就只用花十万美元。流水线计算机能够做得更好[724]。</P>
+<P align=center>表7.1 &nbsp;1995年硬件穷举攻击的平均时间估计</P>
+<P align=center>
+<TABLE cellSpacing=0 cellPadding=0 border=1>
+<TBODY>
+<TR>
+<TD width=73 rowSpan=2>
+<P>&nbsp;<B>Cost</B></P></TD>
+<TD width=524 colSpan=6>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <B>&nbsp;Length&nbsp; Of&nbsp; Key&nbsp; In&nbsp; Bits&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </B></P></TD></TR>
+<TR>
+<TD width=112>
+<P><B>&nbsp;&nbsp; &nbsp;&nbsp;40</B></P></TD>
+<TD vAlign=top width=93>
+<P><B>&nbsp;&nbsp; 56</B></P></TD>
+<TD vAlign=top width=84>
+<P><B>&nbsp;&nbsp; &nbsp;64</B></P></TD>
+<TD vAlign=top width=84>
+<P><B>&nbsp;&nbsp; 80</B></P></TD>
+<TD vAlign=top width=75>
+<P><B>&nbsp; 112</B></P></TD>
+<TD vAlign=top width=76>
+<P><B>&nbsp;&nbsp; 128</B></P></TD></TR>
+<TR>
+<TD vAlign=top width=73>
+<P><B>&nbsp;$100K</B></P></TD>
+<TD width=112>
+<P>&nbsp;2 seconds&nbsp; </P></TD>
+<TD vAlign=top width=93>
+<P>&nbsp;35 hours</P></TD>
+<TD vAlign=top width=84>
+<P>&nbsp;1 year</P></TD>
+<TD vAlign=top width=84>
+<P>70,000years</P></TD>
+<TD vAlign=top width=75>
+<P>10<SUP>14</SUP>years</P></TD>
+<TD vAlign=top width=76>
+<P>10<SUP>19</SUP>years</P></TD></TR>
+<TR>
+<TD vAlign=top width=73>
+<P><B>&nbsp;$1M</B></P></TD>
+<TD vAlign=top width=112>
+<P>.2&nbsp; seconds</P></TD>
+<TD vAlign=top width=93>
+<P>3.5 hours</P></TD>
+<TD vAlign=top width=84>
+<P>37years</P></TD>
+<TD vAlign=top width=84>
+<P>7000 years</P></TD>
+<TD vAlign=top width=75>
+<P>10<SUP>13</SUP>years</P></TD>
+<TD vAlign=top width=76>
+<P>10<SUP>18</SUP>years</P></TD></TR>
+<TR>
+<TD vAlign=top width=73>
+<P><B>&nbsp;$10M</B></P></TD>
+<TD vAlign=top width=112>
+<P>.02 seconds</P></TD>
+<TD vAlign=top width=93>
+<P>21 minutes</P></TD>
+<TD vAlign=top width=84>
+<P>4 days</P></TD>
+<TD vAlign=top width=84>
+<P>700 years</P></TD>
+<TD vAlign=top width=75>
+<P>10<SUP>12</SUP>years</P></TD>
+<TD vAlign=top width=76>
+<P>10<SUP>17</SUP> years</P></TD></TR>
+<TR>
+<TD vAlign=top width=73>
+<P><B>&nbsp;$100M</B></P></TD>
+<TD vAlign=top width=112>
+<P>2 milliseconds</P></TD>
+<TD vAlign=top width=93>
+<P>&nbsp;2 minutes</P></TD>
+<TD vAlign=top width=84>
+<P>9 hours</P></TD>
+<TD vAlign=top width=84>
+<P>70 years</P></TD>
+<TD vAlign=top width=75>
+<P>10<SUP>11</SUP> years</P></TD>
+<TD vAlign=top width=76>
+<P>10<SUP>16</SUP> years<SUP></SUP></P></TD></TR>
+<TR>
+<TD vAlign=top width=73>
+<P><B>&nbsp;$1G</B></P></TD>
+<TD vAlign=top width=112>
+<P>.2 milliseconds</P></TD>
+<TD vAlign=top width=93>
+<P>13 seconds</P></TD>
+<TD vAlign=top width=84>
+<P>1 hour</P></TD>
+<TD vAlign=top width=84>
+<P>7 years</P></TD>
+<TD vAlign=top width=75>
+<P>10<SUP>10</SUP> years</P></TD>
+<TD vAlign=top width=76>
+<P>10<SUP>15</SUP> years</P></TD></TR>
+<TR>
+<TD vAlign=top width=73>
+<P><B>&nbsp;$10G</B></P></TD>
+<TD vAlign=top width=112>
+<P>.02 milliseconds</P></TD>
+<TD vAlign=top width=93>
+<P>&nbsp;1 seconds</P></TD>
+<TD vAlign=top width=84>
+<P>5.4minutes</P></TD>
+<TD vAlign=top width=84>
+<P>245 days</P></TD>
+<TD vAlign=top width=75>
+<P>10<SUP>9</SUP> years</P></TD>
+<TD vAlign=top width=76>
+<P>10<SUP>14</SUP> years</P></TD></TR>
+<TR>
+<TD vAlign=top width=73>
+<P><B>&nbsp;$100G</B></P></TD>
+<TD vAlign=top width=112>
+<P>2 microseconds</P></TD>
+<TD vAlign=top width=93>
+<P>.1 seconds</P></TD>
+<TD vAlign=top width=84>
+<P>32seconds</P></TD>
+<TD vAlign=top width=84>
+<P>24 days</P></TD>
+<TD vAlign=top width=75>
+<P>10<SUP>8</SUP> years</P></TD>
+<TD vAlign=top width=76>
+<P>10<SUP>13</SUP> years</P></TD></TR>
+<TR>
+<TD vAlign=top width=73>
+<P><B>&nbsp;$1T</B></P></TD>
+<TD vAlign=top width=112>
+<P>.2 microseconds</P></TD>
+<TD vAlign=top width=93>
+<P>.01 seconds</P></TD>
+<TD vAlign=top width=84>
+<P>3seconds</P></TD>
+<TD vAlign=top width=84>
+<P>2.4 days</P></TD>
+<TD vAlign=top width=75>
+<P>10<SUP>7</SUP> years</P></TD>
+<TD vAlign=top width=76>
+<P>10<SUP>12</SUP> years</P></TD></TR>
+<TR>
+<TD vAlign=top width=73>
+<P><B>&nbsp;$10T</B></P></TD>
+<TD vAlign=top width=112>
+<P>.o2microseconfs</P></TD>
+<TD vAlign=top width=93>
+<P>1milliseconds</P></TD>
+<TD vAlign=top width=84>
+<P>.3seconds</P></TD>
+<TD vAlign=top width=84>
+<P>6 hours</P></TD>
+<TD vAlign=top width=75>
+<P>10<SUP>6</SUP> years</P></TD>
+<TD vAlign=top width=76>
+<P>10<SUP>11</SUP> years</P></TD></TR></TBODY></TABLE></P>
+<P>&nbsp;&nbsp;&nbsp; 对一个56比特密钥，穷举攻击所需金额对很多大公司和一些犯罪组织来说还是可以承受的。对于64比特密钥，则只有一些发达国家的军事预算才能承受。而破译80比特密钥现在仍然不行，但是如果按目前的形势继续发展下去的话，这种情况将会在30年内发生改变。</P>
+<P>&nbsp;&nbsp;&nbsp; 当然，估计未来35年计算机的计算能力是很可笑的，一些科幻小说里出现的技术突破可能会觉得上述预测很可笑。相反，目前一些未知的物理限制又使人们产生不切实际的乐观。在密码学中悲观一点是很明智的。用80-比特密钥的加密算法是一种目光非常短浅的行为，还是坚持用至少112-比特的密钥吧。</P>
+<P>&nbsp;&nbsp;&nbsp; 如果攻击者想要不择手段地破译一个密钥，他们必须要做的全部事情就是花费钱。所以，试图估计一下密钥的最小“价值”似乎是明智的：在试图破译一个有经济价值的密钥之前，要确信它到底有多大价值呢？举个极端的例子，如果一个加密了的消息值1.39 美元，一台价值1000万美元的破译机来寻找密钥在经济上就毫无意义了。另一方面，如果明文消息值1亿美元，那么造一台破译机破译此信息是值得的，何况有些信息的价值会随时间迅速减少。</P>
+<P>软件破译机</P>
+<P>&nbsp;&nbsp;&nbsp; 没有功能特殊的硬件设备和大规模并行计算机，穷举攻击很难有效地工作。对密码系统的软件攻击比硬件攻击大约慢一千倍。</P>
+<P>&nbsp;&nbsp;&nbsp; 基于软件穷举攻击的真正威胁：并非是它的确定性，而是它的“自由”性。装配一台微型计算机来测试可能的密钥，无论其是否在测试都不涉及到成本问题，如果找到正确的密钥——那太好了，如果没找到，也不会失去什么。建立整个这样的微机网络同样不涉及成本问题。最近一次对DES的试验，在一天内用了40个工作站的空闲时间对2<SUP>34</SUP>个密钥进行了测试[603]。照这样的速度，将需要四百万天来测试所有密钥，但是如果足够多的人试图像这样破译的话，总有某个人会在某处交上好运。文献[603]中这样写到：</P>
+<P>&nbsp;&nbsp;&nbsp; 软件威胁的关键是十足的坏运气。设想一个具有512个工作站的大学计算机网络全部联网，对某些校园来说这是一个中等规模的网络，它们甚至可以遍及世界，通过电子邮件来协调各自行动。假设每个工作站能以每秒加密15,000次的速率运行…考虑测试和更换密钥的时间，便得到…每台每秒测试8,192次。用这样的速度测试完[一个56]比特密钥空间将需要545年（假定网络每天工作24小时）。但是请注意，假设学生破译者进行同样的计算，他们在一天内破译出密钥的机会是1/200,000，在一周内破译出的机会增加到1/66,000，他们的设备越先进，或者使用的机器越多，成功的机会自然就越大。这种概率对靠赛马谋生来说机会太小了，但在某些情况下它还算好的，如，同政府的博彩中奖相比它要好得多，“一百万分之一？”“一千年能发生一次吗？”，要简单地说清这些事已不再可能了。这种不断发展的冒险能接受吗？</P>
+<P>&nbsp;&nbsp;&nbsp; 用一个64比特密钥来替换56比特密钥的密码算法来说，其破译难度要大256倍。而对于40比特的密钥，情况就远比这简单得多。一个由400台，每台每秒能加密32,000次的计算机组成的网络，能够在短短一天内完成对40比特密钥的破译（1992年， 40比特密钥的RC2和RC4算法已经被成功破译了——见13.8节）。</P>
+<P>&nbsp;&nbsp;&nbsp; 对128比特密钥来说，进行穷举攻击是十分荒唐的。工业专家估计：到1996年止，世界上将有二亿台计算机在运行，这种估计包括从巨大的Cray大型机到笔记本电脑在内的计算机。如果所有的这些计算机同时一起进行穷举攻击，并且每台以每秒一百万次的加密速度进行，破译这个128比特的密钥也得需要一百万倍宇宙年龄的时间才能成功。</P>
+<P>&nbsp;&nbsp;&nbsp; 神经网络</P>
+<P>&nbsp;&nbsp;&nbsp; 神经网络对密码分析来说并不是非常有用，这主要是其解空间的模式导致的，因为神经网络最擅于处理那些连续解的问题，这些解一些比另一些更好。这就允许神经网络去学习并在学习中得出越来越好的解。而破译密码算法并没有提供太多学习“机会”的方法：你要么找到密钥要么没有。（至少对稍微好的算法是这样。）神经网络适用于那些结构化环境，在那里一些东西必须要学习，而在信息熵很高，随机性非常强的密码学领域就不适用了。</P>
+<P>&nbsp;&nbsp;&nbsp; 病毒</P>
+<P>&nbsp;&nbsp;&nbsp; 让数以百万台计算机放在一起进行穷举攻击的所遇到的最大难题是说服这些计算机的拥有者同意他们的机器参与，你会有礼貌地请求，但那是浪费时间，因为他们会说“不”；你也可以试图侵占他们的机器，但那更是浪费时间，并且你还可能被捕；你还可以利用计算机病毒来散布攻击程序，以更加有效地覆盖到尽可能多的计算机上。</P>
+<P>&nbsp;&nbsp;&nbsp; 这是在文献[1593]中首次提到的特别有趣的思想。攻击者写下并散布计算机病毒，这些病毒并不重新格式化硬盘驱动器和删除文件，它只是在受染计算机的空闲时间处理穷举攻击的密码分析问题。各种各样的研究已表明微型计算机70%至90%的时间是空闲的，于是病毒可以无任何阻碍地找到时间来完成它的任务。如果它是良性的，在它发作的时候甚至可能逃过人们的注意。</P>
+<P>&nbsp;&nbsp;&nbsp; 最后，某个机器也会偶然碰到正确的密钥，此时会有两条路可以选择：其一，攻击病毒将引发另一个不同的病毒。它除了复制有关正确密钥的信息和删除攻击病毒留下的其它的信息外不做任何事情。然后，新的病毒通过计算机网络传播，直到它回到书写原始病毒的人的计算机上为止。</P>
+<P>&nbsp;&nbsp;&nbsp; 其二，卑鄙的方法将是病毒在屏幕上显示以下信息：</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 本机中有严重的病毒存在！</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 请拨1-800-123-4567并且读入下面的64比特数字给操作人员：</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ××××&nbsp; ××××&nbsp; ××××&nbsp; ××××</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 对于第一个报告该病毒的人给予100美元的奖金。</P>
+<P>&nbsp;&nbsp;&nbsp; 这种攻击的有效性有多大呢？假设典型的被感染了病毒的计算机可以每秒测试一千个密钥，远远低于计算机的最大潜力，因为我们不得不假设它会干其他事情，我们也假设典型的病毒感染了一千万台机器，这样这个病毒可以在83天里破译一个56比特密钥，在58年内破译一个64比特的密钥。你或许会收买抗病毒软件的制造者，但那是你们的问题，任何计算机速度或者病毒感染速度的增长必然会使这种攻击更加有效。</P>
+<P>&nbsp;&nbsp;&nbsp; 中国式抽彩法</P>
+<P>&nbsp;&nbsp;&nbsp; 中国式抽彩法是一种折衷的，但对于大规模并行密码分析机来说是一个可行的建议[1278]。设想一种用于穷举攻击的、每秒有百万次测试速度的破译芯片被安装在每台收音机与电视机中售出，每块芯片在通过广播收到一对明文/密文后便自动利用其中的程序检测不同的密钥。于是，每当想要破译密钥时，就广播这个数据，这时所有的收音机和电视机便开始嘎嚓嘎嚓地开动起来。最后，正确的密钥将会在某个地方被某人找到，这个人也因此得到抽彩所中的奖金，这样便确保了结果会有迅速而正确的报告，且也有助于带有破译芯片的收音机和电视机的销售。</P>
+<P>&nbsp;&nbsp;&nbsp; 如果中国每个成年男人、妇女和小孩都拥有一台这样的收音机或电视机，那么56比特算法的正确密钥在61秒内可找到。如果仅仅十分之一的中国人拥有收音机或电视机——这更接近于现实——正确的密钥将在10分钟内找到。64比特算法的密钥将在4.3小时内找到。——如果百分之一的人拥有收音机或电视机的话要43小时。</P>
+<P>&nbsp;&nbsp;&nbsp; 为了使得攻击能付诸实际，要求进行一些修改。首先，使每块芯片测试随机的密钥，而不是唯一的一组密钥将会更加容易，这样将使攻击减慢大约39%左右——从目前我们正处理的数字来看这并不算多。如果每一个人都在测试中，最后，有人就在其“发现密钥”的灯灭了时要打电话通报这个结果，然后读出出现在他们屏幕上的一串数字。</P>
+<P>&nbsp;&nbsp;&nbsp; 表7.2显示了中国式抽彩对不同国家和不同长度密钥的有效性。中国显然是最有利于实施这种攻击的地方，但他们不得不使每一个人都拥有电视机或收音机。美国人数较少，但有多得多的设备。怀俄明州能够在不到一天之内破译一个56比特的密钥。</P>
+<P align=center>表7.2&nbsp; 使用中国式抽彩的穷举攻击估计</P>
+<DIV align=center>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD vAlign=top width=102>
+<P align=center>&nbsp;</P></TD>
+<TD vAlign=top width=104>
+<P align=center>&nbsp;</P></TD>
+<TD vAlign=top width=132>
+<P align=center>&nbsp;</P></TD>
+<TD vAlign=top width=123>
+<P align=center>破译时间</P></TD>
+<TD vAlign=top width=136>
+<P align=center>破译时间</P></TD></TR>
+<TR>
+<TD width=102>
+<P align=center>国家</P></TD>
+<TD width=104>
+<P align=center>人口</P></TD>
+<TD width=132>
+<P align=center>电视和收音机数</P></TD>
+<TD width=123>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 56-bit</P></TD>
+<TD width=136>
+<P>&nbsp;64-bit</P></TD></TR>
+<TR>
+<TD vAlign=top width=102>
+<P align=center>China</P>
+<P align=center>U.S.</P>
+<P align=center>Iraq</P>
+<P align=center>Israel</P>
+<P align=center>Wyoming</P>
+<P align=center>Winnemucca,NV</P></TD>
+<TD vAlign=top width=104>
+<P align=center>1,190,431,000</P>
+<P align=center>260,714,000</P>
+<P align=center>19,890,000</P>
+<P align=center>5,051,000</P>
+<P align=center>470,588</P>
+<P align=center>6,100</P></TD>
+<TD vAlign=top width=132>
+<P align=center>257,000,000</P>
+<P align=center>739,000,000</P>
+<P align=center>4,730,000</P>
+<P align=center>3,640,000</P>
+<P align=center>1,330,000</P>
+<P align=center>17,300</P></TD>
+<TD vAlign=top width=123>
+<P align=center>280secs.</P>
+<P align=center>97secs.</P>
+<P align=center>4.2hrs</P>
+<P align=center>5.5hrs</P>
+<P align=center>15hrs</P>
+<P align=center>48days</P></TD>
+<TD vAlign=top width=136>
+<P align=center>20hrs</P>
+<P align=center>6.9hrs</P>
+<P align=center>44days</P>
+<P align=center>58days</P>
+<P align=center>160days</P>
+<P align=center>34yrs</P></TD></TR></TBODY></TABLE></DIV>
+<P align=center>(所有数据摘自《1995 World Almanac and Book of Facts》)</P>
+<P>&nbsp;&nbsp;&nbsp; 生物工程技术</P>
+<P>&nbsp;&nbsp;&nbsp; 如果生物芯片是可能的，那么不用它作为分布式的穷举攻击密码分析工具将是愚蠢的，考虑一种假想的动物；很不幸地称它为“DESosaur”[1278]，它由能够检验可能密钥的生物细胞组成，这些生物细胞可以通过光学通道接收明文/密文对（细胞是透明的你可以看见）。而密钥解则通过生物体内的特殊细胞经由循环系统送到DESosaur的发音器官。</P>
+<P>&nbsp;&nbsp;&nbsp; 典型的恐龙古生物具有10<SUP>14</SUP>个细胞（包括细菌），如果它们每秒能完成一百万次加密（应该承认，这是一个大的假设），破译一个56比特的密钥需要一万分之七秒，破译一个64比特的密钥少于十分之二秒的时间。但破译一个128比特的密钥仍需10<SUP>11</SUP>年。</P>
+<P>&nbsp;&nbsp;&nbsp; 另一种生物方法是利用遗传密码分析海藻，它能够完成对密码算法的穷举攻击[1278]。这些生物体使制造多处理器的分布式机器成为可能，因为他们能够覆盖很大的区域。每个明/密文对可通过卫星广播，如果一个生物体找到了结果，它附近的细胞将改变颜色并把结果传回卫星。</P>
+<P>&nbsp;&nbsp;&nbsp; 假设典型的海藻细胞大小为10立方微米（这或许是一个大的估计），那么10<SUP>15</SUP>个可占据一立方米，把它们放入海洋，覆盖深一米的200平方英里（518平方公里）的海水（你可以考虑怎样做到这点——我只是出主意的人），这样将有10<SUP>23</SUP>（超过一千亿加仑）个海藻飘浮在海洋中（超过了一千亿加仑的石油）。如果它们中的每一个每秒能够尝试一百万个密钥，那么它们得花超过100年的时间才能破译128比特的密钥（让海藻的处于繁荣期是一个问题），不管海藻处理速度、海藻直径、或者甚至能够在海洋中的扩散区域的大小，其中任何一个取得突破，都将有效地减少这些数字。</P>
+<P>&nbsp;&nbsp;&nbsp; 请不要问我有关纳米工艺的问题。</P>
+<P>&nbsp;&nbsp;&nbsp; 热力学的局限性</P>
+<P>&nbsp;&nbsp;&nbsp; 热力学第二定律的结论是：信息的表达需要一定的能量。通过改变系统的状态，记录单独的1比特所需要的能量不少于kT，其中T表示系统的绝对温度，k是Boltzman常数。（依靠我，物理课程几乎就结束了。）</P>
+<P>&nbsp;&nbsp;&nbsp; 假定k=1.38*10<SUP>-16</SUP>erg/<SUP>。</SUP>Kelvin，宇宙的环境温度为3.2K，那么在此温度下运行的计算机每设置或清除1比特将消耗4.4*10<SUP>-16</SUP>erg的能量。在比宇宙辐射温度低的环境中运行一台计算机会需要附加的能量来运行热泵。</P>
+<P>&nbsp;&nbsp;&nbsp; 目前，太阳每年辐射出的能量约为1.21*10<SUP>41</SUP>erg。这一能量足以使理想的计算机上的2.7*10<SUP>56</SUP>个单独比特发生改变，也足使一个187比特计算器中的所有状态值发生改变。如果绕太阳建造一个Dyson球，并且让它一点也不少地吸收32年的能量，那么我们就能使一台计算机的能量增加到2<SUP>192</SUP>。当然，它不会让能量剩余，以便计算器完成任何有用的计算。</P>
+<P>&nbsp;&nbsp;&nbsp; 但是，这仅仅是一颗星体，所有星体中很渺小的一颗。一颗典型的超新星释放的能量可达10<SUP>51</SUP>erg。（约是能量以微中子形式释放的一百倍，还得现在就开始。）如果所有的这些能量被全部用以运算，那么一个219比特的计算器会循环其所有的状态值。</P>
+<P>&nbsp;&nbsp;&nbsp; 这些数字与设备的技术性能无关，它只是热力学允许的最大值。所以，我们可以断言：对256-比特的密钥进行穷举攻击是绝对行不通的，除非在超空间里用超物质制造计算机。</P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-12-02
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E9%92%A5/">密钥</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/nds/">NDS</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E7%97%85%E6%AF%92/">病毒</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E8%A7%86/">电视</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/">密码学</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BE%E5%A4%87/">设备</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E7%AE%97%E6%B3%95/">算法</a>
+          <a href="https://lcx.cc/tags/%E8%AE%A8%E8%AE%BA/">讨论</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E4%B8%AD%E5%9B%BD/">中国</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/990/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【文章】7.2 公钥密钥长度 - 分解 量子计算机</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/988/">
+            <span class="next-text nav-default">【文章】6.4 数字现金 - 匿名信用卡 双重花费</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

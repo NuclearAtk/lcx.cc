@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【文章】应用密码学：第一章 - 密码基础知识 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="应用密码学，第一章，密码基础知识，消息被称为明文。用某种方法伪装消息以隐藏它的内容的过程称为加密，加了密的消息称为密文，而把密文转变为明文的过程称为解密。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="应用密码学,第一章,密码基础知识,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/940/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【文章】应用密码学：第一章 - 密码基础知识" />
+<meta property="og:description" content="应用密码学，第一章，密码基础知识，消息被称为明文。用某种方法伪装消息以隐藏它的内容的过程称为加密，加了密的消息称为密文，而把密文转变为明文的过程称为解密。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/940/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-11-16T12:25:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-11-16T12:25:00&#43;08:00" />
+
+<meta itemprop="name" content="【文章】应用密码学：第一章 - 密码基础知识">
+<meta itemprop="description" content="应用密码学，第一章，密码基础知识，消息被称为明文。用某种方法伪装消息以隐藏它的内容的过程称为加密，加了密的消息称为密文，而把密文转变为明文的过程称为解密。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-11-16T12:25:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-11-16T12:25:00&#43;08:00" />
+<meta itemprop="wordCount" content="6468">
+<meta itemprop="keywords" content="密码,密码学,IP,安全,编码,二进制,分析,攻击,函数,技术,加密,解密,密钥,入侵,数据,算法,讨论,文件,问题,系统," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【文章】应用密码学：第一章 - 密码基础知识"/>
+<meta name="twitter:description" content="应用密码学，第一章，密码基础知识，消息被称为明文。用某种方法伪装消息以隐藏它的内容的过程称为加密，加了密的消息称为密文，而把密文转变为明文的过程称为解密。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【文章】应用密码学：第一章 - 密码基础知识</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-11-16" class="post-time">
+          2010-11-16
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+            <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+            
+          </div>
+        <span class="more-meta"> 约 6468 字 </span>
+          <span class="more-meta"> 预计阅读 13 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<H2 align=center>第一章&nbsp; 基础知识</H2>
+<H3>1.1 专业术语</H3>
+<P><B>发送者和接收者</B></P>
+<P>&nbsp;&nbsp;&nbsp; 假设发送者想发送消息给接收者，且想安全地发送信息：她想确信偷听者不能阅读发送的消息。</P>
+<P><B>消息和加密</B></P>
+<P>&nbsp;&nbsp;&nbsp; 消息被称为明文。用某种方法伪装消息以隐藏它的内容的过程称为加密，加了密的消息称为密文，而把密文转变为明文的过程称为解密。图1.1表明了这个过程。</P>
+<P>&nbsp;&nbsp;&nbsp; （如果你遵循ISO 7498-2标准，那就用到术语“译成密码（encipher）”和“解译密码（decipher）”。某些文化似乎认为术语“加密(encrypt)”和“解密(decrypt)”令人生厌，如同陈年腐尸。）</P>
+<P align=center><IMG height=102 src="/File.asp?md5=9caa8b3964432ff1a0c52b44a80b3af6" width=444 border=0></P>
+<P align=center>图1.1&nbsp; 加密和解密</P>
+<P>&nbsp;&nbsp;&nbsp; 使消息保密的技术和科学叫做<B>密码编码学</B>，从事此行的叫密码编码者，<B>密码分析者</B>是从事密码分析的专业人员，<B>密码分析学</B>就是破译密文的科学和技术，即揭穿伪装。作为数学的一个分支的密码学包括密码编码学和密码分析学两者，精于此道的人称为密码学家，现代的密码学家通常也是理论数学家。</P>
+<P>&nbsp;&nbsp;&nbsp; 明文用M（消息）或P（明文）表示，它可能是比特流（文本文件、位图、数字化的语音流或数字化的视频图像）。至于涉及到计算机，P是简单地二进制数据（除了这一章节外，这本书本身只涉及二进制数据和计算机密码学）。明文可被传送或存储，无论在哪种情况，M指待加密的消息。</P>
+<P>&nbsp;&nbsp;&nbsp; 密文用C表示，它也是二进制数据，有时和M一样大，有时稍大（通过压缩和加密的结合，C有可能比P小些。然而，单单加密通常达不到这一点）。加密函数E作用于M得到密文C，用数学表示为：</P>
+<P align=center>E（M）=C.</P>
+<P>&nbsp;&nbsp;&nbsp; 相反地，解密函数D作用于C产生M</P>
+<P align=center>D（C）=M.</P>
+<P>&nbsp;&nbsp;&nbsp; 先加密后再解密消息，原始的明文将恢复出来，下面的等式必须成立：</P>
+<P align=center>D（E（M））=M</P>
+<P><B>鉴别、完整性和抗抵赖</B></P>
+<P>&nbsp;&nbsp;&nbsp; 除了提供机密性外，密码学通常有其它的作用：.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; －<B>鉴别</B><B></B></P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 消息的接收者应该能够确认消息的来源；入侵者不可能伪装成他人。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; －<B>完整性</B><B></B></P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 消息的接收者应该能够验证在传送过程中消息没有被修改；入侵者不可能用假消息代替合法消息。</P>
+<P><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </B><B>－抗抵赖</B></P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 发送者事后不可能虚假地否认他发送的消息。</P>
+<P>&nbsp;&nbsp;&nbsp; 这些功能是通过计算机进行社会交流，至关重要的需求，就象面对面交流一样。某人是否就是他说的人；某人的身份证明文件（驾驶执照、医学学历或者护照）是否有效；声称从某人那里来的文件是否确实从那个人那里来的；这些事情都是通过鉴别、完整性和抗抵赖来实现的。</P>
+<P><B>算法和密钥</B></P>
+<P>&nbsp;&nbsp;&nbsp; 密码算法也叫密码，是用于加密和解密的数学函数。（通常情况下，有两个相关的函数：一个用作加密，另一个用作解密）</P>
+<P>&nbsp;&nbsp;&nbsp; 如果算法的保密性是基于保持算法的秘密，这种算法称为受限制的算法。受限制的算法具有历史意义，但按现在的标准，它们的保密性已远远不够。大的或经常变换的用户组织不能使用它们，因为每有一个用户离开这个组织，其它的用户就必须改换另外不同的算法。如果有人无意暴露了这个秘密，所有人都必须改变他们的算法。</P>
+<P>&nbsp;&nbsp;&nbsp; 更糟的是，受限制的密码算法不可能进行质量控制或标准化。每个用户组织必须有他们自己的唯一算法。这样的组织不可能采用流行的硬件或软件产品。但窃听者却可以买到这些流行产品并学习算法，于是用户不得不自己编写算法并予以实现，如果这个组织中没有好的密码学家，那么他们就无法知道他们是否拥有安全的算法。</P>
+<P>&nbsp;&nbsp;&nbsp; 尽管有这些主要缺陷，受限制的算法对低密级的应用来说还是很流行的，用户或者没有认识到或者不在乎他们系统中内在的问题。</P>
+<P>&nbsp;&nbsp;&nbsp; 现代密码学用密钥解决了这个问题，密钥用K表示。K可以是很多数值里的任意值。密钥K的可能值的范围叫做密钥空间。加密和解密运算都使用这个密钥（即运算都依赖于密钥，并用K作为下标表示），这样，加/解密函数现在变成：</P>
+<P align=center>E<SUB>K</SUB>（M）=C</P>
+<P align=center>&nbsp;D<SUB>K</SUB>（C）=M.</P>
+<P>&nbsp;&nbsp;&nbsp; 这些函数具有下面的特性（见图1.2）：</P>
+<P align=center>D<SUB>K</SUB>（E<SUB>K</SUB>（M））=M.</P>
+<P align=center><IMG height=101 src="https://lcx.cc/file/old/906_89c66f45efe8f97486947315.jpg" width=443 border=0></P>
+<P></P>
+<P align=center>图1.2&nbsp; 使用一个密钥的加/解密</P>
+<P align=center><IMG height=135 src="https://lcx.cc/file/old/907_0afb9a09e05d5d843ac76315.jpg" width=443 border=0></P>
+<P align=center>图1.3&nbsp; 使用两个密钥的加/解密</P>
+<P>&nbsp;&nbsp;&nbsp; 有些算法使用不同的加密密钥和解密密钥（见图1.3），也就是说加密密钥K1与相应的解密密钥K2不同，在这种情况下：</P>
+<P align=center>E<SUB>K1</SUB>（M）=C</P>
+<P align=center>D<SUB>K2</SUB>（C）=M</P>
+<P align=center>D<SUB>K2</SUB> （E<SUB>K1</SUB>（M））=M</P>
+<P>&nbsp;&nbsp;&nbsp; 所有这些算法的安全性都基于密钥的安全性；而不是基于算法的细节的安全性。这就意味着算法可以公开，也可以被分析，可以大量生产使用算法的产品，即使偷听者知道你的算法也没有关系；如果他不知道你使用的具体密钥，他就不可能阅读你的消息。</P>
+<P>&nbsp;&nbsp;&nbsp; 密码系统由算法、以及所有可能的明文、密文和密钥组成的。</P>
+<P><B>对称算法</B></P>
+<P>&nbsp;&nbsp;&nbsp; 基于密钥的算法通常有两类：对称算法和公开密钥算法。</P>
+<P>&nbsp;&nbsp;&nbsp; 对称算法有时又叫传统密码算法，就是加密密钥能够从解密密钥中推算出来，反过来也成立。在大多数对称算法中，加/解密密钥是相同的。这些算法也叫秘密密钥算法或单密钥算法，它要求发送者和接收者在安全通信之前，商定一个密钥。对称算法的安全性依赖于密钥，泄漏密钥就意味着任何人都能对消息进行加/解密。只要通信需要保密，密钥就必须保密。</P>
+<P>&nbsp;&nbsp;&nbsp; 对称算法的加密和解密表示为：</P>
+<P align=center>E<SUB>K</SUB>（M）=C</P>
+<P align=center>D<SUB>K</SUB>（C）=M</P>
+<P>&nbsp;&nbsp;&nbsp; 对称算法可分为两类。一次只对明文中的单个比特（有时对字节）运算的算法称为序列算法或序列密码。另一类算法是对明文的一组比特亚行运算，这些比特组称为分组，相应的算法称为分组算法或分组密码。现代计算机密码算法的典型分组长度为64比特——这个长度大到足以防止分析破译，但又小到足以方便使用（在计算机出现前，算法普遍地每次只对明文的一个字符运算，可认为是序列密码对字符序列的运算）。</P>
+<P><B>公开密钥算法</B></P>
+<P>&nbsp;&nbsp;&nbsp; 公开密钥算法（也叫非对称算法）是这样设计的：用作加密的密钥不同于用作解密的密钥，而且解密密钥不能根据加密密钥计算出来（至少在合理假定的长时间内）。之所以叫做公开密钥算法，是因为加密密钥能够公开，即陌生者能用加密密钥加密信息，但只有用相应的解密密钥才能解密信息。在这些系统中，加密密钥叫做公开密钥（简称公钥），解密密钥叫做私人密钥（简称私钥）。私人密钥有时也叫秘密密钥。为了避免与对称算法混淆，此处不用秘密密钥这个名字。</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp; 用公开密钥K加密表示为：</P>
+<P align=center>E<SUB>K</SUB>（M）=C.</P>
+<P>&nbsp;&nbsp;&nbsp; 虽然公开密钥和私人密钥是不同的，但用相应的私人密钥解密可表示为：</P>
+<P align=center>D<SUB>K</SUB>（C）=M</P>
+<P>&nbsp;&nbsp;&nbsp; 有时消息用私人密钥加密而用公开密钥解密，这用于数字签名（见2.6节），尽管可能产生混淆，但这些运算可分别表示为：</P>
+<P align=center>E<SUB>K</SUB>（M）=C</P>
+<P align=center>D<SUB>K</SUB>（C）=M</P>
+<P><B>密码分析</B></P>
+<P>&nbsp;&nbsp;&nbsp; 密码编码学的主要目的是保持明文（或密钥，或明文和密钥）的秘密以防止偷听者（也叫对手、攻击者、截取者、入侵者、敌手或干脆称为敌人）知晓。这里假设偷听者完全能够接获收发者之间的通信。</P>
+<P>&nbsp;&nbsp;&nbsp; 密码分析学是在不知道密钥的情况下。恢复出明文的科学。成功的密码分析能恢复出消息的明文或密钥。密码分析也可以发现密码体制的弱点，最终得到上述结果（密钥通过非密码分析方式的丢失叫做泄露。）</P>
+<P>&nbsp;&nbsp;&nbsp; 对密码进行分析的尝试称为攻击。荷兰人A.Kerckhoffs最早在19世纪阐明密码分析的一个基本假设，这个假设就是秘密必须全寓于密钥中[794]。Kerckhoffs假设密码分析者已有密码算法及其实现的全部详细资料（当然，可以假设中央情报局(CIA)不会把密码算法告诉摩萨德(Mossad)（译注：以色列的情报组织），但Mossad也许会通过什么方法推出来）。在实际的密码分析中并不总是有这些详细信息的&frac34;&frac34;应该如此假设。如果其他人不能破译算法，即便了解算法如何工作也是徒然，如果连算法的知识都没有，那就肯定不可能破译它。</P>
+<P>&nbsp;&nbsp;&nbsp; 常用的密码分析攻击有四类，当然，每一类都假设密码分析者知道所用的加密算法的全部知识：</P>
+<P><B>(1) </B><B>唯密文攻击。</B></P>
+<P><STRONG>&nbsp;&nbsp;&nbsp; </STRONG>密码分析者有一些消息的密文，这些消息都用同一加密算法加密。密码分析者的任务是恢复尽可能多的明文，或者最好是能推算出加密消息的密钥来，以便可采用相同的密钥解出其他被加密的消息。</P>
+<P>&nbsp;&nbsp;&nbsp; 已知：C<SUB>1</SUB>=E<SUB>K</SUB>（P<SUB>1</SUB>），C<SUB>2</SUB>=E<SUB>K</SUB>（P<SUB>2</SUB>），LL，C<SUB>I</SUB>=E<SUB>K</SUB>（P<SUB>i</SUB>）</P>
+<P>&nbsp;&nbsp;&nbsp; 推导出：P<SUB>1</SUB>，P<SUB>2</SUB>，L，P<SUB>i</SUB>；K或者找出一个算法从C<SUB>i+1</SUB>= E<SUB>K</SUB>（P<SUB>i+1</SUB>）推出P<SUB>i+1</SUB>。</P>
+<P><B>(2) </B><B>已知明文攻击。</B></P>
+<P><STRONG>&nbsp;&nbsp;&nbsp; </STRONG>密码分析者不仅可得到一些消息的密文，而且也知道这些消息的明文。分析者的任务就是用加密信息推出用来加密的密钥或导出一个算法，此算法可以对用同一密钥加密的任何新的消息进行解密。</P>
+<P>&nbsp;&nbsp;&nbsp; 已知：P<SUB>1</SUB>，C<SUB>1</SUB>=E<SUB>k</SUB>（P<SUB>1</SUB>），P<SUB>2</SUB>，C<SUB>2</SUB>=E<SUB>k</SUB>（P<SUB>2</SUB>），L，P<SUB>i</SUB>，C<SUB>i</SUB>=E<SUB>k</SUB>（P<SUB>i</SUB>），</P>
+<P>&nbsp;&nbsp;&nbsp; 推导出：密钥k，或从C<SUB>i+1</SUB>= E<SUB>k</SUB>（P<SUB>i+1</SUB>）推出P<SUB>i+1</SUB>的算法。</P>
+<P><B>（3</B><B>）选择明文攻击。</B></P>
+<P><STRONG>&nbsp;&nbsp;&nbsp; </STRONG>分析者不仅可得到一些消息的密文和相应的明文，而且他们也可选择被加密的明文。这比已知明文攻击更有效。因为密码分析者能选择特定的明文块去加密，那些块可能产生更多关于密钥的信息，分析者的任务是推出用来加密消息的密钥或导出一个算法，此算法可以对用同一密钥加密的任何新的消息进行解密。</P>
+<P>&nbsp;&nbsp;&nbsp; 已知：P<SUB>1</SUB>，C<SUB>1</SUB>=E<SUB>k</SUB>（P<SUB>1</SUB>），P<SUB>2</SUB>，C<SUB>2</SUB>=E<SUB>k</SUB>（P<SUB>2</SUB>），L，P<SUB>i</SUB>，C<SUB>i</SUB>=E<SUB>k</SUB>（P<SUB>i</SUB>）</P>
+<P>&nbsp;&nbsp;&nbsp; 其中P<SUB>1</SUB>，P<SUB>2</SUB>，L，P<SUB>i</SUB>是由密码分析者选择的。</P>
+<P>&nbsp;&nbsp;&nbsp; 推导出：密钥k，或从C<SUB>i+1</SUB>= E<SUB>k</SUB>（P<SUB>i+1</SUB>）推出P<SUB>i+1</SUB>的算法。</P>
+<P><B>（4</B><B>）自适应选择明文攻击。</B></P>
+<P><STRONG>&nbsp;&nbsp;&nbsp; </STRONG>这是选择明文攻击的特殊情况。密码分析者不仅能选择被加密的明文，而且也能基于以前加密的结果修正这个选择。在选择明文攻击中，密码分析者还可以选择一大块被加了密的明文。而在自适应选择密文攻击中，他可选取较小的明文块，然后再基于第一块的结果选择另一明文块，以此类推。</P>
+<P>&nbsp;&nbsp;&nbsp; 另外还有至少三类其它的密码分析攻击。</P>
+<P><B>（5</B><B>）选择密文攻击。</B></P>
+<P><STRONG>&nbsp;&nbsp;&nbsp; </STRONG>密码分析者能选择不同的被加密的密文，并可得到对应的解密的明文，例如密码分析者存取一个防窜改的自动解密盒，密码分析者的任务是推出密钥。</P>
+<P>&nbsp;&nbsp;&nbsp; 已知：C<SUB>1</SUB>，P<SUB>1</SUB>=D<SUB>k</SUB>（C<SUB>1</SUB>），C<SUB>2</SUB>，P<SUB>2</SUB>=D<SUB>k</SUB>（C<SUB>2</SUB>），L，C<SUB>i</SUB>，P<SUB>i</SUB>=D<SUB>k</SUB>（C<SUB>i</SUB>），</P>
+<P>&nbsp;&nbsp;&nbsp; 推导出： k。</P>
+<P>&nbsp;&nbsp;&nbsp; 这种攻击主要用于公开密钥体制，这将在19.3节中讨论。选择密文攻击有时也可有效地用于对称算法（有时选择明文攻击和选择密文攻击一起称作选择文本攻击。）</P>
+<P><B>（6</B><B>）选择密钥攻击。</B></P>
+<P><STRONG>&nbsp;&nbsp;&nbsp; </STRONG>这种攻击并不表示密码分析者能够选择密钥，它只表示密码分析者具有不同密钥之间的关系的有关知识。这种方法有点奇特和晦涩，不是很实际，将在12.4节讨论。</P>
+<P><B>（7</B><B>）软磨硬泡(Rubber-hose)</B><B>攻击。</B></P>
+<P><STRONG>&nbsp;&nbsp;&nbsp; </STRONG>密码分析者威胁、勒索，或者折磨某人，直到他给出密钥为止。行贿有时称为购买密钥攻击。这些是非常有效的攻击，并且经常是破译算法的最好途径。</P>
+<P>&nbsp;&nbsp;&nbsp; 已知明文攻击和选择明文攻击比你想象的更常见。密码分析者得到加了密的明文消息或贿赂某人去加密所选择的消息，这种事情时有所闻。如果你给某大使一则消息，也可能发现该消息已加密了，并被送回他的国家去研究。此时你会去贿赂某人；密码分析者也许知道，许多消息有标准的开头和结尾。加密的源码特别脆弱，这是因为有规律地出现关键字， 如出现：#define，struct，else，return等。加了密的可执行代码也有同样问题，如：调用函数、循环结构等等。已知明文攻击（甚至选择明文攻击）在二战中已被成功地用来破译德国和日本的密码。David Kahn的书中有此类攻击的历史例子[794，795，796]。</P>
+<P>&nbsp;&nbsp;&nbsp; 不要忘记Kerckhoffs的假设：如果你的新的密码系统的强度依赖于攻击者不知道算法的内部机理，你注定会失败。如果你相信保持算法的内部秘密比让研究团体公开分析它更能改进你的密码系统的安全性，那你就错了。如果你认为别人不能反汇编你的代码和逆向设计你的算法，那你就太天真了（1994年RC4算法就发生了这种情况—见17.1节）。最好的算法是那些已经公开的，并经过世界上最好的密码分析家们多年的攻击，但还是不能破译的算法（国家安全局对外保持他们的算法的秘密，但他们有世界上最好的密码分析家在内部工作，你却没有。另外，他们互相讨论他们的算法，通过执著的审查发现他们工作中的弱点）。</P>
+<P>&nbsp;&nbsp;&nbsp; 密码分析者不是总能知道算法的。例如在二战中美国人破译日本人的外交密码——紫密（PURPLE）[794]就是例子，而且美国人一直在做这种事。如果算法用于商业安全程序中，那么拆开这个程序，把算法恢复出来只是时间和金钱问题；如果算法用于军队的通讯系统中，购买（或窃取）这种设备，进行逆向工程恢复算法也只是简单的时间和金钱的问题。</P>
+<P>&nbsp;&nbsp;&nbsp; 那些因为自己不能破译某个算法就草率地声称有一个不可破译的密码的人要么是天才，要么是笨蛋，不幸的是后者居多。千万要提一味吹嘘算法的优点，但又拒绝公开的人，相信他们的算法就像相信骗人的包医百病的灵丹妙药一样。</P>
+<P>&nbsp;&nbsp;&nbsp; 好的密码分析家总会坚持审查，以图把不好的算法从好的算法中剔除出去。</P>
+<P><B>算法的安全性</B></P>
+<P>&nbsp;&nbsp;&nbsp; 根据被破译的难易程度，不同的密码算法具有不同的安全等级。如果破译算法的代价大于加密数据的价值，那么你可能是安全的。如果破译算法所需的时间比加密数据保密的时间更长，那么你可能是安全的；如果用单密钥加密的数据量比破译算法需要的数据量少得多，那么你可能是安全的。</P>
+<P>&nbsp;&nbsp;&nbsp; 我说“可能”是因为在密码分析中总有新的突破。另一方面，大多数数据随着时间的推移，其价值会越来越小，而数据的价值总是比突破保护它的安全性的代价更小，这点是很重要的。</P>
+<P>&nbsp;&nbsp;&nbsp; Lars Knudsen把破译算法分为不同的类别，安全性的递减顺序[858]为：</P>
+<P>1．<B>全部破译</B>。密码分析者找出密钥K，这样D<SUB>K</SUB>（C）=P。</P>
+<P>2．<B>全盘推导</B>。密码分析者找到一个代替算法A，在不知道密钥K的情况下，等价于 D<SUB>K</SUB>（C）=P。</P>
+<P>3．<B>实例（或局部）推导</B>。密码分析者从截获的密文中找出明文。</P>
+<P>4．<B>信息推导</B>。密码分析者获得一些有关密钥或明文的信息。这些信息可能是密钥的几个比特、有关明文格式的信息等等。</P>
+<P>&nbsp;&nbsp;&nbsp; 如果不论密码分析者有多少密文，都没有足够的信息恢复出明文，那么这个算法就是无条件保密的，事实上，只有一次一密乱码本（参看1.5节），才是不可破的（给出无限多的资源仍然不可破）。所有其它的密码系统在唯密文攻击中都是可破的，只要简单地一个接一个地去试每种可能的密钥，并且检查所得明文是否有意义，这种方法叫做蛮力攻击（见7.1节）。</P>
+<P>&nbsp;&nbsp;&nbsp; 密码学更关心在计算上不可破译的密码系统。如果一个算法用（现在或将来）可得到的资源都不能破译，这个算法则被认为在计算上是安全的（有时叫做强的）。准确地说， “可用资源”就是公开数据的分析整理。</P>
+<P>&nbsp;&nbsp;&nbsp; 你可以用不同方式衡量攻击方法的复杂性（见11.1节）：</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1．数据复杂性。用作攻击输入所需的数据量。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2．处理复杂性。完成攻击所需要的时间，这个经常叫做工作因素。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3．存储需求。进行攻击所需要的存储量。</P>
+<P>&nbsp;&nbsp;&nbsp; 作为一个法则，攻击的复杂性取这三个因数的最小化，有些攻击包括这三种复杂性的折中：存储需求越大，攻击可能越快。</P>
+<P>&nbsp;&nbsp;&nbsp; 复杂性用数量级来表示。如果算法的处理复杂性是2<SUP>128</SUP>，那么破译这个算法也需要2<SUP>128</SUP>次运算（这些运算可能是非常复杂和耗时的。）。假设你有足够的计算速度去完成每秒钟一百万次运算，并且用100万个并行处理器完成这个任务，那么仍需花费10<SUP>19</SUP>年以上才能找出密钥，那是宇宙年龄的10亿倍。</P>
+<P>&nbsp;&nbsp;&nbsp; 当攻击的复杂性是常数时（除非一些密码分析者发现更好的密码分析攻击），就只取决于计算能力了。在过去的半个世纪中，我们已看到计算能力的显著提高，并且没有理由认为这种趋势不会继续。许多密码分析攻击用并行处理机是非常理想的：这个任务可分成亿万个子任务，且处理之间不需相互作用。一种算法在现有技术条件下不可破译就简单地宣称该算法是安全的，这未免有些冒险。好的密码系统应设计成能抵御未来许多年后计算能力的发展。</P>
+<P><B>过去的术语</B></P>
+<P>&nbsp;&nbsp;&nbsp; 历史上，将处理语言单元的密码系统称为密本：字、短语、句子等。例如，单词 “OCELOT”可能是整个短语“TURN LEFT 90 DEGREES，”的密文，单词“LOLLIPOP”可能是“TURN RIGHT 90 DEGREES”的密文，而字“BENT EAR”可能是“HOWITZER”的密文。这种类型的密本在本书里没有讨论。密本在特殊环境中才有用，而密码在任何情况下都有用；密码本中若没有“ANTEATERS“这一条，那么你就不能提它。但你可以用密码来指代任何东西。</P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-11-16
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/">密码学</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A0%81/">编码</a>
+          <a href="https://lcx.cc/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6/">二进制</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+          <a href="https://lcx.cc/tags/%E8%A7%A3%E5%AF%86/">解密</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E9%92%A5/">密钥</a>
+          <a href="https://lcx.cc/tags/%E5%85%A5%E4%BE%B5/">入侵</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E7%AE%97%E6%B3%95/">算法</a>
+          <a href="https://lcx.cc/tags/%E8%AE%A8%E8%AE%BA/">讨论</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/941/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【文章】应用密码学 - 隐写术代替和换位密码</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/939/">
+            <span class="next-text nav-default">【文章】应用密码学：前言 - 作者简介 - 目录</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>安全跑路指南2013之乌云版【连载中】 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="safe121" /><meta name="description" content="安全跑路指南2013之乌云版【连载中】。首先写这篇文章只是无聊之作，添加了自己的一些想发，如果因此文章造成的任何后果本人不负任何责任。还请大家遵守法律,因为你犯的事情实在太大你即使逃到国外也能给你引渡回来，此文章仅供走投无路的时候使用。如有错误或不合理的地方欢迎纠正。。。首先跑了得有资金支持吧？网上收个黑卡，分5-7次左右把黑产钱提线，免得被黑吃黑。 IP隐藏什么的不用说了吧？都说烂了。注意下就行了（我之前发的帖子） 如果你是女的就打扮成男的，如果你是男的就打扮成女的，具体怎么操作不用说了吧 然后你最好在雨天晚上，用伞半挡住脸，给POLICE一种你遮挡不全的感觉 然后到据家里远的ATM提RMB。当然如果你是女的扮成男的，你需要学习男性走路的气概，给监控故意留下皮鞋，西装，领带等 你是男的扮成女的，你需要学兰花指之类的，故意给监控留下兰花指or头发or高跟鞋等。最好穿牛仔裤。" />
+<meta name="keywords" content="安全跑路指南2013之乌云版【连载中】" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3761/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="安全跑路指南2013之乌云版【连载中】" />
+<meta property="og:description" content="安全跑路指南2013之乌云版【连载中】。首先写这篇文章只是无聊之作，添加了自己的一些想发，如果因此文章造成的任何后果本人不负任何责任。还请大家遵守法律,因为你犯的事情实在太大你即使逃到国外也能给你引渡回来，此文章仅供走投无路的时候使用。如有错误或不合理的地方欢迎纠正。。。首先跑了得有资金支持吧？网上收个黑卡，分5-7次左右把黑产钱提线，免得被黑吃黑。 IP隐藏什么的不用说了吧？都说烂了。注意下就行了（我之前发的帖子） 如果你是女的就打扮成男的，如果你是男的就打扮成女的，具体怎么操作不用说了吧 然后你最好在雨天晚上，用伞半挡住脸，给POLICE一种你遮挡不全的感觉 然后到据家里远的ATM提RMB。当然如果你是女的扮成男的，你需要学习男性走路的气概，给监控故意留下皮鞋，西装，领带等 你是男的扮成女的，你需要学兰花指之类的，故意给监控留下兰花指or头发or高跟鞋等。最好穿牛仔裤。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3761/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-07-25T11:28:32&#43;08:00" />
+<meta property="article:modified_time" content="2013-07-25T14:28:05&#43;08:00" />
+
+<meta itemprop="name" content="安全跑路指南2013之乌云版【连载中】">
+<meta itemprop="description" content="安全跑路指南2013之乌云版【连载中】。首先写这篇文章只是无聊之作，添加了自己的一些想发，如果因此文章造成的任何后果本人不负任何责任。还请大家遵守法律,因为你犯的事情实在太大你即使逃到国外也能给你引渡回来，此文章仅供走投无路的时候使用。如有错误或不合理的地方欢迎纠正。。。首先跑了得有资金支持吧？网上收个黑卡，分5-7次左右把黑产钱提线，免得被黑吃黑。 IP隐藏什么的不用说了吧？都说烂了。注意下就行了（我之前发的帖子） 如果你是女的就打扮成男的，如果你是男的就打扮成女的，具体怎么操作不用说了吧 然后你最好在雨天晚上，用伞半挡住脸，给POLICE一种你遮挡不全的感觉 然后到据家里远的ATM提RMB。当然如果你是女的扮成男的，你需要学习男性走路的气概，给监控故意留下皮鞋，西装，领带等 你是男的扮成女的，你需要学兰花指之类的，故意给监控留下兰花指or头发or高跟鞋等。最好穿牛仔裤。"><meta itemprop="datePublished" content="2013-07-25T11:28:32&#43;08:00" />
+<meta itemprop="dateModified" content="2013-07-25T14:28:05&#43;08:00" />
+<meta itemprop="wordCount" content="6839">
+<meta itemprop="keywords" content="安全,乌云,云,HTTP,IP,Linux,QQ,车,电脑,攻击,黑产,技术,监控,身份,身份证,手机,系统,姓名,银行,银行卡,隐藏,追踪," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="安全跑路指南2013之乌云版【连载中】"/>
+<meta name="twitter:description" content="安全跑路指南2013之乌云版【连载中】。首先写这篇文章只是无聊之作，添加了自己的一些想发，如果因此文章造成的任何后果本人不负任何责任。还请大家遵守法律,因为你犯的事情实在太大你即使逃到国外也能给你引渡回来，此文章仅供走投无路的时候使用。如有错误或不合理的地方欢迎纠正。。。首先跑了得有资金支持吧？网上收个黑卡，分5-7次左右把黑产钱提线，免得被黑吃黑。 IP隐藏什么的不用说了吧？都说烂了。注意下就行了（我之前发的帖子） 如果你是女的就打扮成男的，如果你是男的就打扮成女的，具体怎么操作不用说了吧 然后你最好在雨天晚上，用伞半挡住脸，给POLICE一种你遮挡不全的感觉 然后到据家里远的ATM提RMB。当然如果你是女的扮成男的，你需要学习男性走路的气概，给监控故意留下皮鞋，西装，领带等 你是男的扮成女的，你需要学兰花指之类的，故意给监控留下兰花指or头发or高跟鞋等。最好穿牛仔裤。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">安全跑路指南2013之乌云版【连载中】</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-07-25" class="post-time">
+          2013-07-25
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E5%AE%89%E5%85%A8/"> 安全 </a>
+            <a href="https://lcx.cc/categories/%E4%B9%8C%E4%BA%91/"> 乌云 </a>
+            <a href="https://lcx.cc/categories/%E4%BA%91/"> 云 </a>
+            
+          </div>
+        <span class="more-meta"> 约 6839 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	首先写这篇文章只是无聊之作，添加了自己的一些想发，如果因此文章造成的任何后果本人不负任何责任。<strong>还请大家遵守法律,因为你犯的事情实在太大你即使逃到国外也能给你引渡回来</strong>，此文章仅供走投无路的时候使用。如有错误或不合理的地方欢迎纠正。。。
+</p>
+<p style="text-indent:2em;">
+	本文章会持续连载，欢迎添加只看楼主功能。
+</p>
+<p style="text-indent:2em;">
+	<strong>MENU</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>0.跑路前的准备</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>1.跑路中的注意事项</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>2.跑路中的身份隐藏/伪造</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>3.住宿/生活</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>4.GCD惯用方法</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>5.当你想家时怎么办？</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>6.当你不幸被抓时怎么办？</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>7.刑讯逼供等</strong> 
+</p>
+<p>
+	<strong>第0章之准备（在你被POl1c3通缉之前）：</strong> 
+</p>
+<p style="text-indent:2em;">
+	我相信来乌云社区的，如果真要跑路大概都是因为黑产/网络犯罪吧？
+</p>
+<p style="text-indent:2em;">
+	<strong><u>-0.00001 - 黑钱提现：</u></strong> 
+</p>
+<p style="text-indent:2em;">
+	首先跑了得有资金支持吧？网上收个黑卡，分5-7次左右把黑产钱提线，免得被黑吃黑。
+</p>
+<p style="text-indent:2em;">
+	IP隐藏什么的不用说了吧？都说烂了。注意下就行了（我之前发的帖子）
+</p>
+<p style="text-indent:2em;">
+	如果你是女的就打扮成男的，如果你是男的就打扮成女的，具体怎么操作不用说了吧
+</p>
+<p style="text-indent:2em;">
+	然后你最好在雨天晚上，用伞半挡住脸，给POLICE一种你遮挡不全的感觉
+</p>
+<p style="text-indent:2em;">
+	然后到据家里远的ATM提RMB。当然如果你是女的扮成男的，你需要学习男性走路的气概，给监控故意留下皮鞋，西装，领带等
+</p>
+<p style="text-indent:2em;">
+	你是男的扮成女的，你需要学兰花指之类的，故意给监控留下兰花指or头发or高跟鞋等。最好穿牛仔裤。
+</p>
+<p style="text-indent:2em;">
+	你可以选择taobao，amazon网购等（姓名留假的，地址找taobao代收的人，谷歌一大堆）
+</p>
+<p style="text-indent:2em;">
+	rmb拿到之后，按兵不动，第二天去买点纸钱，然后去个墓地随便找个墓把衣服等一起跟着纸钱烧了吧。银行卡也烧掉。
+</p>
+<p style="text-indent:2em;">
+	然后准备个旅行包，rmb放在价层里免得遭贼。
+</p>
+<p style="text-indent:2em;">
+	<strong><u>0.001-跑路前的身份证准备</u></strong> 
+</p>
+<p style="text-indent:2em;">
+	相信现在实名的世界里，没有个身份证肯定不行，那么怎么才能拿到身份证呢？首先假证100%不行，别听之前的跑路指南说，那个版本太老不适合当代的社会了。
+</p>
+<p style="text-indent:2em;">
+	首先来说 为什么贪官有那么多身份证？看看身份证丢失补办的流程漏洞
+</p>
+<p style="text-indent:2em;">
+	<strong>身份证被盗或遗失：常规办理程序</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>1.本人写出身份证丢失原因和申请补办报告，办理遗失申明(如登报等);</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>2.凭本人户口，符合标准的身份证相片，单位证明或街道居委会证明到户口所在地公安机关申报补办手续。</strong> 
+</p>
+<p style="text-indent:2em;">
+	首先贪官去农村收买一个农民，因为农民可能一辈子都不进城，这样他们就收买那些人，让其提供他的出生证明，他的居委会给他的证明材料，户口本等。然后记住了一些信息（一定要记住），然后准备好你自己的照片（戴眼镜的人不戴眼镜照相，不戴眼镜的人带眼镜照相），给农民的钱一定要给够（我相信做黑产的不会那么囊中羞涩）
+</p>
+<p style="text-indent:2em;">
+	选择对象一定要跟你年龄差不多的(如果有条件最好是长的差不多)，您别你刚20出头，用了个40岁老汉的身份证去办理，这肯定死。然后打扮的土点
+</p>
+<p style="text-indent:2em;">
+	然后到了当地公安局，说自己身份证丢了，表现的别太紧张（准备工作要做好，生日，生肖，姓名，住址一定要多背几次。。不然容易出事）
+</p>
+<p style="text-indent:2em;">
+	然后按照正常流程走就好了，
+</p>
+<p style="text-indent:2em;">
+	具体流程可以看看：<a href="http://www.hnidcard.com/" target="_blank">身份证补办_身份证网上办理_湖南省居民身份证补领网上申请平台</a>，根据新闻：<a href="http://news.xinhuanet.com/legal/2013-06/24/m_116255949_3.htm" target="_blank">揭秘银行卡倒卖“灰幕”:品种齐全明码标价生意红火</a>，可以看出GAJ对补办身份证次数有记录的，所以找个靠谱点的。
+</p>
+<p style="text-indent:2em;">
+	如果你胆子小，或者你觉得以上方法不靠谱还有另一个方法：
+</p>
+<p style="text-indent:2em;">
+	还是从农民下手，找个跟你长的差不多的，买他的身份证。因为长的差不多你拿这个ID去开房都没人管你，一定要靠谱的人..
+</p>
+<p style="text-indent:2em;">
+	身份证挂失后还能用么?
+</p>
+<p style="text-indent:2em;">
+	根据《中华人民共和国居民身份证法》
+</p>
+<p style="text-indent:2em;">
+	第十一条 居民身份证有效期满、公民姓名变更或者证件严重损坏不能辨认的，应当申请换领新证；居民身份证登记项目出现错误的，公安机关应当及时更正，换发新证；领取新证时，必须交回原证。居民身份证丢失的，应当申请补领。
+</p>
+<p style="text-indent:2em;">
+	1.身份证不需要挂失，也不需要公告声明遗失。“居民身份证丢失的，应当申请补领。
+</p>
+<p style="text-indent:2em;">
+	”
+</p>
+<p style="text-indent:2em;">
+	2.遗失的证件找回来的，可以继续使用。证件上有机读信息，在遗失期间电子信息可能有所损毁，你可以到派出所进行机读查证。机读信息损毁的，到户籍地派出所重新写入就可以了。
+</p>
+<p style="text-indent:2em;">
+	3.如果找回丢失的身份证，而且你也补办新证了，<strong>你的两张证件都有效。</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>！！！！切忌，任何情况下都不要使用假证件！！！！！</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong><u>0.002 - 一些物品的准备：</u></strong> 
+</p>
+<p style="text-indent:2em;">
+	你需要打扮得像农民工。
+</p>
+<p style="text-indent:2em;">
+	首先如下图打扮（如何找？百货市场，相信这些难不倒你黑产大牛）
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/2776_1.jpg" width="200" height="146" /> 
+</p>
+<p style="text-indent:2em;">
+	能改IMEI的NOKIA
+</p>
+<p style="text-indent:2em;">
+	http://s.taobao.com/search?q=%B8%C4%B4%AE%BA%C5
+</p>
+<p style="text-indent:2em;">
+	别选带后台qq功能的
+</p>
+<p style="text-indent:2em;">
+	这章就到次结束
+</p>
+<p style="text-indent:2em;">
+	第一章，注意事项
+</p>
+<p style="text-indent:2em;">
+	首先绝对不能跟着你跑路的物品
+</p>
+<p style="text-indent:2em;">
+	1.你自己的身份证（你身份证的芯片可追踪到4km内）
+</p>
+<p style="text-indent:2em;">
+	2.你的手机&amp;SIM卡，SIM卡用-0.00001的方法处理掉吧。。。重要舍不得的，重要手机号，注册个tormail扔进去吧。
+</p>
+<p style="text-indent:2em;">
+	3.你的电脑（这就是尼玛的证据啊），硬盘，<strong><span style="color:#E53333;">网卡</span></strong>一定要拆下，物理毁灭，记住，先软（擦写）再磁（磁化）后锤子（毁灭），如果没时间，直接锤子，然后碎片扔垃圾桶，分开扔。不然能根据碎片恢复内容。
+</p>
+<p style="text-indent:2em;">
+	4.任何可以证明你身份的东西，include 银行卡，手机，SIM，sfz。顺便把你家<strong><span style="color:#E53333;">路由器</span></strong>，<strong><span style="color:#E53333;">猫</span></strong>都处理掉吧（reset之后二手卖，跑路经费。android手机刷机之后加密一次再直接刷机并且重新分区，iphone直接抹除数据，诺基亚？呵呵呵，我不知道怎么办，reset之后卖了吧。这些能卖的都拿去赚跑路经费吧。记得一定要拔电池）（如果已经被盯上了，手机就不要卖了，万一买家验货，当场开机了，你就死了。狠心直接扔了吧，注意指纹）
+</p>
+<p style="text-indent:2em;">
+	5.跑路过程中千万不要用常规方法(包括公用电话)与家人取得联系，因为这时候你家人的电话都遭到严格监控了。到时候讲怎么办。80%破案都是根据手机
+</p>
+<p style="text-indent:2em;">
+	6.高铁，飞机，火车 一率远离
+</p>
+<p>
+	<strong>第二章，身份隐藏</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>前面已经说了，注意下自己表情之类的别紧张</strong> 
+</p>
+<p>
+	<strong>第三章，生活篇</strong> 
+</p>
+<p style="text-indent:2em;">
+	生活之1，交通篇
+</p>
+<p style="text-indent:2em;">
+	首先注意事项说过，船，飞，火车，高铁均不能，最好找拼车的，然后找比如农民工拼车团体之类的，当时最好打扮的别太烂，至少说的过去。。到达另一个城市之后（广东东莞 广东广州 山东烟台 福建福州 云南昆明 浙江温州 安徽歙县 广西内蒙山西黑吉辽，最好不去省会，不去农村，因为农村人喜欢闲聊，说不定来了个外人就传到当地police station了。），首先报刊亭买个手机号（找回零钱），然后把你的可以改IMEI的手机的IMEI改成16个0，然后插卡（充电问题的话找个黑网吧，或者有些地方比如HQB有手机加油站，投个硬币就行）。到农行什么的小银行用你的“真”身份证办理个银行卡（别怕查，你俩长的像，身份证也是真的，怕个P？）
+</p>
+<p style="text-indent:2em;">
+	跑路跑路，但也不能总跑吧？首先需要找个工作，工地跟砖头打交道去吧，包工头一般不会上报名单，你就把-0.0001步的“真”身份证拿出来就行，登记下就搞定。你也不怕包工头不给工资，因为你自己有黑钱（最好分开放，夹层，鞋垫（注意别让钱烂了），衣服兜，内裤等）。
+</p>
+<p style="text-indent:2em;">
+	最好先让包工头联系住宿，可以住工地上之类的。等这么干几个月之后（1-3个月），去附近租个房子，最好58同城等网站，找这些信息最好就在黑网吧，而且不要使用之前的任何身份，也不要与之前的人有任何联系，仅仅是看房就行，拿笔记录下地址，手机号。如果出租者要你身份证，ok给他，因为他没能力去验证，即使花5元去check一下，这个也是匹配的。因为他就是真的。
+</p>
+<p style="text-indent:2em;">
+	然后注意下人际交往，即使遇到你的老乡，不要上去打招呼。或许这样你就进去了呢。。。也不要过于沉默，如果有人问你你哪的人？就按身份证上的说。。
+</p>
+<p style="text-indent:2em;">
+	<strong>!!!!!!!!!!!切忌进酒，酒后吐真言！！！！！！！！！！！！！</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>！！！！！！！！不到最后时刻不动用黑钱！！！！！！！！！！</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>！！！！！！！！！！不到酒店开房嫖娼！！！！！！！！！！！！！</strong> 
+</p>
+<p style="text-indent:2em;">
+	然后你就按这种生活过一段时间，最好是积极表现，让包工头能看上你。这时候谈个女朋友之类的也可以，在民工找就行。
+</p>
+<p style="text-indent:2em;">
+	这时候你有点小资本了，然后可以到职业学校去学习，比如X翔等，然后这时我相信你的衣服也整齐了，这时候去找个工作，利用你黑阔技术以及职业学校的学历去应聘个网管不成问题。永远不要在工作期间进行hacking。记住如果你的工资到帐了，立刻提款!!!免得那人不靠谱把你钱坑了，藏的方法你懂的，我上面说过。。反正无论如何你有黑钱垫底。
+</p>
+<p style="text-indent:2em;">
+	只要你没案底，ga那里就没指纹
+</p>
+<p style="text-indent:2em;">
+	这时候你失踪已经快1-3年了，相信相貌也变了不少，JC用你之前的相貌肯定找不到你了，这时候你想跟家里联系了
+</p>
+<p style="text-indent:2em;">
+	这时候有点资本了，买台笔记本电脑
+</p>
+<p style="text-indent:2em;">
+	准备如下：
+</p>
+<p style="text-indent:2em;">
+	买个电脑安装win7 or XP,然后把迅雷，qq，暴风，搜狗，AV，LOL，DOTA，快拨，Office等，顺便ie6上H网中点毒。最好是国产带后门的软件装上。然后qq登录点，迅雷下载点东西之类的。 反正是看起来用过的，不要用任何密码，假装不懂电脑。使用Linux的LiveCD，推荐发行版ArchLinux Debian Fedora Gentoo LinuxMint OpenBSD Trisquel QubesOS，跟家人联系的时候，用LiveCD Linux系统，然后想办法上网，注意下你的网卡MAC地址，DHCP客户端的名称。下载接入TOR网络，之后使用tor浏览器和tormail发邮件跟家里报下平安，这样是不可追溯的邮件。 记住20年内不要回家，不要给家里打电话，实在联系就发email，或者短信http://www.freesms.ms/，无论你家人说什么，都不要透露自己现在住址，如有必要就透露个假的地址，因为这时候你还没脱离JC的监控，全程一定TOR。联系完毕之后重启系统，进入WINDOWS，就当若无其事。打几局DOTA（我不知道几年之后还是否有dota。。）
+</p>
+<p style="text-indent:2em;">
+	如果真的想家了，想发视频之类的，<strong>无论如何都不要视频语音，根据背景or声音可以知道你在哪</strong>，让你家人写张纸，写下今天的日期，举起来照相。然后发到你邮箱。
+</p>
+<p style="text-indent:2em;">
+	你可能需要一个面具之类的，然后用打印机打印下今天日期，背景，别用手机照(固件后门)。用照相机，导入电脑后擦除SD卡。注意GPS信息，EXIF信息，像机型号等都改了。修改日期改到19XX年，然后PS掉你的脸，背景，手指，身高等信息，然后将图片有损压缩后发送，让你家人不担心，不过这时候你家的通讯可能受到JC监控，linux的GIMP不错，无论如何别让这张照片流入winows系统环境中，发送完之后shred -u 照片.JPG之后history -c
+</p>
+<p style="text-indent:2em;">
+	<strong>!!!!!!!!!!!!!!!!!!警告：人怕出名猪怕状，请勿做公众人物，上次不是有个杀人潜逃10年当教授，然后上台演讲被识破了么！！！！！！！！</strong> 
+</p>
+<p style="text-indent:2em;">
+	-先更新到这里，想到再写
+</p>
+<p style="text-indent:2em;">
+	Last update: Wednesday, July 24, 2013
+</p>
+<p style="text-indent:2em;">
+	<a href="http://zone.wooyun.org/content/5393" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>相关内容：</strong>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3685/" target="_blank">我们是如何通过一张照片定位到疯狗位置的</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3681/" target="_blank">分享下自己使用的保护方法篇章二（虚拟机模板环境设置） 连载中...</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3659/" target="_blank">分享下自己使用的保护方法篇章一（虚拟机代理中转服务器设置）连载中...</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3360/" target="_blank">探索网络出口GFW的强度与翻墙</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3264/" target="_blank">关于手机的隐私保护。。</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2725/" target="_blank">【需翻墙】网监如何爆菊？网警是如何通过层层VPN加密代理找到你的！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2064/" target="_blank">GSM蜂窝基站定位基本原理浅析</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2056/" target="_blank">用黑客方式找回失窃的电脑 - GSM基站定位 - Wifi热点定位</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2055/" target="_blank">不要偷黑客的东西 - Why you don't steal from a hacker</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1303/" target="_blank">苹果iPhone和谷歌Android手机被曝"定位"用户</a> 
+</p>
+<p>
+	<strong>相关讨论：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1#
+</p>
+<p style="text-indent:2em;">
+	国士无双 | 2013-07-24 20:01
+</p>
+<p style="text-indent:2em;">
+	前排观摩，愿闻其翔...
+</p>
+<p style="text-indent:2em;">
+	2#
+</p>
+<p style="text-indent:2em;">
+	VIP (Fatal error: Call to undefined function getwb() in /data1/www/htdocs/106/wzone/1/index.php on line 10|@齐迹) | 2013-07-24 20:02
+</p>
+<p style="text-indent:2em;">
+	坐等连载
+</p>
+<p style="text-indent:2em;">
+	3#
+</p>
+<p style="text-indent:2em;">
+	Cr4zy | 2013-07-24 20:03
+</p>
+<p style="text-indent:2em;">
+	看起来楼主很专业....
+</p>
+<p style="text-indent:2em;">
+	4#
+</p>
+<p style="text-indent:2em;">
+	Nicky (-。-) | 2013-07-24 20:08
+</p>
+<p style="text-indent:2em;">
+	围观。。
+</p>
+<p style="text-indent:2em;">
+	5#
+</p>
+<p style="text-indent:2em;">
+	ACGT | 2013-07-24 20:10
+</p>
+<p style="text-indent:2em;">
+	来观摩楼主的宝贵经验
+</p>
+<p style="text-indent:2em;">
+	6#
+</p>
+<p style="text-indent:2em;">
+	丁崽 | 2013-07-24 20:19
+</p>
+<p style="text-indent:2em;">
+	看了楼主的几个介绍很是期待
+</p>
+<p style="text-indent:2em;">
+	7#
+</p>
+<p style="text-indent:2em;">
+	seul (寻求引路人，抱团取暖，完成技术传承与资源共享。) | 2013-07-24 20:34
+</p>
+<p style="text-indent:2em;">
+	搬小板凳前排围观
+</p>
+<p style="text-indent:2em;">
+	8#
+</p>
+<p style="text-indent:2em;">
+	YKS (??????????????????????????????????????????????????????????????) | 2013-07-24 20:35
+</p>
+<p style="text-indent:2em;">
+	楼主什么时候说下你上次怎么出来的
+</p>
+<p style="text-indent:2em;">
+	9#
+</p>
+<p style="text-indent:2em;">
+	dir | 2013-07-24 20:38
+</p>
+<p style="text-indent:2em;">
+	目测楼主成功逃脱。。。
+</p>
+<p style="text-indent:2em;">
+	10#
+</p>
+<p style="text-indent:2em;">
+	txcbg | 2013-07-24 20:40
+</p>
+<p style="text-indent:2em;">
+	内容呢？
+</p>
+<p style="text-indent:2em;">
+	11#
+</p>
+<p style="text-indent:2em;">
+	0x2b (姑娘，我给你讲黄色笑话，是想看你害羞，我是在调戏你) | 2013-07-24 20:55
+</p>
+<p style="text-indent:2em;">
+	mark 下 跪求连载更新
+</p>
+<p style="text-indent:2em;">
+	12#
+</p>
+<p style="text-indent:2em;">
+	VIP (Fatal error: Call to undefined function getwb() in /data1/www/htdocs/106/wzone/1/index.php on line 10|@齐迹) | 2013-07-24 21:21
+</p>
+<p style="text-indent:2em;">
+	好牛逼的思路
+</p>
+<p style="text-indent:2em;">
+	13#
+</p>
+<p style="text-indent:2em;">
+	0x2b (姑娘，我给你讲黄色笑话，是想看你害羞，我是在调戏你) | 2013-07-24 21:27
+</p>
+<p style="text-indent:2em;">
+	@safe121 一般在淘宝买的快递 都是写的假地址 他们也不去送到家 都是自己去快递拿
+</p>
+<p style="text-indent:2em;">
+	14#
+</p>
+<p style="text-indent:2em;">
+	小黑要低调 | 2013-07-24 21:27
+</p>
+<p style="text-indent:2em;">
+	真专业。。。。
+</p>
+<p style="text-indent:2em;">
+	15#
+</p>
+<p style="text-indent:2em;">
+	有妹子送上 | 2013-07-24 21:28
+</p>
+<p style="text-indent:2em;">
+	@网监 @党中央
+</p>
+<p style="text-indent:2em;">
+	16#
+</p>
+<p style="text-indent:2em;">
+	好人 (您已犯破坏计算机信息系统罪，请跟我们走一趟。) | 2013-07-24 21:40
+</p>
+<p style="text-indent:2em;">
+	楼主是有经验的，坐等第二章。
+</p>
+<p style="text-indent:2em;">
+	17#
+</p>
+<p style="text-indent:2em;">
+	m0r5 | 2013-07-24 21:42
+</p>
+<p style="text-indent:2em;">
+	1.你自己的身份证（你身份证的芯片可追踪到4km内） ...10M 我倒相信...
+</p>
+<p style="text-indent:2em;">
+	18#
+</p>
+<p style="text-indent:2em;">
+	Mujj (我主要是不太会说话，如有冒犯，你他妈来打我啊。) | 2013-07-24 21:43
+</p>
+<p style="text-indent:2em;">
+	欺负我农村人？
+</p>
+<p style="text-indent:2em;">
+	19#
+</p>
+<p style="text-indent:2em;">
+	safe121 (--黑阔娱乐群：328034840) | 2013-07-24 21:45
+</p>
+<p style="text-indent:2em;">
+	@Mujj 不是这意思。我的意思是那些永远也不进城的人。。。
+</p>
+<p style="text-indent:2em;">
+	20#
+</p>
+<p style="text-indent:2em;">
+	0x_Jin (世上人多心不齐) | 2013-07-24 22:19
+</p>
+<p style="text-indent:2em;">
+	貌似以前那个写跑路指南的 被喝茶了 LZ可有准备？
+</p>
+<p style="text-indent:2em;">
+	21#
+</p>
+<p style="text-indent:2em;">
+	好人 (您已犯破坏计算机信息系统罪，请跟我们走一趟。) | 2013-07-24 22:21
+</p>
+<p style="text-indent:2em;">
+	跑路的话。可以到偏远的地方，随便找一家人给他们点钱，让他们说你是亲戚，可以一直生活在哪。
+</p>
+<p style="text-indent:2em;">
+	22#
+</p>
+<p style="text-indent:2em;">
+	啦绯哥 | 2013-07-24 22:34
+</p>
+<p style="text-indent:2em;">
+	楼主一路走好！
+</p>
+<p style="text-indent:2em;">
+	23#
+</p>
+<p style="text-indent:2em;">
+	虾米 | 2013-07-24 22:37
+</p>
+<p style="text-indent:2em;">
+	@m0r5 身份证可以用来追踪？真的假的？愿闻其详
+</p>
+<p style="text-indent:2em;">
+	24#
+</p>
+<p style="text-indent:2em;">
+	saber (终极屌丝之路~) | 2013-07-24 22:39
+</p>
+<p style="text-indent:2em;">
+	楼主这是第几次进去了。。这么有经验。
+</p>
+<p style="text-indent:2em;">
+	25#
+</p>
+<p style="text-indent:2em;">
+	虾米 | 2013-07-24 22:41
+</p>
+<p style="text-indent:2em;">
+	楼主是经验么还是坐下来想想，就随便写写了
+</p>
+<p style="text-indent:2em;">
+	26#
+</p>
+<p style="text-indent:2em;">
+	傻傻滴 | 2013-07-24 23:08
+</p>
+<p style="text-indent:2em;">
+	用居民身份证遗失补领网上受理也可以补办身份证，可惜大多数省份不支持。
+</p>
+<p style="text-indent:2em;">
+	27#
+</p>
+<p style="text-indent:2em;">
+	safe121 (--黑阔娱乐群：328034840) | 2013-07-24 23:09
+</p>
+<p style="text-indent:2em;">
+	@虾米 坐下来想想，就随便写写了。。
+</p>
+<p style="text-indent:2em;">
+	28#
+</p>
+<p style="text-indent:2em;">
+	safe121 (--黑阔娱乐群：328034840) | 2013-07-24 23:15
+</p>
+<p style="text-indent:2em;">
+	updated.LiveCD比一个加密的分区要好
+</p>
+<p style="text-indent:2em;">
+	29#
+</p>
+<p style="text-indent:2em;">
+	GrayTrack (强大到惊人) | 2013-07-24 23:26
+</p>
+<p style="text-indent:2em;">
+	好玩啊，呵呵
+</p>
+<p style="text-indent:2em;">
+	30#
+</p>
+<p style="text-indent:2em;">
+	safe121 (--黑阔娱乐群：328034840) | 2013-07-24 23:34
+</p>
+<p style="text-indent:2em;">
+	@核攻击
+</p>
+<p style="text-indent:2em;">
+	31#
+</p>
+<p style="text-indent:2em;">
+	0x0F (你看不见我)????(人脸无?) | 2013-07-25 00:50
+</p>
+<p style="text-indent:2em;">
+	假证被查就悲催了。
+</p>
+<p style="text-indent:2em;">
+	32#
+</p>
+<p style="text-indent:2em;">
+	whirlwind (我们天真的梦在哪里?我们的快乐遗落在哪里?相信自己你最了不起，没人可以，对你的梦看不起。) | 2013-07-25 01:14
+</p>
+<p style="text-indent:2em;">
+	@0x0F"&gt;0x0F 激动啊，就是要跑路去国外 有思路没
+</p>
+<p style="text-indent:2em;">
+	33#
+</p>
+<p style="text-indent:2em;">
+	whirlwind (我们天真的梦在哪里?我们的快乐遗落在哪里?相信自己你最了不起，没人可以，对你的梦看不起。) | 2013-07-25 01:22
+</p>
+<p style="text-indent:2em;">
+	@safe121 后把你的可以改IMEI的手机的IMEI改成16个0 有啥用
+</p>
+<p style="text-indent:2em;">
+	34#
+</p>
+<p style="text-indent:2em;">
+	0x0F (你看不见我)????(人脸无?) | 2013-07-25 01:26
+</p>
+<p style="text-indent:2em;">
+	@whirlwind 找道上兄弟帮忙吧。
+</p>
+<p style="text-indent:2em;">
+	35#
+</p>
+<p style="text-indent:2em;">
+	鸡鸡 (~~~~~~~~~~~~~~~~~~~~~~~~~) | 2013-07-25 02:12
+</p>
+<p style="text-indent:2em;">
+	楼主上次怎么出来的。。。
+</p>
+<p style="text-indent:2em;">
+	36#
+</p>
+<p style="text-indent:2em;">
+	wugui (摄像头已贴标签) | 2013-07-25 02:26
+</p>
+<p style="text-indent:2em;">
+	这是小说？
+</p>
+<p style="text-indent:2em;">
+	37#
+</p>
+<p style="text-indent:2em;">
+	斯文的鸡蛋 (顿时我就傻逼了) | 2013-07-25 02:55
+</p>
+<p style="text-indent:2em;">
+	楼主上次怎么出来的
+</p>
+<p style="text-indent:2em;">
+	38#
+</p>
+<p style="text-indent:2em;">
+	斯文的鸡蛋 (顿时我就傻逼了) | 2013-07-25 02:57
+</p>
+<p style="text-indent:2em;">
+	楼主这是在用绳命来给咱们上课啊~（不过我确实赞同跑路别到农村的想法，农村防人之心其实还是很浓的~外来人口基本很难融入~
+</p>
+<p style="text-indent:2em;">
+	39#
+</p>
+<p style="text-indent:2em;">
+	Hilbert | 2013-07-25 03:04
+</p>
+<p style="text-indent:2em;">
+	法定最高刑为无期徒刑、死刑的，经过二十年。如果二十年以后认为必须追诉的，须报请最高人民检察院核准。
+</p>
+<p style="text-indent:2em;">
+	40#
+</p>
+<p style="text-indent:2em;">
+	safe121 (--黑阔娱乐群：328034840) | 2013-07-25 05:08
+</p>
+<p style="text-indent:2em;">
+	@whirlwind 16个0的原因 <a href="http://www.shanzhaiji.cn/news/20091202/14344.html" target="_blank">无法用IMEI码定位恐怖分子 印度坚决肃清山寨机</a> 
+</p>
+<p style="text-indent:2em;">
+	41#
+</p>
+<p style="text-indent:2em;">
+	safe121 (--黑阔娱乐群：328034840) | 2013-07-25 05:08
+</p>
+<p style="text-indent:2em;">
+	@wugui 可以这么理解
+</p>
+<p style="text-indent:2em;">
+	42#
+</p>
+<p style="text-indent:2em;">
+	safe121 (--黑阔娱乐群：328034840) | 2013-07-25 05:08
+</p>
+<p style="text-indent:2em;">
+	@斯文的鸡蛋 @鸡鸡 我根本没进去过。。
+</p>
+<p style="text-indent:2em;">
+	43#
+</p>
+<p style="text-indent:2em;">
+	cnsars | 2013-07-25 06:17
+</p>
+<p style="text-indent:2em;">
+	楼主买黑卡有好的经验么？。。。好多都是超级网银的坑啊！
+</p>
+<p style="text-indent:2em;">
+	44#
+</p>
+<p style="text-indent:2em;">
+	小土豆 (加油ing~~) | 2013-07-25 07:40
+</p>
+<p style="text-indent:2em;">
+	目测LZ 好专业的样子
+</p>
+<p style="text-indent:2em;">
+	45#
+</p>
+<p style="text-indent:2em;">
+	海绵宝宝 (大学狗.) | 2013-07-25 09:21
+</p>
+<p style="text-indent:2em;">
+	@网监 知道以后该怎么防跑路的了吧
+</p>
+<p style="text-indent:2em;">
+	46#
+</p>
+<p style="text-indent:2em;">
+	Ocean | 2013-07-25 09:33
+</p>
+<p style="text-indent:2em;">
+	目测撸主，夹层很多钱
+</p>
+<p style="text-indent:2em;">
+	47#
+</p>
+<p style="text-indent:2em;">
+	seul (寻求引路人，抱团取暖，完成技术传承与资源共享。) | 2013-07-25 09:33
+</p>
+<p style="text-indent:2em;">
+	敢不敢来点跑路实例
+</p>
+<p style="text-indent:2em;">
+	48#
+</p>
+<p style="text-indent:2em;">
+	open (心佛即佛,心魔即魔.) | 2013-07-25 09:35
+</p>
+<p style="text-indent:2em;">
+	发这样的文章的人,一般都是被抓的节奏.
+</p>
+<p style="text-indent:2em;">
+	49#
+</p>
+<p style="text-indent:2em;">
+	园长 (你在身边就是缘，缘分写在数据库里面。) | 2013-07-25 09:44
+</p>
+<p style="text-indent:2em;">
+	十年后等着东窗事发吧
+</p>
+<p style="text-indent:2em;">
+	50#
+</p>
+<p style="text-indent:2em;">
+	saline | 2013-07-25 10:02
+</p>
+<p style="text-indent:2em;">
+	小e你以为谁都和你一样住三环内家族背景雄厚啊？搞黑产的人不就是为了钱么，要是搞了之后还得没命的跑，还不能用那些钱，那还搞个J8啊？
+</p>
+<p style="text-indent:2em;">
+	51#
+</p>
+<p style="text-indent:2em;">
+	360网站卫士 (专业爆腾讯漏洞30年) | 2013-07-25 10:04
+</p>
+<p style="text-indent:2em;">
+	lz就是这样逃到国外的吗
+</p>
+<p style="text-indent:2em;">
+	52#
+</p>
+<p style="text-indent:2em;">
+	xsser (十根阳具有长短!!) | 2013-07-25 10:22
+</p>
+<p style="text-indent:2em;">
+	这得犯多大事儿啊
+</p>
+<p style="text-indent:2em;">
+	53#
+</p>
+<p style="text-indent:2em;">
+	光的传人 | 2013-07-25 10:26
+</p>
+<p style="text-indent:2em;">
+	好牛啊~
+</p>
+<p style="text-indent:2em;">
+	54#
+</p>
+<p style="text-indent:2em;">
+	safe121 (--黑阔娱乐群：328034840) | 2013-07-25 10:36
+</p>
+<p style="text-indent:2em;">
+	@saline FKU
+</p>
+<p style="text-indent:2em;">
+	55#
+</p>
+<p style="text-indent:2em;">
+	safe121 (--黑阔娱乐群：328034840) | 2013-07-25 10:40
+</p>
+<p style="text-indent:2em;">
+	详情请见：http://zone.wooyun.org/content/4951
+</p>
+<p style="text-indent:2em;">
+	至今未取得联系，目测跑路
+</p>
+<p style="text-indent:2em;">
+	56#
+</p>
+<p style="text-indent:2em;">
+	0x2b (姑娘，我给你讲黄色笑话，是想看你害羞，我是在调戏你) | 2013-07-25 10:59
+</p>
+<p style="text-indent:2em;">
+	@safe121 楼主更新一次 鄙人感谢一次！
+</p>
+<p style="text-indent:2em;">
+	57#
+</p>
+<p style="text-indent:2em;">
+	safe121 (--黑阔娱乐群：328034840) | 2013-07-25 11:21
+</p>
+<p style="text-indent:2em;">
+	@0x2b 感谢
+</p>
+<p style="text-indent:2em;">
+	58#
+</p>
+<p style="text-indent:2em;">
+	核攻击 (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2013-07-25 11:28
+</p>
+<p style="text-indent:2em;">
+	楼主需要赞助路费吗……
+</p>
+<p style="text-indent:2em;">
+	59#
+</p>
+<p style="text-indent:2em;">
+	safe121 (--黑阔娱乐群：328034840) | 2013-07-25 11:29
+</p>
+<p style="text-indent:2em;">
+	@核攻击 我没跑路-。- 这个文章可以当小说看
+</p>
+<p style="text-indent:2em;">
+	60#
+</p>
+<p style="text-indent:2em;">
+	he1renyagao | 2013-07-25 12:57
+</p>
+<p style="text-indent:2em;">
+	怎么看怎么像是杀人犯的逃跑路线。
+</p>
+<p style="text-indent:2em;">
+	61#
+</p>
+<p style="text-indent:2em;">
+	123 (v2ex) | 2013-07-25 13:24
+</p>
+<p style="text-indent:2em;">
+	我记得楼主已经跑路国外了吧....
+</p>
+<p style="text-indent:2em;">
+	62#
+</p>
+<p style="text-indent:2em;">
+	咖啡 (他依然向往着长岛的雪， 依然向往着潘帕斯的风吟鸟唱) | 2013-07-25 13:40
+</p>
+<p style="text-indent:2em;">
+	身份证不是这么好搞的，别以为咱农民工不懂花点钱就行，买别的还行一买身份证别人就起疑心了
+</p>
+<p style="text-indent:2em;">
+	在说着得犯多大事儿啊。 楼主专注跑路三十载
+</p>
+<p style="text-indent:2em;">
+	63#
+</p>
+<p style="text-indent:2em;">
+	0x2b (姑娘，我给你讲黄色笑话，是想看你害羞，我是在调戏你) | 2013-07-25 13:50
+</p>
+<p style="text-indent:2em;">
+	跑国外 估计要偷渡
+</p>
+<p style="text-indent:2em;">
+	64#
+</p>
+<p style="text-indent:2em;">
+	M0nster | 2013-07-25 14:19
+</p>
+<p style="text-indent:2em;">
+	1楼重口味，楼主保平安
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="4574,3761,175.156.110.16">
+<p>佚名 @ 2013-07-25 17:21:46</p>
+<p style="text-indent:2em">我當小說看了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">Soga，这才是正确的打开方式。</p>
+</blockquote>
+<blockquote id="4581,3761,110.208.171.195">
+<p>佚名 @ 2013-07-26 00:55:41</p>
+<p style="text-indent:2em">瓶中太满水须走，青叶红花白莲藕</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">帮主何在？速来迎驾！</p>
+</blockquote>
+<blockquote id="4593,3761,122.232.107.161">
+<p>咖啡 @ 2013-07-27 10:56:57</p>
+<p style="text-indent:2em">一炉香烟往上升，三老四少坐堂中，弟子上香把祖请，迎来祖师潘钱翁</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">二炉香烟举在空，三老四少喜盈盈，师长迎来上面坐，弟子上香把礼行</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">safe121</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-07-25
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E4%B9%8C%E4%BA%91/">乌云</a>
+          <a href="https://lcx.cc/tags/%E4%BA%91/">云</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/linux/">Linux</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/%E8%BD%A6/">车</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E8%84%91/">电脑</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E9%BB%91%E4%BA%A7/">黑产</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+          <a href="https://lcx.cc/tags/%E8%BA%AB%E4%BB%BD/">身份</a>
+          <a href="https://lcx.cc/tags/%E8%BA%AB%E4%BB%BD%E8%AF%81/">身份证</a>
+          <a href="https://lcx.cc/tags/%E6%89%8B%E6%9C%BA/">手机</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E5%A7%93%E5%90%8D/">姓名</a>
+          <a href="https://lcx.cc/tags/%E9%93%B6%E8%A1%8C/">银行</a>
+          <a href="https://lcx.cc/tags/%E9%93%B6%E8%A1%8C%E5%8D%A1/">银行卡</a>
+          <a href="https://lcx.cc/tags/%E9%9A%90%E8%97%8F/">隐藏</a>
+          <a href="https://lcx.cc/tags/%E8%BF%BD%E8%B8%AA/">追踪</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3762/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">请教关于手机IMEI定位的问题</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3760/">
+            <span class="next-text nav-default">飞机上自带显示屏的安全测试</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

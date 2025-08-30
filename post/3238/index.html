@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>也谈新旧SIM卡耗电之争——从手机处理STK异常说起 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Horse Luke" /><meta name="description" content="也谈新旧SIM卡耗电之争——从手机处理STK异常说起，新旧SIM卡待机耗电量差10倍。纠结“新旧SIM卡待机耗电量差10倍”的问题毫无益处，其实应该归结为“手机终端在进行SIM卡处理部分（如STK开机交互）的逻辑异常是否会导致耗电量剧增”问题：当SIM卡由于氧化、损坏等导致包括接触不良、物理损坏在内的各种物理异常，或者由于错误的写卡动作导致SIM卡数据结构不标准时，会有可能导致手机在处理SIM卡（比如STK开机交互等）上出现逻辑异常，结果有可能导致耗电，也有可能不耗电；而耗电的严重程度，需要视乎异常而定，根本不可能得出一个通用数值。" />
+<meta name="keywords" content="也谈新旧SIM卡耗电之争——从手机处理STK异常说起，新旧SIM卡待机耗电量差10倍，sim 手机 耗电 stk 待机" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3238/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="也谈新旧SIM卡耗电之争——从手机处理STK异常说起" />
+<meta property="og:description" content="也谈新旧SIM卡耗电之争——从手机处理STK异常说起，新旧SIM卡待机耗电量差10倍。纠结“新旧SIM卡待机耗电量差10倍”的问题毫无益处，其实应该归结为“手机终端在进行SIM卡处理部分（如STK开机交互）的逻辑异常是否会导致耗电量剧增”问题：当SIM卡由于氧化、损坏等导致包括接触不良、物理损坏在内的各种物理异常，或者由于错误的写卡动作导致SIM卡数据结构不标准时，会有可能导致手机在处理SIM卡（比如STK开机交互等）上出现逻辑异常，结果有可能导致耗电，也有可能不耗电；而耗电的严重程度，需要视乎异常而定，根本不可能得出一个通用数值。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3238/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-12-29T22:47:26&#43;08:00" />
+<meta property="article:modified_time" content="2012-12-29T22:56:34&#43;08:00" />
+
+<meta itemprop="name" content="也谈新旧SIM卡耗电之争——从手机处理STK异常说起">
+<meta itemprop="description" content="也谈新旧SIM卡耗电之争——从手机处理STK异常说起，新旧SIM卡待机耗电量差10倍。纠结“新旧SIM卡待机耗电量差10倍”的问题毫无益处，其实应该归结为“手机终端在进行SIM卡处理部分（如STK开机交互）的逻辑异常是否会导致耗电量剧增”问题：当SIM卡由于氧化、损坏等导致包括接触不良、物理损坏在内的各种物理异常，或者由于错误的写卡动作导致SIM卡数据结构不标准时，会有可能导致手机在处理SIM卡（比如STK开机交互等）上出现逻辑异常，结果有可能导致耗电，也有可能不耗电；而耗电的严重程度，需要视乎异常而定，根本不可能得出一个通用数值。"><meta itemprop="datePublished" content="2012-12-29T22:47:26&#43;08:00" />
+<meta itemprop="dateModified" content="2012-12-29T22:56:34&#43;08:00" />
+<meta itemprop="wordCount" content="5552">
+<meta itemprop="keywords" content="手机,Android,Blog,Html,HTTP,保护,测试,服务,技术,命令,软件,数据,锁,微博,问题,物理,智能," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="也谈新旧SIM卡耗电之争——从手机处理STK异常说起"/>
+<meta name="twitter:description" content="也谈新旧SIM卡耗电之争——从手机处理STK异常说起，新旧SIM卡待机耗电量差10倍。纠结“新旧SIM卡待机耗电量差10倍”的问题毫无益处，其实应该归结为“手机终端在进行SIM卡处理部分（如STK开机交互）的逻辑异常是否会导致耗电量剧增”问题：当SIM卡由于氧化、损坏等导致包括接触不良、物理损坏在内的各种物理异常，或者由于错误的写卡动作导致SIM卡数据结构不标准时，会有可能导致手机在处理SIM卡（比如STK开机交互等）上出现逻辑异常，结果有可能导致耗电，也有可能不耗电；而耗电的严重程度，需要视乎异常而定，根本不可能得出一个通用数值。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">也谈新旧SIM卡耗电之争——从手机处理STK异常说起</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-12-29" class="post-time">
+          2012-12-29
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E6%89%8B%E6%9C%BA/"> 手机 </a>
+            
+          </div>
+        <span class="more-meta"> 约 5552 字 </span>
+          <span class="more-meta"> 预计阅读 12 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<b><span>概述</span></b> 
+</p>
+<p style="text-indent:2em;">
+	关于“新旧SIM卡待机耗电量差10倍”的说法可谓莫衷一是，支持（沈阳日报报道）、反对（如通信专业教师@奥卡姆剃刀
+的实验）和中立者（如@戏龙浅底虾 ）均有。
+</p>
+<p style="text-indent:2em;">
+	本人虽然对通信原理一窍不通，但刚好具有最初争议出处沈阳日报提到的测试条件，故而进行了复测，结果发现旧SIM卡确实在某些情况下会出现耗电严重问题，并从手机逻辑处理的角度，认为<b>纠结“新旧SIM卡待机耗电量差10倍”的问题毫无益处，其实应该归结为“手机终端在进行SIM卡处理部分（如STK开机交互）的逻辑异常是否会导致耗电量剧增”问题：当SIM卡由于氧化、损坏等导致包括接触不良、物理损坏在内的各种物理异常，或者由于错误的写卡动作导致SIM卡数据结构不标准时，会有可能导致手机在处理SIM卡（比如STK开机交互等）上出现逻辑异常，结果<span style="font-family:simsun;">有可能</span><span style="font-family:Calibri;">导致耗电</span><span style="font-family:simsun;">，也有可能不耗电；而</span>耗电的严重程度，需要视乎异常而定，根本不可能得出一个通用数值。</b>总体来讲，所以，认同@戏龙浅底虾
+的观点：两种观点都有失偏颇，还需要进一步调查。
+</p>
+<p style="text-indent:2em;">
+	<b>对于使用安卓、苹果、塞班等智能机的绝大多数用户而言，担心旧SIM卡（包括SIM逻辑处理异常）而可能导致的耗电其实并无太大必要。这部分智能机的耗电绝大多数在大屏幕、手机应用大量后台常驻、不必要的设置开启、频繁打开和使用手机应用等问题。经常杀进程、关闭非必要功能、不要频繁使用手机才是王道。如果真担心耗电又不想换卡，用橡皮擦擦干净，是个好办法。</b> 
+</p>
+<p style="text-indent:2em;">
+	对于通信行业的从业者、学术研究者而言，建议到各大手机维修点和运营商营业厅，针对此问题进行大面积调研。相信，应该会有些特别的案例值得挖掘。<span style="line-height:21px;font-family:simsun;">而对于</span><span style="line-height:21px;font-family:Calibri;">手机底层开发者</span><span style="line-height:21px;font-family:simsun;">来讲</span><span style="line-height:21px;font-family:Calibri;">，</span><span style="line-height:21px;font-family:simsun;">期待有开发者出来撰文，阐述有关</span><span style="line-height:21px;font-family:Calibri;">SIM卡物理异常所导致逻辑处理异常问题</span><span style="line-height:21px;font-family:simsun;">和经验</span><span style="line-height:21px;font-family:Calibri;">。</span><span style="line-height:21px;font-family:simsun;">同时也期待有非智能机开发者讨论这个问题，因为有人提到，功能机对</span><span style="line-height:21px;font-family:Calibri;">SIM</span><span style="line-height:21px;font-family:simsun;">卡具有较高依赖性，其操作</span><span style="line-height:21px;font-family:Calibri;">SIM</span><span style="line-height:21px;font-family:simsun;">卡的程度要大于智能机。</span> 
+</p>
+<p style="text-indent:2em;">
+	最后，这场争议传播得如此之快，其很大程度上是因为对“待机”两字的理解不一致。
+</p>
+<p style="text-indent:2em;">
+	<span><b>本文观点争鸣（定期更新）</b></span> 
+</p>
+<p style="text-indent:2em;">
+	@智能卡技术
+：其实怎么说呢？“新旧SIM卡耗电差10倍”的结论肯定是错的，至于旧SIM卡因表面锈蚀磨损接触不良引起的额外耗电，其实和不同卡商的SIM卡质量有关，和新旧关系不大。有些卡商的卡用了1年可能就锈蚀磨损，有的用10年也没事。不同的SIM卡芯片也会不同，所以片面地用SIM卡的新旧来划分欠妥。（2012-12-28
+09:05；<a href="http://weibo.com/1308114954/zbNXrs4LD" target="_blank">http://weibo.com/1308114954/zbNXrs4LD</a>&nbsp;<wbr>）
+</p>
+<p style="text-indent:2em;">
+	===============================
+</p>
+<p style="text-indent:2em;">
+	<span><b>一、缘起</b></span> 
+</p>
+<p style="text-indent:2em;">
+	关于“新旧SIM卡待机耗电量差10倍”的说法可谓莫衷一是，最早出自沈阳日报的《手机电池不耐用或SIM卡作怪：别使用两年以上》（<a href="http://tech.qq.com/a/20121225/000118.htm" target="_blank">http://tech.qq.com/a/20121225/000118.htm</a>&nbsp;<wbr>），后来就直接以子段落标题“新旧SIM卡待机耗电量差10倍”在微博传开了。通信专业教师@奥卡姆剃刀
+则用实验反驳其说法，认为“新旧SIM卡待机耗电量差10倍”是流言（<a href="http://blog.sina.com.cn/s/blog_6c7e111d0101do9j.html" target="_blank">http://blog.sina.com.cn/s/blog_6c7e111d0101do9j.html</a>&nbsp;<wbr>）。后来也有从业者@戏龙浅底虾
+发表博客，认为两者的观点都有失偏颇，主要是将个案扩大化（<a href="http://blog.sina.com.cn/s/blog_53dbe4cf01017nox.html" target="_blank">http://blog.sina.com.cn/s/blog_53dbe4cf01017nox.html</a>&nbsp;<wbr>）。
+</p>
+<p style="text-indent:2em;">
+	<span><b>二、复测沈阳日报说法</b></span> 
+</p>
+<p style="text-indent:2em;">
+	俗语说“空穴来风，未必无因”。虽然对通信原理一窍不通，惊喜的发现，我有沈阳日报报道中的各种复测条件。
+</p>
+<p style="text-indent:2em;">
+	<img title="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" alt="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" src="/file/old/1769_1.jpg" width="400" height="300" /> 
+</p>
+<p style="text-indent:2em;">
+	我目前使用的SIM卡，是06年入网的移动动感地带卡。因今年进行手机应用研究，所以SIM卡插拔就多了起来，结果导致现在在Nokia
+C5-00手机，开机后会不停弹出“SIM卡应用：没错，我就是M-Zone人”，无法关闭，只能按home键“忽略”；中兴U880刷到Android
+2.3后更惨，关不了就意味着屏幕锁死，无法进行正常的操作，只能先开启飞行模式，再切换回来（原版Android
+2.2倒不会出现这个问题）。
+</p>
+<p style="text-indent:2em;">
+	后来仔细一看，应该是卡表面氧化和刮损较严重，导致手机在开机后对SIM卡的操作过程中，出现了异常。但除此之外，Nokia
+C5手机的日常待机并无异样（3天4天不在话下），中兴U880的官方2.2版本在精简各种app后日常也能待到2天机（上下班刷微博的情况下）。乍看上去，沈阳日报的说法是假的？因此，就有了这次根据Nokia
+Energy Profiler的复测。
+</p>
+<p style="text-indent:2em;">
+	为了验证说法，还借了同事的正常SIM卡进行基准测试。凑巧的是，同事的也是06年的中国移动神州行旧卡，这下就是全旧卡对照实验了。
+</p>
+<p style="text-indent:2em;">
+	每次复测都会重新开机，待所有应用载入后测试；复测实验结果如下（数据下载：<a href="http://vdisk.weibo.com/s/lN4DE" target="_blank">http://vdisk.weibo.com/s/lN4DE</a>&nbsp;<wbr>）：
+</p>
+<p style="text-indent:2em;">
+	（1）复测实验A：氧化和刮损严重的SIM旧卡，在Nokia不锁定键盘的时候，每1分钟就会亮一次屏幕，持续15s（系统设定的节点保护时间；见图）。由于屏幕是手机耗电大王，所以直观表现就是大幅度耗电，耗电程度视乎节点保护时间而定。
+</p>
+<p style="text-indent:2em;">
+	<img title="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" alt="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" src="/file/old/1770_2.jpg" width="240" height="320" /> 
+</p>
+<p style="text-indent:2em;">
+	<img title="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" alt="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" src="/file/old/1771_3.png" width="240" height="320" /> 
+</p>
+<p style="text-indent:2em;">
+	（2）复测实验B：氧化和刮损严重的SIM旧卡，在Nokia锁定键盘的时候，每1分钟就会出现一次CPU高占用异常，直观表现就是功耗尖峰突出。但总体功耗极低。
+</p>
+<p style="text-indent:2em;">
+	<img title="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" alt="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" src="/file/old/1772_4.png" width="240" height="320" /> 
+</p>
+<p style="text-indent:2em;">
+	（3）复测实验C：正常SIM旧卡，表现稳定，总体功耗极低。
+</p>
+<p style="text-indent:2em;">
+	<img title="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" alt="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" src="/file/old/1773_5.png" width="240" height="320" /> 
+</p>
+<p style="text-indent:2em;">
+	（4）复测实验D：氧化和刮损严重的SIM旧卡，在Nokia中用C2ZBIN+屏蔽SIM卡补丁后。表现稳定，总体功耗极低。
+</p>
+<p style="text-indent:2em;">
+	<img title="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" alt="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" src="/file/old/1774_6.png" width="240" height="320" /> 
+</p>
+<p style="text-indent:2em;">
+	从以上待机复测实验上来看，SIM旧卡导致耗电异常是有可能的，但10倍貌似就有点夸张了。就这个个案而言，问题出在哪？
+</p>
+<p style="text-indent:2em;">
+	<b><span>三、分析：从STK处理异常，推导手机处理SIM卡异常引发的耗电问题</span></b> 
+</p>
+<p style="text-indent:2em;">
+	既然用屏蔽SIM卡补丁、把“SIM卡应用：没错，我就是M-Zone人”去掉后，耗电平稳性就恢复正常。那么这个玩意，从哪里来的呢？一番搜索后，STK初入视野：
+</p>
+<p style="text-indent:2em;">
+	<i>STK（SIM TOOL
+KIT）是一种小型编程语言的软件，可以固化在SIM卡中。它能够接收和发送GSM的短消息数据，起到SIM卡与短消息之间的接口的作用，同时它还允许SIM卡运行自己的应用软件。这些功能经常被用于在可通过软件激活的电话显示屏上，用友好的文本菜单代替机械的“拨号-收听-应答”方式，从而允许用户通过按键轻松进行复杂的信息检索操作或交易。SIM卡技术,"空中下载"业务,实现基于SIM卡的服务业务,例如移动的"移动梦网"SIM卡,"动感地带"等都是基于STK技术的SIM卡,该技术可以使SIM卡拥有大的存储容量和内置运营商提供的各项服务。</i> 
+</p>
+<p style="text-indent:2em;">
+	<i>（<a href="http://baike.baidu.com/view/65890.htm#3" target="_blank">http://baike.baidu.com/view/65890.htm#3</a>&nbsp;<wbr>；百度百科）</i> 
+</p>
+<p style="text-indent:2em;">
+	而操作过程，则见@智能卡技术 的文章《关于SIM卡的STK应用》（<a href="http://blog.sina.com.cn/s/blog_4df8400a0100ec4l.html" target="_blank">http://blog.sina.com.cn/s/blog_4df8400a0100ec4l.html</a>&nbsp;<wbr>）：
+</p>
+<p style="text-indent:2em;">
+	<i>对于具备STK功能的主动式SIM卡，在表示结果执行正常的时候，采用另外的协议通知终端“你发给我的命令我都执行完了，但是我这里还有一些命令数据，希望你能够取走，帮我执行一下。”于是终端就利用一个取数据的“Fetch”命令，从卡片中把准备好的数据取出来，然后按照这些数据的要求，进行相应的操作，之后终端会利用一个“Terminal
+Response”的命令告诉卡片，“嘿，你让我帮忙的事情，我已经做完了，你看看结果吧，还有啥需要我做的吗？”如果卡片这个时候还有需要终端处理的命令数据，就继续发给终端，如果没有则跟终端说，“伙计，干的不错，暂时没有啥事了，多谢。”</i>&nbsp;<i>&nbsp;</i>&nbsp;
+</p>
+<p style="text-indent:2em;">
+	<i>如果把上面的对话翻译成卡片和终端之间的数据传输的话，就是这样的：</i> 
+</p>
+<p style="text-indent:2em;">
+	<img title="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" alt="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" src="/file/old/1775_7.jpg" width="500" height="670" /> 
+</p>
+<p style="text-indent:2em;">
+	同时还搜索到Android的“STK(三)：STK开机启动后流程解析”（<a href="http://ming.highgic.com/?p=419" target="_blank">http://ming.highgic.com/?p=419</a>&nbsp;<wbr>）：
+</p>
+<p style="text-indent:2em;">
+	<i>“接着，Modem继续上报两条消息，这两条消息均为DISPLAY_TEXT,即通知显示开机导航提示语（如：动感地带SIM/USIM卡
+&nbsp;<wbr>没错，我就是M-Zone人），有的卡只有一条，有的有卡有两条”</i> 
+</p>
+<p style="text-indent:2em;">
+	从上面的资料可以看出，SIM卡和手机终端是存在各种交互过程的，主要的逻辑也放在手机终端上。而手机终端在处理SIM卡的逻辑时，确实有可能因为各种错误的输入或交互，而引发异常。大家都知道，程序逻辑异常的出现可大可小，所造成的影响都需要结合场景来评估：比如说死循环异常，极大几率会导致耗电量剧增，手机发热；但输出异常，可能就只是弹个框，影响甚微。就复测的案例而言，当SIM卡存在氧化等物理异常后，不同的手机有不同的情况：
+</p>
+<p style="text-indent:2em;">
+	（1）Nokia
+C5手机在处理STK时，确实出现了周期性的异常，从而引发耗电量增加异常；但很幸运的是，这种耗电量的异常，在大多数情况下，并不影响待机能力——除非忘了锁定键盘。
+</p>
+<p style="text-indent:2em;">
+	（2）中兴U880的Android 2.2做了容错处理，不会出现任何问题，但是否耗电，待测。
+</p>
+<p style="text-indent:2em;">
+	（3）<span style="line-height:21px;">中兴U880的Android
+2.</span>3出现了异常，无法关闭对话框，导致无法正常使用（处理DISPLAY_TEXT前后出现异常？）；而是否耗电，待测。
+</p>
+<p style="text-indent:2em;">
+	<span style="font-family:宋体;">从上述推测，沈阳日报的说法，并非不可能，旧</span><span style="font-family:Calibri;">SIM</span><span style="font-family:宋体;">卡出现接触不良，导致了手机逻辑异常，碰巧，这种异常使得在纯粹待机耗电量上，出现有</span><span style="font-family:Calibri;">10</span><span style="font-family:宋体;">倍差异的说法。要注意的是，新闻中并没有说明主角的使用手机习惯，所以真实的待机时间，无法推导出来。另外，有些人说旧</span><span style="font-family:Calibri;">SIM</span><span style="font-family:宋体;">卡导致频繁掉线，不排除也是手机异常处理不完善导致（也有可能处理不了？）。</span> 
+</p>
+<p style="text-indent:2em;">
+	因此可以作出一个最终结论，从从手机逻辑处理的角度，纠结“新旧SIM卡待机耗电量差10倍”的问题毫无益处，其实应该归结为“手机终端在进行SIM卡处理部分（如STK开机交互）的逻辑异常是否会导致耗电量剧增”问题：当SIM卡由于氧化、损坏等导致包括接触不良、物理损坏在内的各种物理异常，或者由于错误的写卡动作等导致SIM卡数据结构不标准时，会有可能导致手机在处理SIM卡（比如STK开机交互等）上出现逻辑异常，结果<span style="font-family:simsun;">有可能</span><span style="font-family:Calibri;">导致耗电</span><span style="font-family:simsun;">，也有可能不耗电；而</span>耗电的严重程度，需要视乎异常而定，根本不可能得出一个通用数值。所以，两种观点都有失偏颇，沈阳日报的报道存在个例化的情况，而@奥卡姆剃刀
+的实验也并不严谨。
+</p>
+<p style="text-indent:2em;">
+	实际上，因为SIM卡异常的情况而引发耗电问题在维修店和手机玩家上都时有听闻，如下截图，就分别代表了SIM卡物理异常和SIM卡逻辑异常（对于国外改卡机而言，国内卡可作为一种输入异常看待），引发手机耗电较高问题。（PS：最近几年出现的剪卡潮，会否导致这类问题，希望看到相关案例）
+</p>
+<p style="text-indent:2em;">
+	<img title="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" alt="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" src="/file/old/1776_8.png" width="690" height="159" /> 
+</p>
+<p style="text-indent:2em;">
+	<img title="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" alt="也谈新旧SIM卡耗电之争鈥斺敶邮只鞸TK异常说起" src="/file/old/1777_9.png" width="690" height="340" /> 
+</p>
+<p style="text-indent:2em;">
+	写到这里，想起一条曾广泛流传的微博：“刚吃饭，听某hardware
+team的同事说硬件有些bug是因为宇宙射线击穿内存导致某一bit反转造成的…宇宙射线…长姿势了…”（@__charles_lin
+；<a href="http://weibo.com/1784849201/z47CaBam4">http://weibo.com/1784849201/z47CaBam4</a> ）。重提这条微博的原因，是为了提醒自己：一个缺陷，可能来自多方面甚至意想不到的原因，这需要有多方面知识的储备，以及对相关业务流程的深刻了解，两者决不可孤立存在。
+</p>
+<p style="text-indent:2em;">
+	<span><b>四、对于普通用户的建议：纠结这个并无必要</b></span> 
+</p>
+<p style="text-indent:2em;">
+	纠结旧SIM卡（包括手机对SIM卡逻辑处理异常）的耗电问题有没有必要？个人认为，对于绝大部分普通用户而言，并无必要。因为安卓、苹果、塞班等智能机的绝大多数耗电是在：
+</p>
+<p style="text-indent:2em;">
+	（1）越来越大的大屏幕。屏幕越大必然越耗电。此部分不阐述。
+</p>
+<p style="text-indent:2em;">
+	（2）大量手机应用的安装、后台常驻。应用越多，特别是常驻应用越多，耗电必然越严重。实际上，这也是root/越狱支持和反对者经常交锋的点之一：安全研究者用各种血的案例力证root/越狱的不安全性，并呼吁不要这么做；而用户又确实反感各种强制定制应用所带来的耗电困扰，同时又要寻求自由修改系统的权利。这使得手机应用开发者在选择保护用户隐私的加密手段时，很多时候感到左右为难。
+</p>
+<p style="text-indent:2em;">
+	（3）各种不必要服务的开启，比如GPS等。
+</p>
+<p style="text-indent:2em;">
+	（4）频繁开关屏幕使用应用，就是（1）+（2）+（3）=Game Over。
+</p>
+<p style="text-indent:2em;">
+	<span style="font-family:simsun;">因此在智能手机上，对</span><span style="font-family:Calibri;">SIM</span><span style="font-family:simsun;">卡逻辑处理异常导致的耗电，只要不会出现信号异常，那么在以上智能机的耗电大户面前，基本小巫见大巫，在大部分情况，可以忽略。</span>少装应用，经常杀进程、关闭非必要功能、不要频繁使用手机才是省电王道。
+</p>
+<p style="text-indent:2em;">
+	什么，你还是担心耗电？还不想换卡？那就用橡皮擦擦干净吧。
+</p>
+<p style="text-indent:2em;">
+	<span><b>五、对于行业人员的建议</b></span> 
+</p>
+<p style="text-indent:2em;">
+	对于通信行业的从业者、学术研究者而言，建议到各大手机维修点和运营商营业厅，针对此问题进行大面积调研。相信，应该会有些特别的案例值得挖掘。
+</p>
+<p style="text-indent:2em;">
+	<span style="font-family:simsun;">而对于</span><span style="font-family:Calibri;">手机底层开发者</span><span style="font-family:simsun;">来讲</span><span style="font-family:Calibri;">，</span><span style="font-family:simsun;">期待有开发者出来撰文，阐述有关</span><span style="font-family:Calibri;">SIM卡物理异常所导致逻辑处理异常问题</span><span style="font-family:simsun;">和经验</span><span style="font-family:Calibri;">。</span>&nbsp;<span style="font-family:simsun;">&nbsp;</span>&nbsp;
+</p>
+<p style="text-indent:2em;">
+	<span style="font-family:simsun;">同时也期待有非智能机开发者讨论这个问题，因为有人提到，功能机对</span><span style="font-family:Calibri;">SIM</span><span style="font-family:simsun;">卡具有较高依赖性，其操作</span><span style="font-family:Calibri;">SIM</span><span style="font-family:simsun;">卡的程度要大于智能机。</span> 
+</p>
+<p style="text-indent:2em;">
+	<span><b>六、一些后话</b></span> 
+</p>
+<p style="text-indent:2em;">
+	这场争议传播得如此之快，其很大程度上是因为对“待机”两字的理解不一致。所有涉及的待机实验、还有说明书上的标称待机时间，其实是在理想状态下（没有开启任何应用下、sim卡和信号良好）测出的续航时间；但大家理解的待机，包括各种评测文章所说的待机，是指用户在各种环境、各种操作习惯下的续航时间。这两者数值都没有错，但往往相差巨大，而微博上的传播，大多是用后者来理解前者，因此传播之快，误解之多，意料之中。传播百态，值得传播研究者细细品味。
+</p>
+<p style="text-indent:2em;">
+	转自：<a href="http://blog.sina.com.cn/s/blog_56b798f801019lj2.html" target="_blank">http://blog.sina.com.cn/s/blog_56b798f801019lj2.html</a> 
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Horse Luke</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-12-29
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E6%89%8B%E6%9C%BA/">手机</a>
+          <a href="https://lcx.cc/tags/android/">Android</a>
+          <a href="https://lcx.cc/tags/blog/">Blog</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/%E4%BF%9D%E6%8A%A4/">保护</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E9%94%81/">锁</a>
+          <a href="https://lcx.cc/tags/%E5%BE%AE%E5%8D%9A/">微博</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%89%A9%E7%90%86/">物理</a>
+          <a href="https://lcx.cc/tags/%E6%99%BA%E8%83%BD/">智能</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3239/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">最新 IE 0day 漏洞，影响 IE 8 及以上版本，IE 8 及以上版本网马</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3237/">
+            <span class="next-text nav-default">关于eval的劫持操作</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

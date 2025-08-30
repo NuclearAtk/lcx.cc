@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>物理攻击？那些年我们忽略掉的一些社会工程学手段 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="p0tt1" /><meta name="description" content="物理攻击？那些年我们忽略掉的一些社会工程学手段。笔者自己也不太明白，也没资格给某种手法进行命名，暂且把这种“非主流的社工和渗透攻击结合”的方式成为物理攻击吧。首先，做个小小的声明：文章里提到这个朋友虽然从事相关工作，但是却是正义的，也很乐于我将他知道公布出来，即便是以爆料的形式。再者，文正中提到的案例确实是真实的，但请个文看官切勿对号入座，保留这层窗户纸，所有案例都已经经过法律途径解决了，大家不要延伸猜想，“呵呵”一下就行了“`回到了老家，百无聊赖约出了一位好友，共赴排挡，大家都不怎么会喝酒，只能是靠聊天打发时间，便有了下文，暂称他WSR吧。" />
+<meta name="keywords" content="物理攻击？那些年我们忽略掉的一些社会工程学手段" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4137/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="物理攻击？那些年我们忽略掉的一些社会工程学手段" />
+<meta property="og:description" content="物理攻击？那些年我们忽略掉的一些社会工程学手段。笔者自己也不太明白，也没资格给某种手法进行命名，暂且把这种“非主流的社工和渗透攻击结合”的方式成为物理攻击吧。首先，做个小小的声明：文章里提到这个朋友虽然从事相关工作，但是却是正义的，也很乐于我将他知道公布出来，即便是以爆料的形式。再者，文正中提到的案例确实是真实的，但请个文看官切勿对号入座，保留这层窗户纸，所有案例都已经经过法律途径解决了，大家不要延伸猜想，“呵呵”一下就行了“`回到了老家，百无聊赖约出了一位好友，共赴排挡，大家都不怎么会喝酒，只能是靠聊天打发时间，便有了下文，暂称他WSR吧。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4137/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-01-02T14:39:51&#43;08:00" />
+<meta property="article:modified_time" content="2014-01-02T14:39:51&#43;08:00" />
+
+<meta itemprop="name" content="物理攻击？那些年我们忽略掉的一些社会工程学手段">
+<meta itemprop="description" content="物理攻击？那些年我们忽略掉的一些社会工程学手段。笔者自己也不太明白，也没资格给某种手法进行命名，暂且把这种“非主流的社工和渗透攻击结合”的方式成为物理攻击吧。首先，做个小小的声明：文章里提到这个朋友虽然从事相关工作，但是却是正义的，也很乐于我将他知道公布出来，即便是以爆料的形式。再者，文正中提到的案例确实是真实的，但请个文看官切勿对号入座，保留这层窗户纸，所有案例都已经经过法律途径解决了，大家不要延伸猜想，“呵呵”一下就行了“`回到了老家，百无聊赖约出了一位好友，共赴排挡，大家都不怎么会喝酒，只能是靠聊天打发时间，便有了下文，暂称他WSR吧。"><meta itemprop="datePublished" content="2014-01-02T14:39:51&#43;08:00" />
+<meta itemprop="dateModified" content="2014-01-02T14:39:51&#43;08:00" />
+<meta itemprop="wordCount" content="5969">
+<meta itemprop="keywords" content="攻击,物理,QQ,Web,安全,安卓,电脑,服务,服务器,工程师,工具,官网,黑客,技术,加密,监控,快递,垃圾,漏洞,美国,密码,木马,内网,企业,社工,渗透,数据,思路,搜索,腾讯,网络,网络安全,网站,系统,邮件,邮箱," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="物理攻击？那些年我们忽略掉的一些社会工程学手段"/>
+<meta name="twitter:description" content="物理攻击？那些年我们忽略掉的一些社会工程学手段。笔者自己也不太明白，也没资格给某种手法进行命名，暂且把这种“非主流的社工和渗透攻击结合”的方式成为物理攻击吧。首先，做个小小的声明：文章里提到这个朋友虽然从事相关工作，但是却是正义的，也很乐于我将他知道公布出来，即便是以爆料的形式。再者，文正中提到的案例确实是真实的，但请个文看官切勿对号入座，保留这层窗户纸，所有案例都已经经过法律途径解决了，大家不要延伸猜想，“呵呵”一下就行了“`回到了老家，百无聊赖约出了一位好友，共赴排挡，大家都不怎么会喝酒，只能是靠聊天打发时间，便有了下文，暂称他WSR吧。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">物理攻击？那些年我们忽略掉的一些社会工程学手段</h1>
+      
+      <div class="post-meta">
+        <time datetime="2014-01-02" class="post-time">
+          2014-01-02
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E6%94%BB%E5%87%BB/"> 攻击 </a>
+            <a href="https://lcx.cc/categories/%E7%89%A9%E7%90%86/"> 物理 </a>
+            
+          </div>
+        <span class="more-meta"> 约 5969 字 </span>
+          <span class="more-meta"> 预计阅读 12 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<span style="color:#00B050;"><strong>笔者自己也不太明白，也没资格给某种手法进行命名，暂且把这种“非主流的社工和渗透攻击结合”的方式成为物理攻击吧。</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	首先，做个小小的声明：文章里提到这个朋友虽然从事相关工作，但是却是正义的，也很乐于我将他知道公布出来，即便是以爆料的形式。再者，文正中提到的案例确实是真实的，但请个文看官切勿对号入座，保留这层窗户纸，<span style="color:#00B050;">所有案例都已经经过法律途径解决了，大家不要延伸猜想，“呵呵”一下就行了“`</span> 
+</p>
+<p style="text-indent:2em;">
+	<span><strong>某天</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	回到了老家，百无聊赖约出了一位好友，共赴排挡，大家都不怎么会喝酒，只能是靠聊天打发时间，便有了下文，暂称他WSR吧。
+</p>
+<p style="text-indent:2em;">
+	<span style="font-family:KaiTi_GB2312;">笔者：最近社工挺流行的，真是防不胜防哈~</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="font-family:KaiTi_GB2312;">WSR：还好吧，不过网上的社工案例好像都还基于“调查”和“侦察”类型，不过真正发挥到极致的还是有很多没公开出来的，或者并不普遍的，不知道不了解才是最可怕的。</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="font-family:KaiTi_GB2312;">笔者：说的太玄乎了，你肯定又参与了什么吧？</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="font-family:KaiTi_GB2312;">WSR：很多时候，人是漏洞百出的，对人下手的话，那你就得真正面对人，不是面对电脑和几个数据库~而这方面，国内一般 都被“商业间谍类型的黑客”掌握并运用着~~~</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="font-family:KaiTi_GB2312;">笔者：那讨论讨论呗！交流交流案例！</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#262626;"><strong>案例1</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	有这样一群商业黑客，可能不能理解为传统的黑客定义了，因为他们做的事情确实有些匪夷所思，下文简称为B组织吧。
+</p>
+<p style="text-indent:2em;">
+	这次B组织的目标是国内数一数二的网络公司，旗下业务众多，规章制度健全，员工素质及文化成都普遍很高，管理和运营系统中的数据量异常庞大。
+</p>
+<p style="text-indent:2em;">
+	显然这次需要B组织进驻内网才能完成任务，但是正面渗透入侵的希望十分渺茫，在系统的渗透和检测之后，他们选择了 物理攻击的途径。
+</p>
+<p style="text-indent:2em;">
+	B组织经过调研，了解到了该公司负责开发和运维的部门办公场所，并没有乔装打扮，只是带了个鸭舌帽背着个大点的包就堂而皇之的进入了该写字楼（难道这样比较像外卖和快递？）接着，他没有进入任何办公场所，只是在走廊尽头的大垃圾桶收集了点垃圾，塞到包里并立刻离开了，他这样每天不同的时间段来一次，持续了一周，最后两次，大楼保安居然还跟他打了招呼。
+</p>
+<p style="text-indent:2em;">
+	一周后，B组织整理了这些垃圾，是的，有很多我们意想不到的事情和东西，但是，他们真的在垃圾筒里，也许我们本能认为他们是脏的，所以不予理会，但是对于B组织，它们都是宝贝，比如：便签纸，草稿，超市小票，快递单，香烟盒，呃，居然还有一张折弯掉的3G流量卡。好吧，东西太多了。B组织想了一下，自信的丢掉了别的东西，拿出那张快递单，记下了信息和电话，然后，B组织的一位女生拨通了电话：大概的意思是一家网店的促销调研，完成调研后将给他寄去优惠商品列表，可供他选择。这个Mm的声音很好听，很热情，很诱惑，在这位It男的心里出现了这样的画面：
+</p>
+<p style="text-align:center;">
+	<img title="美女" alt="美女" src="/file/old/3882_1.jpg" width="423" height="317" /> 
+</p>
+<p style="text-indent:2em;">
+	嗯，其实，他并不知道，对面的，可能是这样的：
+</p>
+<p style="text-align:center;">
+	<img title="大叔" alt="大叔" src="/file/old/3883_2.jpg" width="433" height="296" /> 
+</p>
+<p style="text-indent:2em;">
+	好的，不管了，接下来，B组织的快递哥再次登场，带着快递送到了该公司，这个公司安保还是不错的，并没有让他进去，而是让他在前台等待IT男的到来，不过B组织的快递哥还是瞄到了前台电脑上装的企业版 赛门铁克SEP杀软。嗯，交完快递后，B组织的快递哥立马赶回总部号召大家对木马进行针对赛门铁克Sep的免杀。大家应该好奇那个传单列表上都是些什么优惠~恩~就比如下图，只是价格写的是一元两元左右而已。
+</p>
+<p style="text-align:center;">
+	<a href="/file/old/3884_3.jpg" target="_blank"><img title="淘宝 U盘 个性" alt="淘宝 U盘 个性" src="/file/old/3884_3.jpg" width="780" height="378" /></a> 
+</p>
+<p style="text-indent:2em;">
+	我想大家应该知道他们想干嘛了，后来在客服Mm再次去电话的催促下，这位It男矜持的挑了这样一个U盘：
+</p>
+<p style="text-align:center;">
+	<img title="挑了这样一个U盘" alt="挑了这样一个U盘" src="/file/old/3885_4.jpg" width="207" height="247" /> 
+</p>
+<p style="text-indent:2em;">
+	为了防止对方屏蔽aotorun，他们把木马植入了一个u盘加密的工具里，然后写了个牛X的使用文档和他一起放在了u盘的根目录。
+</p>
+<p style="text-indent:2em;">
+	然后依然是按照快递单寄过去：
+</p>
+<p style="text-align:center;">
+	<img title="快递单" alt="快递单" src="/file/old/3886_5.jpg" width="359" height="260" /> 
+</p>
+<p style="text-indent:2em;">
+	也许，大家根本就不会用u盘赠送的渣渣加密软件，但是好奇心会让你打开下，看看界面，最后删除掉。这是心理学上的，笔者也不懂，大概意思就是，白送你一个东西，你也许瞧不上，但不会看都不看就扔掉，但在计算机里，看，意味着什么？双击和运行~
+</p>
+<p style="text-indent:2em;">
+	毫无悬念，两天后，这位IT男的机器在B组织的远控界面上华丽登场，嗯，安全规章履行的不错，是个人笔记本，并不是办公内网机器，这让B组织有些头疼，不过，他们通过感染一些笔记本上的工作文档和程序后，木马被IT男在加班后，顺利摆渡到了工作机器上。至此，该公司内网沦陷，后来还有很多的意向书，会议记录，ppt，密码记录本，等等全部收入B组织囊中，目标任务完成。但是这个过程中还是有做的不足的地方，导致最后B组织相关人员被抓~
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#262626;"><strong>案例2</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	这次B组织的目标是某家经融企业，搞定了网站和web服务器，没有什么收获，原因是网站是外包的（反而安全了？），邮箱是腾讯企业邮箱（腾讯安全响应平台基本没收了一些邮箱漏洞和跨站），正面走不通，B组织再次想到了 物理攻击。
+</p>
+<p style="text-indent:2em;">
+	计划1本来是这样的，他们打算提供安防设备免费安装试用服务给这家公司，通过摄像头监控和图片发送来达到监控这家公司，高精度的摄像头说不定能监控到员工输入密码！ 呃~
+</p>
+<p style="text-indent:2em;">
+	怎么感觉像美国大片呢？ 但是，这些其实都很简单，比如下图，搜索针孔摄像机肯定不行~
+</p>
+<p style="text-indent:2em;">
+	如果你搜索 监控 mini 无线 会怎么样呢？
+</p>
+<p style="text-align:center;">
+	<a href="/file/old/3887_6.jpg" target="_blank"><img title="淘宝 搜索 监控 mini 无线" alt="淘宝 搜索 监控 mini 无线" src="/file/old/3887_6.jpg" width="780" height="587" /></a> 
+</p>
+<p style="text-indent:2em;">
+	几十到几千不等，但是这个计划流产了，他们低估了这家公司，人家是做金融的，安防可是花了大家钱的，而且是正规公司做的，不允许第三方介入的~（但也提醒我们，如果这种正规公司出卖你的话，你将损失惨重）。于是计划1流产了~
+</p>
+<p style="text-indent:2em;">
+	<span><strong>计划2</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	这次B组织选择不再露面，而是在官网收集一批邮箱，然后伪造了邮件，邮件经过邮件头文件伪造可以改成任意邮箱，于是，这些攻击邮件是京东发的。大概意思是，新品牌安卓平板电脑提前线下体验，暂不在官网发售，只给用户提前体验。这样写好处有三个，第一，这种平板肯定京东官网没有，不然露出马脚，第二，体现我们是提前用户试用，第三，买山寨货，便宜呀！！！（B组织可没指望回收回来~）比如下面这些：
+</p>
+<p style="text-align:center;">
+	<a href="/file/old/3888_7.jpg" target="_blank"><img title="为这部山寨安卓平板植入安卓木马" alt="为这部山寨安卓平板植入安卓木马" src="/file/old/3888_7.jpg" width="780" height="271" /></a> 
+</p>
+<p style="text-indent:2em;">
+	嗯，B组织的人们开始为这部山寨安卓平板植入安卓木马了，大家可能怀疑给安卓植入木马和多权限多功能控制有多难~那么笔者给大家提供一个 李毅吧 的帖子，请看3漏洞的视屏，赛门铁克安全专家演示的~链接是：<a href="http://tieba.baidu.com/p/1409914052" target="_blank">安卓狗滚进来，看黑客如何入侵安卓手机。</a> 
+</p>
+<p style="text-indent:2em;">
+	接着，就是等待批量发送的攻击邮件回复了，居然有40%的人都回复申请了试用，- -！搞金融的连平板都买不起么，还用的着试用？看来国人对免费的都不拒绝~总不能都给吧？那样太假，只给一个，又怕万一别人不用。所以，针对邮箱和官网的“团队简介”对比了下职位，选了一个高层领导和一个人事部的主管。把种植木马的机器寄了过去。这样两者没什么交集，而且这两种人有时间上班玩玩东西。
+</p>
+<p style="text-indent:2em;">
+	三天后，两个肉鸡都上线了，分别连上的wifi，一个是公司的，一个却是家里自家用的，公司的那个进行了下嗅探（不要小看安卓系统的能力，看过这篇文章的应该都玩过，“<a href="https://lcx.cc/post/3209/" target="_blank">dSploit—Android网络渗透套件测试小记（含视频）</a>”），得知聊天工具是rtx，没什么戏，家里那个肉鸡呢，虽然没什么用，但是人家登陆了qq，邮箱，微信等等社交工具，当然，这些帐号密码B组织照单全收了。
+</p>
+<p style="text-indent:2em;">
+	剩下来，以这个员工的名义和邮箱发了一些邮件给同事，收集了跟多信息，准备绑马群发给同事。但是后来，这个员工居然是把企业邮箱（腾讯）和QQ邮箱绑定的，呃，于是导出了该邮箱附件夹，机密邮件和类似招标文档 会议记录 周报什么的，纷纷拿下，提前结束了战斗。
+</p>
+<p style="text-indent:2em;">
+	聊了这么多，笔者发现，很多电影中才有的情节，确实发生了，感到很费解。和朋友聊了下，豁然开朗。这些技术并不高深，甚至成本低廉。只是有些人专注于技术，有些人专注心计。<strong>这两种人走到一起，事情变得简单了。而所谓B组织在行业内也是比比皆是，只是他们选择了与黑客这个名词不同的道路而已。</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://www.freebuf.com/news/others/20291.html" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>相关吐槽：</strong> 
+</p>
+<p style="text-indent:2em;">
+	prjf (1级) 联合国驻太平洋cufo
+</p>
+<p style="text-indent:2em;">
+	中联重科，三一重工，MAo，传说中的山猫小组，苗盛茂，北洋贱队，身份证号码：xxxxxxx 大学招聘？ 民间招募？ 我是天融信的大黑客
+</p>
+<p style="text-indent:2em;">
+	cnhawk (2级) 支付宝安全专家
+</p>
+<p style="text-indent:2em;">
+	1.公开信息有很多金矿,只是浓缩和挖掘需要技巧. 2.信息情报收集在没有网络时候已经开展了上千年了.
+</p>
+<p style="text-indent:2em;">
+	黑客
+</p>
+<p style="text-indent:2em;">
+	这个东西是给某个书上翻版过来的吧。 貌似很久就之间就见到过，从国外的变为了国内的。。
+</p>
+<p style="text-indent:2em;">
+	河蟹
+</p>
+<p style="text-indent:2em;">
+	我会说是我徒弟干的吗？
+</p>
+<p style="text-indent:2em;">
+	-
+</p>
+<p style="text-indent:2em;">
+	发表评论
+</p>
+<p style="text-indent:2em;">
+	河蟹 2013-12-17 1楼
+</p>
+<p style="text-indent:2em;">
+	我会说是我徒弟干的吗？
+</p>
+<p style="text-indent:2em;">
+	dead_ice (1级) 2013-12-17 2楼
+</p>
+<p style="text-indent:2em;">
+	我是来看妹子的
+</p>
+<p style="text-indent:2em;">
+	hang333 (3级) 2013-12-17 3楼
+</p>
+<p style="text-indent:2em;">
+	毫无悬念，两天后，这位IT男的机器在B组织的远控界面上华丽登场，嗯，安全规章履行的不错，是个人笔记本，并不是办公内网机器，这让B组织有些头疼，不过，他们通过感染一些笔记本上的工作文档和程序后，木马被IT男在加班后，顺利摆渡到了工作机器上。至此，该公司内网沦陷，后来还有很多的意向书，会议记录，ppt，密码记录本，等等全部收入B组织囊中，目标任务完成。但是这个过程中还是有做的不足的地方，导致最后B组织相关人员被抓~
+</p>
+<p style="text-indent:2em;">
+	后面 ==
+</p>
+<p style="text-indent:2em;">
+	黑客 2013-12-17 4楼
+</p>
+<p style="text-indent:2em;">
+	这个东西是给某个书上翻版过来的吧。
+</p>
+<p style="text-indent:2em;">
+	貌似很久就之间就见到过，从国外的变为了国内的。。
+</p>
+<p style="text-indent:2em;">
+	河蟹 2013-12-17 5楼
+</p>
+<p style="text-indent:2em;">
+	很明显，当别人公司出现了问题之后直接报警，然后楼主就。。。。。。
+</p>
+<p style="text-indent:2em;">
+	网络攻击之所以这么嚣张就是因为其匿名性，你直接找上门去，感觉就是送死。钱转到了，但是没时间花。
+</p>
+<p style="text-indent:2em;">
+	思绪 (2级) 2013-12-17 6楼
+</p>
+<p style="text-indent:2em;">
+	这才算是社工，对吧，不过。看起来好可怕的感觉，不明觉厉。
+</p>
+<p style="text-indent:2em;">
+	litdg (5级) FB作者 2013-12-17 7楼
+</p>
+<p style="text-indent:2em;">
+	牛逼！！
+</p>
+<p style="text-indent:2em;">
+	Linker (1级) 2013-12-17 8楼
+</p>
+<p style="text-indent:2em;">
+	妹子好漂亮- -
+</p>
+<p style="text-indent:2em;">
+	河蟹 mini 2013-12-17 9楼
+</p>
+<p style="text-indent:2em;">
+	国内所谓的社工什么的 实在垃圾 简单的搜索分析 还有跟社工对象聊天 这叫社工那社工还有什么啊 多看看电影那些骗子 如果拿出来用 那才是社工
+</p>
+<p style="text-indent:2em;">
+	vsdfs 2013-12-17 10楼
+</p>
+<p style="text-indent:2em;">
+	一般而已啦，一点新意都没有弄了半天还是甩U盘的节奏，唯一与时俱进一点就是U盘换成了平板
+</p>
+<p style="text-indent:2em;">
+	cnhawk (2级) 支付宝安全专家 2013-12-17 11楼
+</p>
+<p style="text-indent:2em;">
+	1.公开信息有很多金矿,只是浓缩和挖掘需要技巧.
+</p>
+<p style="text-indent:2em;">
+	2.信息情报收集在没有网络时候已经开展了上千年了.
+</p>
+<p style="text-indent:2em;">
+	akz747 (1级) 2013-12-20
+</p>
+<p style="text-indent:2em;">
+	@cnhawk
+</p>
+<p style="text-indent:2em;">
+	正式的系统的是从一战二战开始的，
+</p>
+<p style="text-indent:2em;">
+	英国人最牛，美国人跟英国人学
+</p>
+<p style="text-indent:2em;">
+	我们跟苏联老大哥学
+</p>
+<p style="text-indent:2em;">
+	p0tt1 (4级) 论之语网络安全工程师，Sniffer组员，NTsafe站长 2013-12-17 12楼
+</p>
+<p style="text-indent:2em;">
+	我想说，估计很多人看了一半就知道这是哪两家公司了~
+</p>
+<p style="text-indent:2em;">
+	还请高抬贵手，不要在评论说出来哈~
+</p>
+<p style="text-indent:2em;">
+	3q~
+</p>
+<p style="text-indent:2em;">
+	prjf (1级) 联合国驻太平洋cufo 2013-12-17
+</p>
+<p style="text-indent:2em;">
+	中联重科，三一重工，MAo，传说中的山猫小组，苗盛茂，北洋贱队，身份证号码：xxxxxxx 大学招聘？ 民间招募？ 我是天融信的大黑客
+</p>
+<p style="text-indent:2em;">
+	Mystery。 (5级) 久游网Web开发工程师 2013-12-17
+</p>
+<p style="text-indent:2em;">
+	@p0tt1 记得好久前听说过在停车场撒U盘的故事
+</p>
+<p style="text-indent:2em;">
+	p0tt1 (4级) 论之语网络安全工程师，Sniffer组员，NTsafe站长 2013-12-17
+</p>
+<p style="text-indent:2em;">
+	@Mystery。 怀念那还支持aotorun的年代~
+</p>
+<p style="text-indent:2em;">
+	Mystery。 (5级) 久游网Web开发工程师 2013-12-17
+</p>
+<p style="text-indent:2em;">
+	@p0tt1 犹记得06年我还给别人发scr的QQ木马呢。。。。。
+</p>
+<p style="text-indent:2em;">
+	小明 2013-12-17 13楼
+</p>
+<p style="text-indent:2em;">
+	大家别学这种YY文，呵呵，免得害了自己。
+</p>
+<p style="text-indent:2em;">
+	Jakers (1级) 2013-12-17 14楼
+</p>
+<p style="text-indent:2em;">
+	妹子不错
+</p>
+<p style="text-indent:2em;">
+	河蟹 2013-12-17 15楼
+</p>
+<p style="text-indent:2em;">
+	搞定了网段和WEB服务器还说个JB啊。 直接长驱直入了。
+</p>
+<p style="text-indent:2em;">
+	在国外搞这个还行，请问国外你如何搞？
+</p>
+<p style="text-indent:2em;">
+	虽然你写的很牛B，但是事实到底是不是那样的呢？ 相信只有你自己知道。
+</p>
+<p style="text-indent:2em;">
+	p0tt1 (4级) 论之语网络安全工程师，Sniffer组员，NTsafe站长 2013-12-17
+</p>
+<p style="text-indent:2em;">
+	@河蟹 好吧 ~“搞定了网段和WEB服务器还说个JB啊。 直接长驱直入了。”？哪里说搞定网段和WEB服务器？“在国外搞这个还行，请问国外你如何搞？”这句我就更不懂了，你到底想表达国内还是国外？ – -~
+</p>
+<p style="text-indent:2em;">
+	河蟹 2013-12-17
+</p>
+<p style="text-indent:2em;">
+	@p0tt1 这次B组织的目标是某家经融企业，搞定了网站和web服务器，没有什么收获，原因是网站是外包的（反而安全了？），邮箱是腾讯企业邮箱（腾讯安全响应平台基本没收了一些邮箱漏洞和跨站），正面走不通，B组织再次想到了 物理攻击。
+</p>
+<p style="text-indent:2em;">
+	刚才手误，国内搞这个还行，国外你怎么搞？
+</p>
+<p style="text-indent:2em;">
+	Mystery。 (5级) 久游网Web开发工程师 2013-12-17
+</p>
+<p style="text-indent:2em;">
+	@河蟹 国外为什么就不能搞呢。的确，人身处于国外的话会在危险中，但是随着互联网的发展这些都不是事。http://www.it-times.com.cn/wangzhidaohang/27196.jhtml 我做好一个ISO，让一个人买光盘刻好帮我发货出去，我付给他佣金，可以否？
+</p>
+<p style="text-indent:2em;">
+	p0tt1 (4级) 论之语网络安全工程师，Sniffer组员，NTsafe站长 2013-12-17
+</p>
+<p style="text-indent:2em;">
+	@Mystery。 确实 出卖时间 跑腿 钟点工 这些~已经很普遍了撒~
+</p>
+<p style="text-indent:2em;">
+	DragonEgg (1级) 2013-12-26
+</p>
+<p style="text-indent:2em;">
+	@p0tt1 外包的啊。。网站。数据库，服务器，全是托管在外面，跟公司几乎没有网络或物理联系。
+</p>
+<p style="text-indent:2em;">
+	邻国那个谁 2013-12-17 16楼
+</p>
+<p style="text-indent:2em;">
+	平板思路很精彩，我知道第二个目标是谁，哈哈，这事当时涉案人数相当大。
+</p>
+<p style="text-indent:2em;">
+	大西洋风球 2013-12-17 17楼
+</p>
+<p style="text-indent:2em;">
+	@邻国那个谁 第一个不就是tx嘛…… 部门间把这事盖过去了！太二了···
+</p>
+<p style="text-indent:2em;">
+	MeirLin (1级) 2013-12-17 18楼
+</p>
+<p style="text-indent:2em;">
+	好文。收藏了
+</p>
+<p style="text-indent:2em;">
+	lanseailian (1级) 2013-12-17 19楼
+</p>
+<p style="text-indent:2em;">
+	真的不错，好文章，即使不用，也增加了安全意识
+</p>
+<p style="text-indent:2em;">
+	vis0ip 2013-12-17 20楼
+</p>
+<p style="text-indent:2em;">
+	每次看楼主的短篇文章 都感觉不错的 有要点 有逗乐的地方、
+</p>
+<p style="text-indent:2em;">
+	我来发个总结试试，各种’
+</p>
+<p style="text-indent:2em;">
+	神ID‘ 勿喷、
+</p>
+<p style="text-indent:2em;">
+	1.同样用U盘，这组织没有去播撒，而是迂回的采用客服小广告推荐什么的
+</p>
+<p style="text-indent:2em;">
+	让你感觉好像自己真的是被幸运砸到的（后面平板的赠送模式也是）
+</p>
+<p style="text-indent:2em;">
+	2.木马的捆绑方式没用aotorun 而是也利用心理学 直接搞个加密工具的exe 放那 就不信你不点
+</p>
+<p style="text-indent:2em;">
+	3.案例2的实施中 对各个部门的工状态 同事关系做了很透彻的揣摩
+</p>
+<p style="text-indent:2em;">
+	4.由于楼主的文笔过于幽默，让大家都忽略了上述很多细节与计划实施难点，其实这些是计划周密并且执行的，没有大家想的那么简单
+</p>
+<p style="text-indent:2em;">
+	注：我基本猜测出楼主现实中是谁了 哈哈 小心我拨你电话！
+</p>
+<p style="text-indent:2em;">
+	吐槽：虽然语气不那么教条和正规，但真的比那个什么（上）（中）（下） 一 二 三 好~
+</p>
+<p style="text-indent:2em;">
+	p0tt1 (4级) 论之语网络安全工程师，Sniffer组员，NTsafe站长 2013-12-17
+</p>
+<p style="text-indent:2em;">
+	@vis0ip 555555555555555 您到底是褒还是贬啊~~~
+</p>
+<p style="text-indent:2em;">
+	ghosttang (1级) 2013-12-18 21楼
+</p>
+<p style="text-indent:2em;">
+	一言以蔽之，主动式物理攻击。邮寄U盘攻击，哥试过，性价比奇高。难点在于，摸清企业内部组织结构，选择几个关键人物发动攻击。文中笔者给出的收集垃圾法，开拓了我的思路，不过我个人更推崇直接从保安哥那里要电话，你懂的。
+</p>
+<p style="text-indent:2em;">
+	Master (1级) 2013-12-18 22楼
+</p>
+<p style="text-indent:2em;">
+	不错。很好的思路。Mark一下
+</p>
+<p style="text-indent:2em;">
+	jacky 2013-12-18 23楼
+</p>
+<p style="text-indent:2em;">
+	子屌如是，令堂可知？
+</p>
+<p style="text-indent:2em;">
+	不装逼会死黑客 2013-12-18 24楼
+</p>
+<p style="text-indent:2em;">
+	部分物理攻击和对人的攻击方式，已经超越了“黑客”的范畴，早就不是计算机犯罪，但是中国现在的法律和执行情况，也是可以随便对“黑客”行为定很多“其他”罪名的。
+</p>
+<p style="text-indent:2em;">
+	你们认为哪些直接买通机房对服务器拔线让对方以为被DDoS而愿意付保护费的人厉害还是文章里面的那些人社会工程学厉害？你们认为那些直接买通XX转手几个亿的人厉害还是文章里面的人社会工程学厉害？
+</p>
+<p style="text-indent:2em;">
+	骚年们，醒醒吧，这不是技术~！也早已经超越了技术~！
+</p>
+<p style="text-indent:2em;">
+	MasterSaber (1级) 虚其心，可解天下之问；专其心，可治天下之学；静其心，可悟天下... 2013-12-18 25楼
+</p>
+<p style="text-indent:2em;">
+	又让我想起了曾经某个攻入美国中央情报局的大黑了，被抓了后问怎么攻进来的，答曰：守了3个月的垃圾堆
+</p>
+<p style="text-indent:2em;">
+	a820922716 (1级) 2013-12-19 26楼
+</p>
+<p style="text-indent:2em;">
+	妹子不错
+</p>
+<p style="text-indent:2em;">
+	hack520 (3级) 广西某香猪养殖厂厂长 2013-12-21 27楼
+</p>
+<p style="text-indent:2em;">
+	這種是詐騙手法的一種。只是目的不同而已。
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="6813,4137,36.22.37.79">
+<p>佚名 @ 2014-08-01 16:16:33</p>
+<p style="text-indent:2em">autorun</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">autorun</p>
+</blockquote>
+<blockquote id="7065,4137,124.132.197.217">
+<p>RainShine&#39; @ 2014-10-18 06:57:33</p>
+<p style="text-indent:2em">百无聊赖约出了一位pa0友</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="7835,4137,113.90.201.173">
+<p>Felix @ 2015-09-07 01:08:49</p>
+<p style="text-indent:2em">初来乍到，获益良多。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="7836,4137,113.90.201.173">
+<p>Felix @ 2015-09-07 01:09:57</p>
+<p style="text-indent:2em">初来乍到，看了核大大的文章茅塞顿开。感谢</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">p0tt1</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2014-01-02
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E7%89%A9%E7%90%86/">物理</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%8D%93/">安卓</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E8%84%91/">电脑</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E7%A8%8B%E5%B8%88/">工程师</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E5%AE%98%E7%BD%91/">官网</a>
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+          <a href="https://lcx.cc/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+          <a href="https://lcx.cc/tags/%E5%BF%AB%E9%80%92/">快递</a>
+          <a href="https://lcx.cc/tags/%E5%9E%83%E5%9C%BE/">垃圾</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E7%BE%8E%E5%9B%BD/">美国</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+          <a href="https://lcx.cc/tags/%E5%86%85%E7%BD%91/">内网</a>
+          <a href="https://lcx.cc/tags/%E4%BC%81%E4%B8%9A/">企业</a>
+          <a href="https://lcx.cc/tags/%E7%A4%BE%E5%B7%A5/">社工</a>
+          <a href="https://lcx.cc/tags/%E6%B8%97%E9%80%8F/">渗透</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%80%9D%E8%B7%AF/">思路</a>
+          <a href="https://lcx.cc/tags/%E6%90%9C%E7%B4%A2/">搜索</a>
+          <a href="https://lcx.cc/tags/%E8%85%BE%E8%AE%AF/">腾讯</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E9%82%AE%E4%BB%B6/">邮件</a>
+          <a href="https://lcx.cc/tags/%E9%82%AE%E7%AE%B1/">邮箱</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4138/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">2013年度最为重大的网络攻击</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4136/">
+            <span class="next-text nav-default">走近黑客Paunch与其所控制的地下黑客帝国</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

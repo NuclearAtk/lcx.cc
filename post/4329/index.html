@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>本是同根生，相煎何太急-用Google语音识别API破解reCaptcha验证码 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="A胖" /><meta name="description" content="本是同根生，相煎何太急-用Google语音识别API破解reCaptcha验证码。关于验证码和验证码破解的入门，请看：常见验证码的弱点与验证码识别。什么是reCaptcha？reCaptchas是由Google提供的基于云的验证码系统，通过结合程序生成的验证码和较难被OCR识别的图片，来帮助Google数字化一些书籍，报纸和街景里的门牌号等。reCaptcha同时还有声音验证码的功能，用来给盲人提供服务。" />
+<meta name="keywords" content="本是同根生，相煎何太急-用Google语音识别API破解reCaptcha验证码" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4329/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="本是同根生，相煎何太急-用Google语音识别API破解reCaptcha验证码" />
+<meta property="og:description" content="本是同根生，相煎何太急-用Google语音识别API破解reCaptcha验证码。关于验证码和验证码破解的入门，请看：常见验证码的弱点与验证码识别。什么是reCaptcha？reCaptchas是由Google提供的基于云的验证码系统，通过结合程序生成的验证码和较难被OCR识别的图片，来帮助Google数字化一些书籍，报纸和街景里的门牌号等。reCaptcha同时还有声音验证码的功能，用来给盲人提供服务。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4329/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-05-17T10:25:31&#43;08:00" />
+<meta property="article:modified_time" content="2014-05-17T11:00:05&#43;08:00" />
+
+<meta itemprop="name" content="本是同根生，相煎何太急-用Google语音识别API破解reCaptcha验证码">
+<meta itemprop="description" content="本是同根生，相煎何太急-用Google语音识别API破解reCaptcha验证码。关于验证码和验证码破解的入门，请看：常见验证码的弱点与验证码识别。什么是reCaptcha？reCaptchas是由Google提供的基于云的验证码系统，通过结合程序生成的验证码和较难被OCR识别的图片，来帮助Google数字化一些书籍，报纸和街景里的门牌号等。reCaptcha同时还有声音验证码的功能，用来给盲人提供服务。"><meta itemprop="datePublished" content="2014-05-17T10:25:31&#43;08:00" />
+<meta itemprop="dateModified" content="2014-05-17T11:00:05&#43;08:00" />
+<meta itemprop="wordCount" content="4090">
+<meta itemprop="keywords" content="API,Google,破解,验证码,app,Html,HTTP,IE,IP,POS,Python,Rat,Web,程序,代码,服务,模块,数据,图片,文件,系统,云," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="本是同根生，相煎何太急-用Google语音识别API破解reCaptcha验证码"/>
+<meta name="twitter:description" content="本是同根生，相煎何太急-用Google语音识别API破解reCaptcha验证码。关于验证码和验证码破解的入门，请看：常见验证码的弱点与验证码识别。什么是reCaptcha？reCaptchas是由Google提供的基于云的验证码系统，通过结合程序生成的验证码和较难被OCR识别的图片，来帮助Google数字化一些书籍，报纸和街景里的门牌号等。reCaptcha同时还有声音验证码的功能，用来给盲人提供服务。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">本是同根生，相煎何太急-用Google语音识别API破解reCaptcha验证码</h1>
+      
+      <div class="post-meta">
+        <time datetime="2014-05-17" class="post-time">
+          2014-05-17
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/api/"> API </a>
+            <a href="https://lcx.cc/categories/google/"> Google </a>
+            <a href="https://lcx.cc/categories/%E7%A0%B4%E8%A7%A3/"> 破解 </a>
+            <a href="https://lcx.cc/categories/%E9%AA%8C%E8%AF%81%E7%A0%81/"> 验证码 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4090 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	from：http://www.debasish.in/2014/04/attacking-audio-recaptcha-using-googles.html
+</p>
+<p style="text-indent:2em;">
+	<strong>0x00 背景</strong> 
+</p>
+<p style="text-indent:2em;">
+	关于验证码和验证码破解的入门，请看：<a href="https://lcx.cc/post/3582/" target="_blank">常见验证码的弱点与验证码识别</a> 
+</p>
+<p style="text-indent:2em;">
+	什么是reCaptcha？
+</p>
+<p style="text-indent:2em;">
+	reCaptchas是由Google提供的基于云的验证码系统，通过结合程序生成的验证码和较难被OCR识别的图片，来帮助Google数字化一些书籍，报纸和街景里的门牌号等。
+</p>
+<p style="text-indent:2em;">
+	<img title="reCaptchas是由Google提供的基于云的验证码系统" alt="reCaptchas是由Google提供的基于云的验证码系统" src="/file/old/4245_1.png" width="468" height="177" /> 
+</p>
+<p style="text-indent:2em;">
+	reCaptcha同时还有声音验证码的功能，用来给盲人提供服务。
+</p>
+<p style="text-indent:2em;">
+	<strong>0x01 细节</strong> 
+</p>
+<p style="text-indent:2em;">
+	中心思想：
+</p>
+<p style="text-indent:2em;">
+	用Google的Web Speech API语音识别来破解它自己的reCaptcha声音验证码.
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4246_2.png" target="_blank"><img title="Google的Web Speech API语音识别来破解它自己的reCaptcha声音验证码." alt="Google的Web Speech API语音识别来破解它自己的reCaptcha声音验证码." src="/file/old/4246_2.png" width="780" height="462" /></a> 
+</p>
+<p style="text-indent:2em;">
+	下面来看一下用来语音识别的API
+</p>
+<p style="text-indent:2em;">
+	Chrome浏览器内建了一个基于HTML5的语音输入API，通过它，用户可以通过麦克风输入语音，然后Chrome会识别成文字，这个功能在Android系统下也有。如果你不熟悉这个功能的话这里有个demo:
+</p>
+<p style="text-indent:2em;">
+	<a href="https://www.google.com/intl/en/chrome/demos/speech.html" target="_blank">https://www.google.com/intl/en/chrome/demos/speech.html</a> 
+</p>
+<p style="text-indent:2em;">
+	我一直很好奇这个语音识别API是如何工作的，是通过浏览器本身识别的还是把音频发送到云端识别呢？
+</p>
+<p style="text-indent:2em;">
+	通过抓包发现，好像的确会把语音发送到云端，不过发送出去的数据是SSL加密过的。
+</p>
+<p style="text-indent:2em;">
+	于是我开始翻Chromium项目的源码，终于我找到了有意思的地方：
+</p>
+<p style="text-indent:2em;">
+	<a href="http://src.chromium.org/viewvc/chrome/trunk/src/content/browser/speech/" target="_blank">http://src.chromium.org/viewvc/chrome/trunk/src/content/browser/speech/</a> 
+</p>
+<p style="text-indent:2em;">
+	实现过程非常简单，首先从mic获取音频数据，然后发送到Google的语音识别Web服务，返回JSON格式的识别结果。 用来识别的Web API在这里:
+</p>
+<p style="text-indent:2em;">
+	<a href="https://www.google.com/speech-api/v1/recognize" target="_blank">https://www.google.com/speech-api/v1/recognize</a> 
+</p>
+<p style="text-indent:2em;">
+	比较重要的一点是这个API只接受flac格式的音频(无损格式，真是高大上)。
+</p>
+<p style="text-indent:2em;">
+	既然知道了原理，写一个利用这个识别API的程序就很简单了。
+</p>
+<pre class="prettyprint">./google_speech.py hello.flac</pre>
+<p style="text-indent:2em;">
+	源代码：
+</p>
+<pre class="prettyprint lang-py">'''
+Accessing Google Web Speech API using Pyhon
+Author : Debasish Mandal
+'''
+import httplib
+import sys
+print '[+] Sending clean file to Google voice API'
+f = open(sys.argv[1])
+data = f.read()
+f.close()
+google_speech = httplib.HTTPConnection('www.google.com')
+google_speech.request('POST','/speech-api/v1/recognize?xjerr=1&amp;client=chromium&amp;lang=en-US',data,{'Content-type': 'audio/x-flac; rate=16000'})
+print google_speech.getresponse().read()
+google_speech.close()</pre>
+<p style="text-indent:2em;">
+	研究了一下reCaptcha的语音验证码后，你会发现基本上有两种语音验证码，一种是非常简单的，没有加入很多噪音，语音也很清晰。另外一种是非常复杂的，故意加了很多噪音，连真人很难听出来。这种验证码里面估计加了很多嘶嘶的噪声，并且用很多人声作为干扰。
+</p>
+<p style="text-indent:2em;">
+	关于这个语音验证码的细节可以参考这里<a href="https://groups.google.com/forum/#!topic/recaptcha/lkCyM34zbJo" target="_blank">https://groups.google.com/forum/#!topic/recaptcha/lkCyM34zbJo</a> 
+</p>
+<p style="text-indent:2em;">
+	在这篇文章中我主要写了如何解决前一种验证码，虽然我为了破解后一种复杂的验证码也做了很多努力，但是实在是太困难了，即使是人类对于它的识别率也很低。
+</p>
+<p style="text-indent:2em;">
+	用户可以把recaptcha的语音验证码以mp3格式下载下来，但是Google语音识别接口只接受flac格式，所以我们需要对下载回来的mp3进行一些处理然后转换成flac再提交。
+</p>
+<p style="text-indent:2em;">
+	我们先手工验证一下这样行不行：
+</p>
+<p style="text-indent:2em;">
+	首先把recaptcha播放的音频下载成mp3文件。
+</p>
+<p style="text-indent:2em;">
+	然后用一个叫<a href="http://audacity.sourceforge.net/" target="_blank">Audacity的音频编辑软件</a>（<a href="https://lcx.cc/" target="_blank"><span style="font-family:KaiTi_GB2312;">核总</span></a><span style="font-family:KaiTi_GB2312;">注：</span><span style="font-family:KaiTi_GB2312;">Audacity®是免费，开源，跨平台的声音录制编辑软件：</span><a href="http://audacity.sourceforge.net/" target="_blank"><span style="font-family:KaiTi_GB2312;">http://audacity.sourceforge.net/</span></a>）打开,如图
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4247_3.png" target="_blank"><img title="Audacity的音频编辑软件" alt="Audacity的音频编辑软件" src="/file/old/4247_3.png" width="780" height="423" /></a> 
+</p>
+<p style="text-indent:2em;">
+	把第一个数字的声音复制到新窗口中，然后再重复一次，这样我们把第一位数字的声音复制成连续的两个相同声音。
+</p>
+<p style="text-indent:2em;">
+	比如这个验证码是76426，我们的目的是把7先分离出来，然后让7的语音重复两次。
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4248_4.png" target="_blank"><img title="把7先分离出来，然后让7的语音重复两次" alt="把7先分离出来，然后让7的语音重复两次" src="/file/old/4248_4.png" width="780" height="424" /></a> 
+</p>
+<p style="text-indent:2em;">
+	最后把这段音频保存成wav格式，再转换成flac格式,然后提交到API。
+</p>
+<pre class="prettyprint">debasish@debasish ~/Desktop/audio/heart attack/final $ sox cut_0.wav -r 16000 -b 16 -c 1 cut_0.flac lowpass -2 2500
+debasish@debasish ~/Desktop/audio/heart attack/final $ python send.py cut_0.flac</pre>
+<p style="text-indent:2em;">
+	<a href="/file/old/4249_5.png" target="_blank"><img title="把这段音频保存成wav格式，再转换成flac格式,然后提交到API。" alt="把这段音频保存成wav格式，再转换成flac格式,然后提交到API。" src="/file/old/4249_5.png" width="780" height="405" /></a> 
+</p>
+<p style="text-indent:2em;">
+	很好，服务器成功识别了这段音频并且返回了正确的结果，下面就需要把这个过程自动化了。
+</p>
+<p style="text-indent:2em;">
+	在自动提交之前，我们需要了解一下数字音频是处理什么原理。
+</p>
+<p style="text-indent:2em;">
+	这个stackoverflow的问题是个很好的教程:
+</p>
+<p style="text-indent:2em;">
+	<a href="http://stackoverflow.com/questions/732699/how-is-audio-represented-with-numbers" target="_blank">http://stackoverflow.com/questions/732699/how-is-audio-represented-with-numbers</a> 
+</p>
+<p style="text-indent:2em;">
+	把一个wav格式的文件用16进制编辑器打开:
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4250_6.png" target="_blank"><img title="把一个wav格式的文件用16进制编辑器打开" alt="把一个wav格式的文件用16进制编辑器打开" src="/file/old/4250_6.png" width="780" height="452" /></a> 
+</p>
+<p style="text-indent:2em;">
+	用Python WAVE模块处理wav格式的音频:
+</p>
+<p style="text-indent:2em;">
+	wave模块提供了一个很方便接口用来处理wav格式:
+</p>
+<pre class="prettyprint lang-py">import wave
+f = wave.open('sample.wav', 'r')
+print '[+] WAV parameters ',f.getparams()
+print '[+] No. of Frames ',f.getnframes()
+for i in range(f.getnframes()):
+    single_frame = f.readframes(1)
+    print single_frame.encode('hex')
+f.close()</pre>
+<p style="text-indent:2em;">
+	getparams()函数返回一个元组，内容是关于这个wav文件的一些元数据，例如频道数量，采样宽度，采样率，帧数等等。
+</p>
+<p style="text-indent:2em;">
+	getnframes()返回这个wav文件有多少帧。
+</p>
+<p style="text-indent:2em;">
+	运行这个python程序后，会把sample.wav的每一帧用16进制表示然后print出来
+</p>
+<pre class="prettyprint">[+] WAV parameters (1, 2, 44100, 937, 'NONE', 'not compressed')
+[+] No. of Frames 937
+[+] Sample 0 = 62fe &nbsp; &nbsp;&lt;- Sample 1
+[+] Sample 1 = 99fe &nbsp; &lt;- Sample 2
+[+] Sample 2 = c1ff &nbsp; &nbsp;&lt;- Sample 3
+[+] Sample 3 = 9000
+[+] Sample 4 = 8700
+[+] Sample 5 = b9ff
+[+] Sample 6 = 5cfe
+[+] Sample 7 = 35fd
+[+] Sample 8 = b1fc
+[+] Sample 9 = f5fc
+[+] Sample 10 = 9afd
+[+] Sample 11 = 3cfe
+[+] Sample 12 = 83fe
+[+] ....</pre>
+<p style="text-indent:2em;">
+	从输出文件中我们可以看到，这个wav文件是单通道的,每个通道是2字节长，因为音频是16比特的，我们也可以用 getsampwidth()函数来判断通道宽度，getchannels() 可以用来确定音频是单声道还是立体声。
+</p>
+<p style="text-indent:2em;">
+	接下来对每帧进行解码，这个16进制编码实际上是小端序保存的(little-endian),所以还需要对这段python程序做一些修改，并且利用struct模块把每帧的值转换成带符号的整数。
+</p>
+<pre class="prettyprint lang-py">import wave
+import struct
+f = wave.open('sample.wav', 'r')
+print '[+] WAV parameters ',f.getparams()
+print '[+] No. of Frames ',f.getnframes()
+for i in range(f.getnframes()):
+    single_frame = f.readframes(1)
+    sint = struct.unpack('&lt;h', single_frame) [0]
+    print "[+] Sample ",i," = ",single_frame.encode('hex')," -&gt; ",sint[0]
+f.close()</pre>
+<p style="text-indent:2em;">
+	修改完毕后再次运行，输出内容差不多这样:
+</p>
+<pre class="prettyprint">[+] WAV parameters (1, 2, 44100, 937, 'NONE', 'not compressed')
+[+] No. of Frames 937
+[+] Sample 0 = 62fe -&gt; -414
+[+] Sample 1 = 99fe -&gt; -359
+[+] Sample 2 = c1ff -&gt; -63
+[+] Sample 3 = 9000 -&gt; 144
+[+] Sample 4 = 8700 -&gt; 135
+[+] Sample 5 = b9ff -&gt; -71
+[+] Sample 6 = 5cfe -&gt; -420
+[+] Sample 7 = 35fd -&gt; -715
+[+] Sample 8 = b1fc -&gt; -847
+[+] Sample 9 = f5fc -&gt; -779
+[+] Sample 10 = 9afd -&gt; -614
+[+] Sample 11 = 3cfe -&gt; -452
+[+] Sample 12 = 83fe -&gt; -381
+[+] Sample 13 = 52fe -&gt; -430
+[+] Sample 14 = e2fd -&gt; -542</pre>
+<p style="text-indent:2em;">
+	这样是不是更明白了?下面用python的matplotlib画图模块把这些数值画出来:
+</p>
+<pre class="prettyprint lang-py">import wave
+import struct
+import matplotlib.pyplot as plt
+data_set = []
+f = wave.open('sample.wav', 'r')
+print '[+] WAV parameters ',f.getparams()
+print '[+] No. of Frames ',f.getnframes()
+for i in range(f.getnframes()):
+    single_frame = f.readframes(1)
+    sint = struct.unpack('&lt;h', single_frame)[0]
+    data_set.append(sint)
+f.close()
+plt.plot(data_set)
+plt.ylabel('Amplitude')
+plt.xlabel('Time')
+plt.show()</pre>
+<p style="text-indent:2em;">
+	<a href="/file/old/4251_7.png" target="_blank"><img title="声音的波形图：用python的matplotlib画图模块把这些数值画出来" alt="声音的波形图：用python的matplotlib画图模块把这些数值画出来" src="/file/old/4251_7.png" width="780" height="391" /></a> 
+</p>
+<p style="text-indent:2em;">
+	这个图实际上就是声音的波形图
+</p>
+<p style="text-indent:2em;">
+	进一步自动化:
+</p>
+<p style="text-indent:2em;">
+	下面这段python程序通过音量不同把音频文件分割成多个音频文件，相当于图片验证码识别中的图片分割步骤。
+</p>
+<pre class="prettyprint lang-py">'''
+简单的基于音量的音频文件分割程序
+作用:&nbsp;
+1. 简单的降噪处理
+2. 识别文件中的高音量部分
+3. 根据高音量部分的数目把文件分割成独立文件
+&nbsp;
+'''
+import wave
+import sys
+import struct
+import os
+import time
+import httplib
+from random import randint
+ip = wave.open(sys.argv[1], 'r')
+info = ip.getparams()
+frame_list = []
+for i in range(ip.getnframes()):
+    sframe = ip.readframes(1)
+    amplitude = struct.unpack('&lt;h', sframe)[0]
+    frame_list.append(amplitude)
+ip.close()
+for i in range(0,len(frame_list)):
+    if abs(frame_list[i]) &lt; 25:
+        frame_list[i] = 0
+################################  Find Out most louder portions of the audio file ###########################
+thresh = 30
+output = []
+nonzerotemp = []
+length = len(frame_list)
+i = 0
+while i &lt; length:
+    zeros = []
+    while i &lt; length and frame_list[i] == 0:
+        i += 1
+        zeros.append(0)
+    if len(zeros) != 0 and len(zeros) &lt; thresh:
+        nonzerotemp += zeros
+    elif len(zeros) &gt; thresh:
+        if len(nonzerotemp) &gt; 0 and i &lt; length:
+            output.append(nonzerotemp)
+            nonzerotemp = []
+    else:
+        nonzerotemp.append(frame_list[i])
+        i += 1
+if len(nonzerotemp) &gt; 0:
+    output.append(nonzerotemp)
+chunks = []
+for j in range(0,len(output)):
+    if len(output[j]) &gt; 3000:
+        chunks.append(output[j])
+#########################################################################################################
+for l in chunks:
+    for m in range(0,len(l)):
+        if l[m] == 0:
+             l[m] = randint(-0,+0)
+inc_percent = 1 #10 percent
+for l in chunks:
+    for m in range(0,len(l)):
+        if l[m] &lt;= 0:
+            # negative value
+            l[m] = 0 - abs(l[m]) + abs(l[m])*inc_percent/100
+        else:
+            #positive vaule
+            l[m] =     abs(l[m]) + abs(l[m])*inc_percent/100
+########################################################
+# Below code generates separate wav files depending on the number of loud voice detected.
+NEW_RATE = 1 #Change it to &gt; 1 if any amplification is required
+print '[+] Possibly ',len(chunks),'number of loud voice detected...'
+for i in range(0, len(chunks)):
+    new_frame_rate = info[0]*NEW_RATE
+    print '[+] Creating No. ',str(i),'file..'
+    split = wave.open('cut_'+str(i)+'.wav', 'w')
+    split.setparams((info[0],info[1],info[2],0,info[4],info[5]))
+#   split.setparams((info[0],info[1],new_frame_rate,0,info[4],info[5]))
+    #Add some silence at start selecting +15 to -15
+    for k in range(0,10000):
+        single_frame = struct.pack('&lt;h', randint(-25,+25))
+        split.writeframes(single_frame)
+    # Add the voice for the first time
+    for frames in chunks[i]:
+        single_frame = struct.pack('&lt;h', frames)
+        split.writeframes(single_frame)
+    #Add some silence in between two digits
+    for k in range(0,10000):
+        single_frame = struct.pack('&lt;h', randint(-25,+25))
+        split.writeframes(single_frame)
+    # Repeat effect :  Add the voice second time
+    for frames in chunks[i]:
+        single_frame = struct.pack('&lt;h', frames)
+        split.writeframes(single_frame)
+    #Add silence at end
+    for k in range(0,10000):
+        single_frame = struct.pack('&lt;h', randint(-25,+25))
+        split.writeframes(single_frame)
+    split.close()#Close each files</pre>
+<p style="text-indent:2em;">
+	当这个文件被分割成多份之后我们可以简单的把他们转换成flac格式然后把每个文件单独发送到Google语音识别API进行识别。
+</p>
+<p style="text-indent:2em;">
+	视频已翻墙下载回来：
+</p>
+<p style="text-indent:2em;">
+	<a href="http://wydrops-wordpress.stor.sinaapp.com/uploads/2014/04/Solving-reCaptcha-Audio-Challenge-using-Google-Web-Speech-API-Demo.mp4" target="_blank">Solving reCaptcha Audio Challenge using Google Web Speech API Demo</a> 
+</p>
+<p style="text-indent:2em;">
+	现在我们已经解决了简单的音频验证码，我们再来尝试一下复杂的。
+</p>
+<p style="text-indent:2em;">
+	这个图片是用前面的程序画出来的复杂语音验证码的波形图:
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4252_8.png" target="_blank"><img title="用前面的程序画出来的复杂语音验证码的波形图" alt="用前面的程序画出来的复杂语音验证码的波形图" src="/file/old/4252_8.png" width="780" height="391" /></a> 
+</p>
+<p style="text-indent:2em;">
+	从图里我们可以看到，这段音频中一直存在一个恒定的噪声，就是中间横的蓝色的那条，对于这样的噪声我们可以用标准的离散傅里叶变换，通过快速傅里叶变换fast Fourier transform(挂在高树上的注意了!)来解决。
+</p>
+<p style="text-indent:2em;">
+	回到多年前校园中的数字信号处理这门课，让我们在纯洁的正弦波 s(t)=sint(w*t)上叠加一个白噪声，S(t)=S(t+n), F为S的傅里叶变换，把频率高于和低于w的F值设为0，噪声就被这样过滤掉了。
+</p>
+<p style="text-indent:2em;">
+	<img title="正弦波的频谱域被分离了出来" alt="正弦波的频谱域被分离了出来" src="/file/old/4253_9.gif" width="333" height="317" /> 
+</p>
+<p style="text-indent:2em;">
+	比如这张图里，正弦波的频谱域被分离了出来，只要把多余频率切掉，再逆变换回去就相当于过滤掉部分噪音了。其实自己写这样的过滤器实在太蛋疼了，Python有不少音频处理库并且自带降噪滤镜。
+</p>
+<p style="text-indent:2em;">
+	但是就像识别图形验证码一样，噪音(相当于图片里的干扰线和噪点)并不是破解语音验证码的难点，对于计算机来说，最难的部分还是分割，在复杂的语音验证码里，除了主要的人声之外，背景中还有2，3个人在念叨各种东西，并且音量和主要的声音差不多，无法通过音量分离，这样的手段即使对于人类也很难识别的出。
+</p>
+<p style="text-indent:2em;">
+	我把目前的代码放在了<a href="https://github.com/debasishm89/hack_audio_captcha" target="_blank">https://github.com/debasishm89/hack_audio_captcha</a> 
+</p>
+<p style="text-indent:2em;">
+	这些代码还很原始，有很大改进的余地。
+</p>
+<p style="text-indent:2em;">
+	<strong>0x02 结论</strong> 
+</p>
+<p style="text-indent:2em;">
+	我把这个问题报给了Google安全团队，他们说这个东西就是这样设计的(苦逼的作者),如果系统怀疑对方不是人是机器的时候会自动提升到高难度验证码，目前Google不打算改进这个设计。
+</p>
+<p style="text-indent:2em;">
+	<a href="http://drops.wooyun.org/papers/1524" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4288/" target="_blank">识别wooyun的验证码，wooyun验证码识别，识别乌云验证码的详细分析</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4274/" target="_blank">论防刷票、恶意提交表单：公司网站被恶意提交订单，看你如何解决？</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4241/" target="_blank">短信炸弹：短信轰炸那些事（如何防止猥琐男如何骚扰妹子）</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4009/" target="_blank">BurpSuite有点“懒”，你们是怎样完成带验证码爆破的？</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3984/" target="_blank">西部数码域名安全验证形同虚设，真尼玛方便劫持....</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3860/" target="_blank">短信炸弹，短信轰炸，利用各大网站的验证码功能批量轰炸某个号码</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3582/" target="_blank">常见验证码的弱点与验证码识别</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2720/" target="_blank">后台登陆验证发展的趋势研究</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1365/" target="_blank">【公告】本站留言版加上了验证问题、验证码功能</a>
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/195/" target="_blank">用passcraft突破验证码破解后台管理员账号</a>
+</p>
+<p>
+	<strong>各种吐槽：</strong> 
+</p>
+<p style="text-indent:2em;">
+	livers | 2014/04/29 13:25 | #
+</p>
+<p style="text-indent:2em;">
+	这个老外真淫荡啊
+</p>
+<p style="text-indent:2em;">
+	xyang | 2014/04/29 13:30 | #
+</p>
+<p style="text-indent:2em;">
+	我去
+</p>
+<p style="text-indent:2em;">
+	杰克弗里曼 | 2014/04/29 13:37 | #
+</p>
+<p style="text-indent:2em;">
+	厉害，谷歌这是给自己下套了
+</p>
+<p style="text-indent:2em;">
+	Jim叔叔 | 2014/04/29 13:48 | #
+</p>
+<p style="text-indent:2em;">
+	高数大牛啊。。。如果你是正弦，我就是余弦，我们是傅里叶变换的一对基。
+</p>
+<p style="text-indent:2em;">
+	fffonion | 2014/04/29 13:55 | #
+</p>
+<p style="text-indent:2em;">
+	感觉标题应该是“python音频处理教程：一”……
+</p>
+<p style="text-indent:2em;">
+	【其实google也可以识别非flac格式的，只要改下content-type
+</p>
+<p style="text-indent:2em;">
+	lucky | 2014/04/29 16:56 | #
+</p>
+<p style="text-indent:2em;">
+	真是好的想法
+</p>
+<p style="text-indent:2em;">
+	计算姬 | 2014/04/29 17:50 | #
+</p>
+<p style="text-indent:2em;">
+	高大上啊，自己攻自己啊。
+</p>
+<p style="text-indent:2em;">
+	xiaojiaoben | 2014/04/29 18:59 | #
+</p>
+<p style="text-indent:2em;">
+	使用机器学习可以分割两种人声
+</p>
+<p style="text-indent:2em;">
+	高斯 | 2014/04/30 04:45 | #
+</p>
+<p style="text-indent:2em;">
+	sint(w*t)?不是sin(w*t)?
+</p>
+<p style="text-indent:2em;">
+	Mody | 2014/04/30 09:50 | #
+</p>
+<p style="text-indent:2em;">
+	回复惊现@高斯
+</p>
+<p style="text-indent:2em;">
+	anonymous | 2014/04/30 13:28 | #
+</p>
+<p style="text-indent:2em;">
+	我是小白，完全看不懂啊~
+</p>
+<p style="text-indent:2em;">
+	橘子 | 2014/04/30 22:54 | #
+</p>
+<p style="text-indent:2em;">
+	大赞！求转~
+</p>
+<p style="text-indent:2em;">
+	地狱星星 | 2014/05/01 16:26 | #
+</p>
+<p style="text-indent:2em;">
+	牛呀
+</p>
+<p style="text-indent:2em;">
+	xiadaomike | 2014/05/01 16:26 | #
+</p>
+<p style="text-indent:2em;">
+	我比较好奇Terminal配色名是？
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/" target="_blank">核攻击</a> | 2014/05/17 10:23 | #
+</p>
+<p style="text-indent:2em;">
+	真他娘的猥琐的方法……
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">A胖</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2014-05-17
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/api/">API</a>
+          <a href="https://lcx.cc/tags/google/">Google</a>
+          <a href="https://lcx.cc/tags/%E7%A0%B4%E8%A7%A3/">破解</a>
+          <a href="https://lcx.cc/tags/%E9%AA%8C%E8%AF%81%E7%A0%81/">验证码</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/python/">Python</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E5%9D%97/">模块</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E5%9B%BE%E7%89%87/">图片</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E4%BA%91/">云</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4330/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">Information on recently-fixed Oracle VM VirtualBox vulnerabilities</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4328/">
+            <span class="next-text nav-default">XSS Filter Evasion Cheat Sheet 中文版</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

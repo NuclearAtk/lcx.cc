@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>任何一种装机量巨大的软件，都有政府监控模块，我们应该如何保护自己？ - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="任何一种装机量巨大的软件，都有政府监控模块，我们应该如何保护自己？曾经有个朋友电脑被窃取了，去报案了，然后据说对方问他是否记得自己的mac地址，如果记得就可以找回，当时我觉得这个事情不可以理解，mac是二层地址上传输的，不会传播到因特网上任何其他地方啊，有这个有什么用，后来有一天我突然明白了，而且感到很惶恐。" />
+<meta name="keywords" content="任何一种装机量巨大的软件，都有政府监控模块，我们应该如何保护自己？" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/2371/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="任何一种装机量巨大的软件，都有政府监控模块，我们应该如何保护自己？" />
+<meta property="og:description" content="任何一种装机量巨大的软件，都有政府监控模块，我们应该如何保护自己？曾经有个朋友电脑被窃取了，去报案了，然后据说对方问他是否记得自己的mac地址，如果记得就可以找回，当时我觉得这个事情不可以理解，mac是二层地址上传输的，不会传播到因特网上任何其他地方啊，有这个有什么用，后来有一天我突然明白了，而且感到很惶恐。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/2371/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-03-29T09:01:23&#43;08:00" />
+<meta property="article:modified_time" content="2012-04-11T10:24:45&#43;08:00" />
+
+<meta itemprop="name" content="任何一种装机量巨大的软件，都有政府监控模块，我们应该如何保护自己？">
+<meta itemprop="description" content="任何一种装机量巨大的软件，都有政府监控模块，我们应该如何保护自己？曾经有个朋友电脑被窃取了，去报案了，然后据说对方问他是否记得自己的mac地址，如果记得就可以找回，当时我觉得这个事情不可以理解，mac是二层地址上传输的，不会传播到因特网上任何其他地方啊，有这个有什么用，后来有一天我突然明白了，而且感到很惶恐。"><meta itemprop="datePublished" content="2012-03-29T09:01:23&#43;08:00" />
+<meta itemprop="dateModified" content="2012-04-11T10:24:45&#43;08:00" />
+<meta itemprop="wordCount" content="2924">
+<meta itemprop="keywords" content="保护,监控,模块,软件,360,IP,QQ,VPN,数据,腾讯,网络,微博,问题,协议,中国,追踪," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="任何一种装机量巨大的软件，都有政府监控模块，我们应该如何保护自己？"/>
+<meta name="twitter:description" content="任何一种装机量巨大的软件，都有政府监控模块，我们应该如何保护自己？曾经有个朋友电脑被窃取了，去报案了，然后据说对方问他是否记得自己的mac地址，如果记得就可以找回，当时我觉得这个事情不可以理解，mac是二层地址上传输的，不会传播到因特网上任何其他地方啊，有这个有什么用，后来有一天我突然明白了，而且感到很惶恐。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">任何一种装机量巨大的软件，都有政府监控模块，我们应该如何保护自己？</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-03-29" class="post-time">
+          2012-03-29
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E4%BF%9D%E6%8A%A4/"> 保护 </a>
+            <a href="https://lcx.cc/categories/%E7%9B%91%E6%8E%A7/"> 监控 </a>
+            <a href="https://lcx.cc/categories/%E6%A8%A1%E5%9D%97/"> 模块 </a>
+            <a href="https://lcx.cc/categories/%E8%BD%AF%E4%BB%B6/"> 软件 </a>
+            
+          </div>
+        <span class="more-meta"> 约 2924 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	在某论坛看到个贴，内容如下：
+</p>
+<hr />
+<p style="text-indent:2em;">
+	一个匪夷所思的问题
+</p>
+<p style="text-indent:2em;">
+	//转自@xsser
+</p>
+<p style="text-indent:2em;">
+	曾经有个朋友电脑被窃取了，去报案了，然后据说对方问他是否记得自己的mac地址，如果记得就可以找回，当时我觉得这个事情不可以理解，mac是二层地址上传输的，不会传播到因特网上任何其他地方啊，有这个有什么用，后来有一天我突然明白了，而且感到很惶恐。
+</p>
+<p style="text-indent:2em;">
+	转回复
+</p>
+<p style="text-indent:2em;">
+	http://weibo.com/1273725432/y9Fm81E3o
+</p>
+<p style="text-indent:2em;">
+	微博内容自己看
+</p>
+<p style="text-indent:2em;">
+	不解释，你懂的
+</p>
+<hr />
+<p style="text-indent:2em;">
+	顺便把新浪微博内容也转来（新浪微博会主动弹出“你账号异常，需要手机验证”，然后恐吓+诱导用户，非法收集公民私人信息，真鸡巴恶心）：
+</p>
+<hr />
+<p style="text-indent:2em;">
+	任何一种装机量巨大的软件，有常驻部件，或者因软件性质决定了其持续运行时间会大于30分钟，该软件有中心服务器一类的东西存在，那么这种软件用户群天生就是botnet，一点不带夸张的。这种软件要是不带点“功能”，那都叫对不起党、对不起人民。什么IM、AV、MP、DL的都一样，这叫中国特色的互联网历史。
+</p>
+<p style="text-indent:2em;">
+	一些回复：
+</p>
+<p style="text-indent:2em;">
+	qq+360+暴风+迅雷→中国特色的监视网络 (3月13日 15:37)
+</p>
+<p style="text-indent:2em;">
+	想起09年“绿霸”事件，几个不懂政治的蠢人强行要求全国人民花钱买漏洞百出的“网络爸爸.屌丝护航”软件，居然还要纳税人巨资养一帮私有企业的“客服”来非法监控自己…好吧，结果就是，不但友邦惊诧了，连自己人都气不过搞了它n个0day 出来 (3月13日 14:04)
+</p>
+<p style="text-indent:2em;">
+	这帮傻B蠢惯了，闲烦了，就喜欢出来丢他妈的脸。
+</p>
+<p style="text-indent:2em;">
+	跟中国有毛关系，国外什么OS，MP，PD，不是一样？脑残观点。
+</p>
+<hr />
+<p style="text-indent:2em;">
+	如果有常年关注本人博客的同学，估计早都看到此类内容了，这早都不是什么新鲜事了，2年前本人已写过此类文章，例如：<a href="https://lcx.cc/post/870/" target="_blank">360,腾讯等公司之间的战争,以及网民用户隐私</a> 
+</p>
+<p style="text-indent:2em;">
+	当时的文章写的比较内涵，没有直接提及与政府有关，但是聪明的同学，估计早都已经想到了……
+</p>
+<p style="text-indent:2em;">
+	另外，除了软件监控之外，还有网络监控，这么告诉你吧，除了 GFW 关口过滤之外，国内各大网络运营商都有给 Gov 的秘密接口，至于干什么的，你懂的……
+</p>
+<p style="text-indent:2em;">
+	还有，别以为挂个国内、国外VPN就鸡巴找不到你了，你他妈的就跟个透明的一样，扒光衣服被人看，任人观摩……
+</p>
+<p style="text-indent:2em;">
+	各大电信运营商，都会保存非静态IP用户（宽带用户）上网资料最少3个月以上，
+</p>
+<p style="text-indent:2em;">
+	贴一点东西：
+</p>
+<hr />
+<p style="text-indent:2em;">
+	IPv6的普及一个重要的应用是网络实名制下的互联网身份证/VIeID，目前基于IPv4的网络之所以难以实现网络实名制，一个重要原因就是因为IP资源的共用，因为IP资源不够，所以不同的人在不同的时间段共用一个IP，IP和上网用户无法实现一一对应。
+</p>
+<p style="text-indent:2em;">
+	在IPv4下，现在根据IP查人也比较麻烦，电信局要保留一段时间的上网日志才行，通常因为数据量很大，运营商只保留三个月左右的上网日志，比如查前年某个IP发帖子的用户就不能实现。
+</p>
+<p style="text-indent:2em;">
+	IPv6的出现可以从技术上一劳永逸地解决实名制这个问题，因为那时IP资源将不再紧张，运营商有足够多的IP资源，那时候，运营商在受理入网申请的时候，可以直接给该用户分配一个固定IP地址，这样实际就实现了实名制，也就是一个真实用户和一个IP地址的一一对应。
+</p>
+<p style="text-indent:2em;">
+	当一个上网用户的IP固定了之后，你任何时间做的任何事情都和一个唯一IP绑定，你在网络上做的任何事情在任何时间段内都有据可查，并且无法否认。
+</p>
+<hr />
+<p style="text-indent:2em;">
+	至于 VPN 的问题，呵呵，告诉你，这些传输协议，早已经有自动解码程序在过滤你的数据了，这种加密协议在政府面前就是透明的！这只是其一……
+</p>
+<p style="text-indent:2em;">
+	那什么是其二？？？呵呵，gov 早已经有能力监视国内、外IP之间的通讯了，所以你如果只是挂一个国外VPN，鸡巴就跟没用一样，到时候查一下这个国外IP和国内那个IP有过通讯，就知道是谁了……
+</p>
+<p style="text-indent:2em;">
+	如果你想躲避该类追踪，你至少要有两台以上国外跳板，线路如下：
+</p>
+<p style="text-indent:2em;">
+	你 --&gt; 国外VPN1 --&gt; 国外VPN2 --&gt; 目标
+</p>
+<p style="text-indent:2em;">
+	这样，就无法追踪和国内哪个IP通讯了，因为中间还隔了一个国外的跳板，但是，别以为gov就没办法了，如果真要追踪你，这其实很简单……
+</p>
+<p style="text-indent:2em;">
+	派个人日了那跳板，查日志就行了，gov 如今经常这么干……
+</p>
+<p style="text-indent:2em;">
+	所以，你的跳板的安全性，是很重要的，另外事后一定记得擦除跳板的日志……
+</p>
+<p style="text-indent:2em;">
+	关于入侵跳板，反追踪黑客，可以参考此文：<a href="https://lcx.cc/post/2344/" target="_blank">企业安全应急响应与渗透反击 v0.04(程冲)，值得一看！</a> 
+</p>
+<p style="text-indent:2em;">
+	至于国内跳板嘛，这个就不说了，对于政府来说，这简直太简单了，在各大运营商接口查一下通讯数据就行了……
+</p>
+<p style="text-indent:2em;">
+	这只是极其简单的描述了一下这个过程，实际上要复杂很多……
+</p>
+<p style="text-indent:2em;">
+	另外，这并不是中国这一个国家独有的计划，其实每个国家都一样，尤其是独裁制的国家，将会更甚……
+</p>
+<p style="text-indent:2em;">
+	为什么？统治者为了更好的奴役、控制他的奴隶，这是必须的手段，自古至今都有……
+</p>
+<p style="text-indent:2em;">
+	所以，不要感到恐慌，你就老实巴交的当奴隶吧……
+</p>
+<p>
+	<strong>PS：</strong> 
+</p>
+<p style="text-indent:2em;">
+	估计本文又要被屏蔽了……
+</p>
+<p>
+	<strong>参考文章：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2346/" target="_blank">哎，又被中国国家防火墙（GFW）给屏蔽了一个链接！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2344/" target="_blank">企业安全应急响应与渗透反击 v0.04(程冲)，值得一看！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1999/" target="_blank">我操！他妈的，本站居然被中国国家防火墙（GFW）给屏蔽了！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1213/" target="_blank">入侵者必读, 网警、公安是如何找到你的!</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/870/" target="_blank">360,腾讯等公司之间的战争,以及网民用户隐私</a> 
+</p>
+<p>
+	<strong>PS：</strong> 
+</p>
+<p style="text-indent:2em;">
+	目前监控范围，已慢慢的爬向智能终端平台了，甚是恐怖……
+</p>
+<!--
+<p style="text-indent:2em;">
+	本人所有的软件均手工检测，TM 2009 更是监视发包长达一年之久，但仍不排除有触发性的后门存在，没办法的事……
+</p>
+<p style="text-indent:2em;">
+	或者研究腾讯通讯协议，网上有大量此类资料，自己写个客户端吧（例如各种QQ机器人），晕……
+</p>
+<p>
+	<strong>目前已知存在政府监控</strong><strong>后门的软件：</strong> 
+</p>
+<p style="text-indent:2em;">
+	QQ（以及腾讯公司旗下相关产品）、360（以及奇虎公司旗下相关产品）、迅雷（以及迅雷公司旗下相关产品）、百度旗下产品、各类国产杀软、各类播放器、各类浏览器……
+</p>
+<p style="text-indent:2em;">
+	你问我从哪里得到的？呵呵，不解释，爱信不信，不信拉倒……
+</p>
+-->
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="1261,2371,14.144.14.234">
+<p>流亡青年 @ 2012-03-29 12:23:36</p>
+<p style="text-indent:2em">在中国没办法，哎，没有任何隐私。有能力就移民吧，受罪</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">其实国外也一样，╮(╯_╰)╭……</p>
+</blockquote>
+<blockquote id="1264,2371,183.66.204.133">
+<p>【匿名者】 @ 2012-03-29 19:28:11</p>
+<p style="text-indent:2em">自以为是的S  BB   。。。懂个J8。太肤浅。小丑而已~</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">好歹哥还懂个J8，你丫连J8都不懂！孩子，什么时候看懂了本站一半以上的文章后，再来看看你的留言……</p>
+</blockquote>
+<blockquote id="1266,2371,218.242.156.180">
+<p>【匿名者】 @ 2012-03-30 06:03:35</p>
+<p style="text-indent:2em">核老大言辞很犀利啊- - 
+看你写的文章感觉很爽，想到什么说什么，没有条条框框。
+另外强烈要求贴个软件手工检测的技术帖。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">\(^o^)/，不是逆向牛，顶多黑盒分析下，此类文章建议去看雪论坛，那里全是逆向牛。</p>
+</blockquote>
+<blockquote id="1278,2371,125.69.52.78">
+<p>日月 @ 2012-04-01 16:13:58</p>
+<p style="text-indent:2em">在未被屏蔽前留下脚印！~~</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="2029,2371,61.155.206.113">
+<p>yuluo @ 2012-07-22 13:55:06</p>
+<p style="text-indent:2em">没办法了 安稳的过日子 赚钱 远离政zhi 以及其他gov有理由抓你的行为 有技术 有能力 赚钱过日子 高压线不好碰 比如六si 你懂的</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这个简单，推翻它们既可~　到时候天下爷说了算，重新定制奴隶守则（法律）……</p>
+</blockquote>
+<blockquote id="2088,2371,124.165.216.67">
+<p>safe121 @ 2012-08-01 17:28:02</p>
+<p style="text-indent:2em">115开始刷流氓了，爆菊手段又多了～
+未绑定手机禁止分享给大众功能，请联系资源发布者获取资源!</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">Shit!　╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="4435,2371,49.76.251.214">
+<p>伟伟 @ 2013-07-06 16:54:57</p>
+<p style="text-indent:2em">是不是和没有的棱镜计划差不多了？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">是啊。</p>
+</blockquote>
+<blockquote id="5649,2371,112.241.146.128">
+<p>sinan @ 2014-01-07 20:33:31</p>
+<p style="text-indent:2em">ipv6和ipv4差别不大。
+
+其他的信息都应该是想想就能知道的</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="6042,2371,121.8.235.150">
+<p>xidianlz @ 2014-03-18 10:04:39</p>
+<p style="text-indent:2em">虽然这些东西自己心里知道，但是这么赤果果的看到还有很忧伤</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">反正我们啥都做不了……　╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="7044,2371,119.128.162.224">
+<p>佚名 @ 2014-10-12 00:12:52</p>
+<p style="text-indent:2em">吃的了咸鱼  耐的了渴    这也是没办法的事    智能的时代   隐私什么的呵呵    都懂的</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="8265,2371,60.166.58.226">
+<p>佚名 @ 2016-05-23 19:59:28</p>
+<p style="text-indent:2em">然而还是没被屏蔽</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">so?</p>
+</blockquote>
+<blockquote id="8266,2371,119.36.85.175">
+<p>佚名 @ 2016-05-23 23:32:32</p>
+<p style="text-indent:2em">好好活着不好吗？还有就是天下的乌鸦一般黑。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">+1</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-04-11
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E4%BF%9D%E6%8A%A4/">保护</a>
+          <a href="https://lcx.cc/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E5%9D%97/">模块</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/360/">360</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/vpn/">VPN</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E8%85%BE%E8%AE%AF/">腾讯</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E5%BE%AE%E5%8D%9A/">微博</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          <a href="https://lcx.cc/tags/%E4%B8%AD%E5%9B%BD/">中国</a>
+          <a href="https://lcx.cc/tags/%E8%BF%BD%E8%B8%AA/">追踪</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2375/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">PHP安全新闻早8点特别篇-----ASP代码安全审计</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2369/">
+            <span class="next-text nav-default">“百度他妈”域名引热议</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

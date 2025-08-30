@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>从技术角度深入剖析：改号软件，电话号码任意显示，伪造来电显示 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="从技术角度深入剖析：改号软件，电话号码任意显示，伪造来电显示。刚才看到乌云有人发帖问：网上流传的修改来电的软件实现原理是什么？ 关于这个东西，我还真了解一点（本人涉猎甚广，啥都喜欢研究一番）……其实很多年前就有此类技术分析文档，几年前我曾看过一篇技术分析文章，详细讲了这个实现原理，年代久远，尼玛文章找不到了，但是大概内容还记得点，结合搜索，整理了点东西出来。估计有很多人知道，这种技术是由于不同网络中转发数据用的网关在作怪，但是并不明白更底层的原理，本文将从最底层、最基础的电话传输协议、数据帧开始讲…… " />
+<meta name="keywords" content="从技术角度深入剖析：改号软件，电话号码任意显示，伪造来电显示，手机号码任意显示，手机改号软件，手机变号器，自由通任意显，变号软件，打电话显示任意号码，电话号码任意显示，改号软件，号码任意显，来电任意显，任意显，任意显号软件下载，任意显示号码软件。" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/2484/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="从技术角度深入剖析：改号软件，电话号码任意显示，伪造来电显示" />
+<meta property="og:description" content="从技术角度深入剖析：改号软件，电话号码任意显示，伪造来电显示。刚才看到乌云有人发帖问：网上流传的修改来电的软件实现原理是什么？ 关于这个东西，我还真了解一点（本人涉猎甚广，啥都喜欢研究一番）……其实很多年前就有此类技术分析文档，几年前我曾看过一篇技术分析文章，详细讲了这个实现原理，年代久远，尼玛文章找不到了，但是大概内容还记得点，结合搜索，整理了点东西出来。估计有很多人知道，这种技术是由于不同网络中转发数据用的网关在作怪，但是并不明白更底层的原理，本文将从最底层、最基础的电话传输协议、数据帧开始讲…… " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/2484/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-05-10T15:43:35&#43;08:00" />
+<meta property="article:modified_time" content="2012-08-31T16:03:38&#43;08:00" />
+
+<meta itemprop="name" content="从技术角度深入剖析：改号软件，电话号码任意显示，伪造来电显示">
+<meta itemprop="description" content="从技术角度深入剖析：改号软件，电话号码任意显示，伪造来电显示。刚才看到乌云有人发帖问：网上流传的修改来电的软件实现原理是什么？ 关于这个东西，我还真了解一点（本人涉猎甚广，啥都喜欢研究一番）……其实很多年前就有此类技术分析文档，几年前我曾看过一篇技术分析文章，详细讲了这个实现原理，年代久远，尼玛文章找不到了，但是大概内容还记得点，结合搜索，整理了点东西出来。估计有很多人知道，这种技术是由于不同网络中转发数据用的网关在作怪，但是并不明白更底层的原理，本文将从最底层、最基础的电话传输协议、数据帧开始讲…… "><meta itemprop="datePublished" content="2012-05-10T15:43:35&#43;08:00" />
+<meta itemprop="dateModified" content="2012-08-31T16:03:38&#43;08:00" />
+<meta itemprop="wordCount" content="12469">
+<meta itemprop="keywords" content="改号,号码,技术,软件,伪造,IP,Net,QQ,车,电脑,电信,服务,管理,互联网,解码,权限,设备,身份,手机,数据,网络,无线,系统,协议,信号,姓名," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="从技术角度深入剖析：改号软件，电话号码任意显示，伪造来电显示"/>
+<meta name="twitter:description" content="从技术角度深入剖析：改号软件，电话号码任意显示，伪造来电显示。刚才看到乌云有人发帖问：网上流传的修改来电的软件实现原理是什么？ 关于这个东西，我还真了解一点（本人涉猎甚广，啥都喜欢研究一番）……其实很多年前就有此类技术分析文档，几年前我曾看过一篇技术分析文章，详细讲了这个实现原理，年代久远，尼玛文章找不到了，但是大概内容还记得点，结合搜索，整理了点东西出来。估计有很多人知道，这种技术是由于不同网络中转发数据用的网关在作怪，但是并不明白更底层的原理，本文将从最底层、最基础的电话传输协议、数据帧开始讲…… "/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">从技术角度深入剖析：改号软件，电话号码任意显示，伪造来电显示</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-05-10" class="post-time">
+          2012-05-10
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E6%94%B9%E5%8F%B7/"> 改号 </a>
+            <a href="https://lcx.cc/categories/%E5%8F%B7%E7%A0%81/"> 号码 </a>
+            <a href="https://lcx.cc/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            <a href="https://lcx.cc/categories/%E8%BD%AF%E4%BB%B6/"> 软件 </a>
+            <a href="https://lcx.cc/categories/%E4%BC%AA%E9%80%A0/"> 伪造 </a>
+            
+          </div>
+        <span class="more-meta"> 约 12469 字 </span>
+          <span class="more-meta"> 预计阅读 25 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	刚才看到乌云有人发帖问：<a href="http://zone.wooyun.org/content/197" target="_blank">网上流传的修改来电的软件实现原理是什么？ </a> 
+</p>
+<p style="text-indent:2em;">
+	关于这个东西，我还真了解一点（本人涉猎甚广，啥都喜欢研究一番）……
+</p>
+<p style="text-indent:2em;">
+	其实很多年前就有此类技术分析文档，几年前我曾看过一篇技术分析文章，详细讲了这个实现原理，年代久远，尼玛文章找不到了，但是大概内容还记得点，结合搜索，整理了点东西出来。
+</p>
+<p style="text-indent:2em;">
+	估计有很多人知道，这种技术是由于不同网络中转发数据用的网关在作怪，但是并不明白更底层的原理，<span style="color:#006600;">本文将从<span style="color:#E53333;">最底层、最基础</span>的电话传输协议、数据帧开始讲……</span> 
+</p>
+<hr />
+<p style="text-indent:2em;">
+	关于修改来电显示号码的原理，这个真的是十分古老的东西了，老古董、老掉牙的玩意儿了，起码有二十多年了（和我差不多大，-_-|||），要弄清楚这个原理，首先还得了解下来电号码显示的原理。
+</p>
+<p style="text-indent:2em;">
+	其实嘛，修改来电显示这个玩意儿，任何一个电话、通讯、网络电话（VoIP电话）、手机制造公司的工程师、技师都晓得，就和黑客必须晓得IP地址是啥一样，而且他们都可以轻松地做到，无任何难度……
+</p>
+<p style="text-indent:2em;">
+	首先了解一点电话网络中数据传输的知识，资料如下：
+</p>
+<hr />
+<p style="text-indent:2em;">
+	以下资料摘自：<a href="http://wenku.baidu.com/view/a595897da26925c52cc5bf2e.html" target="_blank">来电显示原理，电话主叫号码信息的识别及实现</a> 
+</p>
+<p style="text-indent:2em;">
+	<strong>电话主叫号码信息的识别及实现</strong> 
+</p>
+<p style="text-indent:2em;">
+	主叫号码信息识别及传送(CID, Calling Identity Delivery, 呼叫身份传递)，是指交换机将主叫用户的主叫号码及呼叫的日期、时间等信息传送给被叫用户，由被叫号用户的主叫号码显示器将信息显示出来并存储。以便用户摘机前就知道到底谁打电话来，或外出回来后查阅谁来过电话。<span style="color:#006600;">（90年代以前的电话网络居然没有来电显示这个功能，这尼玛怎么用的，难以想象……）</span> 
+</p>
+<p style="text-indent:2em;">
+	它是由具有主叫号码信息识别服务功能的交换机与具有主叫号码显示服务功能的终端相配合来实现，在终端上可以显示主叫电话机的号码、呼叫时间等信息。
+</p>
+<p>
+	<strong>一、CID技术产生背景</strong> 
+</p>
+<p style="text-indent:2em;">
+	美国贝尔通信研究室（BELLCORE）首先引入话音频带数据通信的调制解调方式来实现CID业务，并在1990年提出了相关技术建议（TR-TS-000031， ISUE3，1990年1月），该建议经过多次修改后被称为Bell202建议。数据传送采用了移频键控（FSK）方式，通常称为移频键控方式。
+</p>
+<p style="text-indent:2em;">
+	与此同时，欧洲以瑞典为代表的研究机构为能在自己生产的交换机上方便地实现主叫号码传送（Calling Number Delivery）业务，电话终端与交换机之间采用双音多频号码传送方式作为解决方案，通常称为双音多频方式。
+</p>
+<p style="text-indent:2em;">
+	经过多年的研究和发展，许多国家认为移频键控方式有较好的发展前景，纷纷以此为基础来制定本国的标准。到目前为止，采用移频键控方式的国家和地区有美国、加拿大、比利时、英国、西班牙、日本、新加坡和中国等。
+</p>
+<p style="text-indent:2em;">
+	…… 省略无关内容 ……
+</p>
+<p>
+	<strong>二、CID业务功能电话网上开展CID业务，必须考虑各方权益。</strong> 
+</p>
+<p style="text-indent:2em;">
+	主叫用户可以根据自己的意愿在一定权限内控制是否向被叫用户传送自己的号码。被叫用户在登记主叫信息显示权限后，交换机应向被叫用户传送主叫信息。
+</p>
+<p style="text-indent:2em;">
+	1、主叫用户叫信息显示权限
+</p>
+<p style="text-indent:2em;">
+	主叫用户主叫信息显示权即主叫用户是否允许向被叫用户显示主叫信息。
+</p>
+<p style="text-indent:2em;">
+	作为主叫用户，发出呼叫时可以<span style="color:#006600;">有允许CID和限制CID两种选择</span>。
+</p>
+<p style="text-indent:2em;">
+	（1）允许显示
+</p>
+<p style="text-indent:2em;">
+	主叫用户的一切正常拨号，均为允许CID的呼叫，应向被叫用户所在终端交换机传送主叫信息。这类用户也可以要求在某次呼叫时不向被叫用户显示主叫信息，这时需要在该次呼叫拨号之前加拨一标志号码（如**，发端交换机收到**后，判别定为该次呼叫的CID业务被限制，送出限制标志，终端交换机不将该次呼叫的主叫号码送到被叫终端设备。
+</p>
+<p style="text-indent:2em;">
+	（2）限制显示
+</p>
+<p style="text-indent:2em;">
+	主叫用户的一切正常拨号，均为限制CID的呼叫，其主叫号码不送到被叫用户终端设备。这类用户也可以要求在某次呼叫时向被叫用户显示主叫号码，这时需要在该次呼叫拨号之前加拨一标志号码（如**，发端交换机收到**后，判定为该次呼叫的CID业务被允许，送出允许标志，终端交换机将该次呼叫的主叫号码送到被叫终端设备。
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">无论主叫是允许CID用户还是限制CID用户，当呼叫的对方是110，119，120，122等特服终端时，其主叫号码一定要传送到被叫终端上。</span> 
+</p>
+<p style="text-indent:2em;">
+	2、被叫用户主叫信息显示权限
+</p>
+<p style="text-indent:2em;">
+	被叫用户主叫信息显示权限即被叫用户能否显示主叫信息。
+</p>
+<p style="text-indent:2em;">
+	（1）用户登记主叫信息显示权限
+</p>
+<p style="text-indent:2em;">
+	用户登记了主叫信息显示权限后，在作为被叫用户时，终端交换机应向用户传送相应的显示信息。
+</p>
+<p style="text-indent:2em;">
+	·在一次呼叫有主叫号码，则显示“号码+日期+时间”；
+</p>
+<p style="text-indent:2em;">
+	·在一次呼叫中终端交换机没有收到主叫号码，则显示“O”；·在一次呼叫中如果不允许显示主叫号码，则显示“P”。
+</p>
+<p style="text-indent:2em;">
+	（2）用户不登记主叫信息显示权限
+</p>
+<p style="text-indent:2em;">
+	如不登记此权限，交换机不向此用户发送任何信息。
+</p>
+<p>
+	<strong>三、CID业务的基本技术</strong> 
+</p>
+<p style="text-indent:2em;">
+	采用移频键控传送方式的交换机应具备与该方式有关的硬件环境，以及数据处理和传送所必要的软件环境。
+</p>
+<p style="text-indent:2em;">
+	1、主叫号码及标志在局间的传送
+</p>
+<p style="text-indent:2em;">
+	主叫号码信息显示是由终端交换机传给被叫用户终端设备的，因此终端交换机应能顺利得到主叫方号码，这就要求发端交换机将主叫号码等信息通过局间信令系统（如七号信信）传送给终端交换机，随主叫号码一起传送的还有一个标志码，表示主叫方的意愿。如“X”表示主叫号码可以传送给被叫用户；“Y”表示主叫码不愿意传送给被叫用户。
+</p>
+<p style="text-indent:2em;">
+	2、主叫信息从终端交换机到用户的传送
+</p>
+<p style="text-indent:2em;">
+	终端交换得到主叫号码信息后，根据被叫用户特征以及主叫用户标志码来控制主叫号码信息的传送，可以有下列几种处理方式：
+</p>
+<p style="text-indent:2em;">
+	·被叫是未申请CID服务的用户时，不传送任何信息；
+</p>
+<p style="text-indent:2em;">
+	·被叫是CID用户时，主叫标志是“Y”时，传送“P”；
+</p>
+<p style="text-indent:2em;">
+	·被叫是CID用户时，主叫标志是“X”时，传送“主叫号码+时间+日期”；
+</p>
+<p style="text-indent:2em;">
+	·被叫是110，119，120，122等特服用户时，无论主叫标志是“X”还是“Y”均传送主叫号码的信息。
+</p>
+<p style="text-indent:2em;">
+	终端交换机在传送主叫号码信息前，还要根据被叫用户目前所处的状态，采用不同的传送序列和格式。以保证传送能顺利进行。
+</p>
+<p style="text-indent:2em;">
+	（1）被叫话机在挂机状态
+</p>
+<p style="text-indent:2em;">
+	对于采用移频键控方式的交换机，终端交换机将主叫号码信息在第一次振铃和第二次振铃间隔期间，将主叫号码信息以移频键控（FSK）的方式传送给被叫用户终端设备。
+</p>
+<p style="text-indent:2em;">
+	（2）被叫话机处在通话状态
+</p>
+<p style="text-indent:2em;">
+	当被叫用户登记某些业务（如呼叫等待）时，<span style="color:#4C33E5;">若被叫用户处在通话状态下，则终端交换机仍可向被叫用户传送主叫信息</span>。<span style="color:#006600;">（也就是如今多卡多待手机可以同时接听、拨打所依靠的条件。</span><span style="color:#006600;">）</span> 
+</p>
+<p style="text-indent:2em;">
+	例如，具有CID功能的用户乙与用户甲通话时，又有用户丙呼叫用户乙，则在用户乙终端设备上显示用户丙的识别信息。
+</p>
+<p style="text-indent:2em;">
+	…… 省略无关内容 ……
+</p>
+<p style="text-indent:2em;">
+	来电号码显示实际上是现代电信交换网络可以提供的一项服务业务。就其机理而言，是指交换机对用户提供来电号码专用格式的数据的传送，而用户终端利用符合数据解码格式要求的端机进行接收和显示。
+</p>
+<p style="text-indent:2em;">
+	当交换机发出第一次振铃信号后，紧接着发出一串调制信号（现用的主要有FSK和DTMF两种格式的信号），此信号包含着拨号方的电话号码、日期、时间、姓名等信息。
+</p>
+<p style="text-indent:2em;">
+	来电号码显示器在每一次振铃信号的唤醒下，开始接收FSK信号，经解码芯片（如Motorola 的RC145447）获得其中信息，由单片机进行格式处理并在屏幕上显示出来。
+</p>
+<p style="text-indent:2em;">
+	同样，若传输过来的是DTMF来电号码信息，只需由DTMF解码芯片来进行数据解码，即可显示DTMF的来电号码。
+</p>
+<p style="text-indent:2em;">
+	…… 省略无关内容 ……
+</p>
+<hr />
+<p style="text-indent:2em;">
+	以上就是电话通讯协议的极少一部分内容，资料太长，各位看的是不是有点晕了，没关系，我画个简单的图给大家解释下。
+</p>
+<p style="text-indent:2em;">
+	其实嘛，这个玩意儿和互联网通讯协议有很多相似的地方，我画个图：
+</p>
+<p style="text-indent:2em;">
+	<span style="font-size:12px;">主叫　→　电话线路　→　终端交换机（主叫的网关）　→　运营商骨干网络　→　终端交换机（被叫的网关）　→　电话线路　→　被叫</span> 
+</p>
+<p style="text-indent:2em;">
+	各个设备的信息显示权限如下：
+</p>
+<p style="text-indent:2em;">
+	主叫：可以控制是否向被叫用户传送自己的号码，<span style="color:#4C33E5;">也就是手机系统设置的那个“隐藏号码”功能</span>，但是该功能需要运营商支持，但是现在的运营商都是默认传输的，所以是个摆设……
+</p>
+<p style="text-indent:2em;">
+	终端交换机（主叫的网关）：有权控制是否发送主叫号码（110，119，120，122等特殊用户除外，必须发送！），并且可以为所欲为的修改，当然，正规运营商的机器是不会这么干的……
+</p>
+<p style="text-indent:2em;">
+	运营商骨干网络：传输数据，不作任何修改。<span style="color:#E53333;">（公安监听电话就在此处哦，亲~）</span> 
+</p>
+<p style="text-indent:2em;">
+	终端交换机（被叫的网关）：权限同上，但是这里是<span style="color:#4C33E5;">判断被叫有没有开通来电显示功能</span>，开通了就发，没开通就不发。<span style="color:#E53333;">是的，没错，就尼玛这个破功能，运营商每个月还收个3元的来电显示费用，卧槽……</span> 
+</p>
+<p style="text-indent:2em;">
+	被叫：判断是否有附加信息数据包，有就显示，否则不进行任何操作……
+</p>
+<p style="text-indent:2em;">
+	我们从以上的资料中得知，<span style="color:#006600;">电话通讯网络不是依靠电话号码进行用户识别的</span>，而来电显示功能则只是，在交换机发出第一次振铃信号后，<span style="color:#006600;">附加了包含一个主叫用户信息的数据包而已</span>，包含着拨号方的电话号码、日期、时间、姓名等信息，来电号码显示器在每一次振铃信号的唤醒下，开始接收FSK信号，经解码芯片获得其中信息，由单片机进行格式处理并在屏幕上显示出来。
+</p>
+<p style="text-indent:2em;">
+	就好像在互联网中通讯的时候，我向某个QQ号发送消息的时候，我可以选择是否发送昵称（电话号码等信息），而且这个昵称是完全可以修改的。
+</p>
+<p style="text-indent:2em;">
+	既然知道了传输原理，那么改号软件是如何做到的呢？？？
+</p>
+<p style="text-indent:2em;">
+	这里就要了解一下VoIP（IP电话、网络电话）的知识了……
+</p>
+<hr />
+<p style="text-indent:2em;">
+	VOIP：<a href="http://baike.baidu.com/view/1475.htm" target="_blank">http://baike.baidu.com/view/1475.htm</a> 
+</p>
+<p style="text-indent:2em;">
+	VoIP（Voice over Internet Protocol）简而言之就是将模拟声音讯号（Voice）数字化，以数据封包（Data Packet）的形式在 IP 数据网络 (IP Network）上做实时传递。
+</p>
+<p style="text-indent:2em;">
+	VoIP最大的优势是能广泛地采用Internet和全球IP互连的环境，提供比传统业务更多、更好的服务。
+</p>
+<p style="text-indent:2em;">
+	VoIP可以在IP网络上便宜的传送语音、传真、视频、和数据等业务，如统一消息、虚拟电话、虚拟语音/传真邮箱、查号业务、Internet呼叫中心、Internet呼叫管理、电视会议、电子商务、传真存储转发和各种信息的存储转发等。
+</p>
+<p style="text-indent:2em;">
+	VoIP相对比较便宜，为什么？
+</p>
+<p style="text-indent:2em;">
+	VoIP电话不过是互联网上的一种应用，<span style="color:#E53333;">网络电话不受管制</span>。因此，从本质上说，VoIP电话与电子邮件，即时讯息或者网页没有什么不同，它们均能在经过了互联网连接的机器间进行传输。这些机器可以是电脑，或者无线设备，比如手机或者掌上设备等等。
+</p>
+<p style="text-indent:2em;">
+	为什么VoIP服务有些要收钱，有些却免费？
+</p>
+<p style="text-indent:2em;">
+	VoIP服务不仅能够沟通VoIP用户（就像QQ语音聊天一样），而且也可以和电话用户通话，比如使用传统固话网络以及无线手机网络的用户。对这部分通话，VoIP服务商必须要给固话网络运营商以及无线通讯运营商支付通话费用。这部分的收费就会转到VoIP用户头上。网上的VoIP用户之间的通话可以是免费的。
+</p>
+<p style="text-indent:2em;">
+	近年来，网络通信势不可挡，qq、飞信等即时通讯软件冲击着传统的电话通信方式，从而也造就了很多网络新贵，众投资者企望在网络通讯中分一杯羹。继qq、飞信等软件之后，近年来开发的网络电话，被企业和个人广泛应用于国内外长途通话中。
+</p>
+<p style="text-indent:2em;">
+	与此同时，近年来一些网络电话“话吧”在学校、居民住宅区、工业区等迅速兴起。与几年前兴起的传统“IP公话超市”不同的是，网络电话的运营成本更为低廉，且进入门槛更低。只要一台电脑、一条宽带、几台电话机加上一个计费软件就可以操作，网络公司向加盟者或者运营商提供技术支持即可。由于像平常打电话一样方便，网络“话吧”迅速占据中低收入和外来打工人员的市场，并对传统电话业务形成冲击。
+</p>
+<p style="text-indent:2em;">
+	因为成本低廉，市场广阔，VOIP成为一种“暴利”的投资项目，但由于没有政策支持，因此仍然存在运营和管理上的漏洞，发展前景尚不明朗，投资需谨慎。经过几年的发展，虽然网络电话被广泛使用，但网络电话业务目前还处于“灰色地带”，法律没有限制也没有允许，而市面上出现的网络电话“话吧”也并没有营业执照。另外，网络电话本身也有先天缺陷，通话质量受到网络好坏的影响，停电时候无法使用，清晰度上也与传统的固话有差距，其次，<span style="color:#E53333;">网络电话还存在被偷听偷录的风险。</span> 
+</p>
+<p style="text-indent:2em;">
+	…… 省略无关内容 ……
+</p>
+<hr />
+<p style="text-indent:2em;">
+	又是很长的一段资料，各位又看的懵了吧，呵呵呵，我用简单的语言概括下……
+</p>
+<p style="text-indent:2em;">
+	其实VoIP就是网络语音聊天，把音频数据通过互联网从一台电脑传输到另一台电脑，无国界、远程传输，就像QQ语音一样，双方都装个软件就行了……
+</p>
+<p style="text-indent:2em;">
+	那么您可能会问了：二货！你胡扯什么呢？你扯了这么多，这尼玛和改号软件有毛关系？？？？？？
+</p>
+<p style="text-indent:2em;">
+	莫急，莫急，你马上就豁然开朗了！！！！（估计聪明的读者已经想到了！　↖(^o^)↗）
+</p>
+<p style="text-indent:2em;">
+	为了清楚地描述，我再来画个图：
+</p>
+<p style="text-indent:2em;">
+	VoIP：
+</p>
+<p style="text-indent:2em;">
+	<span style="font-size:12px;">用户A　→　计算机　→　ISP运营商接口　→　互联网骨干网络　→　ISP运营商接口　→　计算机　→　用户B</span> 
+</p>
+<p style="text-indent:2em;">
+	尼玛，这个运行模式就不解释了吧？你丫天天在用，俗称：上网！！！！
+</p>
+<p style="text-indent:2em;">
+	亲，还记得电话网络的图吗？？
+</p>
+<p style="text-indent:2em;">
+	电话网络（稍微简化了下）：
+</p>
+<p style="text-indent:2em;">
+	<span style="font-size:12px;">用户A　→　电话　→　主叫的网关　→　运营商骨干网络　→　被叫的网关　→　电话　→　用户B</span> 
+</p>
+<p style="text-indent:2em;">
+	哦呵呵呵呵，如果VoIP和电话，这两个完全不相干的网络结合的话，会发生什吗事呢？
+</p>
+<p style="text-indent:2em;">
+	那么，神奇的地方来了！！！亲，看图：
+</p>
+<pre class="prettyprint">用户A　→　电脑　→　上网接口　→　互联网骨干网络　→　上网接口　→　电脑　→　用户B
+　　　　　　　　　　　　　　　　　　↘　　　　↗
+　　　　　　　　　　　　　　　　　 上车、下车网关
+　　　　　　　　　　　　　　　　　　↗　　　　↘
+用户C　→　电话　→　主叫网关　→　运营商骨干网络　→　被叫网关　→　电话　→　用户D</pre>
+<p style="text-indent:2em;">
+	上车、下车网关：
+</p>
+<p style="text-indent:2em;">
+	也称为中继网关、落地网关，通过 IP 接口与用户端的语音接入网关相连，通过E1接口与局用程控交换机相连。
+</p>
+<p style="text-indent:2em;">
+	中继网关将 IP 分组包与 PCM 的相互转换，从而实现语音接入网关同公关电话网 (PSTN) 的互连互通。
+</p>
+<p style="text-indent:2em;">
+	将一路呼叫从传统电话线转接到IP网上的网关一般称为上车网关，而将IP网上的呼叫转接进电话网的那个则称为下车，或者落地网关。
+</p>
+<p style="text-indent:2em;">
+	该网关需要从电话运营商处申请，然后连接你的服务器即可。
+</p>
+<p style="text-indent:2em;">
+	现在，电话网络和互联网可以互通互联了。
+</p>
+<p style="text-indent:2em;">
+	再回到改号的话题上，既然你无法控制电话网络网关，那么从网络核心设备（落地网关）上进行呼叫，我们只要在信令上送出一个虚拟的号码，被叫的所在地设备便会认为这是真实的主叫号码，所以它给被叫的来电显示，就是我这个虚拟的号码，这是一个很简单的网络欺骗。
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">移动运营商当然可以做到</span>，但我相信没有哪个运营商会这么做，但我们应该看到，与运营商的网络设备相连接的还有许多服务提供商（SP），他们数量众多，良莠不齐，难说不会有人违规操作；当然还有其它运营商的来话，如固定电话网络的来电，或国外的来电，他们也都可以做到。
+</p>
+<p style="text-indent:2em;">
+	这算是运营商网络的一个漏洞，而且还不好修补。&nbsp;
+</p>
+<p>
+	<strong>流程可以简单的概括为：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1、首先在智能手机或电脑上预置一个VoIP软件，该软件指向某预置网关，该网关为非法落地网关。
+</p>
+<p style="text-indent:2em;">
+	2、并且该网关允许并接收客户端发送指定主叫号码，并将此号码传递给被叫号码所属网关。
+</p>
+<p style="text-indent:2em;">
+	3、拨电话吧，随意伪造号码。
+</p>
+<p style="text-indent:2em;">
+	并且<span style="color:#E53333;">不受110等特殊号码限制</span>，因为从“源网关”处，就已经伪造了号码，所以<span style="color:#006600;">你可以给110打一个来电号码是110的电话</span>……
+</p>
+<p style="text-indent:2em;">
+	扯了一大堆，核心的东西就在这个落地网关上！不只是互联网，不同的网络之间通讯都有类似的网关。
+</p>
+<p style="text-indent:2em;">
+	这个网关夹在主叫方与电信公司的网关中间，修改主叫号码后再把修改结果送入电信公司的网关系统中。
+</p>
+<p style="text-indent:2em;">
+	他们自己有一个平台，这个平台与运营商有接口，或者与国外的一些IP运营商存在接口。
+</p>
+<p style="text-indent:2em;">
+	如果你需要，首先会给你的电脑或手机装一个软件，建立一个与他这个平台的通道，但你使用这项功能的时候，就等于接入了他的平台，他的平台再帮你实现这模拟任意号码呼叫。
+</p>
+<p>
+	<strong>最后，总结一下：</strong> 
+</p>
+<p style="text-indent:2em;">
+	“来电显示修改”是利用了网络IP电话网关技术，先来看一下普通座机上来电号码显示的原理，首先交换机传送电话拨打方的包含来电号码的数据，而接听方户终端进行接收和显示，当然这些数据必须符合专用的解码格式。
+</p>
+<p style="text-indent:2em;">
+	当交换机发出第一次振铃信号后，便接着发出一串调制信号，此信号包含着拨号方的电话号码、日期、时间、姓名等信息。
+</p>
+<p style="text-indent:2em;">
+	来电号码显示器在每一次振铃信号的唤醒下，开始接收信号，经解码芯片获取其中的信息，最终处理过后在屏幕上显示出来。
+</p>
+<p style="text-indent:2em;">
+	这样一来，拨打方发出呼叫后，首先要传至电信公司的交换系统，通过该系统的身份核查后，被叫方才能接收到信号。
+</p>
+<p style="text-indent:2em;">
+	“平台”实际上就是网络IP电话，电信公司设置的“电话网关”就相当于传统通话的交换系统。
+</p>
+<p style="text-indent:2em;">
+	所谓的来电显示修改，也制作了一个网关，夹在主叫方与电信公司的网关中间，用自己的网关随意修改主叫号码，再把修改结果送入电信公司的网关系统中。目前，兜售修改软件的公司大都用的这个原理。
+</p>
+<p style="text-indent:2em;">
+	由于这些电话是通过中转平台或者电脑软件拨打，并不是两方之间的连接，因此只要按显示的号码拨过去，对方是无法接听的。
+</p>
+<p style="text-indent:2em;">
+	目前，<span style="color:#E53333;">互联网上的所有网络电话，例如：Skype、UUCall 等公司，全部都可以做到修改来电号码</span>，但他们为了合法，所以只允许你修改为你自己的手机号码，并且要求手机短信验证后，才可以修改。
+</p>
+<p style="text-indent:2em;">
+	实际上，他们的管理员可以任意修改……
+</p>
+<p style="text-indent:2em;">
+	而这些伪造来电号码的公司，和这些网络电话公司的运行模式完全一致，只不过他们是接非法业务……
+</p>
+<p style="text-indent:2em;">
+	为什么近两年这种伪造来电号码的非法业务越来越多？
+</p>
+<p style="text-indent:2em;">
+	因为现在网络越来越发达，速度越来越快，成本越来越低，上手简单，而且又可以和电话网络互通互联，这比从电话公司处伪造号码（最早的伪造方式）容易的不是一点半点，促进了这类公司的发展，他们和雨后春笋一样冒了出来……
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;"><strong>如果从网络安全的角度来讲，传统的以手机、电话号码作为验证用户身份的方式（例如某某手机密保），已经彻底崩溃了……</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	（全文完）
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2838/" target="_blank">如何从按键音中听出360总裁周鸿祎的手机号码 + 详细剖析</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2840/" target="_blank">电话机真的可以用嘴巴模拟拨号音来拨号？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2839/" target="_blank">用音响打电话，揭秘柯南电话拨号，如果电话键失灵了，直接用音响打电话</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1733/" target="_blank">1970年左右发现最早黑客技术——哨子</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2484/" target="_blank">从技术角度深入剖析：改号软件，电话号码任意显示，伪造来电显示</a> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="1517,2484,183.28.71.101">
+<p>流亡青年 @ 2012-05-10 19:47:32</p>
+<p style="text-indent:2em">转载走了。虽然有点乱。我自己在整理了一下。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="1520,2484,61.150.43.49">
+<p>小一 @ 2012-05-10 21:46:01</p>
+<p style="text-indent:2em">我去，核总果然什么都知道。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">只是比他人稍多一点……</p>
+</blockquote>
+<blockquote id="1521,2484,183.20.165.80">
+<p>晴天小猪 @ 2012-05-11 18:22:46</p>
+<p style="text-indent:2em">核总比谷歌还谷歌~爱死你了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">↖(^o^)↗</p>
+</blockquote>
+<blockquote id="1528,2484,221.3.133.232">
+<p>koohik @ 2012-05-12 15:12:33</p>
+<p style="text-indent:2em">核总，看来什么都知道啊，呵呵，写的不错，貌似还是看懂了。哈哈哈</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">写文章的时候需要查资料，在这个过程中你会学到更多东西，写文章就是个学习的过程。　╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="1529,2484,50.31.253.32">
+<p>【匿名者】 @ 2012-05-13 00:32:35</p>
+<p style="text-indent:2em">类似ARP，伪造这玩意危害也大啊，比如某些没脑子的，遇到汇钱的，确认都不确认，直接打过去。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">和Arp几乎没有联系，原理完全不一样……</p>
+</blockquote>
+<blockquote id="1532,2484,183.20.163.9">
+<p>晴天小铸 @ 2012-05-13 14:37:05</p>
+<p style="text-indent:2em">有木有免费打电话的网址呢? 拿着社工很不错 \(^o^)/~</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">http://lcx.cc/?i=1334</p>
+</blockquote>
+<blockquote id="1725,2484,60.53.116.26">
+<p>Zypeh @ 2012-06-03 00:49:31</p>
+<p style="text-indent:2em">呵呵， 笨人也是曾研究过VOIP协议……现在回顾回顾，感触良多啊</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">当时只是一时兴起，查阅了大量电话通讯原理资料，VOIP 有研究一点……</p>
+</blockquote>
+<blockquote id="1864,2484,222.216.6.151">
+<p>我创造上帝 @ 2012-06-21 16:45:13</p>
+<p style="text-indent:2em">打字辛苦吧，亲？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">废话。。。。。这篇文章写了N个小时……</p>
+</blockquote>
+<blockquote id="5343,2484,183.219.189.127">
+<p>1 @ 2013-11-28 11:35:53</p>
+<p style="text-indent:2em">看了看，重点在于“现在，电话网络和互联网可以互通互联了。”  实现过程便是直接修改包？（或是通过自己预设的网关来跳过审查，或是中转点？）  这篇确实看的有点乱，眼睛都瞎了。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">中转点，额，再仔细看看……</p>
+</blockquote>
+<blockquote id="5497,2484,113.223.222.80">
+<p>佚名 @ 2013-12-16 22:06:28</p>
+<p style="text-indent:2em">[内容已屏蔽]</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">禁止广告！再发封IP、IQ……</p>
+</blockquote>
+<blockquote id="5498,2484,113.223.222.80">
+<p>88 @ 2013-12-16 22:07:59</p>
+<p style="text-indent:2em">[内容已屏蔽]</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">禁止广告！再发封IP、IQ……</p>
+</blockquote>
+<blockquote id="5692,2484,110.86.214.13">
+<p>qq110 @ 2014-01-18 09:23:38</p>
+<p style="text-indent:2em">[内容已屏蔽]</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">禁止广告！再发封IP、IQ……</p>
+</blockquote>
+<blockquote id="5693,2484,110.86.214.13">
+<p>任意模拟 @ 2014-01-18 09:25:33</p>
+<p style="text-indent:2em">[内容已屏蔽]</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">禁止广告！再发封IP、IQ……</p>
+</blockquote>
+<blockquote id="6714,2484,1.193.116.117">
+<p>Risitide @ 2014-07-08 10:33:23</p>
+<p style="text-indent:2em">那被叫时为什么不会接入非法落地网关？比如打110转进了非法落地的网关</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">如果你能接入骨干网络，那么你就可以。</p>
+</blockquote>
+<blockquote id="6718,2484,1.202.115.96">
+<p>lightbutt @ 2014-07-08 15:01:42</p>
+<p style="text-indent:2em">楼主说这个voip的漏洞对于运营商来说非常难堵，限制落地网关很难么？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不是说很难封堵，主要是运营商当初就没考虑过这个问题，而且现在各种接入管理混乱，所以这是必然~</p>
+</blockquote>
+<blockquote id="6722,2484,117.30.102.21">
+<p>佚名 @ 2014-07-08 17:09:37</p>
+<p style="text-indent:2em">博主加个转微博按钮，不然不方便呵呵</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">好的，没问题，明天修改下模板，加上百度分享功能。</p>
+</blockquote>
+<blockquote id="6884,2484,106.42.188.218">
+<p>佚名 @ 2014-08-24 08:26:22</p>
+<p style="text-indent:2em">如果对方用改号平台改了号，有什么方法可以追查到对方真实号码吗？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额，这个不好追踪，除非有改号平台权限或者电信运营商权限，或者公安~</p>
+</blockquote>
+<blockquote id="6914,2484,113.223.219.25">
+<p>佚名 @ 2014-09-01 16:21:36</p>
+<p style="text-indent:2em">短信变号软件
+
+现在只有短信号码任意显示升级版可以发了，本公司可以显示你需要的号码，价格400元含280话费，发短信40条，不受地方限制，全国各地号码自己可以任意设置.任意显示。
+
+1.开户后不受时间限制，直到用完话费为止，话费没了，可以续费使用，续费无需另外开户，续费无金额规定。
+
+2.不影响你本机正常使用，不使用时，你手机打出的还是原来的号码。
+
+3.无月租，话费可以随时查询。
+
+电话：1387357****
+
+QQ:111582****
+
+地址：市海珠中路***号</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">禁止广告！友情提示：广告真实性自行鉴定，谨防上当受骗！</p>
+</blockquote>
+<blockquote id="6916,2484,112.232.9.238">
+<p>Name @ 2014-09-01 22:55:38</p>
+<p style="text-indent:2em">...一开世界网络时不懂 买过 200大洋..后台会了一点技术拿下一个平台 果断服务器拿资料 平台 另立门户..</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="6967,2484,140.249.80.85">
+<p>奥特曼~biubiu @ 2014-09-21 17:29:35</p>
+<p style="text-indent:2em">但VoIP一般都是封装好的，如何修改？如何伪造？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">研究下VoIP协议~</p>
+</blockquote>
+<blockquote id="7022,2484,111.205.110.146">
+<p>佚名 @ 2014-10-07 19:31:26</p>
+<p style="text-indent:2em">对于个人来说怎么实现呢，想自己做个小实验，能请教一下吗？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">首先你需要个接入口~</p>
+</blockquote>
+<blockquote id="7268,2484,222.84.2.94">
+<p>pqo @ 2014-12-09 18:55:23</p>
+<p style="text-indent:2em">有意你这个软件 请联系QQ3159528735</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">请注意，任何QQ加你均非本人，谨防上当受骗！</p>
+</blockquote>
+<blockquote id="7292,2484,113.222.231.88">
+<p>佚名 @ 2014-12-17 12:45:29</p>
+<p style="text-indent:2em">短信变号软件
+
+本公司推出(现在大陆估计只开通十来家公司）发短信可以自己设置想要的号码。全国号码可以任意设置.任意显示，开通后可以长期使用，没有月租等其它费用，话费用完可以续费使用，续费自由，可以交2条短信费，无需另外开户。资费透明，可以随时查询，让你消费的明白。价格420元有300话费，可以发短信50条。平台稳定，让你用的放心。本公司承若，一年内出问题，可以免费开通。电一(已屏蔽)六，扣一(已屏蔽)五。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">禁止发布虚假诈骗广告。</p>
+</blockquote>
+<blockquote id="7305,2484,175.14.31.221">
+<p>佚名 @ 2014-12-20 20:37:32</p>
+<p style="text-indent:2em">需要变号的电 136,****,9816</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">禁止广告。（提示：谨防上当受骗！）</p>
+</blockquote>
+<blockquote id="7341,2484,106.17.52.106">
+<p>佚名 @ 2015-01-07 11:43:20</p>
+<p style="text-indent:2em">需要变,扣  一**九  一*** 六零</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[暂无回复]</p>
+</blockquote>
+<blockquote id="7501,2484,222.246.177.13">
+<p>佚名 @ 2015-03-30 15:16:30</p>
+<p style="text-indent:2em">要改号的电 一三八 【屏蔽】二一，Q  一一一五【屏蔽】九</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">禁止广告！友情提示：广告真实性自行鉴定，谨防上当受骗！</p>
+</blockquote>
+<blockquote id="7502,2484,222.246.177.13">
+<p>佚名 @ 2015-03-30 15:18:12</p>
+<p style="text-indent:2em">要变号，电，1，3，【屏蔽屏蔽】，2，1，</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">禁止广告！友情提示：广告真实性自行鉴定，谨防上当受骗！</p>
+</blockquote>
+<blockquote id="7504,2484,222.246.177.13">
+<p>佚名 @ 2015-03-30 15:19:35</p>
+<p style="text-indent:2em">要变号，电，1，3，8--【屏蔽屏蔽】，2，1，</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">禁止广告！友情提示：广告真实性自行鉴定，谨防上当受骗！</p>
+</blockquote>
+<blockquote id="7505,2484,123.124.21.194">
+<p>佚名 @ 2015-03-30 17:31:19</p>
+<p style="text-indent:2em">请问110电话号码是多少？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">您可以拨打114询问一下。</p>
+</blockquote>
+<blockquote id="7511,2484,175.44.235.245">
+<p>佚名 @ 2015-04-03 21:04:26</p>
+<p style="text-indent:2em">niu</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">...</p>
+</blockquote>
+<blockquote id="7598,2484,222.246.178.165">
+<p>佚名 @ 2015-05-22 22:06:45</p>
+<p style="text-indent:2em">(要,改),(号,找)?(1-3-6)---(【屏蔽屏蔽】-1-6)   (扣)   ，11--【屏蔽屏蔽】--15</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！</p>
+</blockquote>
+<blockquote id="7617,2484,222.246.178.12">
+<p>佚名 @ 2015-05-30 16:01:31</p>
+<p style="text-indent:2em">要，改，号 ，电 一，三，六【屏蔽屏蔽】，一，六，扣， 一，一【屏蔽屏蔽】一，五，</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！</p>
+</blockquote>
+<blockquote id="7727,2484,222.246.178.216">
+<p>佚名 @ 2015-07-22 22:04:01</p>
+<p style="text-indent:2em">,,要；,,,改,,，，(,,号；)电 ；(一；,,三,；六)； 【屏蔽屏蔽】一；六；,,)
++++&#39;&#39;&#39;扣；&#39;&#39;&#39;    &#39;一； &#39; &#39;一；【屏蔽屏蔽】&#39;&#39;&#39; 一&#39;&#39;&#39;；&#39;&#39;五&#39;&#39;&#39;&#39;
+，扣； 一；一；【屏蔽屏蔽】一；五</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！</p>
+</blockquote>
+<blockquote id="7728,2484,222.246.178.216">
+<p>佚名 @ 2015-07-22 22:05:19</p>
+<p style="text-indent:2em">手机号任意显示
+您还在为要债.债主不接电话而烦恼吗？您只要花上380元（含100元话费）就可以买到您想要的号码。您可以自己任意设置，全国号码可以任意显示，无月租，长途.漫游，打电话每分钟0.2元。本公司可以任意修改号码业务。比如你设置13866886688，打给别人会显示13866886688，想什么靓号.吉祥号.发财号都可以任意设置，任意显示。话费打完可以冲值，以后可以打多少冲多少。此业务不会影响你本手机的使用，不使用时，你打出的还是原来的号码，两者互不干扰，操作简单。
+,,要；,,,改,,，，(,,号；)电 ；(一；,,三,；六)； (,,,【屏蔽屏蔽】,,),,,,,,,,,,,(,, 【屏蔽屏蔽】一；六；,,)
++++&#39;&#39;&#39;扣；&#39;&#39;&#39; &#39;一； &#39; &#39;一；【屏蔽屏蔽】一&#39;&#39;&#39;；&#39;&#39;五&#39;&#39;&#39;&#39;
+，扣； 一；一【屏蔽屏蔽】； 一；五</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！</p>
+</blockquote>
+<blockquote id="7752,2484,222.246.185.107">
+<p>佚名 @ 2015-07-29 22:31:40</p>
+<p style="text-indent:2em">改号软件
+全国号码可以任显，无月租，长途.漫游，打电话每分钟0.2元。?此业务不会影响你本手机的使用，不使用时，你打出的还是原来的号码，两者互不干扰，操作简单。
+找)?(1-3-6)---(【屏蔽屏蔽】-1-6) (扣) ，11--【屏蔽屏蔽】--15</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！</p>
+</blockquote>
+<blockquote id="7760,2484,125.64.88.57">
+<p>佚名 @ 2015-08-02 14:57:50</p>
+<p style="text-indent:2em">https://github.com/comeforu2012/truth/wiki/ChromePlus  留个脚印</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="7761,2484,222.246.185.104">
+<p>佚名 @ 2015-08-02 18:03:44</p>
+<p style="text-indent:2em">短信号码任显示
+
+全国号可以任设.任显，开通后可以长期使用，没有月租等其它费用，话费用完可以续费使用，续费自由，资费透明，可以随时查，让你消费的明白，平台稳定，让你用的放心。本公司承若，一年内出问题，可以免费开通。
+
+找)?(1-3-6)---(*-*-*-*-*-*-1-6) (扣) ，11--**--**--**--15</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！（每天这么刷，有生意么？）</p>
+</blockquote>
+<blockquote id="7762,2484,222.246.185.104">
+<p>佚名 @ 2015-08-02 18:05:06</p>
+<p style="text-indent:2em">改号软件
+
+全国号码可以任显，无月租，长途.漫游，打电话每分钟0.2元。?此业务不会影响你本手机的使用，不使用时，你打出的还是原来的号码，两者互不干扰，操作简单。
+
+电 一三六（屏蔽屏蔽）九八一六，扣 一一九七 （屏蔽屏蔽） 一五</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！（每天这么刷，有生意么？）</p>
+</blockquote>
+<blockquote id="7763,2484,222.246.185.104">
+<p>佚名 @ 2015-08-02 18:07:00</p>
+<p style="text-indent:2em">短信号码任显示
+
+本公司刚刚推出(现在大陆估计只开通十来家公司）发短信可以自己设置想要的号码。比如你设置13666886688发短信，收信人上显示的发送号码是13666886688。全国号码可以任意设置.任意显示，开通后可以长期使用，没有月租等其它费用，话费用完可以续费使用，续费自由，可以交2条短信费，无需另外开户。资费透明，可以随时查询，让你消费的明白。平台稳定，让你用的放心。本公司承若，一年内出问题，可以免费开通。
+
+电话：136****9816
+
+QQ：119****615
+
+QQ邮箱：119****615@qq.com
+
+地址：市人民西路**号</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！（每天这么刷，有生意么？）</p>
+</blockquote>
+<blockquote id="7773,2484,119.90.45.129">
+<p>佚名 @ 2015-08-08 08:39:32</p>
+<p style="text-indent:2em">没有具体教程说个jb</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="7828,2484,222.246.184.194">
+<p>佚名 @ 2015-09-02 10:45:32</p>
+<p style="text-indent:2em">要，，变，，电，，1，5，1【屏蔽】，1，， 
+                扣，，1，6，5【屏蔽】6，0，</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！</p>
+</blockquote>
+<blockquote id="7829,2484,222.246.184.194">
+<p>佚名 @ 2015-09-02 10:49:02</p>
+<p style="text-indent:2em">短信号码任显示朋友们，发短信要对方显示任意号码不要愁了，你可以让他们显示出，你自己设置好的任何号码，不显示自己的真实号码，国内号码可以任意设置，发到对方可以任意显示，开通后，有费可以长期使用，没有月租等其它费用，不使用时，你手机还是原来的号码，两者互不干扰。
+需要联系电话151【屏蔽】71，QQ：165【屏蔽】60，
+地址，广东省，韶关市，沿江路</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！</p>
+</blockquote>
+<blockquote id="7830,2484,222.246.184.194">
+<p>佚名 @ 2015-09-02 10:50:56</p>
+<p style="text-indent:2em">短信号码任显示朋友们，发短信要对方显示任意号码不要愁了，你可以让他们显示出，你自己设置好的任何号码，不显示自己的真实号码，国内号码可以任意设置，发到对方可以任意显示，开通后，有费可以长期使用，没有月租等其它费用，不使用时，你手机还是原来的号码，两者互不干扰。
+需要联系电话151【屏蔽】71，QQ：165【屏蔽】60，
+地址，广东省，韶关市，沿江路</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！</p>
+</blockquote>
+<blockquote id="7850,2484,222.246.182.66">
+<p>ZCXZ @ 2015-09-13 21:39:58</p>
+<p style="text-indent:2em">打电话改号码
+
+打电话给公司，亲人，朋友，可以让他们显示出任何自己设置好的号码，不显示自己的真实号码，明明你在上海，打电话给公司可以显示广州的号或北京的号码。
+你在北京给自己的朋友打电话，对方显示的却是在上海。全国号码可以你自己任意设置，打到对方任意显示，没有月租等其它费用，不使用时，你手机还是原来的号码，两者互不干扰，需要联系：
+
+电话151****1871 QQ：165****960
+
+地址，广东省，韶关市，沿江路</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！（每天这么刷，有生意么？）</p>
+</blockquote>
+<blockquote id="7851,2484,222.246.182.66">
+<p>ZXCXZ @ 2015-09-13 21:42:07</p>
+<p style="text-indent:2em">手机监听器
+你想知道你深爱的他（她）在外做什么吗，你想知道你深爱的他（她）在家打电话聊些什么吗，本公司可以为你解优。
+本公司最新推出手机.电话监听跟踪软件，只要你知道对方号码，用自己的手机把对方号码绑定在你的手机上，只要她打电话你马上就可以监听到他（她）和别人所打电话内容，让他（她）把所有的秘密都传到你耳朵里，当然，你是怎么知道他（她）在打电话呢，只要他（她）们拨通电话就会在你手机上提示的。
+价格980元，可以同时开通3个号码。
+电话：151****1871 QQ：165****960
+地址，广东省，韶关市，沿江路</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">注意！此类广告100%为诈骗信息！</p>
+</blockquote>
+<blockquote id="7858,2484,222.246.182.242">
+<p>佚名 @ 2015-09-17 20:39:47</p>
+<p style="text-indent:2em">要，，变，，(，1，5，1，，)(【已屏蔽】)(，，1，8，7，1，，)</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！（每天这么刷，有生意么？）</p>
+</blockquote>
+<blockquote id="7872,2484,222.246.180.59">
+<p>佚名 @ 2015-09-21 20:19:12</p>
+<p style="text-indent:2em">前面几个贴屏蔽的电号是【已屏蔽】，</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[暂无回复]</p>
+</blockquote>
+<blockquote id="7873,2484,222.246.180.59">
+<p>佚名 @ 2015-09-21 20:21:19</p>
+<p style="text-indent:2em">屏蔽的Q号是【已屏蔽】</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[暂无回复]</p>
+</blockquote>
+<blockquote id="7911,2484,222.246.183.40">
+<p>佚名 @ 2015-10-04 19:39:08</p>
+<p style="text-indent:2em">要，变，定，一，五【已屏蔽】七，一，扣，一，六【已屏蔽】六，零，</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[暂无回复]</p>
+</blockquote>
+<blockquote id="7977,2484,14.104.29.213">
+<p>佚名 @ 2015-10-31 20:11:55</p>
+<p style="text-indent:2em">哦哦~~~~~~~~~~~~~~~~~~~~</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="8020,2484,222.246.180.93">
+<p>佚名 @ 2015-11-28 15:23:58</p>
+<p style="text-indent:2em">要，---，变，----，定，，(，1，---3---【已屏蔽】，----------1，，-------)</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[暂无回复]</p>
+</blockquote>
+<blockquote id="8021,2484,222.246.180.93">
+<p>佚名 @ 2015-11-28 15:26:18</p>
+<p style="text-indent:2em">扣，一，一，【已屏蔽】，九，，</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[暂无回复]</p>
+</blockquote>
+<blockquote id="8093,2484,10.123.199.111">
+<p>佚名 @ 2015-12-24 14:58:57</p>
+<p style="text-indent:2em">软件全天稳定使用，不像其他人的很快不能用。通话清晰不掉线。应用广泛：逃避应酬，请病、事假，报岗签到，逗朋友，哄另一半等。不论情场、商场都能给你带来</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">站长提示：网络广告有风险，注意辨别，谨防上当受骗！！！</p>
+</blockquote>
+<blockquote id="8099,2484,125.65.83.127">
+<p>改号客服联系在下方 @ 2015-12-29 18:56:46</p>
+<p style="text-indent:2em">朋友V信：changxiangdh ,想不想让你的手机很有个性? 明明你在上海,而你跟朋友聊天的时候,你朋友的电话上显示你在浙江省(北京/南京/ 河南/广西等)以至澳门 美国. 明明你在跟朋友玩,而你打电话给你家人,让家人以为你在外地出差. 明明你不是郑伊健,而你总说你用郑伊健的电话号在打电话 明明你现在在</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">站长提示：网络广告有风险，注意辨别，谨防上当受骗！！！</p>
+</blockquote>
+<blockquote id="8174,2484,220.202.152.112">
+<p>四十大盗 @ 2016-03-06 23:39:59</p>
+<p style="text-indent:2em">谁有支持二次拨号的改号软件？有请加qq1254924607.</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[暂无回复]</p>
+</blockquote>
+<blockquote id="8276,2484,124.231.148.152">
+<p>佚名 @ 2016-05-29 00:00:27</p>
+<p style="text-indent:2em">黑帽SEO站群,百度SEO排名,360SEO排名,百度排名代做 QQ：1433461792</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-08-31
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E6%94%B9%E5%8F%B7/">改号</a>
+          <a href="https://lcx.cc/tags/%E5%8F%B7%E7%A0%81/">号码</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E4%BC%AA%E9%80%A0/">伪造</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/%E8%BD%A6/">车</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E8%84%91/">电脑</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E4%BF%A1/">电信</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>
+          <a href="https://lcx.cc/tags/%E8%A7%A3%E7%A0%81/">解码</a>
+          <a href="https://lcx.cc/tags/%E6%9D%83%E9%99%90/">权限</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BE%E5%A4%87/">设备</a>
+          <a href="https://lcx.cc/tags/%E8%BA%AB%E4%BB%BD/">身份</a>
+          <a href="https://lcx.cc/tags/%E6%89%8B%E6%9C%BA/">手机</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E6%97%A0%E7%BA%BF/">无线</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          <a href="https://lcx.cc/tags/%E4%BF%A1%E5%8F%B7/">信号</a>
+          <a href="https://lcx.cc/tags/%E5%A7%93%E5%90%8D/">姓名</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2485/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">咿呀咿呀淘客家族注入漏洞</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2483/">
+            <span class="next-text nav-default">谈谈 www.pei.net.ph 仿冒入侵菲律宾的整体性分析</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

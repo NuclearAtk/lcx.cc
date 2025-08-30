@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结。很多人对嗅探3389（远程桌面rdp协议）这一块，还是似懂非懂的，我就写了个总结文章，整理一下各种嗅探、劫持3389的方法，以及一些技巧经验大全，大杂烩，我尽量写得思路清晰一点，容易理解。利用 Arp 欺骗、劫持、嗅探的方法： 从 CAIN 嗅探到的 RDP 数据包中，如何得到账号、密码的方法： 你认真看看 CAIN 的数据包，如果是在远程桌面连接工具（mstsc.exe）本地保存密码登录的，那么就直接有明文。如果不是本地保存登录的，是连接后才输入账号密码的，那么嗅探到的 RDP 数据包里面就有一段是专门解密的，每行一个字母，你认真找找，格式大概是这样的：" />
+<meta name="keywords" content="嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/2257/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结" />
+<meta property="og:description" content="嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结。很多人对嗅探3389（远程桌面rdp协议）这一块，还是似懂非懂的，我就写了个总结文章，整理一下各种嗅探、劫持3389的方法，以及一些技巧经验大全，大杂烩，我尽量写得思路清晰一点，容易理解。利用 Arp 欺骗、劫持、嗅探的方法： 从 CAIN 嗅探到的 RDP 数据包中，如何得到账号、密码的方法： 你认真看看 CAIN 的数据包，如果是在远程桌面连接工具（mstsc.exe）本地保存密码登录的，那么就直接有明文。如果不是本地保存登录的，是连接后才输入账号密码的，那么嗅探到的 RDP 数据包里面就有一段是专门解密的，每行一个字母，你认真找找，格式大概是这样的：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/2257/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-02-21T13:49:07&#43;08:00" />
+<meta property="article:modified_time" content="2012-02-27T15:17:46&#43;08:00" />
+
+<meta itemprop="name" content="嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结">
+<meta itemprop="description" content="嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结。很多人对嗅探3389（远程桌面rdp协议）这一块，还是似懂非懂的，我就写了个总结文章，整理一下各种嗅探、劫持3389的方法，以及一些技巧经验大全，大杂烩，我尽量写得思路清晰一点，容易理解。利用 Arp 欺骗、劫持、嗅探的方法： 从 CAIN 嗅探到的 RDP 数据包中，如何得到账号、密码的方法： 你认真看看 CAIN 的数据包，如果是在远程桌面连接工具（mstsc.exe）本地保存密码登录的，那么就直接有明文。如果不是本地保存登录的，是连接后才输入账号密码的，那么嗅探到的 RDP 数据包里面就有一段是专门解密的，每行一个字母，你认真找找，格式大概是这样的："><meta itemprop="datePublished" content="2012-02-21T13:49:07&#43;08:00" />
+<meta itemprop="dateModified" content="2012-02-27T15:17:46&#43;08:00" />
+<meta itemprop="wordCount" content="5260">
+<meta itemprop="keywords" content="端口,技巧,劫持,协议,嗅探,远程,远程桌面,Blog,hijack,Html,HTTP,IE,MAC,本地,工具,攻击,密码,模拟,骗,欺骗,软件,数据,账号," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结"/>
+<meta name="twitter:description" content="嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结。很多人对嗅探3389（远程桌面rdp协议）这一块，还是似懂非懂的，我就写了个总结文章，整理一下各种嗅探、劫持3389的方法，以及一些技巧经验大全，大杂烩，我尽量写得思路清晰一点，容易理解。利用 Arp 欺骗、劫持、嗅探的方法： 从 CAIN 嗅探到的 RDP 数据包中，如何得到账号、密码的方法： 你认真看看 CAIN 的数据包，如果是在远程桌面连接工具（mstsc.exe）本地保存密码登录的，那么就直接有明文。如果不是本地保存登录的，是连接后才输入账号密码的，那么嗅探到的 RDP 数据包里面就有一段是专门解密的，每行一个字母，你认真找找，格式大概是这样的："/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-02-21" class="post-time">
+          2012-02-21
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E7%AB%AF%E5%8F%A3/"> 端口 </a>
+            <a href="https://lcx.cc/categories/%E6%8A%80%E5%B7%A7/"> 技巧 </a>
+            <a href="https://lcx.cc/categories/%E5%8A%AB%E6%8C%81/"> 劫持 </a>
+            <a href="https://lcx.cc/categories/%E5%8D%8F%E8%AE%AE/"> 协议 </a>
+            <a href="https://lcx.cc/categories/%E5%97%85%E6%8E%A2/"> 嗅探 </a>
+            <a href="https://lcx.cc/categories/%E8%BF%9C%E7%A8%8B/"> 远程 </a>
+            <a href="https://lcx.cc/categories/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/"> 远程桌面 </a>
+            
+          </div>
+        <span class="more-meta"> 约 5260 字 </span>
+          <span class="more-meta"> 预计阅读 11 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	很多人对嗅探3389（远程桌面rdp协议）这一块，还是似懂非懂的，我就写了个总结文章，整理一下各种嗅探、劫持3389的方法，以及一些技巧经验大全，大杂烩，我尽量写得思路清晰一点，容易理解。
+</p>
+<hr />
+<p>
+	<strong>利用 Arp 欺骗、劫持、嗅探的方法：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1、直接使用&nbsp;CAIN 工具嗅探，然后分析嗅探到的数据包，分析方法见底下。
+</p>
+<p style="text-indent:2em;">
+	2、先看那机器的终端是谁连过去的，然后架 rdp proxy，然后 arp 欺骗，最后从 rdp proxy 的嗅探记录里，直接拿到登陆明文。
+</p>
+<p style="text-indent:2em;">
+	3、钓鱼攻击，使用 Arp 劫持，欺骗本机为目标机器，然后在本机安装本地密码记录软件，例如：WinlogonHack、WinPswLogger 等工具（注意：这些工具都要修改，改成即使是错误密码也要记录，不然你什么都记录不到！），然后坐等管理员连接，得到密码后恢复 Arp 劫持。
+</p>
+<p style="text-indent:2em;">
+	4、Arp 劫持 + 中间人转发数据的嗅探的方法，详细描述见底下。&nbsp;
+</p>
+<p>
+	<strong>从 CAIN 嗅探到的 RDP 数据包中，如何得到账号、密码的方法：</strong> 
+</p>
+<p style="text-indent:2em;">
+	你认真看看 CAIN 的数据包，如果是在远程桌面连接工具（mstsc.exe）本地保存密码登录的，那么就直接有明文。
+</p>
+<p style="text-indent:2em;">
+	如果不是本地保存登录的，是连接后才输入账号密码的，那么嗅探到的 RDP 数据包里面就有一段是专门解密的，每行一个字母，你认真找找，格式大概是这样的：
+</p>
+<pre class="prettyprint">…… 省略 ……
+Key pressed client-side: 0x2c - 'z'
+…… 省略 ……
+Key pressed client-side: 0x23 - 'h'
+…… 省略 ……
+Key pressed client-side: 0x12 - 'a'
+…… 省略 ……
+Key released client-side: 0x31 - 'n'
+…… 省略 ……
+Key pressed client-side: 0x22 - 'g'
+…… 省略 ……
+Key pressed client-side: 0x20 - 'h'
+…… 省略 ……
+Key pressed client-side: 0x17 - 'a'
+…… 省略 ……
+Key pressed client-side: 0x31 - 'o'
+…… 省略 ……
+
+//字符串为：zhanghao</pre>
+<p style="text-indent:2em;">
+	搜索 Key pressed、Key released 可以得到，是一个个的字母的列出来的，这里就是用户连接成功后所输入的按键信息，组合一下，就可以得出账号密码。
+</p>
+<p style="text-indent:2em;">
+	这里要注意一下特殊字符，例如回车、空格、退格等，还有左、右方向键，这是切换输入框光标位置用的，不注意的话，出来的密码顺序是错误的。
+</p>
+<p style="text-indent:2em;">
+	同时告诉大家一个防止嗅探、密码记录的小技巧，你可以先输后半段，然后使用鼠标将输入框的光标切换到最前边（为什么不能用方向键切换光标？<span style="color:#e53333;">因为是可以从数据包中得到方向键按键</span><span style="color:#e53333;">记录的</span>），然后再输入前半段，这样攻击者最终组合出来的密码顺序是错误的。
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#4c33e5;">这招可以对付所有按键记录类软件，当然，你可以再发挥下，使用更复杂的输入顺序。</span> 
+</p>
+<p>
+	<strong>解开 rdp 数据包工具：</strong> 
+</p>
+<p style="text-indent:2em;">
+	有个工具叫 RDP Parser，可以解开嗅探或截取到的 RDP 数据包文件，然后提取一些按键信息，用来最终拼接出用户名和密码。
+</p>
+<p>
+	<strong>Arp 劫持 + 中间人转发数据的嗅探的方法：</strong> 
+</p>
+<p style="text-indent:2em;">
+	这个方法很早了，大概在2010年08月23日左右，有人在他博客发出来（原文章现在已删除了，删除原因见最底下，Google 能找到转载的），地址为：<a href="http://hi.baidu.com/0x24/blog/item/641268fc6261888fb901a0dd.html" target="_blank">http://hi.baidu.com/0x24/blog/item/641268fc6261888fb901a0dd.html</a> 
+</p>
+<p style="text-indent:2em;">
+	过了一年半载后，又有人在t00ls论坛发过，具体就不写了，内容大致一样，如下所述。
+</p>
+<p style="text-indent:2em;">
+	历时半个月的空闲时间，一个与 CAIN APR RDP 功能相拟的嗅探器工具终于在这个周未完成。
+</p>
+<p style="text-indent:2em;">
+	值得一提是CAIN要在双向欺骗下才能嗅到RDP，如果服务端绑定网送，那么也只能嗅到连接，而不能嗅到数据，更别提密码等之类。
+</p>
+<p style="text-indent:2em;">
+	hijackport + rdpproxy 可以做到单向欺骗获取RDP数据包并解密还原。
+</p>
+<p style="text-indent:2em;">
+	关于 sniffer rdp，比 cain arp rdp 更强大的组合 hijackport + rdpproxy，Me 在附件中演示了两种获取密码方法。
+</p>
+<p style="text-indent:2em;">
+	1、钓鱼 (有点二)
+</p>
+<p style="text-indent:2em;">
+	2、单向模式 sniffer rdp 比起 cain arp rdp 更强 （cain arp rdp 要取得密码等信息必需双向模式. hijackport + rdpproxy 可以突破对方在绑定的情况下获得密码或对方所输入的所有键盘消息）
+</p>
+<p style="text-indent:2em;">
+	具体演示，请到我的网盘下载：hijackportrdpproxy.rar，网盘地址：<a href="http://9780399.ys168.com/" target="_blank">http://9780399.ys168.com/</a> 
+</p>
+<p>
+	<strong>其他另类 Arp 方法：</strong> 
+</p>
+<p style="text-indent:2em;">
+	转自：<a href="http://hi.baidu.com/0x24/blog/item/0dccbd4c64454ce7d72afcfa.html" target="_blank">http://hi.baidu.com/0x24/blog/item/0dccbd4c64454ce7d72afcfa.html</a> 
+</p>
+<p style="text-indent:2em;">
+	时间：2011-12-31 21:09
+</p>
+<p style="text-indent:2em;">
+	这个另类,是思路另类一点,走的路不同.
+</p>
+<p style="text-indent:2em;">
+	这个直播比1还要早.原理更简单.
+</p>
+<p style="text-indent:2em;">
+	原理:
+</p>
+<p style="text-indent:2em;">
+	A.中间人
+</p>
+<p style="text-indent:2em;">
+	B.目标
+</p>
+<p style="text-indent:2em;">
+	C.客户端
+</p>
+<p style="text-indent:2em;">
+	注:
+</p>
+<p style="text-indent:2em;">
+	因为环境有点点特殊.在这说明一下.过程中..是取不取对方的MAC.只能取得网关MAC.
+</p>
+<p style="text-indent:2em;">
+	但也没有关系.为了测试环境达不达要求. 向网关发送了一条ARP.B.目标挂掉.整个恢复过程20分钟
+</p>
+<p style="text-indent:2em;">
+	由此判断网关没有绑定.是可以ARP.但一条ARP可以导至目标挂掉20分钟.这也说明网关的ARP表刷新的速度是每20分种一次.如何在没有目标MAC就意味着.通过中间人去进行数据转发.所以做了一个很大胆的测试.
+</p>
+<p style="text-indent:2em;">
+	1.每隔20分钟发送一次ARP欺骗.
+</p>
+<p style="text-indent:2em;">
+	2.模拟ICMP使其能ping通目标.
+</p>
+<p style="text-indent:2em;">
+	3.模拟TCP三次握手.伪造http反回一个黑页假象.
+</p>
+<p style="text-indent:2em;">
+	4.C --&gt; B.3389 转为 C --&gt; A.3389 记录密码
+</p>
+<p style="text-indent:2em;">
+	5.如果成功取得密码.停止端口转向.停止模拟.停止arp发送.等待网关刷新arp缓存.这时双方都不能登录.直到网关刷新.在这个漫长的等待中.ping 目标IP -T 抢在管理上线.
+</p>
+<p style="text-indent:2em;">
+	6.接下来就是拼人品.
+</p>
+<p style="text-indent:2em;">
+	整个直播记录.花费21分钟左右.成功获取 hack58 权限，下载地址：<a href="http://9780399.ys168.com/" target="_blank">http://9780399.ys168.com/</a> 
+</p>
+<p>
+	<strong>相关工具介绍：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1、rdpproxy：Rdp Proxy 一个转发rdp协议数据包的软件，用于转发3389的数据，然后截取，你懂的……
+</p>
+<p style="text-indent:2em;">
+	2、hijackport：Hijack Port 劫持端口用的，一般和 Rdp Proxy 配套使用。
+</p>
+<p style="text-indent:2em;">
+	3、Cain：著名的综合黑客工具，大家都懂，就不解释了……
+</p>
+<p style="text-indent:2em;">
+	4、RDP Parser：可以解开嗅探或截取到的 RDP 数据包文件，然后提取一些按键信息，用来最终拼接出用户名和密码。
+</p>
+<p>
+	<strong>关于作者删除那篇文章，作者说是：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://hi.baidu.com/0x24/blog/item/af60ae233af96e4092580795.html" target="_blank">http://hi.baidu.com/0x24/blog/item/af60ae233af96e4092580795.html</a> 
+</p>
+<p style="text-indent:2em;">
+	2010-09-08 8:30：本来想公开 hijackport + rdpproxy 的，但我有所改变，我很绕幸的是之前得得过它的人，因为有两个很大的bug，使之在很多实践环境下无效..呵呵.......................最后删贴删贴......
+</p>
+<hr />
+<p>
+	<span style="color:#e53333;">2012-2-26 22:39:25 补充：</span> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2272/" target="_blank">Arp EMP v1.0 发布 &amp; 技术文档 &amp; 详细分析 hijackport + rdpproxy</a> 
+</p>
+<hr />
+<p>
+	<strong><span style="color:#e53333;">2012-2-27 14:53:49 补充：</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#e53333;"><a href="https://lcx.cc/post/2273/" target="_blank">哈哈，此事就此打住，互相攻击没好处，握手交友，和为贵！</a></span></strong> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="1107,2257,182.92.247.1">
+<p>jj @ 2012-02-21 16:00:09</p>
+<p style="text-indent:2em">好文章</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">多多捧场  \(^o^)/</p>
+</blockquote>
+<blockquote id="1111,2257,124.226.57.17">
+<p>【匿名者】 @ 2012-02-23 16:33:48</p>
+<p style="text-indent:2em">期待你（嗅探、劫持 3389 端口、远程桌面、rdp 协议的一些经验技巧总结）中提到改写的利器</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">最近没有时间，很忙，以后有空了写出来，公开下载。</p>
+</blockquote>
+<blockquote id="1112,2257,220.168.249.177">
+<p>【匿名者】 @ 2012-02-23 21:41:37</p>
+<p style="text-indent:2em">你有什么权力指责OPEN，还以为多狠，OPEN写出来了就是有本事，没本事就不要乱吠</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">请问你是何人，你又有什么权利跑我这来乱吠？
+So，你又从哪里看出来我语言里有指责的意思？
+我只是十分讨厌他的做法而已，这跟你又有什么关系？
+从你的言词里，我觉得你这句话最后俩字十分对得起你。</p>
+</blockquote>
+<blockquote id="1113,2257,220.168.249.177">
+<p>【匿名者】 @ 2012-02-23 22:58:20</p>
+<p style="text-indent:2em">只会含沙射影，暗箭伤人，OPEN写出这个花了半个月你也许得半年，不要以为自己多牛B。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">首先，我从来没说过我很牛逼，本人超级菜鸟一个，只会开关机。
+其次，我只看到您除了会喷之外，貌似什么都不会。
+如果您觉得您喷人技能已经点 Max 了，可以去百度贴吧，那里喷神很多，你们可以互喷……
+包爽哟，亲~
+少年，为人要和气处事，吵架滴不好哟~　╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="1123,2257,113.94.34.204">
+<p>奥特曼 @ 2012-02-26 23:36:27</p>
+<p style="text-indent:2em">有意思。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">(⊙_⊙)?</p>
+</blockquote>
+<blockquote id="1124,2257,61.144.75.153">
+<p>【你亲爹】 @ 2012-02-27 00:56:53</p>
+<p style="text-indent:2em">臭傻逼一个 我操你全家！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">试问，你连JJ都没有，你拿什么操呢？</p>
+</blockquote>
+<blockquote id="1125,2257,61.157.79.17">
+<p>haha @ 2012-02-27 09:13:03</p>
+<p style="text-indent:2em">看来我一句玩笑话让你跟ＯＰＥＮ结下梁子了。
+公鸡的技术肯定不差，绝对不在ＯＰＥＮ以及他周围那些之下。
+当然ＯＰＥＮ他们也不是简单人物的说。
+不过公鸡你那句带点稍微攻击ＯＰＥＮ的话还是不要讲了。
+虽然有些人也不喜欢ＯＰＥＮ的做法的说，拿出来显摆一下然后又故作高姿态消失鸟。
+还一本正经的说：“东西不给，如果非要的话，十万”
+这句任谁听了都不爽。呵呵。
+另外，那个谁说的“会点ＶＢ的货就出来显摆”这句话真不同意哈。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">^_^，呵呵，你说的就是我想说的，你理解我！</p>
+</blockquote>
+<blockquote id="1126,2257,210.155.67.89">
+<p>11 @ 2012-02-27 09:36:39</p>
+<p style="text-indent:2em">本来不想回应了，但是还是回一下，任何不是cnmoker或者robert ID回复的留言都不是本人，如果有需要求证的可以加我的Q：1972097.
+不要随便臆断什么事情。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯，不管是谁不谁的，事情过去就过了，等它平息吧，互相攻击，对谁都不好。</p>
+</blockquote>
+<blockquote id="1136,2257,59.54.230.177">
+<p>鬼哥 @ 2012-02-27 19:25:55</p>
+<p style="text-indent:2em">支持LCX。技术不是你们这群小孩子 懂的。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">囧rz</p>
+</blockquote>
+<blockquote id="1139,2257,27.18.125.214">
+<p>【匿名者】 @ 2012-02-28 15:47:02</p>
+<p style="text-indent:2em">支持lcx的  从你博客里学习了不少东西  现在土司关了  就经常来你这里学习学习</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">\(^o^)/ ~</p>
+</blockquote>
+<blockquote id="1140,2257,27.18.125.214">
+<p>【匿名者】 @ 2012-02-28 15:52:43</p>
+<p style="text-indent:2em">支持lcx的  从你博客里学习了不少东西  现在土司关了  就经常来你这里学习学习</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额……</p>
+</blockquote>
+<blockquote id="1372,2257,60.177.84.223">
+<p>【匿名者】 @ 2012-04-22 21:28:11</p>
+<p style="text-indent:2em">没事看看，LZ几岁啊</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-1 岁</p>
+</blockquote>
+<blockquote id="2495,2257,218.77.14.202">
+<p>cx @ 2012-10-20 12:58:21</p>
+<p style="text-indent:2em">站长能交个好友或收个徒弟不？本人小菜，有很多问题自己难以解决！如果站长有时间不吝赐教，请联系...</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">网上交的“好友”实在太多了，每天被当做百度知道一样提问题，烦不胜烦……
+至于收徒，我没有时间和精力去做这些事，也没有收徒这个兴趣……</p>
+</blockquote>
+<blockquote id="3051,2257,173.231.32.245">
+<p>佚名 @ 2013-01-18 23:46:58</p>
+<p style="text-indent:2em">“hijackport + rdpproxy 可以做到单向欺骗获取RDP数据包并解密还原。”
+核总 请问rdpproxy这个工具还能找到吗？ 核老大帮帮忙撒。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">已没有保存，你网上搜搜，可能还有下载的。</p>
+</blockquote>
+<blockquote id="3070,2257,113.57.246.213">
+<p>xun @ 2013-01-21 15:09:58</p>
+<p style="text-indent:2em">攻击机将rdp数据转发到目标机后，目标机接下来是怎么做的？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">目标机什么都不用做，因为对目标机来说，接收的数据完全是正常的、无异常，进入正常处理流程就行了，该咋办就咋办……</p>
+</blockquote>
+<blockquote id="3073,2257,123.150.182.173">
+<p>xun @ 2013-01-21 19:39:41</p>
+<p style="text-indent:2em">核总，还有就是目标收到我们的rdp数据包，那么这个rdp数据包里面的数据来源ip和mac是网关的还是攻击机的？       
+还有就是目标肯定接受数据后要响应的，那么他返回的数据包是怎么传的    直接发给网关么</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你的问题，文章已具体讲过，见：http://lcx.cc/?i=2272</p>
+</blockquote>
+<blockquote id="3150,2257,119.39.248.23">
+<p>graytrack @ 2013-02-02 18:25:56</p>
+<p style="text-indent:2em">我想问一下cain怎么实现双向欺骗呢？怎么设置</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">cain本身已经是双向欺骗，而且没有单向欺骗功能，无需设置。</p>
+</blockquote>
+<blockquote id="3254,2257,203.90.144.49">
+<p>佚名 @ 2013-02-22 16:31:47</p>
+<p style="text-indent:2em">请问，用Cain如何嗅探3389呢?</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">问题太弱智了吧？参阅Cain说明书。</p>
+</blockquote>
+<blockquote id="3466,2257,220.178.87.51">
+<p>dark @ 2013-03-22 09:44:35</p>
+<p style="text-indent:2em">核老大.能给份hijackport不？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">并无保留此程序。</p>
+</blockquote>
+<blockquote id="4029,2257,27.25.203.2">
+<p>佚名 @ 2013-05-22 15:53:01</p>
+<p style="text-indent:2em">路过 看到都是大牛</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="4034,2257,61.161.185.69">
+<p>dedecms @ 2013-05-23 10:12:30</p>
+<p style="text-indent:2em">我发现核总  与其说最闲的人 也是最忙的人，我没看见过哪个个博主每天挨个的回答问题的 还那么细心，那我也凑个热闹吧，核总有啥好点的“动作片”网站么，你懂！哈哈</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你懂的：
+5aSc6Imy6LS15peP77yaaHR0cDovL3d3dy5xczk5dy5jb20v77yM6aKk5oqW6ICF5ZCn77yaaHR0cDovL3d3dy5jZHo4LmNvbS8=</p>
+</blockquote>
+<blockquote id="5472,2257,124.133.90.154">
+<p>核爆炸 @ 2013-12-14 14:16:58</p>
+<p style="text-indent:2em">核老大，又是我，核爆炸 找很久了关于一个能做到 arp 端口劫持 目标机端口 到本机指定端口的 工具 没找到，，，不知道老大能否赐予。。。 保不传播，感激不尽。。。 5473428@qq.com 希望你今天心情明媚，嗖的一下就发给我了。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额，没有此类工具……</p>
+</blockquote>
+<blockquote id="5475,2257,218.59.86.254">
+<p>核爆炸 @ 2013-12-14 18:22:17</p>
+<p style="text-indent:2em">写一个程序 arp 欺骗 劫持目标机 3389终端 到本机 指定端口 ， 其他端口过滤不劫持， 理论上应该可以写出来吧。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">很简单的，你研究一下通讯协议，就知道了，只是一个过滤规则的问题。</p>
+</blockquote>
+<blockquote id="5476,2257,218.59.86.254">
+<p>核爆炸 @ 2013-12-14 18:49:19</p>
+<p style="text-indent:2em">- - 。 核老大能否发发善心 谋谋福利啊 ， 简单的写一个出来 biu 的一下丢到我的邮箱吧。 5473428@qq.com  核大大 思密达。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">伸手党一律砍手！</p>
+</blockquote>
+<blockquote id="5477,2257,218.59.86.254">
+<p>核爆炸 @ 2013-12-14 19:35:49</p>
+<p style="text-indent:2em">。，，。 核老大 ， 你就忍心咩。。 好歹你攻击，我爆炸，搭配起来走天下。 帮个忙吧，，，大哥，，给你快递几个娃娃过去好不好啊。。。实在不想求人额，关键是，，， 大佬，，帮下细佬，得唔得 。。谢晒。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="5531,2257,27.129.152.179">
+<p>豌豆射手 @ 2013-12-22 16:38:44</p>
+<p style="text-indent:2em">请问如果嗅探了好长时间还没嗅探到密码怎么办?难道要一直等下去</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">1、检查嗅探参数是否正确、网络环境是否能嗅探。
+2、人品问题……</p>
+</blockquote>
+<blockquote id="5532,2257,27.129.152.179">
+<p>豌豆射手 @ 2013-12-22 16:40:35</p>
+<p style="text-indent:2em">请问如果嗅探了好长时间还没嗅探到密码怎么办?难道要一直等下去</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">1、检查嗅探参数是否正确、网络环境是否能嗅探。
+2、人品问题……</p>
+</blockquote>
+<blockquote id="5883,2257,113.221.164.26">
+<p>7600 @ 2014-02-21 23:53:55</p>
+<p style="text-indent:2em">http://9780399.ys168.com 求此网盘的嗅探 欺骗教程</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯，那网盘很早就过期了，录像无保存了……</p>
+</blockquote>
+<blockquote id="5894,2257,60.217.76.42">
+<p>7600 @ 2014-02-22 22:23:34</p>
+<p style="text-indent:2em">站长您有嗅探、劫持 3389 端口、远程桌面、rdp 协议的教程吗</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没有，这个还需要教程么？</p>
+</blockquote>
+<blockquote id="6065,2257,124.160.216.79">
+<p>佚名 @ 2014-03-20 21:45:23</p>
+<p style="text-indent:2em">楼主，久仰大名，想求你帮个忙</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">？</p>
+</blockquote>
+<blockquote id="6215,2257,180.110.154.127">
+<p>miss @ 2014-04-17 12:13:15</p>
+<p style="text-indent:2em">请问怎么修改winloginhack 即使是错误密码也记录？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">修改一下条件，具体的你看看源码。</p>
+</blockquote>
+<blockquote id="6220,2257,125.58.158.100">
+<p>芒果奶茶 @ 2014-04-19 12:37:24</p>
+<p style="text-indent:2em">核大大很牛逼的发现了你，弱弱的问下，大型网站后台找不到，通过嗅探之外还有什么方法可以拿下么？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额，方法很多，具体还是要看情况。</p>
+</blockquote>
+<blockquote id="6225,2257,125.58.158.100">
+<p>芒果奶茶 @ 2014-04-19 22:46:06</p>
+<p style="text-indent:2em">又是我芒果奶茶，比如说单子站，虽说我不接单子，不知道单子到底多变态，还是见过很多变态站，如：扫不到后台，没有注入点，XSS漏洞，旁站C段都没有的，百度他的oady更是没有，对于这种变态站想要拿下怎么搞？大大求回复</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">呵呵，那还是建议你放弃吧……</p>
+</blockquote>
+<blockquote id="6226,2257,125.58.158.100">
+<p>芒果奶茶 @ 2014-04-19 22:48:04</p>
+<p style="text-indent:2em">又是我芒果奶茶，比如说单子站，虽说我不接单子，不知道单子到底多变态，还是见过很多变态站，如：扫不到后台，没有注入点，XSS漏洞，旁站C段都没有的，百度他的oady更是没有，对于这种变态站想要拿下怎么搞？大大求回复</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">呵呵，那还是建议你放弃吧……</p>
+</blockquote>
+<blockquote id="6232,2257,61.47.132.63">
+<p>芒果奶茶 @ 2014-04-20 15:46:40</p>
+<p style="text-indent:2em">感谢大大回复</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="7153,2257,59.54.98.76">
+<p>bolin @ 2014-11-12 09:17:16</p>
+<p style="text-indent:2em">本来打算不玩这块的，看到这么华丽又低调的你，那么问题来了，收徒么？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不收徒，谢谢。</p>
+</blockquote>
+<blockquote id="7842,2257,36.44.89.168">
+<p>小朋友 @ 2015-09-10 11:28:13</p>
+<p style="text-indent:2em">Linux下嗅探rdp的有什么呀</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">百度</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-02-27
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E5%B7%A7/">技巧</a>
+          <a href="https://lcx.cc/tags/%E5%8A%AB%E6%8C%81/">劫持</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          <a href="https://lcx.cc/tags/%E5%97%85%E6%8E%A2/">嗅探</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/">远程桌面</a>
+          <a href="https://lcx.cc/tags/blog/">Blog</a>
+          <a href="https://lcx.cc/tags/hijack/">hijack</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/mac/">MAC</a>
+          <a href="https://lcx.cc/tags/%E6%9C%AC%E5%9C%B0/">本地</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E6%8B%9F/">模拟</a>
+          <a href="https://lcx.cc/tags/%E9%AA%97/">骗</a>
+          <a href="https://lcx.cc/tags/%E6%AC%BA%E9%AA%97/">欺骗</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E8%B4%A6%E5%8F%B7/">账号</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2263/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">瑞星提醒：农行、建行ATM出现漏洞 可被黑客利用攻击内网</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2254/">
+            <span class="next-text nav-default">视频: XAircraft FC1212-P 带 AHRS-S V2 室内暴力测试(X450Pro)</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

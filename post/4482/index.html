@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>廉价Arduino山寨板制作teensy - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Anymous" /><meta name="description" content="廉价Arduino山寨板制作teensy。刚才花了半天时间写的文章，一点发表就什么都没了，乌云这是要闹哪样。只能写个简介了。。。刚考完试，放了半天假，刚好板子今天到了。采用arduino micro山寨板 //什么廉价不廉价，其实是买不起。那天我看了一下teensy，好贵啊。我下了血本，花了30元(wqnmlgb,不包邮)买了这个山寨板。今天板子刚到，测试了一下。之所以采用micro，是因为它不需要安装驱动，而uno需要安装驱动，而且他很小。" />
+<meta name="keywords" content="廉价Arduino山寨板制作teensy" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4482/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="廉价Arduino山寨板制作teensy" />
+<meta property="og:description" content="廉价Arduino山寨板制作teensy。刚才花了半天时间写的文章，一点发表就什么都没了，乌云这是要闹哪样。只能写个简介了。。。刚考完试，放了半天假，刚好板子今天到了。采用arduino micro山寨板 //什么廉价不廉价，其实是买不起。那天我看了一下teensy，好贵啊。我下了血本，花了30元(wqnmlgb,不包邮)买了这个山寨板。今天板子刚到，测试了一下。之所以采用micro，是因为它不需要安装驱动，而uno需要安装驱动，而且他很小。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4482/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2015-01-16T15:56:32&#43;08:00" />
+<meta property="article:modified_time" content="2015-06-02T09:28:02&#43;08:00" />
+
+<meta itemprop="name" content="廉价Arduino山寨板制作teensy">
+<meta itemprop="description" content="廉价Arduino山寨板制作teensy。刚才花了半天时间写的文章，一点发表就什么都没了，乌云这是要闹哪样。只能写个简介了。。。刚考完试，放了半天假，刚好板子今天到了。采用arduino micro山寨板 //什么廉价不廉价，其实是买不起。那天我看了一下teensy，好贵啊。我下了血本，花了30元(wqnmlgb,不包邮)买了这个山寨板。今天板子刚到，测试了一下。之所以采用micro，是因为它不需要安装驱动，而uno需要安装驱动，而且他很小。"><meta itemprop="datePublished" content="2015-01-16T15:56:32&#43;08:00" />
+<meta itemprop="dateModified" content="2015-06-02T09:28:02&#43;08:00" />
+<meta itemprop="wordCount" content="4406">
+<meta itemprop="keywords" content="Blog,DNS,exe,Html,HTTP,Net,Rat,Shell,Windows,安全,测试,车,代码,服务,服务器,工具,攻击,后门,命令,模拟,设备,树莓派," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="廉价Arduino山寨板制作teensy"/>
+<meta name="twitter:description" content="廉价Arduino山寨板制作teensy。刚才花了半天时间写的文章，一点发表就什么都没了，乌云这是要闹哪样。只能写个简介了。。。刚考完试，放了半天假，刚好板子今天到了。采用arduino micro山寨板 //什么廉价不廉价，其实是买不起。那天我看了一下teensy，好贵啊。我下了血本，花了30元(wqnmlgb,不包邮)买了这个山寨板。今天板子刚到，测试了一下。之所以采用micro，是因为它不需要安装驱动，而uno需要安装驱动，而且他很小。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">廉价Arduino山寨板制作teensy</h1>
+      
+      <div class="post-meta">
+        <time datetime="2015-01-16" class="post-time">
+          2015-01-16
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4406 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	廉价Arduino山寨板制作teensy
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-11 16:23
+</p>
+<p style="text-indent:2em;">
+	刚才花了半天时间写的文章，一点发表就什么都没了，乌云这是要闹哪样
+</p>
+<p style="text-indent:2em;">
+	只能写个简介了。。。
+</p>
+<p style="text-indent:2em;">
+	刚考完试，放了半天假，刚好板子今天到了
+</p>
+<p style="text-indent:2em;">
+	采用arduino micro山寨板 //什么廉价不廉价，其实是买不起
+</p>
+<p style="text-indent:2em;">
+	那天我看了一下teensy，好贵啊
+</p>
+<p style="text-indent:2em;">
+	我下了血本，花了30元(wqnmlgb,不包邮)买了这个山寨板
+</p>
+<p style="text-indent:2em;">
+	今天板子刚到，测试了一下
+</p>
+<p style="text-indent:2em;">
+	之所以采用micro，是因为它不需要安装驱动，而uno需要安装驱动，而且他很小
+</p>
+<p style="text-indent:2em;">
+	上图
+</p>
+<p style="text-indent:2em;">
+	<img title="arduino micro 山寨板" alt="arduino micro 山寨板" src="/file/old/4537_1.jpg" width="551" height="980" /> 
+</p>
+<p style="text-indent:2em;">
+	<img title="arduino micro 山寨板" alt="arduino micro 山寨板" src="/file/old/4538_2.jpg" width="551" height="980" /> 
+</p>
+<p style="text-indent:2em;">
+	目测长3cm,宽1.5cm
+</p>
+<p style="text-indent:2em;">
+	测试代码，arduino ide 1.06
+</p>
+<pre class="prettyprint">void setup() {//初始化，这里的代码只执行一次
+  Keyboard.begin();//开始键盘通讯
+  delay(3000);//延时 避免初始化对后面产生影响，不宜太短
+  Keyboard.press(KEY_LEFT_GUI);//按下win键
+  delay(500);
+  Keyboard.press('r');//按下r键
+  delay(500);
+  Keyboard.release(KEY_LEFT_GUI);//释放win键
+  Keyboard.release('r');//释放r键
+  delay(500);
+  Keyboard.println("cmd");//输入并回车
+  delay(1000);
+  Keyboard.println("echo wooyun");
+  Keyboard.end();//结束键盘通讯
+}
+void loop()//循环，这里的代码无限循环
+{
+//我这里的代码为空，就是什么也不执行
+//当然你可以随便写代码，但我只让它只执行一次，也可以把上面的代码放到下面，循环执 行，也可在上面加循环语句
+}</pre>
+<p style="text-indent:2em;">
+	函数你可以自己写也可以参照官方的说明使用官方的，
+</p>
+<p style="text-indent:2em;">
+	执行什么命令随你，win7以上可以使用powershell等
+</p>
+<p style="text-indent:2em;">
+	键盘，鼠标都可以按照你的意思模拟出来
+</p>
+<p style="text-indent:2em;">
+	测试视频：<a href="http://pan.baidu.com/s/1eQxlQUm" target="_blank">VID_20150111_153724.mp4</a> 
+</p>
+<p style="text-indent:2em;">
+	micro还有很多gpio，可以进行扩展，例如加个按钮，通过按钮执行不同命令
+</p>
+<p style="text-indent:2em;">
+	加个sd模块，从sd卡读取命令，加mini GSM模块等等。。。
+</p>
+<p style="text-indent:2em;">
+	加什么就看你的创新了
+</p>
+<p style="text-indent:2em;">
+	以micro的个头完全可以嵌入到键盘中，进行监听，而且usb供电
+</p>
+<p style="text-indent:2em;">
+	甚至你还可以通过otg操作手机，模拟什么完全看你的创新了
+</p>
+<p style="text-indent:2em;">
+	以下为复制网上的内容
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	teensy和arduino基本一样
+</p>
+<p style="text-indent:2em;">
+	可以结合kautilya渗透套件
+</p>
+<p style="text-indent:2em;">
+	Kautilya is a toolkit which provides various payloads for a Human Interface Device which may help in breaking in a computer during penetration tests.
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	Payloads列表
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	<strong>Windows</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong>获取类</strong> 
+</p>
+<p style="text-indent:2em;">
+	获取信息
+</p>
+<p style="text-indent:2em;">
+	Hashdump and Exfiltrate
+</p>
+<p style="text-indent:2em;">
+	键盘记录
+</p>
+<p style="text-indent:2em;">
+	嗅探
+</p>
+<p style="text-indent:2em;">
+	WLAN Keys导出
+</p>
+<p style="text-indent:2em;">
+	获取目标证书
+</p>
+<p style="text-indent:2em;">
+	导出LSA秘钥
+</p>
+<p style="text-indent:2em;">
+	Dump passwords in plain
+</p>
+<p style="text-indent:2em;">
+	拷贝SAM
+</p>
+<p style="text-indent:2em;">
+	导出内存数据
+</p>
+<p style="text-indent:2em;">
+	Dump Windows Vault Credentials
+</p>
+<p style="text-indent:2em;">
+	<strong>执行类</strong> 
+</p>
+<p style="text-indent:2em;">
+	sethc 和Utilman 后门
+</p>
+<p style="text-indent:2em;">
+	定时执行payload
+</p>
+<p style="text-indent:2em;">
+	Http 后门
+</p>
+<p style="text-indent:2em;">
+	DNS txt 后门
+</p>
+<p style="text-indent:2em;">
+	无线AP
+</p>
+<p style="text-indent:2em;">
+	Tracking Target Connectivity
+</p>
+<p style="text-indent:2em;">
+	<strong>升级类</strong> 
+</p>
+<p style="text-indent:2em;">
+	移除升级
+</p>
+<p style="text-indent:2em;">
+	强制浏览
+</p>
+<p style="text-indent:2em;">
+	<strong>管理类</strong> 
+</p>
+<p style="text-indent:2em;">
+	添加管理员
+</p>
+<p style="text-indent:2em;">
+	更改默认DNS服务器IP
+</p>
+<p style="text-indent:2em;">
+	编辑Hosts 文件
+</p>
+<p style="text-indent:2em;">
+	添加一个可用的RDP用户
+</p>
+<p style="text-indent:2em;">
+	添加一个可用的Telnet用户
+</p>
+<p style="text-indent:2em;">
+	添加一个可以远程powershell的用户
+</p>
+<p style="text-indent:2em;">
+	<strong>其他</strong> 
+</p>
+<p style="text-indent:2em;">
+	浏览并接受Java Applet签名
+</p>
+<p style="text-indent:2em;">
+	Speak on Target
+</p>
+<p style="text-indent:2em;">
+	<strong>Linux</strong> 
+</p>
+<p style="text-indent:2em;">
+	Download and Execute
+</p>
+<p style="text-indent:2em;">
+	Reverse Shells using built in tools
+</p>
+<p style="text-indent:2em;">
+	Code Execution
+</p>
+<p style="text-indent:2em;">
+	DNS TXT Code Execution
+</p>
+<p style="text-indent:2em;">
+	Perl reverse shell (MSF)
+</p>
+<p style="text-indent:2em;">
+	<strong>OSX</strong> 
+</p>
+<p style="text-indent:2em;">
+	Download and Execute
+</p>
+<p style="text-indent:2em;">
+	DNS TXT Code Execution
+</p>
+<p style="text-indent:2em;">
+	Perl Reverse Shell (MSF)
+</p>
+<p style="text-indent:2em;">
+	Ruby Reverse Shell (MSF)
+</p>
+<p style="text-indent:2em;">
+	<strong>用法：</strong> 
+</p>
+<p style="text-indent:2em;">
+	运行kautilya.rb，更具Kautilya的提示选择相应菜单，然后生成payload到Kautilya的目录。
+</p>
+<p style="text-indent:2em;">
+	生成的payload需要在Arduino IED中编译，然后上传到teensy。
+</p>
+<p style="text-indent:2em;">
+	支持的设备(Human Interface Devices）
+</p>
+<p style="text-indent:2em;">
+	In principal Kautilya should work with any HID capable of acting as a keyboard. Kautilya has been tested on Teensy++2.0 and Teensy 3.0 from pjrc.com. Updates about Kautilya can be found most of the times at my blog http://labofapenetrationtester.com/ and google group.
+</p>
+<p style="text-indent:2em;">
+	<strong>相关文章</strong> 
+</p>
+<p style="text-indent:2em;">
+	A five part blog post on my blog could be useful for those new to HID and Kautilya:
+</p>
+<p style="text-indent:2em;">
+	Part 1: http://labofapenetrationtester.blogspot.in/2012/04/teensy-usb-hid-for-penetration-testers.html
+</p>
+<p style="text-indent:2em;">
+	Part 2: http://labofapenetrationtester.blogspot.in/2012/04/teensy-usb-hid-for-penetration-testers_04.html
+</p>
+<p style="text-indent:2em;">
+	Part 3: http://labofapenetrationtester.blogspot.in/2012/04/teensy-usb-hid-for-penetration-testers_25.html
+</p>
+<p style="text-indent:2em;">
+	Part 4: http://labofapenetrationtester.blogspot.in/2012/05/teensy-usb-hid-for-penetration-testers.html
+</p>
+<p style="text-indent:2em;">
+	Part 5: http://labofapenetrationtester.blogspot.in/2012/09/usb-hid-for-pen-testers-part5.html
+</p>
+<p style="text-indent:2em;">
+	All posts related to Kautilya http://www.labofapenetrationtester.com/search/label/Kautilya
+</p>
+<p style="text-indent:2em;">
+	HID（Human Interface Devices）攻击当前不流行，但是攻击方式新颖，实用性很高，危险系数应该还是比较高的，值得研究。
+</p>
+<p style="text-indent:2em;">
+	百度盘下载：http://pan.baidu.com/s/1i3wwfXj
+</p>
+<p style="text-indent:2em;">
+	github下载：https://github.com/samratashok/Kautilya
+</p>
+<p style="text-indent:2em;">
+	听说集齐12枚wb可以召唤神龙，兑换树莓派
+</p>
+<p style="text-indent:2em;">
+	求感谢啊！求感谢啊！
+</p>
+<p style="text-indent:2em;">
+	<a href="http://zone.wooyun.org/content/17931" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4538/" target="_blank">利用烧鹅制作简单BadUSB，插谁谁怀孕</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4482/" target="_blank">廉价Arduino山寨板制作teensy</a> 
+</p>
+<p>
+	<strong>各种吐槽：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1#
+</p>
+<p style="text-indent:2em;">
+	猪猪侠 (A) | 2015-01-11 16:26
+</p>
+<p style="text-indent:2em;">
+	厉害啊。
+</p>
+<p style="text-indent:2em;">
+	2#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-11 16:28
+</p>
+<p style="text-indent:2em;">
+	@猪猪侠 其实很一般了
+</p>
+<p style="text-indent:2em;">
+	3#
+</p>
+<p style="text-indent:2em;">
+	xiaoxin (己所不欲，勿施于人) | 2015-01-11 16:58
+</p>
+<p style="text-indent:2em;">
+	30不多，玩Arduino我差不多花了400了吧，树莓派也快500了。就做好一个遥控小车。
+</p>
+<p style="text-indent:2em;">
+	玩硬件真是烧钱，烧了硬件就少了不少钱。
+</p>
+<p style="text-indent:2em;">
+	proxmark3，hackrf one更贵。
+</p>
+<p style="text-indent:2em;">
+	4#
+</p>
+<p style="text-indent:2em;">
+	jeary ((:‮？办么怎，了多越来越法方象抽的我)) | 2015-01-11 17:29
+</p>
+<p style="text-indent:2em;">
+	来个详细点的步骤啊 粗粗牛
+</p>
+<p style="text-indent:2em;">
+	5#
+</p>
+<p style="text-indent:2em;">
+	末笔丶 | 2015-01-11 18:53
+</p>
+<p style="text-indent:2em;">
+	@jeary @Anymous感觉这篇文章写的比较完整.更有意思的是下面的评论.
+</p>
+<p style="text-indent:2em;">
+	6#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-11 19:02
+</p>
+<p style="text-indent:2em;">
+	@末笔丶 第一遍写的完整的，一点发表，什么都没了，所以用手机写了个简单的
+</p>
+<p style="text-indent:2em;">
+	7#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-11 19:04
+</p>
+<p style="text-indent:2em;">
+	执行什么是任意的，set只不过是现成的罢了
+</p>
+<p style="text-indent:2em;">
+	8#
+</p>
+<p style="text-indent:2em;">
+	末笔丶 | 2015-01-11 19:14
+</p>
+<p style="text-indent:2em;">
+	@Anymous 之前的话看别人用Teensy++ 2.0做过.但只能最小化窗口.楼主可以试下焊接到鼠标.数据线...
+</p>
+<p style="text-indent:2em;">
+	9#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-11 19:19
+</p>
+<p style="text-indent:2em;">
+	@末笔丶 本来今天要做的，但是手上的5元电烙铁实在不给力，短路啪啪的，焊不上
+</p>
+<p style="text-indent:2em;">
+	10#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-11 19:21
+</p>
+<p style="text-indent:2em;">
+	@末笔丶 还没研究adb，放在移动电源里，通过adb操控开启了usb调试的android
+</p>
+<p style="text-indent:2em;">
+	11#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-11 19:23
+</p>
+<p style="text-indent:2em;">
+	加个sd卡可以模拟成u盘，平常是u盘，通过设定好的事件触发，执行命令
+</p>
+<p style="text-indent:2em;">
+	12#
+</p>
+<p style="text-indent:2em;">
+	末笔丶 | 2015-01-11 20:05
+</p>
+<p style="text-indent:2em;">
+	@Anymous 你是不是在哪个TW实验室偶遇的哥们?
+</p>
+<p style="text-indent:2em;">
+	13#
+</p>
+<p style="text-indent:2em;">
+	末笔丶 | 2015-01-11 20:07
+</p>
+<p style="text-indent:2em;">
+	5块钱烙铁怎么了.话说别人还用打火机跟刀片拖焊过呢.
+</p>
+<p style="text-indent:2em;">
+	14#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-11 20:10
+</p>
+<p style="text-indent:2em;">
+	@末笔丶 是啊
+</p>
+<p style="text-indent:2em;">
+	15#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-11 20:12
+</p>
+<p style="text-indent:2em;">
+	我的烙铁居然把自身的电线也烤焦了
+</p>
+<p style="text-indent:2em;">
+	16#
+</p>
+<p style="text-indent:2em;">
+	末笔丶 | 2015-01-11 20:33
+</p>
+<p style="text-indent:2em;">
+	@Anymous 借口.焊工肯定跟我一样差.我都找了几个废板练练手.
+</p>
+<p style="text-indent:2em;">
+	17#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-11 21:05
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4539_3.jpg" target="_blank"><img alt="" src="/file/old/4539_3.jpg" width="780" height="488" /></a> 
+</p>
+<p style="text-indent:2em;">
+	18#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-11 21:08
+</p>
+<p style="text-indent:2em;">
+	@末笔丶 我没怎么焊过小东西,感觉工具不行
+</p>
+<p style="text-indent:2em;">
+	19#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-11 21:09
+</p>
+<p style="text-indent:2em;">
+	高级点的东西都得用vbs，powershell
+</p>
+<p style="text-indent:2em;">
+	20#
+</p>
+<p style="text-indent:2em;">
+	whale (棱镜信息安全http://9720.org，招版主) | 2015-01-11 21:54
+</p>
+<p style="text-indent:2em;">
+	badusb直接去某宝量产之家买金士顿G4 8G的u盘就可以了，刷入老外的固件，直接就是廉价版usb robber ducky，价格比你的还便宜，实现代码更简单
+</p>
+<p style="text-indent:2em;">
+	21#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-11 22:01
+</p>
+<p style="text-indent:2em;">
+	@whale 8GU盘都已经快这个价了，而且不知道那u盘性能怎么样，怎么扩展，怎么加外设，怎么嵌入到别的设备当中
+</p>
+<p style="text-indent:2em;">
+	22#
+</p>
+<p style="text-indent:2em;">
+	c4bbage (1z) | 2015-01-12 09:05
+</p>
+<p style="text-indent:2em;">
+	这个只能算是HID攻击方式吧，挂BADusb 大旗有点远吧。
+</p>
+<p style="text-indent:2em;">
+	23#感谢(1)
+</p>
+<p style="text-indent:2em;">
+	0x70 | 2015-01-12 09:09
+</p>
+<p style="text-indent:2em;">
+	支持个,点个赞
+</p>
+<p style="text-indent:2em;">
+	24#
+</p>
+<p style="text-indent:2em;">
+	lxj616 (简介) | 2015-01-12 10:05
+</p>
+<p style="text-indent:2em;">
+	这个是HID键盘攻击，badusb是伪装usb网卡劫持流量
+</p>
+<p style="text-indent:2em;">
+	25#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-12 12:05
+</p>
+<p style="text-indent:2em;">
+	badusb是一个大范围，我这只是测试了一个HID，如果加别的东西，也可以
+</p>
+<p style="text-indent:2em;">
+	26#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-12 12:07
+</p>
+<p style="text-indent:2em;">
+	@lxj616 badusb不只是对于网卡，对于很多usb
+</p>
+<p style="text-indent:2em;">
+	27#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-12 12:09
+</p>
+<p style="text-indent:2em;">
+	更像是teensy
+</p>
+<p style="text-indent:2em;">
+	28#
+</p>
+<p style="text-indent:2em;">
+	RainShine (I'm your angel of music.) | 2015-01-12 12:59
+</p>
+<p style="text-indent:2em;">
+	支持一个，点个赞。确实够廉价了。
+</p>
+<p style="text-indent:2em;">
+	29#
+</p>
+<p style="text-indent:2em;">
+	_Evil (科普是一种公益行为) | 2015-01-14 14:48
+</p>
+<p style="text-indent:2em;">
+	不管HID还是badusb 我都很欣赏你
+</p>
+<p style="text-indent:2em;">
+	30#
+</p>
+<p style="text-indent:2em;">
+	西瓜 | 2015-01-15 21:08
+</p>
+<p style="text-indent:2em;">
+	@whale 手里恰好有一个金士顿G4 8G的u盘，看了你的 检测了下是PS2251-03的，果断刷了下编译的固件，结果刷不进去，只有短接之后刷原固件，才能恢复。不得行哦？你怎么操作的？
+</p>
+<p style="text-indent:2em;">
+	31#
+</p>
+<p style="text-indent:2em;">
+	夜未央 | 2015-01-15 21:18
+</p>
+<p style="text-indent:2em;">
+	楼主应该是HID，不应该叫BadUSB
+</p>
+<p style="text-indent:2em;">
+	32#
+</p>
+<p style="text-indent:2em;">
+	Jasonfcku (我就是打酱油啊打酱油。。。哎呀，我艹，你打我干嘛？) | 2015-01-16 11:26
+</p>
+<p style="text-indent:2em;">
+	keyboard was not declared in the scope
+</p>
+<p style="text-indent:2em;">
+	33#
+</p>
+<p style="text-indent:2em;">
+	whale (棱镜信息安全http://9720.org，招版主) | 2015-01-16 11:39
+</p>
+<p style="text-indent:2em;">
+	@西瓜 老外的fw固件源码需要在自己的编译环境下自己编译，才能刷入，我之前用老外给的编译好的固件，死活刷不进去，用自己编译的几秒就完成刷入了，成功实现usb-hid
+</p>
+<p style="text-indent:2em;">
+	34#
+</p>
+<p style="text-indent:2em;">
+	米兰的小铁匠 | 2015-01-16 11:44
+</p>
+<p style="text-indent:2em;">
+	么么哒
+</p>
+<p style="text-indent:2em;">
+	35#
+</p>
+<p style="text-indent:2em;">
+	西瓜 | 2015-01-16 13:03
+</p>
+<p style="text-indent:2em;">
+	@whale 我也自己编译的，使用的最新SDCC，点击build.bat在Psychson/firmware/bin目录下生成fw.bin文件，在windows8下64位大小为217kb，不行。在xp32位下大小为201kb，也刷不进去，芯片固件都是用的BN03V104M.BIN。你的怎么操作的？能交流下么，QQ：1779860693。我是用的量产工具MPALL_v3.63.0C刷的固件。
+</p>
+<p style="text-indent:2em;">
+	36#
+</p>
+<p style="text-indent:2em;">
+	刘海哥 (www.liuhg.com) | 2015-01-16 16:08
+</p>
+<p style="text-indent:2em;">
+	买了个树莓派不知道干嘛！
+</p>
+<p style="text-indent:2em;">
+	37#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-16 16:15
+</p>
+<p style="text-indent:2em;">
+	@刘海哥 玩法多了，看你想干什么
+</p>
+<p style="text-indent:2em;">
+	38#
+</p>
+<p style="text-indent:2em;">
+	whale (棱镜信息安全http://9720.org，招版主) | 2015-01-16 16:27
+</p>
+<p style="text-indent:2em;">
+	@西瓜 我用的是老外给的命令行工具来刷的固件，qq359340941
+</p>
+<p style="text-indent:2em;">
+	39#
+</p>
+<p style="text-indent:2em;">
+	刘海哥 (www.liuhg.com) | 2015-01-16 20:27
+</p>
+<p style="text-indent:2em;">
+	@Anymous 当然什么刺激就玩啥！一直没找到有让我兴趣去弄的...
+</p>
+<p style="text-indent:2em;">
+	40#
+</p>
+<p style="text-indent:2em;">
+	小胖子 (z7y首席代言人) | 2015-01-16 20:56
+</p>
+<p style="text-indent:2em;">
+	好一个badusb
+</p>
+<p style="text-indent:2em;">
+	41#
+</p>
+<p style="text-indent:2em;">
+	Anymous (听说集齐7枚wb能召唤神龙，兑换树莓派，点击右边感谢收集wb，召唤神龙！) | 2015-01-16 21:15
+</p>
+<p style="text-indent:2em;">
+	@刘海哥 高预算的话，你可以试试mini卫星项目，主要的火箭发射费用8w美元左右，预算低点的话考虑，氦气球带到平流层。飞行器，穿戴式设备，fm发射器，低配服务器，高配路由，mcpe服务器，nas服务器，加rtl_sdr频谱仪，加点传感器做小车之类的。豪点的话，抛弃式渗透设备等等
+</p>
+<p style="text-indent:2em;">
+	如果说刺激的话，你可以做成定时炸弹，或者可远控移动的炸弹，远程谋杀。。。高科技犯罪设备等。。。
+</p>
+<p style="text-indent:2em;">
+	我会在ccav上注视你的
+</p>
+<p style="text-indent:2em;">
+	42#
+</p>
+<p style="text-indent:2em;">
+	西瓜 | 2015-01-16 23:26
+</p>
+<p style="text-indent:2em;">
+	@whale 非常感谢，刷固件的工具不用MPALL，恢复的时候用它就行了，用老外的工具刷PAYLOAD就行了 不管217k的fw还是201的 都可以运行的。
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="7722,4482,112.97.35.86">
+<p>N.A.T @ 2015-07-21 08:02:46</p>
+<p style="text-indent:2em">请问一下这个插进去会不会弹出安装驱动捏？？
+求具体某宝店或具体关键字 因为某宝上搜出的太多了 价位也差很远……</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">现在的键盘鼠标都是免驱的了。</p>
+</blockquote>
+<blockquote id="7799,4482,120.82.18.27">
+<p>Lalal @ 2015-08-20 00:29:25</p>
+<p style="text-indent:2em">亲测Win7插上去由于没有以管理员身份运行cmd而执行不了添加用户开启3389等肿么破</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">直接种马吧，简单点，开3389有毛用。</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Anymous</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2015-06-02
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/blog/">Blog</a>
+          <a href="https://lcx.cc/tags/dns/">DNS</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/shell/">Shell</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E8%BD%A6/">车</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E5%90%8E%E9%97%A8/">后门</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E6%8B%9F/">模拟</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BE%E5%A4%87/">设备</a>
+          <a href="https://lcx.cc/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/">树莓派</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4483/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">玩转自制teensy实例--按钮控制</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4481/">
+            <span class="next-text nav-default">【翻译】Powershell Popups &#43; Capture</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

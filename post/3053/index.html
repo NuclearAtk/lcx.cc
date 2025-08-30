@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="丸子" /><meta name="description" content="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例。首先说下，通俗点楼主是做网站的，今天css森林群里大白发现了一家淘宝店铺利用装修实现虚假产品销售情况的骗局。楼主看了下代码确认是骗子，于是准备直播更新骗局的实现原理，希望大家警觉不要上当。为了和谐的购物，大家转起啊！！对了，很多回帖的同学还是不明白怎么鉴别，记得看最后一段总结哦~还有人疑问为什么可以修改淘宝代码，可以搜索下淘宝店铺装修。情况如下，你们知道这个框出来的地方是假的吗！！！？？？" />
+<meta name="keywords" content="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3053/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" />
+<meta property="og:description" content="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例。首先说下，通俗点楼主是做网站的，今天css森林群里大白发现了一家淘宝店铺利用装修实现虚假产品销售情况的骗局。楼主看了下代码确认是骗子，于是准备直播更新骗局的实现原理，希望大家警觉不要上当。为了和谐的购物，大家转起啊！！对了，很多回帖的同学还是不明白怎么鉴别，记得看最后一段总结哦~还有人疑问为什么可以修改淘宝代码，可以搜索下淘宝店铺装修。情况如下，你们知道这个框出来的地方是假的吗！！！？？？" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3053/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-11-01T10:20:18&#43;08:00" />
+<meta property="article:modified_time" content="2012-11-01T11:58:58&#43;08:00" />
+
+<meta itemprop="name" content="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例">
+<meta itemprop="description" content="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例。首先说下，通俗点楼主是做网站的，今天css森林群里大白发现了一家淘宝店铺利用装修实现虚假产品销售情况的骗局。楼主看了下代码确认是骗子，于是准备直播更新骗局的实现原理，希望大家警觉不要上当。为了和谐的购物，大家转起啊！！对了，很多回帖的同学还是不明白怎么鉴别，记得看最后一段总结哦~还有人疑问为什么可以修改淘宝代码，可以搜索下淘宝店铺装修。情况如下，你们知道这个框出来的地方是假的吗！！！？？？"><meta itemprop="datePublished" content="2012-11-01T10:20:18&#43;08:00" />
+<meta itemprop="dateModified" content="2012-11-01T11:58:58&#43;08:00" />
+<meta itemprop="wordCount" content="5955">
+<meta itemprop="keywords" content="骗,淘宝,bug,CSS,Html,HTTP,Rat,代码,欺骗,手机,图片,网页,网站,源码," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例"/>
+<meta name="twitter:description" content="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例。首先说下，通俗点楼主是做网站的，今天css森林群里大白发现了一家淘宝店铺利用装修实现虚假产品销售情况的骗局。楼主看了下代码确认是骗子，于是准备直播更新骗局的实现原理，希望大家警觉不要上当。为了和谐的购物，大家转起啊！！对了，很多回帖的同学还是不明白怎么鉴别，记得看最后一段总结哦~还有人疑问为什么可以修改淘宝代码，可以搜索下淘宝店铺装修。情况如下，你们知道这个框出来的地方是假的吗！！！？？？"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-11-01" class="post-time">
+          2012-11-01
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E9%AA%97/"> 骗 </a>
+            <a href="https://lcx.cc/categories/%E6%B7%98%E5%AE%9D/"> 淘宝 </a>
+            
+          </div>
+        <span class="more-meta"> 约 5955 字 </span>
+          <span class="more-meta"> 预计阅读 12 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	首先说下，通俗点楼主是做网站的，今天css森林群里大白发现了一家淘宝店铺利用装修实现虚假产品销售情况的骗局。楼主看了下代码确认是骗子，于是准备直播更新骗局的实现原理，希望大家警觉不要上当。为了和谐的购物，大家转起啊！！
+</p>
+<p style="text-indent:2em;">
+	对了，很多回帖的同学还是不明白怎么鉴别，记得看最后一段总结哦~还有人疑问为什么可以修改淘宝代码，可以搜索下淘宝店铺装修。
+</p>
+<p style="text-indent:2em;">
+	情况如下，你们知道这个框出来的地方是假的吗！！！？？？
+</p>
+<p style="text-indent:2em;">
+	<img title="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" alt="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" src="/file/old/1588_1.jpg" width="500" height="450" /> 
+</p>
+<p style="text-indent:2em;">
+	首先介绍下店铺装修的基础，简单的说一个网页是由html和css以及一些js效果呈现出来的，html如人的骨骼，css就是外表装饰，js控制页面的效果，类似神经。而淘宝店铺装修就是用css来控制页面的显示效果。这个骗局用到的是css里的background属性，意思就是为一个区域设置一个背景图，这是骗局实现的关键所在，页面虚假的东西都是由背景图片呈现的。
+</p>
+<p style="text-indent:2em;">
+	先来看第一处，30天销售数量
+</p>
+<p style="text-indent:2em;">
+	<img title="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" alt="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" src="/file/old/1589_2.jpg" width="476" height="338" /> 
+</p>
+<p style="text-indent:2em;">
+	从左下角的html中可以看出，实际销售量是0，但是右下角店铺利用css把0右移一点，左边空出的地方用了一个背景图58构成了580件的销售量。
+</p>
+<p style="text-indent:2em;">
+	第二处，购物须知，被改成了“优质商家 7天无理由退换”
+</p>
+<p style="text-indent:2em;">
+	<img title="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" alt="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" src="/file/old/1590_3.jpg" width="499" height="358" /> 
+</p>
+<p style="text-indent:2em;">
+	第三处同理，评价数和成交数也被修改了
+</p>
+<p style="text-indent:2em;">
+	<img title="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" alt="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" src="/file/old/1591_4.jpg" width="500" height="301" /> 
+</p>
+<p style="text-indent:2em;">
+	第四处，评价自然也是假的，左下角代码里显示的是“没有找到结果”。。。
+</p>
+<p style="text-indent:2em;">
+	<img title="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" alt="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" src="/file/old/1592_5.jpg" width="500" height="325" /> 
+</p>
+<p style="text-indent:2em;">
+	大概就是这样子了，卖家的信用构成基本是话费刷的。。
+</p>
+<p style="text-indent:2em;">
+	<img title="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" alt="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" src="/file/old/1593_6.jpg" width="296" height="278" /> 
+</p>
+<p style="text-indent:2em;">
+	此店难逃举报和惩罚，希望其他店家看到此贴不要效仿，做人要厚道，好生意是靠信用积累的，不是欺骗。
+</p>
+<p style="text-indent:2em;">
+	对于非互联网工作的同学可能不知道要怎么辨别，其实有个很简单的技巧就是，背景图是无法选中的，默认情况下，你只要选中文字，选中区域为蓝色，文字为白色，而图片会被蓝色盖住，就可以看到真实数据还是欺骗。
+</p>
+<p style="text-indent:2em;">
+	<img title="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" alt="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" src="/file/old/1594_7.jpg" width="463" height="167" /> 
+</p>
+<p style="text-indent:2em;">
+	<img title="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" alt="楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例" src="/file/old/1595_8.jpg" width="500" height="172" /> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://www.douban.com/group/topic/33943922/?start=100" target="_blank">http://www.douban.com/group/topic/33943922/?start=100</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://www.douban.com/group/topic/33943922/?start=200" target="_blank">http://www.douban.com/group/topic/33943922/?start=200</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://www.douban.com/group/topic/33943922/?start=300" target="_blank">http://www.douban.com/group/topic/33943922/?start=300</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://www.douban.com/group/topic/33943922/?start=400" target="_blank">http://www.douban.com/group/topic/33943922/?start=400</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://www.douban.com/group/topic/33943922/?start=500" target="_blank">http://www.douban.com/group/topic/33943922/?start=500</a> 
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	原帖出自：<a href="http://www.douban.com/group/topic/33943922/" target="_blank">http://www.douban.com/group/topic/33943922/</a> 
+</p>
+<hr />
+<p>
+	<strong>乌云网友评论：</strong> 
+</p>
+<p style="text-indent:2em;">
+	/fd (/proc) ?() | 2012-10-31 17:05
+</p>
+<p style="text-indent:2em;">
+	來個clickjacking如何
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	GaRY | 2012-10-31 17:13
+</p>
+<p style="text-indent:2em;">
+	http://item.taobao.com/item.htm?spm=2013.1.14906022-1755955935.2.SK7yUg&amp;id=16136178612
+</p>
+<p style="text-indent:2em;">
+	原始淘宝的作弊链接
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	qiaoy | 2012-10-31 17:18
+</p>
+<p style="text-indent:2em;">
+	这个真心碉堡了
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	qiaoy | 2012-10-31 17:24
+</p>
+<p style="text-indent:2em;">
+	骗到第10件的时候估计就要穿帮了吧
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	GaRY | 2012-10-31 17:33
+</p>
+<p style="text-indent:2em;">
+	@qiaoy 不会，他是整个数字右移的&nbsp; 这有个例子， http://item.taobao.com/item.htm?spm=a1z10.3.0.95.RKjmZj&amp;id=20613336474&amp;
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	LittlePig (http://goo.gl/TBPpN) | 2012-10-31 17:38
+</p>
+<p style="text-indent:2em;">
+	Chrome的AdBlock插件把那个淘宝店所有被修改的地方都给拦截了……囧
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	冷冷的夜 (从前有个人，他不喜欢我；后来，他死了) | 2012-10-31 17:39
+</p>
+<p style="text-indent:2em;">
+	cool
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	LittlePig (http://goo.gl/TBPpN) | 2012-10-31 17:45
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/1596_1.png" target="_blank"><img alt="" src="/file/old/1596_1.png" width="750" height="247" /></a> 
+</p>
+<p style="text-indent:2em;">
+	穿帮了？
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	小菜 (最近压力真大··) | 2012-10-31 17:46
+</p>
+<p style="text-indent:2em;">
+	已经被人举报了，目测过几天才会处理
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	冷冷的夜 (从前有个人，他不喜欢我；后来，他死了) | 2012-10-31 17:50
+</p>
+<p style="text-indent:2em;">
+	@/fd 起这么猥琐的名字
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	qiaoy | 2012-10-31 17:54
+</p>
+<p style="text-indent:2em;">
+	@GaRY 果然，想到以后连买东西都要查代码了，尴尬。
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	YKS (??????????????????????????????????????????????????????????????) | 2012-10-31 18:32
+</p>
+<p style="text-indent:2em;">
+	碉堡.....评价也是一张大图
+</p>
+<p style="text-indent:2em;">
+	<img alt="" src="/file/old/1597_2.png" width="755" height="2218" /> 
+</p>
+<p style="text-indent:2em;">
+	摘自：<a href="http://zone.wooyun.org/content/1470" target="_blank">http://zone.wooyun.org/content/1470</a> 
+</p>
+<hr />
+<p>
+	<strong>豆瓣网友评论：</strong> 
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:29:41 runrunrabbit (Tomorrow is another day)
+</p>
+<p style="text-indent:2em;">
+	这个还真没听说呢~~~
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:30:04 小神仙 (我就坐在这里看一看。)
+</p>
+<p style="text-indent:2em;">
+	快点说
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:30:08 相信幸福滴小卷 (我的眼里揉不进一粒沙)
+</p>
+<p style="text-indent:2em;">
+	快直播
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:31:24 2妹 (半冷半暖的秋 静静烫贴身边)
+</p>
+<p style="text-indent:2em;">
+	M
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:31:40 央央懒 (在等PW...)
+</p>
+<p style="text-indent:2em;">
+	是不是就P图把销售量做成几百几千件 蓝后把图片当作装饰的banner放在店铺内？
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:32:01 小葵 (我们一起减肥啊？？)
+</p>
+<p style="text-indent:2em;">
+	m
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:34:27 Marigold≡ (你我的心跳与鲜红的罪孽)
+</p>
+<p style="text-indent:2em;">
+	m
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:34:59 花牛 (出发啦不要问那路在哪，迎风向前)
+</p>
+<p style="text-indent:2em;">
+	·····
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:35:05 zawei5850 (JRPG已死)
+</p>
+<p style="text-indent:2em;">
+	m
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:38:07 王玩完。 (没心没肺，长命百岁。)
+</p>
+<p style="text-indent:2em;">
+	那评价里面的内容是怎么生成的呢
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:39:19 此宝贝已下架 (该带回家的就带回家)
+</p>
+<p style="text-indent:2em;">
+	求办法
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:42:51 无厘头的兔纸妹 (从今天起，拒绝豆油看盘！)
+</p>
+<p style="text-indent:2em;">
+	那评价里面的内容是怎么生成的呢王玩完。
+</p>
+<p style="text-indent:2em;">
+	应该是确实卖出了20多件吧
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:46:16 dabai (突然回想起，你在我心里)
+</p>
+<p style="text-indent:2em;">
+	话说 丸子同学你打字的速度有点快~~<br />
+这么快就让你直播玩了
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:47:53 dabai (突然回想起，你在我心里)
+</p>
+<p style="text-indent:2em;">
+	好吧，我是文章里面说的 那个 “某技术群的那个朋友” ~~
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:48:37 轨迹 (我以为你懂我，但结果不是)
+</p>
+<p style="text-indent:2em;">
+	哈哈哈，请求把做这个淘宝店装修的孩纸招入···
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:48:55 stephanie
+</p>
+<p style="text-indent:2em;">
+	下面那个优质卖家呢？本来那里是什么？
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:49:02 轨迹 (我以为你懂我，但结果不是)
+</p>
+<p style="text-indent:2em;">
+	那评价里面的内容是怎么生成的呢王玩完。
+</p>
+<p style="text-indent:2em;">
+	整个评价数包括评价内容都是背景图片···
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:49:54 dabai (突然回想起，你在我心里)
+</p>
+<p style="text-indent:2em;">
+	<a href="http://item.taobao.c?om/item.htm?spm=a1z1?0.3.0.95.RKjmZj&amp;?id=20613336474" target="_blank">http://item.taobao.c?om/item.htm?spm=a1z1?0.3.0.95.RKjmZj&amp;?id=20613336474</a> 
+</p>
+<p style="text-indent:2em;">
+	围观店家。顺便举报一下把。
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:50:48 mooonnnoooom (！)
+</p>
+<p style="text-indent:2em;">
+	所以以后看淘宝，都要看源码了么！！！后悔网页没好好学啊
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:50:50 绣财 (好好活着等死)
+</p>
+<p style="text-indent:2em;">
+	细心的网友，点击多个商品会发现
+</p>
+<p style="text-indent:2em;">
+	<a href="http://item.taobao.c?om/item.htm?spm=2013?.1.14906022-17559559?35.2.SK7yUg&amp;id=1?6136178612" target="_blank">http://item.taobao.c?om/item.htm?spm=2013?.1.14906022-17559559?35.2.SK7yUg&amp;id=1?6136178612</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://item.taobao.c?om/item.htm?spm=2013?.1.14906022-17559559?35.2.SK7yUg&amp;id=1?6136178612" target="_blank">http://item.taobao.c?om/item.htm?spm=2013?.1.14906022-17559559?35.2.SK7yUg&amp;id=1?6136178612</a> 
+</p>
+<p style="text-indent:2em;">
+	商品的评价内容
+</p>
+<p style="text-indent:2em;">
+	评价详情
+</p>
+<p style="text-indent:2em;">
+	成交记录
+</p>
+<p style="text-indent:2em;">
+	都是一样的
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:51:03 猫叔 (雪地靴活计：ydgg.taobao.com)
+</p>
+<p style="text-indent:2em;">
+	这也可以啊 长见识了。。。
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:51:30 Hirochin
+</p>
+<p style="text-indent:2em;">
+	很给力啊
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:52:08 dabai (突然回想起，你在我心里)
+</p>
+<p style="text-indent:2em;">
+	所以以后看淘宝，都要看源码了么！！！后悔网页没好好学啊mooonnnoooom
+</p>
+<p style="text-indent:2em;">
+	以后 直接 ctrl+a 然后看网站把~~
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:52:23 猫叔 (雪地靴活计：ydgg.taobao.com)
+</p>
+<p style="text-indent:2em;">
+	很给力啊Hirochin
+</p>
+<p style="text-indent:2em;">
+	的确很给力。。。。当时我就震精了。。
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:52:34 绣财 (好好活着等死)
+</p>
+<p style="text-indent:2em;">
+	然后再继续点开卖家的信用 <a href="http://rate.taobao.c?om/user-rate-9966e20?78345706ae29b7322534?d60cf.htm?spm=2013.1?.1000126.5.yrHrFg" target="_blank">http://rate.taobao.c?om/user-rate-9966e20?78345706ae29b7322534?d60cf.htm?spm=2013.1?.1000126.5.yrHrFg</a> 
+</p>
+<p style="text-indent:2em;">
+	卖家以前是 主营行业：游戏/话费 8641
+</p>
+<p style="text-indent:2em;">
+	现在改卖中端服装，还有不少买家已买了！
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:54:58 小白
+</p>
+<p style="text-indent:2em;">
+	已经卖了36件了，哈哈
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:55:18 音速 (劳资是淑女，你信吗？)
+</p>
+<p style="text-indent:2em;">
+	然后再继续点开卖家的信用 <a href="http://rate.taobao.com/user-rate-9966e2078345706ae29b7322534d60cf" target="_blank">http://rate.taobao.com/user-rate-9966e2078345706ae29b7322534d60cf</a>...绣财
+</p>
+<p style="text-indent:2em;">
+	貌似好多淘宝卖家都是先做话费起家~~
+</p>
+<p style="text-indent:2em;">
+	等到了一定信用开始做服装
+</p>
+<p style="text-indent:2em;">
+	已经碰到几个了！！！
+</p>
+<p style="text-indent:2em;">
+	&nbsp;
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:55:54 音速 (劳资是淑女，你信吗？)
+</p>
+<p style="text-indent:2em;">
+	<a href="http://ycwang922.taobao.com/" target="_blank">http://ycwang922.taobao.com/</a> 
+</p>
+<p style="text-indent:2em;">
+	这家老板卖的东西 就是真的~~~
+</p>
+<p style="text-indent:2em;">
+	一个一个刷的，好辛苦啊~~~~
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:56:09 轨迹 (我以为你懂我，但结果不是)
+</p>
+<p style="text-indent:2em;">
+	买东西前必须Ctrl+A啊！！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:56:32 绿萝 (内在决定外在)
+</p>
+<p style="text-indent:2em;">
+	。。。。。。。
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:56:32 木瓜啊木瓜
+</p>
+<p style="text-indent:2em;">
+	这种属于刷钻还是这个商家自己造假啊？
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:57:17 猫叔 (雪地靴活计：ydgg.taobao.com)
+</p>
+<p style="text-indent:2em;">
+	幸亏猫叔我不打算刷信誉。。。虽然前途渺茫。。。但认认真真做好每一笔生意就好了吧
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:57:32 runrunrabbit (Tomorrow is another day)
+</p>
+<p style="text-indent:2em;">
+	喔，这种我遇到过~~~心想着可能是刷信誉的呢
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:57:35 贝贝团子 (我要变胖纸！)
+</p>
+<p style="text-indent:2em;">
+	!!
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:57:55 波小尼 (内心要强大!!)
+</p>
+<p style="text-indent:2em;">
+	，，，，我操！！要MARK！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:58:09 吃货阿呆卖萌中 (我是艾斯比牌抽风机咩。XD)
+</p>
+<p style="text-indent:2em;">
+	我次奥！！！<br />
+我感觉又长知识了！！！<br />
+尼玛每次都看销量买东西！！！！！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:58:52 秋 (就快死不瞑目)
+</p>
+<p style="text-indent:2em;">
+	嗯 仔细看图 58 和 0 的字体也不太一样
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 16:59:18 兔美酱 (www.rainbowladys.com求加好友)
+</p>
+<p style="text-indent:2em;">
+	我擦 太牛逼了
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:00:08 dabai (突然回想起，你在我心里)
+</p>
+<p style="text-indent:2em;">
+	这种属于刷钻还是这个商家自己造假啊？木瓜啊木瓜
+</p>
+<p style="text-indent:2em;">
+	这个属于利用网站bug 造假 ……好比你去那些卖烧饼的人 请几十个人去排队卖烧饼一样~~其实那家烧饼压根就不值得排队买
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:00:11 我就是头像 (我是公马这事，元芳你怎么看？)
+</p>
+<p style="text-indent:2em;">
+	还真有人看销量就信了？！<br />
+评论只看中差评的飘走，那种一两年就刷出个皇冠的，从来不买啊。
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:00:16 youmuren
+</p>
+<p style="text-indent:2em;">
+	我发现了，正常的评论是可以复制的。。他的顾客评论是不能复制的。。。大家可以试试看
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:01:16 Minani酱丷 (脱下长日的假面。)
+</p>
+<p style="text-indent:2em;">
+	买东西前必须Ctrl+A啊！！！轨迹
+</p>
+<p style="text-indent:2em;">
+	什么意思，不懂啊！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:01:25 隐形人 (正能量！)
+</p>
+<p style="text-indent:2em;">
+	长见识了！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:01:32 黑桃queen00 (rolo-monopoly.taobao.com)
+</p>
+<p style="text-indent:2em;">
+	要火了
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:01:46 mooonnnoooom (！)
+</p>
+<p style="text-indent:2em;">
+	以后 直接 ctrl+a 然后看网站把~~dabai
+</p>
+<p style="text-indent:2em;">
+	唉唉唉唉！！！又破灭了！！！什么都是编码！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:01:49 兔纸心 (数码产品狂热分子)
+</p>
+<p style="text-indent:2em;">
+	好高端
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:02:44 燦夜 (I M ALIVE)
+</p>
+<p style="text-indent:2em;">
+	很多淘宝店都改了啊
+</p>
+<p style="text-indent:2em;">
+	我经常买的几个 品质不错的店 都是 交易数和评价数对不上的
+</p>
+<p style="text-indent:2em;">
+	顺带一提 你们有心可以看看好评里 有很多都是简单的一个“好”字 然后买家名也是匿名的
+</p>
+<p style="text-indent:2em;">
+	前面是字母 后面是数字 类似 j****9这样的
+</p>
+<p style="text-indent:2em;">
+	这都是刷子
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:02:55 6AN7 (不呼不吸几多秒)
+</p>
+<p style="text-indent:2em;">
+	买东西前必须Ctrl+A啊！！！轨迹
+</p>
+<p style="text-indent:2em;">
+	不懂啊 全选干嘛啊！！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:03:40 世界末日辣椒酱 (不以物喜 不以己悲)
+</p>
+<p style="text-indent:2em;">
+	居然了 淘宝店铺的框架编辑怎么这么开放啊
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:04:24 轨迹 (我以为你懂我，但结果不是)
+</p>
+<p style="text-indent:2em;">
+	什么意思，不懂啊！！Minani酱丷
+</p>
+<p style="text-indent:2em;">
+	变蓝色的就是文字，就是真实信息········没变色的就是背景图片，是浮云·~
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:04:34 呸呸呸呸小阳子
+</p>
+<p style="text-indent:2em;">
+	汗……看来以后看到时候真得多留心一下
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:04:45 lolo甜筒 (像一颗橡皮一样活着.)
+</p>
+<p style="text-indent:2em;">
+	高端洋气，感觉应该这后台。。。
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:05:57 绣财 (好好活着等死)
+</p>
+<p style="text-indent:2em;">
+	所以网购东西，还是要认准，有品牌的商品，尽量去品牌天猫。京东这些正规店，淘宝里买东西最好不要超过100块，不然买回来总会觉得不值，不知真假
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:07:14 马甲 (谢谢每个给我上过一课的人)
+</p>
+<p style="text-indent:2em;">
+	知道怎么破了 那个销量58不能复制 只有那个0能复制
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:07:35 JoJo (永遠 不要 相信 沒有誠信 的人)
+</p>
+<p style="text-indent:2em;">
+	我草！话说借帖子发泄下，淘宝还有一种骗好评的方式就是！收到货24小时给给予我们好评就返！现！20！元！然后他们会扔给你一个表格！说两星期内审核完就给你！然后你会发现等上三四个星期也没用！去问她们就拖！直到你感觉自己受骗了！当你点击投诉！就会显示已过投诉有效期！当你点击追加评论列表！！就会发现受骗的不止你一个！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:08:55 ele
+</p>
+<p style="text-indent:2em;">
+	虽然还是有点不太懂原理，但感谢LZ，以后淘宝购物时会考虑更仔细
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:09:10 Robin (目标虽然模糊 但我们仍有梦想)
+</p>
+<p style="text-indent:2em;">
+	流氓会武术
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:09:25 美伊大人 (弱受三千 姐只取妳一嫖...)
+</p>
+<p style="text-indent:2em;">
+	好高端
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:10:17 寥寥 (冬天你看到雪，夏天有風。)
+</p>
+<p style="text-indent:2em;">
+	以后 直接 ctrl+a 然后看网站把~~dabai
+</p>
+<p style="text-indent:2em;">
+	楼主贴里很多人问了，ctrl+a是怎么个原理？求破
+</p>
+<p style="text-indent:2em;">
+	看到我~
+</p>
+<p style="text-indent:2em;">
+	看到我~
+</p>
+<p style="text-indent:2em;">
+	看到我~
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:10:56 丸子 (多读书)
+</p>
+<p style="text-indent:2em;">
+	楼主憋尿为大家献上此文，得去解决下，有疑问欢迎留言。
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:11:05 酱酱咚 (?~)
+</p>
+<p style="text-indent:2em;">
+	哇~好高端~~lz强大~
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:13:32 Cynn (那一天一定会到来)
+</p>
+<p style="text-indent:2em;">
+	马回去看大图
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:13:35 因果报应 (自尊心要不得)
+</p>
+<p style="text-indent:2em;">
+	JIHAO
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:13:55 summer酱
+</p>
+<p style="text-indent:2em;">
+	高端
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:14:29 侧耳倾听young
+</p>
+<p style="text-indent:2em;">
+	卤煮火眼金睛~
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:14:40 烧姨妈巾女王 ((?д?)叫你手贱改名字！)
+</p>
+<p style="text-indent:2em;">
+	好流弊。被科普了！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:16:16 贫僧法号金莲
+</p>
+<p style="text-indent:2em;">
+	同上，我CTRL A了，可网页变蓝了，再没其他变化
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:16:23 Michelle (有时候清醒才是错误的开始。)
+</p>
+<p style="text-indent:2em;">
+	这个真心好流弊！！！！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:19:12 鬼鬼
+</p>
+<p style="text-indent:2em;">
+	谢谢楼主！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:19:26 人偶君 (三无少女)
+</p>
+<p style="text-indent:2em;">
+	这样子的话，查看网页源代码可以看出来吧？
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:19:37 小Sil (时间只负责流逝 不负责成长)
+</p>
+<p style="text-indent:2em;">
+	学习了。。
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:19:52 马戏团猴子 (卖肾)
+</p>
+<p style="text-indent:2em;">
+	说白了就是把好评什么的做背景
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:20:12 捞月亮的人 (我要薛凯琪！)
+</p>
+<p style="text-indent:2em;">
+	原来是这样，麻痹我困惑了好久！！！！！！！！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:21:06 念折它念折 (每一分 每一秒、就是現在 此刻！)
+</p>
+<p style="text-indent:2em;">
+	lz朋友更高端~
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:21:15 鬼鬼
+</p>
+<p style="text-indent:2em;">
+	同上，我CTRL A了，可网页变蓝了，再没其他变化贫僧法号金莲
+</p>
+<p style="text-indent:2em;">
+	你看看评论和交易的数字，有的蓝了有的还是白的，说明图片是没办法选中的
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:21:22 千杯不醉。 (きみは幸せでしたか？)
+</p>
+<p style="text-indent:2em;">
+	学习了！！！！！！！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:21:37 海绵体宝宝 (大家好！我是孟姨~~)
+</p>
+<p style="text-indent:2em;">
+	不要黑码农的钱！！！不然你会死的很惨！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:21:46 Michelle (有时候清醒才是错误的开始。)
+</p>
+<p style="text-indent:2em;">
+	其实这条裤子只卖了36条！！！！有一个好评而已！！！！！！举报了！！！！！！这个真的能骗太多人了。。。有这脑子干点嘛不好。。。。
+</p>
+<p style="text-indent:2em;">
+	“于您举报的对象同一时段内相应的举报类型已经由其他会员提交处理,小二会尽快处理相应的举报,感谢您对淘宝网的支持. ”好心人很多！！！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:22:30 无厘头的兔纸妹 (从今天起，拒绝豆油看盘！)
+</p>
+<p style="text-indent:2em;">
+	懂啦，以后都要按CTRL + A来辨认啊！！！！！！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:22:39 哭泣の小排骨。 (→内心很邪恶的人。)
+</p>
+<p style="text-indent:2em;">
+	真狠-。-
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:23:02 六面兽
+</p>
+<p style="text-indent:2em;">
+	马克
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:23:45 Michelle (有时候清醒才是错误的开始。)
+</p>
+<p style="text-indent:2em;">
+	店主已经改了吗？？？？？？？跟我刚才看的不一样了！！！！！现在改回正常的了！！！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:24:17 Luz
+</p>
+<p style="text-indent:2em;">
+	最后一张，好方法！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:24:43 喵了个大咪的蛋 (一想到以后啊就好难过啊)
+</p>
+<p style="text-indent:2em;">
+	不要黑码农的钱！！！不然你会死的很惨！海绵体宝宝
+</p>
+<p style="text-indent:2em;">
+	哈哈哈哈
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:24:51 dabai (突然回想起，你在我心里)
+</p>
+<p style="text-indent:2em;">
+	我就奇怪 他们店怎么没关门
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:24:56 Michelle (有时候清醒才是错误的开始。)
+</p>
+<p style="text-indent:2em;">
+	已经改了，连优质商家 7天无理由退换那个也改回正常的了！！！！！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:24:57 桃花倒插
+</p>
+<p style="text-indent:2em;">
+	。。。好厉害
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:25:01 拖鞋 (有什么给我打发时间)
+</p>
+<p style="text-indent:2em;">
+	刚刚看到这个店，还在群里讨论来着，知道是假，不知道背后是这牛X的技术<br />
+知识就是力量
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:25:55 槐花姐
+</p>
+<p style="text-indent:2em;">
+	以后 直接 ctrl+a 然后看网站把~~dabai
+</p>
+<p style="text-indent:2em;">
+	好方法！还有可以在手机上看一下、手机上没有这种bug
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:26:08 Michelle (有时候清醒才是错误的开始。)
+</p>
+<p style="text-indent:2em;">
+	再刷新又回到之前了。。。额。。。。= = 我没有眼花啊。。为啥会变呢。。。
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:27:16 槐花姐
+</p>
+<p style="text-indent:2em;">
+	我草！话说借帖子发泄下，淘宝还有一种骗好评的方式就是！收到货24小时给给予我们好评就返！现！...JoJo
+</p>
+<p style="text-indent:2em;">
+	这个。太坏了。。。举报他们
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:27:29 栖梧轩主 (对于这个世界，我不想解释半个字)
+</p>
+<p style="text-indent:2em;">
+	厉害
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:28:16 Ocean Blue (最近太缺平常心)
+</p>
+<p style="text-indent:2em;">
+	不懂啊 全选干嘛啊！！！6AN7
+</p>
+<p style="text-indent:2em;">
+	例如它原本显示5836件
+</p>
+<p style="text-indent:2em;">
+	评价那里是21,5836件
+</p>
+<p style="text-indent:2em;">
+	ctrl+A 后就能看到58和36的颜色不同，2和1的也一样
+</p>
+<p style="text-indent:2em;">
+	说明实际应该卖了58件，而实际评价只有2个
+</p>
+<p style="text-indent:2em;">
+	明显页面已做了手脚
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:28:26 氺晶籹孩小招娣 (任时光匆匆流去我只在乎你个头)
+</p>
+<p style="text-indent:2em;">
+	我发现立即分辨的方法……
+</p>
+<p style="text-indent:2em;">
+	就是打开评价那里，评价人的头像，名字，都是无法点击的，其实就是一张图贴在评价里的障眼法！
+</p>
+<p style="text-indent:2em;">
+	卤煮我是不是聪明(*?ω?)
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:28:44 dff1230
+</p>
+<p style="text-indent:2em;">
+	其实有个很简单的技巧就是，背景图是无法选中的，你只要选中文字就可以看到真实还是欺骗。<br />
+--&gt;学习了！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:29:05 Michelle (有时候清醒才是错误的开始。)
+</p>
+<p style="text-indent:2em;">
+	我发现立即分辨的方法…… 就是打开评价那里，评价人的头像，名字，都是无法点击的，其实就是一...氺晶籹孩小招娣
+</p>
+<p style="text-indent:2em;">
+	是的，后面的有用也点不了！！！！！！
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:29:10 丸子 (多读书)
+</p>
+<p style="text-indent:2em;">
+	这样子的话，查看网页源代码可以看出来吧？人偶君
+</p>
+<p style="text-indent:2em;">
+	数据应该是ajax动态加载的，看源码看不到实际数量，如果是看样式又晦涩难懂，不便推广，简单的方法就是选中文字啦
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:29:45 刺绣的小龟龟
+</p>
+<p style="text-indent:2em;">
+	nb
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:29:52 有一天
+</p>
+<p style="text-indent:2em;">
+	好流弊啊 学习了
+</p>
+<p style="text-indent:2em;">
+	2012-10-31 17:30:08 dabai (突然回想起，你在我心里)
+</p>
+<p style="text-indent:2em;">
+	好方法！还有可以在手机上看一下、手机上没有这种bug槐花姐
+</p>
+<p style="text-indent:2em;">
+	手机上调用的样式表（就是楼主收的那个css）不一样。所以不会有这种bug~~
+</p>
+<p style="text-indent:2em;">
+	<a href="http://www.douban.com/group/topic/33943922/?start=100" target="_blank">[点此浏览更多评论]</a>
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="2560,3053,58.46.32.60">
+<p>【匿名者】 @ 2012-11-02 03:43:01</p>
+<p style="text-indent:2em">大神 经常关注你博客.请问大马中这俩句话怎么加密的
+&lt;object runat=server id=oScriptlhn scope=page classid=&quot;clsid:72C24DD5-D70A-438B-8A42-98424B88AFB8&quot;&gt;&lt;/object&gt;
+&lt;object runat=server id=oScriptlhn scope=page classid=&quot;clsid:F935DC22-1CF0-11D0-ADB9-00C04FD58A0B&quot;&gt;&lt;/object&gt;</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">看来你是一个没有任何脚本经验的同学，首先，这个并不是什么“加密代码”……
+这个只是 Asp 用来调用服务器组件的一种方式，这两句等同于：
+Set ws= Server.CreateObject(&quot;WScript.Shell&quot;)
+Set ws= Server.CreateObject(&quot;WScript.Shell.1&quot;)
+那么为什么要用这种“特殊方式”调用？首先，在很多年前很多杀软依靠关键词查杀脚本木马，当年“WScript.Shell”等词语被杀的很严重，后来就创新除了这种调用方法，这也是 Asp 标准调用方法之一。
+当然，对现在来说，这种调用方式已起不到任何免杀效果，这种方式调用还有特别的好处，可以调用一些被改名的组件（只改组件名，clsid 并没有改的），兼容性比较高。
+关于“clsid”，这个是系统对不同的组件分配的一个唯一表示它的ID代码（Windows 系统中 ID 都相同，所以可以通用）。
+具体的你搜一下“72C24DD5-D70A-438B-8A42-98424B88AFB8”就会有大量资料，这里不多说了……
+备注：系统所有的 clsid 可以在注册表位置 HKEY_CLASSES_ROOT\CLSID\ 下找到，例如：
+WScript.Shell：HKEY_CLASSES_ROOT\CLSID\{72C24DD5-D70A-438B-8A42-98424B88AFB8}
+关于 clsid 请参考：http://baike.baidu.com/view/150219.htm</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">丸子</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-11-01
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E9%AA%97/">骗</a>
+          <a href="https://lcx.cc/tags/%E6%B7%98%E5%AE%9D/">淘宝</a>
+          <a href="https://lcx.cc/tags/bug/">bug</a>
+          <a href="https://lcx.cc/tags/css/">CSS</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E6%AC%BA%E9%AA%97/">欺骗</a>
+          <a href="https://lcx.cc/tags/%E6%89%8B%E6%9C%BA/">手机</a>
+          <a href="https://lcx.cc/tags/%E5%9B%BE%E7%89%87/">图片</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E9%A1%B5/">网页</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%BA%90%E7%A0%81/">源码</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3054/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">中国电信尝试网络音乐收费新模式 &#43; 精彩站长评论</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3052/">
+            <span class="next-text nav-default">大学生开发手机远程取号应用 融资或达150万美元</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

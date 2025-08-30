@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bug on Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+    <link>https://lcx.cc/tags/bug/</link>
+    <description>Recent content in bug on Nuclear&#39;Atk（核攻击）网络安全实验室</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>Nuclear&#39;Atk（核攻击）网络安全实验室</copyright>
+    <lastBuildDate>Sun, 27 Sep 2015 09:54:46 +0800</lastBuildDate><atom:link href="https://lcx.cc/tags/bug/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mimikatz 使用 Tips</title>
+      <link>https://lcx.cc/post/4571/</link>
+      <pubDate>Sun, 27 Sep 2015 09:54:46 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4571/</guid>
+      <description>Mimikatz 使用Tips Evi1cg (感觉自己萌萌哒) | 2015-09-17 16:42 1.记录 Mimikatz输出： C:\&amp;gt;mimikatz.exe &#34;&#34;privilege::debug&#34;&#34; &#34;&#34;log sekurlsa::logonpasswords full&#34;&#34; exit &amp;amp;&amp;amp; dir 2.将输出导入到本地文件： C:\&amp;gt;mimikatz.exe &#34;&#34;privilege::debug&#34;&#34; &#34;&#34;sekurlsa::logonpasswords full&#34;&#34; exit &amp;gt;&amp;gt; log.txt 3.将输出传输</description>
+    </item>
+    
+    <item>
+      <title>无意中发现一个微软Windows系统自带命令“netsh”的狗血bug！</title>
+      <link>https://lcx.cc/post/4552/</link>
+      <pubDate>Fri, 10 Jul 2015 15:35:46 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4552/</guid>
+      <description>狗血的微软程序猿居然把“listenport”、“listenaddress”写错了，这是有多粗心…… 看图不解释…… 测试系统：Windows</description>
+    </item>
+    
+    <item>
+      <title>利用Google爬虫DDoS任意网站，利用Spreadsheet作为DDoS武器</title>
+      <link>https://lcx.cc/post/4541/</link>
+      <pubDate>Wed, 17 Jun 2015 14:53:20 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4541/</guid>
+      <description>只需要使用一台笔记本，打开几个web标签页，仅仅拷贝一些指向10MB文件的链接，Google去抓取同一文件的流量就超过了700Mbps。 提醒</description>
+    </item>
+    
+    <item>
+      <title>htpwdScan -- 一个简单的批量HTTP暴力破解、撞库攻击脚本</title>
+      <link>https://lcx.cc/post/4524/</link>
+      <pubDate>Fri, 24 Apr 2015 14:19:16 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4524/</guid>
+      <description>htpwdScan -- 一个简单的HTTP暴力破解、撞库攻击脚本 lijiejie | 2015-04-23 17:46 htpwdScan 是一个简单的HTTP暴力破解、撞库攻击脚本： 1. 支持批量校验并导入HTTP代理，低频撞库</description>
+    </item>
+    
+    <item>
+      <title>DNS Spider Multithreaded Bruteforcer v0.6，DNS子域名暴力猜解</title>
+      <link>https://lcx.cc/post/4523/</link>
+      <pubDate>Fri, 24 Apr 2015 14:17:07 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4523/</guid>
+      <description>#!/usr/bin/env python2 # ############################################################################# # 我就是那个坏坏小孩 # # 喜欢的人怎么还没有来 # # 想要对你表白，可是自己一直都做不来 # # 我就是那坏坏小孩 # # 坏小孩 # # ........ # ############################################################################### import sys import time import</description>
+    </item>
+    
+    <item>
+      <title>Android &lt;5.0 ObjectInputStream 权限提升漏洞，安卓5.0以下版本提权漏洞</title>
+      <link>https://lcx.cc/post/4450/</link>
+      <pubDate>Sun, 23 Nov 2014 17:07:42 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4450/</guid>
+      <description>android 5.0 修复了此漏洞：https://android.googlesource.com/platform/libcore/+/738c833d3</description>
+    </item>
+    
+    <item>
+      <title>Remote Perl code execution with query string to debug TWiki plugins</title>
+      <link>https://lcx.cc/post/4442/</link>
+      <pubDate>Sat, 08 Nov 2014 01:08:38 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4442/</guid>
+      <description>影响版本： * TWiki-6.0.0 (TWikiRelease06x00x00) * TWiki-5.1.x (TWikiRelease05x01x00 to TWikiRelease05x01x04) * TWiki-5.0.x (TWikiRelease05x00x00 to TWikiRelease05x00x02) * TWiki-4.3.x (TWikiRelease04x03x00 to TWikiRelease04x03x02) * TWiki-4.2.x (TWikiRelease04x02x00 to TWikiRelease04x02x04) * TWiki-4.1.x (TWikiRelease04x01x00 to TWikiRelease04x01x02) * TWiki-4.0.x (TWikiRelease04x00x00 to TWikiRelease04x00x05) 测试方法： http://www.example.com/do/view/Main/WebHome?debugenableplugins=BackupRestorePlugin%3bprint(&#34;Content-Type:text/html\r\n\r\nVulnerable!&#34;)%3bexit 修复方式： twiki/lib/TWiki/Plugins.pm Patch to sanitize the &#39;debugenableplugins&#39; parameter: =======( 8&amp;gt;&amp;lt; CUT )=============================================== --- TWiki/Plugins.pm.save1 2014-01-09 02:10:56.000000000 -0500 +++ TWiki/Plugins.pm 2014-10-01 20:30:36.000000000 -0400</description>
+    </item>
+    
+    <item>
+      <title>讨论：搞个菠菜网站项目，成本需要多少？</title>
+      <link>https://lcx.cc/post/4440/</link>
+      <pubDate>Thu, 30 Oct 2014 20:33:16 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4440/</guid>
+      <description>搞个菠菜网站项目 成本需要多少。 Night | 2014-10-22 22:23 找人一起合作啊 [原文地址] 各种吐槽： 1# px1624 (aaaaaaaaa) | 2014-10-22 22:28 卖菠菜？如果就是展示下产品的话，直接用sae就够了。没</description>
+    </item>
+    
+    <item>
+      <title>讨论：论控制个人电脑的可行性</title>
+      <link>https://lcx.cc/post/4411/</link>
+      <pubDate>Mon, 11 Aug 2014 14:56:10 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4411/</guid>
+      <description>【很大的话题】论控制个人电脑的可行性 李白 | 2014-08-11 11:21 #起源 每个人都很向往电影里那些hacker在键盘上噼里啪啦打了一大堆（有的甚至不按回车）就进入</description>
+    </item>
+    
+    <item>
+      <title>Shellcodes database，各类系统 Shellcode 大全</title>
+      <link>https://lcx.cc/post/4369/</link>
+      <pubDate>Mon, 16 Jun 2014 10:16:02 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4369/</guid>
+      <description>Shellcodes database Description This page lists some shellcodes and proposes an API to search a specific shellcode. If you want add your shellcode in this database, send an email at submit at shell-storm org. API This is very straightforward to communicate with this API. Just send a simple GET method. The &#34;s&#34; argument contains your keyword. http://shell-storm.org/api/?s=&amp;lt;keyword&amp;gt; Use &#34;*&#34; for multiple keyword search. /?s=&amp;lt;keyword1&amp;gt;*&amp;lt;keyword2&amp;gt;*&amp;lt;keyword3&amp;gt; The output will be like that</description>
+    </item>
+    
+    <item>
+      <title>Using Facebook Notes to DDoS any website</title>
+      <link>https://lcx.cc/post/4299/</link>
+      <pubDate>Sat, 26 Apr 2014 10:36:06 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4299/</guid>
+      <description>Facebook Notes allows users to include &amp;lt;img&amp;gt; tags. Whenever a &amp;lt;img&amp;gt; tag is used, Facebook crawls the image from the external server and caches it. Facebook will only cache the image once however using random get parameters the cache can be by-passed and the feature can be abused to cause a huge HTTP GET flood. Steps to re-create the bug as reported to Facebook Bug Bounty on March 03, 2014.</description>
+    </item>
+    
+    <item>
+      <title>OpenSSL 漏洞利用程序脚本 POC，OpenSSL“heartbleed”重大安全漏洞！</title>
+      <link>https://lcx.cc/post/4275/</link>
+      <pubDate>Wed, 09 Apr 2014 09:32:15 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4275/</guid>
+      <description>OpenSSL Security Advisory [07 Apr 2014] ======================================== TLS heartbeat read overrun (CVE-2014-0160) ========================================== A missing bounds check in the handling of the TLS heartbeat extension can be used to reveal up to 64k of memory to a connected client or server. Only 1.0.1 and 1.0.2-beta releases of OpenSSL are affected including 1.0.1f and 1.0.2-beta1. Thanks for Neel Mehta of Google Security for discovering this bug and to Adam Langley &amp;lt;agl@chromium.org&amp;gt;</description>
+    </item>
+    
+    <item>
+      <title>header的安全配置指南</title>
+      <link>https://lcx.cc/post/4246/</link>
+      <pubDate>Mon, 17 Mar 2014 11:27:25 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4246/</guid>
+      <description>from:https://blog.veracode.com/2014/03/guidelines-for-setting-security-headers/ 0x00 背景 在统计了Alexa top 100万网站的header安全分析之后（2012年11月 - 2013年3月 - 2013年11月），我们发现其实如何正</description>
+    </item>
+    
+    <item>
+      <title>Bypass xss过滤的测试方法</title>
+      <link>https://lcx.cc/post/4172/</link>
+      <pubDate>Wed, 15 Jan 2014 10:45:38 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4172/</guid>
+      <description>0x00 背景 本文来自于《Modern Web Application Firewalls Fingerprinting and Bypassing XSS Filters》其中的bypass xss过滤的部分，前面有根据WAF特征确定是哪个WAF的测试方</description>
+    </item>
+    
+    <item>
+      <title>“熊猫烧香”作者出狱后开网络赌场获利800万受审</title>
+      <link>https://lcx.cc/post/4139/</link>
+      <pubDate>Thu, 02 Jan 2014 14:53:31 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4139/</guid>
+      <description>曾因制造并传播“熊猫烧香”病毒而引发社会关注的张顺和李俊在丽水再次“出山”，伙同多人开设网络赌场。昨天，丽水市莲都区人民法院一审公开审理了这</description>
+    </item>
+    
+    <item>
+      <title>QQ申诉bug？同一局域网内申诉同事、同学、朋友的QQ成功率爆表？</title>
+      <link>https://lcx.cc/post/4085/</link>
+      <pubDate>Fri, 13 Dec 2013 13:45:25 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4085/</guid>
+      <description>QQ申诉bug? Hancock | 2013-12-12 09:24 这两天测试一下 局域网内 上过QQ并且长期在这地区登录的 1到2个好友辅助 百分百申诉成功 已成功3个 (有一个3分钟搞定) 这算</description>
+    </item>
+    
+    <item>
+      <title>安全科普：Waf实现扫描器识别 彻底抵挡黑客扫描</title>
+      <link>https://lcx.cc/post/4040/</link>
+      <pubDate>Sat, 23 Nov 2013 15:19:10 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4040/</guid>
+      <description>0x00 背景 目前安全测试的软件越来越多，也越来越强大，越来越多的人成为[黑客]，今天在网上看到一个文章说拦截wvs的扫描，勾起了我写这篇文章的欲望</description>
+    </item>
+    
+    <item>
+      <title>Android超级用户授权管理器漏洞</title>
+      <link>https://lcx.cc/post/4011/</link>
+      <pubDate>Fri, 15 Nov 2013 15:34:26 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4011/</guid>
+      <description>Android超级用户授权管理器漏洞 rayh4c | 2013-11-15 12:07 出处：http://forum.xda-developers.com/showthread.ph</description>
+    </item>
+    
+    <item>
+      <title>Apache / PHP 5.x Remote Code Execution Exploit</title>
+      <link>https://lcx.cc/post/3987/</link>
+      <pubDate>Mon, 04 Nov 2013 14:44:05 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3987/</guid>
+      <description>/* Apache Magica by Kingcope */ /* gcc apache-magika.c -o apache-magika -lssl */ /* This is a code execution bug in the combination of Apache and PHP. On Debian and Ubuntu the vulnerability is present in the default install of the php5-cgi package. When the php5-cgi package is installed on Debian and Ubuntu or php-cgi is installed manually the php-cgi binary is accessible under /cgi-bin/php5 and /cgi-bin/php. The vulnerability makes</description>
+    </item>
+    
+    <item>
+      <title>WordPress 3.5.1, Denial of Service [UPDATE]</title>
+      <link>https://lcx.cc/post/3967/</link>
+      <pubDate>Fri, 25 Oct 2013 10:04:46 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3967/</guid>
+      <description>英文原文：WordPress 3.5.1, Denial of Service [UPDATE] 中文译文：Wordpress 3.4 - 3.5.1 逻辑问题导致的 DoS Because I haven&#39;t been pasting any new notes for few months, here is one of the bugs I&#39;ve found in newest release of WordPress (version 3.5.1).</description>
+    </item>
+    
+    <item>
+      <title>发现一个微信朋友圈奇葩 Bug！评论内容回复六个表情会自动被系统秒删！ </title>
+      <link>https://lcx.cc/post/3940/</link>
+      <pubDate>Fri, 11 Oct 2013 14:17:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3940/</guid>
+      <description>发现一个微信朋友圈奇葩 Bug！评论内容回复六个表情会自动被系统秒删！ 2013-10-11 18:12:28 最新测试结果： 本人使用安卓（Android 4.1.1）、目前最新版微</description>
+    </item>
+    
+    <item>
+      <title>全方位在互联网中保护自己第三章（知识普及篇—了解网监的实力与暗箭（下）</title>
+      <link>https://lcx.cc/post/3931/</link>
+      <pubDate>Sun, 06 Oct 2013 09:26:40 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3931/</guid>
+      <description>严重警告： 本文内容纯属业余恶搞娱乐，不牵扯任何敏感话题，文章内容真实性无从考证！本站并不赞同文中任何观点；如果读者私自非法传播、转载或进行任</description>
+    </item>
+    
+    <item>
+      <title>Dionaea低交互式蜜罐部署详解</title>
+      <link>https://lcx.cc/post/3919/</link>
+      <pubDate>Wed, 02 Oct 2013 10:15:50 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3919/</guid>
+      <description>0x00 Dionaea 低交互式蜜罐简介 Dionaea(捕蝇草) 低交互式蜜罐(http://dionaea.carnivore.it) 是 Honeynet Project 的开源项目，起始于 Google</description>
+    </item>
+    
+    <item>
+      <title>反向代理的有趣用法</title>
+      <link>https://lcx.cc/post/3894/</link>
+      <pubDate>Wed, 18 Sep 2013 10:39:24 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3894/</guid>
+      <description>0x00 简介 首先请各位客官看这里:http://viptest.yupage.com 这便是一个使用开源程序7ghost搭建的反向代理演示站。 反向代</description>
+    </item>
+    
+    <item>
+      <title>OAuth 2.0安全案例回顾</title>
+      <link>https://lcx.cc/post/3876/</link>
+      <pubDate>Mon, 16 Sep 2013 09:46:40 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3876/</guid>
+      <description>0x00 背景 纵观账号互通发展史，可以发现OAuth比起其它协议（如OpenID）更流行的原因是，业务双方不仅要求账号本身的认证互通（authent</description>
+    </item>
+    
+    <item>
+      <title>解析漏洞总结</title>
+      <link>https://lcx.cc/post/3854/</link>
+      <pubDate>Thu, 05 Sep 2013 17:20:46 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3854/</guid>
+      <description>一、IIS 5.x/6.0解析漏洞 IIS 6.0解析利用方法有两种 1.目录解析 /xx.asp/xx.jpg 2.文件解析 wooyun.asp;.jpg 第一种，在网站下建立文件夹的名字为 .asp、.asa 的</description>
+    </item>
+    
+    <item>
+      <title>sqlmap用户手册[续]</title>
+      <link>https://lcx.cc/post/3794/</link>
+      <pubDate>Wed, 07 Aug 2013 10:33:14 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3794/</guid>
+      <description>《sqlmap用户手册》其实只写了大部分可能用到的参数，还有些并未写，这次补上~ ps：其实看到zone里很多问sqlmap的问题在通读看完那</description>
+    </item>
+    
+    <item>
+      <title>迅雷后门 迅雷签名可疑文件 请大家关注 内部邮件大爆料 过全部杀毒软件 </title>
+      <link>https://lcx.cc/post/3783/</link>
+      <pubDate>Sat, 03 Aug 2013 09:56:37 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3783/</guid>
+      <description>金山火眼认证安全。 http://fireeye.ijinshan.com/analyse.html?md5=6f3a12499553266103796f1e8cc2fb37&amp;amp;sha1=1efd454130a658db83a171a8dcb944caeadc8d8f 过所有杀毒软件 https://www.virustotal.com/zh-cn/file/e6f62fea5f8d6b7506f0c8a83029d97a2a9ada50a0dde0f5b0c382cb959c18f6/analysis/1375416608/ 编者注：以下内容为迅雷内部针对此事的内部邮件） 邮件一 这封邮件是工作人员在收到迅雷看看的用户反馈，分析后发</description>
+    </item>
+    
+    <item>
+      <title>一个诈骗类的技术性问题,朋友的!</title>
+      <link>https://lcx.cc/post/3765/</link>
+      <pubDate>Sat, 27 Jul 2013 09:18:36 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3765/</guid>
+      <description>一个诈骗类的技术性问题,朋友的! 伪装 | 2013-07-26 15:47 一朋友是做中奖诈骗的,前几天他发了很多短信出去(有钱人,100多万条短信) 大家都知道诈骗是需要人进</description>
+    </item>
+    
+    <item>
+      <title>浅谈Android手机木马手工查杀</title>
+      <link>https://lcx.cc/post/3749/</link>
+      <pubDate>Sat, 20 Jul 2013 11:26:45 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3749/</guid>
+      <description>作者:南拳Daddy 版权所有，转载请注明作者以及来源FreebuF.COM，违者必究。&amp;nbsp; 本人关注移动网络安全将近3年了，写这篇文章</description>
+    </item>
+    
+    <item>
+      <title>CSRF简单介绍及利用方法</title>
+      <link>https://lcx.cc/post/3689/</link>
+      <pubDate>Thu, 11 Jul 2013 08:50:15 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3689/</guid>
+      <description>0x00 简要介绍 CSRF（Cross-site request forgery）跨站请求伪造，由于目标站无token/referer限制，导致攻击者可以用户的身份</description>
+    </item>
+    
+    <item>
+      <title>浏览器崩溃别急着上传Crash Reports，DMP泄漏隐私，各种敏感信息</title>
+      <link>https://lcx.cc/post/3651/</link>
+      <pubDate>Fri, 05 Jul 2013 15:04:26 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3651/</guid>
+      <description>浏览器崩溃别急着上传Crash Reports，DMP泄漏隐私，各种敏感信息，明文密码，浏览器历史浏览网址记录。 浏览器崩溃别急着上传Crash</description>
+    </item>
+    
+    <item>
+      <title>XSS解决方案系列之三: 例解过后，再回首您正在维护的产品</title>
+      <link>https://lcx.cc/post/3607/</link>
+      <pubDate>Thu, 20 Jun 2013 17:22:08 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3607/</guid>
+      <description>【说明】 1. 举例子所占篇幅较大，详细的例子只举一个吧，目前只举较典型的二维编码的例子 2. 如果您想运行此例，那么你需要自己实现例子当中的类似于ur</description>
+    </item>
+    
+    <item>
+      <title>sqlmap用户手册</title>
+      <link>https://lcx.cc/post/3581/</link>
+      <pubDate>Mon, 17 Jun 2013 16:32:46 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3581/</guid>
+      <description>2013/06/13 18:45 | 瞌睡龙 http://192.168.136.131/sqlmap/mysql/get_int.php?id=1 当给sqlmap这么一个url的时候，它会： 1、判断可注入的参数 2、判断可以用那种SQL注入技术来注入 3、识别出哪种数据库 4、</description>
+    </item>
+    
+    <item>
+      <title>视频: ATM 的那点事! ATM 漏洞, Hack for fun! 利用磁卡导致ATM关机</title>
+      <link>https://lcx.cc/post/3455/</link>
+      <pubDate>Mon, 29 Apr 2013 09:30:10 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3455/</guid>
+      <description>视频: ATM 的那点事! Hack for fun! Play ATM for fun! ATM 漏洞, 利用磁卡导致ATM关机 相关内容：&amp;nbsp; 视频: ATM 的那点事! ATM 漏洞, Hack for fun! 利用磁卡导致ATM关机 嘿</description>
+    </item>
+    
+    <item>
+      <title>中国黑客利用Twitter进行APT攻击</title>
+      <link>https://lcx.cc/post/3427/</link>
+      <pubDate>Thu, 18 Apr 2013 10:46:44 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3427/</guid>
+      <description>日前，国外安全实验室监测到一例通过Twitter来进行APT攻击攻击的行为，主要是针对西藏政治活动激进分子。并且其中用到了CVE-2013-</description>
+    </item>
+    
+    <item>
+      <title>服务器被入侵之后，反爆1433抓鸡黑客菊花，并公布大量黑阔账号密码</title>
+      <link>https://lcx.cc/post/3371/</link>
+      <pubDate>Thu, 14 Mar 2013 16:48:17 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3371/</guid>
+      <description>2013-3-16 8:22:20 补充： 各位朋友说的很好：赠人玫瑰，手有余香；得饶人处且饶人；没有必要把人逼到死路，毁了年轻人一辈子。 此事就此打住吧，公开资料教训一下就行</description>
+    </item>
+    
+    <item>
+      <title>TP-Link http/tftp backdoor</title>
+      <link>https://lcx.cc/post/3369/</link>
+      <pubDate>Thu, 14 Mar 2013 14:07:36 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3369/</guid>
+      <description>About the TP-Link Router TP-Link TL-WDR4300 is a popular dual band WiFi, SOHO class router. Tested Firmware We tested the remote root PoC on the newest firmware (published on 25.12.2012): TL-WDR4300 – tested firmware version The following info is provided for educational use only! We are also not resposible for any potential damages of the devices which are tested for this vulnerability. Proof of Concept root@secu:~# nc 192.168.0.1 2222 (UNKNOWN)</description>
+    </item>
+    
+    <item>
+      <title>利用HTML5的localStorage快速挤占你的硬盘空间</title>
+      <link>https://lcx.cc/post/3350/</link>
+      <pubDate>Thu, 28 Feb 2013 21:24:09 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3350/</guid>
+      <description>利用HTML5的localStorage快速挤占你的硬盘空间，利用HTML5的localStorage占用你的硬盘空间。 虽然理论上Chrom</description>
+    </item>
+    
+    <item>
+      <title>基于 DOM 的第三类跨站脚本 XSS</title>
+      <link>https://lcx.cc/post/3334/</link>
+      <pubDate>Wed, 20 Feb 2013 10:53:44 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3334/</guid>
+      <description>英文原文：DOM Based Cross Site Scripting or XSS of the Third Kind 翻译原文：http://www.oschina.net/translate/dom-based-xss-</description>
+    </item>
+    
+    <item>
+      <title>一个可以让几乎所有Mac软件都崩溃退出的bug命令</title>
+      <link>https://lcx.cc/post/3319/</link>
+      <pubDate>Mon, 04 Feb 2013 04:47:10 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3319/</guid>
+      <description>File:/// 苹果本周发布了一个非常“疯狂的”bug报告，就是下面这个命令，你在Mac OS X上几乎所有的软件程序窗口中输入这个命令，都会导致软件崩溃。无论</description>
+    </item>
+    
+    <item>
+      <title>android 延迟锁定bug，安卓手机锁破解，屏幕解锁保护</title>
+      <link>https://lcx.cc/post/3278/</link>
+      <pubDate>Wed, 16 Jan 2013 07:57:10 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3278/</guid>
+      <description>1.在android锁定状态下，选择——紧急拨号——紧急联系人——然后返回主目录，大概会有2秒左右的延迟锁定。趁这个机会就可以运行例如goo</description>
+    </item>
+    
+    <item>
+      <title>追踪PlugX Rat作者，人肉定向攻击远控PlugX开发者</title>
+      <link>https://lcx.cc/post/3213/</link>
+      <pubDate>Sun, 23 Dec 2012 15:57:50 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3213/</guid>
+      <description>国外大牛人肉定向攻击远控PlugX开发者全过程分析 上周已经报道过趋势报告的PlugX远控工具被用于定向攻击的事件（http://www.fr</description>
+    </item>
+    
+    <item>
+      <title>JWPlayer Xss 0day [Flash编程安全问题]</title>
+      <link>https://lcx.cc/post/3166/</link>
+      <pubDate>Mon, 17 Dec 2012 19:45:20 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3166/</guid>
+      <description>缺陷编号：WooYun-2012-07166 漏洞标题：JWPlayer Xss 0day [Flash编程安全问题] 相关厂商：LongTail Video 漏洞作者：g</description>
+    </item>
+    
+    <item>
+      <title>Introducing the USB Stick of Death，利用U盘入侵Windows</title>
+      <link>https://lcx.cc/post/3084/</link>
+      <pubDate>Wed, 14 Nov 2012 23:30:50 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3084/</guid>
+      <description>Introducing the USB Stick of Death，利用U盘入侵Windows，插入U盘即中招。 由于 Windows 内置文件系统的设备驱动程序（ntfs.sys）存在错误（可引起蓝屏等</description>
+    </item>
+    
+    <item>
+      <title>楼主朋友发现一个非常高端的淘宝店铺骗局，taobao商户作假实例</title>
+      <link>https://lcx.cc/post/3053/</link>
+      <pubDate>Thu, 01 Nov 2012 10:20:18 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3053/</guid>
+      <description>首先说下，通俗点楼主是做网站的，今天css森林群里大白发现了一家淘宝店铺利用装修实现虚假产品销售情况的骗局。楼主看了下代码确认是骗子，于是准</description>
+    </item>
+    
+    <item>
+      <title>腾讯微信任意用户密码修改漏洞</title>
+      <link>https://lcx.cc/post/3025/</link>
+      <pubDate>Mon, 22 Oct 2012 10:43:35 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3025/</guid>
+      <description>漏洞概要 缺陷编号：WooYun-2012-11720 漏洞标题：微信任意用户密码修改漏洞 相关厂商：腾讯 漏洞作者：only_guest 提交时间：</description>
+    </item>
+    
+    <item>
+      <title>好奇号为什么要进行固件升级？需要升级哪些功能？</title>
+      <link>https://lcx.cc/post/2807/</link>
+      <pubDate>Wed, 22 Aug 2012 10:30:00 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2807/</guid>
+      <description>为什么呢？ forkintheroad 2012-08-13 15:21:02 【惊！好奇号被火星虫子消灭】 据好奇号在升级过程中发来的反馈显示，他们在火星发现某种昆虫，NASA的科学家收到的信息如下“Th</description>
+    </item>
+    
+    <item>
+      <title>给好奇号升级，是最遥远的刷机吗？</title>
+      <link>https://lcx.cc/post/2805/</link>
+      <pubDate>Wed, 22 Aug 2012 09:39:04 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2805/</guid>
+      <description>智能手机爱好者们想必都很熟悉“刷机”这件事，而当你还在为选择固件而犹豫不决时，NASA的工程师却已经开始进行一次跨星球刷机行动：为远在2.5</description>
+    </item>
+    
+    <item>
+      <title>Linux开启NTP服务会在本月遇到闰秒BUG导致服务器重启！</title>
+      <link>https://lcx.cc/post/2611/</link>
+      <pubDate>Mon, 25 Jun 2012 13:17:21 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/2611/</guid>
+      <description>发信人: Moution (黄梓凡), 信区: LinuxApp 标 题: Linux开启NTP服务会在本月遇到闰秒BUG导致服务器重启！ 发信站: 水木社区 (Wed Jun 20 17:05:48 2012), 站内 今天收到的预</description>
+    </item>
+    
+  </channel>
+</rss>

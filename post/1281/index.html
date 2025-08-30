@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>QQ2010 登录过程演示工具 - 截获用户输入的过程 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="QQ2010 登录过程演示工具 - 截获用户输入登陆的过程。花了一点精力，做了如下 QQ2010 版本的登录过程演示工具，主要是用于演示如何截取用户登录时的输入。此工具的原理比较基本，主要是利用全局钩子截获用户的输入。主要是演示作用，因此我又做了一个很直观的界面，可以看到截获输入的过程。" />
+<meta name="keywords" content="QQ2010,登录,过程,演示,工具,截获,用户,输入,登陆,的,过程" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/1281/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="QQ2010 登录过程演示工具 - 截获用户输入的过程" />
+<meta property="og:description" content="QQ2010 登录过程演示工具 - 截获用户输入登陆的过程。花了一点精力，做了如下 QQ2010 版本的登录过程演示工具，主要是用于演示如何截取用户登录时的输入。此工具的原理比较基本，主要是利用全局钩子截获用户的输入。主要是演示作用，因此我又做了一个很直观的界面，可以看到截获输入的过程。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/1281/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2011-04-18T19:03:00&#43;08:00" />
+<meta property="article:modified_time" content="2011-04-18T19:03:00&#43;08:00" />
+
+<meta itemprop="name" content="QQ2010 登录过程演示工具 - 截获用户输入的过程">
+<meta itemprop="description" content="QQ2010 登录过程演示工具 - 截获用户输入登陆的过程。花了一点精力，做了如下 QQ2010 版本的登录过程演示工具，主要是用于演示如何截取用户登录时的输入。此工具的原理比较基本，主要是利用全局钩子截获用户的输入。主要是演示作用，因此我又做了一个很直观的界面，可以看到截获输入的过程。"><meta itemprop="datePublished" content="2011-04-18T19:03:00&#43;08:00" />
+<meta itemprop="dateModified" content="2011-04-18T19:03:00&#43;08:00" />
+<meta itemprop="wordCount" content="8044">
+<meta itemprop="keywords" content="QQ,工具,360,API,POS,Windows,保护,编程,程序,代码,定位,分析,函数,号码,技术,检测,控件,密码,模拟,扫描,事件,数据,腾讯,图片,文件,问题,系统,注册表,注入," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="QQ2010 登录过程演示工具 - 截获用户输入的过程"/>
+<meta name="twitter:description" content="QQ2010 登录过程演示工具 - 截获用户输入登陆的过程。花了一点精力，做了如下 QQ2010 版本的登录过程演示工具，主要是用于演示如何截取用户登录时的输入。此工具的原理比较基本，主要是利用全局钩子截获用户的输入。主要是演示作用，因此我又做了一个很直观的界面，可以看到截获输入的过程。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">QQ2010 登录过程演示工具 - 截获用户输入的过程</h1>
+      
+      <div class="post-meta">
+        <time datetime="2011-04-18" class="post-time">
+          2011-04-18
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/qq/"> QQ </a>
+            <a href="https://lcx.cc/categories/%E5%B7%A5%E5%85%B7/"> 工具 </a>
+            
+          </div>
+        <span class="more-meta"> 约 8044 字 </span>
+          <span class="more-meta"> 预计阅读 17 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>&nbsp;&nbsp;&nbsp; 花了一点精力，做了如下 QQ2010 版本的登录过程演示工具，主要是用于演示如何截取用户登录时的输入。此工具的原理比较基本，主要是利用全局钩子截获用户的输入。主要是演示作用，因此我又做了一个很直观的界面，可以看到截获输入的过程。其用户界面如下所示：</P> 
+<P align=center><IMG src="/file/old/759_a4c547a1d2754cd3461064e6.jpg"></P> 
+<P>&nbsp;&nbsp;&nbsp; 此图中左侧是我做的工具（由于我对腾讯灌输的价值观一向鄙视，所以QQ的LOGO被我替换成了“狗日的腾讯”图标），右侧是真正的QQ2010 SP1（1760）的登录对话框。当用户在QQ的登录对话框进行登录时，其输入将会从我的工具上直观的反应出来。</P> 
+<P>&nbsp;&nbsp;&nbsp; 同样的，为了做到这个步骤，首先必须要找到QQ的登录窗口，因此必须对 QQ 的登录窗口在 UI 上进行分析。使用我用C#开发的“桌面窗口查看器”工具（这个工具相比SPY++的主要优点是，在列出线程创建的窗口时，可以看出窗口的父子关系），可以看到 QQ SP1 的登陆对话框的窗口关系和信息如下图所示：</P> 
+<P align=center><IMG src="/file/old/760_8e2856644c2b46a8f63654e6.jpg"></P> 
+<P>&nbsp;&nbsp;&nbsp; 在上图中，高亮显示的节点是QQ登录对话框窗口，下面两个子窗口分别是QQ号码和QQ密码。除此以外没有任何其他子窗口（因为QQ采取了DirectUI技术）。</P> 
+<P>&nbsp;&nbsp;&nbsp; <STRONG>（一）使用方面的说明：</STRONG></P> 
+<P>&nbsp;&nbsp;&nbsp; （1）QQ版本：由于我修改了代码，对 UI 特征的校验标准放宽。所以可以适合所有较新版本的QQ，TM（例如2009版本以上）<SPAN style="COLOR: #008000">&nbsp;</SPAN>&nbsp;&nbsp;&nbsp; </P> 
+<P>&nbsp;&nbsp;&nbsp; （2）要截取用户的登录，第一个问题是必须定位到用户登录过程，即及时并且准确的找到 QQ 的登录对话框。</P> 
+<P>&nbsp;&nbsp;&nbsp; 这通常是通过研究 UI 特征来做到，UI 特征又是依赖QQ版本的。UI 特征是不固定的，会随着程序进化而发生变化，开发者通常不去注意这些问题，但某些人基于一些特别目的会去观察它，QQ不会为了这些人的方便而保持它的UI稳定。</P> 
+<P>&nbsp;&nbsp;&nbsp; 寻找QQ登录窗口的逻辑是一个很重要的部分，要把它写的高效（以免降低系统性能），又要准确可靠（套用继电保护的专业术语，即对非QQ登录窗口不误动，对QQ登录窗口不拒动）。最简单的方法当然是以一个较高频率调用 FindWindow 按照类名和窗口标题去搜索登录框，但这样显得比较盲目，而且对 UI 特征的依赖性太强，必须跟随QQ的官方发布版本更新，也必须区分是登录窗口还是已经登录后的QQ主窗口（两者类名和窗口名称是一样的）。这里我为了提高检测 QQ 登录窗口的效率，没有安装一个间隔较短的定时器去定期扫描，我使用一个 CBT 钩子去完成。同时通过对多个版本的UI特征的分析，对代码进行了进一步调整，使该程序不会严重依赖 UI 特征，这是通过总结多个版本的UI特征的规律来实现的。。</P> 
+<P>&nbsp;&nbsp;&nbsp; 由于采用 CBT 钩子，因此潜在要求是工具先于 QQ 启动，然后可以发现在之后创建的 QQ 登录窗口，如果用 FindWindow 则不会受此限制。</P> 
+<P>&nbsp;&nbsp;&nbsp; &nbsp;</P> 
+<P>&nbsp;&nbsp;&nbsp; （3）关于该工具的界面，如下图所示。</P> 
+<P>&nbsp;&nbsp;&nbsp; 下面的图片是1.0版本的，我已经升级到了1.1版本，主要变化是在界面上增加了一个文本框显示发现的QQ版本，因为我已经支持了更多 QQ 版本（所以这篇文章的标题也已经改了好几次）。我还一直在考虑将在密码框的下方绘制一个模拟的“caret”（字符插入位置标记），意义不大，只是让工具效果更漂亮一点，现在还没做。</P> 
+<P align=center><IMG src="/file/old/761_6850f77b7e6c45ac0bd187e7.jpg"></P> 
+<P>&nbsp;&nbsp;&nbsp; 当发现QQ登录窗口以后，该对话框就开始监视QQ在号码框和密码框的按键操作，在外观上可以看到QQ上的输入和工具左上角的显示是同步性的。下方显示了工具收到的最近的按键事件（WM_KEYUP / WM_KEYDOWN），这个区域只对输入到QQ号码和密码框的按键感兴趣，对其他按键操作不关心。virtualCode显示的是16进制的虚拟键码，另外还有一个和硬件相关的键扫描码（scanCode），MSDN指出应用程序不应该在逻辑中依赖扫描码，所以这里没有展示它的值。printChar是指如果该按键是可打印字符（isprint），则显示出字符（例如按下A键，中间的框则显示'A'）。VK_NAME是指该 virtualCode 在 winuser.h 中被定义的宏的字符串表示，例如按下向左的方向键，会显示出“VK_LEFT”。</P> 
+<P>&nbsp;&nbsp;&nbsp; Shift，Ctrl 指示灯属于最近按键信息，表示最近一次按键发生时，这两个键是否被同时按下，如果有，则相应指示灯被点亮。比如用户输入了一个大写字母，使 Shift 指示灯被点亮，则它会一直保持着点亮状态（因为该指示灯属于最近按键的信息，而不是Shift 键的当前按下/抬起状态），直到此后的按键改变它的状态为止，因此这两个指示灯你可以把它理解成可以打钩的 CheckBox 控件。注意，其他两个指示灯 NumLock 和 CapsLock 则不同，它们属于实时指示灯，反应的是当前键盘状态，即在QQ登录窗口被发现期间，这两个指示灯看起来就好像是你的键盘上的实际指示灯一样，例如当你反复按 NumLock 按键，窗口上相应的指示灯将和键盘上的实际指示灯一起闪烁。&nbsp;</P> 
+<P>&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: #0000ff"><EM>注意：按键信息区和相关指示灯只有在发现QQ登录窗口和该窗口存在的期间有效。</EM></SPAN></P> 
+<P><SPAN style="COLOR: #0000ff">&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: #000000">（4）对于记住密码，自动登录的登录过程，本工具无效（只能记录到QQ号码）。原因很简单，因为这种登录用户无须使用键盘输入密码。</SPAN></SPAN></P> 
+<P><SPAN style="COLOR: #0000ff"><SPAN style="COLOR: #000000">&nbsp;</SPAN></SPAN>&nbsp;</P> 
+<P>&nbsp;&nbsp;&nbsp; <STRONG>（二）技术方面的说明：</STRONG></P> 
+<P>&nbsp;&nbsp;&nbsp; 由于涉及的内容关系，因此我不打算贴出代码和讲解细节（虽然我很希望像往常的文章那样，贴出核心部分的代码，展示所有重要和有趣的技术细节）。在这里简要讲一点点技术方面的内容。首先了解一下我们位于什么位置，下图是MSDN中讲解键盘输入的章节（参见参考资料）中的一个键盘输入模型，我在原图片的基础上少许添加了一些内容（图中的彩色部分），以显示工具所在的位置。如下图所示：</P> 
+<P align=center><IMG src="/file/old/762_600bcbd3615d88583bf3cfe7.jpg"></P> 
+<P>&nbsp;&nbsp;&nbsp; 演示工具即图中标记为“HookThread”的蓝色方框部分，因为根据MSDN的描述，底层钩子并不注入目标线程所在的进程，而是先切换到HOOK所在线程，然后再切换回目标线程。假设把按键事件的通信流向看作一个河流，则“上游”是硬件和驱动程序（此处应该是硬件抽象层 HAL 的范围所在），然后是系统RIT（Raw Input Thread，原始输入线程），我们则位于 Hook Chain 所在的中游位置，最后是传达至目标线程，即 QQ UI Thread，在这里，QQ&nbsp;线程被唤醒，其消息循环翻译并分发消息，引发对密码框的窗口过程的调用，该事件/消息处理结束。在这个处理过程中，注意以下两点结论：</P> 
+<P>&nbsp;&nbsp;&nbsp; （a）在用户级上，应用程序（QQ）无法感知上游 Hook 的存在，这是本文所演示技术可行性的理论基础。</P> 
+<P>&nbsp;&nbsp;&nbsp; （b）在 Hook 位置，Hook 无法区分消息是来源于硬件输入（硬件驱动程序），还是模拟输入。（注：可能是QQ干扰消息的理论基础）</P> 
+<P>&nbsp;&nbsp;&nbsp; 应用程序用 keybd_event，SendInput 可以产生模拟的硬件输入，按照MSDN文档的描述，模拟输入在图上应位于和键盘驱动相同位置，即产生的消息在 Hook Chain 的“上游位置”直接注入到系统消息队列，这样 Hook Chain 就无法区分消息的来源。如果我没有猜错，QQ的自我保护手段之一应该是用模拟输入的方法去生成对 Hook Chain 的干扰消息。登记 [ PostMessage ] 和 发送 [SendMessage] 消息不能影响输入消息（三种消息被添加到目标线程的三个不同的 message list，细节请参考《Windows 编程器启示录》中介绍消息派送和收取的章节），所以应用程序无法用 Send /Post Message 方法干扰针对输入的HOOK。</P> 
+<P>&nbsp;&nbsp;&nbsp; <STRONG>（1）两个钩子，CBT是长期安装的（等于该演示工具的生命周期），键盘钩子是短暂的（等于QQ的登录框寿命）。</STRONG></P> 
+<P>&nbsp;&nbsp;&nbsp; 当QQ登录框被发现以后，工具上会显示出QQ登录框的主要窗口的句柄，同时我也在此时安装一个底层（LOW LEVEL）键盘钩子，当且仅当键盘钩子装好之后，工具上的 CapsLock 和 NumLock 指示灯才能实时的反应用户的按键动作（否则这两个指示灯只能停留在工具刚启动时获得的状态，不能跟踪键盘的实时状态）。当QQ登录框销毁后，我们就可以把数据记录作为结果保存到日志里（如果勾选了记录日志选项），这时并没有去判断登录结果，即登录是成功还是失败的，还是仅仅点击了标题栏上的关闭按钮。</P> 
+<P>&nbsp;&nbsp;&nbsp; 为了避免输入法切换的热键失效，CBT从长期连接改为断续性的连接（每个成功登陆的QQ将使CBT被短暂卸载），参见后面的第（5）点。</P> 
+<P>&nbsp;&nbsp;&nbsp; <STRONG>（2）必须先过滤QQ产生的干扰。</STRONG></P> 
+<P>&nbsp;&nbsp;&nbsp; 如果我们装好键盘钩子，并且也准确的“对准了目标”以后，但实际上并不能得到用户输入（比如输入密码时你没有得到任何通知，或者你收到了一些错误的按键消息）。因为QQ具有干扰机制，而且QQ还会在用户的合法按键后再立即对自己产生另一个不相关的按键输入。总之在把用户输入传回到我的工具窗口（hwnd_owner) 之前，必须区分它是真正的按键消息，还是QQ产生的虚假干扰消息，然后所有干扰过滤掉，这样被通知的窗口拿到的就是纯净的真正的用户输入。</P> 
+<P>&nbsp;&nbsp;&nbsp; 此处的技术细节不做解释，但是可以从逻辑角度考虑这件事，QQ希望别人不能拦截他的密码，因此主动产生干扰，但它自己也要对收到的干扰进行过滤！这样就进入一个很奇妙的近乎悖论：如果干扰和真正的输入完全无法区分，那么其他程序就完全没有能力截取密码，但是这样QQ自己也无法接收到用户输入的内容！如果QQ自己要能够区分，它就必须指定一个区分的标准，这样其他程序就能够 研究/分析/学习/跟随 QQ的做法，导致QQ的干扰变得没有意义，仅剩下浪费系统资源的作用。</P> 
+<P>&nbsp;&nbsp;&nbsp; 得到过滤了QQ干扰的信息以后，由于拿到的是底层键盘事件，所以这里我又做了和 TranslateMessage 类似的事情，即把原始键盘事件翻译成对字符串的操作。由于底层键盘事件比较繁杂，一般在编程时我们都工作在系统翻译后的结果层上，而这里我是直接处理更接近硬件的事件（比如不同国家文化，不同硬件厂商的键盘都有所不同）。在工具里可以直观看到底层产生的键盘事件（即键盘上的哪一个按键被按下等等），在工具密码框里则是翻译后的处理结果。</P> 
+<P>&nbsp;&nbsp;&nbsp; <STRONG>（3）创建窗口的顺序：</STRONG></P> 
+<P>&nbsp;&nbsp;&nbsp; 在CBT钩子里，如果我们直接发现了对 QQ 登录框的创建，注意这时其子控件尚未创建！所以如果试图用 FindWindowEx 去获取其子控件将什么也得不到。这是使用CBT钩子的一个非常不方便的地方，这和常规的处理思维很不同，例如通常你得到主窗口句柄时窗口都是处于一种完好待命的状态，而在CBT发送通知时，它还什么都没有准备好！也就是说，当系统通知你某个窗口已被创建时，你不能去访问此窗口的任何子控件！为此你不得不在代码上花费更多精力才能处理好这个问题。根据MSDN的描述，你可以在窗口“出生”的时刻修改窗口的位置，大小等信息（不过对本文涉及的需求，这些功能意义不大）。</P> 
+<P>&nbsp;&nbsp;&nbsp; QQ登录框创建窗口的顺序体现为：QQ登录对话框主窗口 -&gt; QQ密码框 -&gt; QQ号码框。</P> 
+<P>&nbsp;&nbsp;&nbsp; TM登录框创建窗口的顺序体现为：TM登录对话框主窗口 -&gt; TM号码框 -&gt; TM密码框。（我仅观测了TM2009的某个版本）</P> 
+<P>&nbsp;&nbsp;&nbsp; 顺便说一句，由于检测逻辑的关系，QQ 的窗口创建顺序对我的检测来说非常简便，代码也很简洁。而 TM 仅仅将子控件创建顺序稍微颠倒了下，我就不得不在代码里做了更多的工作以适应它。由于我兼顾了TM，所以现在无论密码框和号码框的创建顺序如何，工具代码都能很好的将其发现。</P> 
+<P>&nbsp;&nbsp;&nbsp; <STRONG>（4）如何把信息发送回我们的演示工具主窗口。</STRONG></P> 
+<P>&nbsp;&nbsp;&nbsp; 我们可以把所有事情放在DLL中无声无息的去做，还可以把DLL注入到另一个进程中。但这里为了演示，我希望把一些事件以消息的方式发送回我的演示工具，为此我需要把我的工具对话框的窗口句柄通知给DLL。看起来这应该很简单，然而这一步有些让我感到意外。因为我在安装钩子时把自己的工具窗口句柄设置给DLL里的一个全局变量，但是当钩子收到感兴趣的事件通知时，工具窗口的句柄居然不知道什么时候已经变为NULL。这一点着实让我费解了半天，后来我想也许是因为在安装全局钩子时，系统把DLL重新映射（加载）了，导致原来的全局数据全部被清零。或许我应该在 DllMain 里再写一些代码，跟踪一下DLL的事件看看是不是这回事。</P> 
+<P>&nbsp;&nbsp;&nbsp; 为了能够把窗口句柄完善的传达到DLL，我考虑了几种方案，例如用 ini 配置文件或者临时创建一个注册表键用于传递信息，在工具退出时，再清理掉。但这样感觉不够绿色，所以我最终采用的方法是使用共享内存，在DLL和宿主之间相互传递信息。这里DLL不能稳定的持有数据，但是宿主进程则可以稳定的持有数据，因此我在宿主进程中创建共享内存，在DLL中使用内存映射，这样尽管DLL可能重映射，但共享内存对DLL来说始终都是有效的。</P> 
+<P>&nbsp;&nbsp;&nbsp; <STRONG>（5）已登录QQ的 Ctrl + Space 热键失效？</STRONG></P> 
+<P>&nbsp;&nbsp;&nbsp; 这也是一个比较奇怪的问题，如果某个QQ是在工具“监视”下登录成功的，那么我发现在这个QQ里打开聊天窗口时，按 Ctrl + Space 只能输出空格，而不是切换输入法。这让我感到很郁闷，具体原因我还不知道到底是CBT钩子问题呢还是密码框有什么问题呢。因为我发现在QQ的密码输入框中，这个热键也是失效的，在登录成功后，QQ可能做了一些处理，由于工具和QQ框两者互为干扰，且都试图排除对方的干扰，因此也可能是因为我们对登录框的一些动作无形中禁用了QQ登录中的一些有用动作。我发现只要把工具关闭（卸载掉CBT钩子）则热键就恢复正常。因此我修改了演示工具的代码，使一个QQ成功登录以后就卸载掉CBT钩子，然后等待一会（2~3秒钟）再重新安装CBT钩子，这样已登录的QQ就不会感觉到有任何异常。</P> 
+<P>&nbsp;&nbsp;&nbsp; 通过断续性的安装解决了这个问题（这和我在工作中遇到的某个故障很类似，也是从长连接改为断续性连接去解决的），但是引发热键失效这个问题的具体原因还不甚清楚。这个问题可能是我无意中影响了QQ的登录过程中的必要动作导致的。</P> 
+<P>&nbsp;&nbsp;&nbsp; <STRONG>（6）鼠标点击时可能更改插入符的位置。</STRONG></P> 
+<P>&nbsp;&nbsp;&nbsp; 鼠标在登录过程中的作用分析如下：</P> 
+<P>&nbsp;&nbsp;&nbsp; （6.1）对于密码框，鼠标能通过点击去改变光标插入符的位置，这样如果用户用鼠标改变插入符位置，如果没有去监视这一行为，这会导致密码框中记录的文本可能产生错误。</P> 
+<P>&nbsp;&nbsp;&nbsp; （6.2）对于软键盘，监视鼠标的另一个需求是QQ的软键盘，如果用户使用软键盘输入密码，由于不通过按键事件，所以这时键盘钩子是得不到信息的，因此这时我们需要检测鼠标行为。比较简单的方法是，如果用户点击软键盘，我们就对软键盘窗口截图，如果我们能够用图像数据分析提取出每个位置的字符，那样是最好的，如果为了简单，只要把软键盘图片和用户点击的坐标数据一起打包回来再分析即可。</P> 
+<P>&nbsp;&nbsp;&nbsp; 对于软键盘，另一种方法类似游戏外挂的方法，从编程角度考虑，QQ的软键盘需要初始化（给出一个不标准排列的键盘），在QQ内部可能会维护一个软件键盘布局的数据结构，这样通过调试手段在QQ进程中找到这个软键盘布局的数据，就能够把软键盘布局提取出来，然后我们就能够和QQ一样，对收到的鼠标按键，对数据结构进行HitTest 得到用户输入的字符。但这种方法建立在对远程进程访问的基础上，如果开发者的保护意识很好，他能够有意识的阻止其他进程用某些权限访问自己，使这种方法失去作用。</P> 
+<P>&nbsp;&nbsp;&nbsp; 现在我添加了鼠标在密码框上点击的监视，主要用于重新定位光标插入符。定位方法可以参考下面这个我绘制的图片，这个图片是基于对QQ2009的登录窗口观察得来。每个密码字符在密码输入框中占据的尺寸是 8 * 8 像素（定位插入符仅关心横坐标即可）。为了看清楚，下图是把密码框放大到一定倍数后的显示效果，白色的部分就是密码框窗口（其边界以外的部分是浅灰色）。</P> 
+<P align=center><IMG src="/file/old/763_29a5c9a8a9bbb3e9ca130ce7.jpg"></P> 
+<P>&nbsp;&nbsp;&nbsp; 比如当我们发现鼠标在密码框上按下鼠标左键时，可以按照下面的公式计算新的字符插入位置：</P> 
+<P>&nbsp;&nbsp;&nbsp; （a）把鼠标点击的屏幕坐标 (x, y) 根据密码框的屏幕位置，转换成密码框中的客户区坐标 (x', y')。</P> 
+<P>&nbsp;&nbsp;&nbsp; （b）新的插入符位置（索引）：<SPAN style="COLOR: #0000ff"><EM>iNewPos = min ( strlen ( password ) ,&nbsp; (x' - 2) / 8 ) ;&nbsp; （公式1）</EM></SPAN></P> 
+<P><SPAN style="COLOR: #0000ff">&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: #000000">基于整数除法会舍弃小数点后的部分，这样当用户在密码框上点击时，不完整字符的部分会被舍弃，即光标落到到前面的那个字符，我觉得这样是不够人性化的，更好的方法是用“四舍五入”去处理除法结果中的小数部分。即我认为如果腾讯能采用下面的公式逻辑是更合理的：</SPAN></SPAN></P> 
+<P><SPAN style="COLOR: #0000ff"><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp; iNewPos = min ( strlen ( password ),&nbsp; ( x' - 2 + 4 ) / 8 );&nbsp; （公式2）</SPAN></SPAN></P> 
+<P><SPAN style="COLOR: #0000ff"><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp; 设想插入符是一个可在密码框上滚动的小球，鼠标点击的坐标(x')是投放小球的位置，则公式1中，密码框是一个一些列直角三角形组成的锯齿状的轨道槽，而公式2中密码框是一个三角函数曲线状起伏的轨道槽（在 8 * 8 像素的方框的中间达到波峰，在方框的边界达到波谷），这样结果将更符合用户的操作意图，即插入符应落入最近的谷底位置，而不是一律舍弃不够一个完整字符的多余距离。</SPAN></SPAN></P> 
+<P>&nbsp;&nbsp;&nbsp; <STRONG>（7）准确跟踪 QQ 的 UI 处理逻辑。</STRONG></P> 
+<P>&nbsp;&nbsp;&nbsp; QQ登录窗口有两个文本框：QQ号码框和密码框，UI处理逻辑可能因为版本不同而略有区别。例如两个文本框之间切换焦点时处理逻辑，QQ 2010 SP1中，有时用户切换到号码框去按键时，密码框的文本没有被清空。而QQ 2010 SP2中，无论何时在号码框中按键，则密码框中的文本一定会被清空。在工具中我把处理方式设定为QQ 2010最近的版本 SP2。再比如，密码框是否响应鼠标右键的点击等。如果我们要更精确的跟踪的UI处理逻辑，就要区分QQ的版本分别对待。</P> 
+<P>&nbsp;&nbsp;&nbsp; 此外，QQ密码框的最大字符数量是16个字符。</P> 
+<P>&nbsp;&nbsp;&nbsp; <EM><SPAN style="COLOR: #008000">//=========================================================</SPAN></EM></P> 
+<P>&nbsp;&nbsp;&nbsp; <EM><SPAN style="COLOR: #008000">// 补充说明:</SPAN></EM></P> 
+<P>&nbsp;&nbsp;&nbsp; <EM><SPAN style="COLOR: #008000">//=========================================================</SPAN></EM></P> 
+<P>&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: #008000"><EM>360的某些工具装有 hook API 函数的驱动，把某些 API 调用跳转到360的代理函数&nbsp;，从而有能力拦截一些敏感的 API 调用，例如读写文件，注册表，安装系统服务等。不幸的是，安装系统钩子这样的 API 函数显然不可能被 360 放过，所以此演示工具的行为会被360的工具检测到。但从普通用户角度来看，这是一个对用户安全有利的好消息。（本工具仅具有演示作用对系统无害，因此遇此情况请选择允许。）</EM></SPAN></P> 
+<P>&nbsp;&nbsp;&nbsp; <EM><SPAN style="COLOR: #008000">//=========================================================</SPAN></EM></P> 
+<P>&nbsp;&nbsp;&nbsp; <STRONG>最后是该范例的 Demo 可执行文件的下载连接：</STRONG></P> 
+<P>&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: #000000"><FONT color=#000080>http://files.cnblogs.com/hoodlum1980/QQLogon_bin.rar</FONT></SPAN></P> 
+<P>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</P> 
+<P>&nbsp;&nbsp;&nbsp; <STRONG>参考文献：</STRONG></P> 
+<P>&nbsp;&nbsp;&nbsp; （1）分析QQ2010密码输入的网络文章（过滤干扰的实现受此文章启发），WinLockDLL范例代码等（主要参考其 hook 相关代码）。&nbsp;</P> 
+<P>&nbsp;&nbsp;&nbsp; （2）About Keyboard Input， MSDN。（我主要引用其插图）</P> 
+<P>&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: #0000ff"><EM>ms-help://MS.VSCC.v80/MS.MSDN.v80/MS.WIN32COM.v10.en/winui/winui/windowsuserinterface/</EM></SPAN></P> 
+<P><SPAN style="COLOR: #0000ff"><EM>&nbsp;&nbsp;&nbsp; &nbsp; 　　 userinput/keyboardinput/</EM><EM>aboutkeyboardinput.htm#_win32_Keyboard_Input_Model</EM></SPAN></P> 
+<P>&nbsp;&nbsp;&nbsp; （3）Windows 核心编程，第27章，硬件输入模型和局部输入状态。</P> 
+<P>&nbsp;&nbsp;&nbsp; <STRONG>作者声明：</STRONG></P> 
+<P>&nbsp;&nbsp;&nbsp; （1）本文提供的演示工具开发的目的仅用于演示用途，即验证一种技术的可行性和可以达到何种程度。因此此工具绝不作任何对系统有害和用户不知情的事情，尽管这个工具演示的功能非常敏感，但它是无害的，也是基于此原因不能像在其他文章中那样提供源码。很遗憾！我因此没有办法贴出代码中那些我自认为非常优雅和奇妙的部分。</P> 
+<P>&nbsp;&nbsp;&nbsp; 此工具的实现代码 <SPAN style="COLOR: #000000"><STRONG>不含有 </STRONG></SPAN>以下任何行为：如读写注册表，在用户不知情情况下 读写/创建 其他不属于本文所提到的“演示功能的一部分（例如用户指定的记录日志行为）”的文件（就目前而言），安装服务或驱动，添加启动项，添加全局DLL，访问网络，自我复制 / 自我隐藏 / 自我保护，在用户不知情的条件下运行等，以及其他任何可能引发用户反感的行为。它是完全的绿色的小工具，可以任意移动，可以随时删除。你可认为这个工具是友善的无恶意的。作者对本声明负责。</P> 
+<P>&nbsp;&nbsp;&nbsp; （2）<SPAN style="COLOR: #ff0000"><STRONG>警告!: </STRONG>请勿将本工具用于任何目的不当的用途和使用场合，反向工程等。</SPAN></P> 
+<P>&nbsp;&nbsp;&nbsp; <STRONG>代码更新记录 （H - 非常重要；M - 中等； L - 无关紧要；）：</STRONG></P> 
+<P>&nbsp;&nbsp;&nbsp; （1）[M] 增加鼠标监视。2010-10-13。</P> 
+<P>&nbsp;&nbsp;&nbsp; （2）[H] 修复如果打开一个QQ并停留在登录框界面，这时再打开另外一个QQ登录框，则两个QQ登录框上的事件都会把消息发送回来的BUG，这会把监视过程搞乱。因此如果工具已经正在注视着一个QQ登录窗口，则此时打开的其他登录窗口将被忽略。即工具同一时刻只关注一个QQ登录过程。2010-10-13。</P> 
+<P>&nbsp;&nbsp;&nbsp; （3）[M] 优化发现QQ登录窗口的代码，提高了代码效率，去除了部分 QQ UI 特征依赖。2010-10-14。</P> 
+<P>&nbsp;&nbsp;&nbsp; （4）[L] 添加对 TM 演示的支持（但TM的版本号可能不详）。2010-10-14。</P> 
+<P>&nbsp;&nbsp;&nbsp; （5）[L] 修改了对话框的背景色（界面美化），增加了"VK_0” ~ “VK_Z" 的按键名称定义（因为它们的值就是普通字符，SDK没有必要定义它们）。2010-10-14。</P> 
+<P>&nbsp;&nbsp;&nbsp; （6）[L] 增加 QQ2010 Beta2 的 UI 特征。2010-10-15。</P> 
+<P>&nbsp;&nbsp;&nbsp; （7）[M] 重要：调整了代码，去除了对QQ客户端具体版本的强依赖，<STRONG>这使得该工具可以适应几乎目前所有市场主流的 QQ，TM 客户端。</STRONG>2010-12-6。</P> 
+<P>&nbsp;&nbsp;&nbsp; （8）[L] 中等：增加对 QQ2011 版本的检测逻辑（QQ2011版相比2010，2009等历史版本在 UI 上有一些新的变动）。2011-3-23。</P> 
+<P>&nbsp;&nbsp;&nbsp; ----By Hoodlum1980</P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2011-04-18
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/360/">360</a>
+          <a href="https://lcx.cc/tags/api/">API</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E4%BF%9D%E6%8A%A4/">保护</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E5%AE%9A%E4%BD%8D/">定位</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E5%8F%B7%E7%A0%81/">号码</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E6%A3%80%E6%B5%8B/">检测</a>
+          <a href="https://lcx.cc/tags/%E6%8E%A7%E4%BB%B6/">控件</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E6%8B%9F/">模拟</a>
+          <a href="https://lcx.cc/tags/%E6%89%AB%E6%8F%8F/">扫描</a>
+          <a href="https://lcx.cc/tags/%E4%BA%8B%E4%BB%B6/">事件</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E8%85%BE%E8%AE%AF/">腾讯</a>
+          <a href="https://lcx.cc/tags/%E5%9B%BE%E7%89%87/">图片</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%86%8C%E8%A1%A8/">注册表</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%85%A5/">注入</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/1282/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">入侵 www.gongwuyuan.com.cn （中国公务员考试中心） 全过程</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/1280/">
+            <span class="next-text nav-default">使用 Delphi 编写 QQ2009、QQ2010、TM2009 批量自动登陆工具</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>OGNL设计及使用不当造成的远程代码执行漏洞 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="紫气东来" /><meta name="description" content="OGNL设计及使用不当造成的远程代码执行漏洞。我们可以把OGNL作为一个底层产品,它在功能实现中的设计缺陷,是如何能够被利用并远程执行恶意代码的,而不是完全在struts2这个产品的功能设计层面去讨论漏洞原由!什么是OGNL?OGNL是Object-Graph Navigation Language的缩写，它是一种功能强大的表达式语言（Expression Language，简称为EL），通过它简单一致的表达式语法，可以存取对象的任意属性，调用对象的方法，遍历整个对象的结构图，实现字段类型转化等功能。它使用相同的表达式去存取对象的属性。" />
+<meta name="keywords" content="OGNL设计及使用不当造成的远程代码执行漏洞" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3741/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="OGNL设计及使用不当造成的远程代码执行漏洞" />
+<meta property="og:description" content="OGNL设计及使用不当造成的远程代码执行漏洞。我们可以把OGNL作为一个底层产品,它在功能实现中的设计缺陷,是如何能够被利用并远程执行恶意代码的,而不是完全在struts2这个产品的功能设计层面去讨论漏洞原由!什么是OGNL?OGNL是Object-Graph Navigation Language的缩写，它是一种功能强大的表达式语言（Expression Language，简称为EL），通过它简单一致的表达式语法，可以存取对象的任意属性，调用对象的方法，遍历整个对象的结构图，实现字段类型转化等功能。它使用相同的表达式去存取对象的属性。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3741/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-07-20T09:12:46&#43;08:00" />
+<meta property="article:modified_time" content="2013-07-20T09:12:46&#43;08:00" />
+
+<meta itemprop="name" content="OGNL设计及使用不当造成的远程代码执行漏洞">
+<meta itemprop="description" content="OGNL设计及使用不当造成的远程代码执行漏洞。我们可以把OGNL作为一个底层产品,它在功能实现中的设计缺陷,是如何能够被利用并远程执行恶意代码的,而不是完全在struts2这个产品的功能设计层面去讨论漏洞原由!什么是OGNL?OGNL是Object-Graph Navigation Language的缩写，它是一种功能强大的表达式语言（Expression Language，简称为EL），通过它简单一致的表达式语法，可以存取对象的任意属性，调用对象的方法，遍历整个对象的结构图，实现字段类型转化等功能。它使用相同的表达式去存取对象的属性。"><meta itemprop="datePublished" content="2013-07-20T09:12:46&#43;08:00" />
+<meta itemprop="dateModified" content="2013-07-20T09:12:46&#43;08:00" />
+<meta itemprop="wordCount" content="4898">
+<meta itemprop="keywords" content="代码,代码执行,漏洞,远程,exe,EXP,HTTP,IE,Java,POC,Root,Struts,测试,恶意,绕过,数据,数据库," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="OGNL设计及使用不当造成的远程代码执行漏洞"/>
+<meta name="twitter:description" content="OGNL设计及使用不当造成的远程代码执行漏洞。我们可以把OGNL作为一个底层产品,它在功能实现中的设计缺陷,是如何能够被利用并远程执行恶意代码的,而不是完全在struts2这个产品的功能设计层面去讨论漏洞原由!什么是OGNL?OGNL是Object-Graph Navigation Language的缩写，它是一种功能强大的表达式语言（Expression Language，简称为EL），通过它简单一致的表达式语法，可以存取对象的任意属性，调用对象的方法，遍历整个对象的结构图，实现字段类型转化等功能。它使用相同的表达式去存取对象的属性。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">OGNL设计及使用不当造成的远程代码执行漏洞</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-07-20" class="post-time">
+          2013-07-20
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E4%BB%A3%E7%A0%81/"> 代码 </a>
+            <a href="https://lcx.cc/categories/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C/"> 代码执行 </a>
+            <a href="https://lcx.cc/categories/%E6%BC%8F%E6%B4%9E/"> 漏洞 </a>
+            <a href="https://lcx.cc/categories/%E8%BF%9C%E7%A8%8B/"> 远程 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4898 字 </span>
+          <span class="more-meta"> 预计阅读 10 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	我们可以把OGNL作为一个底层产品,它在功能实现中的设计缺陷,是如何能够被利用并远程执行恶意代码的,而不是完全在struts2这个产品的功能设计层面去讨论漏洞原由!
+</p>
+<p style="text-indent:2em;">
+	<strong>什么是OGNL?</strong> 
+</p>
+<p style="text-indent:2em;">
+	OGNL是Object-Graph Navigation Language的缩写，它是一种功能强大的表达式语言（Expression Language，简称为EL），通过它简单一致的表达式语法，可以存取对象的任意属性，调用对象的方法，遍历整个对象的结构图，实现字段类型转化等功能。它使用相同的表达式去存取对象的属性。
+</p>
+<p style="text-indent:2em;">
+	OGNL三要素：(以下部分摘抄互联网某处,我觉得说得好)
+</p>
+<pre class="prettyprint">Ognl.setValue("department.name", user2, "dev");
+
+System.out.println(user2.getDepartment().getName());
+
+Ognl.setValue(Ognl.parseexpression_r("department.name"), context, user2, "otherDev");
+
+System.out.println(user2.getDepartment().getName());
+
+Ognl.setValue("department.name", user2, "dev");
+
+System.out.println(user2.getDepartment().getName());
+
+Ognl.setValue(Ognl.parseexpression_r("department.name"), context, user2, "otherDev");
+
+System.out.println(user2.getDepartment().getName());</pre>
+<p style="text-indent:2em;">
+	<strong>1. 表达式（Expression）</strong> 
+</p>
+<p style="text-indent:2em;">
+	表达式是整个OGNL的核心，所有的OGNL操作都是针对表达式的解析后进行的。表达式会规定此次OGNL操作到底要干什么。我们可以看到，在上面的测试中，name、department.name等都是表达式，表示取name或者department中的name的值。OGNL支持很多类型的表达式，之后我们会看到更多。
+</p>
+<p style="text-indent:2em;">
+	<strong>2. 根对象（Root Object）</strong> 
+</p>
+<p style="text-indent:2em;">
+	根对象可以理解为OGNL的操作对象。在表达式规定了“干什么”以后，你还需要指定到底“对谁干”。在上面的测试代码中，user就是根对象。这就意味着，我们需要对user这个对象去取name这个属性的值（对user这个对象去设置其中的department中的name属性值）。
+</p>
+<p style="text-indent:2em;">
+	<strong>3. 上下文环境（Context）</strong> 
+</p>
+<p style="text-indent:2em;">
+	有了表达式和根对象，我们实际上已经可以使用OGNL的基本功能。例如，根据表达式对根对象进行取值或者设值工作。不过实际上，在OGNL的内部，所有的操作都会在一个特定的环境中运行，这个环境就是OGNL的上下文环境（Context）。说得再明白一些，就是这个上下文环境（Context），将规定OGNL的操作“在哪里干”。 OGN L的上下文环境是一个Map结构，称之为OgnlContext。上面我们提到的根对象（Root Object），事实上也会被加入到上下文环境中去，并且这将作为一个特殊的变量进行处理，具体就表现为针对根对象（Root Object）的存取操作的表达式是不需要增加#符号进行区分的。
+</p>
+<p style="text-indent:2em;">
+	Struts 2中的OGNL Context实现者为ActionContext，它结构示意图如下:
+</p>
+<p style="text-indent:2em;">
+	<img title="Struts 2 中的 OGNL Context 实现者为 ActionContext，它结构示意图" alt="Struts 2 中的 OGNL Context 实现者为 ActionContext，它结构示意图" src="/file/old/2707_1.jpg" width="450" height="269" /> 
+</p>
+<p style="text-indent:2em;">
+	当Struts2接受一个请求时，会迅速创建ActionContext，ValueStack，action 。然后把action存放进ValueStack，所以action的实例变量可以被OGNL访问
+</p>
+<p style="text-indent:2em;">
+	那struts2引入OGNL到底用来干什么?
+</p>
+<p style="text-indent:2em;">
+	我们知道在MVC中,其实所有的工作就是在各层间做数据流转.
+</p>
+<p style="text-indent:2em;">
+	在View层的数据是单一的,只有不带数据类型的字符串.在没有框架的时代我们使用的是手动写代码或者像struts1一样利用反射,填充表单数据并转换到Controller层的对象中，反射转换成java数据类型的commons组件伪代码,如：
+</p>
+<pre class="prettyprint">import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.PropertyUtils;
+
+//自动装载表单及验证
+public class LoadForm {
+    //表单装载
+    public static Object parseRequest(HttpServletRequest request,HttpServletResponse response,Object bean) throws ServletException, IOException{
+           //取得所有参数列表
+           Enumeration&lt;?&gt; enums = request.getParameterNames();
+           //遍历所有参数列表
+           while(enums.hasMoreElements()){
+            Object obj = enums.nextElement();
+            try {
+             //取得这个参数在Bean中的数据类开
+             Class&lt;?&gt; cls = PropertyUtils.getPropertyType(bean, obj.toString());
+             //把相应的数据转换成对应的数据类型
+             Object beanValue = ConvertUtils.convert(request.getParameter(obj.toString()), cls);
+             //填充Bean值
+             PropertyUtils.setProperty(bean, obj.toString(), beanValue);
+            } catch (Exception e) {
+                //不显示异常 e.printStackTrace();
+            }
+           }
+           return bean;
+        }
+    }</pre>
+<p style="text-indent:2em;">
+	从Controller层到View层,还是手动写代码然后到页面上取,如伪代码:
+</p>
+<pre class="prettyprint">request.setAttribute("xxx", "xxx");</pre>
+<p style="text-indent:2em;">
+	而Struts2采纳了XWork的一套完美方案(Xwork提供了很多核心功能：前端拦截机（interceptor），运行时表单属性验证，类型转换，强大的表达式语言（OGNL – the Object Graph Navigation Language），IoC（Inversion of Control反转控制）容器等). 并在此基础上构建一套所谓完美的机制,OGNL方案和OGNLValueStack机制.
+</p>
+<p style="text-indent:2em;">
+	View层到Controller层自动转储;然后是Controller层到View层,我们可以使用简易的表达式取对象数据显示到页面,如: ${对象.属性},节省不少代码时间且使用方便.而它的存储结构就是一棵对象，这里我们可以把对象树当成一个java对象寄存器，可以方便添加、访问对象等。 但是OGNL的这些功能或机制是危险的.
+</p>
+<p style="text-indent:2em;">
+	我们列举一下表达式功能操作清单：
+</p>
+<pre class="prettyprint">1. 基本对象树的访问
+对象树的访问就是通过使用点号将对象的引用串联起来进行。
+例如：xxxx，xxxx.xxxx，xxxx. xxxx. xxxx. xxxx. xxxx
+
+2. 对容器变量的访问
+对容器变量的访问，通过#符号加上表达式进行。
+例如：#xxxx，#xxxx. xxxx，#xxxx.xxxxx. xxxx. xxxx. xxxx
+
+3. 使用操作符号
+OGNL表达式中能使用的操作符基本跟Java里的操作符一样，除了能使用 +, -, *, /, ++, --, ==, !=, = 等操作符之外，还能使用 mod, in, not in等。
+
+4. 容器、数组、对象
+OGNL支持对数组和ArrayList等容器的顺序访问：例如：group.users[0]
+同时，OGNL支持对Map的按键值查找：
+例如：#session['mySessionPropKey']
+不仅如此，OGNL还支持容器的构造的表达式：
+例如：{"green", "red", "blue"}构造一个List，#{"key1" : "value1", "key2" : "value2", "key3" : "value3"}构造一个Map
+你也可以通过任意类对象的构造函数进行对象新建：
+例如：new Java.net.URL("xxxxxx/")
+
+5. 对静态方法或变量的访问
+要引用类的静态方法和字段，他们的表达方式是一样的@class@member或者@class@method(args)：
+例如：@com.javaeye.core.Resource@ENABLE，@com.javaeye.core.Resource@getAllResources
+
+6. 方法调用
+直接通过类似Java的方法调用方式进行，你甚至可以传递参数：
+例如：user.getName()，group.users.size()，group.containsUser(#requestUser)
+
+7. 投影和选择
+OGNL支持类似数据库中的投影（projection） 和选择（selection）。
+投影就是选出集合中每个元素的相同属性组成新的集合，类似于关系数据库的字段操作。投影操作语法为 collection.{XXX}，其中XXX 是这个集合中每个元素的公共属性。
+例如：group.userList.{username}将获得某个group中的所有user的name的列表。
+选择就是过滤满足selection 条件的集合元素，类似于关系数据库的纪录操作。选择操作的语法为：collection.{X YYY}，其中X 是一个选择操作符，后面则是选择用的逻辑表达式。而选择操作符有三种：
+? 选择满足条件的所有元素
+^ 选择满足条件的第一个元素
+$ 选择满足条件的最后一个元素
+例如：group.userList.{? #txxx.xxx != null}将获得某个group中user的name不为空的user的列表。</pre>
+<p style="text-indent:2em;">
+	结合之前的漏洞POC,只举两例漏洞说明本质问题所在(其他类似,如:安全限制绕过,非必要使用OGNL或奇葩地利用OGNL实现设计功能等).那么只要struts2的某些功能使用了OGNL功能,且外部参数传入OGNL流程的,理论上都是能够执行恶意代码的.
+</p>
+<p style="text-indent:2em;">
+	参照之前的PoC从“表达式功能操作清单”中选取“危险项清单”,一些危险的功能操作,问题就出现在它们身上，提供了比较有危害PoC的构造条件:
+</p>
+<pre class="prettyprint">1. 基本对象树的访问
+对象树的访问就是通过使用点号将对象的引用串联起来进行。
+例如：xxxx，xxxx.xxxx，xxxx. xxxx. xxxx. xxxx. xxxx
+
+2. 对容器变量的访问
+对容器变量的访问，通过#符号加上表达式进行。
+例如：#xxxx，#xxxx. xxxx，#xxxx.xxxxx. xxxx. xxxx. xxxx
+
+3. 容器、数组、对象
+OGNL支持对数组和ArrayList等容器的顺序访问：例如：group.users[0]
+同时，OGNL支持对Map的按键值查找：
+例如：#session['mySessionPropKey']
+不仅如此，OGNL还支持容器的构造的表达式：
+例如：{"green", "red", "blue"}构造一个List，#{"key1" : "value1", "key2" : "value2", "key3" : "value3"}构造一个Map
+你也可以通过任意类对象的构造函数进行对象新建：
+例如：new Java.net.URL("xxxxxx/")
+
+4. 对静态方法或变量的访问
+要引用类的静态方法和字段，他们的表达方式是一样的@class@member或者@class@method(args)：
+例如：@com.javaeye.core.Resource@ENABLE，@com.javaeye.core.Resource@getAllResources
+
+5. 方法调用
+直接通过类似Java的方法调用方式进行，你甚至可以传递参数：
+例如：user.getName()，group.users.size()，group.containsUser(#requestUser)</pre>
+<p style="text-indent:2em;">
+	以及上下文环境和这个struts2设计，当Struts2接受一个请求时，会迅速创建ActionContext，ValueStack，action 。然后把action存放进ValueStack，所以action的实例变量可以被OGNL访问。
+</p>
+<p style="text-indent:2em;">
+	第一个,是2010年7月14号(亮点1:乌云好象就是这天出生的吧?),"Struts2/XWork &lt; 2.2.0远程执行任意代码漏洞",POC:
+</p>
+<pre class="prettyprint">?('\u0023_memberAccess[\'allowStaticMethodAccess\']')(meh)=true&amp;amp;(aaa)(('\u0023context[\'xwork.MethodAccessor.denyMethodExecution\']\u003d\u0023foo')(\u0023foo\u003dnew%20java.lang.Boolean("false")))&amp;amp;(asdf)(('\u0023rt.exit(1)')(\u0023rt\u003d@java.lang.Runtime@getRuntime()))=1</pre>
+<p style="text-indent:2em;">
+	也就是这个经典的POC,大家开始第一次认识struts2漏洞(之前也有，只是那时很少有人去关注,或许很容易就能找到一个0day(而且是永远的0day,回溯一下框架历史,我不能再提示了!)。 myibatis框架也有引入OGNL的,亲!
+</p>
+<p style="text-indent:2em;">
+	由于ONGL的调用可以通过http传参来执行，为了防止攻击者以此来调用任意方法，Xwork设置了两个参数来进行防护：
+</p>
+<pre class="prettyprint">OgnlContext的属性 'xwork.MethodAccessor.denyMethodExecution'（默认为真）
+SecurityMemberAccess私有字段'allowStaticMethodAccess'（默认为假）</pre>
+<p style="text-indent:2em;">
+	(这里我现在还没想明白,既然都有这步限制了?为什么后面的那些还会出现,难道官方只会看着公布的PoC打补丁?)
+</p>
+<p style="text-indent:2em;">
+	这里大家都知道,是使用#限制OgnlContext 'xwork.MethodAccessor.denyMethodExecution'和'allowStaticMethodAccess'上下文访问以及静态方法调用的值设置.而漏洞作者使用十六进制编码绕过了限制,从而调用@java.lang.Runtime@getRuntime()这个静态方法执行命令.
+</p>
+<pre class="prettyprint">java.lang.Runtime.getRuntime().exit(1) （终止当前正在运行的 Java 虚拟机）</pre>
+<p style="text-indent:2em;">
+	在某些struts2漏洞中已经开始改变这个观念,因为我们很难再绕过上面的安全限制了.去调用上下文的属性及静态方法执行恶意java代码.
+</p>
+<p style="text-indent:2em;">
+	但是"危险清单"中还有一个可以利用,OGNL表达式中居然可以去new一个java对象(见危险项清单 4.),对于构造PoC足够用了，而不需要上面那些条件.(之前也有类似的相关漏洞,我发现官方并不喜欢做代码审计的)
+</p>
+<p style="text-indent:2em;">
+	Apache Struts CVE-2013-2251 Multiple Remote Command Execution Vulnerabilities
+</p>
+<p style="text-indent:2em;">
+	这里漏洞原理大致是这样,作者一共提供了三个PoC:
+</p>
+<pre class="prettyprint">http://www.example.com/struts2-blank/example/X.action?action:%25{(new+java.lang.ProcessBuilder(new+java.lang.String[]{'command','goes','here'})).start()} (这个和后面两个是有点区别的，多测试目标时你会发现！)
+
+http://www.example.com/struts2-showcase/employee/save.action?redirect:%25{(new+java.lang.ProcessBuilder(new+java.lang.String[]{'command','goes','here'})).start()}
+
+http://www.example.com/struts2-showcase/employee/save.action?redirectAction:%25{(new+java.lang.ProcessBuilder(new+java.lang.String[]{'command','goes','here'})).start()}</pre>
+<pre class="prettyprint">action:
+redirect:
+redirectAction:</pre>
+<p style="text-indent:2em;">
+	这三关键字是struts2设计出来做短地址导航的,但它奇葩地方在于,如：redirectAction:${恶意代码}后面可以跟OGNL表达式执行,找这种相关的漏洞很好找（如果还有）,查看struts2源代码${},%{}等(struts2只认定这些特征的代码进入OGNL表达式执行流程)，struts2执行ognl表达式的实现功能的地方.
+</p>
+<p style="text-indent:2em;">
+	而java.lang.ProcessBuilder是另外一个可以执行命令的java基础类,还有后面大家手中的PoC(new文件操作及输入输出流相关危险类等),此时我们发现只要new对象然后调用其方法就可以了.不再需要上面的一些静态方法等.
+</p>
+<p style="text-indent:2em;">
+	这里只能将OGNL和struts2各打50大板了!
+</p>
+<p style="text-indent:2em;">
+	<a href="http://drops.wooyun.org/papers/340" target="_blank">[原文地址]</a> 
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">紫气东来</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-07-20
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C/">代码执行</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/exp/">EXP</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/java/">Java</a>
+          <a href="https://lcx.cc/tags/poc/">POC</a>
+          <a href="https://lcx.cc/tags/root/">Root</a>
+          <a href="https://lcx.cc/tags/struts/">Struts</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E6%81%B6%E6%84%8F/">恶意</a>
+          <a href="https://lcx.cc/tags/%E7%BB%95%E8%BF%87/">绕过</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3742/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">一朵奇葩</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3740/">
+            <span class="next-text nav-default">在线支付逻辑漏洞总结</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

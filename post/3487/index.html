@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>支付宝木马爆菊过程总结帖【附源码】 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="z7y" /><meta name="description" content="支付宝木马爆菊过程总结帖【附源码】。今晚遇到个木马牛..给我发了个支付宝木马,是想转我钱么。。。。打开360..竟然说安全,在虚拟机打开,然后 netstat -an 竟然无...用C32看了下...看不懂~发现一大堆url ，莫非是后台？打开url 竟然是p2p ,然后用虚拟机给自己的另外一个支付宝转账一元,发现钱跑到别人那去了…….经过Liyang基友的指点才得知,我分析错文件了,此木马是白加黑免杀手法。liyang (铁道游击队队长) | 2013-05-06 15:35为什么是p2p的网站，是因为你分析的文件错了~~你看到那一堆文件其实大部分是安全的，只有stat.dll是木马，这是白加黑木马~" />
+<meta name="keywords" content="支付宝木马爆菊过程总结帖【附源码】" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3487/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="支付宝木马爆菊过程总结帖【附源码】" />
+<meta property="og:description" content="支付宝木马爆菊过程总结帖【附源码】。今晚遇到个木马牛..给我发了个支付宝木马,是想转我钱么。。。。打开360..竟然说安全,在虚拟机打开,然后 netstat -an 竟然无...用C32看了下...看不懂~发现一大堆url ，莫非是后台？打开url 竟然是p2p ,然后用虚拟机给自己的另外一个支付宝转账一元,发现钱跑到别人那去了…….经过Liyang基友的指点才得知,我分析错文件了,此木马是白加黑免杀手法。liyang (铁道游击队队长) | 2013-05-06 15:35为什么是p2p的网站，是因为你分析的文件错了~~你看到那一堆文件其实大部分是安全的，只有stat.dll是木马，这是白加黑木马~" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3487/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-05-10T09:04:00&#43;08:00" />
+<meta property="article:modified_time" content="2013-08-04T09:31:09&#43;08:00" />
+
+<meta itemprop="name" content="支付宝木马爆菊过程总结帖【附源码】">
+<meta itemprop="description" content="支付宝木马爆菊过程总结帖【附源码】。今晚遇到个木马牛..给我发了个支付宝木马,是想转我钱么。。。。打开360..竟然说安全,在虚拟机打开,然后 netstat -an 竟然无...用C32看了下...看不懂~发现一大堆url ，莫非是后台？打开url 竟然是p2p ,然后用虚拟机给自己的另外一个支付宝转账一元,发现钱跑到别人那去了…….经过Liyang基友的指点才得知,我分析错文件了,此木马是白加黑免杀手法。liyang (铁道游击队队长) | 2013-05-06 15:35为什么是p2p的网站，是因为你分析的文件错了~~你看到那一堆文件其实大部分是安全的，只有stat.dll是木马，这是白加黑木马~"><meta itemprop="datePublished" content="2013-05-10T09:04:00&#43;08:00" />
+<meta itemprop="dateModified" content="2013-08-04T09:31:09&#43;08:00" />
+<meta itemprop="wordCount" content="3576">
+<meta itemprop="keywords" content="爆,爆菊,菊,木马,源码,支付宝,exe,HTTP,IP,Net,PHP,QQ,URL,Windows,安全,病毒,程序,分析,服务,服务器,密码,渗透,锁,网站,文件,虚拟机," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="支付宝木马爆菊过程总结帖【附源码】"/>
+<meta name="twitter:description" content="支付宝木马爆菊过程总结帖【附源码】。今晚遇到个木马牛..给我发了个支付宝木马,是想转我钱么。。。。打开360..竟然说安全,在虚拟机打开,然后 netstat -an 竟然无...用C32看了下...看不懂~发现一大堆url ，莫非是后台？打开url 竟然是p2p ,然后用虚拟机给自己的另外一个支付宝转账一元,发现钱跑到别人那去了…….经过Liyang基友的指点才得知,我分析错文件了,此木马是白加黑免杀手法。liyang (铁道游击队队长) | 2013-05-06 15:35为什么是p2p的网站，是因为你分析的文件错了~~你看到那一堆文件其实大部分是安全的，只有stat.dll是木马，这是白加黑木马~"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">支付宝木马爆菊过程总结帖【附源码】</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-05-10" class="post-time">
+          2013-05-10
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E7%88%86/"> 爆 </a>
+            <a href="https://lcx.cc/categories/%E7%88%86%E8%8F%8A/"> 爆菊 </a>
+            <a href="https://lcx.cc/categories/%E8%8F%8A/"> 菊 </a>
+            <a href="https://lcx.cc/categories/%E6%9C%A8%E9%A9%AC/"> 木马 </a>
+            <a href="https://lcx.cc/categories/%E6%BA%90%E7%A0%81/"> 源码 </a>
+            <a href="https://lcx.cc/categories/%E6%94%AF%E4%BB%98%E5%AE%9D/"> 支付宝 </a>
+            
+          </div>
+        <span class="more-meta"> 约 3576 字 </span>
+          <span class="more-meta"> 预计阅读 8 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	<strong><span style="color:#E53333;">分集剧情回顾：</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3472/" target="_blank">360对你真的起作用了吗？bypass....分析支付宝网银木马，反爆菊花</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3473/" target="_blank">接上一章节,支付宝木马,后续情节</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3486/" target="_blank">接上一章节,支付宝木马,后续情节【2】</a> 
+</p>
+<p style="text-indent:2em;">
+	总结帖：
+</p>
+<p style="text-indent:2em;">
+	今晚遇到个木马牛..给我发了个支付宝木马,是想转我钱么。。。。
+</p>
+<p style="text-indent:2em;">
+	打开360..竟然说安全,在虚拟机打开,然后 netstat -an 竟然无...
+</p>
+<p style="text-indent:2em;">
+	用C32看了下...看不懂~
+</p>
+<pre class="prettyprint">http://rel.netsoft2005.com/pg.php
+http://jump.netsoft2005.com/quit.php
+http://rel.netsoft2005.com/promote.php
+http://jump.netsoft2005.com/rm.php
+http://www.netsoft2012.com/cfg/getconf.php</pre>
+<p style="text-indent:2em;">
+	发现一大堆url ，莫非是后台？
+</p>
+<p style="text-indent:2em;">
+	打开url 竟然是p2p ,然后用虚拟机给自己的另外一个支付宝转账一元,发现钱跑到别人那去了…….
+</p>
+<p style="text-indent:2em;">
+	经过Liyang基友的指点才得知,我分析错文件了,此木马是白加黑免杀手法。
+</p>
+<p style="text-indent:2em;">
+	liyang (铁道游击队队长) | 2013-05-06 15:35
+</p>
+<p style="text-indent:2em;">
+	为什么是p2p的网站，是因为你分析的文件错了~~
+</p>
+<p style="text-indent:2em;">
+	你看到那一堆文件其实大部分是安全的，只有stat.dll是木马，这是白加黑木马~
+</p>
+<p style="text-indent:2em;">
+	一下是我很久之前写的一小篇文章中的
+</p>
+<p style="text-indent:2em;">
+	我们今天的重点讨论白加黑的技术。旧版本的金山网盾的浏览器首页锁定功能锁定的主页是通过读取一个配置文件得到的，而金锁木马把里面的内容改为某个特定的网址，而金山网盾在加载配置文件的时候并没有校验文件内容，于是就把被木马修改的网址锁定为主页。
+</p>
+<p style="text-indent:2em;">
+	这就是一个木马病毒利用可信程序进行破坏的典型案例。这类病毒中可信程序一般被称为Loader,该类木马经常使用的Loader有老版本的好压和暴风影音等，病毒作者之所以选择它们作为病毒Loader,是因为它们在运行时会加载其对应的动态链接库,这个和DLL劫持又有相似之处。它们利用了Windows系统中加载DLL的一个特点。一个exe程序要加载DLL文件是在磁盘上搜索DLL文件，而不是按照指定路径加载。如果DLL文件被替换的话，可能会造成一定的问题，如犇牛病毒，软件目录下会出现大量的usp10.dll文件。
+</p>
+<p style="text-indent:2em;">
+	经过大牛的指点,总算明白点道理了。。。。。。
+</p>
+<p style="text-indent:2em;">
+	接下来轮到zazaz基友按耐不住基情了
+</p>
+<p style="text-indent:2em;">
+	zazaz | 2013-05-06 16:58
+</p>
+<p style="text-indent:2em;">
+	里面的文件除了stat.dll以外都是正常文件，ppover.exe运行时会加载stat.dll，正常的stat.dll被替换成了病毒文件，stat.dll用Themida壳加密了，程序运行后会自动把所有文件复制到C:\Program Files\Windows Media Player\目录，ppover.exe复制到此目录名字wmplay.exe，创建启动项C:\Program Files\Windows Media Player\wmplay.exe。
+</p>
+<p style="text-indent:2em;">
+	stat.dll会创建mmc.exe为暂停状态，并且把病毒exe写入mmc的内存，然后修改mmc的执行入口，然后恢复执行mmc。我把这个病毒exe提取出来了，直接分析这个就行了，zip密码：test，<a href="http://pan.baidu.com/share/link?shareid=558947&uk=2516935295" target="_blank">test.zip </a> 
+</p>
+<p style="text-indent:2em;">
+	于是 把马儿下载到虚拟机，打开,然后打开 www.alipay.com 转款给V基 1块钱
+</p>
+<p style="text-indent:2em;">
+	然后抓虚拟机的包,得到几个信息：
+</p>
+<p style="text-indent:2em;">
+	1. http://nnn.xxccdf.com/ 是他收信地址.
+</p>
+<p style="text-indent:2em;">
+	2. 我给别人转账的时候,他会弹出个
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2179_1.jpg" target="_blank"><img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2179_1.jpg" width="780" height="397" /></a> 
+</p>
+<p style="text-indent:2em;">
+	3. 输入验证码，netstat -an 发现占用了一堆 127.0.0.1:2233 端口,拿本机做转发代理..
+</p>
+<p style="text-indent:2em;">
+	<img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2180_2.jpg" width="533" height="253" /> 
+</p>
+<p style="text-indent:2em;">
+	4. 再者抓到个他的进钱接口的收款密码
+</p>
+<p style="text-indent:2em;">
+	<img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2181_3.jpg" width="714" height="161" /> 
+</p>
+<p style="text-indent:2em;">
+	我邪恶的把它进钱接口里仅剩的18块钱消费完了….
+</p>
+<p style="text-indent:2em;">
+	<img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2182_4.jpg" width="769" height="338" /> 
+</p>
+<p style="text-indent:2em;">
+	接下来，该讲述下怎么偷他源码了..
+</p>
+<p style="text-indent:2em;">
+	得到他的IP和域名了,自然是whois一下顺便查下他的IP段是哪个IDC的~
+</p>
+<p style="text-indent:2em;">
+	经过一番名侦探柯南般的侦查，发现他的VPS竟然是在他大爷的 某某服务器提供商 租的~
+</p>
+<p style="text-indent:2em;">
+	好吧,某某服务器提供商我来了,先查了下社工库,没发现什么,然后百度发现他上过的网站和论坛,日下之,拿到数据库,又得到一个他的常用密码了,你说我人品是爆格了吧~！！！
+</p>
+<p style="text-indent:2em;">
+	但是我得先知道他在某某服务器提供商的用户名是多少,这该怎么办呢….
+</p>
+<p style="text-indent:2em;">
+	突然发现个好玩的功能~
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/2330_5-fix.jpg" target="_blank"><img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2330_5-fix.jpg" width="780" height="278" /></a> 
+</p>
+<p style="text-indent:2em;">
+	人品爆格,一猜就中,用户名果断跟域名有关,大多数SB小白站长的习惯哈！！
+</p>
+<p style="text-indent:2em;">
+	<img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2331_6-fix.jpg" width="457" height="154" /> 
+</p>
+<p style="text-indent:2em;">
+	密码果断就是他的常用密码哇……….. 多亏了 可爱得啦大仙基友帮忙,哈哈哈！
+</p>
+<p style="text-indent:2em;">
+	嗯，不错….发现好东西了
+</p>
+<p style="text-indent:2em;">
+	<img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2177_6.jpg" width="746" height="116" /> 
+</p>
+<p style="text-indent:2em;">
+	你说这感情好不好？反正我是感觉很棒,接下来该想想怎么进服务器了…..
+</p>
+<p style="text-indent:2em;">
+	控制面板的功能只有 关闭VPS - 开启VPS - 重装系统 三个主要功能
+</p>
+<p style="text-indent:2em;">
+	怎么办呢，身为许多白富美梦中情人的z7y屌丝就想到了一个很棒的办法…
+</p>
+<p style="text-indent:2em;">
+	忽悠客服去
+</p>
+<p style="text-indent:2em;">
+	<img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2332_8-fix.jpg" width="334" height="350" /> 
+</p>
+<p style="text-indent:2em;">
+	漫长的等待10分钟…………
+</p>
+<p style="text-indent:2em;">
+	10. 9. 8.7.6.5.4.3.2.1.0
+</p>
+<p style="text-indent:2em;">
+	十分钟到~叮铃铃,当然不是下课……是骚扰客服去！
+</p>
+<p style="text-indent:2em;">
+	<img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2333_9-fix.jpg" width="245" height="256" /> 
+</p>
+<p style="text-indent:2em;">
+	为了给客服个好印象,当然得赞赞人家呐。。。。。
+</p>
+<p style="text-indent:2em;">
+	许多基友就开始想骂我了
+</p>
+<p style="text-indent:2em;">
+	<img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2187_10.jpg" width="211" height="175" /> 
+</p>
+<p style="text-indent:2em;">
+	总算客服帮我破解好密码了重置为：fireinter
+</p>
+<p style="text-indent:2em;">
+	马上连上服务器,打包源码,走人喽！！！
+</p>
+<p style="text-indent:2em;">
+	邪恶的完成鸟~
+</p>
+<p style="text-indent:2em;">
+	收尾篇：
+</p>
+<p style="text-indent:2em;">
+	第二天登陆他进钱账户一看,发现原来的18早已变成 2704。。。。
+</p>
+<p style="text-indent:2em;">
+	身为屌丝的我,自然不会放过！！
+</p>
+<p style="text-indent:2em;">
+	<img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2188_11.jpg" width="243" height="142" /> 
+</p>
+<p style="text-indent:2em;">
+	<img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2189_12.jpg" width="577" height="664" /> 
+</p>
+<p style="text-indent:2em;">
+	<img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2174_3.jpg" width="170" height="86" /> 
+</p>
+<p style="text-indent:2em;">
+	<img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2190_14.jpg" width="311" height="258" /> 
+</p>
+<p style="text-indent:2em;">
+	给基友们一人上一个会员先~~~ 全部年费 1-5年都有,哈哈哈哈
+</p>
+<p style="text-indent:2em;">
+	改了他网站的内容不是想装逼,我是想等管理员来加我QQ，我好套取更多信息,果断的管理员果然加我了,我忽悠到他教我使用这个后台源码了……哈哈哈哈！！
+</p>
+<p style="text-indent:2em;">
+	<img title="支付宝木马爆菊过程总结帖【附源码】" alt="支付宝木马爆菊过程总结帖【附源码】" src="/file/old/2187_10.jpg" width="211" height="175" /> 
+</p>
+<p style="text-indent:2em;">
+	在这里感谢: @小胖子 @zazaz @liyang @法海 @倒霉熊 @健宇 @黑匣子 @z7y @Mujj @苦战 @可爱的啦大仙 对此次旅程的帮助,谢谢！
+</p>
+<p style="text-indent:2em;">
+	By: z7y
+</p>
+<p style="text-indent:2em;">
+	<s>源码下载地址：【</s><a href="http://pan.baidu.com/share/init?shareid=472870&uk=2819483685" target="_blank"><s>点我下载</s></a><s>】 提取码：52ju </s>
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;">（2013-8-4 9:30:59 补充：</span><span style="color:#E53333;">Fuck，原作者把网盘密码改了，Shit</span><span style="color:#E53333;">）</span>
+</p>
+<p style="text-indent:2em;">
+	<a href="http://zone.wooyun.org/content/3654" target="_blank">source</a> 
+</p>
+<p>
+	<strong>免查水表二货吐槽：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1#
+</p>
+<p style="text-indent:2em;">
+	momo | 2013-05-10 02:05
+</p>
+<p style="text-indent:2em;">
+	AD出租，z7y你妹啊。
+</p>
+<p style="text-indent:2em;">
+	2#
+</p>
+<p style="text-indent:2em;">
+	momo | 2013-05-10 02:06
+</p>
+<p style="text-indent:2em;">
+	你还@你自己谢，我擦。
+</p>
+<p style="text-indent:2em;">
+	3#
+</p>
+<p style="text-indent:2em;">
+	momo | 2013-05-10 02:08
+</p>
+<p style="text-indent:2em;">
+	源码呢？
+</p>
+<p style="text-indent:2em;">
+	4#
+</p>
+<p style="text-indent:2em;">
+	蟋蟀哥哥 (popok是孙子!![just for fun]) | 2013-05-10 02:09
+</p>
+<p style="text-indent:2em;">
+	居然没给我充qq会员
+</p>
+<p style="text-indent:2em;">
+	5#
+</p>
+<p style="text-indent:2em;">
+	小胖子 (我是小胖子，我为z7y代言！！) | 2013-05-10 02:11
+</p>
+<p style="text-indent:2em;">
+	哈哈哈哈，24K纯真屌丝
+</p>
+<p style="text-indent:2em;">
+	6#
+</p>
+<p style="text-indent:2em;">
+	Mujj (找个玩渗透网站的、教我玩渗透、我给他8位qq和情侣) | 2013-05-10 02:13
+</p>
+<p style="text-indent:2em;">
+	找个玩渗透网站的、教我玩渗透、我给他8位qq和情侣.
+</p>
+<p style="text-indent:2em;">
+	7#
+</p>
+<p style="text-indent:2em;">
+	枫叶 | 2013-05-10 02:13
+</p>
+<p style="text-indent:2em;">
+	没收到qq会员，好伤心 感觉不会再爱了
+</p>
+<p style="text-indent:2em;">
+	8#
+</p>
+<p style="text-indent:2em;">
+	t00000by57 | 2013-05-10 02:14
+</p>
+<p style="text-indent:2em;">
+	点我下载 下载个铲铲
+</p>
+<p style="text-indent:2em;">
+	9#
+</p>
+<p style="text-indent:2em;">
+	z7y (我是z7y，我为小胖子代言！！) | 2013-05-10 02:36
+</p>
+<p style="text-indent:2em;">
+	下载链接：http://pan.baidu.com/share/link?shareid=472870&amp;uk=2819483685 提取密码:52ju
+</p>
+<p style="text-indent:2em;">
+	10#
+</p>
+<p style="text-indent:2em;">
+	liyang (铁道游击队队长) | 2013-05-10 06:31
+</p>
+<p style="text-indent:2em;">
+	哈哈~~首先谢谢好基友啊~
+</p>
+<p style="text-indent:2em;">
+	那个某某服务器提供商的客服安全意思也太差了吧。。。。。。
+</p>
+<p style="text-indent:2em;">
+	11#
+</p>
+<p style="text-indent:2em;">
+	廷廷 (想法最重要) | 2013-05-10 07:49
+</p>
+<p style="text-indent:2em;">
+	保存了，研究价值高
+</p>
+<p style="text-indent:2em;">
+	12#
+</p>
+<p style="text-indent:2em;">
+	昵称 (&lt;/textarea&gt;'"&gt;&lt;script src) | 2013-05-10 08:16
+</p>
+<p style="text-indent:2em;">
+	只有服务器源码，没有木马源码，如何忽悠到木马 源码就更牛逼了
+</p>
+<p style="text-indent:2em;">
+	13#
+</p>
+<p style="text-indent:2em;">
+	liyang (铁道游击队队长) | 2013-05-10 08:18
+</p>
+<p style="text-indent:2em;">
+	@昵称 同意啊~~楼主看看能把木马的源码忽悠来么~~
+</p>
+<p style="text-indent:2em;">
+	14#
+</p>
+<p style="text-indent:2em;">
+	etcat | 2013-05-10 08:45
+</p>
+<p style="text-indent:2em;">
+	貌似 有个邪恶的想法 把过程从新提交乌云 写个某某网妹妹免费送您服务器 会不会很吊
+</p>
+<p style="text-indent:2em;">
+	15#
+</p>
+<p style="text-indent:2em;">
+	z7y (我是z7y，我为小胖子代言！！) | 2013-05-10 08:47
+</p>
+<p style="text-indent:2em;">
+	@昵称 @liyang 木有木马源码，但是有木马客户端和服务端，就是不知道该怎么生成出木马来，因为木马源码不可能会放在服务器的吧！！！！
+</p>
+<p style="text-indent:2em;">
+	16#
+</p>
+<p style="text-indent:2em;">
+	liyang (铁道游击队队长) | 2013-05-10 09:00
+</p>
+<p style="text-indent:2em;">
+	@z7y 这个应该不像是远控木马批量生成的吧，应该是自己有源代码编译的~~
+</p>
+<p style="text-indent:2em;">
+	17#
+</p>
+<p style="text-indent:2em;">
+	z7y (我是z7y，我为小胖子代言！！) | 2013-05-10 09:01
+</p>
+<p style="text-indent:2em;">
+	好吧，晚点放出客户端和服务端，看看有木有大牛能写出木马或反编出木马，哈哈哈……想复现木马功能测试看看！！可是捏url加密了。。
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3486/" target="_blank">接上一章节,支付宝木马,后续情节【2】</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3473/" target="_blank">接上一章节,支付宝木马,后续情节</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3472/" target="_blank">360对你真的起作用了吗？bypass....分析支付宝网银木马，反爆菊花</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3439/" target="_blank">揭秘诈骗千万人民币的团伙及具体位置分析</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3435/" target="_blank">核总霸气分析“天津丽人女子医院”主站被黑、挂淘宝客、黑帽SEO全过程！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3401/" target="_blank">接着核总的《打击钓鱼，人人有责》之后的故事...</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3400/" target="_blank">打击钓鱼，人人有责……</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3387/" target="_blank">XSS挖出一个黑产团体</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3372/" target="_blank">追查黑客姓名,邮箱,支付宝信息，惊现大规模僵尸网络，要求警方介入处理！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3371/" target="_blank">服务器被入侵之后，反爆1433抓鸡黑客菊花，并公布大量黑阔账号密码</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3309/" target="_blank">耍了一个发给我网购木马的骗子~~</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3067/" target="_blank">东京大学加密招生海报解密过程（内含妹子）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2851/" target="_blank">简单分析一个通过 js 劫持进行黑帽 SEO 做淘宝客的案例</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1120/" target="_blank">某人肉搜索的典型案例分析 一群推理神牛</a> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="3890,3487,58.46.32.168">
+<p>佚名 @ 2013-05-10 14:51:44</p>
+<p style="text-indent:2em">后台真不会用</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="3903,3487,123.7.51.113">
+<p>骑猪吃老虎 @ 2013-05-11 01:09:01</p>
+<p style="text-indent:2em">本机做转发代理???我不是很懂！请大牛赐教</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">可能是因为木马需要本机篡改数据包，所以使用代理转发……</p>
+</blockquote>
+<blockquote id="3909,3487,118.125.248.13">
+<p>佚名 @ 2013-05-11 12:22:47</p>
+<p style="text-indent:2em">吓我一大跳 我还以为是搞的马的源码！白高兴</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="3914,3487,211.95.72.6">
+<p>专打装逼狗哈哈哈 @ 2013-05-11 19:12:45</p>
+<p style="text-indent:2em">U2FsdGVkX1+DxuZE3uBtbQseBKNFzyaZMGHeTfO4dP7tLn1ijpuiOIglcHLl60mdHXAmgGnYpZZTEPNhkbi2vtt4V4okq0bvWfaxdFP5fXZutWnNog+NxJo+j4dGw4uj9vO7lVkVZXjh/XauywhqpziwJ5K8hKBXwWO8cxONX9jklnekx7SPkM1FNKcYJykivvHbxvvzgFqn2SgR8R1AgvYkU3Qs15OwOxuIPbVAHYdVV7vgEDd83DZEa0nvCk83euUXK4nLvZxLZ1S8WNheaImSwuvIFi7HTRRsy+4/mctfvU3Pn7g8JMcKq/w/W+HiXamW/tpteJxt6ZjQcn2MaWpVgeeZwyt8rcFVns+/LfvB5DoplZcWZwH7/H5Vmyr7vbtN+JtTlRzO8BSZvkHEqi28XoGxAoeZ/VQcOMWJFPOrVn4Igx/zyDzen9xX9iO8j+32zRCVnwNf8RtNYnDp+v8Ax9NSmAcxvbxcHYJamUKy5A3CN9l/zkJdI+4mvIr86+Dls7oYqiaiaPsbwv+YXmRBEFLvr2Ju1nidGh3/6HfYufoEJye4mlKvR0cvuWd+uXS+AYenmCOWQCcXSfb8n4+E1v7IDj4q1pzbGpFG2cjLIxI94CnQKdl9gghaPzsm</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">U2FsdGVkX19qVdRXugEIZdmG3aImmsE8UjVC0ErFkKw0QkeUlOcKseiumweB9rNI/iiSYCUVZiK2fkL7feHVK6SZ+F7PSyKWIBrjbYWF6Gkb7GAchWDBkdFO1wbke3xaFdhEuvorva7z6ARMYltZsDel8HtA9wG9hCBeq9REm2WowAzuBZd69AllB8dROOY4MFd3vg9zOW2R2s7eQIItS/flu/hRkAQs7sfCMqZwtdc=</p>
+</blockquote>
+<blockquote id="3915,3487,211.95.72.6">
+<p>看你还装逼不 @ 2013-05-11 19:18:24</p>
+<p style="text-indent:2em">U2FsdGVkX1/ELc/IlN6eY1nFzoptCya51ZfRmWmdjX9XKi5JY57/4tLMqvVAKAJQtOiAYBqwFbim10WGHTbnoa4fDmNaiWmBxapaSPEjZ/gjXb3Lp65P4PgTSoRgaD/SSzbr95JzqSdDDiWux5aMWzz3ovn5CtpwelVj15I1fEu54vGEwboE7AfaFcX+/U9pZCUs8Eto6tc319bqJoohz1nvngHMqmN5JXBDYDPVk+WvigZLqcjG1mMROIrNh1WeMYnVJLVYKuD8PVyk+e+6XVQzBL425HHTVCwT/IpSWAP9Wy6wh8psliUugD0mHo2B9Dy6dbFvZdtxoUhXjoT2vqB3owhdB4UJOpUOCk8HoEF0/bG3pK0N+zOo9Cqoiz/EyGRLuH05rUkGTfzirEXXOTorowZaLVMAXUFSFZIIvXGJ7rD7lYIxM2JeOc76+U7T73MPETJ3Hkq1Ei65w4jGE7MQR9YaKSRHXQnd6ZwXCQM7hKVVxbMpKfHgPITCb93LY6hggu8Ngr9lntOFvL9QUeLWn3ANUGy8al7EUtipi8UqrgWj+98Uw4hV2nZQ3wm+YVGCnsb3+MmlCkmOmgOAhPNJcmS90Y0HTkF8iN3abCN+euDhsuD8GrkBhOLMQVrYiOjV1qgjN/oH6t74sbDCPS/gkvGlcAm8HTNQF0LtOxcm3/0jC94DiTcVEwFA9cOa6H6udnvohRcc/f0hkjMnLgIEdqItBttomNSZDO0KedoiFDQQeK0UV5a8fh3ZiaYqg71mukPMmrg4FGObUoXjGJWfp/rPhtOi+9tSeRnGae/r7KB08vSRKylWQyO/WGL78JSEk36w8FC3tWbWzHtToFZpOnm86lCsN9N4qXiLe3szw/RpNwTRZyTXy3iuPUhRbUR0o0nUxzAZ8NxgHPs+1V6GIZLJHlVcgtwvI3mT+Kx2Gr/iNLfleYLoitx+QrTCLTwQix3FrVYjFa77j7CzKzdCYBkAK9z0yHUq8IMqDJc=</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">U2FsdGVkX18qpq8LVUtkO0okFkvsavFVatgTc4XCgZdDHeQXHQo1doBfaP5OSfNLYXWKVohmN84jESU2hGl40oyNxS0sZwW5q0x3wV8nizL8xOXSg+s21srVOVv6ZKjELqFMDxsfCmCwD814ScwcljZGxoh3Wwh0Pyw4zHpkiaDM7uFvZbU0zPlPABp16VC3Vm7xApGQ7dRkvHDfT9PBN+P/qD56T0qfsOySCKptDOXRQAcrUVTvpK7NsZuQ99ho</p>
+</blockquote>
+<blockquote id="3918,3487,58.17.24.55">
+<p>不装逼你绝对会死 @ 2013-05-11 21:21:02</p>
+<p style="text-indent:2em">U2FsdGVkX18/cR8FsDQARFF/4OEX6+InMp605SxI0dpvS0Z798Ho9nm76VdmY6i4jVbEmWef2KOG1r+IeJCz+T4YenH/sGOjp4/o9nufVPp1YUhRsklQ/0881y4MLSYIWdNW+tNXPwxe3hjDcM6wOnGftWVrxrN6s5nsMnyIq7tLffPy16gLmNsmylDZhmbRdLXMjUerowxuqY0F3zYYAc0C4SfLGH+AlJOoPXc6AkcCa5weiu0IznC0hOaTf8O3RgRJoK6oHLcQd1AsS2e5/LtAZWpK4HBs7xtTeu6qQHWLXOT+Bcyh7/atTfMhnjVZ1A8LFaJfqLkUmapqaIVjG2+/zpohYie7xhQLMO2BYqvCumb8qupPFW6o87CSThlhgSzlluzNfIv9tEZ9cfo2O4GjIP5eBAukULgpOZncwIBe5xiSmBiOCntXnQvu237FIAZqZv+rWtlFf7fmSaarOxeYu33HKe4aZQP/uyQ4etNLwsE92vPiq3WhjbP3qotMfZB03naxbf984IwJs4LUashnyHSI1nQrJKHlbhaG3Iwv4sEGl/RkYmHvARaLPPtbQgu3sfmUzOPK9eBNkSK8sbwCZa7ZTDlKuq9aYUou8fE5pEP7KjtRdj+a1RIXL0FOBGI5oy4zABIPzN4fCKYwq49vwhkUyqoWxHAXha20Q/0zS4G/yqzQkS0u4q2b6odom9lusYdMPydjGU9XqbxchEJQz1qRP2dh92wJ7vbLLSKUpepAmBeNkAlGPMkQS2Bw7JlDU2RC/8e6tgWQV64wte8fCwlMzrvyKJE+LuQWQ4IBsCA+QA9EPUy76TZ8iJE6NBFkw/yr3YgLjvCt0k9TY7MuwaHnQNkwJMyBP3F/fG5TFcHXfzJVrFx6JOORKhaJ6ux6obdxYWxRG7iH6U+jtOHeJijuDccJu5nnD+h0PzcWSibNE0RwzlQNL+l6t/Cy1h6XonCeVyBy2G/fFa/5w7YJ2VMUYibUkV9iVRKnEGTGeAGQpVWs1ONbdV769zCgD0HMY9TCucpP0vMDApzvqY7xpbaVputB/lEe1CLnV44TZFVC0xKsn18hrkZeHHGRklNoTZjo/xrMouniIiBbEFLEMvo7VKfwKw5tWZwueLCk6LZCxpC3IiQDMoUrjZbmUV+mF/lQDwNLCh0dNksLxA==</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">U2FsdGVkX19lU5C4YfnsOetCklaDwQBywjMPJCCRsBnLG83u1ASRvAFH/QYkKRn6yXvZycJSJYAP3PkMDJBrJ0I9b13gNCa2yQsIFMSEWRi7sIlZC5EHwliDWSmZPNVONOAmNctrKhOfjXgQQKmeOg==</p>
+</blockquote>
+<blockquote id="3919,3487,58.17.24.55">
+<p>我要告诉大家真心 @ 2013-05-11 21:26:56</p>
+<p style="text-indent:2em">U2FsdGVkX18EqnNUZfZmw+TWZLd4mWzf08YlJvOrTuFIYTEGL1oa5/8jJK1FFD+U9TPYS7+FqDbiZ2Hfu2Dqixd8vYhARPZgJwAI1LetRfH/p4yCdhDojV3hBeLqsCk7vKtRnTmDPxgXweSkyOWXAw06sfU9FZK9mPlimU/K1F+AXrp8O7kPLQZmbL7xTNJucQmQ9NP5JwmbqZefr/WadOsBDWZ5pV+PWKZT0WhvX4i9Dd8h6CzEU0zge/pOd7ixnqZp37OiqB1fC4z9m0FmlMJ7TTyHL8Xzw3NzfuvzzfDh4n26pYrXuyLpB3qG4wZz68SmHn4Xny94kZ/G5wnpcvinAUHzgCdOqfy6NJatjlfFW/xV9gPYCUi6ZdHCKdY/cNl0RQVCoy47r9qYyrRBQ+W0JhFh8wXiWQJipi1pPTpHZ0dUc5yb+LBrVux9Sljq7sUi07vCmwAbe7LJ2wc9fvmwtxziAZGHnhBlZIRIrIVoLVohCoKwj3r6iSHPlPXcE06PrrVXrOVvdJU9iKSp1GRNzNpZ6GHpXGQZ4L3SGWU4JcfzCSvTDMUjkYtxeaYd2wRexRO6EVz24jYJQ5+9tqeYGYIKqZBJ6sLejwmels3+cblL/YTQGrdeSBtFutrJYAv22yFz3qo+9xTQG6uxr4as2oFDpBvnVsCbfyNaDUkyHz8FBhCrRe5vsXGmWrFPPVWsEMm1RXivp2rqMXgjDw0oLRFkspVDy0HTKtwsgWxuY+jXiPahGlNY5ZtwGIfhmNs8kq7PnzZyg2Z7DLBJGRswdixVCtGynZdwtMNexvs=</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">U2FsdGVkX19iu5FBg1kVSNrgunV5vfLs8bEG8Pu7grcV/UrXBv1idHjwTEiqPsVCf6vUdzuALdFIv2m9ZM6YXUu35IO5Pg84IH5dQco8zSYX4CPCh2y4PpHgEk+nN5oUdEYHWWnmLtnuxGbGM2xuRVeA4lPj2WSFwpiM5pXF9azQ1XQQvs7QSw/RCiC61+10TXcK2ljLrVU+KfX8CIIAiF1tVv99C3CCHqAdnwIkmlE=</p>
+</blockquote>
+<blockquote id="4103,3487,125.42.14.185">
+<p>Troy @ 2013-05-30 16:13:09</p>
+<p style="text-indent:2em">核总犀利~~</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">orz...</p>
+</blockquote>
+<blockquote id="4156,3487,182.37.46.239">
+<p>佚名 @ 2013-06-04 01:47:28</p>
+<p style="text-indent:2em">百度pan停止下载了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额……</p>
+</blockquote>
+<blockquote id="4170,3487,118.252.74.112">
+<p>路人 @ 2013-06-06 18:13:01</p>
+<p style="text-indent:2em">百度盘啊。。核总补下吧</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额，貌似我也没保存……</p>
+</blockquote>
+<blockquote id="4416,3487,27.226.197.49">
+<p>我擦 @ 2013-07-03 13:34:43</p>
+<p style="text-indent:2em">百度盘用不了了，，能不能补个</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额，没有备用连接，你找找有木有转载的……</p>
+</blockquote>
+<blockquote id="4652,3487,1.84.107.195">
+<p>佚名 @ 2013-08-03 16:33:31</p>
+<p style="text-indent:2em">源码无法下载，请补充</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">啊，Fuck，原作者把网盘密码改了，Shit，你找找有没有转载的，蛋疼……</p>
+</blockquote>
+<blockquote id="5364,3487,116.248.36.227">
+<p>佚名 @ 2013-12-02 14:06:17</p>
+<p style="text-indent:2em">求教，怎么通过支付密码的呢？？？我岂不是看着1WQB动不了？？？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">估计密码一样吧……</p>
+</blockquote>
+<blockquote id="5367,3487,116.248.36.227">
+<p>佚名 @ 2013-12-02 21:10:12</p>
+<p style="text-indent:2em">登录密码跟支付密码不可能一样，莫非LZ人品爆发用其他的常用密码？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="7398,3487,183.44.134.120">
+<p>佚名 @ 2015-02-09 13:05:30</p>
+<p style="text-indent:2em">楼主，下载链接不存在了。重新分享下呗</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">木有了，没有备份…… -_-|||</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">z7y</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-08-04
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E7%88%86/">爆</a>
+          <a href="https://lcx.cc/tags/%E7%88%86%E8%8F%8A/">爆菊</a>
+          <a href="https://lcx.cc/tags/%E8%8F%8A/">菊</a>
+          <a href="https://lcx.cc/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+          <a href="https://lcx.cc/tags/%E6%BA%90%E7%A0%81/">源码</a>
+          <a href="https://lcx.cc/tags/%E6%94%AF%E4%BB%98%E5%AE%9D/">支付宝</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E7%97%85%E6%AF%92/">病毒</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E6%B8%97%E9%80%8F/">渗透</a>
+          <a href="https://lcx.cc/tags/%E9%94%81/">锁</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/">虚拟机</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3488/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">上海伊莱美医院被黑、黑帽SEO做淘宝客，核总深入追查，揪出内鬼！</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3486/">
+            <span class="next-text nav-default">接上一章节,支付宝木马,后续情节【2】</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

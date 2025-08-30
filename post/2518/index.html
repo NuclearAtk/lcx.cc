@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>[修正] 终于搞清楚 lcx、lcx.exe、老马、海阳顶端木马之间的关系了 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="今天终于搞清楚 lcx、lcx.exe、htran1.0、myvbscript 的关系了，今天终于搞清楚 lcx、lcx.exe、老马之间的关系了，终于搞清楚 lcx、lcx.exe、老马、海阳顶端木马之间的关系了。刚才 lcx 前辈加我，原因是本站域名的关系，一直有人误会，lcx 前辈不胜骚扰，畅谈了一番。Lcx 是国内 05、06 年的老前辈，前辈姓李，尊名李春晓（拼音缩写：lcx）。前辈最早的网名是 lcx，也就是那位写过海阳顶端 Asp 木马的 lcx。前辈之前的网站是：www.haiyangtop.net，后来被人抢注了（是个日本站），现在就剩一个百度 Blog 了：http://hi.baidu.com/new/myvbscript" />
+<meta name="keywords" content="今天终于搞清楚 lcx、lcx.exe、htran1.0、myvbscript 的关系了，今天终于搞清楚 lcx、lcx.exe、老马之间的关系了，终于搞清楚 lcx、lcx.exe、老马、海阳顶端木马之间的关系了" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/2518/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="[修正] 终于搞清楚 lcx、lcx.exe、老马、海阳顶端木马之间的关系了" />
+<meta property="og:description" content="今天终于搞清楚 lcx、lcx.exe、htran1.0、myvbscript 的关系了，今天终于搞清楚 lcx、lcx.exe、老马之间的关系了，终于搞清楚 lcx、lcx.exe、老马、海阳顶端木马之间的关系了。刚才 lcx 前辈加我，原因是本站域名的关系，一直有人误会，lcx 前辈不胜骚扰，畅谈了一番。Lcx 是国内 05、06 年的老前辈，前辈姓李，尊名李春晓（拼音缩写：lcx）。前辈最早的网名是 lcx，也就是那位写过海阳顶端 Asp 木马的 lcx。前辈之前的网站是：www.haiyangtop.net，后来被人抢注了（是个日本站），现在就剩一个百度 Blog 了：http://hi.baidu.com/new/myvbscript" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/2518/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-05-24T12:31:28&#43;08:00" />
+<meta property="article:modified_time" content="2012-05-25T09:33:25&#43;08:00" />
+
+<meta itemprop="name" content="[修正] 终于搞清楚 lcx、lcx.exe、老马、海阳顶端木马之间的关系了">
+<meta itemprop="description" content="今天终于搞清楚 lcx、lcx.exe、htran1.0、myvbscript 的关系了，今天终于搞清楚 lcx、lcx.exe、老马之间的关系了，终于搞清楚 lcx、lcx.exe、老马、海阳顶端木马之间的关系了。刚才 lcx 前辈加我，原因是本站域名的关系，一直有人误会，lcx 前辈不胜骚扰，畅谈了一番。Lcx 是国内 05、06 年的老前辈，前辈姓李，尊名李春晓（拼音缩写：lcx）。前辈最早的网名是 lcx，也就是那位写过海阳顶端 Asp 木马的 lcx。前辈之前的网站是：www.haiyangtop.net，后来被人抢注了（是个日本站），现在就剩一个百度 Blog 了：http://hi.baidu.com/new/myvbscript"><meta itemprop="datePublished" content="2012-05-24T12:31:28&#43;08:00" />
+<meta itemprop="dateModified" content="2012-05-25T09:33:25&#43;08:00" />
+<meta itemprop="wordCount" content="7437">
+<meta itemprop="keywords" content="exe,木马,ASP,bug,Cmd,CSS,HTTP,Net,程序,代码,工具,黑客,漏洞,论坛,上传,搜索,网络,网站," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[修正] 终于搞清楚 lcx、lcx.exe、老马、海阳顶端木马之间的关系了"/>
+<meta name="twitter:description" content="今天终于搞清楚 lcx、lcx.exe、htran1.0、myvbscript 的关系了，今天终于搞清楚 lcx、lcx.exe、老马之间的关系了，终于搞清楚 lcx、lcx.exe、老马、海阳顶端木马之间的关系了。刚才 lcx 前辈加我，原因是本站域名的关系，一直有人误会，lcx 前辈不胜骚扰，畅谈了一番。Lcx 是国内 05、06 年的老前辈，前辈姓李，尊名李春晓（拼音缩写：lcx）。前辈最早的网名是 lcx，也就是那位写过海阳顶端 Asp 木马的 lcx。前辈之前的网站是：www.haiyangtop.net，后来被人抢注了（是个日本站），现在就剩一个百度 Blog 了：http://hi.baidu.com/new/myvbscript"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">[修正] 终于搞清楚 lcx、lcx.exe、老马、海阳顶端木马之间的关系了</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-05-24" class="post-time">
+          2012-05-24
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/exe/"> exe </a>
+            <a href="https://lcx.cc/categories/%E6%9C%A8%E9%A9%AC/"> 木马 </a>
+            
+          </div>
+        <span class="more-meta"> 约 7437 字 </span>
+          <span class="more-meta"> 预计阅读 15 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	哈哈哈，别笑话，本人接触网络迟，对这些陈年往事真的是知之甚少……
+</p>
+<p style="text-indent:2em;">
+	如今新一代的黑客们，恐怕都彻底忘了这些前辈了吧……
+</p>
+<p style="text-indent:2em;">
+	方才 lcx 前辈加我，原因是本站域名的关系，一直有人误会，lcx 前辈不胜骚扰，畅谈了一番。
+</p>
+<p style="text-indent:2em;">
+	（Lcx 以前是职业作家哟……）
+</p>
+<p style="text-indent:2em;">
+	Lcx 是国内 05、06 之前年的老前辈，前辈姓李，尊名李春晓（拼音缩写：lcx）。
+</p>
+<p style="text-indent:2em;">
+	前辈最早的网名是 lcx，也就是那位写过海阳顶端 Asp 木马的 lcx。
+</p>
+<p style="text-indent:2em;">
+	前辈之前的网站是：www.haiyangtop.net，后来被人抢注了（是个日本站），现在就剩一个百度 Blog 了：http://hi.baidu.com/new/myvbscript
+</p>
+<p>
+	<strong>lcx 与 lcx.exe：</strong> 
+</p>
+<p style="text-indent:2em;">
+	引用前辈原话，lcx.exe 是我编译 htran 1.0 的源码，写了篇文章介绍了一下，没想到大家都用。
+</p>
+<p style="text-indent:2em;">
+	那个 lcx.exe，是我以前在黑客手册当编辑时，编译了一下 htran，起了个名叫 lcx，没事写了一篇文章介绍了一下，没想到哪么火，好多人以为是我写的，我也解释过n次。
+</p>
+<p style="text-indent:2em;">
+	可能一是刊物的力量吧，二是当时很少人会端口转发，所以出名了。
+</p>
+<p style="text-indent:2em;">
+	t00ls 那个 lcx 也是我。
+</p>
+<p>
+	<strong>lcx、老马与海阳顶端网asp木马：</strong> 
+</p>
+<p style="text-indent:2em;">
+	lcx 和老马（Marcos）是两个人，他们是关系很好的朋友，海阳顶端最早是 lcx 写的，从 2005 版后是老马写的。
+</p>
+<p style="text-indent:2em;">
+	看了，Lcx 写的“海阳2006+使用手册”，确实不是一个人，前后有很多个人分工写过，以下内容摘自lcx原文（有少量修改）：
+</p>
+<p style="text-indent:2em;">
+	其实我放弃 lcx 这个名好久了，像我 blog 都叫 myvbscript。
+</p>
+<p style="text-indent:2em;">
+	2003年吧，不过我哪阵，不专搞这些，我哪时写小说写杂志呢，是文学青年，后来给电脑杂志写稿，慢慢就转到it行业了。
+</p>
+<p style="text-indent:2em;">
+	我在烟台，是烟台下边的海阳人。所以哪阵弄个asp shell叫海阳顶端，网站也是海阳顶端网，不过很多人都以为是海洋。
+</p>
+<p style="text-indent:2em;">
+	最早呢，是在2001年年底，我在网上搜索到了网辰在线和化境上传的两套程序，在两套程序之间，加了一个简单的超级链接，于是海阳顶端网asp木马就这样不光彩的诞生了。
+</p>
+<p style="text-indent:2em;">
+	当时我没有专搞这些，于是乎，时间一晃，三年过去了……
+</p>
+<p style="text-indent:2em;">
+	2003年，我把 czy 写的免 fso 版的 cmd.asp 和网上流传甚广的经典 cmd.asp 收录在第一版的压缩包里，作为2003版发布了。
+</p>
+<p style="text-indent:2em;">
+	后来 allen，这个青海的神秘黑客把海阳顶端网升级了1个版本后，就消失不见了，直到2005年年底才又重新浮出水面，这就是大家耳熟能详的xp版了。
+</p>
+<p style="text-indent:2em;">
+	allen 消失后，海阳顶端网开发的历史没有停下，xp.net 版、红粉佳人版、红粉佳人修正版、2004正式版，我每隔几个月升级一次，在网上找到有用的代码来加入进去。
+</p>
+<p style="text-indent:2em;">
+	2004年5月，我来到了北京网络安全公司工作，闲下无聊，又出了海阳顶端网asp木马2005α版。
+</p>
+<p style="text-indent:2em;">
+	后来，我有了开发海阳顶端网asp木马2005正式版的念头，当他把代码基本完工后，想换一个css样式，找到了Marcos（老马），Marcos看我写的代码后，定然是向痰盂里吐了好久，于是说我重写代码吧。
+</p>
+<p style="text-indent:2em;">
+	Marcos出手不凡，我收集好了功能代码后或告之我想实现的功能，他三天的时间就写出了2005官方正式版了(图8)。2005官方正式版算是上了一个新的台阶，毕竟是程序员的手笔。2005版的发布也带有了一个简单的C/S模式。
+</p>
+<p style="text-indent:2em;">
+	当海阳顶端网asp木马2006版出来后，Marcos已经把asp木马的功能推至极至，海阳顶端网asp木马2006版出来之后，Marcos也认为asp木马的功能已达到了顶点，对我表示不会再开发了。
+</p>
+<p style="text-indent:2em;">
+	再后来，Marcos写完了asp站长助手，这就是2006+的雏形了。海阳顶端网2006+版从asp站长助手改进而来，这个版本相较也asp站长助手多了更多细节的改进，也沿袭了从2005正式版Marcos一贯的风格，只求最大，不求最好。
+</p>
+<p style="text-indent:2em;">
+	但是我能够相信这依然是会让使用者推崇的一个版本，无论如何，这个版本出来后，海阳顶端网asp木马的开发历程就到此截止，与大家说声再见了。
+</p>
+<p style="text-indent:2em;">
+	浮尘浪，似人潮，难免会有思念，我最不忍心背向你转面……
+</p>
+<p style="text-indent:2em;">
+	goodbye，我的爱人，goodbye，海阳顶端。
+</p>
+<hr />
+<p style="text-indent:2em;">
+	这世界上，总有一些千丝万缕微妙的联系，把一群不相干的人扯在一起。
+</p>
+<p style="text-indent:2em;">
+	又有谁能料到，若干年后，会交到 lcx 这个朋友呢？？
+</p>
+<p style="text-indent:2em;">
+	世事难料……
+</p>
+<p style="text-indent:2em;">
+	附上：海阳2006+使用手册，看的不是技术，主要看文笔。lcx不愧为作家，文章写得真有感觉。
+</p>
+<hr />
+<p style="text-indent:2em;">
+	海阳顶端网ASP木马2006+版用户手册
+</p>
+<p style="text-indent:2em;">
+	2006年情人节的第二天，我开始动手写这个心里认为是庞大的用户手册。也许是带了一些情人节的唏嘘，就像我的博客上写的词句一样：思念一个人，思绪就是一条河流，而我是水底的石头。我一动不动，思念的河流流过。也许若干年后，我已长满了青苔，哪有谁明白这是思念的沉垢？这情绪竟然带到了这篇文章里，久久不能释怀，于是这本手册我干脆抛弃毫无感情的说明书写法，让思绪带我们走吧。毕竟这是海阳顶端网最终的一个版本了，却也违背了我当初在海阳顶端网红粉佳人版写下的寓言，最后一个版本叫罗马假日版。我们会有假日的，像地球另一端的城市罗马一样那样天蓝蓝、空气纯静的假日，但是到哪里去寻找我们的茜茜公主？我与Marcos商量这个最终版叫什么名字时，我踱步到他的房间，在北京寒冷的冬天他喝着冰冷的可乐，这个骨子只有代码没有浪漫的家伙，用他一贯反应慢N拍的速度吱吱唔唔说，我原来写好的代码上是标了个2006+呀。在哪瞬间我回首了海阳顶端网asp木马开发的5年多的历史，竟没有一丝感伤，没有一丝留恋，没有一丝起伏，当一个人心里占据了另一个人的时候，你也许就会超然物外了，那就叫做海阳顶端网ASP木马2006+版了。
+</p>
+<p style="text-indent:2em;">
+	一、我们来回首海阳顶端网ASP木马开发历程
+</p>
+<p style="text-indent:2em;">
+	曾经年少无知时，我们喜欢做梦。那个时候，我们有热血，有冲动，有干劲，有幼稚，有处女般光滑皮肤一样的青春，更有狼子野心般的狡黠。那似乎是unicode漏洞流行的2001年年底，当我在网吧照着红客联盟的傻瓜教程黑掉了海阳信息港的asp论坛和红蜻蜓聊天室后，我知道了什么是asp。为了常久的控制那个所有海阳人引以为傲的自己开发的论坛和海阳单身网友集体发情的聊天室，我在网上搜索到了网辰在线和化境上传的两套程序。在两套程序之间，我加了一个简单的超级链接，于是海阳顶端网asp木马就这样不光彩的诞生了。我们看一下图1，就会明白，从始至终海阳顶端网的开发者从来没有忘却对这两个前辈的敬仰。当我这把程序加了一个很大的噱头：永远不会被查杀的木马，放到网上去后，我就抛弃了短暂的网络生活，继续做我的翻砂工了。网费实在不是我能承受得起的，黑客从始至终也不是我有兴趣的东西。翻砂工的生涯是苦闷的，为了躲避，更为了抒发，我捉笔做文，竟而不经意间入了什么作家协会了。当我若干年后坐在电脑前，一年之中难得几次翻出我以前的小说来看，默默苦笑，中国失去了一个70年代作家，竟然让我在恁大岁数时成为了什么第三还是第四代黑客里的一个工具小子，幸或不幸？
+</p>
+<p style="text-indent:2em;">
+	(图1)
+</p>
+<p style="text-indent:2em;">
+	当3年的翻砂工生涯过去，我也依靠手中的笔成为了海阳一家大型国有企业办公室里的一个文职者。结婚过后，生活了无痕。那时的生活真是庸懒，经济条件好转后，2003年我百无聊赖时装上了宽带。在网上搜索过后，我才发现，我当时的话并没有说大，海阳顶端网asp木马依然没有被查杀，在google上处处都留有她的芳踪。那时候，我正自己做了一个小小的论坛，smallhome.51.net/wdb，多么让人怀念的一个论坛，可以说现在依然活跃的一些知名的黑客工作者，都在哪个论坛里混过或去过，像czy、pinkeyes、Marcos、陌生人、9xiao、pskey、猪水儿……，那里我也结识了不少好朋友，后来多数成为我QQ的好友。在那里混过的当时的黑客x档案光盘编辑小木头，正在网恋我老家的一个妹妹小林，于我这个管理员混得很熟。他说，你写篇文章海阳顶端网asp木马2003版如何用吧？对了，那时候我已经把czy写的免fso版的cmd.asp和网上流传甚广的经典cmd.asp收录在第一版的压缩包里，作为2003版发布了。于是诞生了我黑客写作生涯的第一篇有稿费的黑客文章，海阳顶端网asp木马应用详解发表在黑客x档案的2003年4期吧？学黑客的爱好者，当时正如雨后春笋，海阳顶端网asp木马借助媒体的力量声名鹊起。经典界面如图2所示，我们来怀旧。
+</p>
+<p style="text-indent:2em;">
+	（图2）
+</p>
+<p style="text-indent:2em;">
+	感谢allen，衷心感谢。这个青海的神秘黑客把海阳顶端网升级了1个版本后，就消失不见了，这就是大家耳熟能详的xp版了。allen，似乎很厉害，在2003年的时候，已经在我论坛上提到过用asp+serv-u提升权限了。不过最后一次印象中交往，好像是在2003年年底让我检测他写的www.371.net商城程序，当我拿到3389权限后，他就消失不见了，2005年年底才又重新浮出水面。xp把2003版全部改写成一个程序，非常的方便，但是同时也存在着一个cookie欺骗漏洞一个直接上传漏洞，可以直接破出密码和上传另一个webshell，这两个漏洞一直沿袭到了2004正式版前。同时也谢感这两个漏洞，如果不是因为它们的存在，海阳顶端网asp木马也许不会走到现在。
+</p>
+<p style="text-indent:2em;">
+	（图3）
+</p>
+<p style="text-indent:2em;">
+	allen消失后，海阳顶端网开发的历史没有停下，我边学asp边来“组合”新的代码到海阳asp木马中。xp.net版、红粉佳人版、红粉佳人修正版、2004正式版，我每隔几个月升级一次，在网上找到有用的代码来加入进去(图4、图5、图6)。红粉佳人修正版上有这样几句漂浮语句：“喜欢看着蓝蓝的天，喝牛奶，被人宠，被人哄，被人抱着，被人迁就，不用减肥，可以大笑和大哭……”，那是我从Marcos论坛的css样式上摘下来的，正好符合当时我暗恋像一个孩子般的单纯的小姑娘的怀旧心情。总体来说，我的努力还是值得肯定的，因为海阳顶端网asp木马越来越受人欢迎了。记得来北京后，小榕在酒桌与我讲过一句话，你能不能改一下粉红色的css，我们总是吐呀吐呀，就吐习惯了。我的偶像小榕竟然也用过海阳顶端asp木马，当时心下一阵窃喜……提到allen，不能不提到一些别的。其实还有他写的海阳顶端asp木马3.0和海阳顶端asp木马3.1修正版。这两个版本其实就是隐藏海阳顶端网asp木马到别的asp文件中，N长时间后仍然在网上发文写滥这样类似的方法，孰不知在N年前早就有了（http://www.chinesehack.org/down/list.asp?search=海阳&amp;page=3），网上的东东为什么总是一重再重，一复再复？
+</p>
+<p style="text-indent:2em;">
+	（图4）
+</p>
+<p style="text-indent:2em;">
+	（图5）
+</p>
+<p style="text-indent:2em;">
+	（图6）
+</p>
+<p style="text-indent:2em;">
+	2004年5月，我来到了北京网络安全公司工作。闲下无聊，又出了海阳顶端网asp木马2005α版（图7）。此时网上经有了N多版本的asp木马了，从功能上来讲，我认为海阳顶端网asp木马与其它asp木马相较，始终是不逊色的。不过当时C/S端的asp木马更受欢迎了，如kker的asp木马和冰狐的asp木马。不过我当时总是对此不以为然，我认为该功能不过是海阳顶端网asp木马的3.1的延伸版而已，但是后来我明白我错了。于是有了开发海阳顶端网asp木马2005正式版的念头。当我把代码基本完工后，想换一个css样式，找到了Marcos。Marcos看我写的代码后，定然是向痰盂里吐了好久，于是说我重写代码吧。我正求之不得。那时我已经厌倦了，更有一种想法把海阳顶端网asp木马变成一个品牌，让更多的人来参与代码的写作，让它变成大众的东东。
+</p>
+<p style="text-indent:2em;">
+	（图7）
+</p>
+<p style="text-indent:2em;">
+	Marcos出手不凡，我收集好了功能代码后或告之我想实现的功能，他三天的时间就写出了2005官方正式版了(图8)。2005官方正式版算是上了一个新的台阶，毕竟是程序员的手笔。2005版的发布也带有了一个简单的C/S模式。其实当初复杂模式的C/S也已经开发好了。不知网上当时的什么风潮，好的东东总是要保留一段时间，于是我也保留了一段时间然后才在2006正式版前流传出去了。为了让海阳顶端网2005官正式版发布的隆重一些，于是我动用了好久前申请的域名http://www.haiyangtop.net，绑定在了一个国外的商业空间上。同时，我也辛苦收集了以前各个版本的历史代码，放之与人下载。可惜不久后，居说那个商业空间被美国政府告之有黑客行为，于是我的辛苦就付之流水了。不知是否与放海阳顶端网asp木马有关？海阳顶端网2005官方正式版发布之后，Marcos又发现了几个小bug，于是重新修改覆盖了原来的网站内的压缩包，空间没了之后，我不知网上流传的2005官方正式版有哪几个是完全没有bug的？应当是少之又少。
+</p>
+<p style="text-indent:2em;">
+	（图8）
+</p>
+<p style="text-indent:2em;">
+	Marcos后来说，写asp木马并不是那样困难的，我说是。当然是这样的，我从来都是修修补补，不肯推翻原来的结构重来，我是个怀旧的懒人。Marcos不是，当海阳顶端网asp木马2006版出来后，我就吃了一惊，不仅是结构变了，连操作习惯都要跟着变，我是适应了好长时间才适应过来(图9)。Marcos已经把asp木马的功能推至极至，在2006+出版的前夕仍然是说，如果要商业操作的话，2006版才是一个最恰当的一个版本。海阳顶端网asp木马2006版出来之后，Marcos也认为asp木马的功能已达到了顶点，对我表示不会再开发了。但是时间的推移，使用者的质疑，仍然证明着asp木马还有继续增加功能的可能。Marcos写完了asp站长助手，这就是2006+的雏形了。海阳顶端网2006+版从asp站长助手改进而来，这个版本相较也asp站长助手多了更多细节的改进，也沿袭了从2005正式版Marcos一贯的风格，只求最大，不求最好。但是我能够相信这依然是会让使用者推崇的一个版本，无论如何，这个版本出来后，海阳顶端网asp木马的开发历程就到此截止，与大家说声再见了。浮尘浪，似人潮，难免会有思念，我最不忍心背向你转面……
+</p>
+<p style="text-indent:2em;">
+	goodbye，我的爱人，goodbye，海阳顶端。
+</p>
+<p style="text-indent:2em;">
+	…… 省略大量木马介绍文档，如果有需要可以去搜这篇文章 ……
+</p>
+<p style="text-indent:2em;">
+	以上就是海阳顶端ASP木马2006+的所有功能的简约说明了，对菜鸟来说还是有一些指导作用的。为了减少QQ网友对我和老马的骚扰，所以终于下决心下完这份文档。写这份文档，有点虎头蛇尾的感觉，也许末尾有少许工具没有详细介其用法。我写到中途的时间，忍不住笑了，自己真有耐心和时间来完成这样的一个垃圾文稿。在写作、排版、抓图过程之中，更深刻的体会了原来我的文章是体力劳动。不过，写作的用意更多的是边写边来测试海阳顶端2006+版是否还有未知的bug；同时，为了忘却的记念，撰文志之。
+</p>
+<p style="text-indent:2em;">
+	声明1：使用本工具，对此造成不良后果的，责任自负。
+</p>
+<p style="text-indent:2em;">
+	声明2：老马很寂寞的，有人愿意做他的女朋友的话，我愿意出18块钱给女方。
+</p>
+<p style="text-indent:2em;">
+	by lcx、Marcos
+</p>
+<p style="text-indent:2em;">
+	2006.2
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="1644,2518,122.234.7.8">
+<p>九区外观大队队长 @ 2012-05-24 13:21:11</p>
+<p style="text-indent:2em">黑客手册我最喜欢了  我还发表过文章  可惜被XXX和谐了  没有黑阔手册的指引  小黑阔们怎么办啊</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">从没看过黑客手册　╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="1645,2518,222.139.226.231">
+<p>【匿名者】 @ 2012-05-24 13:38:36</p>
+<p style="text-indent:2em">我用QQ拼音打lcx 第一个出来的是&quot;赖昌星&quot;  =.=</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">现在的输入法都有记忆功能，会把经常打的字排在前边。。。</p>
+</blockquote>
+<blockquote id="1646,2518,202.107.197.178">
+<p>【匿名者】 @ 2012-05-24 17:47:54</p>
+<p style="text-indent:2em">我记得是宁波工程学院的，老马写的海阳顶端啊，难道是同一人？
+http://hididi.net/public/marcos/marcos.htm</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不是同一个人。。。是前后分工写的。。。</p>
+</blockquote>
+<blockquote id="1650,2518,101.78.151.179">
+<p>hehe @ 2012-05-24 23:41:56</p>
+<p style="text-indent:2em">lcx不等于老马.海阳顶端最早是lcx写的,从2005版后是老马写的.</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">刚才看了，Lcx 写的“海阳2006+使用手册”，确实不是一个人，前后有很多个人分工写过。</p>
+</blockquote>
+<blockquote id="1651,2518,125.69.54.43">
+<p>日月 @ 2012-05-25 10:27:54</p>
+<p style="text-indent:2em">思念一个人，思绪就是一条河流，而我是水底的石头。我一动不动，思念的河流流过。也许若干年后，我已长满了青苔，哪有谁明白这是思念的沉垢？ 好有感觉！！！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">抒情散文，好有感觉，很像一位作家的风格，想不起来谁了……</p>
+</blockquote>
+<blockquote id="1654,2518,116.10.20.30">
+<p>【匿名者】 @ 2012-05-25 11:17:57</p>
+<p style="text-indent:2em">想学 cmd ftp 有好多问题找不到解答希望得到大大的支持</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这种 cmd 基础命令，就不要问了，网上一堆一堆的，不回答此类问题。</p>
+</blockquote>
+<blockquote id="2450,2518,1.193.63.157">
+<p>【匿名者】 @ 2012-10-10 01:15:35</p>
+<p style="text-indent:2em">我在文章里看到了小榕，有他的消息么</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">很早以前听说是在安全公司上班，再后来貌似去了国安，再后来不知道了……</p>
+</blockquote>
+<blockquote id="2451,2518,114.246.152.51">
+<p>【匿名者】 @ 2012-10-10 16:57:16</p>
+<p style="text-indent:2em">老马很单纯的，人很好，技术我就不用说了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">老马很清纯的，长的俊，口活大家都懂的……　囧rz……　（纯属恶搞）</p>
+</blockquote>
+<blockquote id="3027,2518,123.150.182.213">
+<p>Mr.V @ 2013-01-14 01:44:01</p>
+<p style="text-indent:2em">向老前辈学习！向老前辈致敬！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">捅老前辈菊花！插老前辈龙眼！</p>
+</blockquote>
+<blockquote id="3892,2518,121.34.117.167">
+<p>test @ 2013-05-10 17:05:15</p>
+<p style="text-indent:2em">那楼主为什么要用lcx.cc的域名，莫非因为名字字母？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这个问题很久以前已经回答过了，具体见：http://lcx.cc/?i=1，关于本站域名和网名的解释</p>
+</blockquote>
+<blockquote id="4067,2518,112.234.137.5">
+<p>Corvus @ 2013-05-27 06:44:53</p>
+<p style="text-indent:2em">这是一个屌丝心中有女神的时候才有的骚情文字。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">风骚的文艺青年……</p>
+</blockquote>
+<blockquote id="4663,2518,110.86.27.194">
+<p>shiy @ 2013-08-05 09:27:29</p>
+<p style="text-indent:2em">= =！逛这个网站几个月了，我也是前2天才知道原来您和LCX不是一个人。。。顺便找了一下LCX的论坛。当然啦，您的文章也让我受益匪浅。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">Soga.</p>
+</blockquote>
+<blockquote id="6721,2518,117.30.102.21">
+<p>佚名 @ 2014-07-08 17:03:12</p>
+<p style="text-indent:2em">刚才看到这个站，还以为lcx老前辈呵呵。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">哈哈哈，感谢支持！之前很多人误会了~</p>
+</blockquote>
+<blockquote id="6844,2518,183.18.217.43">
+<p>佚名 @ 2014-08-14 17:16:43</p>
+<p style="text-indent:2em">呵呵，刚刚才看完这篇文章，深有感触！
+确实时间带走了一些往事，为您点个赞！
+顺便跟贵站要个友链！
+网站：http://www.yms2014.com/forum.php
+站点名称：依美式安全小组   贵站已加友链</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">链接已做好！</p>
+</blockquote>
+<blockquote id="7207,2518,27.98.206.143">
+<p>warden @ 2014-11-25 02:39:15</p>
+<p style="text-indent:2em">12345678</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">87654321</p>
+</blockquote>
+<blockquote id="7210,2518,222.134.37.14">
+<p>xin @ 2014-11-25 21:22:41</p>
+<p style="text-indent:2em">海阳顶端，以前很喜欢用的，现在基本不用了，看的感觉自己也老了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">哈哈哈，永恒的经典！</p>
+</blockquote>
+<blockquote id="7229,2518,125.68.205.252">
+<p>R @ 2014-11-29 21:47:40</p>
+<p style="text-indent:2em">原来贵站的域名是这么得来的阿,希望站长不嫌弃小白阿</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">哈哈哈，是的。</p>
+</blockquote>
+<blockquote id="7343,2518,60.206.202.25">
+<p>匿名 @ 2015-01-07 20:58:04</p>
+<p style="text-indent:2em">海阳顶端，想起来0304年的那些日子了，热泪盈眶。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">当年的经典。</p>
+</blockquote>
+<blockquote id="7344,2518,222.162.70.66">
+<p>佚名 @ 2015-01-08 16:23:26</p>
+<p style="text-indent:2em">当年还会点皮毛，几年工作下来，现在的我发现什么都不会了，技术也都过时了，时间啊时间......</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">岁月是把杀猪刀~</p>
+</blockquote>
+<blockquote id="7978,2518,113.240.233.245">
+<p>mogeko @ 2015-11-01 23:47:52</p>
+<p style="text-indent:2em">**的百度把百度空间合并了
+都不知道去哪里看他的文章
+lcx前辈和他编辑的杂志也快从网络中消失
+当时无忧无虑的我有很多时间学习技术，然而我只是似懂非懂的脚本小子
+现在什么都不会了，学习的时间也少了
+才开始明白黑客是什么</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">旧的消失，新的涌入，长江后浪推前浪~</p>
+</blockquote>
+<blockquote id="7988,2518,218.205.56.219">
+<p>佚名 @ 2015-11-10 14:05:56</p>
+<p style="text-indent:2em">我看了好多遍 还是没理解。。更晕了。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="8023,2518,221.2.217.62">
+<p>白帽子社工组 @ 2015-11-29 22:52:13</p>
+<p style="text-indent:2em">http://www.haiyangtop.net/ 前辈的博客复活了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">我靠，真尼玛简陋，文章调用的以前百度博客的，也不确定是否本人。</p>
+</blockquote>
+<blockquote id="8024,2518,59.45.81.231">
+<p>佚名 @ 2015-11-30 09:25:57</p>
+<p style="text-indent:2em">我以前也用过，但是工作时间久了，技术都丢的差不多了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">+1</p>
+</blockquote>
+<blockquote id="8036,2518,223.72.64.122">
+<p>臭名小子 @ 2015-12-04 14:53:11</p>
+<p style="text-indent:2em">我想找个黑客做业务 业务量很大 有意向联系我 谢谢1343119337</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-05-25
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+          <a href="https://lcx.cc/tags/asp/">ASP</a>
+          <a href="https://lcx.cc/tags/bug/">bug</a>
+          <a href="https://lcx.cc/tags/cmd/">Cmd</a>
+          <a href="https://lcx.cc/tags/css/">CSS</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E8%AE%BA%E5%9D%9B/">论坛</a>
+          <a href="https://lcx.cc/tags/%E4%B8%8A%E4%BC%A0/">上传</a>
+          <a href="https://lcx.cc/tags/%E6%90%9C%E7%B4%A2/">搜索</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2519/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">本站要火了。。。。。。。</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2517/">
+            <span class="next-text nav-default">腾讯TM、QQ远程命令执行漏洞 点开QQ消息 执行本地文件、命令</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

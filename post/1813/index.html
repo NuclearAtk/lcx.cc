@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>关于国内各种所谓的“大牛B”，及各种版本的本地提权工具想说的。 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="关于国内各种所谓的“大牛B”，及各种版本的本地提权工具想说的。国内绝大多数漏洞利用程序，都是利用的国外公开的文档、资料（国外佬一般超喜欢公布详细的资料），那些文档里基本就有源码，国内所做的只是稍微修改、编译一下，把版权改成自己的、、、囧、、、" />
+<meta name="keywords" content="关于国内各种所谓的“大牛B”，及各种版本的本地提权工具想说的。" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/1813/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="关于国内各种所谓的“大牛B”，及各种版本的本地提权工具想说的。" />
+<meta property="og:description" content="关于国内各种所谓的“大牛B”，及各种版本的本地提权工具想说的。国内绝大多数漏洞利用程序，都是利用的国外公开的文档、资料（国外佬一般超喜欢公布详细的资料），那些文档里基本就有源码，国内所做的只是稍微修改、编译一下，把版权改成自己的、、、囧、、、" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/1813/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2011-10-07T10:47:00&#43;08:00" />
+<meta property="article:modified_time" content="2012-04-06T13:38:28&#43;08:00" />
+
+<meta itemprop="name" content="关于国内各种所谓的“大牛B”，及各种版本的本地提权工具想说的。">
+<meta itemprop="description" content="关于国内各种所谓的“大牛B”，及各种版本的本地提权工具想说的。国内绝大多数漏洞利用程序，都是利用的国外公开的文档、资料（国外佬一般超喜欢公布详细的资料），那些文档里基本就有源码，国内所做的只是稍微修改、编译一下，把版权改成自己的、、、囧、、、"><meta itemprop="datePublished" content="2011-10-07T10:47:00&#43;08:00" />
+<meta itemprop="dateModified" content="2012-04-06T13:38:28&#43;08:00" />
+<meta itemprop="wordCount" content="3329">
+<meta itemprop="keywords" content="本地,工具,提权,exe,Shell,安全,程序,代码,黑客,漏洞,网络,网络安全,微软,溢出,源码,远程," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="关于国内各种所谓的“大牛B”，及各种版本的本地提权工具想说的。"/>
+<meta name="twitter:description" content="关于国内各种所谓的“大牛B”，及各种版本的本地提权工具想说的。国内绝大多数漏洞利用程序，都是利用的国外公开的文档、资料（国外佬一般超喜欢公布详细的资料），那些文档里基本就有源码，国内所做的只是稍微修改、编译一下，把版权改成自己的、、、囧、、、"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">关于国内各种所谓的“大牛B”，及各种版本的本地提权工具想说的。</h1>
+      
+      <div class="post-meta">
+        <time datetime="2011-10-07" class="post-time">
+          2011-10-07
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E6%9C%AC%E5%9C%B0/"> 本地 </a>
+            <a href="https://lcx.cc/categories/%E5%B7%A5%E5%85%B7/"> 工具 </a>
+            <a href="https://lcx.cc/categories/%E6%8F%90%E6%9D%83/"> 提权 </a>
+            
+          </div>
+        <span class="more-meta"> 约 3329 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	在 T00ls.net 看到个帖子，原文如下：
+</p>
+<p>
+	<table style="border-bottom:#cccccc 1px dotted;border-left:#cccccc 1px dotted;table-layout:fixed;border-top:#cccccc 1px dotted;border-right:#cccccc 1px dotted;" class="ke-zeroborder" border="0" cellspacing="0" cellpadding="6" width="95%" align="center">
+		<tbody>
+			<tr>
+				<td style="word-wrap:break-word;" bgcolor="#f3f3f3">
+					<p>
+						<span style="color:#990000;font-weight:bold;">原帖标题“一些想法罢了。。有兴趣的同鞋看看”，楼主：</span> 
+					</p>
+					<p>
+						每每拿到shell 的时候&nbsp; 提权都会不经意的去看看ws 组建<br />
+然后找找可写目录 看看能不能写<br />
+最后传上 提权工具试试<br />
+从 巴西烤肉到 360&nbsp; 再到pr&nbsp; 再到本地内核&nbsp; 再到iis6<br />
+挨个的实验，可是这些东西终归是别人的 <br />
+都是被玩了很多遍才发出来&nbsp; 有的貌似是留在了shell里被再来者给收获了<br />
+我现在就是想弄清楚&nbsp; 这些 用c编译出来的一个个程序都是怎么搞出来的<br />
+通过各种搜索引擎 我了解到&nbsp; 这些大多数都是c代码 或者c++写出来的<br />
+于是我就想弄明白&nbsp; 关于微软每每打补丁的时候&nbsp;&nbsp; 应该有成千上万的计算机没有补上<br />
+那么 我们就可以针对补丁号&nbsp; 然后查看对应的漏洞&nbsp; <br />
+从而通过汇编以及c 来写出这些歌溢出程序 shellcode&nbsp; 从而获取系统权限<br />
+=================================<br />
+于是我就想知道&nbsp;&nbsp; 我们究竟需要一个怎样的思路才可以如同牛牛一样写出提权工具<br />
+呵呵。。。&nbsp;&nbsp; 希望大家给予指点<br />
+更希望&nbsp;&nbsp; 编译达人能给予 启示
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</p>
+<p>
+	<table style="border-bottom:#cccccc 1px dotted;border-left:#cccccc 1px dotted;table-layout:fixed;border-top:#cccccc 1px dotted;border-right:#cccccc 1px dotted;" class="ke-zeroborder" border="0" cellspacing="0" cellpadding="6" width="95%" align="center">
+		<tbody>
+			<tr>
+				<td style="word-wrap:break-word;" bgcolor="#f3f3f3">
+					<p>
+						<span style="color:#990000;font-weight:bold;">路人甲：</span> 
+					</p>
+					<p>
+						这些提权东西的作者都是啥级别的 ？ - -。。<strong><span style="color:#ff0000;">（本人评论：都是“大牛逼”级别的，下文会有解释……）<br />
+</span></strong>请牛牛们来权威的简单摆摆～～
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</p>
+<p>
+	<table style="border-bottom:#cccccc 1px dotted;border-left:#cccccc 1px dotted;table-layout:fixed;border-top:#cccccc 1px dotted;border-right:#cccccc 1px dotted;" class="ke-zeroborder" border="0" cellspacing="0" cellpadding="6" width="95%" align="center">
+		<tbody>
+			<tr>
+				<td style="word-wrap:break-word;" bgcolor="#f3f3f3">
+					<p>
+						<span style="color:#990000;font-weight:bold;">路人乙：</span> 
+					</p>
+					<p>
+						呵呵&nbsp; 刚刚翻了一下&nbsp; 几个工具的源码<br />
+nc是典型的c语言写的<br />
+lcx是c#写的&nbsp; 貌似也有c脚本写的<br />
+大家可以一起研究研究
+					</p>
+					<p>
+						<strong><span style="color:#ff0000;">（本人评论：</span></strong> 
+					</p>
+					<p>
+						<strong><span style="color:#ff0000;">&nbsp;&nbsp;&nbsp; 这其实跟语言没啥太大关系，这些玩意儿最早也不是国内人写的（N年以后国内有“原创”的了），nc.exe、lcx.exe 均是国外N（起码大于6-7）年以前的黑客小工具，后来传到国内来了，于是乎，有了各种免杀版、个人版、汉化版的……</span></strong> 
+					</p>
+					<p>
+						<strong><span style="color:#ff0000;">&nbsp;&nbsp;&nbsp; 也有可能是国内起源的，太过于古老了，已无从考证。。另外说一下，现在叫lcx并非lcx.exe的作者、、包括本站域名。。</span></strong> 
+					</p>
+					<p>
+						<strong><span style="color:#ff0000;">&nbsp;&nbsp;&nbsp; 实际上这种玩意儿，要多简单有多简单、、、</span></strong> 
+					</p>
+					<p>
+						<strong><span style="color:#ff0000;">&nbsp;&nbsp;&nbsp; 都是简单的数据收发，代码不会超过50行就可以搞定，国内任何一个普通的程序员都可以写出来。。。</span></strong> 
+					</p>
+					<p>
+						<strong><span style="color:#ff0000;">&nbsp;&nbsp;&nbsp; 围观的群众：这不是坑爹么、、、）</span></strong> 
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</p>
+<p>
+	<table style="border-bottom:#cccccc 1px dotted;border-left:#cccccc 1px dotted;table-layout:fixed;border-top:#cccccc 1px dotted;border-right:#cccccc 1px dotted;" class="ke-zeroborder" border="0" cellspacing="0" cellpadding="6" width="95%" align="center">
+		<tbody>
+			<tr>
+				<td style="word-wrap:break-word;" bgcolor="#f3f3f3">
+					<p>
+						<span style="color:#990000;font-weight:bold;">路人丙、丁、戊、己、庚、辛、壬、癸……：</span> 
+					</p>
+					<p>
+						楼主是说编译或修改别人写好的代码 还是自己挖本地溢出？？？？？？
+					</p>
+					<p>
+						楼主你是要自己编译还是要自己挖溢出..
+					</p>
+					<p>
+						自己能挖出来就牛B了
+					</p>
+					<p>
+						……
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</p>
+<p>
+	以下是本人回复：
+</p>
+<p style="text-indent:2em;">
+	看情况，楼主应该是从来没有接触过编程。。
+</p>
+<p style="text-indent:2em;">
+	首先，不要羡慕国内所谓的“牛B”。。。
+</p>
+<p style="text-indent:2em;">
+	国内绝大多数漏洞利用程序，都是利用的国外公开的文档、资料（国外佬一般超喜欢公布详细的资料，为什么米国黑客要先进国内很多年呢？我想这和“技术开源”及学习环境有很大的关系，国内的学习环境嘛，你懂得……），那些文档里基本就有源码，国内所做的只是稍微修改、编译一下，把版权改成自己的、、、囧、、、
+</p>
+<p style="text-indent:2em;">
+	然后就是一些国内的小菜，把“大牛”本来就盗版过一次的程序，再拿来把名字改成自己的，再盗版一次，无语……
+</p>
+<p style="text-indent:2em;">
+	So，你就看到网上各种“xx版”的提权工具乱飞，然后你下载下来对比一下十六进制，惊奇的发现，居然都一样。。
+</p>
+<p style="text-indent:2em;">
+	T00ls前几个月发的神马 xiaoA 提权工具、2003、2008 本地溢出、内核溢出.exe，全都是坑爹！
+</p>
+<p style="text-indent:2em;">
+	我是前一段时间整理这些破烂玩意儿，起码在我电脑上找出来不下十个版本，对比了一下Hex，我去，全都他妈的一样，连版权都不改，直接就是把文件重命名了一下，整理完只有3个，就这还是Hex完全一样的，还没有排除各种个人版、免杀版。。
+</p>
+<p style="text-indent:2em;">
+	实际上这玩意儿原始文件名叫：system_exp.exe，漏洞全名为：Windows Kernel Local Privilege Exploit，中文我翻译为：Windows Server 2003、2008 内核溢出、本地提权 0day。
+</p>
+<p style="text-indent:2em;">
+	再来张图：
+</p>
+<p align="center">
+	<img style="filter:;width:666px;height:434px;" border="0" hspace="0" alt="关于国内各种所谓的“大牛B”，及各种版本的本地提权工具想说的。" src="/file/old/496_f28116f8261bf97ed8f9fdeb.jpg" width="666" height="434" /> 
+</p>
+<p style="text-indent:2em;">
+	You, See? That is Bull Shit!!!
+</p>
+<p style="text-indent:2em;">
+	至于楼主所说的补丁号，呵呵，这个是常识了，除了未公开的漏洞，基本上绝大多数的都有补丁号。
+</p>
+<p style="text-indent:2em;">
+	Cmd下：systeminfo 就可以看到补丁号了，然后对症下药。
+</p>
+<p style="text-indent:2em;">
+	至于自动利用，那么就整合一下这些提权工具源码，写个简单的判断就行了，很容易的，这些源码网上到处乱飞。。。
+</p>
+<p style="text-indent:2em;">
+	至于漏洞挖掘方面，各种漏洞：本地溢出、远程溢出、网马啦，等各种溢出类漏洞其挖掘过程基本一样。
+</p>
+<p style="text-indent:2em;">
+	首先你必须具备以下条件：
+</p>
+<blockquote style="margin-right:0px;" dir="ltr">
+	<p>
+		1、极其深厚的编程功底、程序调试功底……
+	</p>
+	<p>
+		2、极强的耐心 + 大量的时间。
+	</p>
+	<p>
+		3、不可缺少的好人品。
+	</p>
+</blockquote>
+<p style="text-indent:2em;">
+	此类漏洞的挖掘，就是个砸时间、砸耐心、拼人品的干活……
+</p>
+<p style="text-indent:2em;">
+	过程极其枯燥无聊、你没有极好的耐心的话、你会抓狂……
+</p>
+<p style="text-indent:2em;">
+	接下来就是狂拼人品，漏洞挖不挖的出来，很大程度上并非取决的技术，而是一点点运气，有人一年挖不出来一个，有人一星期挖N个……
+</p>
+<p style="text-indent:2em;">
+	发现漏洞之后，并不是就完事了，更拼耐心、拼人品的活来了，漏洞的利用、、、
+</p>
+<p style="text-indent:2em;">
+	一个漏洞的利用，要经过极其严格的调试，反复不断地测试、调试，极其枯燥乏味的过程，砸时间、砸精力、砸人品……
+</p>
+<p style="text-indent:2em;">
+	大多是情况下，很多漏洞都是无法利用或者十分鸡肋的，这种漏洞不在少数，国外有些站整天公布这些漏洞，给人感觉超级牛逼，实际上全是不能用的鸡肋玩意儿，某些站还公布假漏洞 ……、、、、
+</p>
+<p style="text-indent:2em;">
+	So，你丫人品好，经过大量调试，极其烦躁的测试过程，成功开发出利用程序，So，漏洞进入流通渠道了。
+</p>
+<p style="text-indent:2em;">
+	So，你可能是业余挖掘漏洞，你可能会给几个好友，炫耀一下成果，或者去私人站点（blog 之类的地方），放个什么xx漏洞利用程序，好一点的写大量详细文档，然后接受众多小菜的膜拜，赚成就感、优越感、赚名气、赚金钱、赚美女、赚香车…… 咳、咳！扯远……
+</p>
+<p style="text-indent:2em;">
+	So，你也有可能是某组织的（网络安全组织、团队等），准备在某年黑客大会上公开的资料，这就不说了，大家都知道……
+</p>
+<p style="text-indent:2em;">
+	So，你可能是专业漏洞挖掘人员，你的漏洞可能会流入“地下黑市”，高价出售，等各种盈利手段，或者贡献给**部门，给奖金，等。也有可能你和国外某些安全公司有合作，挖掘的漏洞一律卖给他们，那些公司拿到后，开发相应的修补程序，避免给用户造成损失（他们表面上这么说的，实际上干啥，只有他们自己知道），同时给漏洞提供者佣金、奖金，一年赚个百十万没一点问题。
+</p>
+<p>
+	&nbsp;&nbsp; 不管什么渠道流出去的漏洞，最后都几经周折流传到众多小菜手上（时间可能很漫长，有的几年，有的永远也不），开始了入侵之旅，N年后，工具废弃了，也无人记得了，新的工具又流传出来，历史新的循环又开始了…… 咳、咳！扯远了……
+</p>
+<p>
+	&nbsp;&nbsp; 国外“收购”漏洞的公司、例如：
+</p>
+<blockquote style="margin-right:0px;" dir="ltr">
+	<p>
+		1、美国VeriSign网络安全公司
+	</p>
+	<p>
+		2、苹果
+	</p>
+	<p>
+		3、谷歌
+	</p>
+	<p>
+		4、微软
+	</p>
+	<p>
+		5、以及米国秘密部门
+	</p>
+	<p>
+		6、……
+	</p>
+</blockquote>
+<p style="text-indent:2em;">
+	国内的：百度、网易、腾讯、迅雷、搜狐 ……
+</p>
+<p style="text-indent:2em;">
+	这种专业的漏洞挖掘人员，国内不在少数，例如真正的大牛逼，“赏金黑客”：<strong><span style="color:#ff0000;">吴石</span></strong>！！
+</p>
+<p>
+	<table style="border-bottom:#cccccc 1px dotted;border-left:#cccccc 1px dotted;table-layout:fixed;border-top:#cccccc 1px dotted;border-right:#cccccc 1px dotted;" class="ke-zeroborder" border="0" cellspacing="0" cellpadding="6" width="95%" align="center">
+		<tbody>
+			<tr>
+				<td style="word-wrap:break-word;" bgcolor="#f3f3f3">
+					<p>
+						<span style="color:#990000;font-weight:bold;">微软的公告摘要：</span> 
+					</p>
+					<p>
+						鸣谢，Microsoft 感谢下列人员或组织与我们一起致力于保护客户的利益：
+					</p>
+					<p>
+						? <strong><span style="color:#0000ff;">Team509</span></strong> 的 <strong><span style="color:#ff0000;">Wushi</span></strong> 与 Zero Day Initiative 合作，报告了远程桌面连接堆溢出漏洞 (CVE-2009-1133)
+					</p>
+					<p>
+						? Yamata Li 报告了远程桌面连接 ActiveX 控件堆溢出漏洞 (CVE-2009-1929)
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#e53333;">关于这位真大牛的事迹可以去看：国内挖洞狂牛 - 吴石 - 寻找网络漏洞的人：</span></strong><a href="https://lcx.cc/post/1187/" target="_blank"><strong><span style="color:#e53333;">https://lcx.cc/post/1187/</span></strong></a><strong><span style="color:#e53333;">，强烈建议去看！</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	跟这些人比，我们都是渣滓，国内的“大牛”都是装逼……，不过也不能在一起比，虽然都是计算机类，但还是隔了个大山，你要问他网络安全、网络渗透，估计一问三不知……
+</p>
+<p style="text-indent:2em;">
+	更多漏洞挖掘方面的，不止有全新漏洞的挖掘，还有漏洞的二次挖掘及利用，就是打了补丁后的漏洞挖掘，存在很多这样的漏洞，一次补不彻底，导致多次补丁，这样的漏洞太多了，不一一列举了。。
+</p>
+<p style="text-indent:2em;">
+	还有就是根据安全补丁，挖掘本次修补的漏洞，不过这种的没啥价值，基本都补了，另一个是可能网上都有公开的漏洞文档了，一般都是个人学习，或者其他用途，总之这样的很少……
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#e53333;">本人超级小菜，以上全是本人在某市精神病康复中心发疯时胡言乱语写的文字，本人也不能理解本人写的什么内容，如有侵犯众多“大牛B”的利益、名誉权、知名度、牛逼程度，您就当没看见，是小的在放屁。</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#e53333;">本文内容如有错误，请留言指正。</span></strong> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="915,1813,58.44.68.143">
+<p>【匿名者】 @ 2011-10-07 19:24:26</p>
+<p style="text-indent:2em">敢于说实话，像在t00ls里面一样，顶你，不错！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">现状就这样，国内就如此。</p>
+</blockquote>
+<blockquote id="948,1813,60.23.113.185">
+<p>【匿名者】 @ 2011-11-17 20:54:06</p>
+<p style="text-indent:2em">感触很深，知道什么是井底之蛙了，谢谢指点！~~</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">国内就是这样，装逼的一堆，没办法的事。</p>
+</blockquote>
+<blockquote id="1387,1813,222.41.170.66">
+<p>【匿名者】 @ 2012-04-27 11:20:08</p>
+<p style="text-indent:2em">请在这里填写留言内容，留言内容最长不超过 400 字。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">So？</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-04-06
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E6%9C%AC%E5%9C%B0/">本地</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E6%8F%90%E6%9D%83/">提权</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/shell/">Shell</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a>
+          <a href="https://lcx.cc/tags/%E5%BE%AE%E8%BD%AF/">微软</a>
+          <a href="https://lcx.cc/tags/%E6%BA%A2%E5%87%BA/">溢出</a>
+          <a href="https://lcx.cc/tags/%E6%BA%90%E7%A0%81/">源码</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/1814/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">物理攻击、抓频攻击 - 利用雷达来进行扫描网络弱点</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/1812/">
+            <span class="next-text nav-default">baidu.cm 的故事 （注意是cm）</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Android远程控制工具，安卓手机远控木马 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="nauscript" /><meta name="description" content="Android远程控制工具，安卓手机远控木马。那天看到zone里@Sn0wLe0p4rd 发了一个关于凑一个安卓的远控，今天发一个Android远程控制工具AndroRat。Androrat是一个客户/服务器模式的JAVA Android应用。而Androrat这个名字也很好理解，顾名思义，是Android和RAT (Remote Access Tool)的合体。 这个工具是一个大学四年级团队的安全项目，这款应用的目的是远程操控android设备并且从中获取信息。" />
+<meta name="keywords" content="Android远程控制工具，安卓手机远控木马" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3555/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="Android远程控制工具，安卓手机远控木马" />
+<meta property="og:description" content="Android远程控制工具，安卓手机远控木马。那天看到zone里@Sn0wLe0p4rd 发了一个关于凑一个安卓的远控，今天发一个Android远程控制工具AndroRat。Androrat是一个客户/服务器模式的JAVA Android应用。而Androrat这个名字也很好理解，顾名思义，是Android和RAT (Remote Access Tool)的合体。 这个工具是一个大学四年级团队的安全项目，这款应用的目的是远程操控android设备并且从中获取信息。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3555/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-06-05T16:15:25&#43;08:00" />
+<meta property="article:modified_time" content="2014-03-30T13:59:13&#43;08:00" />
+
+<meta itemprop="name" content="Android远程控制工具，安卓手机远控木马">
+<meta itemprop="description" content="Android远程控制工具，安卓手机远控木马。那天看到zone里@Sn0wLe0p4rd 发了一个关于凑一个安卓的远控，今天发一个Android远程控制工具AndroRat。Androrat是一个客户/服务器模式的JAVA Android应用。而Androrat这个名字也很好理解，顾名思义，是Android和RAT (Remote Access Tool)的合体。 这个工具是一个大学四年级团队的安全项目，这款应用的目的是远程操控android设备并且从中获取信息。"><meta itemprop="datePublished" content="2013-06-05T16:15:25&#43;08:00" />
+<meta itemprop="dateModified" content="2014-03-30T13:59:13&#43;08:00" />
+<meta itemprop="wordCount" content="5326">
+<meta itemprop="keywords" content="Android,安卓,工具,木马,手机,远程,远控,cookie,IE,IP,Rat,短信,数据,数据库,源码," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Android远程控制工具，安卓手机远控木马"/>
+<meta name="twitter:description" content="Android远程控制工具，安卓手机远控木马。那天看到zone里@Sn0wLe0p4rd 发了一个关于凑一个安卓的远控，今天发一个Android远程控制工具AndroRat。Androrat是一个客户/服务器模式的JAVA Android应用。而Androrat这个名字也很好理解，顾名思义，是Android和RAT (Remote Access Tool)的合体。 这个工具是一个大学四年级团队的安全项目，这款应用的目的是远程操控android设备并且从中获取信息。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Android远程控制工具，安卓手机远控木马</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-06-05" class="post-time">
+          2013-06-05
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/android/"> Android </a>
+            <a href="https://lcx.cc/categories/%E5%AE%89%E5%8D%93/"> 安卓 </a>
+            <a href="https://lcx.cc/categories/%E5%B7%A5%E5%85%B7/"> 工具 </a>
+            <a href="https://lcx.cc/categories/%E6%9C%A8%E9%A9%AC/"> 木马 </a>
+            <a href="https://lcx.cc/categories/%E6%89%8B%E6%9C%BA/"> 手机 </a>
+            <a href="https://lcx.cc/categories/%E8%BF%9C%E7%A8%8B/"> 远程 </a>
+            <a href="https://lcx.cc/categories/%E8%BF%9C%E6%8E%A7/"> 远控 </a>
+            
+          </div>
+        <span class="more-meta"> 约 5326 字 </span>
+          <span class="more-meta"> 预计阅读 11 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	那天看到zone里@Sn0wLe0p4rd发了一个关于<a href="http://zone.wooyun.org/user/Sn0wLe0p4rd" target="_blank">凑一个安卓的远控</a>，今天发一个Android远程控制工具AndroRat
+</p>
+<p style="text-indent:2em;">
+	Androrat是一个客户/服务器模式的JAVA Android应用。而Androrat这个名字也很好理解，顾名思义，是Android和RAT (Remote Access Tool)的合体。 这个工具是一个大学四年级团队的安全项目，这款应用的目的是远程操控android设备并且从中获取信息。
+</p>
+<p style="text-indent:2em;">
+	功能
+</p>
+<p style="text-indent:2em;">
+	获取联系人信息
+</p>
+<p style="text-indent:2em;">
+	获取通话信息
+</p>
+<p style="text-indent:2em;">
+	获取短信信息
+</p>
+<p style="text-indent:2em;">
+	GPS/网络定位
+</p>
+<p style="text-indent:2em;">
+	实时监控接收短信息
+</p>
+<p style="text-indent:2em;">
+	实时获取手机状态
+</p>
+<p style="text-indent:2em;">
+	拍照
+</p>
+<p style="text-indent:2em;">
+	响铃
+</p>
+<p style="text-indent:2em;">
+	录视频
+</p>
+<p style="text-indent:2em;">
+	发短信
+</p>
+<p style="text-indent:2em;">
+	打电话
+</p>
+<p style="text-indent:2em;">
+	打开浏览器访问URL
+</p>
+<p style="text-indent:2em;">
+	手机震动
+</p>
+<p style="text-indent:2em;">
+	下载地址：<a href="https://github.com/wcb972/androrat" target="_blank">Androrat</a>
+</p>
+<p style="text-indent:2em;">
+	<strong><span style="color:#E53333;">关于该源码的具体编译及修改教程详见：</span></strong><a href="https://lcx.cc/post/3882/" target="_blank"><span>如何玩转Android远控（androrat）</span></a>
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3882/" target="_blank">如何玩转Android远控（androrat）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3555/" target="_blank">Android远程控制工具，安卓手机远控木马</a> 
+</p>
+<p>
+	<strong>相关吐槽：</strong> 
+</p>
+<p style="text-indent:2em;">
+	nauscript (&lt;!--&lt;img src="--&gt;&lt;imgsrc=xonerror=alert(document.cookie)//"&gt;) | 2013-06-04 22:26
+</p>
+<p style="text-indent:2em;">
+	擦 电脑卡了 没发出来。。。 下载链接重发<a href="https://github.com/wcb972/androrat" target="_blank">Androrat</a> 
+</p>
+<p style="text-indent:2em;">
+	2#
+</p>
+<p style="text-indent:2em;">
+	nauscript (&lt;!--&lt;img src="--&gt;&lt;imgsrc=xonerror=alert(document.cookie)//"&gt;) | 2013-06-04 22:27
+</p>
+<p style="text-indent:2em;">
+	还有网上搜集到的一份Androrat的源码 没有验证 下载地址 <a href="http://pan.baidu.com/share/link?shareid=517944&uk=1076602916" target="_blank">androrat-master.zip</a> 
+</p>
+<p style="text-indent:2em;">
+	3#
+</p>
+<p style="text-indent:2em;">
+	bittertea (Bittertea.pw) | 2013-06-04 22:29
+</p>
+<p style="text-indent:2em;">
+	先测试再说
+</p>
+<p style="text-indent:2em;">
+	4#
+</p>
+<p style="text-indent:2em;">
+	nauscript (&lt;!--&lt;img src="--&gt;&lt;imgsrc=xonerror=alert(document.cookie)//"&gt;) | 2013-06-04 22:34
+</p>
+<p style="text-indent:2em;">
+	@bittertea 上面原文里的是原版 测试有效 下面网上流传的那个我没看过 一个基友给的 应该也可用
+</p>
+<p style="text-indent:2em;">
+	5#
+</p>
+<p style="text-indent:2em;">
+	Sn0wLe0p4rd | 2013-06-04 22:53
+</p>
+<p style="text-indent:2em;">
+	笑纳了，小伙儿加油
+</p>
+<p style="text-indent:2em;">
+	6#
+</p>
+<p style="text-indent:2em;">
+	nauscript (&lt;!--&lt;img src="--&gt;&lt;imgsrc=xonerror=alert(document.cookie)//"&gt;) | 2013-06-04 23:18
+</p>
+<p style="text-indent:2em;">
+	@Sn0wLe0p4rd 两集联发 再发一个sql注入的
+</p>
+<p style="text-indent:2em;">
+	7#
+</p>
+<p style="text-indent:2em;">
+	RootUser | 2013-06-05 11:46
+</p>
+<p style="text-indent:2em;">
+	@nauscript 求提供一个编译好的APK给我，小弟没有安卓环境。 524251386@qq.com
+</p>
+<p style="text-indent:2em;">
+	8#
+</p>
+<p style="text-indent:2em;">
+	园长 (你在身边就是缘，缘分写在数据库里面。) | 2013-06-05 12:29
+</p>
+<p style="text-indent:2em;">
+	@nauscript 那源码是我上传的，我都不知道你是怎么搜到我的下载地址的哈哈...
+</p>
+<p style="text-indent:2em;">
+	9#
+</p>
+<p style="text-indent:2em;">
+	nauscript (&lt;!--&lt;img src="--&gt;&lt;imgsrc=xonerror=alert(document.cookie)//"&gt;) | 2013-06-05 12:50
+</p>
+<p style="text-indent:2em;">
+	@园长 晓新晓心是园长大人的盘么？ 之前在里面下载过东西就一直收藏着，看到你发的那个我才去网上找到的Androrat 。。。。。。
+</p>
+<p style="text-indent:2em;">
+	10#
+</p>
+<p style="text-indent:2em;">
+	xiaoxin | 2013-06-05 13:00
+</p>
+<p style="text-indent:2em;">
+	这个是开源的，上网就能搜到代码
+</p>
+<p style="text-indent:2em;">
+	11#
+</p>
+<p style="text-indent:2em;">
+	园长 (你在身边就是缘，缘分写在数据库里面。) | 2013-06-05 13:19
+</p>
+<p style="text-indent:2em;">
+	@nauscript 额 我从git上CheckOut下来的，那个ID是我的。
+</p>
+<p style="text-indent:2em;">
+	12#
+</p>
+<p style="text-indent:2em;">
+	nauscript (&lt;!--&lt;img src="--&gt;&lt;imgsrc=xonerror=alert(document.cookie)//"&gt;) | 2013-06-05 13:22
+</p>
+<p style="text-indent:2em;">
+	@园长 网络真小。。。。跪了 真有缘 果断关注你了。。。。
+</p>
+<p style="text-indent:2em;">
+	13#
+</p>
+<p style="text-indent:2em;">
+	园长 (你在身边就是缘，缘分写在数据库里面。) | 2013-06-05 13:38
+</p>
+<p style="text-indent:2em;">
+	@nauscript 这个圈子本来就不算大，来来去去都是那么些人。
+</p>
+<p style="text-indent:2em;">
+	14#
+</p>
+<p style="text-indent:2em;">
+	梧桐雨 (一个习惯逛zone社区的路人) | 2013-06-05 13:49
+</p>
+<p style="text-indent:2em;">
+	@nauscript @园长 你们的缘分都写在数据库里面了吧:D
+</p>
+<p style="text-indent:2em;">
+	15#
+</p>
+<p style="text-indent:2em;">
+	Thanks (freebuF资深屌丝) | 2013-06-05 14:40
+</p>
+<p style="text-indent:2em;">
+	freebuf上的。。
+</p>
+<p style="text-indent:2em;">
+	16#
+</p>
+<p style="text-indent:2em;">
+	zeracker | 2013-06-05 14:45
+</p>
+<p style="text-indent:2em;">
+	还有好些商业版本的，很牛X。。。。。
+</p>
+<p style="text-indent:2em;">
+	17#
+</p>
+<p style="text-indent:2em;">
+	昵称 (&lt;/textarea&gt;'"&gt;&lt;script src) | 2013-06-05 15:53
+</p>
+<p style="text-indent:2em;">
+	@nauscript @园长 @zeracker 好吧，西班牙语的stepbystep--------http://ifsecurity.com/2013/01/29/poc-malware-android-compilar-androrat/
+</p>
+<p style="text-indent:2em;">
+	需要翻墙。
+</p>
+<p style="text-indent:2em;">
+	18#
+</p>
+<p style="text-indent:2em;">
+	nauscript (&lt;!--&lt;img src="--&gt;&lt;imgsrc=xonerror=alert(document.cookie)//"&gt;) | 2013-06-05 16:09
+</p>
+<p style="text-indent:2em;">
+	@梧桐雨 你要不要也加个字段进来
+</p>
+<p style="text-indent:2em;">
+	19#
+</p>
+<p style="text-indent:2em;">
+	梧桐雨 (一个习惯逛zone社区的路人) | 2013-06-05 16:11
+</p>
+<p style="text-indent:2em;">
+	@nauscript 好啊好，命名为id吧
+</p>
+<p style="text-indent:2em;">
+	<a href="http://zone.wooyun.org/content/4098" target="_blank">source</a> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="4169,3555,118.252.74.112">
+<p>路人甲 @ 2013-06-06 16:59:09</p>
+<p style="text-indent:2em">不会用是硬伤，主控端没看到。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额……</p>
+</blockquote>
+<blockquote id="4660,3555,119.129.134.254">
+<p>佚名 @ 2013-08-04 11:16:57</p>
+<p style="text-indent:2em">表示想问下怎么生成客户端~~~~~？？？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">先看一下说明文档。</p>
+</blockquote>
+<blockquote id="4669,3555,106.2.166.126">
+<p>骑个大28 @ 2013-08-06 00:01:16</p>
+<p style="text-indent:2em">想了解一下这个 站长能给个联系方式不？ QQ2732458321</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">http://lcx.cc/?i=1</p>
+</blockquote>
+<blockquote id="4721,3555,219.139.34.140">
+<p>佚名 @ 2013-08-12 11:44:28</p>
+<p style="text-indent:2em">Android手机电话短信监控软件，本软件能监听到安装了本程序的安卓手机上的所有短信收发记录和通话记录，如果被监控手机在收发短信或接打电话时能连上网络，则短信记录和通话记录实时发到你指定的邮箱。如果被监控手机收发短信或接打电话时不能连上网络，则将短信记录和通话记录保存到手机上，下次手机连上网络时自动后台发送到你指定的邮箱。同时，本程序还能监控到手机上接收到的彩信，具备手机定位，通话录音等功能。购买者可以联系QQ：2919410391</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">请各位读者注意！该广告并非本站发布，属某网友匿名发表，请【自行鉴定真假】，谨防【上当受骗】！</p>
+</blockquote>
+<blockquote id="4788,3555,211.139.151.35">
+<p>佚名 @ 2013-08-22 17:15:10</p>
+<p style="text-indent:2em">兼容性不是很好，几个功能我手机用不了，特别是拍照·录视频，不然，嘿嘿</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额……</p>
+</blockquote>
+<blockquote id="5150,3555,111.150.93.55">
+<p>adous @ 2013-10-19 09:05:49</p>
+<p style="text-indent:2em">老大啊  你的软件下载地址过期了哇。求重新公布下下载地址 或者发到我邮箱1206122261@qq.com 谢谢</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额，这个貌似没有备份……</p>
+</blockquote>
+<blockquote id="5152,3555,27.153.247.54">
+<p>冠希哥不要 @ 2013-10-19 19:55:29</p>
+<p style="text-indent:2em">核总，我想问一下，如果我这个后台ip吧，限制了除了我这个ip之外其他ip都不能登陆，是不是就没有可能有人登陆我的后台对吧</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">1、看如何限制的，js跳转的话（实际上脚本程序未终止，后边代码继续执行），你懂的
+2、X-Forward-For
+3、搞到管理IP段，挂代理
+4、机房 arp
+5、搞到管理pc</p>
+</blockquote>
+<blockquote id="5176,3555,202.88.87.116">
+<p>苦涩的人生 @ 2013-10-25 18:27:55</p>
+<p style="text-indent:2em">您好。核总。
+自己正需要这个软件，想要下载测试。
+好像连接挂了。
+麻烦您能否再补一下下载地址呢？
+或给我发信箱。。
+谢谢了。。
+12227770@qq.com</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额，貌似木有备份，你搜搜，说不定有转载的……</p>
+</blockquote>
+<blockquote id="5315,3555,222.90.193.125">
+<p>佚名 @ 2013-11-22 10:35:09</p>
+<p style="text-indent:2em">请问这个主控端怎么运行呢，我找不到运行的方式，619101045@qq.com</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">看说明。</p>
+</blockquote>
+<blockquote id="5396,3555,182.246.54.28">
+<p>shizi @ 2013-12-04 17:44:36</p>
+<p style="text-indent:2em">404是硬伤。。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">？</p>
+</blockquote>
+<blockquote id="5435,3555,125.42.120.209">
+<p>佚名 @ 2013-12-10 16:54:01</p>
+<p style="text-indent:2em">Android手机电话短信监控软件，本软件能监听到安装了本程序的安卓手机上的所有短信收发记录和通话记录，如果被监控手机在收发短信或接打电话时能连上网络，则短信记录和通话记录实时发到你指定的邮箱。如果被监控手机收发短信或接打电话时不能连上网络，则将短信记录和通话记录保存到手机上，下次手机连上网络时自动后台发送到你指定的邮箱。同时，本程序还能监控到手机上接收到的彩信，具备手机定位，通话录音等功能。购买者可以联系QQ：646257485</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额……</p>
+</blockquote>
+<blockquote id="5678,3555,27.210.188.176">
+<p>嘿嘿 @ 2014-01-14 11:17:57</p>
+<p style="text-indent:2em">2033246@qq.com  大哥 你的 连接失效了 能发到邮箱里面吗</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">原版源码：http://pan.baidu.com/share/link?shareid=517944&amp;uk=1076602916
+修正过的源码：http://lcx.cc/?i=3882</p>
+</blockquote>
+<blockquote id="5865,3555,119.108.176.9">
+<p>hello @ 2014-02-20 12:26:38</p>
+<p style="text-indent:2em">站长那个androrat中androratserver工程有缺漏啊，import不了，看了下连androidmanifest.xml都木有。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你下这个：http://lcx.cc/?i=3882，没有缺漏，编译通过。</p>
+</blockquote>
+<blockquote id="5901,3555,123.147.244.94">
+<p>佚名 @ 2014-02-24 10:53:47</p>
+<p style="text-indent:2em">可以吧安装包传给我吗，870376361@qq.com谢谢！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">http://lcx.cc/?i=3882，有源码下载。</p>
+</blockquote>
+<blockquote id="6130,3555,60.8.103.242">
+<p>佚名 @ 2014-03-29 23:41:56</p>
+<p style="text-indent:2em">大哥好  里面的源码没有解释吗？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">有部分注释，关于该源码的具体编译及修改教程详见：
+如何玩转Android远控（androrat） ，http://lcx.cc/?i=3882</p>
+</blockquote>
+<blockquote id="6131,3555,180.166.134.238">
+<p>尨葵 @ 2014-03-30 07:49:47</p>
+<p style="text-indent:2em">可以吧安装包传给我吗，2812288180@qq.com谢谢！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">编译好的安装包对你来说没有用，因为你需要在源码中修改上线地址，源码文中有下载。
+关于该源码的具体编译及修改教程详见：如何玩转Android远控（androrat） ，http://lcx.cc/?i=3882</p>
+</blockquote>
+<blockquote id="6132,3555,180.166.134.238">
+<p>尨葵 @ 2014-03-30 07:50:55</p>
+<p style="text-indent:2em">可以吧安装包传给我吗，2812288180@qq.com谢谢！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">编译好的安装包对你来说没有用，因为你需要在源码中修改上线地址，源码文中有下载。
+关于该源码的具体编译及修改教程详见：如何玩转Android远控（androrat） ，http://lcx.cc/?i=3882</p>
+</blockquote>
+<blockquote id="6315,3555,117.150.6.37">
+<p>佚名 @ 2014-04-29 14:12:21</p>
+<p style="text-indent:2em">求网站入侵高手，拿数据
+
+可以先测试，免订金。支持第三方担保
+手上有大量的单，最好是能长期合作。实现共赢，月收几万是小问题。联系QQ1297299685</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">提示：广告真实性请自行判断，谨防上当受骗……</p>
+</blockquote>
+<blockquote id="6417,3555,61.180.72.160">
+<p>佚名 @ 2014-05-18 10:19:10</p>
+<p style="text-indent:2em">我自己买一个新手机，然后再安装一个手机对手机或电脑对手机的远程监控软件，能对监控手机的通话，短信，图片，等进行实时监控，并且能控制手机摄像，录音。能安装这样的软件吗？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">本文或 http://lcx.cc/?i=3882 都是你说的东西。</p>
+</blockquote>
+<blockquote id="6418,3555,61.180.72.160">
+<p>佚名 @ 2014-05-18 10:20:51</p>
+<p style="text-indent:2em">我自己买一个新手机，然后再安装一个手机对手机或电脑对手机的远程监控软件，能对监控手机的通话，短信，图片，等进行实时监控，并且能控制手机摄像，录音。能安装这样的软件吗？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">本文或 http://lcx.cc/?i=3882 都是你说的东西。</p>
+</blockquote>
+<blockquote id="6422,3555,121.23.173.197">
+<p>求手机远控加Q @ 2014-05-18 11:15:58</p>
+<p style="text-indent:2em">求手机远控Q1515253858 黑人勿扰~提供测试的来 价格适合直接定做</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">http://lcx.cc/?i=3882</p>
+</blockquote>
+<blockquote id="6423,3555,121.23.173.197">
+<p>佚名 @ 2014-05-18 11:18:28</p>
+<p style="text-indent:2em">可以吧安装包传给我吗，1148259328@qq.com谢谢！我电脑安装不了安卓环境，哪位大神帮忙修改下我自己的上线地址，可给红包，谢谢大神们，谁能帮帮我 我Q1148259328</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">http://lcx.cc/?i=3882</p>
+</blockquote>
+<blockquote id="6610,3555,218.203.10.81">
+<p>佚名 @ 2014-06-19 15:41:40</p>
+<p style="text-indent:2em">新人路过 找个朋友一起学习Linux运维方面知识  小弟qq2465240993</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="6611,3555,218.203.10.81">
+<p>路过的小八路 @ 2014-06-19 15:43:07</p>
+<p style="text-indent:2em">新人路过 找个朋友一起学习Linux运维方面知识  小弟qq2465240993</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="6617,3555,117.150.7.53">
+<p>佚名 @ 2014-06-20 18:22:28</p>
+<p style="text-indent:2em">本工作室销售现成的安卓监控程序:
+拦截版，安卓短信拦截转发，远程开启或者关闭拦截，操作目标手机同发短信，转发到指定的号码，可以自动访问设定的网址，可自由设置拦截什么开头的号码，比如100开头的。其他就不拦截。。
+
+全能版，在拦截版的基础上增加了获取目标手机所有的通讯录，通话记录，短信内容。这些是用邮箱来接收的。同时也可以按照客户的要求订制自己想要的哪些功能。可以提供测试。
+
+交易方式：可走淘宝网第三方担保。以上三个版本，都没有时间限制。联系QQ2919410391</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">提示各位读者：广告真实性自测，风险自担，谨防上当受骗！</p>
+</blockquote>
+<blockquote id="6626,3555,124.225.52.50">
+<p>佚名 @ 2014-06-21 19:13:15</p>
+<p style="text-indent:2em">求手机远控Q503522405 黑人勿扰~提供测试的来 价格适合直接定做</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[暂无回复]</p>
+</blockquote>
+<blockquote id="6633,3555,222.76.40.115">
+<p>佚名 @ 2014-06-22 18:59:06</p>
+<p style="text-indent:2em">谁给我个远控端和被远控端  974772768@qq.com</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="6676,3555,180.143.0.73">
+<p>佚名 @ 2014-06-29 11:32:35</p>
+<p style="text-indent:2em">请问一下下载地址怎么失效了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">新的下载地址见这里，如何玩转Android远控（androrat）：http://lcx.cc/?i=3882</p>
+</blockquote>
+<blockquote id="6698,3555,116.11.241.129">
+<p>小乖乖 @ 2014-07-03 11:48:39</p>
+<p style="text-indent:2em">求大神如果有手机远控的请联系我 QQ 1377899001 加我说手机..... 价钱可以给高点</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="6777,3555,103.246.244.210">
+<p>sword @ 2014-07-23 11:34:49</p>
+<p style="text-indent:2em">你好，我测试无法开机自启动，请问是什么原因呢</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯，这个原因太多了，具体你自己检查一下吧。</p>
+</blockquote>
+<blockquote id="6808,3555,103.246.244.210">
+<p>ss @ 2014-07-31 09:28:49</p>
+<p style="text-indent:2em">你好，我测试代码老是发现会挂掉。
+错误是ANR in my.app.client，Reason: Executing service my.app.client/.Client
+应该是service阻塞了？请问怎么处理呢</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">纳尼？java不太熟，建议你百度一下~</p>
+</blockquote>
+<blockquote id="6825,3555,221.206.36.14">
+<p>安卓 @ 2014-08-08 16:47:07</p>
+<p style="text-indent:2em">站长，问一下
+此软件有没有彩信功能呢</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">目测没有。</p>
+</blockquote>
+<blockquote id="7047,3555,219.75.28.91">
+<p>拖鞋被盗 @ 2014-10-12 22:38:53</p>
+<p style="text-indent:2em">有最新下载地址没？ 我也想玩</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">如何玩转Android远控（androrat）：http://lcx.cc/?i=3882</p>
+</blockquote>
+<blockquote id="7117,3555,183.58.191.29">
+<p>drike @ 2014-10-31 22:24:44</p>
+<p style="text-indent:2em">大核，有类似的安卓远控么？这款的主控端用的java不这么熟悉，而且bug好像也太多了吧！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没有</p>
+</blockquote>
+<blockquote id="7133,3555,182.92.187.105">
+<p>佚名 @ 2014-11-09 00:18:34</p>
+<p style="text-indent:2em">怎么配置被控端啊</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">有说明~</p>
+</blockquote>
+<blockquote id="7218,3555,1.197.174.216">
+<p>佚名 @ 2014-11-27 19:49:20</p>
+<p style="text-indent:2em">求手机远控Q503522405 黑人勿扰~提供测试的来 价格适合直接定做</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="7225,3555,36.40.56.27">
+<p>佚名 @ 2014-11-28 23:52:50</p>
+<p style="text-indent:2em">求远程安卓马2868480833，价格不要太高</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="7267,3555,49.212.202.65">
+<p>佚名 @ 2014-12-09 14:20:05</p>
+<p style="text-indent:2em">跪求一个控，价钱好商量,QQ5-1-9-3-5-4-0-4</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：谨防上当受骗~</p>
+</blockquote>
+<blockquote id="7342,3555,125.79.156.222">
+<p>小菜鸟 @ 2015-01-07 16:56:37</p>
+<p style="text-indent:2em">有控制oppo手机网络打开关闭的软件吗？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没有</p>
+</blockquote>
+<blockquote id="7392,3555,175.152.82.232">
+<p>小菜 @ 2015-02-04 20:40:21</p>
+<p style="text-indent:2em">站长不能下载手机远控啊</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">详见：如何玩转Android远控（androrat） ：http://lcx.cc/?i=3882</p>
+</blockquote>
+<blockquote id="7436,3555,113.107.24.48">
+<p>黑夜 @ 2015-02-18 00:36:37</p>
+<p style="text-indent:2em">找安卓远控，QQ3030680550，费用好说，能测试才M。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">提示：广告有风险，谨防上当受骗！</p>
+</blockquote>
+<blockquote id="7441,3555,27.149.225.176">
+<p>佚名 @ 2015-02-24 00:10:22</p>
+<p style="text-indent:2em">可以远控支付宝钱包不</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">不可以</p>
+</blockquote>
+<blockquote id="7456,3555,221.200.206.222">
+<p>魂狼 @ 2015-03-08 11:59:58</p>
+<p style="text-indent:2em">有没有windows控制安卓的远控木马？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没有。</p>
+</blockquote>
+<blockquote id="7489,3555,123.122.121.138">
+<p>佚名 @ 2015-03-25 13:33:48</p>
+<p style="text-indent:2em">求可用的安卓远控，联系QQ：740100100 骗子勿扰，可下载apk等功能，要免杀。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="7531,3555,123.125.35.136">
+<p>佚名 @ 2015-04-12 11:42:03</p>
+<p style="text-indent:2em">求手机远控Q135889867 黑人勿扰~提供测试的来 价格适合直接定</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">为什么要歧视有色人种呢？~</p>
+</blockquote>
+<blockquote id="7532,3555,123.125.35.136">
+<p>佚名 @ 2015-04-12 11:43:34</p>
+<p style="text-indent:2em">求可用的手机远控，联系QQ：860957810 骗子勿扰，可下载apk等功能，要免杀</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="7545,3555,119.86.239.164">
+<p>佚名 @ 2015-04-16 02:38:36</p>
+<p style="text-indent:2em">求一款安卓远控马 希望大神不要吝啬 价格好说· 多谢站长的文章 有的QQ985212180</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">提示：网络有风险，谨防上当受骗！</p>
+</blockquote>
+<blockquote id="7614,3555,223.240.240.254">
+<p>秦亚版主 @ 2015-05-29 07:56:58</p>
+<p style="text-indent:2em">安卓远控需要的可以加Q208662804 ！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">站长提示：网络广告有风险，谨防上当受骗！</p>
+</blockquote>
+<blockquote id="7648,3555,221.200.203.196">
+<p>魂狼 @ 2015-06-14 12:57:32</p>
+<p style="text-indent:2em">有没有WINDOWS控制台的木马？给提供一个呗</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没有</p>
+</blockquote>
+<blockquote id="7650,3555,124.156.4.26">
+<p>佚名 @ 2015-06-16 13:33:41</p>
+<p style="text-indent:2em">这个可以自己写</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">嗯</p>
+</blockquote>
+<blockquote id="7652,3555,14.124.180.212">
+<p>佚名 @ 2015-06-17 17:32:44</p>
+<p style="text-indent:2em">请在这里填写留言内容，最长不超过 1000 字。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[暂无回复]</p>
+</blockquote>
+<blockquote id="7653,3555,14.124.180.212">
+<p>佚名 @ 2015-06-17 17:36:17</p>
+<p style="text-indent:2em">Q208662804 1513142666  内部群 250343062  都是骗子，大家注意</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="7654,3555,14.124.180.212">
+<p>佚名 @ 2015-06-17 17:38:41</p>
+<p style="text-indent:2em">有真正实力的加我Q136569887</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="7667,3555,123.191.102.35">
+<p>佚名 @ 2015-06-22 09:25:20</p>
+<p style="text-indent:2em">还有没有类似的软件？能不能告诉一个？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">没有。</p>
+</blockquote>
+<blockquote id="7797,3555,116.253.3.214">
+<p>佚名 @ 2015-08-19 16:53:01</p>
+<p style="text-indent:2em">这个软件的下载地址在哪里</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">如何玩转Android远控（androrat）：http://lcx.cc/?i=3882
+http://pan.baidu.com/share/link?shareid=1496511097&amp;uk=771752861</p>
+</blockquote>
+<blockquote id="7803,3555,60.223.238.206">
+<p>佚名 @ 2015-08-22 04:22:06</p>
+<p style="text-indent:2em">求安卓最新版的远控马。可商务合作。QQ：3198055520</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">提示：网络有风险，谨防上当受骗！</p>
+</blockquote>
+<blockquote id="8066,3555,1.93.52.194">
+<p>佚名 @ 2015-12-15 12:29:17</p>
+<p style="text-indent:2em">645403265安卓木马手机远控想拥有就那么简单</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">站长提示：网络广告有风险，注意辨别，谨防上当受骗！！！</p>
+</blockquote>
+<blockquote id="8153,3555,222.77.74.226">
+<p>大白 @ 2016-02-19 10:59:12</p>
+<p style="text-indent:2em">站长大大，下载源码直接编译能用吗</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">自己试一下啊……</p>
+</blockquote>
+<blockquote id="8202,3555,117.136.99.55">
+<p>佚名 @ 2016-04-02 18:00:38</p>
+<p style="text-indent:2em">谁能提供电脑客户端手机服务端的远控，钱不是问题，须提供试用，长期合作！谢谢！！！2212929029</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">友情提示：网络广告有风险，注意辨别，谨防上当受骗！！！</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">nauscript</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2014-03-30
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/android/">Android</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%8D%93/">安卓</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+          <a href="https://lcx.cc/tags/%E6%89%8B%E6%9C%BA/">手机</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E6%8E%A7/">远控</a>
+          <a href="https://lcx.cc/tags/cookie/">cookie</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/%E7%9F%AD%E4%BF%A1/">短信</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="https://lcx.cc/tags/%E6%BA%90%E7%A0%81/">源码</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3556/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【ASP.NET代码审计】逐浪CMS（ZOOMLA!CMS）漏洞挖掘</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3554/">
+            <span class="next-text nav-default">MetInfo_v5.1.3 任意文件上传漏洞</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

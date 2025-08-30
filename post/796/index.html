@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【计算机常识】Windows 操作系统常见进程详解 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="Windows 操作系统常见进程详解，Windows 操作系统常见进程，Windows 系统常见进程，Windows 常见进程详解，Windows 系统进程详解，Windows 进程详解，Windows 常见进程，Windows 进程详解，Windows 进程，system，process，alg.exe，csrss.exe，ddhelp.exe，dllhost.exe，inetinfo.exe，kernel32.dll，lsass.exe，mdm.exe，mprexe.exe，internat.exemmtask.tsk，msgsrv32.exe，mstask.exe，regsvc.exe，rpcss.exe，services.exe，smss.exe，snmp.exe，spool32.exe，spoolsv.exe，stisvc.exe，svchost.exe，system，taskmon.exe，tcpsvcs.exe，winlogon.exe，winmgmt.exe。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="Windows 操作系统常见进程详解,Windows 操作系统常见进程,Windows 系统常见进程,Windows 常见进程详解,Windows 系统进程详解,Windows 进程详解,Windows 常见进程,Windows 进程详解,Windows 进程,system,process,alg.exe,csrss.exe,ddhelp.exe,dllhost.exe,inetinfo.exe,kernel32.dll,lsass.exe,mdm.exe,mprexe.exe,internat.exemmtask.tsk,msgsrv32.exe,mstask.exe,regsvc.exe,rpcss.exe,services.exe,smss.exe,snmp.exe,spool32.exe,spoolsv.exe,stisvc.exe,svchost.exe,system,taskmon.exe,tcpsvcs.exe,winlogon.exe,winmgmt.exe,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/796/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【计算机常识】Windows 操作系统常见进程详解" />
+<meta property="og:description" content="Windows 操作系统常见进程详解，Windows 操作系统常见进程，Windows 系统常见进程，Windows 常见进程详解，Windows 系统进程详解，Windows 进程详解，Windows 常见进程，Windows 进程详解，Windows 进程，system，process，alg.exe，csrss.exe，ddhelp.exe，dllhost.exe，inetinfo.exe，kernel32.dll，lsass.exe，mdm.exe，mprexe.exe，internat.exemmtask.tsk，msgsrv32.exe，mstask.exe，regsvc.exe，rpcss.exe，services.exe，smss.exe，snmp.exe，spool32.exe，spoolsv.exe，stisvc.exe，svchost.exe，system，taskmon.exe，tcpsvcs.exe，winlogon.exe，winmgmt.exe。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/796/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-10-18T11:26:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-10-18T11:26:00&#43;08:00" />
+
+<meta itemprop="name" content="【计算机常识】Windows 操作系统常见进程详解">
+<meta itemprop="description" content="Windows 操作系统常见进程详解，Windows 操作系统常见进程，Windows 系统常见进程，Windows 常见进程详解，Windows 系统进程详解，Windows 进程详解，Windows 常见进程，Windows 进程详解，Windows 进程，system，process，alg.exe，csrss.exe，ddhelp.exe，dllhost.exe，inetinfo.exe，kernel32.dll，lsass.exe，mdm.exe，mprexe.exe，internat.exemmtask.tsk，msgsrv32.exe，mstask.exe，regsvc.exe，rpcss.exe，services.exe，smss.exe，snmp.exe，spool32.exe，spoolsv.exe，stisvc.exe，svchost.exe，system，taskmon.exe，tcpsvcs.exe，winlogon.exe，winmgmt.exe。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-10-18T11:26:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-10-18T11:26:00&#43;08:00" />
+<meta itemprop="wordCount" content="10272">
+<meta itemprop="keywords" content="Windows,操作系统,系统,API,app,Bat,bug,Cmd,CSS,CTF,Dos,exe,EXP,FTP,Html,IDS,IE,IIS,IP,MAC,Microsoft,Mysql,Net,QQ,RSS,SQL,Web,安全,本地,病毒,插件,程序,服务,工具,管理,广告,后台,脚本,客户端,路由,命令,权限,软件,扫描,视频,数据,网络,文件,远程,注册表," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【计算机常识】Windows 操作系统常见进程详解"/>
+<meta name="twitter:description" content="Windows 操作系统常见进程详解，Windows 操作系统常见进程，Windows 系统常见进程，Windows 常见进程详解，Windows 系统进程详解，Windows 进程详解，Windows 常见进程，Windows 进程详解，Windows 进程，system，process，alg.exe，csrss.exe，ddhelp.exe，dllhost.exe，inetinfo.exe，kernel32.dll，lsass.exe，mdm.exe，mprexe.exe，internat.exemmtask.tsk，msgsrv32.exe，mstask.exe，regsvc.exe，rpcss.exe，services.exe，smss.exe，snmp.exe，spool32.exe，spoolsv.exe，stisvc.exe，svchost.exe，system，taskmon.exe，tcpsvcs.exe，winlogon.exe，winmgmt.exe。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【计算机常识】Windows 操作系统常见进程详解</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-10-18" class="post-time">
+          2010-10-18
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/windows/"> Windows </a>
+            <a href="https://lcx.cc/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"> 操作系统 </a>
+            <a href="https://lcx.cc/categories/%E7%B3%BB%E7%BB%9F/"> 系统 </a>
+            
+          </div>
+        <span class="more-meta"> 约 10272 字 </span>
+          <span class="more-meta"> 预计阅读 21 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>&nbsp;&nbsp;&nbsp; Windows 操作系统常见进程详解，Windows 操作系统常见进程，Windows 系统常见进程，Windows 常见进程详解，Windows 系统进程详解，Windows 进程详解，Windows 常见进程，Windows 进程详解，Windows 进程，system，process，alg.exe，csrss.exe，ddhelp.exe，dllhost.exe，inetinfo.exe，kernel32.dll，lsass.exe，mdm.exe，mprexe.exe，internat.exemmtask.tsk，msgsrv32.exe，mstask.exe，regsvc.exe，rpcss.exe，services.exe，smss.exe，snmp.exe，spool32.exe，spoolsv.exe，stisvc.exe，svchost.exe，system，taskmon.exe，tcpsvcs.exe，winlogon.exe，winmgmt.exe。</P>
+<P>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P><FONT style="FONT-WEIGHT: bold; COLOR: #990000">Windows 操作系统常见进程详解：</FONT> <br />
+ <br />
+&nbsp;&nbsp;&nbsp; system process alg.exe csrss.exe ddhelp.exe dllhost.exe inetinfo.exe kernel32.dll lsass.exe mdm.exe mprexe.exe internat.exemmtask.tsk msgsrv32.exe mstask.exe regsvc.exe rpcss.exe services.exe smss.exe snmp.exe spool32.exe spoolsv.exe stisvc.exe svchost.exe system taskmon.exe tcpsvcs.exe winlogon.exe winmgmt.exe ……</P>
+<P>描述：</P>
+<P>system process  <br />
+进程文件: [system process] or [system process]  <br />
+进程名称: Windows内存处理系统进程  <br />
+描述: Windows页面内存管理进程，拥有0级优先。  <br />
+是否为系统进程: 是&nbsp;  <br />
+alg.exe  <br />
+进程文件: alg or alg.exe  <br />
+进程名称: 应用层网关服务  <br />
+描述: 这是一个应用层网关服务用于网络共享。  <br />
+是否为系统进程: 是 </P>
+<P>csrss.exe  <br />
+进程文件: csrss or csrss.exe  <br />
+进程名称: Client/Server Runtime Server Subsystem  <br />
+描述: 客户端服务子系统，用以控制Windows图形相关子系统。  <br />
+是否为系统进程: 是 </P>
+<P>ddhelp.exe  <br />
+进程文件: ddhelp or ddhelp.exe  <br />
+进程名称: DirectDraw Helper  <br />
+描述: DirectDraw Helper是DirectX这个用于图形服务的一个组成部分。  <br />
+是否为系统进程: 是 </P>
+<P>dllhost.exe  <br />
+进程文件: dllhost or dllhost.exe  <br />
+进程名称: DCOM DLL Host进程  <br />
+描述: DCOM DLL Host进程支持基于COM对象支持DLL以运行Windows程序。  <br />
+是否为系统进程: 是 </P>
+<P>inetinfo.exe  <br />
+进程文件: inetinfo or inetinfo.exe  <br />
+进程名称: IIS Admin Service Helper  <br />
+描述: InetInfo是Microsoft Internet Infomation Services (IIS)的一部分，用于Debug调试除错。  <br />
+是否为系统进程: 是 </P>
+<P>internat.exe  <br />
+进程文件: internat or internat.exe  <br />
+进程名称: Input Locales  <br />
+描述: 这个输入控制图标用于更改类似国家设置、键盘类型和日期格式。  <br />
+是否为系统进程: 是 </P>
+<P>kernel32.dll  <br />
+进程文件: kernel32 or kernel32.dll  <br />
+进程名称: Windows壳进程  <br />
+描述: Windows壳进程用于管理多线程、内存和资源。  <br />
+是否为系统进程: 是 </P>
+<P>lsass.exe  <br />
+进程文件: lsass or lsass.exe  <br />
+进程名称: 本地安全权限服务  <br />
+描述: 这个本地安全权限服务控制Windows安全机制。  <br />
+是否为系统进程: 是 </P>
+<P>mdm.exe  <br />
+进程文件: mdm or mdm.exe  <br />
+进程名称: Machine Debug Manager  <br />
+描述: Debug除错管理用于调试应用程序和Microsoft Office中的Microsoft Script Editor脚本编辑器。  <br />
+是否为系统进程: 是 </P>
+<P>mmtask.tsk  <br />
+进程文件: mmtask or mmtask.tsk  <br />
+进程名称: 多媒体支持进程  <br />
+描述: 这个Windows多媒体后台程序控制多媒体服务，例如MIDI。  <br />
+是否为系统进程: 是 </P>
+<P>mprexe.exe  <br />
+进程文件: mprexe or mprexe.exe  <br />
+进程名称: Windows路由进程  <br />
+描述: Windows路由进程包括向适当的网络部分发出网络请求。  <br />
+是否为系统进程: 是 </P>
+<P>msgsrv32.exe  <br />
+进程文件: msgsrv32 or msgsrv32.exe  <br />
+进程名称: Windows信使服务  <br />
+描述: Windows信使服务调用Windows驱动和程序管理在启动。&nbsp;  <br />
+是否为系统进程: 是 </P>
+<P>mstask.exe  <br />
+进程文件: mstask or mstask.exe  <br />
+进程名称: Windows计划任务  <br />
+描述: Windows计划任务用于设定继承在什么时间或者什么日期备份或者运行。  <br />
+是否为系统进程: 是 </P>
+<P>regsvc.exe  <br />
+进程文件: regsvc or regsvc.exe  <br />
+进程名称: 远程注册表服务  <br />
+描述: 远程注册表服务用于访问在远程计算机的注册表。  <br />
+是否为系统进程: 是 </P>
+<P>rpcss.exe  <br />
+进程文件: rpcss or rpcss.exe  <br />
+进程名称: RPC Portmapper  <br />
+描述: Windows 的RPC端口映射进程处理RPC调用(远程模块调用)然后把它们映射给指定的服务提供者。  <br />
+是否为系统进程: 是 </P>
+<P>Windows 下运行的一般程序的进程 </P>
+<P>absr.exe acrobat.exe acrord32.exe agentsvr.exe aim.exe airsvcu.exe calc.exe alogserv.exe avconsol.exe avsynmgr.exe backWeb.exe bcb.exe ccapp.exe ctfmon.execdplayer.exe charmap.exe idaemon.exe cisvc.exe cmd.exe cmesys.exe ctsvccda.exe cutftp.exe defwatch.exe devldr32.exe dreamweaver.exe directcd.exe em_exec.exe excel.exe findfast.exe frontpage.exe gmt.exe kodakimage.exe hh.exe hidserv.exe QQ.exe iexplore.exe mgabg.exe mad.exe loadwc.exe eloadqm.exe msaccess.exe mcshield.exe msdtc.exe emsbb.exe mmc.exe mobsync.exe mplayer.exe mplayer2.ex msiexec.exe msimn.exe msmsgs.exe msoobe.exe mspaint.exe mysqld-nt.exe navapsvc.exe mspmspsv.exe navapw32.exe ndetect.exe netscape.exe notepad.exe ntbackup.exe ntvdm.exe nvsvc32.exe nwiz.exe osa.exe outlook.exe photoshop.exe point32.exe powerpnt.exe pstores.exe qttask.exe realplay.exe rnaapp.exe rtvscan.exe rundll32.exe sndrec32.exe sndvol32.exe spoolss.exe starter.exe tapisrv.exe systray.exe userinit.exe visio.exe vptray.exe vshwin32.exe vsmon.exe vsstat.exe wab.exe webscanx.exe winamp.exe winhlp32.exe winoa386.mod winproj.exe wordpad.exe wowexec.exe winroute.exe winword.exe winzip32.exe ypager.exe wmplayer.exe wkcalrem.exe wkqkpick.exe&nbsp; </P>
+<P>&nbsp; <br />
+具体描述： </P>
+<P> <br />
+system process  <br />
+进程文件: [system process] or [system process]  <br />
+进程名称: Windows内存处理系统进程  <br />
+描述: Windows页面内存管理进程，拥有0级优先。  <br />
+是否为系统进程: 是&nbsp;  <br />
+alg.exe  <br />
+进程文件: alg or alg.exe  <br />
+进程名称: 应用层网关服务  <br />
+描述: 这是一个应用层网关服务用于网络共享。  <br />
+是否为系统进程: 是 </P>
+<P>csrss.exe  <br />
+进程文件: csrss or csrss.exe  <br />
+进程名称: Client/Server Runtime Server Subsystem  <br />
+描述: 客户端服务子系统，用以控制Windows图形相关子系统。  <br />
+是否为系统进程: 是 </P>
+<P>ddhelp.exe  <br />
+进程文件: ddhelp or ddhelp.exe  <br />
+进程名称: DirectDraw Helper  <br />
+描述: DirectDraw Helper是DirectX这个用于图形服务的一个组成部分。  <br />
+是否为系统进程: 是 </P>
+<P>dllhost.exe  <br />
+进程文件: dllhost or dllhost.exe  <br />
+进程名称: DCOM DLL Host进程  <br />
+描述: DCOM DLL Host进程支持基于COM对象支持DLL以运行Windows程序。  <br />
+是否为系统进程: 是 </P>
+<P>inetinfo.exe  <br />
+进程文件: inetinfo or inetinfo.exe  <br />
+进程名称: IIS Admin Service Helper  <br />
+描述: InetInfo是Microsoft Internet Infomation Services (IIS)的一部分，用于Debug调试除错。  <br />
+是否为系统进程: 是 </P>
+<P>internat.exe  <br />
+进程文件: internat or internat.exe  <br />
+进程名称: Input Locales  <br />
+描述: 这个输入控制图标用于更改类似国家设置、键盘类型和日期格式。  <br />
+是否为系统进程: 是 </P>
+<P>kernel32.dll  <br />
+进程文件: kernel32 or kernel32.dll  <br />
+进程名称: Windows壳进程  <br />
+描述: Windows壳进程用于管理多线程、内存和资源。  <br />
+是否为系统进程: 是 </P>
+<P>lsass.exe  <br />
+进程文件: lsass or lsass.exe  <br />
+进程名称: 本地安全权限服务  <br />
+描述: 这个本地安全权限服务控制Windows安全机制。  <br />
+是否为系统进程: 是 </P>
+<P>mdm.exe  <br />
+进程文件: mdm or mdm.exe  <br />
+进程名称: Machine Debug Manager  <br />
+描述: Debug除错管理用于调试应用程序和Microsoft Office中的Microsoft Script Editor脚本编辑器。  <br />
+是否为系统进程: 是 </P>
+<P>mmtask.tsk  <br />
+进程文件: mmtask or mmtask.tsk  <br />
+进程名称: 多媒体支持进程  <br />
+描述: 这个Windows多媒体后台程序控制多媒体服务，例如MIDI。  <br />
+是否为系统进程: 是 </P>
+<P>mprexe.exe  <br />
+进程文件: mprexe or mprexe.exe  <br />
+进程名称: Windows路由进程  <br />
+描述: Windows路由进程包括向适当的网络部分发出网络请求。  <br />
+是否为系统进程: 是 </P>
+<P>msgsrv32.exe  <br />
+进程文件: msgsrv32 or msgsrv32.exe  <br />
+进程名称: Windows信使服务  <br />
+描述: Windows信使服务调用Windows驱动和程序管理在启动。&nbsp;  <br />
+是否为系统进程: 是 </P>
+<P>mstask.exe  <br />
+进程文件: mstask or mstask.exe  <br />
+进程名称: Windows计划任务  <br />
+描述: Windows计划任务用于设定继承在什么时间或者什么日期备份或者运行。  <br />
+是否为系统进程: 是 </P>
+<P>regsvc.exe  <br />
+进程文件: regsvc or regsvc.exe  <br />
+进程名称: 远程注册表服务  <br />
+描述: 远程注册表服务用于访问在远程计算机的注册表。  <br />
+是否为系统进程: 是 </P>
+<P>rpcss.exe  <br />
+进程文件: rpcss or rpcss.exe  <br />
+进程名称: RPC Portmapper  <br />
+描述: Windows 的RPC端口映射进程处理RPC调用(远程模块调用)然后把它们映射给指定的服务提供者。  <br />
+是否为系统进程: 是 </P>
+<P>services.exe  <br />
+进程文件: services or services.exe  <br />
+进程名称: Windows Service Controller  <br />
+描述: 管理Windows服务。  <br />
+是否为系统进程: 是 </P>
+<P>smss.exe  <br />
+进程文件: smss or smss.exe  <br />
+进程名称: Session Manager Subsystem  <br />
+描述: 该进程为会话管理子系统用以初始化系统变量，MS-DOS驱动名称类似LPT1以及COM，调用Win32壳子系统和运行在Windows登陆过程。  <br />
+是否为系统进程: 是 </P>
+<P>snmp.exe  <br />
+进程文件: snmp or snmp.exe  <br />
+进程名称: Microsoft SNMP Agent  <br />
+描述: Windows简单的网络协议代理（SNMP）用于监听和发送请求到适当的网络部分。  <br />
+是否为系统进程: 是 </P>
+<P>spool32.exe  <br />
+进程文件: spool32 or spool32.exe  <br />
+进程名称: Printer Spooler  <br />
+描述: Windows打印任务控制程序，用以打印机就绪。  <br />
+是否为系统进程: 是 </P>
+<P>spoolsv.exe  <br />
+进程文件: spoolsv or spoolsv.exe  <br />
+进程名称: Printer Spooler Service  <br />
+描述: Windows打印任务控制程序，用以打印机就绪。  <br />
+是否为系统进程: 是 </P>
+<P>stisvc.exe  <br />
+进程文件: stisvc or stisvc.exe  <br />
+进程名称: Still Image Service  <br />
+描述: Still Image Service用于控制扫描仪和数码相机连接在Windows。  <br />
+是否为系统进程: 是 </P>
+<P>svchost.exe  <br />
+进程文件: svchost or svchost.exe  <br />
+进程名称: Service Host Process  <br />
+描述: Service Host Process是一个标准的动态连接库主机处理服务。  <br />
+是否为系统进程: 是 </P>
+<P>system  <br />
+进程文件: system or system  <br />
+进程名称: Windows System Process  <br />
+描述: Microsoft Windows系统进程。  <br />
+是否为系统进程: 是 </P>
+<P>taskmon.exe  <br />
+进程文件: taskmon or taskmon.exe  <br />
+进程名称: Windows Task Optimizer  <br />
+描述: windows任务优化器监视你使用某个程序的频率，并且通过加载那些经常使用的程序来整理优化硬盘。&nbsp;  <br />
+是否为系统进程: 是 </P>
+<P>tcpsvcs.exe  <br />
+进程文件: tcpsvcs or tcpsvcs.exe  <br />
+进程名称: TCP/IP Services  <br />
+描述: TCP/IP Services Application支持透过TCP/IP连接局域网和Internet。  <br />
+是否为系统进程: 是 </P>
+<P>winlogon.exe  <br />
+进程文件: winlogon or winlogon.exe  <br />
+进程名称: Windows Logon Process  <br />
+描述: Windows NT用户登陆程序。  <br />
+是否为系统进程: 是 </P>
+<P>winmgmt.exe  <br />
+进程文件: winmgmt or winmgmt.exe  <br />
+进程名称: Windows Management Service  <br />
+描述: Windows Management Service透过Windows Management Instrumentation data (WMI)技术处理来自应用客户端的请求。  <br />
+是否为系统进程: 是 </P>
+<P>&nbsp;</P>
+<P>程序进程 </P>
+<P>absr.exe  <br />
+进程文件: absr or absr.exe  <br />
+进程名称: Backdoor.Autoupder Virus  <br />
+描述: 这个进程是Backdoor.Autoupder后门病毒程序创建的。  <br />
+是否为系统进程: 否 </P>
+<P>acrobat.exe  <br />
+进程文件: acrobat or acrobat.exe  <br />
+进程名称: Adobe Acrobat  <br />
+描述: Acrobat Writer用于创建PDF文档。  <br />
+是否为系统进程: 否 </P>
+<P>acrord32.exe  <br />
+进程文件: acrord32 or acrord32.exe  <br />
+进程名称: Acrobat Reader  <br />
+描述: Acrobat Reader是一个用于阅读PDF文档的软件。  <br />
+是否为系统进程: 否 </P>
+<P>agentsvr.exe  <br />
+进程文件: agentsvr or agentsvr.exe  <br />
+进程名称: OLE automation server  <br />
+描述: OLE Automation Server是Microsoft Agent的一部分。  <br />
+是否为系统进程: 否 </P>
+<P>aim.exe  <br />
+进程文件: aim or aim.exe  <br />
+进程名称: AOL Instant Messenger  <br />
+描述: AOL Instant Messenger是一个在线聊天和即时通讯IM软件客户端。  <br />
+是否为系统进程: 否 </P>
+<P>airsvcu.exe  <br />
+进程文件: airsvcu or airsvcu.exe  <br />
+进程名称: Microsoft Media Manager  <br />
+描述: OLE 这是一个用于在硬盘上建立索引文件和文件夹，在Microsoft Media Manager媒体管理启动时运行的进程。它可以在控制面板被禁用。  <br />
+是否为系统进程: 否 </P>
+<P>alogserv.exe  <br />
+进程文件: alogserv or alogserv.exe  <br />
+进程名称: McAfee VirusScan  <br />
+描述: McAfee VirusScan是一个反病毒软件用于扫描你的文档和E-mail中的病毒。  <br />
+是否为系统进程: 否 </P>
+<P>avconsol.exe  <br />
+进程文件: avconsol or avconsol.exe  <br />
+进程名称: McAfee VirusScan  <br />
+描述: McAfee VirusScan是一个反病毒软件用于扫描你的文档和E-mail中的病毒。  <br />
+是否为系统进程: 否 </P>
+<P>avsynmgr.exe  <br />
+进程文件: avsynmgr or avsynmgr.exe  <br />
+进程名称: McAfee VirusScan  <br />
+描述: McAfee VirusScan是一个反病毒软件用于扫描你的文档和E-mail中的病毒。  <br />
+是否为系统进程: 否 </P>
+<P>backWeb.exe  <br />
+进程文件: backWeb or backWeb.exe  <br />
+进程名称: Backweb Adware  <br />
+描述: Backweb是一个Adware（广告插件，一般是由于安装某些免费软件而伴随安装上的程序）来自Backweb Technologies。  <br />
+是否为系统进程: 否 </P>
+<P> <br />
+bcb.exe  <br />
+进程文件: bcb or bcb.exe  <br />
+进程名称: Borland C++ Builder  <br />
+描述: Borland C++ Builder  <br />
+是否为系统进程: 否 </P>
+<P>calc.exe  <br />
+进程文件: calc or calc.exe  <br />
+进程名称: Calculator  <br />
+描述: Microsoft Windows计算器程序  <br />
+是否为系统进程: 否 </P>
+<P>ccapp.exe  <br />
+进程文件: ccapp or ccapp.exe  <br />
+进程名称: Symantec Common Client  <br />
+描述: Symantec公用应用客户端包含在Norton AntiVirus 2003和Norton Personal Firewall 2003。  <br />
+是否为系统进程: 否 </P>
+<P>cdplayer.exe  <br />
+进程文件: cdplayer or cdplayer.exe  <br />
+进程名称: CD Player  <br />
+描述: Microsoft Windows包含的CD播放器  <br />
+是否为系统进程: 否 </P>
+<P>charmap.exe  <br />
+进程文件: charmap or charmap.exe  <br />
+进程名称: Windows Character Map  <br />
+描述: Windows字符映射表用来帮助你寻找不常见的字符。  <br />
+是否为系统进程: 否 </P>
+<P>idaemon.exe  <br />
+进程文件: cidaemon or cidaemon.exe  <br />
+进程名称: Microsoft Indexing Service  <br />
+描述: 在后台运行的Windows索引服务，用于帮助你搜索文件在下次变得更快。  <br />
+是否为系统进程:&nbsp; </P>
+<P>cisvc.exe  <br />
+进程文件: cisvc or cisvc.exe  <br />
+进程名称: Microsoft Index Service Helper  <br />
+描述: Microsoft Index Service Helper监视Microsoft Indexing Service (cidaemon.exe) 的内存占用情况，如果cidaemon.exe内存使用超过了40M，则自动重新启动该进程。  <br />
+是否为系统进程: 否 </P>
+<P>cmd.exe  <br />
+进程文件: cmd or cmd.exe  <br />
+进程名称: Windows Command Prompt  <br />
+描述: Windows控制台程序。不像旧的command.com，cmd.exe是一个32位的命令行使用在WinNT/2000/XP。  <br />
+是否为系统进程: 否 </P>
+<P>cmesys.exe  <br />
+进程文件: cmesys or cmesys.exe  <br />
+进程名称: Gator GAIN Adware  <br />
+描述: Gator GAIN是一个Adware插件（广告插件，一般是由于安装某些免费软件而伴随安装上的程序）。  <br />
+是否为系统进程: 否 </P>
+<P>ctfmon.exe  <br />
+进程文件: ctfmon or ctfmon.exe  <br />
+进程名称: Alternative User Input Services  <br />
+描述: 控制Alternative User Input Text Processor (TIP)和Microsoft Office语言条。Ctfmon.exe提供语音识别、手写识别、键盘、翻译和其它用户输入技术的支持。  <br />
+是否为系统进程: 否 </P>
+<P>ctsvccda.exe  <br />
+进程文件: ctsvccda or ctsvccda.exe  <br />
+进程名称: Create CD-ROM Services  <br />
+描述: 在Win9X创建CD-ROM访问服务。  <br />
+是否为系统进程: 否 </P>
+<P>cutftp.exe  <br />
+进程文件: cutftp or cutftp.exe  <br />
+进程名称: CuteFTP  <br />
+描述: CuteFTP是一个流行的FTP客户端用于从FTP服务器上传/下载文件。  <br />
+是否为系统进程: 否 </P>
+<P>defwatch.exe  <br />
+进程文件: defwatch or defwatch.exe  <br />
+进程名称: Norton AntiVirus  <br />
+描述: Norton Anti-Virus扫描你的文件和email以检查病毒。  <br />
+是否为系统进程: 否 </P>
+<P>devldr32.exe  <br />
+进程文件: devldr32 or devldr32.exe  <br />
+进程名称: Create Device Loader  <br />
+描述: Creative Device Loader属于Create Soundblaster驱动。  <br />
+是否为系统进程: 否 </P>
+<P>directcd.exe  <br />
+进程文件: directcd or directcd.exe  <br />
+进程名称: Adaptec DirectCD  <br />
+描述: Adaptec DirectCD是一个用文件管理器式的界面，烧录文件到光盘的软件。  <br />
+是否为系统进程: 否 </P>
+<P>dreamweaver.exe  <br />
+进程文件: dreamweaver or dreamweaver.exe  <br />
+进程名称: Macromedia DreamWeaver  <br />
+描述: Macromedia DreamWeaver是一个HTML编辑器用于创建站点和其它类别的HTML文档。  <br />
+是否为系统进程: 否 </P>
+<P>em_exec.exe  <br />
+进程文件: em_exec or em_exec.exe  <br />
+进程名称: Logitech Mouse Settings  <br />
+描述: 这是Logitech MouseWare状态栏图标的进程，用于用户访问控制鼠标属性和察看MouseWare帮助。&nbsp;  <br />
+是否为系统进程: 否  <br />
+&nbsp; <br />
+excel.exe  <br />
+进程文件: excel or excel.exe  <br />
+进程名称: Microsoft Excel  <br />
+描述: Microsoft Excel是一个电子表格程序包括在Microsoft Office中。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>findfast.exe  <br />
+进程文件: findfast or findfast.exe  <br />
+进程名称: Microsoft Office Indexing  <br />
+描述: Microsoft Office索引程序，用于提高Microsoft Office索引Office文档的速度。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>frontpage.exe  <br />
+进程文件: frontpage or frontpage.exe  <br />
+进程名称: Microsoft FrontPage  <br />
+描述: Microsoft FrontPage是一个HTML编辑器用于创建站点和其它类别的HTML文档。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>gmt.exe  <br />
+进程文件: gmt or gmt.exe  <br />
+进程名称: Gator Spyware Component  <br />
+描述: Gator Spyware是一个广告插件，随Gator安装和启动。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P> <br />
+hh.exe  <br />
+进程文件: hh or hh.exe  <br />
+进程名称: Gator Windows Help  <br />
+描述: Windows Help程序用以打开帮助文件和文档，包括在很多Windows程序中。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>hidserv.exe  <br />
+进程文件: hidserv or hidserv.exe  <br />
+进程名称: Microsoft Human Interface Device Audio Service  <br />
+描述: 后台服务，用来支持USB音效部件和USB多媒体键盘。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>QQ.exe  <br />
+进程文件: QQ or QQ.exe  <br />
+进程名称: QQ  <br />
+描述: QQ是一个在线聊天和即时通讯客户端。  <br />
+是否为系统进程: 否 </P>
+<P>iexplore.exe  <br />
+进程文件: iexplore or iexplore.exe  <br />
+进程名称: Internet Explorer  <br />
+描述: Microsoft Internet Explorer网络浏览器透过HTTP访问WWW万维网。  <br />
+是否为系统进程: 否 </P>
+<P>kodakimage.exe  <br />
+进程文件: kodakimage or kodakimage.exe  <br />
+进程名称: Imaging  <br />
+描述: Kodak Imaging是一个图片察看软件。包括在Windows，用以打开图像文件。  <br />
+是否为系统进程: 否 </P>
+<P>loadqm.exe  <br />
+进程文件: loadqm or loadqm.exe  <br />
+进程名称: MSN Queue Manager Loader  <br />
+描述: MSN Queue Manager Loader被随着MSN Explorer和MSN Messenger安装。他在一些时候会占用很多系统资源。  <br />
+是否为系统进程: 否 </P>
+<P>loadwc.exe  <br />
+进程文件: loadwc or loadwc.exe  <br />
+进程名称: Load WebCheck  <br />
+描述: Load WebCheck用以定制一些Internet Explorer的设定，添加、删除或者更新用户profiles设定。  <br />
+是否为系统进程: 否 </P>
+<P>mad.exe  <br />
+进程文件: mad or mad.exe  <br />
+进程名称: System Attendant Service  <br />
+描述: System Attendant Service是Microsoft Exchange Server的后台程序。它用以读取Microsoft Exchange的DLLs文件，写log信息和生成离线地址薄。  <br />
+是否为系统进程: 否 </P>
+<P>mcshield.exe  <br />
+进程文件: mcshield or mcshield.exe  <br />
+进程名称: McAfee VirusScan  <br />
+描述: McAfee VirusScan是一个反病毒软件用以扫描你的文件和email中的病毒。  <br />
+是否为系统进程: 否 </P>
+<P>mgabg.exe  <br />
+进程文件: mgabg or mgabg.exe  <br />
+进程名称: Matrox BIOS Guard  <br />
+描述: Matrox BIOS守护进程。  <br />
+是否为系统进程: 否 </P>
+<P>mmc.exe  <br />
+进程文件: mmmc or mmc.exe  <br />
+进程名称: Microsoft Management Console  <br />
+描述: Microsoft Management Console管理控制程序集成了很多的系统控制选项。例如设备管理（系统、硬件&nbsp;  <br />
+）或者计算机权限控制（Administrative管理工具）。  <br />
+是否为系统进程: 否 </P>
+<P>mobsync.exe  <br />
+进程文件: mobsync or mobsync.exe  <br />
+进程名称: Microsoft Synchronization Manager  <br />
+描述: Internet Explorer的一个组成部分，用以在后台同步离线察看页面。  <br />
+是否为系统进程: 否 </P>
+<P>mplayer.exe  <br />
+进程文件: mplayer or mplayer.exe  <br />
+进程名称: Windows Media Player  <br />
+描述: Windows Media Player是一个用以打开音乐、声音和视频文件的软件。  <br />
+是否为系统进程: 否 </P>
+<P>mplayer2.exe  <br />
+进程文件: mplayer2 or mplayer2.exe  <br />
+进程名称: Windows Media Player  <br />
+描述: Windows Media Player是一个用以打开音乐、声音和视频文件的软件。  <br />
+是否为系统进程: 否 </P>
+<P>msaccess.exe  <br />
+进程文件: msaccess or msaccess.exe  <br />
+进程名称: Microsoft Access  <br />
+描述: Microsoft Access是一个数据库软件包括在Microsoft Office。  <br />
+是否为系统进程: 否 </P>
+<P>msbb.exe  <br />
+进程文件: msbb or msbb.exe  <br />
+进程名称: MSBB Web3000 Spyware Application  <br />
+描述: MSBB Web3000 Spyware是包括在一些adware产品中，利用注册表随Windows启动。  <br />
+是否为系统进程: 否 </P>
+<P>msdtc.exe  <br />
+进程文件: msdtc or msdtc.exe  <br />
+进程名称: Distributed Transaction Coordinator  <br />
+描述: Microsoft Distributed Transaction Coordinator控制多个服务器的传输，被安装在Microsoft Personal Web Server和Microsoft SQL Server。  <br />
+是否为系统进程: 否 </P>
+<P>msiexec.exe  <br />
+进程文件: msiexec or msiexec.exe  <br />
+进程名称: Windows Installer Component  <br />
+描述: Windows Installer的一部分。用来帮助Windows Installer package files (MSI)格式的安装文件。  <br />
+是否为系统进程: 否 </P>
+<P>msimn.exe  <br />
+进程文件: msimn or msimn.exe  <br />
+进程名称: Microsoft Outlook Express  <br />
+描述: Microsoft Outlook Express是一个Email和新闻组客户端包括在Microsoft Windows。  <br />
+是否为系统进程: 否 </P>
+<P> <br />
+msmsgs.exe  <br />
+进程文件: msmsgs or msmsgs.exe  <br />
+进程名称: MSN Messenger Traybar Process  <br />
+描述: MSN Messenger是一个在线聊天和即时通讯客户端。  <br />
+是否为系统进程: 否 </P>
+<P>msoobe.exe  <br />
+进程文件: msoobe or msoobe.exe  <br />
+进程名称: Windows Product Activation  <br />
+描述: Windows XP License的Product Activation产品激活程序。  <br />
+是否为系统进程: 否 </P>
+<P>mspaint.exe  <br />
+进程文件: mspaint or mspaint.exe  <br />
+进程名称: Microsoft Paint  <br />
+描述: Microsoft Paint画图是一个图像编辑器包括在Microsoft Windows，它能够编辑bmp图像。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>mspmspsv.exe  <br />
+进程文件: mspmspsv or mspmspsv.exe  <br />
+进程名称: WMDM PMSP Service  <br />
+描述: Windows Media Player 7需要安装的Helper Service。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>mysqld-nt.exe  <br />
+进程文件: mysqld-nt or mysqld-nt.exe  <br />
+进程名称: MySQL Daemon  <br />
+描述: MySQL Daemon控制访问MySQL数据库。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>navapsvc.exe  <br />
+进程文件: navapsvc or navapsvc.exe  <br />
+进程名称: Norton AntiVirus Auto-Protect Service  <br />
+描述: Norton Anti-Virus扫描你的文件和email中的病毒。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>navapw32.exe  <br />
+进程文件: navapw32 or navapw32.exe  <br />
+进程名称: Norton AntiVirus Agent  <br />
+描述: Norton Anti-Virus扫描你的文件和email中的病毒。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>ndetect.exe  <br />
+进程文件: ndetect or ndetect.exe  <br />
+进程名称: ICQ Ndetect Agent  <br />
+描述: ICQ Ndetect Agent是ICQ用来侦测网络连接的程序。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>netscape.exe  <br />
+进程文件: netscape or netscape.exe  <br />
+进程名称: Netscape  <br />
+描述: Netscape网络浏览器通过HTTP浏览WWW万维网。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>notepad.exe  <br />
+进程文件: notepad or notepad.exe  <br />
+进程名称: Notepad  <br />
+描述: Notepad字符编辑器用于打开文档。在Windows中附带。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>ntbackup.exe  <br />
+进程文件: ntbackup or ntbackup.exe  <br />
+进程名称: Windows Backup  <br />
+描述: Windows备份工具用于备份文件和文件夹。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>ntvdm.exe  <br />
+进程文件: ntvdm or ntvdm.exe  <br />
+进程名称: Windows 16-bit Virtual Machine  <br />
+描述: Windows Virtual Machine是为了兼容旧的16位Windows和DOS程序而设置的虚拟机。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>nvsvc32.exe  <br />
+进程文件: nvsvc32 or nvsvc32.exe  <br />
+进程名称: NVIDIA Driver Helper Service  <br />
+描述: NVIDIA Driver Helper Service在NVIDA显卡驱动中被安装。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>nwiz.exe  <br />
+进程文件: nwiz or nwiz.exe  <br />
+进程名称: NVIDIA nView Control Panel  <br />
+描述: NVIDIA nView控制面板在NVIDA显卡驱动中被安装，用于调整和设定。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>osa.exe  <br />
+进程文件: osa or osa.exe  <br />
+进程名称: Office Startup Assistant  <br />
+描述: Microsoft Office启动助手，随Windows启动，增强启动、Office字体、命令和Outlook事务提醒等特性。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>outlook.exe  <br />
+进程文件: outlook or outlook.exe  <br />
+进程名称: Microsoft Outlook  <br />
+描述: Microsoft Outlook是一个Email客户端包括在Microsoft Office。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>photoshop.exe  <br />
+进程文件: photoshop or photoshop.exe  <br />
+进程名称: Adobe Photoshop  <br />
+描述: Adobe Photoshop是一个图像编辑软件，能够打开和编辑照片和其它更多类型格式的图片。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>point32.exe  <br />
+进程文件: point32 or point32.exe  <br />
+进程名称: Microsoft Intellimouse Monitor  <br />
+描述: Microsoft Intellimouse Monitor添加一个鼠标设定图标在工具栏。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>powerpnt.exe  <br />
+进程文件: powerpnt or powerpnt.exe  <br />
+进程名称: Microsoft PowerPoint  <br />
+描述: Microsoft PowerPoint是一个演示软件包括在Microsoft Office。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>pstores.exe  <br />
+进程文件: pstores or pstores.exe  <br />
+进程名称: Protected Storage Service  <br />
+描述: Microsoft Protected Storage服务控制保密的内容密码。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P> <br />
+qttask.exe  <br />
+进程文件: qttask or qttask.exe  <br />
+进程名称: Quick Time Tray Icon  <br />
+描述: Quick Time任务栏图标在你运行Quick Time的时候启动。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>realplay.exe  <br />
+进程文件: realplay or realplay.exe  <br />
+进程名称: Real Player  <br />
+描述: Real Player是一个媒体播放器用来打开和播放音乐、声音和Real Media格式的视频文件。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>rnaapp.exe  <br />
+进程文件: rnaapp or rnaapp.exe  <br />
+进程名称: Windows Modem Connection  <br />
+描述: Windows Modem连接控制用以控制拨号modem连接。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>rtvscan.exe  <br />
+进程文件: rtvscan or rtvscan.exe  <br />
+进程名称: Norton AntiVirus  <br />
+描述: Norton Anti-Virus用以扫描你的文件和email中的病毒。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>rundll32.exe  <br />
+进程文件: rundll32 or rundll32.exe  <br />
+进程名称: Windows RUNDLL32 Helper  <br />
+描述: Windows Rundll32为了需要调用DLLs的程序。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>sndrec32.exe  <br />
+进程文件: sndrec32 or sndrec32.exe  <br />
+进程名称: Windows Sound Recorder  <br />
+描述: Windows录音机用以播放和录制声音文件(.wav)。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>sndvol32.exe  <br />
+进程文件: sndvol32 or sndvol32.exe  <br />
+进程名称: Windows Volume Control  <br />
+描述: Windows声音控制进程在任务栏驻留用以控制音量和声卡相关。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>spoolss.exe  <br />
+进程文件: spoolss or spoolss.exe  <br />
+进程名称: Printer Spooler Subsystem  <br />
+描述: Windows打印机控制子程序用以调用需要打印的内容从磁盘到打印机。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>starter.exe  <br />
+进程文件: starter or starter.exe  <br />
+进程名称: Creative Labs Ensoniq Mixer Tray icon  <br />
+描述: 状态栏图标在Creative Sound Mixer中被安装。为了Creative声卡 (Soundblaster)。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>systray.exe  <br />
+进程文件: systray or systray.exe  <br />
+进程名称: Windows Power Management  <br />
+描述: Windows电源管理程序用以控制节能和恢复启动。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>tapisrv.exe  <br />
+进程文件: tapisrv or tapisrv.exe  <br />
+进程名称: TAPI Service  <br />
+描述: Windows Telephony (TAPI) 的后台服务程序。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>userinit.exe  <br />
+进程文件: userinit or userinit.exe  <br />
+进程名称: UserInit Process  <br />
+描述: UserInit程序运行登陆脚本，建立网络连接和启动Shell壳。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>visio.exe  <br />
+进程文件: visio or visio.exe  <br />
+进程名称: Microsoft Visio  <br />
+描述: Microsoft Visio是一个图形化管理软件。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>vptray.exe  <br />
+进程文件: vptray or vptray.exe  <br />
+进程名称: Norton AntiVirus  <br />
+描述: Norton Anti-Virus扫描你的文件和email中的病毒。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>vshwin32.exe  <br />
+进程文件: vshwin32 or vshwin32.exe  <br />
+进程名称: McAfee VirusScan  <br />
+描述: McAfee VirusScan是一个反病毒软件用以扫描你的文件和email中的病毒。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>vsmon.exe  <br />
+进程文件: vsmon or vsmon.exe  <br />
+进程名称: True Vector Internet Monitor  <br />
+描述: True Vector Internet Monitor是ZoneAlarm个人防火墙的一部分，用以监视网络流经数据和攻击。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>vsstat.exe  <br />
+进程文件: vsstat or vsstat.exe  <br />
+进程名称: McAfee VirusScan  <br />
+描述: McAfee VirusScan是一个反病毒软件用以扫描你的文件和email中的病毒。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P> <br />
+wab.exe  <br />
+进程文件: wab or wab.exe  <br />
+进程名称: Address Book  <br />
+描述: 在Outlook中的地址薄。用来存放email地址、联系信息。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>webscanx.exe  <br />
+进程文件: webscanx or webscanx.exe  <br />
+进程名称: McAfee VirusScan  <br />
+描述: McAfee VirusScan是一个反病毒软件用以扫描你的文件和email中的病毒。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>winamp.exe  <br />
+进程文件: winamp or winamp.exe  <br />
+进程名称: WinAmp  <br />
+描述: WinAmp Media Player是一个用来打开音乐、声音和视频文件以及用以管理Mp3文件的软件。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>winhlp32.exe  <br />
+进程文件: winhlp32 or winhlp32.exe  <br />
+进程名称: Windows Help  <br />
+描述: Windows帮助文件察看程序，用来打开帮助文档。该程序被包括在很多的Windows程序中。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>winoa386.mod  <br />
+进程文件: winoa386 or winoa386.mod  <br />
+进程名称: MS-DOS Console  <br />
+描述: Windows MS-DOS控制台用以DOS命令和脚本。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>winproj.exe  <br />
+进程文件: winproj or winproj.exe  <br />
+进程名称: Microsoft Project  <br />
+描述: Microsoft Project是一个项目计划编制程序。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>winroute.exe  <br />
+进程文件: winroute or winroute.exe  <br />
+进程名称: WinRoute  <br />
+描述: WinRoute是一个基于Windows的防火墙/路由/连接共享软件。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>winword.exe  <br />
+进程文件: winword or winword.exe  <br />
+进程名称: Microsoft Word  <br />
+描述: Microsoft Word是一个字处理程序包括在Microsoft Office。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>winzip32.exe  <br />
+进程文件: winzip32 or winzip32.exe  <br />
+进程名称: WinZip  <br />
+描述: WinZip是一个文件压缩工具，用于创建，打开和解压zip文件。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>wkcalrem.exe  <br />
+进程文件: wkcalrem or wkcalrem.exe  <br />
+进程名称: Microsoft Works Calendar Reminder  <br />
+描述: Microsoft Works Calendar Reminders工作日程提醒，在后台处理和显示弹出计划的工作日志提醒。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>wkqkpick.exe  <br />
+进程文件: wkqkpick or wkqkpick.exe  <br />
+进程名称: WinZip traybar icon  <br />
+描述: WinZip的状态栏图标，被允许在Winzip启动时启动。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>wmplayer.exe  <br />
+进程文件: wmplayer or wmplayer.exe  <br />
+进程名称: Windows Media Player  <br />
+描述: Windows Media Player是一个用来打开和播放音乐，声音和视频的软件。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>wordpad.exe  <br />
+进程文件: wordpad or wordpad.exe  <br />
+进程名称: Wordpad  <br />
+描述: Wordpad是一个字符编辑器用以打开和编辑txt和rtf档。&nbsp;  <br />
+是否为系统进程: 否 </P>
+<P>wowexec.exe  <br />
+进程文件: wowexec or wowexec.exe  <br />
+进程名称: Windows On Windows Execution Process  <br />
+描述: Windows On Windows Execution Support Process和ntvdm.exe作用类似，为了兼容16位应用程序。  <br />
+是否为系统进程: 否 </P>
+<P>ypager.exe  <br />
+进程文件: ypager or ypager.exe  <br />
+进程名称: Yahoo Messenger Helper  <br />
+描述: Yahoo Messenger的状态栏图标，随Yahoo Messenger运行，是其一部分。  <br />
+是否为系统进程: 否 </P></TD></TR></TBODY></TABLE></P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-10-18
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/api/">API</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/bat/">Bat</a>
+          <a href="https://lcx.cc/tags/bug/">bug</a>
+          <a href="https://lcx.cc/tags/cmd/">Cmd</a>
+          <a href="https://lcx.cc/tags/css/">CSS</a>
+          <a href="https://lcx.cc/tags/ctf/">CTF</a>
+          <a href="https://lcx.cc/tags/dos/">Dos</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/exp/">EXP</a>
+          <a href="https://lcx.cc/tags/ftp/">FTP</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/ids/">IDS</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/iis/">IIS</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/mac/">MAC</a>
+          <a href="https://lcx.cc/tags/microsoft/">Microsoft</a>
+          <a href="https://lcx.cc/tags/mysql/">Mysql</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/rss/">RSS</a>
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E6%9C%AC%E5%9C%B0/">本地</a>
+          <a href="https://lcx.cc/tags/%E7%97%85%E6%AF%92/">病毒</a>
+          <a href="https://lcx.cc/tags/%E6%8F%92%E4%BB%B6/">插件</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E5%B9%BF%E5%91%8A/">广告</a>
+          <a href="https://lcx.cc/tags/%E5%90%8E%E5%8F%B0/">后台</a>
+          <a href="https://lcx.cc/tags/%E8%84%9A%E6%9C%AC/">脚本</a>
+          <a href="https://lcx.cc/tags/%E5%AE%A2%E6%88%B7%E7%AB%AF/">客户端</a>
+          <a href="https://lcx.cc/tags/%E8%B7%AF%E7%94%B1/">路由</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E6%9D%83%E9%99%90/">权限</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E6%89%AB%E6%8F%8F/">扫描</a>
+          <a href="https://lcx.cc/tags/%E8%A7%86%E9%A2%91/">视频</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E8%BF%9C%E7%A8%8B/">远程</a>
+          <a href="https://lcx.cc/tags/%E6%B3%A8%E5%86%8C%E8%A1%A8/">注册表</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/797/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【批处理技巧】简单批处理、Bat 内部命令简介</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/795/">
+            <span class="next-text nav-default">【计算机技巧】WinRAR命令行参数功能操作详解</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

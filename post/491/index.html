@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【技巧】什么是程序的代码重构 有什么好处 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="什么是程序的代码重构,有什么好处。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="什么是程序的代码重构,有什么好处,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/491/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【技巧】什么是程序的代码重构 有什么好处" />
+<meta property="og:description" content="什么是程序的代码重构,有什么好处。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/491/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-09-06T12:14:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-09-06T12:14:00&#43;08:00" />
+
+<meta itemprop="name" content="【技巧】什么是程序的代码重构 有什么好处">
+<meta itemprop="description" content="什么是程序的代码重构,有什么好处。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-09-06T12:14:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-09-06T12:14:00&#43;08:00" />
+<meta itemprop="wordCount" content="12904">
+<meta itemprop="keywords" content="程序,代码,技巧,IE,Java,安全,编程,编码,测试,车,程序员,工具,函数,技术,模块,热点,软件,数据,数据库,问题,系统," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【技巧】什么是程序的代码重构 有什么好处"/>
+<meta name="twitter:description" content="什么是程序的代码重构,有什么好处。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【技巧】什么是程序的代码重构 有什么好处</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-09-06" class="post-time">
+          2010-09-06
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E7%A8%8B%E5%BA%8F/"> 程序 </a>
+            <a href="https://lcx.cc/categories/%E4%BB%A3%E7%A0%81/"> 代码 </a>
+            <a href="https://lcx.cc/categories/%E6%8A%80%E5%B7%A7/"> 技巧 </a>
+            
+          </div>
+        <span class="more-meta"> 约 12904 字 </span>
+          <span class="more-meta"> 预计阅读 26 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P><FONT face=Verdana>　　重构（Refactoring）就是在不改变软件现有功能的基础上，通过调整程序代码改善软件的质量、性能，使其程序的<STRONG>设计模式</STRONG>和<STRONG>架构</STRONG>更趋合理，提高软件的扩展性和维护性。</FONT></P>
+<P><FONT face=Verdana>　　也许有人会问，为什么不在项目开始时多花些时间把设计做好，而要以后花时间来重构呢？要知道一个完美得可以预见未来任何变化的设计，或一个灵活得可以容纳任何扩展的设计是不存在的。系统设计人员对即将着手的项目往往只能从大方向予以把控，而无法知道每个细枝末节，其次永远不变的就是变化，提出需求的用户往往要在软件成型后，始才开始"品头论足"，系统设计人员毕竟不是先知先觉的神仙，功能的变化导致设计的调整再所难免。所以"测试为先，持续重构"作为良好开发习惯被越来越多的人所采纳，测试和重构像黄河的护堤，成为保证软件质量的法宝。</FONT></P>
+<P><FONT face=Verdana><STRONG>一、为什么要重构（Refactoring）</STRONG></FONT></P>
+<P><FONT face=Verdana>　　在不改变系统功能的情况下，改变系统的实现方式。为什么要这么做？投入精力不用来满足客户关心的需求，而是仅仅改变了软件的实现方式，这是否是在浪费客户的投资呢？</FONT></P>
+<P><FONT face=Verdana>　　重构的重要性要从软件的生命周期说起。软件不同与普通的产品，他是一种智力产品，没有具体的物理形态。一个软件不可能发生物理损耗，界面上的按钮永远不会因为按动次数太多而发生接触不良。那么为什么一个软件制造出来以后，却不能永远使用下去呢？ <br />
+</FONT><FONT face=Verdana>　　对软件的生命造成威胁的因素只有一个：需求的变更。一个软件总是为解决某种特定的需求而产生，时代在发展，客户的业务也在发生变化。有的需求相对稳定一些，有的需求变化的比较剧烈，还有的需求已经消失了，或者转化成了别的需求。在这种情况下，软件必须相应的改变。 <br />
+</FONT><FONT face=Verdana>　　考虑到成本和时间等因素，当然不是所有的需求变化都要在软件系统中实现。但是总的说来，软件要适应需求的变化，以保持自己的生命力。 <br />
+</FONT><FONT face=Verdana>　　这就产生了一种糟糕的现象：软件产品最初制造出来，是经过精心的设计，具有良好架构的。但是随着时间的发展、需求的变化，必须不断的修改原有的功能、追加新的功能，还免不了有一些缺陷需要修改。为了实现变更，不可避免的要违反最初的设计构架。经过一段时间以后，软件的架构就千疮百孔了。bug越来越多，越来越难维护，新的需求越来越难实现，软件的构架对新的需求渐渐的失去支持能力，而是成为一种制约。最后新需求的开发成本会超过开发一个新的软件的成本，这就是这个软件系统的生命走到尽头的时候。 <br />
+</FONT><FONT face=Verdana>　　重构就能够最大限度的避免这样一种现象。系统发展到一定阶段后，使用重构的方式，不改变系统的外部功能，只对内部的结构进行重新的整理。通过重构，不断的调整系统的结构，使系统对于需求的变更始终具有较强的适应能力。</FONT></P>
+<P><FONT face=Verdana>　　通过重构可以达到以下的目标：</FONT></P>
+<P><FONT face=Verdana>　　·持续偏纠和改进软件设计 <br />
+</FONT><FONT face=Verdana>　　重构和设计是相辅相成的，它和设计彼此互补。有了重构，你仍然必须做预先的设计，但是不必是最优的设计，只需要一个合理的解决方案就够了，如果没有重构、程序设计会逐渐腐败变质，愈来愈像断线的风筝，脱缰的野马无法控制。重构其实就是整理代码，让所有带着发散倾向的代码回归本位。</FONT></P>
+<P><FONT face=Verdana>　　·使代码更易为人所理解 <br />
+</FONT><FONT face=Verdana>　　Martin Flower在《重构》中有一句经典的话："任何一个傻瓜都能写出计算机可以理解的程序，只有写出人类容易理解的程序才是优秀的程序员。"对此，笔者感触很深，有些程序员总是能够快速编写出可运行的代码，但代码中晦涩的命名使人晕眩得需要紧握坐椅扶手，试想一个新兵到来接手这样的代码他会不会想当逃兵呢？ <br />
+</FONT><FONT face=Verdana>　　软件的生命周期往往需要多批程序员来维护，我们往往忽略了这些后来人。为了使代码容易被他人理解，需要在实现软件功能时做许多额外的事件，如清晰的排版布局，简明扼要的注释，其中命名也是一个重要的方面。一个很好的办法就是采用暗喻命名，即以对象实现的功能的依据，用形象化或拟人化的手法进行命名，一个很好的态度就是将每个代码元素像新生儿一样命名，也许笔者有点命名偏执狂的倾向，如能荣此雅号，将深以此为幸。 <br />
+</FONT><FONT face=Verdana>　　对于那些让人充满迷茫感甚至误导性的命名，需要果决地、大刀阔斧地整容，永远不要手下留情！</FONT></P>
+<P><FONT face=Verdana>　　·帮助发现隐藏的代码缺陷 <br />
+</FONT><FONT face=Verdana>　　孔子说过：温故而知新。重构代码时逼迫你加深理解原先所写的代码。笔者常有写下程序后，却发生对自己的程序逻辑不甚理解的情景，曾为此惊悚过，后来发现这种症状居然是许多程序员常患的"感冒"。当你也发生这样的情形时，通过重构代码可以加深对原设计的理解，发现其中的问题和隐患，构建出更好的代码。</FONT></P>
+<P><FONT face=Verdana>　　·从长远来看，有助于提高编程效率 <br />
+</FONT><FONT face=Verdana>　　当你发现解决一个问题变得异常复杂时，往往不是问题本身造成的，而是你用错了方法，拙劣的设计往往导致臃肿的编码。 <br />
+</FONT><FONT face=Verdana>　　改善设计、提高可读性、减少缺陷都是为了稳住阵脚。良好的设计是成功的一半，停下来通过重构改进设计，或许会在当前减缓速度，但它带来的后发优势却是不可低估的。</FONT></P>
+<P><FONT face=Verdana><STRONG>二、何时着手重构（Refactoring）</STRONG></FONT></P>
+<P><FONT face=Verdana>　　新官上任三把火，开始一个全新??、脚不停蹄、加班加点，一支声势浩大的千军万"码"夹裹着程序员激情和扣击键盘的鸣金奋力前行，势如破竹，攻城掠地，直指"黄龙府"。 <br />
+</FONT><FONT face=Verdana>　　开发经理是这支浩浩汤汤代码队伍的统帅，他负责这支队伍的命运，当齐恒公站在山顶上看到管仲训练的队伍整齐划一地前进时，他感叹说"我有这样一支军队哪里还怕没有胜利呢？"。但很遗憾，你手中的这支队伍原本只是散兵游勇，在前进中招兵买马，不断壮大，所以队伍变形在所难免。当开发经理发觉队伍变形时，也许就是克制住攻克前方山头的诱惑，停下脚步整顿队伍的时候了。 </FONT></P>
+<P><FONT face=Verdana>　　Kent Beck提出了"代码坏味道"的说法，和我们所提出的"队伍变形"是同样的意思，队伍变形的信号是什么呢？以下列述的代码症状就是"队伍变形"的强烈信号：</FONT></P>
+<P><FONT face=Verdana>　　·代码中存在重复的代码 <br />
+</FONT><FONT face=Verdana>　　中国有118 家整车生产企业，数量几乎等于美、日、欧所有汽车厂家数之和，但是全国的年产量却不及一个外国大汽车公司的产量。重复建设只会导致效率的低效和资源的浪费。 <br />
+</FONT><FONT face=Verdana>　　程序代码更是不能搞重复建设，如果同一个类中有相同的代码块，请把它提炼成类的一个独立方法，如果不同类中具有相同的代码，请把它提炼成一个新类，永远不要重复代码。 </FONT></P>
+<P><FONT face=Verdana>　　·过大的类和过长的方法 <br />
+</FONT><FONT face=Verdana>　　过大的类往往是类抽象不合理的结果，类抽象不合理将降低了代码的复用率。方法是类王国中的诸侯国，诸侯国太大势必动摇中央集权。过长的方法由于包含的逻辑过于复杂，错误机率将直线上升，而可读性则直线下降，类的健壮性很容易被打破。当看到一个过长的方法时，需要想办法将其划分为多个小方法，以便于分而治之。</FONT><FONT face=Verdana> </FONT></P>
+<P><FONT face=Verdana>　　·牵一毛而需要动全身的修改 <br />
+</FONT><FONT face=Verdana>　　当你发现修改一个小功能，或增加一个小功能时，就引发一次代码地震，也许是你的设计抽象度不够理想，功能代码太过分散所引起的。</FONT></P>
+<P><FONT face=Verdana>　　·类之间需要过多的通讯 <br />
+</FONT><FONT face=Verdana>　　A类需要调用B类的过多方法访问B的内部数据，在关系上这两个类显得有点狎昵，可能这两个类本应该在一起，而不应该分家。</FONT></P>
+<P><FONT face=Verdana>　　·过度耦合的信息链 <br />
+</FONT><FONT face=Verdana>　　"计算机是这样一门科学，它相信可以通过添加一个中间层解决任何问题"，所以往往中间层会被过多地追加到程序中。如果你在代码中看到需要获取一个信息，需要一个类的方法调用另一个类的方法，层层挂接，就象输油管一样节节相连。这往往是因为衔接层太多造成的，需要查看就否有可移除的中间层，或是否可以提供更直接的调用方法。</FONT></P>
+<P><FONT face=Verdana>　　·各立山头干革命 <br />
+</FONT><FONT face=Verdana>　　如果你发现有两个类或两个方法虽然命名不同但却拥有相似或相同的功能，你会发现往往是因为开发团队协调不够造成的。笔者曾经写了一个颇好用的字符串处理类，但因为没有及时通告团队其他人员，后来发现项目中居然有三个字符串处理类。革命资源是珍贵的，我们不应各立山头干革命。 </FONT><FONT face=Verdana></FONT></P>
+<P><FONT face=Verdana>　 ·不完美的设计 <br />
+</FONT><FONT face=Verdana>　　在笔者刚完成的一个比对报警项目中，曾安排阿朱开发报警模块，即通过Socket向指定的短信平台、语音平台及客户端报警器插件发送报警报文信息，阿朱出色地完成了这项任务。后来用户又提出了实时比对的需求，即要求第三方系统以报文形式向比对报警系统发送请求，比对报警系统接收并响应这个请求。这又需要用到Socket报文通讯，由于原来的设计没有将报文通讯模块独立出来，所以无法复用阿朱开发的代码。后来我及时调整了这个设计，新增了一个报文收发模块，使系统所有的对外通讯都复用这个模块，系统的整体设计也显得更加合理。 <br />
+</FONT><FONT face=Verdana>　　每个系统都或多或少存在不完美的设计，刚开始可能注意不到，到后来才会慢慢凸显出来，此时唯有勇于更改才是最好的出路。</FONT></P>
+<P><FONT face=Verdana>　　·缺少必要的注释 <br />
+</FONT><FONT face=Verdana>　　虽然许多软件工程的书籍常提醒程序员需要防止过多注释，但这个担心好象并没有什么必要。往往程序员更感兴趣的是功能实现而非代码注释，因为前者更能带来成就感，所以代码注释往往不是过多而是过少，过于简单。人的记忆曲线下降的坡度是陡得吓人的，当过了一段时间后再回头补注释时，很容易发生"提笔忘字，愈言且止"的情形。 <br />
+</FONT><FONT face=Verdana>　　曾在网上看到过微软的代码注释，其详尽程度让人叹为观止，也从中体悟到了微软成功的一个经验。</FONT><FONT face=Verdana> </FONT></P>
+<P><FONT face=Verdana><STRONG>三、重构（Refactoring）的难题</STRONG></FONT><FONT face=Verdana> </FONT></P>
+<P><FONT face=Verdana>　　学习一种可以大幅提高生产力的新技术时，你总是难以察觉其不适用的场合。通常你在一个特定场景中学习它，这个场景往往是个项目。这种情况下你很难看出什么会造成这种新技术成效不彰或甚至形成危害。十年前，对象技术（object tech.）的情况也是如此。那时如果有人问我「何时不要使用对象」，我很难回答。并非我认为对象十全十美、没有局限性 — 我最反对这种盲目态度，而是尽管我知道它的好处，但确实不知道其局限性在哪儿。 <br />
+</FONT><FONT face=Verdana>　　现在，重构的处境也是如此。我们知道重构的好处，我们知道重构可以给我们的工作带来垂手可得的改变。但是我们还没有获得足够的经验，我们还看不到它的局限性。 <br />
+这一小节比我希望的要短。暂且如此吧。随着更多人学会重构技巧，我们也将对??你应该尝试一下重构，获得它所提供的利益，但在此同时，你也应该时时监控其过程，注意寻找重构可能引入的问题。请让我们知道你所遭遇的问题。随着对重构的了解日益增多，我们将找出更多解决办法，并清楚知道哪些问题是真正难以解决的。</FONT><FONT face=Verdana> </FONT></P>
+<P><FONT face=Verdana>　　·数据库（Databases） <br />
+</FONT><FONT face=Verdana>　　「重构」经常出问题的一个领域就是数据库。绝大多数商用程序都与它们背后的database schema（数据库表格结构）紧密耦合（coupled）在一起，这也是database schema如此难以修改的原因之一。另一个原因是数据迁移（migration）。就算你非常小心地将系统分层（layered），将database schema和对象模型（object model）间的依赖降至最低，但database schema的改变还是让你不得不迁移所有数据，这可能是件漫长而烦琐的工作。 <br />
+</FONT><FONT face=Verdana>　　在「非对象数据库」（nonobject databases）中，解决这个问题的办法之一就是：在对象模型（object model）和数据库模型（database model）之间插入一个分隔层（separate layer），这就可以隔离两个模型各自的变化。升级某一模型时无需同时升级另一模型，只需升级上述的分隔层即可。这样的分隔层会增加系统复杂度，但可以给你很大的灵活度。如果你同时拥有多个数据库，或如果数据库模型较为复杂使你难以控制，那么即使不进行重构，这分隔层也是很重要的。 <br />
+</FONT><FONT face=Verdana>　　你无需一开始就插入分隔层，可以在发现对象模型变得不稳定时再产生它。这样你就可以为你的改变找到最好的杠杆效应。 <br />
+</FONT><FONT face=Verdana>　　对开发者而言，对象数据库既有帮助也有妨碍。某些面向对象数据库提供不同版本的对象之间的自动迁移功能，这减少了数据迁移时的工作量，但还是会损失一定时间。如果各数据库之间的数据迁移并非自动进行，你就必须自行完成迁移工作，这个工作量可是很大的。这种情况下你必须更加留神classes内的数据结构变化。你仍然可以放心将classes的行为转移过去，但转移值域（field）时就必须格外小心。数据尚未被转移前你就得先运用访问函数（accessors）造成「数据已经转移」的假象。一旦你确定知道「数据应该在何处」时，就可以一次性地将数据迁移过去。这时惟一需要修改的只有访问函数（accessors），这也降低了错误风险。</FONT></P>
+<P><FONT face=Verdana>　　·修改接口（Changing Interfaces） <br />
+</FONT><FONT face=Verdana>　　关于对象，另一件重要事情是：它们允许你分开修改软件模块的实现（implementation）和接口（interface）。你可以安全地修改某对象内部而不影响他人，但对于接口要特别谨慎 — 如果接口被修改了，任何事情都有可能发生。 <br />
+</FONT><FONT face=Verdana>　　一直对重构带来困扰的一件事就是：许多重构手法的确会修改接口。像Rename Method（273）这么简单的重构手法所做的一切就是修改接口。这对极为珍贵的封装概念会带来什么影响呢？</FONT>  <br />
+<FONT face=Verdana>　　如果某个函数的所有调用动作都在你的控制之下，那么即使修改函数名称也不会有任何问题。哪怕面对一个public函数，只要能取得并修改其所有调用者，你也可以安心地将这个函数易名。只有当需要修改的接口系被那些「找不到，即使找到也不能修改」的代码使用时，接口的修改才会成为问题。如果情况真是如此，我就会说：这个接口是个「已发布接口」（published interface）— 比公开接口（public interface）更进一步。接口一旦发行，你就再也无法仅仅修改调用者而能够安全地修改接口了。你需要一个略为复杂的程序。 <br />
+</FONT><FONT face=Verdana>　　这个想法改变了我们的问题。如今的问题是：该如何面对那些必须修改「已发布接口」的重构手法？ <br />
+</FONT><FONT face=Verdana>　　简言之，如果重构手法改变了已发布接口（published interface），你必须同时维护新旧两个接口，直到你的所有用户都有时间对这个变化做出反应。幸运的是这不太困难。你通常都有办法把事情组织好，让旧接口继续工作。请尽量这么做：让旧接口调用新接口。当你要修改某个函数名称时，请留下旧函数，让它调用新函数。千万不要拷贝函数实现码，那会让你陷入「重复代码」（duplicated code）的泥淖中难以自拔。你还应该使用Java提供的 deprecation（反对）设施，将旧接口标记为 "deprecated"。这么一来你的调用者就会注意到它了。 <br />
+</FONT><FONT face=Verdana>　　这个过程的一个好例子就是Java容器类（collection classes）。Java 2的新容器取代了原先一些容器。当Java 2容器发布时，JavaSoft花了很大力气来为开发者提供一条顺利迁徙之路。 <br />
+</FONT><FONT face=Verdana>　　「保留旧接口」的办法通常可行，但很烦人。起码在一段时间里你必须建造（build）并维护一些额外的函数。它们会使接口变得复杂，使接口难以使用。还好我们有另一个选择：不要发布（publish）接口。当然我不是说要完全禁止，因为很明显你必得发布一些接口。如果你正在建造供外部使用的APIs，像Sun所做的那样，肯定你必得发布接口。我之所以说尽量不要发布，是因为我常常看到一些开发团队公开了太多接口。我曾经看到一支三人团队这么工作：每个人都向另外两人公开发布接口。这使他们不得不经常来回维护接口，而其实他们原本可以直接进入程序库，径行修改自己管理的那一部分，那会轻松许多。过度强调「代码拥有权」的团队常常会犯这种错误。发布接口很有用，但也有代价。所以除非真有必要，别发布接口。这可能意味需要改变你的代码拥有权观念，让每个人都可以修改别人的代码，以运应接口的改动。以搭档（成对）编程（Pair Programming）完成这一切通常是个好主意。 <br />
+</FONT><FONT face=Verdana>　　不要过早发布（published）接口。请修改你的代码拥有权政策，使重构更顺畅。 <br />
+</FONT><FONT face=Verdana>　　Java之中还有一个特别关于「修改接口」的问题：在throws子句中增加一个异常。这并不是对签名式（signature）的修改，所以你无法以delegation（委托手法）隐藏它。但如果用户代码不作出相应修改，编译器不会让它通过。这个问题很难解决。你可以为这个函数选择一个新名tion（可控式异常）转换成一个unchecked exception（不可控异常）。你也可以拋出一个unchecked异常，不过这样你就会失去检验能力。如果你那么做，你可以警告调用者：这个unchecked异常日后会变成一个checked异常。这样他们就有时间在自己的代码中加上对此异常的处理。出于这个原因，我总是喜欢为整个package定义一个superclass异常（就像java.sql的SQLException），并确保所有public函数只在自己的throws子句中声明这个异常。这样我就可以随心所欲地定义subclass异常，不会影响调用者，因为调用者永远只知道那个更具一般性的superclass异常。</FONT></P>
+<P><FONT face=Verdana>　　·难以通过重构手法完成的设计改动 <br />
+</FONT><FONT face=Verdana>　　通过重构，可以排除所有设计错误吗？是否存在某些核心设计决策，无法以重构手法修改？在这个领域里，我们的统计数据尚不完整。当然某些情况下我们可以很有效地重构，这常常令我们倍感惊讶，但的确也有难以重构的地方。比如说在一个项目中，我们很难（但还是有可能）将「无安全需求（no security requirements）情况下构造起来的系统」重构为「安全性良好的（good security）系统」。 <br />
+</FONT><FONT face=Verdana>　　这种情况下我的办法就是「先想象重构的情况」。考虑候选设计方案时，我会问自己：将某个设计重构为另一个设计的难度有多大？如果看上去很简单，我就不必太担心选择是否得当，于是我就会选最简单的设计，哪怕它不能覆盖所有潜在需求也没关系。但如果预先看不到简单的重构办法，我就会在设计上投入更多力气。不过我发现，这种情况很少出现。</FONT></P>
+<P><FONT face=Verdana>　　·何时不该重构？ <br />
+</FONT><FONT face=Verdana>　　有时候你根本不应该重构 — 例如当你应该重新编写所有代码的时候。有时候既有代码实在太混乱，重构它还不如从新写一个来得简单。作出这种决定很困难，我承认我也没有什么好准则可以判断何时应该放弃重构。 <br />
+</FONT><FONT face=Verdana>　　重写（而非重构）的一个清楚讯号就是：现有代码根本不能正常运作。你可能只是试着做点测试，然后就发现代码中满是错误，根本无法稳定运作。记住，重构之前，代码必须起码能够在大部分情况下正常运作。 <br />
+</FONT><FONT face=Verdana>　　一个折衷办法就是：将「大块头软件」重构为「封装良好的小型组件」。然后你就可以逐一对组件作出「重构或重建」的决定。这是一个颇具希望的办法，但我还没有足够数据，所以也无法写出优秀的指导原则。对于一个重要的古老系统，这肯定会是一个很好的方向。 <br />
+</FONT><FONT face=Verdana>　　另外，如果项目已近最后期限，你也应该避免重构。在此时机，从重构过程赢得的生产力只有在最后期限过后才能体现出来，而那个时候已经时不我予。Ward Cunningham对此有一个很好的看法。他把未完成的重构工作形容为「债务」。很多公司都需要借债来使自己更有效地运转。但是借债就得付利息，过于复杂的代码所造成的「维护和扩展的额外开销」就是利息。你可以承受一定程度的利息，但如果利息太高你就会被压垮。把债务管理好是很重要的，你应该随时通过重构来偿还一部分债务。 <br />
+</FONT><FONT face=Verdana>　　如果项目已经非常接近最后期限，你不应该再分心于重构，因为已经没有时间了。不过多个项目经验显示：重构的确能够提高生产力。如果最后你没有足够时间，通常就表示你其实早该进行重构。</FONT><FONT face=Verdana> </FONT></P>
+<P><FONT face=Verdana><STRONG>四、重构（Refactoring）与设计</STRONG></FONT></P>
+<P><FONT face=Verdana></FONT><FONT face=Verdana>「重构」肩负一项特别任务：它和设计彼此互补。初学编程的时候，我埋头就写程序，浑浑噩噩地进行开发。然而很快我便发现，「事先设计」（upfront design）可以助我节省回头工的高昂成本。于是我很快加强这种「预先设计」风格。许多人都把设计看作软件开发的关键环节，而把编程（programming）看作只是机械式的低级劳动。他们认为设计就像画工程图而编码就像施工。但是你要知道，软件和真实器械有着很大的差异。软件的可塑性更强，而且完全是思想产品。正如Alistair Cockburn所说：『有了设计，我可以思考更快，但是其中充满小漏洞。』</FONT><FONT face=Verdana> </FONT> <br />
+<FONT face=Verdana>　　有一种观点认为：重构可以成为「预先设计」的替代品。这意思是你根本不必做任何设计，只管按照最初想法开始编码，让代码有效运作，然后再将它重构成型。事实上这种办法真的可行。我的确看过有人这么做，最后获得设计良好的软件。极限编程（Extreme Programming）【Beck, XP】 的支持者极力提倡这种办法。</FONT><FONT face=Verdana>  <br />
+</FONT><FONT face=Verdana>　　尽管如上所言，只运用重构也能收到效果，但这并不是最有效的途径。是的，即使极限编程（Extreme Programming）爱好者也会进行预先设计。他们会使用CRC卡或类似的东西来检验各种不同想法，然后才得到第一个可被接受的解决方案，然后才能开始编码，然后才能重构。关键在于：重构改变了「预先设计」的角色。如果没有重构，你就必须保证「预先设计」正确无误，这个压力太大了。这意味如果将来需要对原始设计做任何修改，代价都将非常高昂。因此你需要把更多时间和精力放在预先设计上，以避免日后修改。</FONT><FONT face=Verdana> </FONT> <br />
+<FONT face=Verdana>　　如果你选择重构，问题的重点就转变了。你仍然做预先设计，但是不必一定找出正确的解决方案。此刻的你只需要得到一个足够合理的解决方案就够了。你很肯定地知道，在实现这个初始解决方案的时候，你对问题的理解也会逐渐加深，你可能会察觉最佳解决方案和你当初设想的有些不同。只要有重构这项武器在手，就不成问题，因为重构让日后的修改成本不再高昂。 <br />
+</FONT><FONT face=Verdana>　　这种转变导致一个重要结果：软件设计朝向简化前进了一大步。过去未曾运用重构时，我总是力求得到灵活的解决方案。任何一个需求都让我提心吊胆地猜疑：在系统寿命期间，这个需求会导致怎样的变化？由于变更设计的代价非常高昂，所以我希望建造一个足够灵活、足够强固的解决方案，希望它能承受我所能预见的所有需求变化。问题在于：要建造一个灵活的解决方案，所需的成本难以估算。灵活的解决方案比简单的解决方案复杂许多，所以最终得到的软件通常也会更难维护 — 虽然它在我预先设想的??方向上，你也必须理解如何修改设计。如果变化只出现在一两个地方，那不算大问题。然而变化其实可能出现在系统各处。如果在所有可能的变化出现地点都建立起灵活性，整个系统的复杂度和维护难度都会大大提高。当然，如果最后发现所有这些灵活性都毫无必要，这才是最大的失败。你知道，这其中肯定有些灵活性的确派不上用场，但你却无法预测到底是哪些派不上用场。为了获得自己想要的灵活性，你不得不加入比实际需要更多的灵活性。</FONT><FONT face=Verdana> </FONT></P>
+<P><FONT face=Verdana>　　有了重构，你就可以通过一条不同的途径来应付变化带来的风险。<STRONG>你仍旧需要思考潜在的变化，仍旧需要考虑灵活的解决方案。但是你不必再逐一实现这些解决方案，而是应该问问自己：『把一个简单的解决方案重构成这个灵活的方案有多大难度？』如果答案是「相当容易」（大多数时候都如此），那么你就只需实现目前的简单方案就行了。 <br />
+</STRONG>　　重构可以带来更简单的设计，同时又不损失灵活性，这也降低了设计过程的难度，减轻了设计压力。一旦对重构带来的简单性有更多感受，你甚至可以不必再预先思考前述所谓的灵活方案 — 一旦需要它，你总有足够的信心去重构。是的，当下只管建造可运行的最简化系统，至于灵活而复杂的设计，唔，多数时候你都不会需要它。</FONT><FONT face=Verdana> </FONT></P>
+<P><FONT face=Verdana>劳而无获— Ron Jeffries <br />
+</FONT><FONT face=Verdana>　　Chrysler Comprehensive Compensation（克莱斯勒综合薪资系统）的支付过程太慢了。虽然我们的开发还没结束，这个问题却已经开始困扰我们，因为它已经拖累了测试速度。 <br />
+</FONT><FONT face=Verdana>　　Kent Beck、Martin Fowler和我决定解决这个问题。等待大伙儿会合的时间里，凭着我对这个系统的全盘了解，我开始推测：到底是什么让系统变慢了？我想到数种可能，然后和伙伴们谈了几种可能的修改方案。最后，关于「如何让这个系统运行更快」，我们提出了一些真正的好点子。 <br />
+</FONT><FONT face=Verdana>　　然后，我们拿Kent的量测工具度量了系统性能。我一开始所想的可能性竟然全都不是问题肇因。我们发现：系统把一半时间用来创建「日期」实体（instance）。更有趣的是，所有这些实体都有相同的值。</FONT><FONT face=Verdana> <br />
+　　于是我们观察日期的创建逻辑，发现有机会将它优化。日期原本是由字符串转换而生，即使无外部输入也是如此。之所以使用字符串转换方式，完全是为了方便键盘输入。好，也许我们可以将它优化。 <br />
+</FONT><FONT face=Verdana>　　于是我们观察日期怎样被这个程序运用。我们发现，很多日期对象都被用来产生「日期区间」实体（instance）。「日期区间」是个对象，由一个起始日期和一个结束日期组成。仔细追踪下去，我们发现绝大多数日期区间是空的！ <br />
+</FONT><FONT face=Verdana>　　处理日期区间时我们遵循这样一个规则：如果结束日期在起始日期之前，这个日期区间就该是空的。这是一条很好的规则，完全符合这个class的需要。采用此一规则后不久，我们意识到，创建一个「起始日期在结束日期之后」的日期区间，仍然不算是清晰的代码，于是我们把这个行为提炼到一个factory method（译注：一个著名的设计模式，见《Design Patterns》），由它专门创建「空的日期区间」。 <br />
+</FONT><FONT face=Verdana>　　我们做了上述修改，使代码更加清晰，却意外得到了一个惊喜。我们创建一个固定不变的「空日期区间」对象，并让上述调整后的factory method每次都返回该对象，而不再每次都创建新对象。这一修改把系统速度提升了几乎一倍，足以让测试速度达到可接受程度。这只花了我们大约五分钟。 <br />
+</FONT><FONT face=Verdana>　　我和团队成员（Kent和Martin谢绝参加）认真推测过：我们了若指掌的这个程序中可能有什么错误？我们甚至凭空做了些改进设计，却没有先对系统的真实情况进行量测。 <br />
+</FONT><FONT face=Verdana>　　我们完全错了。除了一场很有趣的交谈，我们什么好事都没做。 <br />
+</FONT><FONT face=Verdana>　　教训：哪怕你完全了解系统，也请实际量测它的性能，不要臆测。臆测会让你学到一些东西，但十有八九你是错的。</FONT><FONT face=Verdana> </FONT></P>
+<P><FONT face=Verdana><STRONG>五、重构与性能（Performance） <br />
+</STRONG></FONT><FONT face=Verdana>　　译注：在我的接触经验中，performance一词被不同的人予以不同的解释和认知：效率、性能、效能。不同地区（例如台湾和大陆）的习惯用法亦不相同。本书一遇performance我便译为性能。efficient译为高效，effective译为有效。</FONT></P>
+<P><FONT face=Verdana>　　关于重构，有一个常被提出的问题：它对程序的性能将造成怎样的影响？为了让软件易于理解，你常会作出一些使程序运行变慢的修改。这是个重要的问题。我并不赞成为了提高设计的纯洁性或把希望寄托于更快的硬件身上，而忽略了程序性能。已经有很多软件因为速度太慢而被用户拒绝，日益提高的机器速度亦只不过略微放宽了速度方面的限制而已。但是，换个角度说，虽然重构必然会使软件运行更慢，但它也使软件的性能优化更易进行。除了对性能有严格要求的实时（real time）系统，其它任何情况下「编写快速软件」的秘密就是：首先写出可调（tunable）软件，然后调整它以求获得足够速度。</FONT></P>
+<P><FONT face=Verdana>　　我看过三种「编写快速软件」的方法。其中最严格的是「时间预算法」（time budgeting），这通常只用于性能要求极高的实时系统。如果使用这种方法，分解你的设计时就要做好预算，给每个组件预先分配一定资源 — 包括时间和执行轨迹（footprint）。每个组件绝对不能超出自己的预算，就算拥有「可在不同组件之间调度预配时间」的机制也不行。这种方法高度重视性能，对于心律调节器一类的系统是必须的，因为在这样的系统中迟来的数据就是错误的数据。但对其他类系统（例如我经常开发的企业信息系统）而言，如此追求高性能就有点过份了。 <br />
+</FONT><FONT face=Verdana>　　第二种方法是「持续关切法」（constant attention）。这种方法要求任何程序员在任何时间做任何事时，都要设法保持系统的高性能。这种方式很常见，感觉上很有吸引力，但通常不会起太大作用。任何修改如果是为了提高性能，通??终得到的软件的确更快了，那么这点损失尚有所值，可惜通常事与愿违，因为性能改善一旦被分散到程序各角落，每次改善都只不过是从「对程序行为的一个狭隘视角」出发而已。</FONT></P>
+<P><FONT face=Verdana>　　关于性能，一件很有趣的事情是：如果你对大多数程序进行分析，你会发现它把大半时间都耗费在一小半代码身上。如果你一视同仁地优化所有代码，90% 的优化工作都是白费劲儿，因为被你优化的代码有许多难得被执行起来。你花时间做优化是为了让程序运行更快，但如果因为缺乏对程序的清楚认识而花费时间，那些时间都是被浪费掉了。</FONT></P>
+<P><FONT face=Verdana>　　第三种性能提升法系利用上述的 "90%" 统计数据。采用这种方法时，你以一种「良好的分解方式」（well-factored manner）来建造自己的程序，不对性能投以任何关切，直至进入性能优化阶段 — 那通常是在开发后期。一旦进入该阶段，你再按照某个特定程序来调整程序性能。</FONT></P>
+<P><FONT face=Verdana>　　在性能优化阶段中，你首先应该以一个量测工具监控程序的运行，让它告诉你程序中哪些地方大量消耗时间和空间。这样你就可以找出性能热点（hot spot）所在的一小段代码。然后你应该集中关切这些性能热点，并使用前述「持续关切法」中的优化手段来优化它们。由于你把注意力都集中在热点上，较少的工作量便可显现较好的成果。即便如此你还是必须保持谨慎。和重构一样，你应该小幅度进行修改。每走一步都需要编译、测试、再次量测。如果没能提高性能，就应该撤销此次修改。你应该继续这个「发现热点、去除热点」的过程，直到获得客户满意的性能为止。关于这项技术，McConnell 【McConnell】 为我们提供了更多信息。 <br />
+</FONT><FONT face=Verdana>　　一个被良好分解（well-factored）的程序可从两方面帮助此种优化形式。首先，它让你有比较充裕的时间进行性能调整（performance tuning），因为有分解良好的代码在手，你就能够更快速地添加功能，也就有更多时间用在性能问题上（准确的量测则保证你把这些时间投资在恰当地点）。其次，面对分解良好的程序，你在进行性能分析时便有较细的粒度（granularity），于是量测工具把你带入范围较小的程序段落中，而性能的调整也比较容易些。由于代码更加清晰，因此你能够更好地理解自己的选择，更清楚哪种调整起关键作用。 <br />
+</FONT><FONT face=Verdana>　　我发现重构可以帮助我写出更快的软件。短程看来，重构的确会使软件变慢，但它使优化阶段中的软件性能调整更容易。最终我还是有赚头。 </FONT></P>
+<P><FONT face=Verdana><STRONG>优化一个薪资系统— Rich Garzaniti</STRONG> <br />
+<FONT face=Arial></FONT><FONT face=Verdana>　　</FONT>将Chrysler Comprehensive Compensation（克莱斯勒综合薪资系统）交给GemStone公司之前，我们用了相当长的时间开发它。开发过程中我们无可避免地发现程序不够快，于是找了Jim Haungs — GemSmith中的一位好手 — 请他帮我们优化这个系统。 <br />
+</FONT><FONT face=Verdana><FONT face=Arial></FONT><FONT face=Verdana>　　</FONT>Jim先用一点时间让他的团队了解系统运作方式，然后以GemStone的ProfMonitor特性编写出一个性能量测工具，将它插入我们的功能测试中。这个工具可以显示系统产生的对象数量，以及这些对象的诞生点。 <br />
+</FONT><FONT face=Verdana><FONT face=Arial></FONT><FONT face=Verdana>　　</FONT>令我们吃惊的是：创建量最大的对象竟是字符串。其中最大的工作量则是反复产生12,000-bytes的字符串。这很特别，因为这字符串实在太大了，连GemStone惯用的垃圾回收设施都无法处理它。由于它是如此巨大，每当被创建出来，GemStone都会将它分页（paging）至磁盘上。也就是说字符串的创建竟然用上了I/O子系统（译注：分页机制会动用I/O），而每次输出记录时都要产生这样的字符串三次﹗ <br />
+</FONT><FONT face=Verdana><FONT face=Arial></FONT><FONT face=Verdana>　　</FONT>我们的第一个解决办法是把一个12,000-bytes字符串缓存（cached）起来，这可解决一大半问题。后来我们又加以修改，将它直接写入一个file stream，从而避免产生字符串。 <br />
+</FONT><FONT face=Verdana><FONT face=Arial></FONT><FONT face=Verdana>　　</FONT>解决了「巨大字符串」问题后，Jim的量测工具又发现了一些类似问题，只不过字符串稍微小一些：800-bytes、500-bytes……等等，我们也都对它们改用file stream，于是问题都解决了。 <br />
+</FONT><FONT face=Verdana><FONT face=Arial></FONT><FONT face=Verdana>　　</FONT>使用这些技术，我们稳步提高了系统性能。开发过程中原本似乎需要1,000小时以上才能完成的薪资计算，实际运作时只花40小时。一个月后我们把时间缩短到18小时。正式投入运转时只花12小时。经过一年的运行和改善后，全部计算只需9小时。 <br />
+</FONT><FONT face=Verdana><FONT face=Arial></FONT><FONT face=Verdana>　　</FONT>我们的最大改进就是：将程序放在多处理器（multi-processor）计算器上，以多线程（multiple threads）方式运行。最初这个系统并非按照多线程思维来设计，但由于代码有良好分解（well factored），所以我们只花三天时间就让它得以同时运行多个线程了。现在，薪资的计算只需2小时。 <br />
+</FONT><FONT face=Verdana><FONT face=Arial></FONT><FONT face=Verdana>　　</FONT>在Jim提供工具使我们得以在实际操作中量度系统性能之前，我们也猜测过问题所在。但如果只靠猜测，我们需要很长的时间才能试出真正的解法。真实的量测指出了一个完全不同的方向，并大大加快了我们的进度。</FONT></P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-09-06
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E5%B7%A7/">技巧</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/java/">Java</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A0%81/">编码</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8B%E8%AF%95/">测试</a>
+          <a href="https://lcx.cc/tags/%E8%BD%A6/">车</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E5%9D%97/">模块</a>
+          <a href="https://lcx.cc/tags/%E7%83%AD%E7%82%B9/">热点</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/492/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">求生之路2新地图 我恨山(I Hate Mountains)</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/490/">
+            <span class="next-text nav-default">【公告】t00ls.net 无法访问的具体原因</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

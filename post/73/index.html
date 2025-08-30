@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【VB技巧】提高VB代码的执行效率 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="提高VB代码的执行效率。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="提高VB执行效率,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/73/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【VB技巧】提高VB代码的执行效率" />
+<meta property="og:description" content="提高VB代码的执行效率。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/73/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-05-04T19:39:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-05-04T19:39:00&#43;08:00" />
+
+<meta itemprop="name" content="【VB技巧】提高VB代码的执行效率">
+<meta itemprop="description" content="提高VB代码的执行效率。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-05-04T19:39:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-05-04T19:39:00&#43;08:00" />
+<meta itemprop="wordCount" content="5913">
+<meta itemprop="keywords" content="VB,代码,技巧,Dos,exe,编码,程序,程序员,函数,技术,控件,模块,软件,数据,图片,文件,问题," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【VB技巧】提高VB代码的执行效率"/>
+<meta name="twitter:description" content="提高VB代码的执行效率。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【VB技巧】提高VB代码的执行效率</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-05-04" class="post-time">
+          2010-05-04
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/vb/"> VB </a>
+            <a href="https://lcx.cc/categories/%E4%BB%A3%E7%A0%81/"> 代码 </a>
+            <a href="https://lcx.cc/categories/%E6%8A%80%E5%B7%A7/"> 技巧 </a>
+            
+          </div>
+        <span class="more-meta"> 约 5913 字 </span>
+          <span class="more-meta"> 预计阅读 12 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<P>&nbsp;&nbsp;&nbsp; 本文描述了如何通过一些技术手段来提高VB代码的执行效率。这些手段可以分为两个大的部分：编码技术和编译优化技术。本文从编码技术和编译技术来讨论。这篇文章我(海阔天空）会不断更新,请大家及时查看。 <br />
+</P>
+<P>第一部分：编码技术。 <br />
+下面的这些方法(到现在为止共27种）可以帮助你提高代码的运行速度： <br />
+　　1. 使用整数(Integer）和长整数(Long） <br />
+　　提高代码运行速度最简单的方法莫过于使用正确的数据类型了。也许你不相信,但是正确地选择数据类型可以大幅度提升代码的性能。在大多数情况下,程序员可以将Single,Double和Currency类型的变量替换为Integer或Long类型的变量,因为VB处理Integer和Long的能力远远高于处理其它几种数据类型。下面是排序： <br />
+Long 最快  <br />
+Integer .  <br />
+Byte .  <br />
+Single .  <br />
+Double .  <br />
+Currency 最慢 </P>
+<P>　　在大多数情况下,程序员选择使用Single或Double的原因是因为它们能够保存小数。但是小数也可以保存在Integer类型的变量中。例如程序中约定有三位小数,那么只需要将保存在Integer变量中的数值除以1000就可以得到结果。根据我的经验,使用Integer和Long替代Single,Double和Currency后,代码的运行速度可以提高将近10倍。</P>
+<P>　　2. 避免使用变体</P>
+<P>　　对于一个VB程序员来说,这是再明显不过的事情了。变体类型的变量需要16个字节的空间来保存数据,而一个整数(Integer）只需要2个字节。通常使用变体类型的目的是为了减少设计的工作量和代码量,也有的程序员图个省事而使用它。但是如果一个软件经过了严格设计和按照规范编码的话,完全可以避免使用变体类型。</P>
+<P>　　在这里顺带提一句,对于Object对象也存在同样的问题。请看下面的代码：</P>
+<P>Dim FSO  <br />
+Set FSO = New Scripting.FileSystemObject </P>
+<P>　　或</P>
+<P>Dim FSO as object <br />
+Set FSO = New Scripting.FileSystemObject </P>
+<P>　　上面的代码由于在申明的时候没有指定数据类型,在赋值时将浪费内存和CPU时间。正确的代码应该象下面这样：</P>
+<P>Dim FSO as New FileSystemObject  <br />
+　　3. 尽量避免使用属性</P>
+<P>　　在平时的代码中,最常见的比较低效的代码就是在可以使用变量的情况下,反复使用属性(Property）,尤其是在循环中。要知道存取变量的速度是存取属性的速度的20倍左右。下面这段代码是很多程序员在程序中会使用到的：</P>
+<P>Dim intCon as Integer <br />
+For intCon = 0 to Ubound(SomVar()) <br />
+Text1.Text = Text1.Text &amp; vbcrlf &amp; SomeVar(intCon) <br />
+Next intCon </P>
+<P>　　下面这段代码的执行速度是上面代码的20倍。 </P>
+<P>Dim intCon as Integer <br />
+Dim sOutput as String <br />
+For intCon = 0 to Ubound(SomeVar()) <br />
+sOutput = sOutput &amp; vbCrlf &amp; <br />
+SomeVar(intCon) <br />
+Next <br />
+Text1.Text = sOutput </P>
+<P>同样地,像这样的代码 . . . </P>
+<P>Do Until EOF(F)  <br />
+&nbsp;&nbsp; Line Input #F, nextLine  <br />
+&nbsp;&nbsp; Text1.Text = Text1.Text + nextLine  <br />
+Loop </P>
+<P>. . . 比下面的代码慢得多： </P>
+<P>Do Until EOF(F)  <br />
+&nbsp;&nbsp; Line Input #F, nextLine  <br />
+&nbsp;&nbsp; bufferVar = bufferVar + nextLine  <br />
+Loop  <br />
+Text1.Text = bufferVar </P>
+<P>然而,下面的代码完成了相同的功能,而且还要快： </P>
+<P>&nbsp;&nbsp; Text1.Text = Input(F, LOF(F)) </P>
+<P>如上述,几种方法都实现了同样的任务；同时,最好的算法也是最优的。</P>
+<P>　　4. 尽量使用数组,避免使用集合</P>
+<P>　　除非你必须使用集合(Collection）,否则你应该尽量使用数组。据测试,数组的存取速度可以达到集合的100倍。这个数字听起来有点骇人听闻,但是如果你考虑到集合是一个对象,你就会明白为什么差异会这么大。</P>
+<P>　　5. 展开小的循环体</P>
+<P>　　在编码的时候,有可能遇到这种情况：一个循环体只会循环2到3次,而且循环体由几行代码组成。在这种情况下,你可以把循环展开。原因是循环会占用额外的CPU时间。但是如果循环比较复杂,你就没有必要这样做了。</P>
+<P>　　6. 避免使用很短的函数</P>
+<P>　　和使用小的循环体相同,调用只有几行代码的函数也是不经济的--调用函数所花费的时间或许比执行函数中的代码需要更长的时间。在这种情况下,你可以把函数中的代码拷贝到原来调用函数的地方。</P>
+<P>　　7. 减少对子对象的引用</P>
+<P>　　在VB中,通过使用.来实现对象的引用。例如：</P>
+<P>Form1.Text1.Text </P>
+<P>　　在上面的例子中,程序引用了两个对象：Form1和Text1。利用这种方法引用效率很低。但遗憾的是,没有办法可以避免它。程序员唯一可以做就是使用With或者将用另一个对象保存子对象(Text1）。</P>
+<P>' 使用With <br />
+With frmMain.Text1 <br />
+.Text = "Learn VB" <br />
+.Alignment = 0 <br />
+.Tag = "Its my life" <br />
+.BackColor = vbBlack <br />
+.ForeColor = vbWhite <br />
+End With </P>
+<P>　　或者 </P>
+<P>' 使用另一个对象保存子对象 <br />
+Dim txtTextBox as TextBox <br />
+Set txtTextBox = frmMain.Text1 <br />
+TxtTextBox.Text = "Learn VB" <br />
+TxtTextBox.Alignment = 0 <br />
+TxtTextBox.Tag = "Its my life" <br />
+TxtTextBox.BackColor = vbBlack <br />
+TxtTextBox.ForeColor = vbWhite </P>
+<P>　　注意,上面提到的方法只适用于需要对一个对象的子对象进行操作的时候,下面这段代码是不正确的：</P>
+<P>With Text1 <br />
+.Text = "Learn VB" <br />
+.Alignment = 0 <br />
+.Tag = "Its my life" <br />
+.BackColor = vbBlack <br />
+.ForeColor = vbWhite <br />
+End With </P>
+<P>　　很不幸的是,我们常常可以在实际的代码中发现类似于上面的代码。这样做只会使代码的执行速度更慢。原因是With块编译后会形成一个分枝,会增加了额外的处理工作。</P>
+<P>　　8. 检查字符串是否为空</P>
+<P>　　大多数程序员在检查字符串是否为空时会使用下面的方法：</P>
+<P>If Text1.Text = "" then <br />
+' 执行操作 <br />
+End if&nbsp; </P>
+<P>　　很不幸,进行字符串比较需要的处理量甚至比读取属性还要大。因此我建议大家使用下面的方法：</P>
+<P>If Len(Text1.Text) = 0 then <br />
+' 执行操作 <br />
+End if </P>
+<P>　　9. 去除Next关键字后的变量名</P>
+<P>　　在Next关键字后加上变量名会导致代码的效率下降。我也不知道为什么会这样,只是一个经验而已。不过我想很少有程序员会这样画蛇添足,毕竟大多数程序员都是惜字如金的人。</P>
+<P>' 错误的代码 <br />
+For iCount = 1 to 10 <br />
+' 执行操作 <br />
+Next iCount <br />
+' 正确的代码 <br />
+For iCount = 1 to 10 <br />
+' 执行操作 <br />
+Next&nbsp; </P>
+<P>　　10. 使用数组,而不是多个变量</P>
+<P>　　当你有多个保存类似数据的变量时,可以考虑将他们用一个数组代替。在VB中,数组是最高效的数据结构之一。</P>
+<P>　　11. 使用动态数组,而不是静态数组</P>
+<P>　　使用动态数组对代码的执行速度不会产生太大的影响,但是在某些情况下可以节约大量的资源。</P>
+<P>　　12. 销毁对象</P>
+<P>　　无论编写的是什么软件,程序员都需要考虑在用户决定终止软件运行后释放软件占用的内存空间。但遗憾的是很多程序员对这一点好像并不是很在意。正确的做法是在退出程序前需要销毁程序中使用的对象。例如：</P>
+<P>Dim FSO as New FileSystemObject <br />
+' 执行操作 <br />
+' 销毁对象 <br />
+Set FSO = Nothing <br />
+对于窗体,可以进行卸载： <br />
+Unload frmMain&nbsp; </P>
+<P>　　或</P>
+<P>Set frmMain = Nothing </P>
+<P>　　13. 变长和定长字符串</P>
+<P>　　从技术上来说,与变长字符串相比,定长字符串需要较少的处理时间和空间。但是定长字符串的缺点在于在很多情况下,你都需要调用Trim函数以去除字符串末的空字符,这样反而会降低代码效率。所以除非是字符串的长度不会变化,否则还是使用变长字符串。</P>
+<P>　　14. 使用类模块,而不是ActiveX控件</P>
+<P>　　除非ActiveX控件涉及到用户界面,否则尽量使用轻量的对象,例如类。这两者之间的效率有很大差异。</P>
+<P>　　15. 使用内部对象</P>
+<P>　　在涉及到使用ActiveX控件和DLL的时候,很多程序员喜欢将它们编译好,然后再加入工程中。我建议你最好不要这样做,因为从VB连接到一个外部对象需要耗费大量的CPU处理能力。每当你调用方法或存取属性的时候,都会浪费大量的系统资源。如果你有ActiveX控件或DLL的源代码,将它们作为工程的私有对象。</P>
+<P>　　16. 减少模块的数量</P>
+<P>　　有些人喜欢将通用的函数保存在模块中,对于这一点我表示赞同。但是在一个模块中只写上二三十行代码就有些可笑了。如果你不是非常需要模块,尽量不要使用它。这样做的原因是因为只有在模块中的函数或变量被调用时,VB才将模块加载到内存中；当VB应用程序退出时,才会从内存中卸载这些模块。如果代码中只有一个模块,VB就只会进行一次加载操作,这样代码的效率就得到了提高；反之如果代码中有多个模块,VB会进行多次加载操作,代码的效率会降低。</P>
+<P>　　17. 使用对象数组</P>
+<P>　　当设计用户界面时,对于同样类型的控件,程序员应该尽量使用对象数组。你可以做一个实验：在窗口上添加100个PictureBox,每个PictureBox都有不同的名称,运行程序。然后创建一个新的工程,同样在窗口上添加100个PictureBox,不过这一次使用对象数组,运行程序,你可以注意到两个程序加载时间上的差别。</P>
+<P>　　18. 使用Move方法</P>
+<P>　　在改变对象的位置时,有些程序员喜欢使用Width,Height,Top和Left属性。例如：</P>
+<P>Image1.Width = 100 <br />
+Image1.Height = 100 <br />
+Image1.Top = 0 <br />
+Image1.Left = 0 </P>
+<P>　　实际上这样做效率很低,因为程序修改了四个属性,而且每次修改之后,窗口都会被重绘。正确的做法是使用Move方法：</P>
+<P>Image1.Move 0,0,100,100 </P>
+<P>　　19. 减少图片的使用</P>
+<P>　　图片将占用大量内存,而且处理图片也需要占用很多CPU资源。在软件中,如果可能的话,可以考虑用背景色来替代图片--当然这只是从技术人员的角度出发看这个问题。</P>
+<P>　　20. 使用ActiveX DLL,而不是ActiveX控件</P>
+<P>　　如果你设计的ActiveX对象不涉及到用户界面,使用ActiveX DLL。</P>
+<P>　　21. 使用类可以提高软件的整体性能 <br />
+&nbsp;&nbsp;&nbsp;&nbsp; VB提供的机制不完全支持面向对象的设计和编码,但是VB提供了简单的类。大多数人认为使用对象将导致代码的效率降低。对于这一点我个人有些不同的意见；考察代码的效率不能纯粹从运行速度的角度出发,软件占用的资源也是需要考虑的因素之一。使用类可以帮助你在整体上提升软件的性能。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 22. 尽可能使用常数  <br />
+使用常数可以加快应用程序的运行,增强代码的可读性,而且易于维护。如果代码中的字符串或数字是不变的,则可把它们声明为常数。常数在编译时只处理一次,将适当的值写进代码；而变量在每次运行应用程序时都要读取当前值。 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 尽量使用对象浏览器中列举的内部常数,而不要自己去创建。不要担心应用程序中引用的模块包含多余的常数；多余的常数在形成 .exe 文件时被删除。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 23. 用 ByVal 传递参数,而不用 ByRef  <br />
+编写含参数的 Sub 或 Function 过程时,按值 (ByVal) 传递参数比按地址 (ByRef) 快。尽管 Visual Basic 中参数传递的缺省方式是按地址的 (ByRef) ,但实际上需要改变参数值的过程极少。如果过程中不需改变参数的值,就可以按值 (ByVal) 来传递,举例说明如下： </P>
+<P>Private Sub DoSomething(ByVal strName As String, _  <br />
+ByVal intAge As Integer) </P>
+<P> <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 24. 使用类型确定的可选参数  <br />
+使用 Visual Basic 5.0 中类型确定的可选参数,可以提高 Sub 或 Function 的调用速度。Visual Basic 以前版本中的可选参数只能是 Variant 的。如果过程是按值传递参数的,正如下面的例子,16 个字节的 Variant 变量保存在堆栈中。 </P>
+<P>Private Sub DoSomething(ByVal strName As String, _  <br />
+Optional ByVal vntAge As Variant, _  <br />
+Optional ByVal vntWeight As Variant) </P>
+<P>使用类型确定的可选参数,每次调用时占用的堆栈空间较少,而且传递到内存中的数据也较少： </P>
+<P>Private Sub DoSomething(ByVal strName As String, _  <br />
+Optional ByVal intAge As Integer, _  <br />
+Optional ByVal intWeight As Integer) </P>
+<P>类型确定的可选参数的访问速度比 Variant 快,而且一旦数据类型错误,编译时就显示错误信息。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 25利用集合的优点  <br />
+可以定义和使用对象的集合是 Visual Basic 的强大功能之一。尽管集合是非常有用的,但还要正确使用才能获得最好的效果： </P>
+<P>使用 For Each...Next 替代 For...Next。 </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26. 添加集合的对象时避免使用 Before 和 After 参数。 </P>
+<P>使用键集而不用几组相同对象的数组。  <br />
+集合可以用 For...Next 循环进行迭代。但采用 For Each...Next 可读性更好,而且多数情况下更快。For Each...Next 是由集合的生成器实现迭代的,所以实际的操作速度将随集合对象的不同而改变。由于 For Each...Next 的最简单的实现机理就是 For...Next 的线性迭代,因此 For Each...Next 不会比 For...Next 慢。但是,有些情况下采用了比线性迭代更复杂的实现机理,所以 For Each...Next 要快得多。 </P>
+<P>如果没有使用 Before 和 After 参数,则往集合中添加对象是非常快的。否则,Visual Basic 必须在集合中检测到其它对象后,才能添加新对象。 </P>
+<P>如果对象的类型都一样,集合或数组都可以用来管理这些对象(如果对象的类型不一样,则只能用集合）。从速度的观点看,选择何种方式取决于对象的访问方式。如果能够为每一对象分配唯一的键,则集合是访问对象的最快方式。使用键从集合中检索对象比从数组中顺序遍历对象快。当然,如果没有键而要遍历对象时,则选择数组比较好。就顺序遍历方式而言,数组比集合快。 </P>
+<P>如果对象的个数少,则数组使用的内存小,并且搜索的速度快。当对象的个数在 100 左右时,集合比数组的效率高；当然,具体的数目还有赖于微处理器的速度和可用的内存。 </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26. 不要用Do While Not record.EOF 语句。  <br />
+例如下面的代码比较慢： <br />
+Do While Not record.EOF  <br />
+&nbsp;&nbsp; '代码 <br />
+&nbsp;&nbsp; record.MoveNext <br />
+Loop</P>
+<P>下面的要快好多</P>
+<P>Record.MoveLast <br />
+intCount=Record.RecordCount <br />
+Record.MoveFirst <br />
+For i=1 To intCount <br />
+&nbsp;&nbsp; '代码 <br />
+&nbsp; Records.MoveNext <br />
+Next i</P>
+<P>第二部分 编译优化</P>
+<P>　　我所见过的很多VB程序员从来没有使用过编译选项,也没有试图搞清楚各个选项之间的差别。下面让我们来看一下各个选项的具体含义。</P>
+<P>　　1. P-代码(伪代码）和本机代码</P>
+<P>　　你可以选择将软件编译为P-代码或是本机代码。缺省选项是本机代码。那什么是P-代码和本机代码呢？ <br />
+P-代码：当在VB中执行代码时,VB首先是将代码编译为P-代码,然后再解释执行编译好的P-代码。在编译环境下,使用这种代码要比本机代码快。选择P-代码后,编译时VB将伪代码放入一个EXE文件中。</P>
+<P>　　本机代码：本机代码是VB6以后才推出的选项。当编译为EXE文件后,本机代码的执行速度比P-代码快。选择本机代码后,编译时VB使用机器指令生成EXE文件。</P>
+<P>　　在使用本机代码进行编译时,我发现有时候会引入一些莫名其妙的错误。在编译环境中我的代码完全正确地被执行了,但是用本机代码选项生成的EXE文件却不能正确执行。通常这种情况是在卸载窗口或弹出打印窗口时发生的。我通过在代码中加入DoEvent语句解决了这个问题。当然出现这种情况的几率非常少,也许有些VB程序员从来没有遇到过,但是它的确存在。</P>
+<P>　　在本机代码中还有几个选项：</P>
+<P>　　a) 代码速度优化：该选项可以编译出速度较快的执行文件,但执行文件比较大。推荐使用</P>
+<P>　　b) 代码大小优化：该选项可以编译出比较小的执行文件,但是以牺牲速度为代价的,不推荐使用。</P>
+<P>　　c) 无优化：该选项只是将P-代码转化为本机代码,没有做任何优化。在调试代码时可以使用。</P>
+<P>　　d) 针对Pentium Pro优化：虽然该项不是本机代码中的缺省选项,但是我通常会使用该选项。该选项编译出的可执行程序在Pentium Pro和Pentium 2以上的机器上可以运行得更快,而在比较老的机器上要稍稍慢一些。考虑到现在用Pentium 2都是落伍,所以推荐大家使用该选项。</P>
+<P>　　e) 产生符号化调试信息：该项在编译过程中生成一些调试信息,使用户可以利用Visual C++一类的工具来调试编译好的代码。使用该选项会生成一个.pdf文件,该文件记录了可执行文件中的标志信息。当程序拥有API函数或DLL调用时,该选项还是比较有帮助的。</P>
+<P>　　2. 高级优化</P>
+<P>　　高级优化中的设置可以帮助你提高软件的速度,但是有时候也会引入一些错误,因此我建议大家尽量小心地使用它们。如果在代码中有比较大的循环体或者复杂的数学运算时,选中高级优化中的某些项会大幅度提升代码的性能。如果你使用了高级优化功能,我建议你严格测试编译好的文件。</P>
+<P>　　a) 假定无别名：可以提高循环体中代码的执行效率,但是在如果通过变量的引用改变变量值的情况下,例如调用一个方法,变量的引用作为方法的参数,在方法中改变了变量的值的话,就会引发错误。有可能只是返回的结果错误,也有可能是导致程序中断运行的严重错误。</P>
+<P>　　b) 取消数组绑定检查、取消整数溢出检查和取消浮点错误检查：在程序运行时,如果通过这些检查发现了错误,错误处理代码会处理这些错误。但是如果取消了这些检查,发生了错误程序就无法处理。只有当你确定你的代码中不会出现上面的这些错误时,你才可以使用这些选项。它们将使软件的性能得到很大的提升。</P>
+<P>　　c) 允许不舍入的浮点操作：选择该选项可以是编译出来的程序更快地处理浮点操作。它唯一的缺点就是在比较两个浮点数时可能会导致不正确的结果。</P>
+<P>　　d) 取消Pentium FDIV安全检查：该选项是针对一些老的Pentium芯片设置的,现在看来已经过时了。</P>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-05-04
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/vb/">VB</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E5%B7%A7/">技巧</a>
+          <a href="https://lcx.cc/tags/dos/">Dos</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A0%81/">编码</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E6%8E%A7%E4%BB%B6/">控件</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E5%9D%97/">模块</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E5%9B%BE%E7%89%87/">图片</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/74/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【视频】We Will Rock You 古罗马美女版</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/72/">
+            <span class="next-text nav-default">【VB技巧】VB KeyCode 常数表</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

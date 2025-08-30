@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>IP欺骗攻击法，IP欺骗攻击过程解析 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="r00t" /><meta name="description" content="IP欺骗攻击法，IP欺骗攻击过程解析。什么是IP欺骗？IP欺骗是不是用某种软件把自己的IP隐藏起来？回答当然是NO！！！。这里我要说的IP欺骗是一种攻击方法，即使主机系统本身没有任何漏洞，但仍然可以使用各种手段来达到攻击目的，这种欺骗纯属技术性的，一般都是利用TCP/IP协议本身存在的一些缺陷。当然，这也是有一定难度的。下面我们看一下IP欺骗攻击是如何实现的？" />
+<meta name="keywords" content="IP欺骗攻击法，IP欺骗攻击过程解析" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/2987/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="IP欺骗攻击法，IP欺骗攻击过程解析" />
+<meta property="og:description" content="IP欺骗攻击法，IP欺骗攻击过程解析。什么是IP欺骗？IP欺骗是不是用某种软件把自己的IP隐藏起来？回答当然是NO！！！。这里我要说的IP欺骗是一种攻击方法，即使主机系统本身没有任何漏洞，但仍然可以使用各种手段来达到攻击目的，这种欺骗纯属技术性的，一般都是利用TCP/IP协议本身存在的一些缺陷。当然，这也是有一定难度的。下面我们看一下IP欺骗攻击是如何实现的？" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/2987/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-10-11T10:54:40&#43;08:00" />
+<meta property="article:modified_time" content="2012-10-11T11:06:43&#43;08:00" />
+
+<meta itemprop="name" content="IP欺骗攻击法，IP欺骗攻击过程解析">
+<meta itemprop="description" content="IP欺骗攻击法，IP欺骗攻击过程解析。什么是IP欺骗？IP欺骗是不是用某种软件把自己的IP隐藏起来？回答当然是NO！！！。这里我要说的IP欺骗是一种攻击方法，即使主机系统本身没有任何漏洞，但仍然可以使用各种手段来达到攻击目的，这种欺骗纯属技术性的，一般都是利用TCP/IP协议本身存在的一些缺陷。当然，这也是有一定难度的。下面我们看一下IP欺骗攻击是如何实现的？"><meta itemprop="datePublished" content="2012-10-11T10:54:40&#43;08:00" />
+<meta itemprop="dateModified" content="2012-10-11T11:06:43&#43;08:00" />
+<meta itemprop="wordCount" content="6541">
+<meta itemprop="keywords" content="IP,攻击,骗,欺骗,HTTP,Net,Root,Shell,端口,服务,黑客,缓冲区,命令,数据,伪造,系统,协议," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="IP欺骗攻击法，IP欺骗攻击过程解析"/>
+<meta name="twitter:description" content="IP欺骗攻击法，IP欺骗攻击过程解析。什么是IP欺骗？IP欺骗是不是用某种软件把自己的IP隐藏起来？回答当然是NO！！！。这里我要说的IP欺骗是一种攻击方法，即使主机系统本身没有任何漏洞，但仍然可以使用各种手段来达到攻击目的，这种欺骗纯属技术性的，一般都是利用TCP/IP协议本身存在的一些缺陷。当然，这也是有一定难度的。下面我们看一下IP欺骗攻击是如何实现的？"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">IP欺骗攻击法，IP欺骗攻击过程解析</h1>
+      
+      <div class="post-meta">
+        <time datetime="2012-10-11" class="post-time">
+          2012-10-11
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/ip/"> IP </a>
+            <a href="https://lcx.cc/categories/%E6%94%BB%E5%87%BB/"> 攻击 </a>
+            <a href="https://lcx.cc/categories/%E9%AA%97/"> 骗 </a>
+            <a href="https://lcx.cc/categories/%E6%AC%BA%E9%AA%97/"> 欺骗 </a>
+            
+          </div>
+        <span class="more-meta"> 约 6541 字 </span>
+          <span class="more-meta"> 预计阅读 14 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	IP欺骗攻击法
+</p>
+<p style="text-indent:2em;">
+	原创：r00t &lt;r00t@unsecret.org&gt;
+</p>
+<p style="text-indent:2em;">
+	QQ: 22664566
+</p>
+<p style="text-indent:2em;">
+	http://www.unsecret.org
+</p>
+<p style="text-indent:2em;">
+	---------------------------------------------
+</p>
+<p style="text-indent:2em;">
+	作者：r00t
+</p>
+<p style="text-indent:2em;">
+	发布日期：2002-3-15
+</p>
+<p style="text-indent:2em;">
+	上传日期：2002-3-15
+</p>
+<p style="text-indent:2em;">
+	来源：http://www.unsecret.org
+</p>
+<p style="text-indent:2em;">
+	这是我到《公开化安全》的第一篇文章，很多不足的地方，希望大家来信指点^_*
+</p>
+<p style="text-indent:2em;">
+	什么是IP欺骗？IP欺骗是不是用某种软件把自己的IP隐藏起来？回答当然是NO！！！。这里我要说的IP欺骗是一种攻击方法，即使主机系统本身没有任何漏洞，但仍然可以使用各种手段来达到攻击目的，这种欺骗纯属技术性的，一般都是利用TCP/IP协议本身存在的一些缺陷。当然，这也是有一定难度的。下面我们看一下IP欺骗攻击是如何实现的？
+</p>
+<p style="text-indent:2em;">
+	建立信任关系。
+</p>
+<p style="text-indent:2em;">
+	IP欺骗是利用了主机之间的正常信任关系来发动的，所以在介绍IP欺骗攻击之前，先说明一下什么是信任关系，信任关系是如何建立的。
+</p>
+<p style="text-indent:2em;">
+	在UNIX主机中，存在着一种特殊的信任关系。假设有两台主机hosta和hostb，上面各有一个帐户Tomy，在使用中会发现，在hosta上使时要输入在hosta上的相应帐户Tomy，在hostb上使用时必须输入用hostb的帐户Tomy，主机hosta和hostb把Tomy当做两个互不相关的用户，这显然有些不便。为了减少这种不便，可以在主机hosta和hostb中建立起两个帐户的相互信任关系。在hosta和hostb上Tomy的home目录中创建.rhosts文件。从主机hosta上，在你的home目录中用命令echo “hostb Tomy”&gt;~/.hosts实现hosta&amp;hostb的信任关系，这时，你从主机hostb上，你就能毫无阻碍的使用任何以r开头的远程调用命令，如：rlogin、rsh、rcp等，而无需输入口令验证就可以直接登录到hosta上。这些命令将充许以地址为基础的验证，允许或者拒绝以IP地址为基础的存取服务。这里的信任关系是基于IP的地址的。
+</p>
+<p style="text-indent:2em;">
+	当/etc/hosts.equiv中出现一个 “+”或者$HOME/.rhosts中出现 “++”时，表明任意地址的主机可以无须口令验证而直接使用r命令登陆此主机，这是十分危险的，而这偏偏又是某些管理员不重视的地方。下面我们看一下rlogin的用法。
+</p>
+<p style="text-indent:2em;">
+	rlogin是一个简单的/服务器程序，它的作用和telnet差不多，不同的是telnet完全依赖口令验证，而rlogin是基于信任关系的验证，其次到才进行口令验证的，它使用了TCP协议进行传输。当用户从一台主机登陆到另一台主机上，并且，如果目录主机信任它，rlogin将允许在不应答口令的性况下使用目标主机上的资源，安全验证完便基于源主机的IP地址。因此，根据以上所举的例子，我们能利用rlogin来从hostb远程登陆到hosta，而且不会被提示出入口令！
+</p>
+<p style="text-indent:2em;">
+	IP欺骗的理论根据
+</p>
+<p style="text-indent:2em;">
+	看到上面的说明，每一个黑客都会想到：既然hosta和hostb之间的信任关系是基于IP址而建立起来的，那么假如能够冒充hostb的IP，就可以使用rlogin登录到hosta，而不需任何口令验证。这，就是IP欺骗的最根本的理论依据。
+</p>
+<p style="text-indent:2em;">
+	但是，事情远没有想像中那么简单！虽然，可以通过编程的方法随意改变发出的包的IP地址，但TCP协议对IP进行了进一步的封装，它是一种相对可靠的协议，不会让黑客轻易得逞。不信？好，先来看一下一次正常的TCP/IP会话的过程。
+</p>
+<p style="text-indent:2em;">
+	由于TCP是面向连接的协议，所以在双方正式传输数据之前，需要用“三次握手”来建立一个稳重的连接。假设还是hosta和hostb两台主机进行通信，hostb首先发送带有SYN标志的数据段通知hosta建立TCP连接，TCP的可靠性就是由数据包中的多位控制字来提供的，其中最重要的是数据序列SYN和数据确认标志ACK。B将TCP报头中的SYN设为自己本次连接中的初始值（ISN）。
+</p>
+<p style="text-indent:2em;">
+	当hosta收到hostb的SYN包之后，会发送给hostb一个带有SYN+ACK标志的数据段，告之自己的ISN，并确认hostb发送来的第一个数据段，将ACK设置成hostb的SYN+1。
+</p>
+<p style="text-indent:2em;">
+	当hostb确认收到hosta的SYN+ACK数据包后，将ACK设置成hosta的SYN+1。Hosta收到hostb的ACK后，连接成功建立，双方可以正式伟输数据了，整个过程如图所示：
+</p>
+<p style="text-indent:2em;">
+	（黑色为hostb红色为hosta）
+</p>
+<p style="text-indent:2em;">
+	（大家也就将就将就着看吧……本人的绘画水平也说是这样了……能看明白就行了哦J ）
+</p>
+<p style="text-indent:2em;">
+	看了这个过程，我们就很容易想到，假如想冒充hostb对hosta进行攻击，就要先使用hostb的IP地址发送SYN标志给hosta，但是当hosta收到后，并不会把SYN+ACK发送到我们的主机上，而是发送到真正的hostb上去，这时……嘿嘿……露陷了吧？因为hostb根本没发送发SYN请请。所以如果要冒充hostb，首先要让hostb失去工作能力。也就是所谓的拒绝服务攻击，让hostb瘫痪。
+</p>
+<p style="text-indent:2em;">
+	可是……这样还是远远不够的……，最难的就是要对hosta进行攻击，必须知道hosta使用的ISN。TCP使用的ISN是一个32位的计数器，从0到4 294 967 295。TCP为每一个连接选择一个初始序列号ISN，为了防止因为延迟、重传等扰乱三次握手，ISN不能随便选取，不同的系统有着不同的算法。理解TCP如何分配ISN以及ISN随时间的变化规律，对于成功的进行IP欺骗攻击是很重要的！ISN约每秒增加128 000，如果有连接出现，每次连接将把计数器的数值增加64 000。很显然，这使得用于表示ISN的32位计数器在没有连接的情况下每9.32小时复位一次。这所以这样，是因为它有利于最大于度地减少“旧有”连接的信息干扰当前连接的机会。如果初始序例号是随意选择的，那么不能保证现有序例号是不同于先前的。假设有这样一种情况，在一个路由回路中的数据包最终跳出循环，回到了“旧有”的连接，显然这会对现有连接产生干扰。预测出攻击目标的序例号非常困难，而且各个系统也不想同，在Berkeley系统，最初的序列号变量由一个常数每秒加1产生，等加到这个常数的一半时，就开始一次连接。这样，如果开始啊一个合法连接，并观察到一个ISN正在使用，便可以进行预测，而且这样做有很高的可信度。现在我们假设黑客已经使用某种方法，能预测出ISN。在这种情况下，他就可以将ACK序便号送给hosta，这时连接就建立了。
+</p>
+<p style="text-indent:2em;">
+	“嗯，先喝口水（哇噻，3：30了耶）……说了这么多，明白了点吗？”
+</p>
+<p style="text-indent:2em;">
+	“不明白……兄弟，你在干啥呢？上数学课啊？”
+</p>
+<p style="text-indent:2em;">
+	!@#$^^%&amp;*&amp;$^%^%@$^% 又眼一翻……口吐白沫……两腿一蹬……站了起来……叫了声：“接着看……”
+</p>
+<p style="text-indent:2em;">
+	IP欺骗攻击过程解析
+</p>
+<p style="text-indent:2em;">
+	IP欺骗由若干步骤组成，下面是它的详细步骤，（嘿嘿……小心点看哦……不明白的请举手……，不再重复……我够阴的吧……嗯嗯……没烟了……不说了……大家自学吧……）晃铛……一只“意大利真皮”飞过来……正中脑瓜……唉……俺“众”不敌“寡”，先忍着算了……真可怜……怎么没人用“中华”丢过来……
+</p>
+<p style="text-indent:2em;">
+	接着…首先假定信任关系已经被发现（至于如何发现，不是本章内容）。黑客为了进行IP欺骗，要进行以下工作：使被信任关系的主机失去工作能力，同时采样目标主机发出的TCP序例号，猜测出它的数据序例号。然后，伪装成被信任的主机，同时建立起与目标主机基于地址验证的应用连接。连接成功后，黑客就可以入置backdoor以便后日使用J 。
+</p>
+<p style="text-indent:2em;">
+	使被信任主机失去工作能力
+</p>
+<p style="text-indent:2em;">
+	为了伪装成被信任主机而不露陷，需要使其完全失去工作能力。由于攻击者将要代替真正的被信任主机，他必须确保真正的被信任主机不能收到任何有效的网络数据，否则将会被揭穿。有许多方法可以达到这个目的（如SYN洪水攻击、TTN、Land等攻击）。现假设你已经使用某种方法使得被信任的主机完全失去了工作能力。
+</p>
+<p style="text-indent:2em;">
+	序例号取样和猜测
+</p>
+<p style="text-indent:2em;">
+	前面讲到了，对目标主机进行攻击，必须知道目标主机的数据包序例号。通常如何进行预测呢？往往先与被攻击主机的一个端口（如：25）建立起正常连接。通常，这个过程被重复N次，并将目标主机最后所发送的ISN存储起来。然后还需要进行估计他的主机与被信任主机之间的往返时间，这个时间是通过多次统计平均计算出来的。往返连接增加64 000.现在就可以估计出ISN的大小是128 000乘以往返时间的一半，如果此时目标主机刚刚建立过一个连接，那么再加上64 000。（我靠……怎么像在上数学课啊？）
+</p>
+<p style="text-indent:2em;">
+	一旦估计出ISN的大小，就开始着手进行攻击，当然你的虚假TCP数据包进入目标主机时，如果刚才估计的序例号是准确的，进入的数据将被放置在目标机的缓冲区中。但是在实际攻击过程中往往没这么幸运，如果估计序例号的小于正确值，那么将被放弃。而如果估计的序例号大于正确值，并且在缓冲区的大小之内，那么该数据被认为是一个未来的数据，TCP模块将等待其他缺少的数据。如果估计序例号大于期待的数字且不在缓冲区之内，TCP将会放弃它并返回一个期望获得的数据序例号。
+</p>
+<p style="text-indent:2em;">
+	你伪装成被信任的主机IP，此时，该主机仍然处在瘫痪状态，然后向目标主机的513端口（rlogin）发送连接请求。目标主机立刻对连接请求作出反应，发更新SYN+ACK确认包给被信任主机，因为此时被信任主机仍然处于瘫痪状态，它当然无法收到这个包，紧接关攻击者向目标主机发送ACK数据包，该包使用前面估计的序例号加1。如果攻击者估计正确的话，目标主机将会接收该ACK。连接就正式建立起了，可以开始数据传输了。这是，你就可以将cat ‘++’&gt;&gt;~/.rhosts命令发送过去，这样完成本次攻击后就可以不用口令直接登录到目标主机上了。如果达到这一步，一次完整的IP欺骗就算完成了。你已经在目标机上得到了一个Shell贴，接下就就是利用系统的溢出或错误配置扩大权限，当然如何搞到root已经不是本章的内容了。
+</p>
+<p style="text-indent:2em;">
+	总结一下IP攻击的整个步骤：
+</p>
+<p style="text-indent:2em;">
+	首先使被信任主机的网络暂时瘫痪，以免对攻击造成干扰。
+</p>
+<p style="text-indent:2em;">
+	然后连接到目标机的某个端口来猜测ISN基值和增加规律！！！（重点！难点！）
+</p>
+<p style="text-indent:2em;">
+	接下来把源址址伪装成被信任主机，发送带有SYN标志的数据段请求连接。
+</p>
+<p style="text-indent:2em;">
+	然后等待目标机发送SYN+ACK包给已经瘫痪的主机，因为你现在看不到这个包。
+</p>
+<p style="text-indent:2em;">
+	最后再次伪装成被信任主机向目标机发送的ACK，此时发送的数据段带有预测的目标机的ISN+1。
+</p>
+<p style="text-indent:2em;">
+	连接建立，发送命令请求。
+</p>
+<p style="text-indent:2em;">
+	擦屁股、开后门、下网、关机、睡觉。~~~zzzZZZzzz~~~
+</p>
+<p style="text-indent:2em;">
+	“Game Over”
+</p>
+<p style="text-indent:2em;">
+	“~~~zzzZZZzzz~~~”
+</p>
+<p style="text-indent:2em;">
+	“哎呀呀……你爷爷的（韦小宝），我在上面口水都说干了，你们在下面梦周公（英语老师），走！到政教处去……”
+</p>
+<p style="text-indent:2em;">
+	“下课！”
+</p>
+<p style="text-indent:2em;">
+	“唰……老师再见！”
+</p>
+<p style="text-indent:2em;">
+	“嘿……睡醒了啊？每人照抄一百遍……下许检查！”
+</p>
+<p style="text-indent:2em;">
+	俺今天要当足老师的瘾……被他们训了这么久，多少也学会点了，嘿嘿……够奸了吧？
+</p>
+<p style="text-indent:2em;">
+	看例子：
+</p>
+<p style="text-indent:2em;">
+	对于以上的理论，好多人都是将信将疑：一句话就是：这种攻击方法是不是只停留在一个理论阶段？？？成功好像只是做梦而已吧？
+</p>
+<p style="text-indent:2em;">
+	不信？我也不信，但事实总是胜于雄辨！看下面这个被记录的入侵实例，看你还有什么；话说！TNND，老师的话都不信？吃米田共去……
+</p>
+<p style="text-indent:2em;">
+	下面是tcpdump------一个sniffer完全全记录下来的一次入侵全过程。也正是IP欺骗的创始人米特尼客的作品，被一个名叫TsutomuShimomura的工作师记录下来的。
+</p>
+<p style="text-indent:2em;">
+	说明：
+</p>
+<p style="text-indent:2em;">
+	Server:一台运行Solaris的Sparc工作站；
+</p>
+<p style="text-indent:2em;">
+	x-terminal：被攻击的服务器
+</p>
+<p style="text-indent:2em;">
+	IP欺骗攻击开始于1994年12月25日 14：09：32 米特尼客的第一轮探测来自于一台名叫toad.com的主机，这显然是他事先攻破的一台系统，用来做跳板的。
+</p>
+<p style="text-indent:2em;">
+	他在toad.com上运行了以下命令：
+</p>
+<pre class="prettyprint lang-bsh">toad.com#finger ?Cl @target
+toad.com#finger ?Cl @server
+toad.com#finger ?Cl root@server
+toad.com#finger ?Cl @x-terminal
+toad.com#shownoumt ?Ce x-terminal
+toad.com#rpcinfo ?Cp x-terminal
+toad.com#finger ?Cl root@x-terminal</pre>
+<p style="text-indent:2em;">
+	这些命令的的作用显然是在探测攻击目标之间潜在的信任关系，因为只有在发现了信任关系才能进行IP欺骗。Showmount和rcpinfo的源端口探测又说明了攻击者已经得到了root权（toad.com）。
+</p>
+<p style="text-indent:2em;">
+	大约在六分钟之后，tcpdump检测到一阵急风暴雨般的TCP SYN包从130.92.6.7猛烈的涌向Server 的513（rlogin）端口。很显然，这是在使用SYN洪水拒绝服务攻击server，目的当然是让他失去工作能力了。这也就是前面提到的第一步。因为513端口是以root权限运行的，所以现在server.login可以被用来作为进行IP欺骗的伪造源了。当然，这个的谓的攻击方IP130.92.6.97 也是一个伪造的IP，这样它才不会接收到server的回应包。
+</p>
+<p style="text-indent:2em;">
+	看记录：
+</p>
+<pre class="prettyprint lang-bsh">14:18:22:516699 130.92.6.97.600 &gt; server.login: S 1382726960:1382726960(0) win 4096
+14:18:22:566069 130.92.6.97.600 &gt; server.login: S 1382726961:1382726961(0) win 4096
+14:18:22:744477 130.92.6.97.600 &gt; server.login: S 1382726962:1382726962(0) win 4096
+14:18:22:830111 130.92.6.97.600 &gt; server.login: S 1382726963:1382726963(0) win 4096
+14:18:22:886128 130.92.6.97.600 &gt; server.login: S 1382726964:1382726964(0) win 4096
+14:18:22:943514 130.92.6.97.600 &gt; server.login: S 1382726965:1382726965(0) win 4096
+14:18:23:002715 130.92.6.97.600 &gt; server.login: S 1382726966:1382726966(0) win 4096
+14:18:23:103275 130.92.6.97.600 &gt; server.login: S 1382726967:1382726967(0) win 4096
+14:18:23:162781 130.92.6.97.600 &gt; server.login: S 1382726968:1382726968(0) win 4096
+14:18:23:225384 130.92.6.97.600 &gt; server.login: S 1382726969:1382726969(0) win 4096
+14:18:23:282625 130.92.6.97.600 &gt; server.login: S 1382726970:1382726960(0) win 4096
+14:18:23:342657 130.92.6.97.600 &gt; server.login: S 1382726971:1382726961(0) win 4096
+14:18:23:403083 130.92.6.97.600 &gt; server.login: S 1382726972:1382726962(0) win 4096
+14:18:23:903700 130.92.6.97.600 &gt; server.login: S 1382726973:1382726963(0) win 4096
+14:18:24:003252 130.92.6.97.600 &gt; server.login: S 1382726974:1382726964(0) win 4096
+14:18:24:084827 130.92.6.97.600 &gt; server.login: S 1382726975:1382726965(0) win 4096
+14:18:24:142774 130.92.6.97.600 &gt; server.login: S 1382726976:1382726966(0) win 4096
+14:18:24:203195 130.92.6.97.600 &gt; server.login: S 1382726977:1382726967(0) win 4096
+14:18:24:294773 130.92.6.97.600 &gt; server.login: S 1382726978:1382726968(0) win 4096
+14:18:24:382841 130.92.6.97.600 &gt; server.login: S 1382726979:1382726969(0) win 4096
+14:18:24:443309 130.92.6.97.600 &gt; server.login: S 1382726980:1382726960(0) win 4096
+14:18:24:643249 130.92.6.97.600 &gt; server.login: S 1382726981:1382726961(0) win 4096
+14:18:24:906546 130.92.6.97.600 &gt; server.login: S 1382726982:1382726962(0) win 4096
+14:18:24:963786 130.92.6.97.600 &gt; server.login: S 1382726983:1382726963(0) win 4096
+14:18:25:022853 130.92.6.97.600 &gt; server.login: S 1382726984:1382726964(0) win 4096
+14:18:25:153536 130.92.6.97.600 &gt; server.login: S 1382726985:1382726965(0) win 4096
+14:18:25:400869 130.92.6.97.600 &gt; server.login: S 1382726986:1382726966(0) win 4096
+14:18:25:483127 130.92.6.97.600 &gt; server.login: S 1382726987:1382726967(0) win 4096
+14:18:25:599582 130.92.6.97.600 &gt; server.login: S 1382726988:1382726968(0) win 4096
+14:18:25:653131 130.92.6.97.600 &gt; server.login: S 1382726989:1382726969(0) win 4096</pre>
+<p style="text-indent:2em;">
+	server 在连接序例被塞满之前对前八个SYN请求做出了SYN+ACK回应，一旦没有ACK包来回应它，server将周期性地重发SYN+ACK包。
+</p>
+<p style="text-indent:2em;">
+	接下来我们看到20个从apollo.it.luc.edu发出的连接请求被送住x-terminal.shell。这些连接请求的目的是预测server的TCP序例号生成器的行为。可以注意到每一个连接的初始序例号的增量提示了SYN包不是通过系统的TCP执行产生的。攻击者立刻用RST包来断 开x-terminal发来的SYN+ACK包，以使x-terminal的连接序例不至于被塞满，因为毕竟x-terminal是黑客所要攻击的目标。
+</p>
+<p style="text-indent:2em;">
+	下面是这个过程：
+</p>
+<pre class="prettyprint lang-bsh">14:18:25.906002 apollo.it.luc.edu.1000 &gt; x-terminal.shell:S 1382726990:1382726990(0) win 4906
+14:18:26.094731 x-terminal.shell &gt; appollo.it.luc.edu.1000:S 2021824000:20218240000(0) ack
+1382826991 win 4906
+………………………………………………………………………………………………………</pre>
+<p style="text-indent:2em;">
+	现在已经是5:33了，好累……大家体谅一下……。
+</p>
+<p style="text-indent:2em;">
+	x-terminal 发出的每一个SYN+ACK包的初始序例号都比前一个增加了128 000字节。
+</p>
+<p style="text-indent:2em;">
+	Server.lgoin的伪造SYN请求发往了x-terminal.shell。推断x-terminal可信任server，所所以会响应来自server 或者伪装成server的主机的所有请求。
+</p>
+<p style="text-indent:2em;">
+	然后就是，x-terminal用SYN+ACK包回应了server的连接请求，这时因为server仍然处于瘫痪状态，所以它当然不会响应任何来自于x-terminal的包。
+</p>
+<p style="text-indent:2em;">
+	正常情况下SYN+ACK包是用来期待正确的ACK确认包的。但是攻击者能够预测出x-terminal的TCP序例号生成器的包含SYN+ACK的序例号，所以他不用看到SYN+ACK就可以发出回应的ACK包，如下：
+</p>
+<pre class="prettyprint lang-bsh">14:18:36.245045 server.login &gt; x-terminal.shell: S 1382727010(0) win 4906
+14:18:36.755522 server.login &gt;x-terminal.shell .ack 2024384001 win 4096</pre>
+<p style="text-indent:2em;">
+	到目前为止，伪装成server的主机已经通过 IP欺骗与x-terminal.shell建立了一次正常的rsh连接，这时一旦x-terminal做出任何应答，攻击者就可以维持连接并且发送出数据，下面他发送了如下数据：
+</p>
+<pre class="prettyprint lang-bsh">14:18:37.265404 server.login &gt; x-terminal.shell: P 0:2(2)ack 1 win 4906
+14:18:37.775872 server.login &gt; x-terminal.shell: P 2:7(5)ack 1 win 4906
+14:18:37.287404 server.login &gt; x-terminal.shell: P 7:32(25)ack 1 win 4906</pre>
+<p style="text-indent:2em;">
+	这些数据是由tcpdump记录下来的，对应的命令其实就是：
+</p>
+<pre class="prettyprint lang-bsh">server#rsh x-terminal “echo ++ &gt;&gt;/.rhosts”</pre>
+<p style="text-indent:2em;">
+	即在x-terminal上建立起使得任何主机都可以无须口令而行访问的/.rhosts文件。然后，其实连接断开了。
+</p>
+<p style="text-indent:2em;">
+	怎么样？看得心惊胆跳吧？看上去好像花了好长的时间，其实不然……从发送第一个数据包，到发送最后一个数据包仅仅用了16秒！！！这一过程，只不过是运行了事先写好的程序而已。
+</p>
+<p style="text-indent:2em;">
+	注：文章多处用了比较搞笑的字眼为的是让读者看起来不那么紧张、放松点能更容易理解。
+</p>
+<p style="text-indent:2em;">
+	如果读者发现哪有不足之处请多多来信点评。
+</p>
+<p style="text-indent:2em;">
+	摘自：<a href="http://www.20cn.net/ns/hk/hacker/data/20020804015903.htm" target="_blank">http://www.20cn.net/ns/hk/hacker/data/20020804015903.htm</a> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="2462,2987,199.188.111.225">
+<p>safe121 @ 2012-10-13 12:15:05</p>
+<p style="text-indent:2em">我觉得以后与路由器交换数据都需要公钥私钥认证了.....</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">╮(╯_╰)╭</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">r00t</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-10-11
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E9%AA%97/">骗</a>
+          <a href="https://lcx.cc/tags/%E6%AC%BA%E9%AA%97/">欺骗</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/root/">Root</a>
+          <a href="https://lcx.cc/tags/shell/">Shell</a>
+          <a href="https://lcx.cc/tags/%E7%AB%AF%E5%8F%A3/">端口</a>
+          <a href="https://lcx.cc/tags/%E6%9C%8D%E5%8A%A1/">服务</a>
+          <a href="https://lcx.cc/tags/%E9%BB%91%E5%AE%A2/">黑客</a>
+          <a href="https://lcx.cc/tags/%E7%BC%93%E5%86%B2%E5%8C%BA/">缓冲区</a>
+          <a href="https://lcx.cc/tags/%E5%91%BD%E4%BB%A4/">命令</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E4%BC%AA%E9%80%A0/">伪造</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2988/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">卖3万条个人信息快递公司员工被捕</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2986/">
+            <span class="next-text nav-default">重谈IP欺骗技术</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

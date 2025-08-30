@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Nuclear-Blog v7.2 博客系统 最终版 开源下载 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="大概在 2010 年前后，那会儿非常流行搭博客，核总本人也想搭一个，但是找来找去，找不到一个安全、简洁、高效的博客程序，于是乎狠心下来自己从零开发一个，于是这套博客系统诞生了，后来命名为 Nuclear-Blog。目前版本是 Nuclear-Blog v7.2，也是最终版本，以下是使用说明和相关功能介绍。" />
+<meta name="keywords" content="Nuclear-Blog v7.2, 博客系统, 开源下载, Nuclear-Blog, blog, asp, 博客, 源码, 程序, 系统" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4599/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="Nuclear-Blog v7.2 博客系统 最终版 开源下载" />
+<meta property="og:description" content="大概在 2010 年前后，那会儿非常流行搭博客，核总本人也想搭一个，但是找来找去，找不到一个安全、简洁、高效的博客程序，于是乎狠心下来自己从零开发一个，于是这套博客系统诞生了，后来命名为 Nuclear-Blog。目前版本是 Nuclear-Blog v7.2，也是最终版本，以下是使用说明和相关功能介绍。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4599/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-05-30T22:28:40&#43;08:00" />
+<meta property="article:modified_time" content="2020-05-30T22:28:40&#43;08:00" />
+
+<meta itemprop="name" content="Nuclear-Blog v7.2 博客系统 最终版 开源下载">
+<meta itemprop="description" content="大概在 2010 年前后，那会儿非常流行搭博客，核总本人也想搭一个，但是找来找去，找不到一个安全、简洁、高效的博客程序，于是乎狠心下来自己从零开发一个，于是这套博客系统诞生了，后来命名为 Nuclear-Blog。目前版本是 Nuclear-Blog v7.2，也是最终版本，以下是使用说明和相关功能介绍。"><meta itemprop="datePublished" content="2020-05-30T22:28:40&#43;08:00" />
+<meta itemprop="dateModified" content="2020-05-30T22:28:40&#43;08:00" />
+<meta itemprop="wordCount" content="4432">
+<meta itemprop="keywords" content="Nuclear-Blog,blog,asp,博客,源码,程序,系统," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Nuclear-Blog v7.2 博客系统 最终版 开源下载"/>
+<meta name="twitter:description" content="大概在 2010 年前后，那会儿非常流行搭博客，核总本人也想搭一个，但是找来找去，找不到一个安全、简洁、高效的博客程序，于是乎狠心下来自己从零开发一个，于是这套博客系统诞生了，后来命名为 Nuclear-Blog。目前版本是 Nuclear-Blog v7.2，也是最终版本，以下是使用说明和相关功能介绍。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Nuclear-Blog v7.2 博客系统 最终版 开源下载</h1>
+      
+      <div class="post-meta">
+        <time datetime="2020-05-30" class="post-time">
+          2020-05-30
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/nuclear-blog/"> Nuclear-Blog </a>
+            <a href="https://lcx.cc/categories/blog/"> blog </a>
+            <a href="https://lcx.cc/categories/asp/"> asp </a>
+            <a href="https://lcx.cc/categories/%E5%8D%9A%E5%AE%A2/"> 博客 </a>
+            <a href="https://lcx.cc/categories/%E6%BA%90%E7%A0%81/"> 源码 </a>
+            <a href="https://lcx.cc/categories/%E7%A8%8B%E5%BA%8F/"> 程序 </a>
+            <a href="https://lcx.cc/categories/%E7%B3%BB%E7%BB%9F/"> 系统 </a>
+            
+          </div>
+        <span class="more-meta"> 约 4432 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#快速使用">快速使用</a></li>
+    <li><a href="#文件结构">文件结构</a></li>
+    <li><a href="#安全设置">安全设置</a></li>
+    <li><a href="#数据备份">数据备份</a></li>
+    <li><a href="#依赖组件">依赖组件</a></li>
+    <li><a href="#初始化设置">初始化设置</a>
+      <ul>
+        <li><a href="#1启用父路径">1、启用父路径</a></li>
+        <li><a href="#2兼容--iis-70">2、兼容 ≥ IIS 7.0</a></li>
+        <li><a href="#3临时调试程序">3、临时调试程序</a></li>
+        <li><a href="#4一些其他设置">4、一些其他设置</a></li>
+      </ul>
+    </li>
+    <li><a href="#网站模板">网站模板</a></li>
+    <li><a href="#下载地址">下载地址</a></li>
+    <li><a href="#相关截图">相关截图</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p align="center"><img alt="首页" src="/file/4599/首页.png" /></p>
+<h2 id="前言">前言</h2>
+<p>　　大概在 2010 年前后，那会儿非常流行搭博客，<strong><a href="https://lcx.cc/">核总</a><strong>本人也想搭一个，但是找来找去，找不到一个</strong>安全、简洁、高效</strong>的博客程序，于是乎狠心下来自己<strong>从零开发</strong>一个，于是这套博客系统诞生了，后来命名为 <a href="https://lcx.cc/%E5%85%B3%E4%BA%8E/#%E4%BB%A3%E7%A0%81%E5%BC%80%E6%BA%90">Nuclear-Blog</a>。</p>
+<p>　　说起来从零开发博客，并且<strong>全部代码接近于完全原创</strong>，国内做到的人估计<strong>屈指可数</strong>，一是需要<strong>大量时间和经验</strong>，二是需要<strong>极高的编程功力</strong>，只是这两点就足以<strong>令 99% 的人望而却步</strong>，所以<strong>大多数人只是拿个开源的博客二次开发一下、换个皮、改个模板玩玩</strong>。</p>
+<p>　　从 2010 年到 2015 年，这套博客程序经历了<strong>无数次迭代更新</strong>，再加上<a href="https://lcx.cc">核总</a>从骨子里追求<strong>精益求精、登峰造极</strong>，所以这 5 年时间里已经将该系统打磨的<strong>极其安全、稳定、简洁、高效</strong>了，同时也极大地<strong>提升了个人编程水平</strong>，并且<strong>顺带学到了很多底层协议、知识</strong>，对以后的<strong>个人综合技术水平提升</strong>起到了很大的帮助。</p>
+<p>　　那么，有细心的读者发现了，<strong>为何 2015 年后没有更新了呢？</strong></p>
+<p>　　原因很简单，该有的功能都有了，不该有的功能也加了，一个博客系统已<strong>无限接近于成熟和完美</strong>，所以后边更新的频率越来越低，因为<strong>没啥可更新的了</strong>，哈哈哈……</p>
+<p>　　历史上也<a href="https://lcx.cc/%E5%85%B3%E4%BA%8E/#%E4%BB%A3%E7%A0%81%E5%BC%80%E6%BA%90">开源过几次</a>，版本列表如下：</p>
+<ul>
+<li><a href="/post/1184/">Nuclear-Blog v4.0</a></li>
+<li><a href="/post/1235/">Nuclear-Blog v5.0</a></li>
+<li><a href="/post/1531/">Nuclear-Blog v5.0</a></li>
+<li><a href="/post/2034/">Nuclear-Blog v6.0</a></li>
+</ul>
+<p>　　后来到了 2018 年，由于 Asp <strong>无法跨平台</strong>，试了很多方案无解，同时 PHP 已充斥了整个行业，Asp 生存空间越来越小（过时但永不淘汰），再加上个人<strong>精力有限</strong>，最终<strong>放弃了继续开发</strong>。</p>
+<p>　　遂于 2018 年中旬抽时间整理了之前的内容，并彻底更换网站系统为 <a href="https://caddyserver.com/">Caddy</a> + <a href="https://gohugo.io/">Hugo</a> 跨平台完美组合，于 2018 年 9 月中旬<a href="https://lcx.cc/%E5%85%B3%E4%BA%8E/#%E4%B8%AD%E9%80%94%E5%85%B3%E7%AB%99">重新上线</a>。</p>
+<p>　　随着时代的变迁，从最开始的<strong>博客</strong>，接下来<strong>轻博客</strong>，到现在的<strong>微博</strong>，大家越来越<strong>不喜欢臃肿的长文章</strong>，更喜欢<strong>短小精悍的碎片信息</strong>，这年头还坚持写博客的人，已经寥寥无几了。</p>
+<p>　　再后来，有很多朋友喜欢这套博客程序，原因是<strong>很简洁而且相当安全</strong>，于是在众多朋友<strong>频繁催更</strong>之下，抽时间整理了<strong>最终版</strong>的源码，现发布出来。</p>
+<p>　　目前版本是 <a href="/post/4599/">Nuclear-Blog v7.2</a>，也是<strong>最终版本</strong>，以下是使用说明和相关功能介绍。</p>
+<h2 id="快速使用">快速使用</h2>
+<p>　　1、下载 <a href="/post/4599/">Nuclear-Blog v7.2</a> 压缩包并解压。</p>
+<p>　　2、在文件 <strong>\admin\Index.asp</strong> 中<strong>修改后台登陆账号和密码</strong>，默认 admin:123456。</p>
+<p>　　3、将后台管理主目录 <strong>/admin/</strong> 修改为<strong>其他人猜不到的名字</strong>。</p>
+<p>　　4、在 <strong>/inc/conn.asp</strong> 中<strong>将数据库名字修改为其他人猜不到</strong>的，<strong>别忘了将两个对应的 .mdb 文件也改名</strong>。</p>
+<p>　　5、上传所有文件到你的 Windows 服务器或者支持 Asp 的虚拟主机、空间，如有必要，请参考“<strong>初始化设置</strong>”对服务器进行相关调整。</p>
+<p>　　6、访问后台，<strong>修改一下网站名称之类的基本参数</strong>，添加一点内容，Enjoin！</p>
+<p>　　操作过程中<strong>如果有疑问或者报错，请参考底下的手册</strong>。</p>
+<p>　　本系统<strong>已经十分安全</strong>，<strong>强迫症患者</strong>可以参考底下设置一下相关权限。</p>
+<h2 id="文件结构">文件结构</h2>
+<p>　　本博客系统的文件<strong>结构简洁</strong>、<strong>逻辑清晰</strong>，每个文件中都有详细的<strong>代码说明和注释</strong>，以供二次开发或者修改代码所参考，具体结构如下：</p>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td>\后台密码加密算法\</td>
+<td>加密算法，用于生成 <strong>\admin\Index.asp</strong> 中后台登陆<strong>账号和密码的密文</strong>，独立运行，<strong>可以删除</strong>。</td>
+</tr>
+<tr>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td>\favicon.ico</td>
+<td>浏览器地址栏的小图标，也用于收藏夹，非必须的，看个人喜好更换或删除。</td>
+</tr>
+<tr>
+<td>\404.asp</td>
+<td>自定义的 404 错误页面。</td>
+</tr>
+<tr>
+<td>\file.asp</td>
+<td>所有的附件、图片、文件处理程序，主要功能是<strong>提取数据库中的文件，缓存并输出</strong>。</td>
+</tr>
+<tr>
+<td>\index.asp</td>
+<td><strong>核心文件</strong>，所有的首页、文章、列表、内容处理程序。</td>
+</tr>
+<tr>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td>\admin\</td>
+<td>后台相关文件，<strong>该目录名可以随意改名，最好修改成别人猜不到的</strong>。</td>
+</tr>
+<tr>
+<td>\admin\Index.asp</td>
+<td><strong>后台登陆账号和密码在这里改，配合上边的算法使用，默认账号和密码 admin:123456。</strong></td>
+</tr>
+<tr>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td>\cache\</td>
+<td><strong>所有页面、文件、图片的缓存</strong>，访问会<strong>自动生成</strong>，可以随时手动删除或在后台清空，程序会在你修改数据的时候自动更新缓存，核心代码<strong>全自动的</strong>，基本不用管。</td>
+</tr>
+<tr>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td>\image\</td>
+<td>所有的模板文件、图片、CSS、JS 等静态资源存放路径。</td>
+</tr>
+<tr>
+<td>\image\Content.html</td>
+<td>内容页面模板。</td>
+</tr>
+<tr>
+<td>\image\Index.html</td>
+<td>首页模板。</td>
+</tr>
+<tr>
+<td>\image\List.html</td>
+<td>列表模板。</td>
+</tr>
+<tr>
+<td>\image\LiuYan.html</td>
+<td>留言板模板。</td>
+</tr>
+<tr>
+<td>\image\face\</td>
+<td>留言板的默认头像。</td>
+</tr>
+<tr>
+<td>\image\KindEditor\</td>
+<td>KindEditor 编辑器，用的纯静态版，<strong>不用担心任何漏洞</strong>。</td>
+</tr>
+<tr>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td>\inc\0b1214c54b5a59d3_data.mdb</td>
+<td>存放文章、浏览、系统设置的数据库，<strong>建议名字改成别人猜不到的，以防非法下载，造成数据泄露</strong>。</td>
+</tr>
+<tr>
+<td>\inc\0b1214c54b5a59d3_file.mdb</td>
+<td>存放附件、图片等文件二进制数据的数据库，<strong>建议名字改成别人猜不到的，以防非法下载，造成数据泄露</strong>。</td>
+</tr>
+<tr>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td>\inc\MD5.asp</td>
+<td>MD5 算法。</td>
+</tr>
+<tr>
+<td>\inc\Conn.asp</td>
+<td>数据库链接配置和一些公共函数，如果<strong>修改了数据库名字，记得在这里也改一下</strong>。</td>
+</tr>
+<tr>
+<td>\inc\Anti-CC_CDN.asp</td>
+<td>早年写的一个<strong>高效防 CC 攻击模块</strong>（支持 CDN，也可以防<strong>路径扫描、恶意采集和暴力破解</strong>），具体参考<a href="https://lcx.cc/post/2094/">Asp 防御CC攻击模块 (Anti-CC.asp)</a></td>
+</tr>
+<tr>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td>\liuyan\index.asp</td>
+<td>留言板。</td>
+</tr>
+<tr>
+<td>\liuyan\liuyan.asp</td>
+<td>留言板，提交留言。</td>
+</tr>
+<tr>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td>\music\</td>
+<td>一个在线音乐视频播放器，主要用于<strong>在文章中插入多媒体文件</strong>。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="安全设置">安全设置</h2>
+<p>　　如果你在 <strong>\admin\Index.asp</strong> 中添加：</p>
+<p>　　<code>&lt;!--#include file=&quot;Inc/Anti-CC_CDN.asp&quot;--&gt;</code></p>
+<p>　　还能天然<strong>免疫暴力破解登陆密码攻击</strong>，退一万步讲，即使<strong>有后台权限也拿不到 webshell</strong>，最多删删文章、改改首页意淫下罢了（所以建议<strong>多备份</strong>）。</p>
+<p>　　XSS 之类的就更不用担心了，<strong>不存在任何 XSS 漏洞（欢迎各种代码审计）</strong>。</p>
+<p>　　如你用的 CDN 的话，所有访客 IP 地址是通过 <strong>HTTP_X_FORWARDED_FOR</strong> 获取的，但是不用担心，<strong>该函数已进行安全处理</strong>。</p>
+<p>　　为了安全起见，建议设置一下<strong>文件访问权限</strong>，其实不设置也不要紧，<strong>这套系统从正面无人能入侵（再次欢迎各种代码审计）</strong>，建议的文件访问权限设置如下：</p>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>权限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td>\cache\ 及子目录</td>
+<td>可读可写，<strong>禁止执行</strong></td>
+</tr>
+<tr>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td>\inc\</td>
+<td>可读可写（<strong>主要是为了能修改 mdb 数据库</strong>）</td>
+</tr>
+<tr>
+<td>\inc\*.asp</td>
+<td>只读，<strong>不可写</strong></td>
+</tr>
+<tr>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td>其余所有目录、文件及子目录</td>
+<td>只读，<strong>不可写</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="数据备份">数据备份</h2>
+<p>　　<a href="/post/4599/">Nuclear-Blog v7.2</a> 博客系统备份十分简单方便，只需要<strong>打包一下除 \cache\ 目录之外的所有文件</strong>即可。</p>
+<p>　　建议首次打包备份后，以后<strong>只需要单独打包一下 \inc\ 目录下的两个 mdb 数据库</strong>即可，以减少传输数据量。</p>
+<p>　　众所周知，<strong>三处离线灾备</strong>是基本原则。</p>
+<h2 id="依赖组件">依赖组件</h2>
+<p>　　网站留言版是可以设置<strong>有新留言自动发送邮件提醒</strong>的，具体设置见后台，该功能需要依赖 JMail 发送邮件组件，下载地址见底下。</p>
+<p>　　也有无组件发送邮件的方法，你可以自己改改，但效果不太好，<strong>因为是公共地址发送，各种被滥用，容易进垃圾箱(100%)</strong>，相关代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%
+&#39; CDOSYS 发邮件、Win7 无组件发送、支持 Godaddy 的发邮件代码、非 Jmail（使用 godaddy 公共 SMTP 服务器 relay-hosting.secureserver.net 不需要用户密码验证，需要系统：Windows/IIS）
+&#39; 注意：Godaddy 的空间/虚拟主机禁止了所有三方 SMTP 服务器，只能用他自己服务器。注意需要使用 utf-8 编码，否则乱码！
+&#39; http://blog.csdn.net/tangolivesky/article/details/6266985
+&#39; https://sg.godaddy.com/zh/help/using-cdosys-to-send-email-from-your-windows-hosting-account-1073
+&#39; 1、发现很有意思的地方，就是发件人可以随意填写，都能发送成功，根本不需要什么godaddy的企业邮局，这一点让我很惊讶。
+&#39; 2、objMail.BodyPart.Charset=&#34;utf-8&#34; 增加了编码定义功能，发送邮件不再乱码
+&#39; 3、邮件到达的速度时快时慢，有时候可以达到秒速，有时候可能要好几分钟
+&#39; 4、进垃圾邮箱几率很大，需要加白名单
+
+&#39; 创建组件
+dim CDOMail, STUl
+set CDOMail = CreateObject(&#34;CDO.Message&#34;)
+
+&#39; 设置邮件参数
+CDOMail.From = &#34;from@163.com&#34; &#39;发信人
+CDOMail.To = &#34;to@163.com&#34; &#39;收信人
+CDOMail.Subject = &#34;标题&#34; &#39;标题
+CDOMail.BodyPart.Charset = &#34;utf-8&#34; &#39;编码
+CDOMail.HTMLBody = &#34;内&lt;br&gt;容&#34; &#39;Html 内容
+&#39; CDOMail.TextBody = &#34;邮件内容&#34; &#39;文本内容
+&#39; CDOMail.AddAttachment &#34;D:\www\images\right.png&#34;  &#39;附件
+
+&#39; 配置 SMTP 服务器
+STUl = &#34;http://schemas.microsoft.com/cdo/configuration/&#34;
+With CDOMail.Configuration.Fields
+	.Item(STUl &amp; &#34;sendusing&#34;) = 2 &#39;发送使用端口
+	.Item(STUl &amp; &#34;smtpserverport&#34;) = 25 &#39;SMTP服务器端口
+	.Item(STUl &amp; &#34;smtpconnectiontimeout&#34;) = 60 &#39;连接超时（秒）
+	.Item(STUl &amp; &#34;smtpserver&#34;) = &#34;relay-hosting.secureserver.net&#34; &#39;Godaddy 公共 SMTP 服务器（不需要用户密码验证）
+	&#39; .Item(STUl &amp; &#34;smtpserver&#34;) = &#34;smtp.163.com&#34; &#39;SMTP服务器地址
+	&#39; .Item(STUl &amp; &#34;smtpauthenticate&#34;) = 1 &#39;远程服务器需要验证
+	&#39; .Item(STUl &amp; &#34;sendusername&#34;) = &#34;from@163.com&#34; &#39;发送方邮箱地址
+	&#39; .Item(STUl &amp; &#34;sendpassword&#34;) = &#34;password&#34; &#39;发送方邮箱密码
+	.Update
+End With
+
+&#39;执行发送
+CDOMail.Send
+%&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="初始化设置">初始化设置</h2>
+<h3 id="1启用父路径">1、启用父路径</h3>
+<p>　　IIS -&gt; 网站 -&gt; 网站名 -&gt; Asp -&gt; 启用父路径 -&gt; True</p>
+<p>　　否则会报错：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Active Server Pages 错误 &#39;ASP 0131&#39;
+
+不允许的父路径
+
+/liuyan/index.asp，行 1
+
+包含文件“../Inc/Conn.asp”不能用“..”表示父目录。
+</code></pre></td></tr></table>
+</div>
+</div><p>　　或者你<strong>把所有包含文件改成绝对路径</strong>，就不用修改该设置了，但是如果<strong>运行在子目录兼容性会变差</strong>。</p>
+<h3 id="2兼容--iis-70">2、兼容 ≥ IIS 7.0</h3>
+<p>　　IIS 7.0 及更高版本使用 32 位 mdb 数据库必须进行如下操作：</p>
+<p>　　IIS -&gt; 应用程序池 -&gt; 网站名 -&gt; 右键高级设置 -&gt; 启用 32 位应用程序 -&gt; True</p>
+<p>　　否则会报错：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ADODB.Connection 错误 &#39;800a0e7a&#39;
+
+未找到提供程序。该程序可能未正确安装。
+
+/Inc/Conn.asp，行 33
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3临时调试程序">3、临时调试程序</h3>
+<p>　　<strong>【警告：如非调试请勿进行此操作】</strong></p>
+<p>　　如需临时调试程序代码，请执行以下操作：</p>
+<p>　　IIS -&gt; 网站 -&gt; 网站名 -&gt; Asp -&gt; 编译/调试 -&gt; 将错误发送到浏览器 -&gt; True</p>
+<p>　　并注释掉相关文件的 <strong>On Error Resume Next</strong>，共有以下文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">file.asp
+4:On Error Resume Next
+
+index_bak.asp
+29:On Error Resume Next
+
+admin\File_UpLoad_Class.asp
+430:    On Error Resume Next
+470:    On Error Resume Next
+
+liuyan\liuyan.asp
+4:On Error Resume Next
+
+liuyan\index.asp
+4:On Error Resume Next
+
+index.asp
+29:On Error Resume Next
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4一些其他设置">4、一些其他设置</h3>
+<p>　　/inc/conn.asp</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&lt;%
+&#39;...
+
+&#39;是否以CDN模式运行（获取访客真实IP地址）
+IsCDN = False
+
+&#39;缓存文件存放目录，切记最后要加：\
+CachePath = Server.MapPath(&#34;/cache/&#34;) &amp; &#34;\&#34;
+
+&#39;主数据库路径（存放：文章、留言、配置）
+DataPath = Server.MapPath(&#34;/inc/0b1214c54b5a59d3_data.mdb&#34;)
+
+&#39;文件数据库路径（存放：文件）
+DataPath_File = Server.MapPath(&#34;/inc/0b1214c54b5a59d3_file.mdb&#34;) 
+
+&#39;...
+%&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="网站模板">网站模板</h2>
+<p>　　模板很简单，由于全站页面并不多，所以只有几个 .html 文件，所有模板相关的文件都储存在 \image\，具体参考上边的文件结构，采用 <strong>html + 标签替换</strong>的方式生成实际页面内容，具体可以参考 index.asp 和 /inc/conn.asp 中的代码。</p>
+<p>　　模板支持的标签和变量</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">有效范围</th>
+<th>变量标签</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">　</td>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td style="text-align:center">全局变量</td>
+<td>{网站名称}、{网站域名}</td>
+<td>网站名称、网站域名。</td>
+</tr>
+<tr>
+<td style="text-align:center">全局变量</td>
+<td>{主页描述}、{主页关键字}</td>
+<td>主页的描述、关键词，给搜索引擎蜘蛛看的，SEO 优化用的。</td>
+</tr>
+<tr>
+<td style="text-align:center">全局变量</td>
+<td>{推荐内容}、{友情链接}</td>
+<td>自定义的推荐内容、友情链接代码。</td>
+</tr>
+<tr>
+<td style="text-align:center">全局变量</td>
+<td>{统计代码}</td>
+<td>统计用的JS代码。</td>
+</tr>
+<tr>
+<td style="text-align:center">全局变量</td>
+<td>{顶部广告}、{底部广告}</td>
+<td>两个独立的广告代码。</td>
+</tr>
+<tr>
+<td style="text-align:center">全局变量</td>
+<td>{当前页码}</td>
+<td>当前文章或列表的页码，首页为 0。</td>
+</tr>
+<tr>
+<td style="text-align:center">全局变量</td>
+<td>{随机数}</td>
+<td>产生一个随机数，一般用来做防采集，随机乱码用的。</td>
+</tr>
+<tr>
+<td style="text-align:center">　</td>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td style="text-align:center">主页变量</td>
+<td>{最新内容}</td>
+<td>按ID从大到小排序（倒叙）的文章列表。</td>
+</tr>
+<tr>
+<td style="text-align:center">主页变量</td>
+<td>{最多浏览}</td>
+<td>按点击数从大到小排序（倒叙）的文章列表。</td>
+</tr>
+<tr>
+<td style="text-align:center">主页变量</td>
+<td>{随便看看}</td>
+<td>随机提取的文章列表。</td>
+</tr>
+<tr>
+<td style="text-align:center">　</td>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td style="text-align:center">列表变量</td>
+<td>{文章列表}、{页码列表}</td>
+<td>按照ID或点击数从大到小排列的文章列表及页码。</td>
+</tr>
+<tr>
+<td style="text-align:center">　</td>
+<td>　</td>
+<td>　</td>
+</tr>
+<tr>
+<td style="text-align:center">文章变量</td>
+<td>{标题}、{作者}、{内容}</td>
+<td>文章的标题、作者及内容。</td>
+</tr>
+<tr>
+<td style="text-align:center">文章变量</td>
+<td>{时间}、{修改}、{点击数}</td>
+<td>文章的发表、最后修改时间，以及点击数。</td>
+</tr>
+<tr>
+<td style="text-align:center">文章变量</td>
+<td>{关键字}、{描述}</td>
+<td>文章的关键词、描述，给搜索引擎蜘蛛看的，SEO 优化用的。</td>
+</tr>
+<tr>
+<td style="text-align:center">文章变量</td>
+<td>{默认作者}</td>
+<td>文章的默认作者，会替换为系统设置里指定的值。</td>
+</tr>
+<tr>
+<td style="text-align:center">文章变量</td>
+<td>{简单描述}</td>
+<td>截取适当长度的文章描述，在文章页面顶部做简单显示。</td>
+</tr>
+<tr>
+<td style="text-align:center">文章变量</td>
+<td>{上一篇链接}、{上一篇标题}</td>
+<td>上一篇文章的ID（编号）、标题。</td>
+</tr>
+<tr>
+<td style="text-align:center">文章变量</td>
+<td>{下一篇链接}、{下一篇标题}</td>
+<td>下一篇文章的ID（编号）、标题。</td>
+</tr>
+<tr>
+<td style="text-align:center">文章变量</td>
+<td>{本页链接}</td>
+<td>当前文章页面的完整 Url 地址，用于在转载信息里调用。</td>
+</tr>
+<tr>
+<td style="text-align:center">文章变量</td>
+<td>{评论数}</td>
+<td>当前文章对应的评论条数。</td>
+</tr>
+</tbody>
+</table>
+<p>　　提示：测试模板的时候记得<strong>禁用缓存或者隔一秒自动删除缓存文件</strong>，以便查看最新修改后的效果，这是一个<strong>自动循环删除缓存的批处理</strong>例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bat" data-lang="bat"><span class="k">echo</span> off <span class="p">&amp;</span> <span class="k">cls</span>
+<span class="k">echo</span> 为防止意外执行造成数据丢失，请按任意键以继续……
+<span class="k">echo</span>.
+<span class="k">pause</span>
+
+<span class="p">:</span><span class="nl">1</span>
+<span class="k">del</span> /s /f /q /a <span class="s2">&#34;</span><span class="nv">%cd%</span><span class="s2">\cache\*.*&#34;</span>
+ping 127.0.0.1 -w 1 -n 3
+<span class="k">goto</span> <span class="nl">1</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>　　以上代码保存到：<strong>\网站跟目录\清理缓存.bat</strong></p>
+<p>　　<strong>提示：默认的模板经过长期微调，对各大搜索引擎的 SEO 十分友好，可以参考。</strong></p>
+<h2 id="下载地址">下载地址</h2>
+<p>　　<a href="/file/4599/Nuclear-Blog%20v7.2.rar">Nuclear-Blog v7.2</a>，需要 WinRAR 5.0 或更高版本解压。</p>
+<p>　　<a href="/file/4599/JMail%20%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6%E7%BB%84%E4%BB%B6.rar">w3 JMail v4.5 免费版.msi</a>，JMail 发送邮件组件，新留言自动发邮件提醒用的。</p>
+<h2 id="相关截图">相关截图</h2>
+<p align="center"><img alt="首页" src="/file/4599/首页.png" /></p>
+<p align="center"><img alt="首页底部" src="/file/4599/首页底部.png" /></p>
+<p align="center"><img alt="文章列表" src="/file/4599/文章列表.png" /></p>
+<p align="center"><img alt="文章内容" src="/file/4599/文章内容.png" /></p>
+<p align="center"><img alt="文章留言" src="/file/4599/文章留言.png" /></p>
+<p align="center"><img alt="后台登录界面" src="/file/4599/后台登录界面.png" /></p>
+<p align="center"><img alt="后台数据统计" src="/file/4599/后台数据统计.png" /></p>
+<p align="center"><img alt="后台网站设置" src="/file/4599/后台网站设置.png" /></p>
+<p align="center"><img alt="后台变量标签" src="/file/4599/后台变量标签.png" /></p>
+<p align="center"><img alt="后台媒体播放" src="/file/4599/后台媒体播放.png" /></p>
+<p align="center"><img alt="后台文件列表" src="/file/4599/后台文件列表.png" /></p>
+<p align="center"><img alt="后台文章列表" src="/file/4599/后台文章列表.png" /></p>
+<p align="center"><img alt="后台文章添加及编辑" src="/file/4599/后台文章添加及编辑.png" /></p>
+<p align="center"><img alt="后台留言列表" src="/file/4599/后台留言列表.png" /></p>
+<p align="center"><img alt="后台留言编辑" src="/file/4599/后台留言编辑.png" /></p>
+<p align="center"><img alt="后台文件上传_缩略图模式" src="/file/4599/后台文件上传_缩略图模式.png" /></p>
+<p align="center"><img alt="后台文件上传_列表模式_上传中" src="/file/4599/后台文件上传_列表模式_上传中.png" /></p>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2020-05-30
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/nuclear-blog/">Nuclear-Blog</a>
+          <a href="https://lcx.cc/tags/blog/">blog</a>
+          <a href="https://lcx.cc/tags/asp/">asp</a>
+          <a href="https://lcx.cc/tags/%E5%8D%9A%E5%AE%A2/">博客</a>
+          <a href="https://lcx.cc/tags/%E6%BA%90%E7%A0%81/">源码</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4600/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">微信电脑版多开、防撤回(带撤回提示)破解方法</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4598/">
+            <span class="next-text nav-default">★ 公告 ★ 关于西安另一个“核攻击” ★ 郭瑞 ★</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

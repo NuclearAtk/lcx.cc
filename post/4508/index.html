@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>保护自己之：如何打造运行在U盘上的操作系统，防查水表大法！ - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="乌云众生" /><meta name="description" content="保护自己之：如何打造运行在U盘上的操作系统，防查水表大法！设计目的：防止查水表！虽然有U盘启动的windows ce系统，但是系统很多功能却是用不了，如何打造一个只运行在U盘上的系统。我估计U盘的读写能力没有硬盘强。如果换成外接式移动硬盘，应该很好设计成入侵式系统。当查水表时，直接拔出移动式硬盘，重新开机就进入了正常系统。谁有这方面的经验？交流下，如果能做成U盘式的最好。" />
+<meta name="keywords" content="保护自己之：如何打造运行在U盘上的操作系统，防查水表大法！" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/4508/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="保护自己之：如何打造运行在U盘上的操作系统，防查水表大法！" />
+<meta property="og:description" content="保护自己之：如何打造运行在U盘上的操作系统，防查水表大法！设计目的：防止查水表！虽然有U盘启动的windows ce系统，但是系统很多功能却是用不了，如何打造一个只运行在U盘上的系统。我估计U盘的读写能力没有硬盘强。如果换成外接式移动硬盘，应该很好设计成入侵式系统。当查水表时，直接拔出移动式硬盘，重新开机就进入了正常系统。谁有这方面的经验？交流下，如果能做成U盘式的最好。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/4508/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2015-03-24T15:34:10&#43;08:00" />
+<meta property="article:modified_time" content="2015-03-30T14:31:29&#43;08:00" />
+
+<meta itemprop="name" content="保护自己之：如何打造运行在U盘上的操作系统，防查水表大法！">
+<meta itemprop="description" content="保护自己之：如何打造运行在U盘上的操作系统，防查水表大法！设计目的：防止查水表！虽然有U盘启动的windows ce系统，但是系统很多功能却是用不了，如何打造一个只运行在U盘上的系统。我估计U盘的读写能力没有硬盘强。如果换成外接式移动硬盘，应该很好设计成入侵式系统。当查水表时，直接拔出移动式硬盘，重新开机就进入了正常系统。谁有这方面的经验？交流下，如果能做成U盘式的最好。"><meta itemprop="datePublished" content="2015-03-24T15:34:10&#43;08:00" />
+<meta itemprop="dateModified" content="2015-03-30T14:31:29&#43;08:00" />
+<meta itemprop="wordCount" content="8888">
+<meta itemprop="keywords" content="保护,操作系统,水表,系统,DDOS,Dos,Linux,Windows,车,电脑,工具,攻击,技术,加密,密码,匿名,全球,软件,手机,数据,网络," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="保护自己之：如何打造运行在U盘上的操作系统，防查水表大法！"/>
+<meta name="twitter:description" content="保护自己之：如何打造运行在U盘上的操作系统，防查水表大法！设计目的：防止查水表！虽然有U盘启动的windows ce系统，但是系统很多功能却是用不了，如何打造一个只运行在U盘上的系统。我估计U盘的读写能力没有硬盘强。如果换成外接式移动硬盘，应该很好设计成入侵式系统。当查水表时，直接拔出移动式硬盘，重新开机就进入了正常系统。谁有这方面的经验？交流下，如果能做成U盘式的最好。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">保护自己之：如何打造运行在U盘上的操作系统，防查水表大法！</h1>
+      
+      <div class="post-meta">
+        <time datetime="2015-03-24" class="post-time">
+          2015-03-24
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E4%BF%9D%E6%8A%A4/"> 保护 </a>
+            <a href="https://lcx.cc/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"> 操作系统 </a>
+            <a href="https://lcx.cc/categories/%E6%B0%B4%E8%A1%A8/"> 水表 </a>
+            <a href="https://lcx.cc/categories/%E7%B3%BB%E7%BB%9F/"> 系统 </a>
+            
+          </div>
+        <span class="more-meta"> 约 8888 字 </span>
+          <span class="more-meta"> 预计阅读 18 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	如何打造运行在U盘上的操作系统。
+</p>
+<p style="text-indent:2em;">
+	江南的鱼 | 2015-03-24 12:09
+</p>
+<p style="text-indent:2em;">
+	设计目的：防止查水表！
+</p>
+<p style="text-indent:2em;">
+	虽然有U盘启动的windows ce系统，但是系统很多功能却是用不了，如何打造一个只运行在U盘上的系统。
+</p>
+<p style="text-indent:2em;">
+	我估计U盘的读写能力没有硬盘强。
+</p>
+<p style="text-indent:2em;">
+	如果换成外接式移动硬盘，应该很好设计成入侵式系统。
+</p>
+<p style="text-indent:2em;">
+	当查水表时，直接拔出移动式硬盘，重新开机就进入了正常系统。
+</p>
+<p style="text-indent:2em;">
+	谁有这方面的经验？交流下，如果能做成U盘式的最好。
+</p>
+<p style="text-indent:2em;">
+	<a href="http://zone.wooyun.org/content/19294" target="_blank">[原文地址]</a> 
+</p>
+<p>
+	<strong>各种吐槽：</strong> 
+</p>
+<p style="text-indent:2em;">
+	1#
+</p>
+<p style="text-indent:2em;">
+	江南的鱼 | 2015-03-24 12:15
+</p>
+<p style="text-indent:2em;">
+	目前的解决方案是 MojoPac
+</p>
+<p style="text-indent:2em;">
+	2#
+</p>
+<p style="text-indent:2em;">
+	动后河 (类的继承) | 2015-03-24 12:24
+</p>
+<p style="text-indent:2em;">
+	kali装进3.0的u盘
+</p>
+<p style="text-indent:2em;">
+	3#
+</p>
+<p style="text-indent:2em;">
+	暧昧 (给你个微笑，自己领会) | 2015-03-24 12:25
+</p>
+<p style="text-indent:2em;">
+	U盘读写不理想。 硬盘理想点 。内存也大
+</p>
+<p style="text-indent:2em;">
+	4#
+</p>
+<p style="text-indent:2em;">
+	暗羽 (喵喵喵喵喵喵喵喵) | 2015-03-24 12:54
+</p>
+<p style="text-indent:2em;">
+	试过用两个U盘，一个就是正常装系统用的启动盘，然后把系统装到另一个U盘里，3.0的U盘用起来还可以
+</p>
+<p style="text-indent:2em;">
+	5#
+</p>
+<p style="text-indent:2em;">
+	light (生于理想，死于欲望) | 2015-03-24 13:39
+</p>
+<p style="text-indent:2em;">
+	直接用VMware做一个系统，加密后放进U盘。即插即用
+</p>
+<p style="text-indent:2em;">
+	6#
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/" target="_blank">核攻击</a> (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2015-03-24 14:58
+</p>
+<p style="text-indent:2em;">
+	MojoPac、VMware、VirtualBox
+</p>
+<p style="text-indent:2em;">
+	7#
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/" target="_blank">核攻击</a> (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2015-03-24 14:59
+</p>
+<p style="text-indent:2em;">
+	关于读写速度和容量方面，USB 3.0 32GB/64GB 足矣~
+</p>
+<p style="text-indent:2em;">
+	8#
+</p>
+<p style="text-indent:2em;">
+	_Evil (科普是一种公益行为) | 2015-03-24 15:07
+</p>
+<p style="text-indent:2em;">
+	@<a href="https://lcx.cc/" target="_blank">核攻击</a> 下次试试
+</p>
+<p style="text-indent:2em;">
+	9#
+</p>
+<p style="text-indent:2em;">
+	大白菜 (YY ID 71686265) | 2015-03-24 15:26
+</p>
+<p style="text-indent:2em;">
+	想办法买一个固态的超小硬盘~
+</p>
+<p style="text-indent:2em;">
+	10#
+</p>
+<p style="text-indent:2em;">
+	毕月乌 (猜猜我是谁？) | 2015-03-24 17:09
+</p>
+<p style="text-indent:2em;">
+	imagex_x64.exe /apply install.wim 1 g:\
+</p>
+<p style="text-indent:2em;">
+	bcdboot.exe g:\windows /s g:
+</p>
+<p style="text-indent:2em;">
+	11#
+</p>
+<p style="text-indent:2em;">
+	江南的鱼 | 2015-03-24 19:26
+</p>
+<p style="text-indent:2em;">
+	搭建这个平台大概成本只需要300元，你没看错，300元，就可以保证安全！
+</p>
+<p style="text-indent:2em;">
+	128G移动SSD2.5寸SATA3 269元
+</p>
+<p style="text-indent:2em;">
+	一个立式固定架10元，
+</p>
+<p style="text-indent:2em;">
+	程序安装免费。
+</p>
+<p style="text-indent:2em;">
+	启动时按固定键盘按键选择使用外置移动硬盘启动，听见敲门声，立马拔出，然后扔到水里。
+</p>
+<p style="text-indent:2em;">
+	12#
+</p>
+<p style="text-indent:2em;">
+	李旭敏 ((҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉҉) | 2015-03-24 20:22
+</p>
+<p style="text-indent:2em;">
+	如果查水表，JC叔叔肯定也会把移动硬盘带走的··别想了
+</p>
+<p style="text-indent:2em;">
+	13#
+</p>
+<p style="text-indent:2em;">
+	回复此人感谢
+</p>
+<p style="text-indent:2em;">
+	刘海哥 (‮moc.ghuil.www) | 2015-03-24 21:41
+</p>
+<p style="text-indent:2em;">
+	@动后河 但是重启就没了啊！
+</p>
+<p style="text-indent:2em;">
+	14#
+</p>
+<p style="text-indent:2em;">
+	刘海哥 (‮moc.ghuil.www) | 2015-03-24 21:41
+</p>
+<p style="text-indent:2em;">
+	求指导如何在u盘安装一个随身系统能存东西的！就如同移动硬盘
+</p>
+<p style="text-indent:2em;">
+	15#
+</p>
+<p style="text-indent:2em;">
+	蟋蟀哥哥 (̷ͣ̑̆ͯ̆̋͋̒ͩ͊̋̇̒ͦ̿̐͞҉̷̻̖͎̦̼) | 2015-03-24 21:43
+</p>
+<p style="text-indent:2em;">
+	USB 3.0还是可以的。
+</p>
+<p style="text-indent:2em;">
+	16#
+</p>
+<p style="text-indent:2em;">
+	夜影 | 2015-03-25 01:00
+</p>
+<p style="text-indent:2em;">
+	我在虚拟机上面安装个冰点还原 一样重启后 不留痕迹。
+</p>
+<p style="text-indent:2em;">
+	17#
+</p>
+<p style="text-indent:2em;">
+	ljhj (但愿低调，好好学习。) | 2015-03-25 09:49
+</p>
+<p style="text-indent:2em;">
+	上次装过一次，把kali装进U盘里，没用几天U盘就坏了。
+</p>
+<p style="text-indent:2em;">
+	18#
+</p>
+<p style="text-indent:2em;">
+	看灰机 (莽夫，都是用DDOS说话~) | 2015-03-25 09:51
+</p>
+<p style="text-indent:2em;">
+	硬盘碎成渣也能恢复回来，就看数据价值高不高。你要是搞料的，你看能不能恢复，先审讯核实情况，然后取证阶段拿到厅里或者部里技术部门。 一般象搞料的，搞个匿名手机卡，到高速搞，完事一扔卡，驱车回市区。
+</p>
+<p style="text-indent:2em;">
+	19#
+</p>
+<p style="text-indent:2em;">
+	小表哥 | 2015-03-25 10:10
+</p>
+<p style="text-indent:2em;">
+	@看灰机 那部用过的手机再用别的卡开机就会被发现
+</p>
+<p style="text-indent:2em;">
+	20#
+</p>
+<p style="text-indent:2em;">
+	小表哥 | 2015-03-25 10:12
+</p>
+<p style="text-indent:2em;">
+	诸位没重装过系统么 老毛桃的winpe啊 都出win8 版的了 标准的内存系统 上网 软件 都能用
+</p>
+<p style="text-indent:2em;">
+	21#
+</p>
+<p style="text-indent:2em;">
+	小表哥 | 2015-03-25 10:16
+</p>
+<p style="text-indent:2em;">
+	老毛桃winpe 精简的windows 他是把系统全部先加载到内存 usb2.0的速度都很快 重装系统 破解密码都用它
+</p>
+<p style="text-indent:2em;">
+	22#
+</p>
+<p style="text-indent:2em;">
+	小表哥 | 2015-03-25 10:17
+</p>
+<p style="text-indent:2em;">
+	@刘海哥 老毛桃winpe
+</p>
+<p style="text-indent:2em;">
+	23#
+</p>
+<p style="text-indent:2em;">
+	小表哥 | 2015-03-25 10:20
+</p>
+<p style="text-indent:2em;">
+	@江南的鱼 2G优盘 +老毛桃winpe 20块钱不到
+</p>
+<p style="text-indent:2em;">
+	24#
+</p>
+<p style="text-indent:2em;">
+	小表哥 | 2015-03-25 10:23
+</p>
+<p style="text-indent:2em;">
+	那个winpe把window精简到很小 win2003 + win8 +一堆软件 才300m. 运行的时候 是把镜像全部加载到内存 系统在虚拟磁盘里 运行速度非常快 网络 驱动可以自行加载 看来诸位大神没给人修过电脑啊 没给妹子重装过系统啊
+</p>
+<p style="text-indent:2em;">
+	25#
+</p>
+<p style="text-indent:2em;">
+	鬼五 (万般努力，只为心中那个梦) | 2015-03-25 10:28
+</p>
+<p style="text-indent:2em;">
+	U盘的话不知道为什么总是用一段时间就不能用了，就要重装一次，个人感觉应该是经常插拔和频繁换电脑等原因
+</p>
+<p style="text-indent:2em;">
+	26#
+</p>
+<p style="text-indent:2em;">
+	屌丝王爷 (爱情来得太快。。。。) | 2015-03-25 10:33
+</p>
+<p style="text-indent:2em;">
+	你要入侵了中央网站，咋闹都没用，不知道我们是专制国家？
+</p>
+<p style="text-indent:2em;">
+	27#
+</p>
+<p style="text-indent:2em;">
+	看灰机 (莽夫，都是用DDOS说话~) | 2015-03-25 11:15
+</p>
+<p style="text-indent:2em;">
+	@小表哥 用卡托4G插笔记本。。。你见过用手机洗料的？
+</p>
+<p style="text-indent:2em;">
+	28#
+</p>
+<p style="text-indent:2em;">
+	小表哥 | 2015-03-25 11:24
+</p>
+<p style="text-indent:2em;">
+	@看灰机 我的意思是 扔掉的不只是手机卡 用手机卡的网卡或者手机也只能用一次
+</p>
+<p style="text-indent:2em;">
+	29#
+</p>
+<p style="text-indent:2em;">
+	keke (秒杀各种装逼犯) | 2015-03-25 11:27
+</p>
+<p style="text-indent:2em;">
+	@看灰机 DDOS牛出现
+</p>
+<p style="text-indent:2em;">
+	30#
+</p>
+<p style="text-indent:2em;">
+	夜影 | 2015-03-25 12:32
+</p>
+<p style="text-indent:2em;">
+	买个拓实的信号放大器 开车去哪里热闹点的地方 停车场之类的 随便破解个WIFI 搞完走人 鸡巴事情没有。
+</p>
+<p style="text-indent:2em;">
+	31#
+</p>
+<p style="text-indent:2em;">
+	看灰机 (莽夫，都是用DDOS说话~) | 2015-03-25 13:41
+</p>
+<p style="text-indent:2em;">
+	@小表哥 水表哥，你说蹭网如何？ 应该抓不到吧？ 更换MAC地址。
+</p>
+<p style="text-indent:2em;">
+	32#
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/" target="_blank">核攻击</a> (统治全球，奴役全人类！毁灭任何胆敢阻拦的有机生物！) | 2015-03-25 14:05
+</p>
+<p style="text-indent:2em;">
+	补充一个：
+</p>
+<p style="text-indent:2em;">
+	<a href="https://tails.boum.org/" target="_blank">Tails - Privacy for anyone anywhere</a>：<a href="https://tails.boum.org/" target="_blank">https://tails.boum.org/</a> 
+</p>
+<p style="text-indent:2em;">
+	Tails：专注于隐私保护的开源操作系统
+</p>
+<p style="text-indent:2em;">
+	别以为Tails是什么偷窥软件，其实它是一个开源的操作系统，专注于隐私保护的口袋操作系统。它是一个基于 Tor 的 Linux 操作系统，启动之后会自动运行Tor，它不向本地系统储存任何数据。
+</p>
+<p style="text-indent:2em;">
+	Tails 是一个 Live 操作系统，能安装在光盘、U 盘和 SD 卡上，可以随身携带，需要时直接从光盘、U盘或 SD 卡启动之后就能上网，因此被称之为口袋操作系统。它是一个基于 Tor 的 Linux 操作系统，启动之后会自动运行Tor，它不向本地系统储存任何数据。Snowden、记者 Glenn Greenwald和纪录片制作人Laura Poitras 都使用这个操作系统，而且Edward Snowden 使用 Tails 主要是为了规避NSA 的窥视。Poitras 称，虽然安装和验证略有麻烦，但一旦设置好之后使用起来是很简单的。Snowden 泄漏的文件显示，NSA 曾在一幻灯片中抱怨 Tails，因为Tails 对 NSA 不利。这也意味着Tails对隐私保护是有用的，而且 Tails 所有代码都是开源的，任何人都可以检查。
+</p>
+<p style="text-indent:2em;">
+	使用Tails还可以帮助你：
+</p>
+<p style="text-indent:2em;">
+	•匿名使用互联网，规避审查。
+</p>
+<p style="text-indent:2em;">
+	•所有连接到互联网的路径都会被迫通过Tor网络。
+</p>
+<p style="text-indent:2em;">
+	•不会在你使用的电脑上留下任何痕迹，除非你故意让它显示出来。
+</p>
+<p style="text-indent:2em;">
+	•使用最先进的加密工具为你的文件、电子邮件和即时消息加密。
+</p>
+<p style="text-indent:2em;">
+	Linux 爱好者应该对口袋操作系统比较熟悉。许多 Linux 版本都可以装到 U 盘之上。这在提供了便携性的同时，也能够更好地保护个人隐私。Tails 就是一个便携操作系统。它基于 Debian Linux，专门为爱好隐私的人设计。Tails 预装了许多隐私和加密工具，最为知名的就是 Tor，一个由志愿者组成的匿名代理网络。
+</p>
+<p style="text-indent:2em;">
+	Tails 的开发者是一些不愿透露姓名的人士。这应该不会让人感到奇怪。交流中开发团队成员说，NSA 采取了许多方法向自由软件项目和开发者施压。就在去年的 Linuxcon 技术会议上，Linux 创始人 Linus Torvalds 暗示说，NSA 曾希望他在操作系统中安装一个后门。
+</p>
+<p style="text-indent:2em;">
+	根据他们的说法，Tails 计划开始于 5 年之前。团队中的一些人已经是 Tor 的爱好者，并且参与自由软件社群多年，但是他们认为，必须有一个工具箱，把保护隐私的工具集合起来，并且让大众也能使用。最初，他们的计划叫做 Amnesia（健忘），基于一个现有的操作系统 Icognito（匿名）。随后，两个系统融合为 Tails，代表 The Amnesic Incogito Live System。在为桌面系统开发的同时，另一个团队正在制作移动版，可运行在 Android 和 Ubuntu 平板之上。
+</p>
+<p style="text-indent:2em;">
+	除了改进的隐私保护工具之外，Tails 还预装了一些生产力工具，比如 OpenOffice、Gimp 和 Audacity。不过，这并不意味着它适合日常使用。因为当你使用的服务增多，隐私泄露的可能性也会大增。它最适合的使用场景应该是匿名交流，比如新闻记者需要保护自己的信息源。华盛顿邮报的记者 Barton Gellman 曾经说过，“Tails 将所有必要的工具放到了一起，并且从设计上确保你不会把事情搞砸。对于Tails，我有种相见恨晚的感觉。”
+</p>
+<p style="text-indent:2em;">
+	33#
+</p>
+<p style="text-indent:2em;">
+	冰比冰水冰 (有没有想过也许一辈子你都是个小人物) | 2015-03-25 14:38
+</p>
+<p style="text-indent:2em;">
+	Meegopad，它装备了x86处理器，可运行大多数操作系统，包括Windows 8.1和Ubuntu和Fedora这样的热门Linux分支。整个设备的长度不足10厘米，配备了英特尔1.7GHz Atom四核处理器，1GB DDR3内存，2个MicroUSB接口，1个HDMI接口，16/32GB存储空间，内存卡槽，Wi-Fi和蓝牙4.0。
+</p>
+<p style="text-indent:2em;">
+	要被查水表了，立马扔马桶里冲走
+</p>
+<p style="text-indent:2em;">
+	34#
+</p>
+<p style="text-indent:2em;">
+	若情 | 2015-03-25 15:36
+</p>
+<p style="text-indent:2em;">
+	用U盘运行会卡吗？
+</p>
+<p style="text-indent:2em;">
+	35#
+</p>
+<p style="text-indent:2em;">
+	小表哥 | 2015-03-25 16:08
+</p>
+<p style="text-indent:2em;">
+	@看灰机 人流大的地方蹭网 成本低 一定要注意监控。大学 城中村不错。 而且大学这样的如果去查的话 坑定有动静 也算个预警了
+</p>
+<p style="text-indent:2em;">
+	36#
+</p>
+<p style="text-indent:2em;">
+	小表哥 | 2015-03-25 16:25
+</p>
+<p style="text-indent:2em;">
+	@看灰机 好吧 我很水 天天水经验 。。学习反侦察 不是看名侦探柯南 而是看今日说法 看上几千集今日说法 立马成侦探了 （其实最初我是看撒贝宁的） 追踪是一步步缩小范围的，是一步步逼近你的 如果等到破门而入的时候想起销毁就晚了 想销毁要提早 提前知道他们的行动难度很高 一种解决的办法是找个替罪羊 在他家的门被砸破的时候你能听到动静 等发现他是替罪的时候 时间足够你销毁到干干净净了 当然如果你有前科、案底属于重点监控对象的的话 稍微有点事人家直接找你了，先看看是不是干的 ，怎么躲也没办法了。
+</p>
+<p style="text-indent:2em;">
+	37#
+</p>
+<p style="text-indent:2em;">
+	小表哥 | 2015-03-25 16:31
+</p>
+<p style="text-indent:2em;">
+	技术上说 最安全的还是内存系统 断电即消失 上面说的winpe 256M内存都能运行 整个系统镜像全部加载到内存 运行飞速 无视u盘读取速度 断电即消失 。其他的安装在u盘上的系统 ，就是上面说的过段时间就要重新安装的那种 运行的缓存会在u盘上，证据就在里面。关键winpe还能在光盘上运行！500M光盘绰绰有余
+</p>
+<p style="text-indent:2em;">
+	38#
+</p>
+<p style="text-indent:2em;">
+	heaven (喜欢不断学习！) | 2015-03-25 17:10
+</p>
+<p style="text-indent:2em;">
+	我感觉U盘不理想，不如购买一款固态硬盘作为操作系统，当听到敲门声直接把固态拿出来砸掉就OK了。他们也恢复不了！
+</p>
+<p style="text-indent:2em;">
+	39#
+</p>
+<p style="text-indent:2em;">
+	heaven (喜欢不断学习！) | 2015-03-25 17:17
+</p>
+<p style="text-indent:2em;">
+	@小表哥 给妹子装系统就玩远控啦！
+</p>
+<p style="text-indent:2em;">
+	40#
+</p>
+<p style="text-indent:2em;">
+	一个小尼玛 | 2015-03-26 11:25
+</p>
+<p style="text-indent:2em;">
+	win8自带这个功能，可以把win8放到U盘里，bbs.winos.cn上有图文介绍，懒得给你去找了。
+</p>
+<p style="text-indent:2em;">
+	41#
+</p>
+<p style="text-indent:2em;">
+	a6c (·̮̃·̃) | 2015-03-26 15:30
+</p>
+<p style="text-indent:2em;">
+	@<a href="https://lcx.cc/" target="_blank">核攻击</a> Tails +1
+</p>
+<p style="text-indent:2em;">
+	这个必须赞下
+</p>
+<p style="text-indent:2em;">
+	42#
+</p>
+<p style="text-indent:2em;">
+	xFrank | 2015-03-26 16:14
+</p>
+<p style="text-indent:2em;">
+	高手很多啊
+</p>
+<p style="text-indent:2em;">
+	43#
+</p>
+<p style="text-indent:2em;">
+	蓝哆 (我是作（zhao）死（shi）哆~) | 2015-03-27 13:27
+</p>
+<p style="text-indent:2em;">
+	U盘的读写次数伤不起啊
+</p>
+<p style="text-indent:2em;">
+	44#
+</p>
+<p style="text-indent:2em;">
+	小表哥 | 2015-03-27 15:40
+</p>
+<p style="text-indent:2em;">
+	@蓝哆 内存系统 直接把镜像加载到内存 只读一次
+</p>
+<p style="text-indent:2em;">
+	45#
+</p>
+<p style="text-indent:2em;">
+	蓝哆 (我是作（zhao）死（shi）哆~) | 2015-03-27 22:43
+</p>
+<p style="text-indent:2em;">
+	@小表哥 以为他们是把系统写进U盘呢.... winpe不是太好用
+</p>
+<p style="text-indent:2em;">
+	46#
+</p>
+<p style="text-indent:2em;">
+	炮灰乙 | 2015-03-28 11:10
+</p>
+<p style="text-indent:2em;">
+	TrueCrypt的隐藏加密就有你要的功能，输入错误密码进入假系统，输入正确密码进入真系统。遇到查水表时给他们错误密码，他们没法发现里面的隐藏系统
+</p>
+<p style="text-indent:2em;">
+	47#
+</p>
+<p style="text-indent:2em;">
+	东方的肚皮舞 | 2015-03-28 14:48
+</p>
+<p style="text-indent:2em;">
+	你在国内。
+</p>
+<p style="text-indent:2em;">
+	48#
+</p>
+<p style="text-indent:2em;">
+	桔子 | 2015-03-28 15:31
+</p>
+<p style="text-indent:2em;">
+	为什么这么多回复没有一个人提到
+</p>
+<p style="text-indent:2em;">
+	Windows To Go
+</p>
+<p style="text-indent:2em;">
+	这玩意是微软官方出的便携式系统，支持 BitLocker 加密。。。
+</p>
+<p style="text-indent:2em;">
+	49#
+</p>
+<p style="text-indent:2em;">
+	傲气雄鸡 (乌云三大傻逼:逍遥、蓝莓说、党中央) | 2015-03-28 17:25
+</p>
+<p style="text-indent:2em;">
+	一群没进去过的在为自己以后进去能全身而退而考虑后路，我保证你们进去之后人家都用不着放大招，你们就会主动求着别人让你说，没进去的时候一个比一个嘴硬，真到进去了没几个撑到最后还继续嘴硬的。还有就是各位设置加密密码的时候最好不要太麻烦以防止自己真的忘了，万一哪天被抓了让你输入加密硬盘密码的时候，然后你说你忘了，那你就惨了...
+</p>
+<p style="text-indent:2em;">
+	莫伸手，伸手可能被抓，放心吧，被抓你们一定会招的
+</p>
+<p style="text-indent:2em;">
+	50#
+</p>
+<p style="text-indent:2em;">
+	Anymous (专注于廉价迷你方便快捷的解决方案ด้้้้้็็็็็้้้้้็็็็็้้้ด้้้้้็็็็็้้้้้็็็็็้้้ด้้้้้็็็็็้้้้้็็็็็้้้ด้้้้้็็็็็้้้้้็็็็็้้้ด้้้้้็็็็็้้้้้็็็็็้้้ด้้้้้็็็็็้้้้้็็็็็้้้ด้้้้้็็็็็้้้้้็็็็็้้้ด้้้้้็็็็็้้้้้็็็็็้้้ด้้้้้็็็็็้้้้้็็็็็้้้ด้้้้้็็็็็้้้้้็็็็็้้) | 2015-03-28 17:58
+</p>
+<p style="text-indent:2em;">
+	@桔子 +10086
+</p>
+<p style="text-indent:2em;">
+	linux and to go --from Raspberry Pi 2
+</p>
+<p style="text-indent:2em;">
+	51#
+</p>
+<p style="text-indent:2em;">
+	黑暗游侠 | 2015-03-28 22:04
+</p>
+<p style="text-indent:2em;">
+	[广告内容已屏蔽]
+</p>
+<p style="text-indent:2em;">
+	52#
+</p>
+<p style="text-indent:2em;">
+	腾讯厂商 (腾讯帝国) | 2015-03-28 22:18
+</p>
+<p style="text-indent:2em;">
+	最近一直在不断的安装各种系统。 kali来说吧。写好u盘启动后， 1选择安装到整个磁盘，2选择磁盘为u盘（通常u盘引导是默认安装到u盘的，因为u盘是此时的主逻辑盘）
+</p>
+<p>
+	<strong>相关内容：</strong> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4503/" target="_blank">号称不会被查水表的通信APP-Telegram，悬赏20万美元求漏洞</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4501/" target="_blank">社会工程学：一张SIM卡引发的连锁社工人肉案例</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4498/" target="_blank">讨论：如何在网络上保护个人隐私？互联网时代的隐私泄露与安全保护？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4476/" target="_blank">MD5散列密码不等于MD5的安全性</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4475/" target="_blank">[翻译]Python开发中的密码散列(Hashing)</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4444/" target="_blank">JSON探针—定位目标网络虚拟信息身份，利用大量三方网站cookie进行追踪</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4429/" target="_blank">三种方法还原ASP.NET可逆加密内容</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4327/" target="_blank">对小米论坛泄露数据的一次分析 密码成功破解率高达37.8%</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4323/" target="_blank">讨论：因为这次小米信息泄漏事件，总结一下数据泄漏造成的危害</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4322/" target="_blank">python加密通讯后门</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4320/" target="_blank">网络匿迹、逆向追踪：关于那些做H站的人，是怎么落网的？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4313/" target="_blank">中航信系统漏洞泄露乘客信息，查询任意航班乘机人姓名,航班号,身份证,手机号</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4278/" target="_blank">Angry Birds和广告系统泄露个人信息——FireEye对Angry Birds的分析</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4272/" target="_blank">2014 最新 web qq 密码的加密方式分析过程，WebQQ 登陆密码加密算法分析</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4269/" target="_blank">小米手机客户资料泄露了吗？冒充小米售后回访诈骗电话：01053799231</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4259/" target="_blank">使用WiFi真的有那么危险吗？安全科普：教你增强自己的无线网络安全</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4257/" target="_blank">黑客讲故事:攻下隔壁女生路由器后,我都做了些什么,无线路由器被蹭网后,入侵女神</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4256/" target="_blank">女黑客Oona，分析直升机现场拍摄警车追捕画面中的信号声，绘出飞机飞行轨迹</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4239/" target="_blank">发个社工福利站，搜库 - 密码泄露查询，社工库，泄露密码查询库</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4238/" target="_blank">揭露一个飞机退改签的诈骗：借口机票退改签要退款，索要银行卡号，套取个人信息</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4229/" target="_blank">京东惨招恶意炒作，数据库泄露为撞库攻击</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4196/" target="_blank">【TED】Markham Nolan：如何辨别网上信息真伪，神级人肉，物理社工</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4191/" target="_blank">求助加密代码解密！！！比较另类的“加密”一句话木马后门……</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4189/" target="_blank">俄罗斯黑客被曝潜伏Facebook，搭建蜜罐监视tor网络数据</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4188/" target="_blank">保护水表：关于tor和mac地址的疑问，各位进来讨论一下，反追踪/匿迹</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4186/" target="_blank">黑阔大牛来说一说切实可行的匿名上网方法</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4185/" target="_blank">2000万条酒店开房数据泄露 男子婚事被搅黄</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4180/" target="_blank">探秘时刻：多重身份的逃犯，不翼而飞的七百万，几百买身份证一票弄了700万</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4157/" target="_blank">利用声学密码分析攻击破译4096位RSA加密算法</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4148/" target="_blank">开房数据泄露案告破 警方发现嫌犯曾参与多起网络犯罪</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4137/" target="_blank">物理攻击？那些年我们忽略掉的一些社会工程学手段</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4132/" target="_blank">娱乐贴：看我如何逃避追查以及洗钱</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4116/" target="_blank">全方位在互联网中保护自己第八章（如何留住数据的节操（上））</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4055/" target="_blank">偷取一个人的钱包，还能让他告诉我信用卡的提款密码 ?</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4051/" target="_blank">【防骗】又见网银诈骗，骗子冒充朋友，借口卡丢了先借你卡转账用用，揭秘！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4050/" target="_blank">遇到一个加密方式 只有1和0 求大神告知，二进制字符串“加密”</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4043/" target="_blank">全方位在互联网中保护自己第七章（上网习惯以及计算机唯一代码追踪的防范）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/4033/" target="_blank">京东 淘宝 天猫订单信息泄露诈骗, 接到“京东”的客服电话之后遭遇团伙诈骗</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3980/" target="_blank">adobe 1.5亿泄露数据 密码算法逆向挑战</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3941/" target="_blank">全方位在互联网中保护自己第六章（国产软件或后门软件的替代品(下)）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3931/" target="_blank">全方位在互联网中保护自己第三章（知识普及篇—了解网监的实力与暗箭（下）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3930/" target="_blank">全方位在互联网中保护自己第一章（知识概念篇第一部分）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3921/" target="_blank">全方位在互联网中保护自己第五章（国产软件或后门软件的替代品(中)）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3920/" target="_blank">全方位在互联网中保护自己第四章（国产软件或后门软件的替代品(上)）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3916/" target="_blank">全方位在互联网中保护自己第二章(知识普及篇第二章-了解网监的实力与暗箭(上))</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3874/" target="_blank">怪异！10086短信接口泄露？10086发博彩、赌博短信</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3866/" target="_blank">在申诉中猜想QQ密码可能明文储存，讨论腾讯申诉“历史密码”机制</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3861/" target="_blank">注意，日站的时候请清理cookie或使用虚拟机，否则可被cookie追踪</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3853/" target="_blank">浅谈怎样保住数据最后的贞操</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3813/" target="_blank">病患信息遭泄露 骗子假扮医生短信要红包</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3803/" target="_blank">【逆向爆菊】某DDOS事件逆向追踪。。。有人深挖过吗？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3778/" target="_blank">为抓小偷 俄警方在地铁安装能读取乘客手机信息的设备，这是啥技术？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3772/" target="_blank">逆向爆菊、反向追踪之：追查史上最奇葩的“挂马”黑客！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3768/" target="_blank">保护自己之手机定位信息收集</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3762/" target="_blank">请教关于手机IMEI定位的问题</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3761/" target="_blank">安全跑路指南2013之乌云版【连载中】</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3753/" target="_blank">腾讯泄露隐私？看卫士哥获得女神的好友的名单，社工可能认识的人！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3751/" target="_blank">刚刚看到个鱼站，然后就被轮流爆菊了……</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3747/" target="_blank">如何设置安全的密码</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3723/" target="_blank">应用安全思维系列之一：如何保护密码才安全</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3686/" target="_blank">一张随意拍摄的波士顿马拉松比赛照片，如何帮助FBI破案</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3685/" target="_blank">我们是如何通过一张照片定位到疯狗位置的</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3674/" target="_blank">Carberp源代码泄露后续——黑掉黑客</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3669/" target="_blank">黑市交易 – 女性肉鸡价格比男性贵100倍</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3547/" target="_blank">再次遭遇 GoTop 挂机刷钱“病毒”，逆向爆菊，追踪背后“牧马人”</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3541/" target="_blank">DNS域传送信息泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3529/" target="_blank">如何抵御社工库类的黑客攻击？在明文密码已泄露的情况下保护自己？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3502/" target="_blank">0x80c IRC 网络安全匿名聊天室</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3488/" target="_blank">上海伊莱美医院被黑、黑帽SEO做淘宝客，核总深入追查，揪出内鬼！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3487/" target="_blank">支付宝木马爆菊过程总结帖【附源码】</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3486/" target="_blank">接上一章节,支付宝木马,后续情节【2】</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3473/" target="_blank">接上一章节,支付宝木马,后续情节</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3472/" target="_blank">360对你真的起作用了吗？bypass....分析支付宝网银木马，反爆菊花</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3467/" target="_blank">一种猥琐方式的对攻击者定位（观315有感）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3463/" target="_blank">关机后仍能提取出内存中的关键信息，计算机关闭后内存数据泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3439/" target="_blank">揭秘诈骗千万人民币的团伙及具体位置分析</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3435/" target="_blank">核总霸气分析“天津丽人女子医院”主站被黑、挂淘宝客、黑帽SEO全过程！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3422/" target="_blank">中国电信ADSL宽带信息泄露,可查任意IP对应的宽带账号,电话号码,上门砍人</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3401/" target="_blank">接着核总的《打击钓鱼，人人有责》之后的故事...</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3400/" target="_blank">打击钓鱼，人人有责……</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3394/" target="_blank">【跟风贴】XSS挖出一个黑产团体</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3387/" target="_blank">XSS挖出一个黑产团体</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3379/" target="_blank">陌陌猥琐流定位妹纸精准位置 有图有真相 + 安卓工具</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3372/" target="_blank">追查黑客姓名,邮箱,支付宝信息，惊现大规模僵尸网络，要求警方介入处理！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3371/" target="_blank">服务器被入侵之后，反爆1433抓鸡黑客菊花，并公布大量黑阔账号密码</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3309/" target="_blank">耍了一个发给我网购木马的骗子~~</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3304/" target="_blank">Base64 格式的密文，Base64 方式的 MD5 密匙，一些编码知识</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3303/" target="_blank">几种常见的hash加密，怎么判断hash的类型</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3295/" target="_blank">Inception能入侵全盘加密的计算机，修改物理机器内存/任意密码进入</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3270/" target="_blank">android软件外加监控，隐私安全？！爆个一键root内幕！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3264/" target="_blank">关于手机的隐私保护。。</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3263/" target="_blank">关于X卧底的通话监听、短信记录、定位追踪等侵犯隐私的行为讨论</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3247/" target="_blank">远程入侵QQ好友所在网吧监控系统，人脸识别、定位坐标，定点打击</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3213/" target="_blank">追踪PlugX Rat作者，人肉定向攻击远控PlugX开发者</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3185/" target="_blank">看新闻学知识之手机千里追回</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3184/" target="_blank">西安丢iPhone定位在北京民警辗转2400公里追回</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3179/" target="_blank">定位GFW的python脚本，如何找到GFW设备的IP地址</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3067/" target="_blank">东京大学加密招生海报解密过程（内含妹子）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3048/" target="_blank">可能的拦截HTTPS加密通信的手段 破解Google Gmail的https新思路</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/3022/" target="_blank">试验无线网络监听 网络账户密码也可被获取</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2990/" target="_blank">一个40位的“md5”</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2938/" target="_blank">视频:神奇的读心大师 网上有你的整个人生 利用社工+人肉来做神棍……</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2937/" target="_blank">法国政府约谈Facebook称泄漏用户个人隐私</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2920/" target="_blank">解密搜狗搜集用户信息的用途</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2875/" target="_blank">《魔兽世界》截屏数据水印惊现用户私人数据 截图隐藏水印 暗含玩家信息</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2868/" target="_blank">某些搜索引擎超科幻搜索结果，泄露了不只一点点 </a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2851/" target="_blank">简单分析一个通过 js 劫持进行黑帽 SEO 做淘宝客的案例</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2793/" target="_blank">找出 GFW 在 Internet 的位置、追踪 GFW 在互联网中的位置</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2766/" target="_blank">黑客攻击导致澳安全情报局网站，崩溃长达半小时</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2764/" target="_blank">德安全专家破解GSM加密算法 GSM网络破解 监听全球40亿部手机</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2725/" target="_blank">【需翻墙】网监如何爆菊？网警是如何通过层层VPN加密代理找到你的！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2668/" target="_blank">善用网站权限设置 莫让社交变“裸奔” 社交网络诱人沉迷 病态的自恋</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2545/" target="_blank">福布斯：IE10“禁止追踪”扼杀网络广告市场</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2538/" target="_blank">如何加载 VMware Workstation v8.0.1 加密过的虚拟磁盘文件(vmdk)</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2450/" target="_blank">苹果欲建造内部食堂 防止保密信息泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2371/" target="_blank">任何一种装机量巨大的软件，都有政府监控模块，我们应该如何保护自己？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2326/" target="_blank">美国色情网站遭黑客袭击 7.3万用户资料泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2292/" target="_blank">Mydecms 贤诚文章管理系统泄露数据库账号、密码、库名漏洞</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2290/" target="_blank">惊爆“17岁少女黑客 fly”高清无码裸照！！这下你真的火了！！！</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2216/" target="_blank">用 js 实现本地 md4、md5、sha1 加密表单并提交</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2127/" target="_blank">互联网信息办公布用户信息泄露事件查处情况</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2116/" target="_blank">2012年新浪微博用户密码泄露漏洞（图片解析）</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2114/" target="_blank">黑客考虑发射通讯卫星对抗全球互联网监管</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2089/" target="_blank">目前我认为是2011密码泄露事件最合理、最符合实际的一个解释</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2064/" target="_blank">GSM蜂窝基站定位基本原理浅析</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2056/" target="_blank">用黑客方式找回失窃的电脑 - GSM基站定位 - Wifi热点定位</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/2055/" target="_blank">不要偷黑客的东西 - Why you don't steal from a hacker</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1828/" target="_blank">索尼又遭黑客攻击 或致9万余份用户信息泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1690/" target="_blank">VB Html编码、Html解码、Html加密、Html解密、Html转义字符</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1575/" target="_blank">美国军方遭黑客袭击 泄露大量秘密信息</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1555/" target="_blank">黑客的新目标:泄密其他黑客资料</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1537/" target="_blank">国家计算机病毒中心发现新型蠕虫 即时聊天要当心</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1501/" target="_blank">艺电称旗下一网站遭攻击 用户资料泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1333/" target="_blank">索尼承认1000万信用卡资料遭盗窃 索尼PSN数据被黑激怒全球客户</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1303/" target="_blank">苹果iPhone和谷歌Android手机被曝"定位"用户</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1213/" target="_blank">入侵者必读, 网警、公安是如何找到你的!</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1120/" target="_blank">某人肉搜索的典型案例分析 一群推理神牛</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1119/" target="_blank">囧事 知名反病毒厂商卡巴斯基源代码泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1078/" target="_blank">呵呵，腾讯？QQ？网民隐私？公安监控？</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1053/" target="_blank">360秘密收集用户信息日志文件大规模外泄</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1034/" target="_blank">【文章】10.3 通信信道加密 链对链 端对端</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1027/" target="_blank">【文章】Winrar 压缩软件的加密算法 - AES</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1015/" target="_blank">【文章】9.6 密码反馈模式 初始化向量 错误</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1011/" target="_blank">【文章】9.3 密码分组链接模式 - 反馈寄存器</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1009/" target="_blank">【文章】9.1 电子密码本模式 - 多重加密处理</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1005/" target="_blank">【文章】8.10 密钥有效期 密钥破译 密文分析</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/1004/" target="_blank">【文章】8.9 泄露密钥 对称密码 私/密钥泄露</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/976/" target="_blank">【文章】4.14 密钥托管 密钥托管的政治 安全</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/975/" target="_blank">【文章】4.13 秘密的全或无泄露 ANDOS协议</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/950/" target="_blank">【文章】应用密码学: 加密数字签名 重发攻击</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/941/" target="_blank">【文章】应用密码学 - 隐写术代替和换位密码</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/939/" target="_blank">【文章】应用密码学：前言 - 作者简介 - 目录</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/937/" target="_blank">3389 远程桌面 Mstsc RDP协议详细解析 (下)</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/870/" target="_blank">360,腾讯等公司之间的战争,以及网民用户隐私</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/624/" target="_blank">【VB技巧】VB URL编码与解码 URL加密与解密</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/620/" target="_blank">【VB技巧】VB Base64编码/解码/加密/解密</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/564/" target="_blank">【Asp】ASP Unescape加密/解密/编码/解码</a> 
+</p>
+<p style="text-indent:2em;">
+	<a href="https://lcx.cc/post/554/" target="_blank">【漏洞】Microsoft IE CSS处理跨域信息泄露</a> 
+</p>
+<p><strong>留言评论（旧系统）：</strong></p>
+<div style="max-height:600px;width:100%;overflow:auto;overflow-x:hidden;">
+<blockquote id="7488,4508,101.205.16.239">
+<p>佚名 @ 2015-03-25 12:41:52</p>
+<p style="text-indent:2em">难道没用过tails吗，这个很不错的。已经更新到的1.3.1了。Privacy for anyone anywhere</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">么用过，研究看看……</p>
+</blockquote>
+<blockquote id="7494,4508,218.90.167.85">
+<p>有名 @ 2015-03-27 20:45:55</p>
+<p style="text-indent:2em">其实如果可以的话用玻璃硬盘，然后我们有氢氟酸</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">-_-!!!</p>
+</blockquote>
+<blockquote id="7495,4508,124.237.162.144">
+<p>只是路过啊别查水表 @ 2015-03-28 17:22:25</p>
+<p style="text-indent:2em">某人上台后。。。对国内互联网的管制开始严格了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">+1</p>
+</blockquote>
+<blockquote id="7497,4508,180.102.50.194">
+<p>m @ 2015-03-29 07:36:04</p>
+<p style="text-indent:2em">xp、7、8、8.1均可以实现运行在usb介质上，而且几乎和一般系统没有两样（你的设备最好读写快一点，不然慢成狗），当然安装还需要一些处理工作就是了。</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">是的，完全没问题。</p>
+</blockquote>
+<blockquote id="7499,4508,114.113.238.231">
+<p>a @ 2015-03-30 10:39:41</p>
+<p style="text-indent:2em">该更新；了</p>
+<p>本站回复：</p>
+<p style="text-indent:2em">+1</p>
+</blockquote>
+</div>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">乌云众生</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2015-03-30
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E4%BF%9D%E6%8A%A4/">保护</a>
+          <a href="https://lcx.cc/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+          <a href="https://lcx.cc/tags/%E6%B0%B4%E8%A1%A8/">水表</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/ddos/">DDOS</a>
+          <a href="https://lcx.cc/tags/dos/">Dos</a>
+          <a href="https://lcx.cc/tags/linux/">Linux</a>
+          <a href="https://lcx.cc/tags/windows/">Windows</a>
+          <a href="https://lcx.cc/tags/%E8%BD%A6/">车</a>
+          <a href="https://lcx.cc/tags/%E7%94%B5%E8%84%91/">电脑</a>
+          <a href="https://lcx.cc/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+          <a href="https://lcx.cc/tags/%E6%94%BB%E5%87%BB/">攻击</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E5%8C%BF%E5%90%8D/">匿名</a>
+          <a href="https://lcx.cc/tags/%E5%85%A8%E7%90%83/">全球</a>
+          <a href="https://lcx.cc/tags/%E8%BD%AF%E4%BB%B6/">软件</a>
+          <a href="https://lcx.cc/tags/%E6%89%8B%E6%9C%BA/">手机</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/4509/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">Linux系统时间重启后变化原因，及解决办法，安卓/Android、Tizen</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/4507/">
+            <span class="next-text nav-default">WebSocket 中转注入工具(for SQL Injection tools: sqlmap, etc.)</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

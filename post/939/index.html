@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>【文章】应用密码学：前言 - 作者简介 - 目录 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="应用密码学，前言，作者简介，目录。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta name="keywords" content="应用密码学,前言,作者简介,目录,Nuclear&#39;Atk,Nuclear&#39;Atk 个人博客,Nuclear&#39;Atk 文章." />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/939/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="【文章】应用密码学：前言 - 作者简介 - 目录" />
+<meta property="og:description" content="应用密码学，前言，作者简介，目录。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/939/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2010-11-16T12:00:00&#43;08:00" />
+<meta property="article:modified_time" content="2010-11-16T12:00:00&#43;08:00" />
+
+<meta itemprop="name" content="【文章】应用密码学：前言 - 作者简介 - 目录">
+<meta itemprop="description" content="应用密码学，前言，作者简介，目录。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"><meta itemprop="datePublished" content="2010-11-16T12:00:00&#43;08:00" />
+<meta itemprop="dateModified" content="2010-11-16T12:00:00&#43;08:00" />
+<meta itemprop="wordCount" content="7017">
+<meta itemprop="keywords" content="密码,密码学,Hash,IE,IP,Net,安全,保护,代码,分析,管理,函数,技术,加密,监控,美国,密钥,身份,世界,数据,算法,锁,讨论,问题,系统,协议,泄露,邮件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="【文章】应用密码学：前言 - 作者简介 - 目录"/>
+<meta name="twitter:description" content="应用密码学，前言，作者简介，目录。这篇文章由Nuclear&#39;Atk所写，并发表于Nuclear&#39;Atk个人博客。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">【文章】应用密码学：前言 - 作者简介 - 目录</h1>
+      
+      <div class="post-meta">
+        <time datetime="2010-11-16" class="post-time">
+          2010-11-16
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81/"> 密码 </a>
+            <a href="https://lcx.cc/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/"> 密码学 </a>
+            
+          </div>
+        <span class="more-meta"> 约 7017 字 </span>
+          <span class="more-meta"> 预计阅读 15 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<H1 align=center>应用密码学</H1>
+<H2 align=center>前言</H2>
+<P>&nbsp;&nbsp;&nbsp; 世界上有两种密码：一种是防止你的小妹妹看你的文件；另一种是防止当局者阅读你的文件资料。这本书写的是后一种情况。</P>
+<P>&nbsp;&nbsp;&nbsp; 如果把一封信锁在保险柜中，把保险柜藏在纽约的某个地方…，然后告诉你去看这封信。这并不是安全，而是隐藏。相反，如果把一封信锁在保险柜中，然后把保险柜及其设计规范和许多同样的保险柜给你，以便你和世界上最好的开保险柜的专家能够研究锁的装置。而你还是无法打开保险柜去读这封信，这样才是安全的。</P>
+<P>&nbsp;&nbsp;&nbsp; 许多年来，这种密码学是军队独家专有的领域。美国国家安全局以及前苏联、英国、法国、以色列及其它国家的安全机构已将大量的财力投入到加密自己的通信，同时又千方百计地去破译别人的通信的残酷游戏之中，面对这些政府，个人既无专门知识又无足够财力保护自己的秘密。</P>
+<P>&nbsp;&nbsp;&nbsp; 在过去20年里，公开的密码学研究爆炸性地增长。从二次世界大战以来，当普通公民还在长期使用经典密码时，计算机密码学成为世界军事的独占领域。今天，最新的计算机密码学已应用到军事当局的高墙之外，现在非专业人员都可以利用密码技术去阻止最强大的敌人，包括军方的安全机构。</P>
+<P>&nbsp;&nbsp;&nbsp; 平头百姓真的需要这种保密性吗？是的，他们可能正策划一次政治运动，讨论税收或正干一件非法的事情；他们也可能正设计一件新产品，讨论一种市场策略，或计划接管竞争对手的生意，或者，他们可能生活在一个不尊重个人隐私权的国家，也可能做一些他们自己认为并非违法实际却是非法的事情。不管理由是什么，他的数据和通信都是私人的、秘密的，与他人无关。</P>
+<P>&nbsp;&nbsp;&nbsp; 这本书正好在混乱的年代发表。1994年，克林顿当局核准了托管加密标准（包括Clipper芯片和Fortezza卡），并将数字电话法案签署成为法律。这两个行政令企图确保政府实施电子监控的能力。</P>
+<P>&nbsp;&nbsp;&nbsp; 一些危险的Orwellian假设在作祟：即政府有权侦听私人通信，个人对政府保守秘密是错误的，如果可能，法律总有能力强制实施法院授权的监控，但是，这是公民第一次被强迫采取积极措施，以使他们自己能被监控。这两个行政令并不是政府在某个模糊范围内的简单倡议，而是一种先发制人的单方面尝试，旨在侵占以前属于人民的权力。</P>
+<P>&nbsp;&nbsp;&nbsp; Clipper和数字电话不保护隐私，它强迫个人无条件地相信政府将尊重他们的隐私。非法窃听小马丁·路德·金电话的执法机构，同样也能容易地窃听用Clipper保护的电话。最近，地方警察机关在好些管区内都有因非法窃听而被控有罪或被提出民事诉讼的，这些地方包括马里兰、康涅狄格、佛蒙特、佐治亚、密苏里和内华达。为了随时方便警察局的工作而配置这种技术是很糟糕的想法。</P>
+<P>&nbsp;&nbsp;&nbsp; 这儿给我们的教训是采用法律手段并不能充分保护我们自己，我们需要用数学来保护自己。加密太重要了，不能让给政府独享。</P>
+<P>&nbsp;&nbsp;&nbsp; 本书为你提供了一些可用来保护自己隐私的工具。提供密码产品可能宣布为非法，但提供有关的信息绝不会犯法。</P>
+<H3 align=center>怎样读这本书？</H3>
+<P>&nbsp;&nbsp;&nbsp; 我写《应用密码学》一书是为了在真实介绍密码学的同时给出全面的参考文献。我尽量在不损失正确性的情况下保持文本的可读性。这本书不想成为一本数学书。虽然我无意给出任何错误信息，但匆忙中理论难免有失严谨。对形式方法感兴趣的人，可以参考大量的学术文献。</P>
+<P>&nbsp;&nbsp;&nbsp; 第一章介绍了密码学，定义了许多术语，简要讨论了计算机出现前密码学的情况。</P>
+<P>&nbsp;&nbsp;&nbsp; 第一篇（第二~六章）描述密码学的各种协议：人们能用密码学做什么。协议范围从简单（一人向另一人发送加密消息）到复杂（在电话上抛掷硬币）再到深奥的（秘密的和匿名的数字货币交易）。这些协议中有些一目了然，有些却十分奇异。密码术能够解决大多数人绝没有认识到的许多问题。</P>
+<P>&nbsp;&nbsp;&nbsp; 第二篇（第7~10章）讨论密码技术。对密码学的大多数基本应用来说，这一部分的四章都是很重要的。第七章和第八章讨论密钥：密钥应选多长才能保密，怎样产生、存储密钥，怎样处理密钥等等。密钥管理是密码学最困难的一部分，经常是保密系统的一个致命弱点；第九章讨论了使用密码算法的不同方法；第十章给出了与算法有关的细节：怎样选择、实现和使用算法。</P>
+<P>&nbsp;&nbsp;&nbsp; 第三篇（第9~23章）列出了多个算法。第11章提供了数学背景，如果你对公开密钥算法感兴趣，这一章是需要了解的。如果你只想实现DES（或类似的东西），你可以跳过这一章；第12章讨论DES：DES算法、它的历史、它的安全性和它的一些变形；第13、14、15章讨论其它的分组算法。如果你需要比DES更保密的算法，请阅读IDEA和三重DES算法这节。如果你想阅读一系列比DES算法更安全的算法，就请读完整章；第16、17章讨论序列密码算法；第18章集中讨论单向hash函数；虽然讨论了好些单向hash函数，但MD5和SHA是最通用的；第19章讨论公开密钥加密算法。第20章讨论了公开密钥数字签名算法；第21章讨论了公开密钥鉴别算法；第22章讨论了公开密钥密钥交换算法。几种重要的公开密钥算法分别是RSA、DSA、Fiat-Shamir和Diffie-hellman算法；第23章有更深奥的公开密钥算法和协议。这一章的数学知识是非常复杂的，请系好你的安全带。</P>
+<P>&nbsp;&nbsp;&nbsp; 第四篇（第24~25章）转向密码学的真实世界。第24章讨论这些算法和协议的一些实际实现；第25章接触到围绕密码学的一些政治问题，这些章节并不全面。</P>
+<P>&nbsp;&nbsp;&nbsp; 此外，书中还包括在第三篇中讨论的10个算法的源代码清单，由于篇幅的限制，我不可能涉及所有的源代码，况且，密码的源代码不能出口（非常奇怪的是，国务院允许本书的第一版和源代码出口，但不允许含有同样源代码的计算机磁盘的出口）。配套的源代码盘包括的源代码比本书中列出的要多得多；这也许是除军事机构以外的最大的密码源代码集。我只能发送源代码盘给住在美国和加拿大的美国和加拿大公民，但我希望有一天这种情况会改变。如果你对这本书的实现或密码算法均感兴趣的话，设法得到这个磁盘。详细情况请看本书的最后一页。</P>
+<P>&nbsp;&nbsp;&nbsp; 对这本书的一种批评，是它的广博性代替了可读性。这是对的，但我想给可能是偶然在学术文献或产品中需要一个算法的人提供一个参考。对于那些对教材更感兴趣的人，我只能抱歉。密码学领域正日趋热门，这是第一次把这么多资料收集在一本书中。即使这样，还是有许多东西限于篇幅舍弃了，我尽量保留了那些我认为是重要的、有实用价值的或者是有趣的专题，如果我对某一专题讨论不深，我会给出深入讨论这些专题的参考文献。</P>
+<P>&nbsp;&nbsp;&nbsp; 笔者在写作过程中已尽力查出和根除书中的错误，但我相信不可能消除所有的错误。第二版肯定比第一版的错误少得多。谌误表可以从我这里得到，并且它被定期发往Usenet的新闻组sci.crypt。如果读者发现错误，请通知我，我将向发现每个错误的第一个人免费寄送一张源码盘，以示感谢。</P>
+<H3 align=center>致谢</H3>
+<P>&nbsp;&nbsp;&nbsp; 为本书提供帮助的人真是数不胜数，他们都值得提及。我谨感谢Don Alvarez, Ross Anderson, Dave Balenson, Karl Barrus, Steve Bellovin, Dan Bernstein, Eli Biham, Joan Boyar, Karen Cooper, Whit Diffie, Joan Feigenbaum, Phil Karn, Neal Kobitz, Xuejia Lai, Tom Leranth, Mike Markowitz, Ralph Merkle, Bill Patton, Peter Pearson, Charles Pfleegar, Ken Pizzini, Bart Preneel, Mark Riordan, Joachim Schurman和Marc Schwartz感谢他们对本书第一版的审阅和校订。感谢Marc Vauclair将它译成法文。感谢Abe Abraham, Ross Anderson, Dave Banisar, Steve Bellovin, Eli Biham, Matt Bishop, Matt Blaze, Gary Carter, Jan Camenisch, Claude Crepeau, Joan Daemen, Jorge Davila, Ed Dawson, Whit Diffie, Carl Ellison, Joan Feigenbaum, Niels Ferguson, Matt Franklin, Rosario Gennaro, Dieter Gollmann, Mark Goresky, Richard Graveman, Stuart Haber, Jingman He, Bob Hogue, Kenneth Iversen, Markus Jakobsson, Burt Kaliski, Phil Karn, John Kelsey, John Kennedy, Lars Knudsen, Paul Kocher, John Ladwig, Xuejia Lai, Arjen Lenstra, Paul Leyland, Mike Markowitz, Jim Massey, Bruce McNair, William Hugh Murray, Roger Needham, Clif Neuman, Kaisa Nyberg, Luke O’Connor, Peter Pearson, Rene Peralta, Bart Preneel, Yisrael Radai, Matt Robshaw, Michael Roe, Phil Rogaway, Avi Rubin, Paul Rubin, Selwyn Russell, Kazue Sako, Mahmoud Salmasizadeh, Markus Stadler, Dmitry Titov, Jimmy Upton, Marc Vauclair, Serge Vaudenay, Gideon Yuval, Glen Zorn和其它不愿透露姓名的政府官员们对第2版的审阅和校订。感谢Lawrie Brown, Leisa Condie, Joan Daemen, Peter Gutmann, Alan Insley, Chris Johnston, John Kelsey, Xuejia Lai, Bill Leininger, Mike Markowitz, Richard Outerbridge, Peter Pearson, Ken Pizzini, Colin Plumb, RSA Data Security, Inc.,Michael Wood和Phil Zimmermann提供的源代码。感谢Paul MacNerland为第一版制图；Karen Cooper为第二版排版；Beth Friedman为第二版核对；Carol Kennedy为第二版做索引；sci.crypt和Cypherpunks邮件列表的读者们在主意、答问和谌误方面的支持；Randy Seuss提供的Internet接入；Jeff Duntemann和Jon Erickson给我鼓励、支持、交谈和友情和食粮让我动手写作；还要感谢AT&amp;T公司开除我，使这一切成为可能。没有这些人的帮助，仅靠我个人是不可能写出好书的。</P>
+<P align=right>B.施柰尔&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</P>
+<P>作者简介：</P>
+<P>&nbsp;&nbsp;&nbsp; BRUCE SCHNEIER是Counterpane Systems公司的总裁，该公司位于伊利诺依州的Oak公园，是一个密码学和计算机安全方面的专业咨询公司。Bruce还是《电子邮件安全》(E-Mail Security <JOHN 1995 Sons, & Wiley>)和《保护您的计算机》(Protect Your Macintosh<PEACHPIT 1994 Press,>)两书的作著。在主要的密码学杂志上已发表数十篇论文。是Dr.Dobb’s杂志责任编辑之一，负责“算法幽经”栏目。同时担任《计算机和通信安全评论》（Computer and Communication Security Reviews）的编辑。Bruce是“国际密码研究协会”的理事会成员、“电子隐私信息中心”的顾问团成员和“新安全范例工作组”(New Security Paradigms Workshop)程序委员会成员。此外，他还经常开办密码学、计算机安全和隐私保护方面的学术讲座。</P>
+<H3 align=center>目录</H3>
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 序 I <br />
+&nbsp;&nbsp;&nbsp; W.迪菲(Whitfield Diffie) I <br />
+&nbsp;&nbsp;&nbsp; 前&nbsp; 言 IV <br />
+&nbsp;&nbsp;&nbsp; 怎样读这本书？ V <br />
+&nbsp;&nbsp;&nbsp; 致谢 VI <br />
+&nbsp;&nbsp;&nbsp; 作者简介 VII</P>
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 第一章&nbsp; 基础知识 1</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 1.1 专业术语 1 <br />
+&nbsp;&nbsp;&nbsp; 1.2 隐写术 7 <br />
+&nbsp;&nbsp;&nbsp; 1.3 代替密码和换位密码 8 <br />
+&nbsp;&nbsp;&nbsp; 1.4 简单异或 11 <br />
+&nbsp;&nbsp;&nbsp; 1.5 一次一密乱码本 12 <br />
+&nbsp;&nbsp;&nbsp; 1.6 计算机算法 14 <br />
+&nbsp;&nbsp;&nbsp; 1.7 大数 14</P></BLOCKQUOTE>
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 第一篇 密码协议 16</P>
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 第二章&nbsp; 协议结构模块 16</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 2.1&nbsp; 协议介绍 16 <br />
+&nbsp;&nbsp;&nbsp; 2.2&nbsp; 使用对称密码术的通信 21 <br />
+&nbsp;&nbsp;&nbsp; 2.3&nbsp; 单向函数 22 <br />
+&nbsp;&nbsp;&nbsp; 2.4&nbsp; 单向Hash函数 23 <br />
+&nbsp;&nbsp;&nbsp; 2.5&nbsp; 使用公开密钥密码术的通信 24 <br />
+&nbsp;&nbsp;&nbsp; 2.6&nbsp; 数字签名 26 <br />
+&nbsp;&nbsp;&nbsp; 2.7&nbsp; 带加密的数字签名 31 <br />
+&nbsp;&nbsp;&nbsp; 2.8&nbsp; 随机和伪随机序列的产生 33</P></BLOCKQUOTE>
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 第三章&nbsp; 基本协议 36</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 3.1&nbsp; 密钥交换 36 <br />
+&nbsp;&nbsp;&nbsp; 3.2&nbsp; 鉴别 40 <br />
+&nbsp;&nbsp;&nbsp; 3.3&nbsp; 鉴别和密钥交换 43 <br />
+&nbsp;&nbsp;&nbsp; 3.4 &nbsp;鉴别和密钥交换协议的形式分析 50 <br />
+&nbsp;&nbsp;&nbsp; 3.5&nbsp; 多密钥公开密钥密码学 53 <br />
+&nbsp;&nbsp;&nbsp; 3.6&nbsp; 秘密分割 54 <br />
+&nbsp;&nbsp;&nbsp; 3.7&nbsp; 秘密共享 55 <br />
+&nbsp;&nbsp;&nbsp; 3.8&nbsp; 数据库的密码保护 58</P></BLOCKQUOTE>
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 第四章 中级协议 59</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 4.1&nbsp; 时间戳服务 59 <br />
+&nbsp;&nbsp;&nbsp; 4.2&nbsp; 阈下信道 62 <br />
+&nbsp;&nbsp;&nbsp; 4.3&nbsp; 不可抵赖的数字签名 63 <br />
+&nbsp;&nbsp;&nbsp; 4.4 &nbsp;指定的确认者签名 64 <br />
+&nbsp;&nbsp;&nbsp; 4.5&nbsp; 代理签名 65 <br />
+&nbsp;&nbsp;&nbsp; 4.6&nbsp; 团体签名 65 <br />
+&nbsp;&nbsp;&nbsp; 4.7&nbsp; 失败-终止 数字签名 66 <br />
+&nbsp;&nbsp;&nbsp; 4.8&nbsp; 用加密数据计算 67 <br />
+&nbsp;&nbsp;&nbsp; 4.9&nbsp; 比特承诺 67 <br />
+&nbsp;&nbsp;&nbsp; 4.10&nbsp;公平的硬币抛掷 69 <br />
+&nbsp;&nbsp;&nbsp; 4.11&nbsp;智力扑克 72 <br />
+&nbsp;&nbsp;&nbsp; 4.12 单向累加器 75 <br />
+&nbsp;&nbsp;&nbsp; 4.13&nbsp;秘密的全或无泄露 76 <br />
+&nbsp;&nbsp;&nbsp; 4.14&nbsp;密钥托管 76</P></BLOCKQUOTE>
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 第五章 高级协议 79</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 5.1&nbsp; 零知识证明 79 <br />
+&nbsp;&nbsp;&nbsp; 5.2&nbsp; 身份的零知识证明 85 <br />
+&nbsp;&nbsp;&nbsp; 5.3&nbsp; 盲签名 87 <br />
+&nbsp;&nbsp;&nbsp; 5.4&nbsp; 基于身份的公钥密码 90 <br />
+&nbsp;&nbsp;&nbsp; 5.5&nbsp; 不经意传输 90 <br />
+&nbsp;&nbsp;&nbsp; 5.6&nbsp; 不经意签名 92 <br />
+&nbsp;&nbsp;&nbsp; 5.7&nbsp; 同时签约 92 <br />
+&nbsp;&nbsp;&nbsp; 5.8&nbsp; 数字证明邮件 95 <br />
+&nbsp;&nbsp;&nbsp; 5.9&nbsp; 秘密的同时交换 97</P></BLOCKQUOTE>
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 第六章 深奥的协议 98</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 6.1&nbsp; 保密选举 98 <br />
+&nbsp;&nbsp;&nbsp; 6.2&nbsp; 保密的多方计算 105 <br />
+&nbsp;&nbsp;&nbsp; 6.3&nbsp; 匿名报文广播 107 <br />
+&nbsp;&nbsp;&nbsp; 6.4&nbsp; 数字现金 109</P></BLOCKQUOTE>
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 第二篇&nbsp; 密码技术 116</P>
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 第七章&nbsp; 密钥长度 116</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P dir=ltr style="MARGIN-RIGHT: 0px">&nbsp;&nbsp;&nbsp; 7.1 对称密钥长度 116 <br />
+&nbsp;&nbsp;&nbsp; 7.2 公钥密钥长度 122 <br />
+&nbsp;&nbsp;&nbsp; 7.3 对称密钥和公钥密钥长度的比较 128 <br />
+&nbsp;&nbsp;&nbsp; 7.4 对单向Hash函数的生日攻击 128 <br />
+&nbsp;&nbsp;&nbsp; 7.5&nbsp;密钥应该多长 128 <br />
+&nbsp;&nbsp;&nbsp; 7.6 总结 129</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第八章 密钥管理 130</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 8.1&nbsp; 密钥生成 130 <br />
+&nbsp;&nbsp;&nbsp; 8.2&nbsp; 非线性密钥空间 135 <br />
+&nbsp;&nbsp;&nbsp; 8.3&nbsp; 发送密钥 135 <br />
+&nbsp;&nbsp;&nbsp; 8.4&nbsp; 验证密钥 137 <br />
+&nbsp;&nbsp;&nbsp; 8.5&nbsp; 使用密钥 138 <br />
+&nbsp;&nbsp;&nbsp; 8.6&nbsp; 更新密钥 139 <br />
+&nbsp;&nbsp;&nbsp; 8.7&nbsp; 存储密钥 139 <br />
+&nbsp;&nbsp;&nbsp; 8.8&nbsp; 备份密钥 140 <br />
+&nbsp;&nbsp;&nbsp; 8.9&nbsp; 泄露密钥 141 <br />
+&nbsp;&nbsp;&nbsp; 8.10&nbsp;密钥有效期 141 <br />
+&nbsp;&nbsp;&nbsp; 8.11&nbsp;销毁密钥 142 <br />
+&nbsp;&nbsp;&nbsp; 8.12&nbsp;公开密钥的密钥管理 143</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第九章&nbsp; 算法类型和模式 146</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 9.1&nbsp; 电子密码本模式 146 <br />
+&nbsp;&nbsp;&nbsp; 9.2&nbsp; 分组重放 147 <br />
+&nbsp;&nbsp;&nbsp; 9.3&nbsp; 密码分组链接模式 149 <br />
+&nbsp;&nbsp;&nbsp; 9.4&nbsp; 序列密码算法 152 <br />
+&nbsp;&nbsp;&nbsp; 9.5&nbsp;&nbsp;自同步序列密码 154 <br />
+&nbsp;&nbsp;&nbsp; 9.6&nbsp; 密码反馈模式 155 <br />
+&nbsp;&nbsp;&nbsp; 9.7&nbsp; 同步序列密码 157 <br />
+&nbsp;&nbsp;&nbsp; 9.8&nbsp; 输出反馈模式 158 <br />
+&nbsp;&nbsp;&nbsp; 9.9&nbsp; 计数器模式 160 <br />
+&nbsp;&nbsp;&nbsp; 9.10&nbsp;其他分组密码模式 161 <br />
+&nbsp;&nbsp;&nbsp; 9.11&nbsp;选择密码模式 163 <br />
+&nbsp;&nbsp;&nbsp; 9.12 交错 164 <br />
+&nbsp;&nbsp;&nbsp; 9.13 分组密码算法与序列密码算法 165</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第十章&nbsp;&nbsp; 使用算法 167</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 10.1 选择算法 167 <br />
+&nbsp;&nbsp;&nbsp; 10.2 公钥密码与对称密码 169 <br />
+&nbsp;&nbsp;&nbsp; 10.3 通信信道加密 169 <br />
+&nbsp;&nbsp;&nbsp; 10.4 加密数据存储 172 <br />
+&nbsp;&nbsp;&nbsp; 10.5 硬件加密与软件加密 174 <br />
+&nbsp;&nbsp;&nbsp; 10.6 压缩、编码、加密 176 <br />
+&nbsp;&nbsp;&nbsp; 10.8 密文中隐藏密文 177 <br />
+&nbsp;&nbsp;&nbsp; 10.9 销毁信息 178</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第三篇&nbsp; 密码算法 180</P>
+<P>&nbsp;&nbsp;&nbsp; 第十一章&nbsp; 数学背景 180</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 11.1&nbsp; 信息论 180 <br />
+&nbsp;&nbsp;&nbsp; 11.2&nbsp; 复杂性理论 183 <br />
+&nbsp;&nbsp;&nbsp; 11.3&nbsp; 数论 187 <br />
+&nbsp;&nbsp;&nbsp; 11.4&nbsp; 因子分解 200 <br />
+&nbsp;&nbsp;&nbsp; 11.5&nbsp; 素数产生 202 <br />
+&nbsp;&nbsp;&nbsp; 11.6&nbsp; 有限域上的离散对数 205</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第十二章&nbsp; 数据加密标准（DES） 207</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 12.1&nbsp; 背景 207 <br />
+&nbsp;&nbsp;&nbsp; 12.2&nbsp; DES描述 210 <br />
+&nbsp;&nbsp;&nbsp; 12.3&nbsp; DES的安全性 219 <br />
+&nbsp;&nbsp;&nbsp; 12.4 差分及线性分析 224 <br />
+&nbsp;&nbsp;&nbsp; 12.5 实际设计的准则 232 <br />
+&nbsp;&nbsp;&nbsp; 12.6&nbsp;&nbsp; DES变形 232 <br />
+&nbsp;&nbsp;&nbsp; 12.7&nbsp; DES现在的安全性如何？ 238</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第十三章&nbsp; 其它分组密码算法 239</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 13.1&nbsp; LUCIFER算法 239 <br />
+&nbsp;&nbsp;&nbsp; 13.2&nbsp; MADEYGA算法 239 <br />
+&nbsp;&nbsp;&nbsp; 13.3&nbsp; NewDES算法 241 <br />
+&nbsp;&nbsp;&nbsp; 13.4&nbsp; FEAL算法 243 <br />
+&nbsp;&nbsp;&nbsp; 13.5&nbsp; REDOC算法 247 <br />
+&nbsp;&nbsp;&nbsp; 13.6&nbsp; LOKI算法 248 <br />
+&nbsp;&nbsp;&nbsp; 13.7&nbsp; KHUFU和KHAFRE算法 250 <br />
+&nbsp;&nbsp;&nbsp; 13.8&nbsp; RC2算法 252 <br />
+&nbsp;&nbsp;&nbsp; 13.9&nbsp; IDEA算法 253 <br />
+&nbsp;&nbsp;&nbsp; 13.10&nbsp; MMB算法 259 <br />
+&nbsp;&nbsp;&nbsp; 13.11&nbsp; CA—1.1算法 260 <br />
+&nbsp;&nbsp;&nbsp; 13.12&nbsp; SKIPJACK算法 261</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第十四章&nbsp; 其它分组密码算法（续） 263</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 14.1 GOST算法 263 <br />
+&nbsp;&nbsp;&nbsp; 14.2 CAST算法 265 <br />
+&nbsp;&nbsp;&nbsp; 14.3&nbsp;BLOWFISH算法 266 <br />
+&nbsp;&nbsp;&nbsp; 14.4 SAFER算法 269 <br />
+&nbsp;&nbsp;&nbsp; 14.5 3—WAY算法 271 <br />
+&nbsp;&nbsp;&nbsp; 14.6 CRAB算法 271 <br />
+&nbsp;&nbsp;&nbsp; 14.7 SXAL8/MBAL算法 273 <br />
+&nbsp;&nbsp;&nbsp; 14.8 RC5算法 273 <br />
+&nbsp;&nbsp;&nbsp; 14.9&nbsp;其它分组密码算法 274 <br />
+&nbsp;&nbsp;&nbsp; 14.10&nbsp;分组密码设计理论 274 <br />
+&nbsp;&nbsp;&nbsp; 14.11&nbsp;使用单向散列函数的算法 278 <br />
+&nbsp;&nbsp;&nbsp; 14.12&nbsp;分组密码算法的选择 281</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第15章&nbsp; 组合的分组密码 283</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 15.1 双重加密 283 <br />
+&nbsp;&nbsp;&nbsp; 15.2 三重加密 284 <br />
+&nbsp;&nbsp;&nbsp; 15.3 加倍分组长度 288 <br />
+&nbsp;&nbsp;&nbsp; 15.4 其它一些多重加密方案 289 <br />
+&nbsp;&nbsp;&nbsp; 15.5 缩短CDMF密钥 291 <br />
+&nbsp;&nbsp;&nbsp; 15.6 白噪声 291 <br />
+&nbsp;&nbsp;&nbsp; 15.7 级联多重加密算法 291 <br />
+&nbsp;&nbsp;&nbsp; 15.8 组合多重分组算法 292</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第十六章&nbsp; 伪随机序列发生器和序列密码 293</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 16.1&nbsp; 伪随机序列发生器 293 <br />
+&nbsp;&nbsp;&nbsp; 16.2&nbsp; 线性反馈移位寄存器 297 <br />
+&nbsp;&nbsp;&nbsp; 16.3&nbsp; 序列密码的设计与分析 304 <br />
+&nbsp;&nbsp;&nbsp; 16.4&nbsp; 使用LFSR的序列密码 305 <br />
+&nbsp;&nbsp;&nbsp; 16.5&nbsp; A5 313 <br />
+&nbsp;&nbsp;&nbsp; 16.6&nbsp; Hughes XPD/KPD 313 <br />
+&nbsp;&nbsp;&nbsp; 16.7&nbsp; Nanoteq 314 <br />
+&nbsp;&nbsp;&nbsp; 16.8&nbsp; Rambutan 314 <br />
+&nbsp;&nbsp;&nbsp; 16.9&nbsp; 附加式发生器 314 <br />
+&nbsp;&nbsp;&nbsp; 16.10&nbsp;GIFFORD 316 <br />
+&nbsp;&nbsp;&nbsp; 16.11&nbsp;M算法 317 <br />
+&nbsp;&nbsp;&nbsp; 16.12&nbsp;PKZIP 318</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第17章 其它序列密码和真随机序列发生器 320</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 17.1&nbsp; RC4 320 <br />
+&nbsp;&nbsp;&nbsp; 17.2&nbsp; SEAL 321 <br />
+&nbsp;&nbsp;&nbsp; 17.3&nbsp; WAKE 322 <br />
+&nbsp;&nbsp;&nbsp; 17.4&nbsp; 带进位的反馈移位寄存器 323 <br />
+&nbsp;&nbsp;&nbsp; 17.5&nbsp; 使用FCSR的序列密码 329 <br />
+&nbsp;&nbsp;&nbsp; 17.6&nbsp; 非线性反馈移位寄存器 332 <br />
+&nbsp;&nbsp;&nbsp; 17.7&nbsp; 其它序列密码 333 <br />
+&nbsp;&nbsp;&nbsp; 17.8&nbsp; 序列密码设计的系统理论方法 334 <br />
+&nbsp;&nbsp;&nbsp; 17.9&nbsp; 序列密码设计的复杂性理论方法 335 <br />
+&nbsp;&nbsp;&nbsp; 17.10&nbsp;序列密码设计的其它方法 336 <br />
+&nbsp;&nbsp;&nbsp; 17.11&nbsp;多个序列密码的级联 337 <br />
+&nbsp;&nbsp;&nbsp; 17.12&nbsp;序列密码的选择 337 <br />
+&nbsp;&nbsp;&nbsp; 17.13&nbsp;从单个伪随机序列发生器生成多个序列 338 <br />
+&nbsp;&nbsp;&nbsp; 17.14&nbsp;真随机序列产生器 339</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第十八章&nbsp; 单向hash函数 344</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 18.1&nbsp; 背景 344 <br />
+&nbsp;&nbsp;&nbsp; 18.2&nbsp; SNEFRU 346 <br />
+&nbsp;&nbsp;&nbsp; 18.3&nbsp; N- hash 346 <br />
+&nbsp;&nbsp;&nbsp; 18.4&nbsp; MD4 349 <br />
+&nbsp;&nbsp;&nbsp; 18.5&nbsp; MD5 350 <br />
+&nbsp;&nbsp;&nbsp; 18.6&nbsp; MD2 354 <br />
+&nbsp;&nbsp;&nbsp; 18.7&nbsp; 安全hash算法（SHA） 354 <br />
+&nbsp;&nbsp;&nbsp; 18.8&nbsp; RIPE- MD 357 <br />
+&nbsp;&nbsp;&nbsp; 18.9&nbsp; HAVAL 357 <br />
+&nbsp;&nbsp;&nbsp; 18.10&nbsp; 其它单向hash函数 358 <br />
+&nbsp;&nbsp;&nbsp; 18.11&nbsp; 使用对称分组算法的单向hash函数 358 <br />
+&nbsp;&nbsp;&nbsp; 18.12&nbsp; 使用公开密钥算法 365 <br />
+&nbsp;&nbsp;&nbsp; 18.13&nbsp; 单向hash函数的选择 365 <br />
+&nbsp;&nbsp;&nbsp; 18.14&nbsp; 消息鉴别码 366</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第19章&nbsp; 公开密钥算法 370</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 19.1&nbsp;背景 370 <br />
+&nbsp;&nbsp;&nbsp; 19.2 背包算法 371 <br />
+&nbsp;&nbsp;&nbsp; 19.3 RSA算法 374 <br />
+&nbsp;&nbsp;&nbsp; 19.4 POHLIG-HELLMAN算法 381 <br />
+&nbsp;&nbsp;&nbsp; 19.5 RABIN算法 381 <br />
+&nbsp;&nbsp;&nbsp; 19.6 ElGAMAL算法 383 <br />
+&nbsp;&nbsp;&nbsp; 19.7 McELIECE算法 385 <br />
+&nbsp;&nbsp;&nbsp; 19.8 椭圆曲线密码体制 386 <br />
+&nbsp;&nbsp;&nbsp; 19.9&nbsp;LUC算法 386 <br />
+&nbsp;&nbsp;&nbsp; 19.10&nbsp;有限自动机公开密钥密码体制 387</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第二十章&nbsp; 公开密钥数字签名算法 389</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 20.1 数字签名算法(DSA) 389 <br />
+&nbsp;&nbsp;&nbsp; 20.2&nbsp;DSA的变形 396 <br />
+&nbsp;&nbsp;&nbsp; 20.3&nbsp;GOST数字签名算法 398 <br />
+&nbsp;&nbsp;&nbsp; 20.4&nbsp;离散对数签名方案 399 <br />
+&nbsp;&nbsp;&nbsp; 20.5&nbsp;ONG-SCHNORR-SHAMIR 401 <br />
+&nbsp;&nbsp;&nbsp; 20.6&nbsp;ESIGN 401 <br />
+&nbsp;&nbsp;&nbsp; 20.7 细胞自动机 402 <br />
+&nbsp;&nbsp;&nbsp; 20.8&nbsp;其它公开密钥算法 403</P></BLOCKQUOTE>
+<P dir=ltr>&nbsp;&nbsp;&nbsp; 第21章 鉴别方案 405</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 21.1 FEIGE—FIAT—SHAMIR算法 405 <br />
+&nbsp;&nbsp;&nbsp; 21.2 GUILLOU—QUISQUATER算法 409 <br />
+&nbsp;&nbsp;&nbsp; 21.3 SCHNORR算法 411 <br />
+&nbsp;&nbsp;&nbsp; 21.4 身份识别方案转为数字签名方案 412 <br />
+&nbsp;&nbsp;&nbsp; 22.1 Diffie-Hellman 算法 413 <br />
+&nbsp;&nbsp;&nbsp; 22.2 站间协议 415 <br />
+&nbsp;&nbsp;&nbsp; 22.3 Shamir的三次传递协议 415 <br />
+&nbsp;&nbsp;&nbsp; 22.4 COMSET 416 <br />
+&nbsp;&nbsp;&nbsp; 22.5 加密的密钥交换 416 <br />
+&nbsp;&nbsp;&nbsp; 22.6 加强的密钥协商 420 <br />
+&nbsp;&nbsp;&nbsp; 22.7 会议密钥分发和秘密广播 420 <br />
+&nbsp;&nbsp;&nbsp; 23&nbsp;&nbsp; 协议的专用算法 423 <br />
+&nbsp;&nbsp;&nbsp; 23.1 多重密钥的公开密钥密码学 423 <br />
+&nbsp;&nbsp;&nbsp; 23.2 秘密共享算法 423 <br />
+&nbsp;&nbsp;&nbsp; 23.3 阈下信道 426 <br />
+&nbsp;&nbsp;&nbsp; 23.4 不可抵赖的数字签名 431 <br />
+&nbsp;&nbsp;&nbsp; 23.5 指定的确认者签名 433 <br />
+&nbsp;&nbsp;&nbsp; 23.6 用加密数据计算 434 <br />
+&nbsp;&nbsp;&nbsp; 23.7 公平的硬币抛掷 435 <br />
+&nbsp;&nbsp;&nbsp; 23.8 单向累加器 437 <br />
+&nbsp;&nbsp;&nbsp; 23.9 秘密的全或无泄露 437 <br />
+&nbsp;&nbsp;&nbsp; 23.10 公平和防错的密码体制 439 <br />
+&nbsp;&nbsp;&nbsp; 23.11 知识的零知识证明 440 <br />
+&nbsp;&nbsp;&nbsp; 23.12 盲签名 442 <br />
+&nbsp;&nbsp;&nbsp; 23.13 不经意传输 443 <br />
+&nbsp;&nbsp;&nbsp; 23.14 保密的多方计算 443 <br />
+&nbsp;&nbsp;&nbsp; 23.15 概率加密 444 <br />
+&nbsp;&nbsp;&nbsp; 23.16 量子密码学 446</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第四篇&nbsp; 真实世界 449</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 24&nbsp;&nbsp;&nbsp; 实现方案范例 449 <br />
+&nbsp;&nbsp;&nbsp; 24.1&nbsp; IBM秘密密钥管理协议 449 <br />
+&nbsp;&nbsp;&nbsp; 24.2&nbsp; MITRENET 450 <br />
+&nbsp;&nbsp;&nbsp; 24.3&nbsp; ISDN 450 <br />
+&nbsp;&nbsp;&nbsp; 24.4&nbsp; STU-Ⅲ 452 <br />
+&nbsp;&nbsp;&nbsp; 24.5&nbsp; KERBEROS 452 <br />
+&nbsp;&nbsp;&nbsp; 24.6&nbsp; KRYPTOKNIGHT 457 <br />
+&nbsp;&nbsp;&nbsp; 24.7&nbsp; SESAME 457 <br />
+&nbsp;&nbsp;&nbsp; 24.8&nbsp; IBM 通用密码体系 458 <br />
+&nbsp;&nbsp;&nbsp; 24.9&nbsp; ISO鉴别框架 459 <br />
+&nbsp;&nbsp;&nbsp; 24.10 保密性增强邮件（PEM） 462 <br />
+&nbsp;&nbsp;&nbsp; 24.11 消息安全协议（MSP） 467 <br />
+&nbsp;&nbsp;&nbsp; 24.12&nbsp;PRETTY GOOD PRIVACY（PGP） 467 <br />
+&nbsp;&nbsp;&nbsp; 24.13 智能卡 469 <br />
+&nbsp;&nbsp;&nbsp; 24.14 公开密钥密码学标准（PKCS） 470 <br />
+&nbsp;&nbsp;&nbsp; 24.15&nbsp;通用的电子支付系统（UEPS） 471 <br />
+&nbsp;&nbsp;&nbsp; 26.16&nbsp;CLIPPER 473 <br />
+&nbsp;&nbsp;&nbsp; 24.17 CAPSTONE 475 <br />
+&nbsp;&nbsp;&nbsp; 24.18&nbsp;AT&amp;T&nbsp;&nbsp; 3600型电话保密设备（TSD） 475 <br />
+&nbsp;&nbsp;&nbsp; 25&nbsp;&nbsp;&nbsp; 政治 476 <br />
+&nbsp;&nbsp;&nbsp; 25.1&nbsp; 国家安全局（NSA） 476 <br />
+&nbsp;&nbsp;&nbsp; 25.2&nbsp; 国家计算机安全中心（NCSC） 477 <br />
+&nbsp;&nbsp;&nbsp; 25.3&nbsp; 国家标准技术所（NIST） 478 <br />
+&nbsp;&nbsp;&nbsp; 25.4&nbsp; RSA数据安全有限公司 481 <br />
+&nbsp;&nbsp;&nbsp; 25.5&nbsp; 公开密钥合作者 481 <br />
+&nbsp;&nbsp;&nbsp; 25.6&nbsp; 国际密码研究协会（IACR） 482 <br />
+&nbsp;&nbsp;&nbsp; 25.7&nbsp; RACE 完整性基本评估（RIPE） 483 <br />
+&nbsp;&nbsp;&nbsp; 25.8&nbsp; 对欧洲的有条件访问（CAFE） 483 <br />
+&nbsp;&nbsp;&nbsp; 25.9&nbsp; ISO/IEC 9979 484 <br />
+&nbsp;&nbsp;&nbsp; 25.10 专业人员、公民自由及产业性组织 484 <br />
+&nbsp;&nbsp;&nbsp; 25.11 Sci. Crypt 485 <br />
+&nbsp;&nbsp;&nbsp; 25.12 Cypherpunks 485 <br />
+&nbsp;&nbsp;&nbsp; 25.13 专利 486 <br />
+&nbsp;&nbsp;&nbsp; 25.14 美国出口法规 486 <br />
+&nbsp;&nbsp;&nbsp; 25.15 其他国家的密码进出口 491 <br />
+&nbsp;&nbsp;&nbsp; 25.16 合法性问题 492 <br />
+&nbsp;&nbsp;&nbsp; Matt Blaze 跋 493</P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 第五篇&nbsp; 源代码 495</P>
+<BLOCKQUOTE dir=ltr style="MARGIN-RIGHT: 0px">
+<P>&nbsp;&nbsp;&nbsp; 1. DES 495 <br />
+&nbsp;&nbsp;&nbsp; 2. LOK191 505 <br />
+&nbsp;&nbsp;&nbsp; 3. IDEA 510 <br />
+&nbsp;&nbsp;&nbsp; 4. GOST 516 <br />
+&nbsp;&nbsp;&nbsp; 5. BLOWFISH 520 <br />
+&nbsp;&nbsp;&nbsp; 6. 3-Way 529 <br />
+&nbsp;&nbsp;&nbsp; 7. RC5 535 <br />
+&nbsp;&nbsp;&nbsp; 8. A5 539 <br />
+&nbsp;&nbsp;&nbsp; 9. SEAL 545 <br />
+&nbsp;&nbsp;&nbsp; References 553</P></BLOCKQUOTE>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2010-11-16
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81/">密码</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/">密码学</a>
+          <a href="https://lcx.cc/tags/hash/">Hash</a>
+          <a href="https://lcx.cc/tags/ie/">IE</a>
+          <a href="https://lcx.cc/tags/ip/">IP</a>
+          <a href="https://lcx.cc/tags/net/">Net</a>
+          <a href="https://lcx.cc/tags/%E5%AE%89%E5%85%A8/">安全</a>
+          <a href="https://lcx.cc/tags/%E4%BF%9D%E6%8A%A4/">保护</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E7%AE%A1%E7%90%86/">管理</a>
+          <a href="https://lcx.cc/tags/%E5%87%BD%E6%95%B0/">函数</a>
+          <a href="https://lcx.cc/tags/%E6%8A%80%E6%9C%AF/">技术</a>
+          <a href="https://lcx.cc/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+          <a href="https://lcx.cc/tags/%E7%9B%91%E6%8E%A7/">监控</a>
+          <a href="https://lcx.cc/tags/%E7%BE%8E%E5%9B%BD/">美国</a>
+          <a href="https://lcx.cc/tags/%E5%AF%86%E9%92%A5/">密钥</a>
+          <a href="https://lcx.cc/tags/%E8%BA%AB%E4%BB%BD/">身份</a>
+          <a href="https://lcx.cc/tags/%E4%B8%96%E7%95%8C/">世界</a>
+          <a href="https://lcx.cc/tags/%E6%95%B0%E6%8D%AE/">数据</a>
+          <a href="https://lcx.cc/tags/%E7%AE%97%E6%B3%95/">算法</a>
+          <a href="https://lcx.cc/tags/%E9%94%81/">锁</a>
+          <a href="https://lcx.cc/tags/%E8%AE%A8%E8%AE%BA/">讨论</a>
+          <a href="https://lcx.cc/tags/%E9%97%AE%E9%A2%98/">问题</a>
+          <a href="https://lcx.cc/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+          <a href="https://lcx.cc/tags/%E5%8D%8F%E8%AE%AE/">协议</a>
+          <a href="https://lcx.cc/tags/%E6%B3%84%E9%9C%B2/">泄露</a>
+          <a href="https://lcx.cc/tags/%E9%82%AE%E4%BB%B6/">邮件</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/940/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">【文章】应用密码学：第一章 - 密码基础知识</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/938/">
+            <span class="next-text nav-default">【文章】应用密码学 W.迪菲(Whitfield Diffie)</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>

